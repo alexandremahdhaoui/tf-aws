@@ -1,0 +1,45 @@
+<html>
+<head></head>
+<body>
+    <h1>Resource: aws_accessanalyzer_analyzer</h1>
+    <p>Manages an Access Analyzer Analyzer. More information can be found in the <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html">Access Analyzer User Guide</a>.</p>
+    <h2>Example Usage</h2>
+    <h3>Account Analyzer</h3>
+    <pre><code class="language-terraform">resource &#34;aws_accessanalyzer_analyzer&#34; &#34;example&#34; {
+      analyzer_name = &#34;example&#34;
+    }
+    </code></pre>
+    <h3>Organization Analyzer</h3>
+    <pre><code class="language-terraform">resource &#34;aws_organizations_organization&#34; &#34;example&#34; {
+          aws_service_access_principals = [&#34;access-analyzer.amazonaws.com&#34;]
+        }
+
+        resource &#34;aws_accessanalyzer_analyzer&#34; &#34;example&#34; {
+          depends_on = [aws_organizations_organization.example]
+
+          analyzer_name = &#34;example&#34;
+          type          = &#34;ORGANIZATION&#34;
+<!--        }-->
+    </code></pre>
+    <h2>Argument Reference</h2>
+    <p>The following arguments are required:</p>
+    <ul>
+        <li><code>analyzer_name</code> - (Required) Name of the Analyzer.</li>
+    </ul>
+    <p>The following arguments are optional:</p>
+    <ul>
+        <li><code>tags</code> - (Optional) Key-value map of resource tags. If configured with a provider <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block"><code>default_tags</code> configuration block</a> present, tags with matching keys will overwrite those defined at the provider-level.</li>
+        <li><code>type</code> - (Optional) Type of Analyzer. Valid values are <code>ACCOUNT</code> or <code>ORGANIZATION</code>. Defaults to <code>ACCOUNT</code>.</li>
+    </ul>
+    <h2>Attributes Reference</h2>
+    <p>In addition to all arguments above, the following attributes are exported:</p>
+    <ul>
+        <li><code>arn</code> - ARN of the Analyzer.</li>
+        <li><code>id</code> - Analyzer name.</li>
+        <li><code>tags_all</code> - Map of tags assigned to the resource, including those inherited from the provider <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs#default_tags-configuration-block"><code>default_tags</code> configuration block</a>.</li>
+    </ul>
+    <h2>Import</h2>
+    <p>Access Analyzer Analyzers can be imported using the <code>analyzer_name</code>, e.g.,</p>
+    <pre><code>$ terraform import aws_accessanalyzer_analyzer.example example</code></pre>
+</body>
+</html>

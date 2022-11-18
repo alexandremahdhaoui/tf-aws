@@ -1,19 +1,18 @@
-# tf-aws
+[[_TOC_]]
 
-_[ TOC ]_
+# Repository structure
 
-## Repository structure
+| Path        | Description                                                                                                          |
+|-------------|----------------------------------------------------------------------------------------------------------------------|
+| cmd/        | Includes command line tools used in this project.                                                                    |
+| gen/mod/    | Generated modules.                                                                                                   |
+| gen/src/    | `TerraformModule` configuration files.                                                                               |
+| pkg/        | Includes go packages used by the golang cli tools defined in `cmd`.                                                  |
+| pkg/tokens/ | Contains `Token`, `TokenStream` & `TokenTree` interfaces used to parse the markdowns into `TerraformModule` structs. |
+| templates/  | Includes all templating files used to generate the content inside src.                                               |
 
-| Path       | Description                                                            |
-|------------|------------------------------------------------------------------------|
-| cmd/       | Includes command line tools used in this project.                      |
-| gen/mod/   | Includes all generated modules.                                        |
-| gen/src/   | Includes all configuration files.                                      |
-| pkg/       | Includes go packages used by the golang cli tools defined in `cmd`.    |
-| templates/ | Includes all templating files used to generate the content inside src. |
 
-
-## TODO
+# TODO
 - Get all the Data for resource & datasource from GitHub:
   - Links
     - https://github.com/hashicorp/terraform-provider-aws/tree/main/website/docs
@@ -24,8 +23,12 @@ _[ TOC ]_
   - We do not really need to keep this data to be honest. Maybe for debugging it will be easier to keep it in the 
   beginning.
 
+Important:
+- We should allow overwritting configurations from source, e.g. adding a new key for `lifecycle.ignore_changes`. 
+  - Maybe create a folder called `src_overwrite/`.
+- Don't store `gen/` in the repo but rather in `s3`
 
-## Modules
+# Modules
 
 <!-- PLACEHOLDER BEGIN modules -->
 
@@ -37,7 +40,7 @@ _[ TOC ]_
 
 <!-- PLACEHOLDER END modules -->
 
-## Considerations
+# Considerations
 
 These modules are simple wrappers around the AWS provider to comply to the 
 [tag specification](https://gitlab.com/alexandre.mahdhaoui/spec-tag).
