@@ -1,0 +1,28 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_sesv2_configuration_set
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Configuration Set.
+            type: string
+        last_fresh_start:
+            description: The date and time (in Unix time) when the reputation metrics were last given a fresh start. When your account is given a fresh start, your reputation metrics are calculated starting from the date of the fresh start.
+            type: string
+        reputation_options:
+            description: |
+                An object that defines whether or not Amazon SES collects reputation metrics for the emails that you send that use the configuration set.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

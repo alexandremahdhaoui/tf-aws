@@ -1,0 +1,78 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_tag_option_resource_association
+spec:
+    args:
+        create:
+            description: (Default 3m)
+            type: string
+            optional: true
+        id:
+            description: Identifier of the association.
+            type: string
+            optional: true
+        read:
+            description: (Default 10m)
+            type: string
+            optional: true
+        resource_arn:
+            description: ARN of the resource.
+            type: string
+            optional: true
+        resource_created_time:
+            description: Creation time of the resource.
+            type: string
+            optional: true
+        resource_description:
+            description: Description of the resource.
+            type: string
+            optional: true
+        resource_id:
+            description: (Required) Resource identifier.
+            type: string
+            optional: true
+        resource_name:
+            description: 'Description of the resource.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        tag_option_id:
+            description: '(Required) Tag Option identifier.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 3m)
+            type: string
+        delete:
+            description: (Default 3m)
+            type: string
+        id:
+            description: Identifier of the association.
+            type: string
+        read:
+            description: (Default 10m)
+            type: string
+        resource_arn:
+            description: ARN of the resource.
+            type: string
+        resource_created_time:
+            description: Creation time of the resource.
+            type: string
+        resource_description:
+            description: Description of the resource.
+            type: string
+        resource_name:
+            description: 'Description of the resource.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

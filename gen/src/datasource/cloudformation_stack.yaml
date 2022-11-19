@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: cloudformation_stack
+spec:
+    args: {}
+    attrs:
+        capabilities:
+            description: List of capabilities
+            type: string
+        description:
+            description: Description of the stack
+            type: string
+        disable_rollback:
+            description: Whether the rollback of the stack is disabled when stack creation fails
+            type: string
+        iam_role_arn:
+            description: ARN of the IAM role used to create the stack.
+            type: string
+        notification_arns:
+            description: List of SNS topic ARNs to publish stack related events
+            type: string
+        outputs:
+            description: Map of outputs from the stack.
+            type: string
+        parameters:
+            description: Map of parameters that specify input parameters for the stack.
+            type: string
+        tags:
+            description: Map of tags associated with this stack.
+            type: string
+        template_body:
+            description: Structure containing the template body.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

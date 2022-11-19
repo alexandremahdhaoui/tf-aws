@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_codebuild_webhook
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The name of the build project.
+            type: string
+        payload_url:
+            description: The CodeBuild endpoint where webhook events are sent.
+            type: string
+        secret:
+            description: The secret token of the associated repository. Not returned by the CodeBuild API for all source types.
+            type: string
+        url:
+            description: 'The URL to the webhook.~> strongNote: The secret attribute is only set on resource creation, so if the secret is manually rotated, terraform will not pick up the change on subsequent runs.  In that case, the webhook resource should be tainted and re-created to get the secret back in sync.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_dms_replication_instance
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        replication_instance_arn:
+            description: The Amazon Resource Name (ARN) of the replication instance.
+            type: string
+        replication_instance_private_ips:
+            description: ' A list of the private IP addresses of the replication instance.'
+            type: string
+        replication_instance_public_ips:
+            description: A list of the public IP addresses of the replication instance.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

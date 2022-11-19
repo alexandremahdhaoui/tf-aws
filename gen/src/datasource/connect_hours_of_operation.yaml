@@ -1,0 +1,60 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: connect_hours_of_operation
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Hours of Operation.
+            type: string
+        config:
+            description: 'Configuration information for the hours of operation: day, start time, and end time . Config blocks are documented below. Config blocks are documented below.'
+            type: string
+        day:
+            description: Day that the hours of operation applies to.
+            type: string
+        description:
+            description: Description of the Hours of Operation.
+            type: string
+        end_time:
+            description: End time block specifies the time that your contact center closes. The end_time is documented below.
+            type: string
+        hours:
+            description: Hour of opening.
+            type: string
+        hours_of_operation_arn:
+            description: (strongDeprecated) ARN of the Hours of Operation.
+            type: string
+        hours_of_operation_id:
+            description: The identifier for the hours of operation.
+            type: string
+        instance_id:
+            description: Identifier of the hosting Amazon Connect Instance.
+            type: string
+        minutes:
+            description: 'Minute of closing.A start_time block supports the following arguments:'
+            type: string
+        name:
+            description: Name of the Hours of Operation.
+            type: string
+        start_time:
+            description: 'Start time block specifies the time that your contact center opens. The start_time is documented below.A end_time block supports the following arguments:'
+            type: string
+        tags:
+            description: Map of tags to assign to the Hours of Operation.
+            type: string
+        time_zone:
+            description: 'Time zone of the Hours of Operation.A config block supports the following arguments:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,156 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_imagebuilder_image
+spec:
+    args:
+        account_id:
+            description: Account identifier of the AMI.
+            type: string
+            optional: true
+        amis:
+            description: |
+                Set of objects with each Amazon Machine Image (AMI) created.
+            type: string
+            optional: true
+        arn:
+            description: Amazon Resource Name (ARN) of the image.
+            type: string
+            optional: true
+        container_recipe_arn:
+            description: (Optional) - Amazon Resource Name (ARN) of the container recipe.
+            type: string
+            optional: true
+        create:
+            description: (Default 60m)
+            type: string
+            optional: true
+        date_created:
+            description: Date the image was created.
+            type: string
+            optional: true
+        description:
+            description: Description of the AMI.
+            type: string
+            optional: true
+        distribution_configuration_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration.
+            type: string
+            optional: true
+        enhanced_image_metadata_enabled:
+            description: (Optional) Whether additional information about the image being created is collected. Defaults to true.
+            type: string
+            optional: true
+        image:
+            description: Identifier of the AMI.
+            type: string
+            optional: true
+        image_recipe_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the image recipe.
+            type: string
+            optional: true
+        image_tests_configuration:
+            description: (Optional) Configuration block with image tests configuration. Detailed below.
+            type: string
+            optional: true
+        image_tests_enabled:
+            description: (Optional) Whether image tests are enabled. Defaults to true.
+            type: string
+            optional: true
+        infrastructure_configuration_arn:
+            description: (Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration.
+            type: string
+            optional: true
+        name:
+            description: Name of the AMI.
+            type: string
+            optional: true
+        os_version:
+            description: Operating System version of the image.
+            type: string
+            optional: true
+        output_resources:
+            description: |
+                List of objects with resources created by the image.
+            type: string
+            optional: true
+        platform:
+            description: Platform of the image.
+            type: string
+            optional: true
+        region:
+            description: Region of the AMI.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value map of resource tags for the Image Builder Image. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        timeout_minutes:
+            description: '(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        version:
+            description: 'Version of the image.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        account_id:
+            description: Account identifier of the AMI.
+            type: string
+        amis:
+            description: |
+                Set of objects with each Amazon Machine Image (AMI) created.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the image.
+            type: string
+        create:
+            description: (Default 60m)
+            type: string
+        date_created:
+            description: Date the image was created.
+            type: string
+        description:
+            description: Description of the AMI.
+            type: string
+        image:
+            description: Identifier of the AMI.
+            type: string
+        name:
+            description: Name of the AMI.
+            type: string
+        os_version:
+            description: Operating System version of the image.
+            type: string
+        output_resources:
+            description: |
+                List of objects with resources created by the image.
+            type: string
+        platform:
+            description: Platform of the image.
+            type: string
+        region:
+            description: Region of the AMI.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        version:
+            description: 'Version of the image.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

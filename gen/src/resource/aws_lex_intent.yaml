@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lex_intent
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the Lex intent.
+            type: string
+        checksum:
+            description: |-
+                Checksum identifying the version of the intent that was created. The checksum is not
+                included as an argument because the resource will add it automatically when updating the intent.
+            type: string
+        create:
+            description: (Default 1m)
+            type: string
+        created_date:
+            description: The date when the intent version was created.
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        last_updated_date:
+            description: The date when the $LATEST version of this intent was updated.
+            type: string
+        update:
+            description: (Default 1m)
+            type: string
+        version:
+            description: 'The version of the bot.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

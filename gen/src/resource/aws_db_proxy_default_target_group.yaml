@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_db_proxy_default_target_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) representing the target group.
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        id:
+            description: Name of the RDS DB Proxy.
+            type: string
+        name:
+            description: 'The name of the default target group.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

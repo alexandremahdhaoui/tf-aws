@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_apprunner_connection
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the connection.
+            type: string
+        status:
+            description: Current state of the App Runner connection. When the state is AVAILABLE, you can use the connection to create an aws_apprunner_service resource.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

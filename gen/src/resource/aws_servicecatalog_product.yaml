@@ -1,0 +1,144 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_product
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.'
+            type: string
+            optional: true
+        arn:
+            description: ARN of the product.
+            type: string
+            optional: true
+        create:
+            description: (Default 5m)
+            type: string
+            optional: true
+        created_time:
+            description: Time when the product was created.
+            type: string
+            optional: true
+        delete:
+            description: (Default 5m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of the provisioning artifact (i.e., version), including how it differs from the previous provisioning artifact.
+            type: string
+            optional: true
+        disable_template_validation:
+            description: (Optional) Whether AWS Service Catalog stops validating the specified provisioning artifact template even if it is invalid.
+            type: string
+            optional: true
+        distributor:
+            description: (Optional) Distributor (i.e., vendor) of the product.
+            type: string
+            optional: true
+        has_default_path:
+            description: Whether the product has a default path. If the product does not have a default path, call ListLaunchPaths to disambiguate between paths.  Otherwise, ListLaunchPaths is not required, and the output of ProductViewSummary can be used directly with DescribeProvisioningParameters.
+            type: string
+            optional: true
+        id:
+            description: Product ID. For example, prod-dnigbtea24ste.
+            type: string
+            optional: true
+        name:
+            description: (Optional) Name of the provisioning artifact (for example, v1, v2beta). No spaces are allowed.
+            type: string
+            optional: true
+        owner:
+            description: (Required) Owner of the product.
+            type: string
+            optional: true
+        provisioning_artifact_parameters:
+            description: (Required) Configuration block for provisioning artifact (i.e., version) parameters. Detailed below.
+            type: string
+            optional: true
+        read:
+            description: (Default 10m)
+            type: string
+            optional: true
+        status:
+            description: Status of the product.
+            type: string
+            optional: true
+        support_description:
+            description: (Optional) Support information about the product.
+            type: string
+            optional: true
+        support_email:
+            description: (Optional) Contact email for product support.
+            type: string
+            optional: true
+        support_url:
+            description: (Optional) Contact URL for product support.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Tags to apply to the product. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.provisioning_artifact_parametersThe following arguments are supported:'
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        template_physical_id:
+            description: (Required if template_url is not provided) Template source as the physical ID of the resource that contains the template. Currently only supports CloudFormation stack ARN. Specify the physical ID as arn:[partition]:cloudformation:[region]:[account ID]:stack/[stack name]/[resource ID].
+            type: string
+            optional: true
+        template_url:
+            description: (Required if template_physical_id is not provided) Template source as URL of the CloudFormation template in Amazon S3.
+            type: string
+            optional: true
+        type:
+            description: '(Optional) Type of provisioning artifact. Valid values: CLOUD_FORMATION_TEMPLATE, MARKETPLACE_AMI, MARKETPLACE_CAR (Marketplace Clusters and AWS Resources).In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        update:
+            description: (Default 5m)
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the product.
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        created_time:
+            description: Time when the product was created.
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        has_default_path:
+            description: Whether the product has a default path. If the product does not have a default path, call ListLaunchPaths to disambiguate between paths.  Otherwise, ListLaunchPaths is not required, and the output of ProductViewSummary can be used directly with DescribeProvisioningParameters.
+            type: string
+        id:
+            description: Product ID. For example, prod-dnigbtea24ste.
+            type: string
+        read:
+            description: (Default 10m)
+            type: string
+        status:
+            description: Status of the product.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 5m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

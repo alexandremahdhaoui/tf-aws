@@ -1,0 +1,37 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_organizations_organizational_unit
+spec:
+    args: {}
+    attrs:
+        accounts:
+            description: |
+                List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:
+            type: string
+        arn:
+            description: ARN of the organizational unit
+            type: string
+        email:
+            description: Email of the account
+            type: string
+        id:
+            description: Identifier of the organization unit
+            type: string
+        name:
+            description: Name of the account
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

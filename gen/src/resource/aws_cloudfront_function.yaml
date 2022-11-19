@@ -1,0 +1,62 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudfront_function
+spec:
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) identifying your CloudFront Function.
+            type: string
+            optional: true
+        comment:
+            description: (Optional) Comment.
+            type: string
+            optional: true
+        etag:
+            description: ETag hash of the function. This is the value for the DEVELOPMENT stage of the function.
+            type: string
+            optional: true
+        live_stage_etag:
+            description: ETag hash of any LIVE stage of the function.
+            type: string
+            optional: true
+        name:
+            description: (Required) Unique name for your CloudFront Function.
+            type: string
+            optional: true
+        publish:
+            description: '(Optional) Whether to publish creation/change as Live CloudFront Function Version. Defaults to true.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        runtime:
+            description: (Required) Identifier of the function's runtime. Currently only cloudfront-js-1.0 is valid.
+            type: string
+            optional: true
+        status:
+            description: Status of the function. Can be UNPUBLISHED, UNASSOCIATED or ASSOCIATED.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) identifying your CloudFront Function.
+            type: string
+        etag:
+            description: ETag hash of the function. This is the value for the DEVELOPMENT stage of the function.
+            type: string
+        live_stage_etag:
+            description: ETag hash of any LIVE stage of the function.
+            type: string
+        status:
+            description: Status of the function. Can be UNPUBLISHED, UNASSOCIATED or ASSOCIATED.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

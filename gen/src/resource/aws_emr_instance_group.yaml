@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_emr_instance_group
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The EMR Instance ID
+            type: string
+        running_instance_count:
+            description: ' The number of instances currently running in this instance group.'
+            type: string
+        status:
+            description: ' The current status of the instance group.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

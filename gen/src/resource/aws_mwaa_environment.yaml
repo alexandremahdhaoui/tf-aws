@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_mwaa_environment
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the MWAA Environment
+            type: string
+        create:
+            description: (Default 120m)
+            type: string
+        created_at:
+            description: The Created At date of the MWAA Environment
+            type: string
+        delete:
+            description: (Default 90m)
+            type: string
+        logging_configuration[0].<LOG_CONFIGURATION_TYPE>[0].cloud_watch_log_group_arn:
+            description: Provides the ARN for the CloudWatch group where the logs will be published
+            type: string
+        service_role_arn:
+            description: The Service Role ARN of the Amazon MWAA Environment
+            type: string
+        status:
+            description: The status of the Amazon MWAA Environment
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update:
+            description: (Default 90m)
+            type: string
+        webserver_url:
+            description: 'The webserver URL of the MWAA EnvironmentTimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

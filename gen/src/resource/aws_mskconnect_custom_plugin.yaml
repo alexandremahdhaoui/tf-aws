@@ -1,0 +1,85 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_mskconnect_custom_plugin
+spec:
+    args:
+        arn:
+            description: the Amazon Resource Name (ARN) of the custom plugin.
+            type: string
+            optional: true
+        bucket_arn:
+            description: (Required) The Amazon Resource Name (ARN) of an S3 bucket.
+            type: string
+            optional: true
+        content_type:
+            description: (Required) The type of the plugin file. Allowed values are ZIP and JAR.
+            type: string
+            optional: true
+        create:
+            description: (Default 10m)
+            type: string
+            optional: true
+        delete:
+            description: (Default 10m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) A summary description of the custom plugin.location Argument Reference
+            type: string
+            optional: true
+        file_key:
+            description: (Required) The file key for an object in an S3 bucket.
+            type: string
+            optional: true
+        latest_revision:
+            description: an ID of the latest successfully created revision of the custom plugin.
+            type: string
+            optional: true
+        location:
+            description: (Required) Information about the location of a custom plugin. See below.
+            type: string
+            optional: true
+        name:
+            description: (Required) The name of the custom plugin..
+            type: string
+            optional: true
+        object_version:
+            description: '(Optional) The version of an object in an S3 bucket.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        s3:
+            description: (Required) Information of the plugin file stored in Amazon S3. See below.location s3 Argument Reference
+            type: string
+            optional: true
+        state:
+            description: 'the state of the custom plugin.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: the Amazon Resource Name (ARN) of the custom plugin.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 10m)
+            type: string
+        latest_revision:
+            description: an ID of the latest successfully created revision of the custom plugin.
+            type: string
+        state:
+            description: 'the state of the custom plugin.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

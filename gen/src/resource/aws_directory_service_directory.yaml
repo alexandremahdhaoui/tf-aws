@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_directory_service_directory
+spec:
+    args: {}
+    attrs:
+        access_url:
+            description: The access URL for the directory, such as http://alias.awsapps.com.
+            type: string
+        connect_ips:
+            description: 'The IP addresses of the AD Connector servers.Timeoutsaws_directory_service_directory provides the following Timeouts configuration options:'
+            type: string
+        create:
+            description: (Default 60 minutes) Used for directory creation
+            type: string
+        delete:
+            description: (Default 60 minutes) Used for directory deletion
+            type: string
+        dns_ip_addresses:
+            description: A list of IP addresses of the DNS servers for the directory or connector.
+            type: string
+        id:
+            description: The directory identifier.
+            type: string
+        security_group_id:
+            description: The ID of the security group created by the directory.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.connect_settings (for ADConnector) is also exported with the following attributes:'
+            type: string
+        update:
+            description: (Default 60 minutes) Used for directory update
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

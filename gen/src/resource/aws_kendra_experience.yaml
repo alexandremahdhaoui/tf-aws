@@ -1,0 +1,132 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_kendra_experience
+spec:
+    args:
+        arn:
+            description: ARN of the Experience.
+            type: string
+            optional: true
+        configuration:
+            description: '(Optional) Configuration information for your Amazon Kendra experience. Terraform will only perform drift detection of its value when present in a configuration. Detailed below.configuration~> strongNOTE: By default of the AWS Kendra API, the content_source_configuration.direct_put_content parameter will be set to false if not provided.The configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        content_source_configuration:
+            description: (Optional, Required if user_identity_configuration not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the BatchPutDocument API. Terraform will only perform drift detection of its value when present in a configuration. Detailed below.
+            type: string
+            optional: true
+        create:
+            description: (Default 30m)
+            type: string
+            optional: true
+        data_source_ids:
+            description: (Optional) The identifiers of the data sources you want to use for your Amazon Kendra experience. Maximum number of 100 items.
+            type: string
+            optional: true
+        delete:
+            description: (Default 30m)
+            type: string
+            optional: true
+        description:
+            description: (Optional, Forces new resource if removed) A description for your Amazon Kendra experience.
+            type: string
+            optional: true
+        direct_put_content:
+            description: (Optional) Whether to use documents you indexed directly using the BatchPutDocument API. Defaults to false.
+            type: string
+            optional: true
+        endpoint:
+            description: The endpoint of your Amazon Kendra experience.
+            type: string
+            optional: true
+        endpoint_type:
+            description: The type of endpoint for your Amazon Kendra experience.
+            type: string
+            optional: true
+        endpoints:
+            description: ""
+            type: string
+            optional: true
+        experience_id:
+            description: The unique identifier of the experience.
+            type: string
+            optional: true
+        faq_ids:
+            description: '(Optional) The identifier of the FAQs that you want to use for your Amazon Kendra experience. Maximum number of 100 items.user_identity_configurationThe user_identity_configuration configuration block supports the following argument:'
+            type: string
+            optional: true
+        id:
+            description: The unique identifiers of the experience and index separated by a slash (/).
+            type: string
+            optional: true
+        identity_attribute_name:
+            description: '(Required) The AWS SSO field name that contains the identifiers of your users, such as their emails.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        index_id:
+            description: (Required, Forces new resource) The identifier of the index for your Amazon Kendra experience.
+            type: string
+            optional: true
+        name:
+            description: (Required) A name for your Amazon Kendra experience.
+            type: string
+            optional: true
+        role_arn:
+            description: (Required) The Amazon Resource Name (ARN) of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information. For more information, see IAM roles for Amazon Kendra.
+            type: string
+            optional: true
+        status:
+            description: 'The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        update:
+            description: (Default 30m)
+            type: string
+            optional: true
+        user_identity_configuration:
+            description: '(Optional, Required if content_source_configuration not provided) The AWS SSO field name that contains the identifiers of your users, such as their emails. Detailed below.content_source_configurationThe content_source_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Experience.
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        endpoint:
+            description: The endpoint of your Amazon Kendra experience.
+            type: string
+        endpoint_type:
+            description: The type of endpoint for your Amazon Kendra experience.
+            type: string
+        endpoints:
+            description: ""
+            type: string
+        experience_id:
+            description: The unique identifier of the experience.
+            type: string
+        id:
+            description: The unique identifiers of the experience and index separated by a slash (/).
+            type: string
+        status:
+            description: 'The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

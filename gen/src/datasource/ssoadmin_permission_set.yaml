@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ssoadmin_permission_set
+spec:
+    args: {}
+    attrs:
+        description:
+            description: Description of the Permission Set.
+            type: string
+        id:
+            description: ARN of the Permission Set.
+            type: string
+        relay_state:
+            description: Relay state URL used to redirect users within the application during the federation authentication process.
+            type: string
+        session_duration:
+            description: Length of time that the application user sessions are valid in the ISO-8601 standard.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

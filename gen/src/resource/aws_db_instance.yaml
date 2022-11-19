@@ -1,0 +1,264 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_db_instance
+spec:
+    args: {}
+    attrs:
+        address:
+            description: The hostname of the RDS instance. See also endpoint and port.
+            type: string
+        allocated_storage:
+            description: The amount of allocated storage.
+            type: string
+        arn:
+            description: The ARN of the RDS instance.
+            type: string
+        availability_zone:
+            description: The availability zone of the instance.
+            type: string
+        backup_retention_period:
+            description: The backup retention period.
+            type: string
+        backup_window:
+            description: The backup window.
+            type: string
+        bucket_name:
+            description: (Required) The bucket name where your backup is stored
+            type: string
+        bucket_prefix:
+            description: (Optional) Can be blank, but is the path to your backup
+            type: string
+        ca_cert_identifier:
+            description: |-
+                Identifier of the CA certificate for the
+                DB instance.
+            type: string
+        character_set_name:
+            description: 'The character set (collation) used on Oracle and Microsoft SQL instances.TimeoutsConfiguration options:'
+            type: string
+        create:
+            description: (Default 40m)
+            type: string
+        customer_owned_ip_enabled:
+            description: '(Optional) Indicates whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. See CoIP for RDS on Outposts for more information.~> strongNOTE: Removing the replicate_source_dbRestore To Point In Time-> strongNote: You can restore to any point in time before the source DB instance''s latest_restorable_time or a point up to the number of days specified in the source DB instance''s backup_retention_periodDeveloper Guideaurora-mysql or aurora-postgresql DB engines. For Aurora, refer to the aws_rds_cluster resource documentation.The restore_to_point_in_time block supports the following arguments:'
+            type: string
+        db_name:
+            description: The database name.
+            type: string
+        delete:
+            description: (Default 60m)
+            type: string
+        domain:
+            description: The ID of the Directory Service Active Directory domain the instance is joined to
+            type: string
+        domain_iam_role_name:
+            description: The name of the IAM role to be used when making API calls to the Directory Service.
+            type: string
+        endpoint:
+            description: The connection endpoint in address:port format.
+            type: string
+        engine:
+            description: The database engine.
+            type: string
+        engine_version_actual:
+            description: The running version of the database.
+            type: string
+        final_snapshot_identifier:
+            description: |-
+                (Optional) The name of your final DB snapshot
+                when this DB instance is deleted. Must be provided if skip_final_snapshotfalse. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. Must not be provided when deleting a read replica.
+            type: string
+        hosted_zone_id:
+            description: |-
+                The canonical hosted zone ID of the DB instance (to be used
+                in a Route 53 Alias record).
+            type: string
+        iam_database_authentication_enabled:
+            description: |-
+                (Optional) Specifies whether mappings of AWS Identity and Access Management (IAM) accounts to database
+                accounts is enabled.
+            type: string
+        id:
+            description: The RDS instance ID.
+            type: string
+        identifier:
+            description: |-
+                (Optional, Forces new resource) The name of the RDS instance,
+                if omitted, Terraform will assign a random, unique identifier. Required if restore_to_point_in_time is specified.
+            type: string
+        identifier_prefix:
+            description: |-
+                (Optional, Forces new resource) Creates a unique
+                identifier beginning with the specified prefix. Conflicts with identifier.
+            type: string
+        ingestion_role:
+            description: (Required) Role applied to load the data.
+            type: string
+        instance_class:
+            description: '- The RDS instance class.'
+            type: string
+        iops:
+            description: ""
+            type: string
+        kms_key_id:
+            description: |-
+                (Optional) The ARN for the KMS encryption key. If creating an
+                encrypted replica, set this to the destination KMS ARN.
+            type: string
+        latest_restorable_time:
+            description: The latest time, in UTC RFC3339 format, to which a database can be restored with point-in-time restore.
+            type: string
+        license_model:
+            description: ""
+            type: string
+        maintenance_window:
+            description: The instance maintenance window.
+            type: string
+        max_allocated_storage:
+            description: (Optional) When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling.
+            type: string
+        monitoring_interval:
+            description: |-
+                (Optional) The interval, in seconds, between points
+                when Enhanced Monitoring metrics are collected for the DB instance. To disable
+                collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid
+                Values: 0, 1, 5, 10, 15, 30, 60.
+            type: string
+        monitoring_role_arn:
+            description: "(Optional) The ARN for the IAM role that permits RDS\nto send enhanced monitoring metrics to CloudWatch Logs. You can find more\ninformation on the "
+            type: string
+        multi_az:
+            description: If the RDS instance is multi AZ enabled.
+            type: string
+        name:
+            description: The database name.
+            type: string
+        nchar_character_set_name:
+            description: (Optional, Forces new resource) The national character set is used in the NCHAR, NVARCHAR2, and NCLOB data types for Oracle instances. This can't be changed. See .
+            type: string
+        network_type:
+            description: '(Optional) The network type of the DB instance. Valid values: IPV4, DUAL.'
+            type: string
+        option_group_name:
+            description: (Optional) Name of the DB option group to associate.
+            type: string
+        parameter_group_name:
+            description: ""
+            type: string
+        password:
+            description: (Required unless a snapshot_identifier or replicate_source_db
+            type: string
+        performance_insights_enabled:
+            description: (Optional) Specifies whether Performance Insights are enabled. Defaults to false.
+            type: string
+        performance_insights_kms_key_id:
+            description: (Optional) The ARN for the KMS key to encrypt Performance Insights data. When specifying performance_insights_kms_key_id, performance_insights_enabled needs to be set to true. Once KMS key is set, it can never be changed.
+            type: string
+        performance_insights_retention_period:
+            description: (Optional) Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
+            type: string
+        port:
+            description: The database port.
+            type: string
+        publicly_accessible:
+            description: |-
+                (Optional) Bool to control if instance is publicly
+                accessible. Default is false.
+            type: string
+        replica_mode:
+            description: (Optional) Specifies whether the replica is in either mounted or open-read-onlyopen-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
+            type: string
+        replicate_source_db:
+            description: 'identifierkms_key_id. See DB Instance Replication and '
+            type: string
+        resource_id:
+            description: The RDS Resource ID of this instance.
+            type: string
+        restore_time:
+            description: (Optional) The date and time to restore from. Value must be a time in Universal Coordinated Time (UTC) format and must be before the latest restorable time for the DB instance. Cannot be specified with use_latest_restorable_time.
+            type: string
+        restore_to_point_in_time:
+            description: (Optional, Forces new resource) A configuration block for restoring a DB instance to an arbitrary point in time. Requires the identifier argument to be set with the name of the new DB instance to be created. See Restore To Point In Time below for details.
+            type: string
+        s3_import:
+            description: (Optional) Restore from a Percona Xtrabackup in S3.  See Importing Data into an Amazon RDS MySQL DB Instance
+            type: string
+        security_group_names:
+            description: |-
+                (Optional/Deprecated) List of DB Security Groups to
+                associate. Only used for DB Instances on the emEC2-Classic.
+            type: string
+        skip_final_snapshot:
+            description: |-
+                (Optional) Determines whether a final DB snapshot is
+                created before the DB instance is deleted. If true is specified, no DBSnapshot
+                is created. If false is specified, a DB snapshot is created before the DB
+                instance is deleted, using the value from final_snapshot_identifierfalse.
+            type: string
+        snapshot_identifier:
+            description: |-
+                (Optional) Specifies whether or not to create this
+                database from a snapshot. This correlates to the snapshot ID you'd find in the
+                RDS console, e.g: rds:production-2015-06-26-06-05.
+            type: string
+        source_db_instance_automated_backups_arn:
+            description: (Optional) The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
+            type: string
+        source_db_instance_identifier:
+            description: (Optional) The identifier of the source DB instance from which to restore. Must match the identifier of an existing DB instance. Required if source_db_instance_automated_backups_arn or source_dbi_resource_id is not specified.
+            type: string
+        source_dbi_resource_id:
+            description: (Optional) The resource ID of the source DB instance from which to restore. Required if source_db_instance_identifier or source_db_instance_automated_backups_arn is not specified.
+            type: string
+        source_engine:
+            description: (Required, as of Feb 2018 only 'mysql' supported) Source engine for the backup
+            type: string
+        source_engine_version:
+            description: '(Required, as of Feb 2018 only ''5.6'' supported) Version of the source engine used to make the backupThis will not recreate the resource if the S3 object changes in some way.  It''s only used to initialize the databaseIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        status:
+            description: The RDS instance status.
+            type: string
+        storage_encrypted:
+            description: Whether the DB instance is encrypted.
+            type: string
+        storage_type:
+            description: |-
+                (Optional) One of "standard" (magnetic), "gp2" (general
+                purpose SSD), or "io1" (provisioned IOPS SSD). The default is "io1" if iops
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        timezone:
+            description: (Optional) Time zone of the DB instance. timezonetimezone
+            type: string
+        update:
+            description: (Default 80m)
+            type: string
+        use_latest_restorable_time:
+            description: '(Optional) A boolean value that indicates whether the DB instance is restored from the latest backup time. Defaults to false. Cannot be specified with restore_time.S3 Import OptionsFull details on the core parameters and impacts are in the API Docs: RestoreDBInstanceFromS3.  Sample'
+            type: string
+        username:
+            description: 'The master username for the database.On Oracle and Microsoft SQL instances the following is exported additionally:'
+            type: string
+        vpc_security_group_ids:
+            description: |-
+                (Optional) List of VPC security groups to
+                associate.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-// httpGet runs a GET request to the specified URL & return the byte slice of the body
-func httpGet(url string) ([]byte, error) {
+// HttpGet runs a GET request to the specified URL & return the byte slice of the body
+func HttpGet(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err

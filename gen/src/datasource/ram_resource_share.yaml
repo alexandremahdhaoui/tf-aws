@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ram_resource_share
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the resource share.
+            type: string
+        id:
+            description: ARN of the resource share.
+            type: string
+        owning_account_id:
+            description: ID of the AWS account that owns the resource share.
+            type: string
+        status:
+            description: Status of the RAM share.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

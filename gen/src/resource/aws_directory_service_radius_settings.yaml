@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_directory_service_radius_settings
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 30 minutes) Used for RADIUS settings creation
+            type: string
+        id:
+            description: 'The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:'
+            type: string
+        update:
+            description: (Default 30 minutes) Used for RADIUS settings update
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

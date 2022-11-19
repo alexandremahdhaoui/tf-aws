@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iam_group_policy
+spec:
+    args: {}
+    attrs:
+        group:
+            description: The group to which this policy applies.
+            type: string
+        id:
+            description: The group policy ID.
+            type: string
+        name:
+            description: The name of the policy.
+            type: string
+        policy:
+            description: The policy document attached to the group.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,218 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_synthetics_canary
+spec:
+    args:
+        active_tracing:
+            description: (Optional) Whether this canary is to use active AWS X-Ray tracing when it runs. You can enable active tracing only for canaries that use version syn-nodejs-2.0 or later for their canary runtime.
+            type: string
+            optional: true
+        arn:
+            description: Amazon Resource Name (ARN) of the Canary.
+            type: string
+            optional: true
+        artifact_config:
+            description: (Optional) configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3. See Artifact Config.
+            type: string
+            optional: true
+        artifact_s3_location:
+            description: (Required) Location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary.
+            type: string
+            optional: true
+        created:
+            description: Date and time the canary was created.
+            type: string
+            optional: true
+        delete_lambda:
+            description: (Optional)  Specifies whether to also delete the Lambda functions and layers used by this canary. The default is false.
+            type: string
+            optional: true
+        duration_in_seconds:
+            description: (Optional) Duration in seconds, for the canary to continue making regular runs according to the schedule in the Expression value.run_config
+            type: string
+            optional: true
+        encryption_mode:
+            description: '(Optional) The encryption method to use for artifacts created by this canary. Valid values are: SSE_S3 and SSE_KMS.'
+            type: string
+            optional: true
+        engine_arn:
+            description: ARN of the Lambda function that is used as your canary's engine.
+            type: string
+            optional: true
+        environment_variables:
+            description: (Optional) Map of environment variables that are accessible from the canary during execution. Please see AWS Docs for variables reserved for Lambda.vpc_configIf this canary tests an endpoint in a VPC, this structure contains information about the subnet and security groups of the VPC endpoint. For more information, see Running a Canary in a VPC.
+            type: string
+            optional: true
+        execution_role_arn:
+            description: (Required) ARN of the IAM role to be used to run the canary. see AWS Docs for permissions needs for IAM Role.
+            type: string
+            optional: true
+        expression:
+            description: (Required) Rate expression or cron expression that defines how often the canary is to run. For rate expression, the syntax is rate(number unit). emunit can be minute, minutes, or hour. For cron expression, the syntax is cron(expression). For more information about the syntax for cron expressions, see Scheduling canary runs using cron.
+            type: string
+            optional: true
+        failure_retention_period:
+            description: (Optional) Number of days to retain data about failed runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.
+            type: string
+            optional: true
+        handler:
+            description: (Required) Entry point to use for the source code when running the canary. This value must end with the string .handler .
+            type: string
+            optional: true
+        id:
+            description: Name for this canary.
+            type: string
+            optional: true
+        kms_key_arn:
+            description: (Optional) The ARN of the customer-managed KMS key to use, if you specify SSE_KMS for encryption_mode.schedule
+            type: string
+            optional: true
+        last_modified:
+            description: Date and time the canary was most recently modified.
+            type: string
+            optional: true
+        last_started:
+            description: Date and time that the canary's most recent run started.
+            type: string
+            optional: true
+        last_stopped:
+            description: Date and time that the canary's most recent run ended.
+            type: string
+            optional: true
+        memory_in_mb:
+            description: (Optional) Maximum amount of memory available to the canary while it is running, in MB. The value you specify must be a multiple of 64.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name for this canary. Has a maximum length of 21 characters. Valid characters are lowercase alphanumeric, hyphen, or underscore.
+            type: string
+            optional: true
+        run_config:
+            description: (Optional) Configuration block for individual canary runs. Detailed below.
+            type: string
+            optional: true
+        runtime_version:
+            description: (Required) Runtime version to use for the canary. Versions change often so consult the Amazon CloudWatch documentation for the latest valid versions. Values include syn-python-selenium-1.0, syn-nodejs-puppeteer-3.0, syn-nodejs-2.2, syn-nodejs-2.1, syn-nodejs-2.0, and syn-1.0.
+            type: string
+            optional: true
+        s3_bucket:
+            description: (Optional) Full bucket name which is used if your canary script is located in S3. The bucket must already exist. Specify the full bucket name including s3:// as the start of the bucket name. strongConflicts with zip_file.
+            type: string
+            optional: true
+        s3_encryption:
+            description: (Optional) Configuration of the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3. See S3 Encryption.s3_encryption
+            type: string
+            optional: true
+        s3_key:
+            description: (Optional) S3 key of your script. strongConflicts with zip_file.
+            type: string
+            optional: true
+        s3_version:
+            description: (Optional) S3 version ID of your script. strongConflicts with zip_file.
+            type: string
+            optional: true
+        schedule:
+            description: ' (Required) Configuration block providing how often the canary is to run and when these test runs are to stop. Detailed below.'
+            type: string
+            optional: true
+        security_group_ids:
+            description: '(Required) IDs of the security groups for this canary.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        source_location_arn:
+            description: ARN of the Lambda layer where Synthetics stores the canary script code.
+            type: string
+            optional: true
+        start_canary:
+            description: (Optional) Whether to run or stop the canary.
+            type: string
+            optional: true
+        status:
+            description: Canary status.
+            type: string
+            optional: true
+        subnet_ids:
+            description: (Required) IDs of the subnets where this canary is to run.
+            type: string
+            optional: true
+        success_retention_period:
+            description: (Optional) Number of days to retain data about successful runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        timeline:
+            description: Structure that contains information about when the canary was created, modified, and most recently run. see Timeline.vpc_config
+            type: string
+            optional: true
+        timeout_in_seconds:
+            description: (Optional) Number of seconds the canary is allowed to run before it must stop. If you omit this field, the frequency of the canary is used, up to a maximum of 840 (14 minutes).
+            type: string
+            optional: true
+        vpc_config:
+            description: (Optional) Configuration block. Detailed below.
+            type: string
+            optional: true
+        vpc_id:
+            description: ID of the VPC where this canary is to run.timeline
+            type: string
+            optional: true
+        zip_file:
+            description: (Optional) ZIP file that contains the script, if you input your canary script directly into the canary instead of referring to an S3 location. It can be up to 5 MB. strongConflicts with s3_bucket, s3_key, and s3_version.artifact_config
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the Canary.
+            type: string
+        created:
+            description: Date and time the canary was created.
+            type: string
+        engine_arn:
+            description: ARN of the Lambda function that is used as your canary's engine.
+            type: string
+        id:
+            description: Name for this canary.
+            type: string
+        last_modified:
+            description: Date and time the canary was most recently modified.
+            type: string
+        last_started:
+            description: Date and time that the canary's most recent run started.
+            type: string
+        last_stopped:
+            description: Date and time that the canary's most recent run ended.
+            type: string
+        source_location_arn:
+            description: ARN of the Lambda layer where Synthetics stores the canary script code.
+            type: string
+        status:
+            description: Canary status.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        timeline:
+            description: Structure that contains information about when the canary was created, modified, and most recently run. see Timeline.vpc_config
+            type: string
+        vpc_id:
+            description: ID of the VPC where this canary is to run.timeline
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

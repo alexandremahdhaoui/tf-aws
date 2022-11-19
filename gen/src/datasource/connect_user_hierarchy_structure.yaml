@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: connect_user_hierarchy_structure
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ' ARN of the hierarchy level.'
+            type: string
+        hierarchy_structure:
+            description: 'Block that defines the hierarchy structure''s levels. The hierarchy_structure block is documented below.A hierarchy_structure block supports the following attributes:'
+            type: string
+        id:
+            description: ' The identifier of the hierarchy level.'
+            type: string
+        level_five:
+            description: 'Details of level five. See below.Each level block supports the following attributes:'
+            type: string
+        level_four:
+            description: Details of level four. See below.
+            type: string
+        level_one:
+            description: Details of level one. See below.
+            type: string
+        level_three:
+            description: Details of level three. See below.
+            type: string
+        level_two:
+            description: Details of level two. See below.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

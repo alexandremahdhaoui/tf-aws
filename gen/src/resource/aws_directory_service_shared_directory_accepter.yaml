@@ -1,0 +1,67 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_directory_service_shared_directory_accepter
+spec:
+    args:
+        create:
+            description: (Default 60 minutes) Used for directory creation
+            type: string
+            optional: true
+        id:
+            description: Identifier of the shared directory.
+            type: string
+            optional: true
+        method:
+            description: Method used when sharing a directory (i.e., ORGANIZATIONS or HANDSHAKE).
+            type: string
+            optional: true
+        notes:
+            description: Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation.
+            type: string
+            optional: true
+        owner_account_id:
+            description: Account identifier of the directory owner.
+            type: string
+            optional: true
+        owner_directory_id:
+            description: 'Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:'
+            type: string
+            optional: true
+        shared_directory_id:
+            description: '(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 60 minutes) Used for directory creation
+            type: string
+        delete:
+            description: (Default 60 minutes) Used for directory deletion
+            type: string
+        id:
+            description: Identifier of the shared directory.
+            type: string
+        method:
+            description: Method used when sharing a directory (i.e., ORGANIZATIONS or HANDSHAKE).
+            type: string
+        notes:
+            description: Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation.
+            type: string
+        owner_account_id:
+            description: Account identifier of the directory owner.
+            type: string
+        owner_directory_id:
+            description: 'Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

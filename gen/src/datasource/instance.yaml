@@ -1,0 +1,203 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: instance
+spec:
+    args: {}
+    attrs:
+        ami:
+            description: ID of the AMI used to launch the instance.
+            type: string
+        arn:
+            description: ARN of the instance.
+            type: string
+        associate_public_ip_address:
+            description: Whether or not the Instance is associated with a public IP address or not (Boolean).
+            type: string
+        auto_recovery:
+            description: Automatic recovery behavior of the instance.
+            type: string
+        availability_zone:
+            description: Availability zone of the Instance.
+            type: string
+        credit_specification:
+            description: Credit specification of the Instance.
+            type: string
+        delete_on_termination:
+            description: If the root block device will be deleted on termination.
+            type: string
+        device_name:
+            description: Physical name of the device.
+            type: string
+        disable_api_stop:
+            description: Whether or not EC2 Instance Stop Protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html#Using_StopProtection) is enabled (Boolean).
+            type: string
+        disable_api_termination:
+            description: Whether or not EC2 Instance Termination Protection is enabled (Boolean).
+            type: string
+        ebs_block_device:
+            description: ""
+            type: string
+        ebs_optimized:
+            description: Whether the Instance is EBS optimized or not (Boolean).
+            type: string
+        enable_resource_name_dns_a_record:
+            description: Indicates whether to respond to DNS queries for instance hostnames with DNS A records.
+            type: string
+        enable_resource_name_dns_aaaa_record:
+            description: Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records.
+            type: string
+        enabled:
+            description: Whether Nitro Enclaves are enabled.
+            type: string
+        enclave_options:
+            description: |
+                Enclave options of the instance.
+            type: string
+        encrypted:
+            description: If the EBS volume is encrypted.
+            type: string
+        ephemeral_block_device:
+            description: |
+                Ephemeral block device mappings of the Instance.
+            type: string
+        host_id:
+            description: ID of the dedicated host the instance will be assigned to.
+            type: string
+        host_resource_group_arn:
+            description: ARN of the host resource group the instance is associated with.
+            type: string
+        hostname_type:
+            description: Type of hostname for EC2 instances.
+            type: string
+        http_endpoint:
+            description: 'State of the metadata service: enabled, disabled.'
+            type: string
+        http_put_response_hop_limit:
+            description: Desired HTTP PUT response hop limit for instance metadata requests.
+            type: string
+        http_tokens:
+            description: 'If session tokens are required: optional, required.'
+            type: string
+        iam_instance_profile:
+            description: Name of the instance profile associated with the Instance.
+            type: string
+        instance_metadata_tags:
+            description: 'If access to instance tags is allowed from the metadata service: enabled, disabled.'
+            type: string
+        instance_state:
+            description: 'State of the instance. One of: pending, running, shutting-down, terminated, stopping, stopped. See Instance Lifecycle for more information.'
+            type: string
+        instance_type:
+            description: Type of the Instance.
+            type: string
+        iops:
+            description: 0 If the volume is not a provisioned IOPS image, otherwise the supported IOPS count.
+            type: string
+        ipv6_addresses:
+            description: 'IPv6 addresses associated to the Instance, if applicable. strongNOTE: Unlike the IPv4 address, this doesn''t change if you attach an EIP to the instance.'
+            type: string
+        key_name:
+            description: Key name of the Instance.
+            type: string
+        kms_key_arn:
+            description: ARN of KMS Key, if EBS volume is encrypted.
+            type: string
+        maintenance_options:
+            description: ""
+            type: string
+        metadata_options:
+            description: ""
+            type: string
+        monitoring:
+            description: Whether detailed monitoring is enabled or disabled for the Instance (Boolean).
+            type: string
+        network_interface_id:
+            description: ID of the network interface that was created with the Instance.
+            type: string
+        no_device:
+            description: Whether the specified device included in the device mapping was suppressed or not (Boolean).
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost.
+            type: string
+        password_data:
+            description: Base-64 encoded encrypted password data for the instance. Useful for getting the administrator password for instances running Microsoft Windows. This attribute is only exported if get_password_data is true. See GetPasswordData for more information.
+            type: string
+        placement_group:
+            description: Placement group of the Instance.
+            type: string
+        placement_partition_number:
+            description: Number of the partition the instance is in.
+            type: string
+        private_dns:
+            description: Private DNS name assigned to the Instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC.
+            type: string
+        private_dns_name_options:
+            description: ""
+            type: string
+        private_ip:
+            description: Private IP address assigned to the Instance.
+            type: string
+        public_dns:
+            description: Public DNS name assigned to the Instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC.
+            type: string
+        public_ip:
+            description: 'Public IP address assigned to the Instance, if applicable. strongNOTE: If you are using an aws_eip with your instance, you should refer to the EIP''s address directly and not use public_ip, as this field will change after the EIP is attached.'
+            type: string
+        root_block_device:
+            description: ""
+            type: string
+        secondary_private_ips:
+            description: Secondary private IPv4 addresses assigned to the instance's primary network interface (eth0) in a VPC.
+            type: string
+        security_groups:
+            description: Associated security groups.
+            type: string
+        snapshot_id:
+            description: ID of the snapshot.
+            type: string
+        source_dest_check:
+            description: Whether the network interface performs source/destination checking (Boolean).
+            type: string
+        subnet_id:
+            description: VPC subnet ID.
+            type: string
+        tags:
+            description: Map of tags assigned to the Instance.
+            type: string
+        tenancy:
+            description: 'Tenancy of the instance: dedicated, default, host.'
+            type: string
+        throughput:
+            description: Throughput of the volume, in MiB/s.
+            type: string
+        user_data:
+            description: SHA-1 hash of User Data supplied to the Instance.
+            type: string
+        user_data_base64:
+            description: Base64 encoded contents of User Data supplied to the Instance. Valid UTF-8 contents can be decoded with the base64decode function. This attribute is only exported if get_user_data is true.
+            type: string
+        virtual_name:
+            description: Virtual device name.
+            type: string
+        volume_size:
+            description: Size of the volume, in GiB.
+            type: string
+        volume_type:
+            description: Type of the volume.
+            type: string
+        vpc_security_group_ids:
+            description: 'Associated security groups in a non-default VPC.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

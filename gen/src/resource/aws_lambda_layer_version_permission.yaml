@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_layer_version_permission
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The layer_name and version_number, separated by a comma (,).
+            type: string
+        policy:
+            description: Full Lambda Layer Permission policy.
+            type: string
+        revision_id:
+            description: A unique identifier for the current revision of the policy.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

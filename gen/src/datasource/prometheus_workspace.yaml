@@ -1,0 +1,57 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: prometheus_workspace
+spec:
+    args:
+        alias:
+            description: Prometheus workspace alias.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the Prometheus workspace.
+            type: string
+            optional: true
+        created_date:
+            description: Creation date of the Prometheus workspace.
+            type: string
+            optional: true
+        prometheus_endpoint:
+            description: Endpoint of the Prometheus workspace.
+            type: string
+            optional: true
+        status:
+            description: Status of the Prometheus workspace.
+            type: string
+            optional: true
+        workspace_id:
+            description: '(Required) Prometheus workspace ID.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        alias:
+            description: Prometheus workspace alias.
+            type: string
+        arn:
+            description: ARN of the Prometheus workspace.
+            type: string
+        created_date:
+            description: Creation date of the Prometheus workspace.
+            type: string
+        prometheus_endpoint:
+            description: Endpoint of the Prometheus workspace.
+            type: string
+        status:
+            description: Status of the Prometheus workspace.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

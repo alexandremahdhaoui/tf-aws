@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: connect_user_hierarchy_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ' ARN of the hierarchy group.'
+            type: string
+        hierarchy_path:
+            description: Block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below.
+            type: string
+        id:
+            description: ' The identifier of the hierarchy group.'
+            type: string
+        level_five:
+            description: 'Details of level five. See below.A level block supports the following attributes:'
+            type: string
+        level_four:
+            description: Details of level four. See below.
+            type: string
+        level_id:
+            description: Identifier of the level in the hierarchy group.
+            type: string
+        level_one:
+            description: Details of level one. See below.
+            type: string
+        level_three:
+            description: Details of level three. See below.
+            type: string
+        level_two:
+            description: Details of level two. See below.
+            type: string
+        tags:
+            description: 'Map of tags to assign to the hierarchy group.A hierarchy_path block supports the following attributes:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

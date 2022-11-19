@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_redshift_endpoint_authorization
+spec:
+    args: {}
+    attrs:
+        allowed_all_vpcs:
+            description: Indicates whether all VPCs in the grantee account are allowed access to the cluster.
+            type: string
+        endpoint_count:
+            description: The number of Redshift-managed VPC endpoints created for the authorization.
+            type: string
+        grantee:
+            description: The Amazon Web Services account ID of the grantee of the cluster.
+            type: string
+        grantor:
+            description: The Amazon Web Services account ID of the cluster owner.
+            type: string
+        id:
+            description: The identifier of the Redshift Endpoint Authorization, account, and cluster_identifier separated by a colon (:).
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

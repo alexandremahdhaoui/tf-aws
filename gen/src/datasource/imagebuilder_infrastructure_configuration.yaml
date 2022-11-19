@@ -1,0 +1,152 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: imagebuilder_infrastructure_configuration
+spec:
+    args:
+        arn:
+            description: '(Required) ARN of the infrastructure configuration.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        date_created:
+            description: Date the infrastructure configuration was updated.
+            type: string
+            optional: true
+        description:
+            description: Description of the infrastructure configuration.
+            type: string
+            optional: true
+        http_put_response_hop_limit:
+            description: Number of hops that an instance can traverse to reach its destonation.
+            type: string
+            optional: true
+        http_tokens:
+            description: Whether a signed token is required for instance metadata retrieval requests.
+            type: string
+            optional: true
+        instance_metadata_options:
+            description: ""
+            type: string
+            optional: true
+        instance_profile_name:
+            description: Name of the IAM Instance Profile associated with the configuration.
+            type: string
+            optional: true
+        instance_types:
+            description: Set of EC2 Instance Types associated with the configuration.
+            type: string
+            optional: true
+        key_pair:
+            description: Name of the EC2 Key Pair associated with the configuration.
+            type: string
+            optional: true
+        logging:
+            description: |
+                Nested list of logging settings.
+            type: string
+            optional: true
+        name:
+            description: Name of the infrastructure configuration.
+            type: string
+            optional: true
+        resource_tags:
+            description: Key-value map of resource tags for the infrastructure created by the infrastructure configuration.
+            type: string
+            optional: true
+        s3_bucket_name:
+            description: Name of the S3 Bucket for logging.
+            type: string
+            optional: true
+        s3_key_prefix:
+            description: Key prefix for S3 Bucket logging.
+            type: string
+            optional: true
+        s3_logs:
+            description: |
+                Nested list of S3 logs settings.
+            type: string
+            optional: true
+        security_group_ids:
+            description: Set of EC2 Security Group identifiers associated with the configuration.
+            type: string
+            optional: true
+        sns_topic_arn:
+            description: ARN of the SNS Topic associated with the configuration.
+            type: string
+            optional: true
+        subnet_id:
+            description: Identifier of the EC2 Subnet associated with the configuration.
+            type: string
+            optional: true
+        tags:
+            description: Key-value map of resource tags for the infrastructure configuration.
+            type: string
+            optional: true
+    attrs:
+        date_created:
+            description: Date the infrastructure configuration was updated.
+            type: string
+        description:
+            description: Description of the infrastructure configuration.
+            type: string
+        http_put_response_hop_limit:
+            description: Number of hops that an instance can traverse to reach its destonation.
+            type: string
+        http_tokens:
+            description: Whether a signed token is required for instance metadata retrieval requests.
+            type: string
+        instance_metadata_options:
+            description: ""
+            type: string
+        instance_profile_name:
+            description: Name of the IAM Instance Profile associated with the configuration.
+            type: string
+        instance_types:
+            description: Set of EC2 Instance Types associated with the configuration.
+            type: string
+        key_pair:
+            description: Name of the EC2 Key Pair associated with the configuration.
+            type: string
+        logging:
+            description: |
+                Nested list of logging settings.
+            type: string
+        name:
+            description: Name of the infrastructure configuration.
+            type: string
+        resource_tags:
+            description: Key-value map of resource tags for the infrastructure created by the infrastructure configuration.
+            type: string
+        s3_bucket_name:
+            description: Name of the S3 Bucket for logging.
+            type: string
+        s3_key_prefix:
+            description: Key prefix for S3 Bucket logging.
+            type: string
+        s3_logs:
+            description: |
+                Nested list of S3 logs settings.
+            type: string
+        security_group_ids:
+            description: Set of EC2 Security Group identifiers associated with the configuration.
+            type: string
+        sns_topic_arn:
+            description: ARN of the SNS Topic associated with the configuration.
+            type: string
+        subnet_id:
+            description: Identifier of the EC2 Subnet associated with the configuration.
+            type: string
+        tags:
+            description: Key-value map of resource tags for the infrastructure configuration.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

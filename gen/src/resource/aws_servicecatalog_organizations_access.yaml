@@ -1,0 +1,29 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_organizations_access
+spec:
+    args:
+        enabled:
+            description: '(Required) Whether to enable AWS Organizations access.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        id:
+            description: 'Account ID for the account using the resource.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: 'Account ID for the account using the resource.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: servicequotas_service_quota
+spec:
+    args: {}
+    attrs:
+        adjustable:
+            description: Whether the service quota is adjustable.
+            type: string
+        arn:
+            description: ARN of the service quota.
+            type: string
+        default_value:
+            description: Default value of the service quota.
+            type: string
+        global_quota:
+            description: Whether the service quota is global for the AWS account.
+            type: string
+        id:
+            description: ARN of the service quota.
+            type: string
+        service_name:
+            description: Name of the service.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

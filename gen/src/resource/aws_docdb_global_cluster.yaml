@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_docdb_global_cluster
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Global Cluster Amazon Resource Name (ARN)
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        db_cluster_arn:
+            description: Amazon Resource Name (ARN) of member DB Cluster.
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        global_cluster_members:
+            description: ""
+            type: string
+        global_cluster_resource_id:
+            description: AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed.
+            type: string
+        id:
+            description: 'DocDB Global Cluster.TimeoutsConfiguration options:'
+            type: string
+        is_writer:
+            description: Whether the member is the primary DB Cluster.
+            type: string
+        update:
+            description: (Default 5m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

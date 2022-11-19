@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_load_balancer_backend_server_policy
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The ID of the policy.
+            type: string
+        load_balancer_name:
+            description: The load balancer on which the policy is defined.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

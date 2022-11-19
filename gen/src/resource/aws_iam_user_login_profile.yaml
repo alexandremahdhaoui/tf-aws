@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iam_user_login_profile
+spec:
+    args: {}
+    attrs:
+        encrypted_password:
+            description: The encrypted password, base64 encoded. Only available if password was handled on Terraform resource creation, not import.~> strongNOTE:terraform output password | base64 --decode | keybase pgp decrypt.
+            type: string
+        key_fingerprint:
+            description: The fingerprint of the PGP key used to encrypt the password. Only available if password was handled on Terraform resource creation, not import.
+            type: string
+        password:
+            description: The plain text password, only available when pgp_key is not provided.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

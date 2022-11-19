@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_glue_dev_endpoint
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the endpoint.
+            type: string
+        availability_zone:
+            description: The AWS availability zone where this endpoint is located.
+            type: string
+        failure_reason:
+            description: The reason for a current failure in this endpoint.
+            type: string
+        name:
+            description: The name of the new endpoint.
+            type: string
+        private_address:
+            description: A private IP address to access the endpoint within a VPC, if this endpoint is created within one.
+            type: string
+        public_address:
+            description: The public IP address used by this endpoint. The PublicAddress field is present only when you create a non-VPC endpoint.
+            type: string
+        status:
+            description: The current status of this endpoint.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        vpc_id:
+            description: he ID of the VPC used by this endpoint.
+            type: string
+        yarn_endpoint_address:
+            description: The YARN endpoint address used by this endpoint.
+            type: string
+        zeppelin_remote_spark_interpreter_port:
+            description: The Apache Zeppelin port for the remote Apache Spark interpreter.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

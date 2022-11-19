@@ -1,0 +1,96 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_security_group
+spec:
+    args:
+        arn:
+            description: ARN of the security group.
+            type: string
+            optional: true
+        cidr_blocks:
+            description: (Optional) List of CIDR blocks.
+            type: string
+            optional: true
+        create:
+            description: (Default 10m)
+            type: string
+            optional: true
+        delete:
+            description: (Default 15m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of this egress rule.
+            type: string
+            optional: true
+        from_port:
+            description: (Required) Start port (or ICMP type number if protocol is icmp)
+            type: string
+            optional: true
+        id:
+            description: ID of the security group.
+            type: string
+            optional: true
+        ipv6_cidr_blocks:
+            description: (Optional) List of IPv6 CIDR blocks.
+            type: string
+            optional: true
+        owner_id:
+            description: Owner ID.
+            type: string
+            optional: true
+        prefix_list_ids:
+            description: (Optional) List of Prefix List IDs.
+            type: string
+            optional: true
+        protocol:
+            description: (Required) Protocol. If you select a protocol of -1 (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0.  The supported values are defined in the IpProtocol argument in the IpPermission API reference. This argument is normalized to a lowercase value to match the AWS API requirement when using Terraform 0.12.x and above. Please make sure that the value of the protocol is specified as lowercase when used with older version of Terraform to avoid issues during upgrade.
+            type: string
+            optional: true
+        security_groups:
+            description: (Optional) List of security groups. A group name can be used relative to the default VPC. Otherwise, group ID.
+            type: string
+            optional: true
+        self:
+            description: '(Optional) Whether the security group itself will be added as a source to this egress rule.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        to_port:
+            description: (Required) End range port (or ICMP code if protocol is icmp).
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the security group.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 15m)
+            type: string
+        id:
+            description: ID of the security group.
+            type: string
+        owner_id:
+            description: Owner ID.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

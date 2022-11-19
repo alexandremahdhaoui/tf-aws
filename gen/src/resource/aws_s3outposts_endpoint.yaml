@@ -1,0 +1,70 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_s3outposts_endpoint
+spec:
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the endpoint.
+            type: string
+            optional: true
+        cidr_block:
+            description: VPC CIDR block of the endpoint.
+            type: string
+            optional: true
+        creation_time:
+            description: UTC creation time in RFC3339 format.
+            type: string
+            optional: true
+        id:
+            description: Amazon Resource Name (ARN) of the endpoint.
+            type: string
+            optional: true
+        network_interfaces:
+            description: |
+                Set of nested attributes for associated Elastic Network Interfaces (ENIs).
+            type: string
+            optional: true
+        outpost_id:
+            description: (Required) Identifier of the Outpost to contain this endpoint.
+            type: string
+            optional: true
+        security_group_id:
+            description: (Required) Identifier of the EC2 Security Group.
+            type: string
+            optional: true
+        subnet_id:
+            description: '(Required) Identifier of the EC2 Subnet.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the endpoint.
+            type: string
+        cidr_block:
+            description: VPC CIDR block of the endpoint.
+            type: string
+        creation_time:
+            description: UTC creation time in RFC3339 format.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the endpoint.
+            type: string
+        network_interface_id:
+            description: Identifier of the Elastic Network Interface (ENI).
+            type: string
+        network_interfaces:
+            description: |
+                Set of nested attributes for associated Elastic Network Interfaces (ENIs).
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

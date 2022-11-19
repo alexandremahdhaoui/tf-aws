@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudformation_type
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: (Optional) Amazon Resource Name (ARN) of the CloudFormation Type version. See also type_arn.
+            type: string
+        default_version_id:
+            description: Identifier of the CloudFormation Type default version.
+            type: string
+        deprecated_status:
+            description: Deprecation status of the version.
+            type: string
+        description:
+            description: Description of the version.
+            type: string
+        documentation_url:
+            description: URL of the documentation for the CloudFormation Type.
+            type: string
+        is_default_version:
+            description: Whether the CloudFormation Type version is the default version.
+            type: string
+        provisioning_type:
+            description: Provisioning behavior of the CloudFormation Type.
+            type: string
+        schema:
+            description: JSON document of the CloudFormation Type schema.
+            type: string
+        source_url:
+            description: URL of the source code for the CloudFormation Type.
+            type: string
+        type_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the CloudFormation Type. See also arn.
+            type: string
+        version_id:
+            description: (Optional) Identifier of the CloudFormation Type version.
+            type: string
+        visibility:
+            description: Scope of the CloudFormation Type.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_detective_member
+spec:
+    args: {}
+    attrs:
+        administrator_id:
+            description: AWS account ID for the administrator account.
+            type: string
+        id:
+            description: Unique identifier (ID) of the Detective.
+            type: string
+        invited_time:
+            description: Date and time, in UTC and extended RFC 3339 format, when an Amazon Detective membership invitation was last sent to the account.
+            type: string
+        status:
+            description: Current membership status of the member account.
+            type: string
+        updated_time:
+            description: Date and time, in UTC and extended RFC 3339 format, of the most recent change to the member account's status.
+            type: string
+        volume_usage_in_bytes:
+            description: Data volume in bytes per day for the member account.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

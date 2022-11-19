@@ -1,0 +1,90 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: network_interface
+spec:
+    args: {}
+    attrs:
+        allocation_id:
+            description: Allocation ID.
+            type: string
+        arn:
+            description: ARN of the network interface.
+            type: string
+        association:
+            description: Association information for an Elastic IP address (IPv4) associated with the network interface. See supported fields below.
+            type: string
+        association_id:
+            description: Association ID.
+            type: string
+        availability_zone:
+            description: Availability Zone.
+            type: string
+        carrier_ip:
+            description: Carrier IP address associated with the network interface. This attribute is only set when the network interface is in a subnet which is associated with a Wavelength Zone.
+            type: string
+        customer_owned_ip:
+            description: Customer-owned IP address.
+            type: string
+        description:
+            description: Description of the network interface.
+            type: string
+        interface_type:
+            description: Type of interface.
+            type: string
+        ip_owner_id:
+            description: ID of the Elastic IP address owner.
+            type: string
+        ipv6_addresses:
+            description: List of IPv6 addresses to assign to the ENI.
+            type: string
+        mac_address:
+            description: MAC address.
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost.
+            type: string
+        owner_id:
+            description: AWS account ID of the owner of the network interface.
+            type: string
+        private_dns_name:
+            description: Private DNS name.
+            type: string
+        private_ip:
+            description: Private IPv4 address of the network interface within the subnet.
+            type: string
+        private_ips:
+            description: Private IPv4 addresses associated with the network interface.
+            type: string
+        public_dns_name:
+            description: Public DNS name.
+            type: string
+        public_ip:
+            description: 'Address of the Elastic IP address bound to the network interface.TimeoutsConfiguration options:'
+            type: string
+        requester_id:
+            description: ID of the entity that launched the instance on your behalf.
+            type: string
+        security_groups:
+            description: List of security groups for the network interface.
+            type: string
+        subnet_id:
+            description: ID of the subnet.
+            type: string
+        tags:
+            description: Any tags assigned to the network interface.
+            type: string
+        vpc_id:
+            description: ID of the VPC.association
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

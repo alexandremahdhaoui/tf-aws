@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ses_receipt_rule_set
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: SES receipt rule set ARN.
+            type: string
+        id:
+            description: SES receipt rule set name.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

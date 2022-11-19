@@ -1,0 +1,43 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lightsail_key_pair
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the Lightsail key pair
+            type: string
+        encrypted_fingerprint:
+            description: |-
+                The MD5 public key fingerprint for the encrypted
+                private key
+            type: string
+        encrypted_private_key:
+            description: pgp_keypgp_key is supplied
+            type: string
+        fingerprint:
+            description: The MD5 public key fingerprint as specified in section 4 of RFC 4716.
+            type: string
+        id:
+            description: The name used for this key pair
+            type: string
+        private_key:
+            description: |-
+                the private key, base64 encoded. This is only populated
+                when creating a new key, and when no pgp_key is provided
+            type: string
+        public_key:
+            description: the public key, base64 encoded
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

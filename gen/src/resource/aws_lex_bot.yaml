@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lex_bot
+spec:
+    args: {}
+    attrs:
+        checksum:
+            description: |-
+                Checksum identifying the version of the bot that was created. The checksum is not
+                included as an argument because the resource will add it automatically when updating the bot.
+            type: string
+        created_date:
+            description: The date when the bot version was created.
+            type: string
+        failure_reason:
+            description: If status is FAILED, Amazon Lex provides the reason that it failed to build the bot.
+            type: string
+        last_updated_date:
+            description: The date when the $LATEST version of this bot was updated.
+            type: string
+        status:
+            description: |-
+                When you send a request to create or update a bot, Amazon Lex sets the status response
+                element to BUILDING. After Amazon Lex builds the bot, it sets status to READY. If Amazon Lex can't
+                build the bot, it sets status to FAILED. Amazon Lex returns the reason for the failure in the
+                failure_reason response element.
+            type: string
+        version:
+            description: The version of the bot.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: eks_addon
+spec:
+    args: {}
+    attrs:
+        addon_version:
+            description: Version of EKS add-on.
+            type: string
+        arn:
+            description: ARN of the EKS add-on.
+            type: string
+        created_at:
+            description: Date and time in RFC3339 format that the EKS add-on was created.
+            type: string
+        id:
+            description: EKS Cluster name and EKS add-on name separated by a colon (:).
+            type: string
+        service_account_role_arn:
+            description: ""
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

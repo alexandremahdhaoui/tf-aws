@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: prefix_list
+spec:
+    args: {}
+    attrs:
+        cidr_blocks:
+            description: 'List of CIDR blocks for the AWS service associated with the prefix list.TimeoutsConfiguration options:'
+            type: string
+        id:
+            description: ID of the selected prefix list.
+            type: string
+        name:
+            description: Name of the selected prefix list.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

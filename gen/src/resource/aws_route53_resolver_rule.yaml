@@ -1,0 +1,35 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53_resolver_rule
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN (Amazon Resource Name) for the resolver rule.
+            type: string
+        id:
+            description: The ID of the resolver rule.
+            type: string
+        owner_id:
+            description: When a rule is shared with another AWS account, the account ID of the account that the rule is shared with.
+            type: string
+        share_status:
+            description: |-
+                Whether the rules is shared and, if so, whether the current account is sharing the rule with another account, or another account is sharing the rule with the current account.
+                Values are NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

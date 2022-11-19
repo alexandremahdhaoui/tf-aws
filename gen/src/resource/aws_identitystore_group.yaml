@@ -1,0 +1,79 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_identitystore_group
+spec:
+    args:
+        create:
+            description: (Default 60m)
+            type: string
+            optional: true
+        delete:
+            description: (Default 90m)
+            type: string
+            optional: true
+        description:
+            description: '(Optional) A string containing the description of the group.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        display_name:
+            description: (Optional) A string containing the name of the group. This value is commonly displayed when the group is referenced.
+            type: string
+            optional: true
+        external_ids:
+            description: A list of external IDs that contains the identifiers issued to this resource by an external identity provider. See External IDs below.External IDs
+            type: string
+            optional: true
+        group_id:
+            description: The identifier of the newly created group in the identity store.
+            type: string
+            optional: true
+        id:
+            description: The identifier issued to this resource by an external identity provider.
+            type: string
+            optional: true
+        identity_store_id:
+            description: (Required) The globally unique identifier for the identity store.
+            type: string
+            optional: true
+        issuer:
+            description: 'The issuer for an external identifier.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        update:
+            description: (Default 180m)
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 60m)
+            type: string
+        delete:
+            description: (Default 90m)
+            type: string
+        external_ids:
+            description: A list of external IDs that contains the identifiers issued to this resource by an external identity provider. See External IDs below.External IDs
+            type: string
+        group_id:
+            description: The identifier of the newly created group in the identity store.
+            type: string
+        id:
+            description: The identifier issued to this resource by an external identity provider.
+            type: string
+        issuer:
+            description: 'The issuer for an external identifier.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 180m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

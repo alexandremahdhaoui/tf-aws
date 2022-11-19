@@ -1,0 +1,361 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_elasticache_replication_group
+spec:
+    args:
+        apply_immediately:
+            description: (Optional) Specifies whether any modifications are applied immediately, or during the next maintenance window. Default is false.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the created ElastiCache Replication Group.
+            type: string
+            optional: true
+        at_rest_encryption_enabled:
+            description: (Optional) Whether to enable encryption at rest.
+            type: string
+            optional: true
+        auth_token:
+            description: (Optional) Password used to access a password protected server. Can be specified only if transit_encryption_enabled = true.
+            type: string
+            optional: true
+        auto_minor_version_upgrade:
+            description: |-
+                (Optional) Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window.
+                Only supported for engine type "redis"true.
+            type: string
+            optional: true
+        automatic_failover_enabled:
+            description: (Optional) Specifies whether a read-only replica will be automatically promoted to read/write primary if the existing primary fails. If enabled, num_cache_clusters must be greater than 1. Must be enabled for Redis (cluster mode enabled) replication groups. Defaults to false.
+            type: string
+            optional: true
+        availability_zones:
+            description: (Optional, strongDeprecated use preferred_cache_cluster_azs instead) List of EC2 availability zones in which the replication group's cache clusters will be created. The order of the availability zones in the list is not considered.
+            type: string
+            optional: true
+        cluster_enabled:
+            description: Indicates if cluster mode is enabled.
+            type: string
+            optional: true
+        cluster_mode:
+            description: (Optional, strongDeprecated use root-level num_node_groups and replicas_per_node_group instead) Create a native Redis cluster. automatic_failover_enabled must be set to true. Cluster Mode documented below. Only 1 cluster_mode block is allowed. Note that configuring this block does not enable cluster mode, i.e., data sharding, this requires using a parameter group that has the parameter cluster-enabled set to true.
+            type: string
+            optional: true
+        configuration_endpoint_address:
+            description: Address of the replication group configuration endpoint when cluster mode is enabled.
+            type: string
+            optional: true
+        create:
+            description: (Default 60m)
+            type: string
+            optional: true
+        data_tiering_enabled:
+            description: (Optional) Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type. This parameter must be set to true when using r6gd nodes.
+            type: string
+            optional: true
+        delete:
+            description: (Default 40m)
+            type: string
+            optional: true
+        description:
+            description: ' – (Required) User-created description for the replication group. Must not be empty.'
+            type: string
+            optional: true
+        destination:
+            description: Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+            type: string
+            optional: true
+        destination_type:
+            description: For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+            type: string
+            optional: true
+        engine:
+            description: (Optional) Name of the cache engine to be used for the clusters in this replication group. The only valid value is redis.
+            type: string
+            optional: true
+        engine_version:
+            description: |-
+                (Optional) Version number of the cache engine to be used for the cache clusters in this replication group.
+                If the version is 6 or higher, the major and minor version can be set, e.g., 6.26.x5.0.6engine_version_actual, see  below.
+            type: string
+            optional: true
+        engine_version_actual:
+            description: Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine.
+            type: string
+            optional: true
+        final_snapshot_identifier:
+            description: (Optional) The name of your final node group (shard) snapshot. ElastiCache creates the snapshot from the primary node in the cluster. If omitted, no final snapshot will be made.
+            type: string
+            optional: true
+        global_replication_group_id:
+            description: (Optional) The ID of the global replication group to which this replication group should belong. If this parameter is specified, the replication group is added to the specified global replication group as a secondary replication group; otherwise, the replication group is not part of any global replication group. If global_replication_group_id is set, the num_node_groups parameter (or the num_node_groups parameter of the deprecated cluster_mode block) cannot be set.
+            type: string
+            optional: true
+        id:
+            description: ID of the ElastiCache Replication Group.
+            type: string
+            optional: true
+        kms_key_id:
+            description: (Optional) The ARN of the key that you wish to use if encrypting at rest. If not supplied, uses service managed encryption. Can be specified only if at_rest_encryption_enabled = true.
+            type: string
+            optional: true
+        log_delivery_configuration:
+            description: (Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+            type: string
+            optional: true
+        log_format:
+            description: Valid values are json or text
+            type: string
+            optional: true
+        log_type:
+            description: 'Valid values are  slow-log or engine-log. Max 1 of each.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        maintenance_window:
+            description: ' – (Optional) Specifies the weekly time range for when maintenance on the cache cluster is performed. The format is ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00'
+            type: string
+            optional: true
+        member_clusters:
+            description: Identifiers of all the nodes that are part of this replication group.
+            type: string
+            optional: true
+        multi_az_enabled:
+            description: (Optional) Specifies whether to enable Multi-AZ Support for the replication group. If true, automatic_failover_enabled must also be enabled. Defaults to false.
+            type: string
+            optional: true
+        node_type:
+            description: (Optional) Instance class to be used. See AWS documentation for information on supported node types and guidance on selecting node types. Required unless global_replication_group_id is set. Cannot be set if global_replication_group_id is set.
+            type: string
+            optional: true
+        notification_topic_arn:
+            description: ' – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic'
+            type: string
+            optional: true
+        num_cache_clusters:
+            description: (Optional) Number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2. Updates will occur before other modifications. Conflicts with num_node_groups, the deprecatednumber_cache_clusters, or the deprecated cluster_mode. Defaults to 1.
+            type: string
+            optional: true
+        num_node_groups:
+            description: (Optional, strongDeprecated use root-level num_node_groups instead) Number of node groups (shards) for this Redis replication group. Changing this number will trigger an online resizing operation before other settings modifications. Required unless global_replication_group_id is set.
+            type: string
+            optional: true
+        number_cache_clusters:
+            description: (Optional, strongDeprecated use num_cache_clusters instead) Number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2. Updates will occur before other modifications. Conflicts with num_cache_clusters, num_node_groups, or the deprecated cluster_mode. Defaults to 1.
+            type: string
+            optional: true
+        parameter_group_name:
+            description: (Optional) Name of the parameter group to associate with this replication group. If this argument is omitted, the default cache parameter group for the specified engine is used. To enable "cluster mode", i.e., data sharding, use a parameter group that has the parameter cluster-enabled set to true.
+            type: string
+            optional: true
+        port:
+            description: ' – (Optional) Port number on which each of the cache nodes will accept connections. For Memcache the default is 11211, and for Redis the default port is 6379.'
+            type: string
+            optional: true
+        preferred_cache_cluster_azs:
+            description: (Optional) List of EC2 availability zones in which the replication group's cache clusters will be created. The order of the availability zones in the list is considered. The first item in the list will be the primary node. Ignored when updating.
+            type: string
+            optional: true
+        primary_endpoint_address:
+            description: (Redis only) Address of the endpoint for the primary node in the replication group, if the cluster mode is disabled.
+            type: string
+            optional: true
+        reader_endpoint_address:
+            description: (Redis only) Address of the endpoint for the reader node in the replication group, if the cluster mode is disabled.
+            type: string
+            optional: true
+        replicas_per_node_group:
+            description: (Optional, Required with cluster_mode num_node_groups, strongDeprecated use root-level replicas_per_node_group instead) Number of replica nodes in each node group. Valid values are 0 to 5. Changing this number will trigger an online resizing operation before other settings modifications.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks.
+            type: string
+            optional: true
+        replication_group_description:
+            description: ' – (strongDeprecated use description instead) User-created description for the replication group. Must not be empty.'
+            type: string
+            optional: true
+        replication_group_id:
+            description: ' – (Required) Replication group identifier. This parameter is stored as a lowercase string.'
+            type: string
+            optional: true
+        security_group_ids:
+            description: (Optional) One or more Amazon VPC security groups associated with this replication group. Use this parameter only when you are creating a replication group in an Amazon Virtual Private Cloud
+            type: string
+            optional: true
+        security_group_names:
+            description: (Optional) List of cache security group names to associate with this replication group.
+            type: string
+            optional: true
+        snapshot_arns:
+            description: ' – (Optional) List of ARNs that identify Redis RDB snapshot files stored in Amazon S3. The names object names cannot contain any commas.'
+            type: string
+            optional: true
+        snapshot_name:
+            description: (Optional) Name of a snapshot from which to restore data into the new node group. Changing the snapshot_name forces a new resource.
+            type: string
+            optional: true
+        snapshot_retention_limit:
+            description: (Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of snapshot_retention_limit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+            type: string
+            optional: true
+        snapshot_window:
+            description: '(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. The minimum snapshot window is a 60 minute period. Example: 05:00-09:00'
+            type: string
+            optional: true
+        subnet_group_name:
+            description: (Optional) Name of the cache subnet group to be used for the replication group.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Map of tags to assign to the resource. Adding tags to this resource will add or overwrite any existing tags on the clusters in the replication group and not to the group itself. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        transit_encryption_enabled:
+            description: (Optional) Whether to enable encryption in transit.
+            type: string
+            optional: true
+        update:
+            description: (Default 40m)
+            type: string
+            optional: true
+        user_group_ids:
+            description: '(Optional) User Group ID to associate with the replication group. Only a maximum of one (1) user group ID is valid. strongNOTE: This argument emis a set because the AWS specification allows for multiple IDs. However, in practice, AWS only allows a maximum size of one.cluster_mode (strongDEPRECATED)'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the created ElastiCache Replication Group.
+            type: string
+        cluster_enabled:
+            description: Indicates if cluster mode is enabled.
+            type: string
+        configuration_endpoint_address:
+            description: Address of the replication group configuration endpoint when cluster mode is enabled.
+            type: string
+        create:
+            description: (Default 60m)
+            type: string
+        delete:
+            description: (Default 40m)
+            type: string
+        destination:
+            description: Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+            type: string
+        destination_type:
+            description: For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+            type: string
+        engine_version_actual:
+            description: Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine.
+            type: string
+        final_snapshot_identifier:
+            description: (Optional) The name of your final node group (shard) snapshot. ElastiCache creates the snapshot from the primary node in the cluster. If omitted, no final snapshot will be made.
+            type: string
+        global_replication_group_id:
+            description: (Optional) The ID of the global replication group to which this replication group should belong. If this parameter is specified, the replication group is added to the specified global replication group as a secondary replication group; otherwise, the replication group is not part of any global replication group. If global_replication_group_id is set, the num_node_groups parameter (or the num_node_groups parameter of the deprecated cluster_mode block) cannot be set.
+            type: string
+        id:
+            description: ID of the ElastiCache Replication Group.
+            type: string
+        kms_key_id:
+            description: (Optional) The ARN of the key that you wish to use if encrypting at rest. If not supplied, uses service managed encryption. Can be specified only if at_rest_encryption_enabled = true.
+            type: string
+        log_delivery_configuration:
+            description: (Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+            type: string
+        log_format:
+            description: Valid values are json or text
+            type: string
+        log_type:
+            description: 'Valid values are  slow-log or engine-log. Max 1 of each.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        maintenance_window:
+            description: ' – (Optional) Specifies the weekly time range for when maintenance on the cache cluster is performed. The format is ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:05:00-sun:09:00'
+            type: string
+        member_clusters:
+            description: Identifiers of all the nodes that are part of this replication group.
+            type: string
+        multi_az_enabled:
+            description: (Optional) Specifies whether to enable Multi-AZ Support for the replication group. If true, automatic_failover_enabled must also be enabled. Defaults to false.
+            type: string
+        node_type:
+            description: (Optional) Instance class to be used. See AWS documentation for information on supported node types and guidance on selecting node types. Required unless global_replication_group_id is set. Cannot be set if global_replication_group_id is set.
+            type: string
+        notification_topic_arn:
+            description: ' – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic'
+            type: string
+        num_cache_clusters:
+            description: (Optional) Number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2. Updates will occur before other modifications. Conflicts with num_node_groups, the deprecatednumber_cache_clusters, or the deprecated cluster_mode. Defaults to 1.
+            type: string
+        num_node_groups:
+            description: (Optional, strongDeprecated use root-level num_node_groups instead) Number of node groups (shards) for this Redis replication group. Changing this number will trigger an online resizing operation before other settings modifications. Required unless global_replication_group_id is set.
+            type: string
+        number_cache_clusters:
+            description: (Optional, strongDeprecated use num_cache_clusters instead) Number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2. Updates will occur before other modifications. Conflicts with num_cache_clusters, num_node_groups, or the deprecated cluster_mode. Defaults to 1.
+            type: string
+        parameter_group_name:
+            description: (Optional) Name of the parameter group to associate with this replication group. If this argument is omitted, the default cache parameter group for the specified engine is used. To enable "cluster mode", i.e., data sharding, use a parameter group that has the parameter cluster-enabled set to true.
+            type: string
+        port:
+            description: ' – (Optional) Port number on which each of the cache nodes will accept connections. For Memcache the default is 11211, and for Redis the default port is 6379.'
+            type: string
+        preferred_cache_cluster_azs:
+            description: (Optional) List of EC2 availability zones in which the replication group's cache clusters will be created. The order of the availability zones in the list is considered. The first item in the list will be the primary node. Ignored when updating.
+            type: string
+        primary_endpoint_address:
+            description: (Redis only) Address of the endpoint for the primary node in the replication group, if the cluster mode is disabled.
+            type: string
+        reader_endpoint_address:
+            description: (Redis only) Address of the endpoint for the reader node in the replication group, if the cluster mode is disabled.
+            type: string
+        replicas_per_node_group:
+            description: (Optional, Required with cluster_mode num_node_groups, strongDeprecated use root-level replicas_per_node_group instead) Number of replica nodes in each node group. Valid values are 0 to 5. Changing this number will trigger an online resizing operation before other settings modifications.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks.
+            type: string
+        security_group_ids:
+            description: (Optional) One or more Amazon VPC security groups associated with this replication group. Use this parameter only when you are creating a replication group in an Amazon Virtual Private Cloud
+            type: string
+        security_group_names:
+            description: (Optional) List of cache security group names to associate with this replication group.
+            type: string
+        snapshot_arns:
+            description: ' – (Optional) List of ARNs that identify Redis RDB snapshot files stored in Amazon S3. The names object names cannot contain any commas.'
+            type: string
+        snapshot_name:
+            description: (Optional) Name of a snapshot from which to restore data into the new node group. Changing the snapshot_name forces a new resource.
+            type: string
+        snapshot_retention_limit:
+            description: (Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of snapshot_retention_limit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+            type: string
+        snapshot_window:
+            description: '(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. The minimum snapshot window is a 60 minute period. Example: 05:00-09:00'
+            type: string
+        subnet_group_name:
+            description: (Optional) Name of the cache subnet group to be used for the replication group.
+            type: string
+        tags:
+            description: (Optional) Map of tags to assign to the resource. Adding tags to this resource will add or overwrite any existing tags on the clusters in the replication group and not to the group itself. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        transit_encryption_enabled:
+            description: (Optional) Whether to enable encryption in transit.
+            type: string
+        update:
+            description: (Default 40m)
+            type: string
+        user_group_ids:
+            description: '(Optional) User Group ID to associate with the replication group. Only a maximum of one (1) user group ID is valid. strongNOTE: This argument emis a set because the AWS specification allows for multiple IDs. However, in practice, AWS only allows a maximum size of one.cluster_mode (strongDEPRECATED)'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,93 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ce_tags
+spec:
+    args:
+        and:
+            description: (Optional) Return results that match both Dimension objects.
+            type: string
+            optional: true
+        cost_category:
+            description: (Optional) Configuration block for the filter that's based on CostCategory values. See below.
+            type: string
+            optional: true
+        dimension:
+            description: (Optional) Configuration block for the specific Dimension to use for Expression. See below.
+            type: string
+            optional: true
+        end:
+            description: (Required) Beginning of the time period.filter
+            type: string
+            optional: true
+        filter:
+            description: (Optional) Configuration block for the Expression object used to categorize costs. See below.
+            type: string
+            optional: true
+        id:
+            description: Unique ID of the tag.
+            type: string
+            optional: true
+        key:
+            description: '(Required) key that''s used to sort the data. Valid values are: BlendedCost,  UnblendedCost, AmortizedCost, NetAmortizedCost, NetUnblendedCost, UsageQuantity, NormalizedUsageAmount.'
+            type: string
+            optional: true
+        match_options:
+            description: '(Optional) Match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. Valid values are: EQUALS,  ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE.'
+            type: string
+            optional: true
+        not:
+            description: (Optional) Return results that match both Dimension object.
+            type: string
+            optional: true
+        or:
+            description: (Optional) Return results that match both Dimension object.
+            type: string
+            optional: true
+        search_string:
+            description: (Optional) Value that you want to search for.
+            type: string
+            optional: true
+        sort_by:
+            description: (Optional) Configuration block for the value by which you want to sort the data. See below.
+            type: string
+            optional: true
+        sort_order:
+            description: '(Optional) order that''s used to sort the data. Valid values are: ASCENDING,  DESCENDING.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        start:
+            description: (Required) End of the time period.
+            type: string
+            optional: true
+        tag:
+            description: (Optional) Configuration block for the specific Tag to use for Expression. See below.cost_category
+            type: string
+            optional: true
+        tag_key:
+            description: (Optional) Key of the tag that you want to return values for.time_period
+            type: string
+            optional: true
+        time_period:
+            description: (Required) Configuration block for the start and end dates for retrieving the dimension values.
+            type: string
+            optional: true
+        values:
+            description: (Optional) Specific value of the Cost Category.sort_by
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: Unique ID of the tag.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

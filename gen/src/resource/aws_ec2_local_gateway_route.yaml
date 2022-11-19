@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_local_gateway_route
+spec:
+    args:
+        destination_cidr_block:
+            description: (Required) IPv4 CIDR range used for destination matches. Routing decisions are based on the most specific match.
+            type: string
+            optional: true
+        local_gateway_route_table_id:
+            description: (Required) Identifier of EC2 Local Gateway Route Table.
+            type: string
+            optional: true
+        local_gateway_virtual_interface_group_id:
+            description: '(Required) Identifier of EC2 Local Gateway Virtual Interface Group.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: EC2 Local Gateway Route Table identifier and destination CIDR block separated by underscores (_)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

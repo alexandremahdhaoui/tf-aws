@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_backup_plan
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the backup plan.
+            type: string
+        name:
+            description: Display name of a backup plan.
+            type: string
+        tags:
+            description: Metadata that you can assign to help organize the plans you create.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

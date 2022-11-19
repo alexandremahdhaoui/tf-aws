@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ebs_snapshot_import
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the EBS Snapshot.
+            type: string
+        data_encryption_key_id:
+            description: The data encryption key identifier for the snapshot.
+            type: string
+        id:
+            description: The snapshot ID (e.g., snap-59fcb34e).
+            type: string
+        owner_alias:
+            description: Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners.
+            type: string
+        owner_id:
+            description: The AWS account ID of the EBS snapshot owner.
+            type: string
+        volume_size:
+            description: The size of the drive in GiBs.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

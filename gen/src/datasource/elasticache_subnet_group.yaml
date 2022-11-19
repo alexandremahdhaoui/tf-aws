@@ -1,0 +1,50 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: elasticache_subnet_group
+spec:
+    args:
+        arn:
+            description: ARN of the subnet group.
+            type: string
+            optional: true
+        description:
+            description: Description of the subnet group.
+            type: string
+            optional: true
+        id:
+            description: Name of the subnet group.
+            type: string
+            optional: true
+        name:
+            description: '(Required) Name of the subnet group.In addition, the following attributes are exported:'
+            type: string
+            optional: true
+        subnet_ids:
+            description: Set of VPC Subnet ID-s of the subnet group.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the subnet group.
+            type: string
+        description:
+            description: Description of the subnet group.
+            type: string
+        id:
+            description: Name of the subnet group.
+            type: string
+        subnet_ids:
+            description: Set of VPC Subnet ID-s of the subnet group.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

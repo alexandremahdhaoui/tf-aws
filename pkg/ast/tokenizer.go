@@ -14,7 +14,7 @@ const (
 	Pre
 	Code
 
-	Resource
+	ModuleName
 	ArgumentReference
 	RequiredArgs
 	OptionalArgs
@@ -35,7 +35,7 @@ func NewTokenizer() token.Tokenizer {
 			A:                   *regexp.MustCompile(`^a$`),
 			Pre:                 *regexp.MustCompile(`^pre$`),
 			Code:                *regexp.MustCompile(`^code$`),
-			Resource:            *regexp.MustCompile(`^Resource\:.*`),
+			ModuleName:          *regexp.MustCompile(`^Resource\:.*|^Data\ Source\:.*|^Data\ source\:.*`),
 			ArgumentReference:   *regexp.MustCompile(`^Argument\ Reference`),
 			RequiredArgs:        *regexp.MustCompile(`^The\ following\ arguments\ are\ required\:`),
 			OptionalArgs:        *regexp.MustCompile(`^The\ following\ arguments\ are\ optional\:`),

@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_s3control_multi_region_access_point_policy
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 15m)
+            type: string
+        established:
+            description: The last established policy for the Multi-Region Access Point.
+            type: string
+        id:
+            description: The AWS account ID and access point name separated by a colon (:).
+            type: string
+        proposed:
+            description: 'The proposed policy for the Multi-Region Access Point.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 15m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

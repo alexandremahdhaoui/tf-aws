@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iam_role_policy
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The role policy ID, in the form of role_name:role_policy_name.
+            type: string
+        name:
+            description: The name of the policy.
+            type: string
+        policy:
+            description: The policy document attached to the role.
+            type: string
+        role:
+            description: The name of the role associated with the policy.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

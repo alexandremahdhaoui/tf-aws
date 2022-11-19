@@ -1,0 +1,110 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_networkmanager_site_to_site_vpn_attachment
+spec:
+    args:
+        arn:
+            description: The ARN of the attachment.
+            type: string
+            optional: true
+        attachment_policy_rule_number:
+            description: The policy rule number associated with the attachment.
+            type: string
+            optional: true
+        attachment_type:
+            description: The type of attachment.
+            type: string
+            optional: true
+        core_network_arn:
+            description: The ARN of a core network.
+            type: string
+            optional: true
+        core_network_id:
+            description: The ID of a core network
+            type: string
+            optional: true
+        edge_location:
+            description: The Region where the edge is located.
+            type: string
+            optional: true
+        id:
+            description: The ID of the attachment.
+            type: string
+            optional: true
+        owner_account_id:
+            description: The ID of the attachment account owner.
+            type: string
+            optional: true
+        resource_arn:
+            description: The attachment resource ARN.
+            type: string
+            optional: true
+        segment_name:
+            description: The name of the segment attachment.
+            type: string
+            optional: true
+        state:
+            description: The state of the attachment.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Key-value tags for the attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        vpn_connection_arn:
+            description: (Required) The ARN of the site-to-site VPN connection.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: The ARN of the attachment.
+            type: string
+        attachment_policy_rule_number:
+            description: The policy rule number associated with the attachment.
+            type: string
+        attachment_type:
+            description: The type of attachment.
+            type: string
+        core_network_arn:
+            description: The ARN of a core network.
+            type: string
+        core_network_id:
+            description: The ID of a core network
+            type: string
+        edge_location:
+            description: The Region where the edge is located.
+            type: string
+        id:
+            description: The ID of the attachment.
+            type: string
+        owner_account_id:
+            description: The ID of the attachment account owner.
+            type: string
+        resource_arn:
+            description: The attachment resource ARN.
+            type: string
+        segment_name:
+            description: The name of the segment attachment.
+            type: string
+        state:
+            description: The state of the attachment.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

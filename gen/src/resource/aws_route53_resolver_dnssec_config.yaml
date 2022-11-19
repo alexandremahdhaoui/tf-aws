@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53_resolver_dnssec_config
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN for a configuration for DNSSEC validation.
+            type: string
+        id:
+            description: The ID for a configuration for DNSSEC validation.
+            type: string
+        owner_id:
+            description: The owner account ID of the virtual private cloud (VPC) for a configuration for DNSSEC validation.
+            type: string
+        validation_status:
+            description: 'The validation status for a DNSSEC configuration. The status can be one of the following: ENABLING, ENABLED, DISABLING and DISABLED.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

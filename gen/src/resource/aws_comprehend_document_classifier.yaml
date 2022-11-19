@@ -1,0 +1,174 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_comprehend_document_classifier
+spec:
+    args:
+        annotation_data_s3_uri:
+            description: (Optional) Location of annotation files.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the Document Classifier version.
+            type: string
+            optional: true
+        attribute_names:
+            description: (Required) The JSON attribute that contains the annotations for the training documents.
+            type: string
+            optional: true
+        augmented_manifests:
+            description: |-
+                (Optional) List of training datasets produced by Amazon SageMaker Ground Truth.
+                Used if data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below.
+            type: string
+            optional: true
+        create:
+            description: '(Optional, Default: 60m)'
+            type: string
+            optional: true
+        data_access_role_arn:
+            description: (Required) The ARN for an IAM Role which allows Comprehend to read the training and testing data.
+            type: string
+            optional: true
+        data_format:
+            description: '(Optional, Default: COMPREHEND_CSVCOMPREHEND_CSV or AUGMENTED_MANIFEST.'
+            type: string
+            optional: true
+        delete:
+            description: '(Optional, Default: 30m)'
+            type: string
+            optional: true
+        document_type:
+            description: '(Optional, Default: PLAIN_TEXT_DOCUMENTPLAIN_TEXT_DOCUMENT or SEMI_STRUCTURED_DOCUMENT.'
+            type: string
+            optional: true
+        input_data_config:
+            description: |-
+                (Required) Configuration for the training and testing data.
+                See the input_data_config Configuration Block section below.
+            type: string
+            optional: true
+        kms_key_id:
+            description: ""
+            type: string
+            optional: true
+        label_delimiter:
+            description: '|, ~, !, @, #, $, %, ^, *, -, _, +, =, \, :, ;, >, ?, /, <space>, and <tab>|.'
+            type: string
+            optional: true
+        language_code:
+            description: en, es, fr, it, de, or pt.
+            type: string
+            optional: true
+        mode:
+            description: '(Optional, Default: MULTI_CLASSMULTI_CLASS or MULTI_LABELMULTI_CLASS is also known as "Single Label" in the AWS Console.'
+            type: string
+            optional: true
+        model_kms_key_id:
+            description: ""
+            type: string
+            optional: true
+        name:
+            description: -).
+            type: string
+            optional: true
+        output_data_config:
+            description: |-
+                (Optional) Configuration for the output results of training.
+                See the output_data_config Configuration Block section below.
+            type: string
+            optional: true
+        output_s3_uri:
+            description: (Computed) Full path for the output documents.
+            type: string
+            optional: true
+        s3_uri:
+            description: output_s3_uri.vpc_config Configuration Block
+            type: string
+            optional: true
+        security_group_ids:
+            description: (Required) List of security group IDs.
+            type: string
+            optional: true
+        source_documents_s3_uri:
+            description: (Optional) Location of source PDF files.
+            type: string
+            optional: true
+        split:
+            description: '(Optional, Default: TRAINTRAIN or TEST.output_data_config Configuration Block'
+            type: string
+            optional: true
+        subnets:
+            description: '(Required) List of VPC subnets.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags Configuration Block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_comprehend_document_classifier provides the following Timeouts configuration options:'
+            type: string
+            optional: true
+        test_s3uri:
+            description: (Optional) Location of test documents.augmented_manifests Configuration Block
+            type: string
+            optional: true
+        update:
+            description: '(Optional, Default: 60m)'
+            type: string
+            optional: true
+        version_name:
+            description: |-
+                (Optional) Name for the version of the Document Classifier.
+                Each version must have a unique name within the Document Classifier.
+                If omitted, Terraform will assign a random, unique version name.
+                If explicitly set to ""-version_name_prefix.
+            type: string
+            optional: true
+        version_name_prefix:
+            description: |-
+                (Optional) Creates a unique version name beginning with the specified prefix.
+                Has a maximum length of 37 characters.
+                Can contain upper- and lower-case letters, numbers, and hypen (-version_name.
+            type: string
+            optional: true
+        volume_kms_key_id:
+            description: |-
+                (Optional) KMS Key used to encrypt storage volumes during job processing.
+                Can be a KMS Key ID or a KMS Key ARN.
+            type: string
+            optional: true
+        vpc_config:
+            description: |-
+                (Optional) Configuration parameters for VPC to contain Document Classifier resources.
+                See the vpc_config Configuration Block section below.input_data_config Configuration Block
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Document Classifier version.
+            type: string
+        create:
+            description: '(Optional, Default: 60m)'
+            type: string
+        delete:
+            description: '(Optional, Default: 30m)'
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_comprehend_document_classifier provides the following Timeouts configuration options:'
+            type: string
+        update:
+            description: '(Optional, Default: 60m)'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

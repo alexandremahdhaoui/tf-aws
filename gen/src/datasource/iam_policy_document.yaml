@@ -1,0 +1,102 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: iam_policy_document
+spec:
+    args:
+        actions:
+            description: ' (Optional) - List of actions that this statement either allows or denies. For example, ["ec2:RunInstances", "s3:*"].'
+            type: string
+            optional: true
+        condition:
+            description: ' (Optional) - Configuration block for a condition. Detailed below.'
+            type: string
+            optional: true
+        effect:
+            description: ' (Optional) - Whether this statement allows or denies the given actions. Valid values are Allow and Deny. Defaults to Allow.'
+            type: string
+            optional: true
+        identifiers:
+            description: ' (Required) List of identifiers for principals. When type is AWS, these are IAM principal ARNs, e.g., arn:aws:iam::12345678901:role/yak-role.  When type is Service, these are AWS Service roles, e.g., lambda.amazonaws.com. When type is Federated, these are web identity users or SAML provider ARNs, e.g., accounts.google.com or arn:aws:iam::12345678901:saml-provider/yak-saml-provider. When type is CanonicalUser, these are canonical user IDs, e.g., 79a59df900b949e55d96a1e698fbacedfd6e09d98eacf8f8d5218e7cd47ef2be.'
+            type: string
+            optional: true
+        not_actions:
+            description: ' (Optional) - List of actions that this statement does emnot apply to. Use to apply a policy statement to all actions emexcept those listed.'
+            type: string
+            optional: true
+        not_principals:
+            description: ' (Optional) - Like principals except these are principals that the statement does emnot apply to.'
+            type: string
+            optional: true
+        not_resources:
+            description: ' (Optional) - List of resource ARNs that this statement does emnot apply to. Use to apply a policy statement to all resources emexcept those listed. Conflicts with resources.'
+            type: string
+            optional: true
+        override_json:
+            description: ' (Optional, strongDeprecated use the override_policy_documents attribute instead) - IAM policy document whose statements with non-blank sids will override statements with the same sid from documents assigned to the source_json, source_policy_documents, and override_policy_documents arguments. Non-overriding statements will be added to the exported document.~> strongNOTE: Statements without a sid cannot be overridden. In other words, a statement without a sid from documents assigned to the source_json or source_policy_documents arguments cannot be overridden by statements from documents assigned to the override_json or override_policy_documents arguments.'
+            type: string
+            optional: true
+        override_policy_documents:
+            description: ' (Optional) - List of IAM policy documents that are merged together into the exported document. In merging, statements with non-blank sids will override statements with the same sid from earlier documents in the list. Statements with non-blank sids will also override statements with the same sid from documents provided in the source_json and source_policy_documents arguments.  Non-overriding statements will be added to the exported document.'
+            type: string
+            optional: true
+        policy_id:
+            description: ' (Optional) - ID for the policy document.'
+            type: string
+            optional: true
+        principals:
+            description: ' (Optional) - Configuration block for principals. Detailed below.'
+            type: string
+            optional: true
+        resources:
+            description: ' (Optional) - List of resource ARNs that this statement applies to. This is required by AWS if used for an IAM policy. Conflicts with not_resources.'
+            type: string
+            optional: true
+        sid:
+            description: ' (Optional) - Sid (statement ID) is an identifier for a policy statement.conditionA condition constrains whether a statement applies in a particular situation. Conditions can be specific to an AWS service. When using multiple condition blocks, they must emall evaluate to true for the policy statement to apply. In other words, AWS evaluates the conditions as though with an "AND" boolean operation.'
+            type: string
+            optional: true
+        source_json:
+            description: ' (Optional, strongDeprecated use the source_policy_documents attribute instead) - IAM policy document used as a base for the exported policy document. Statements with the same sid from documents assigned to the override_json and override_policy_documents arguments will override source statements.'
+            type: string
+            optional: true
+        source_policy_documents:
+            description: ' (Optional) - List of IAM policy documents that are merged together into the exported document. Statements defined in source_policy_documents or source_json must have unique sids. Statements with the same sid from documents assigned to the override_json and override_policy_documents arguments will override source statements.'
+            type: string
+            optional: true
+        statement:
+            description: ' (Optional) - Configuration block for a policy statement. Detailed below.'
+            type: string
+            optional: true
+        test:
+            description: ' (Required) Name of the IAM condition operator to evaluate.'
+            type: string
+            optional: true
+        type:
+            description: ' (Required) Type of principal. Valid values include AWS, Service, Federated, CanonicalUser and *.The following attribute is exported:'
+            type: string
+            optional: true
+        values:
+            description: ' (Required) Values to evaluate the condition against. If multiple values are provided, the condition matches if at least one of them applies. That is, AWS evaluates multiple values as though using an "OR" boolean operation.'
+            type: string
+            optional: true
+        variable:
+            description: ' (Required) Name of a Context Variable to apply the condition to. Context variables may either be standard AWS variables starting with aws: or service-specific variables prefixed with the service name.principals and not_principalsThe principals and not_principals arguments define to whom a statement applies or does not apply, respectively.~> strongNOTE: Even though the IAM Documentation states that "Principal": "*" and "Principal": {"AWS": "*"} are equivalent, those principal elements have different behavior in some situations, e.g., IAM Role Trust Policy. To have Terraform render JSON containing "Principal": "*", use type = "*" and identifiers = ["*"]. To have Terraform render JSON containing "Principal": {"AWS": "*"}, use type = "AWS" and identifiers = ["*"].-> For more information about AWS principals, refer to the AWS Identity and Access Management User Guide: AWS JSON policy elements: Principal.'
+            type: string
+            optional: true
+        version:
+            description: ' (Optional) - IAM policy document version. Valid values are 2008-10-17 and 2012-10-17. Defaults to 2012-10-17. For more information, see the AWS IAM User Guide.statement'
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_appconfig_configuration_profile
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the AppConfig Configuration Profile.
+            type: string
+        configuration_profile_id:
+            description: The configuration profile ID.
+            type: string
+        id:
+            description: AppConfig configuration profile ID and application ID separated by a colon (:).
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

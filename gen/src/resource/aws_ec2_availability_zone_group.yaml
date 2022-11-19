@@ -1,0 +1,29 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_availability_zone_group
+spec:
+    args:
+        group_name:
+            description: (Required) Name of the Availability Zone Group.
+            type: string
+            optional: true
+        opt_in_status:
+            description: '(Required) Indicates whether to enable or disable Availability Zone Group. Valid values: opted-in or not-opted-in.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: Name of the Availability Zone Group.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

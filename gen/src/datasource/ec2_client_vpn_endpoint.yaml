@@ -1,0 +1,94 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ec2_client_vpn_endpoint
+spec:
+    args:
+        arn:
+            description: ' The ARN of the Client VPN endpoint.'
+            type: string
+            optional: true
+        authentication_options:
+            description: Information about the authentication method used by the Client VPN endpoint.
+            type: string
+            optional: true
+        client_cidr_block:
+            description: IPv4 address range, in CIDR notation, from which client IP addresses are assigned.
+            type: string
+            optional: true
+        client_connect_options:
+            description: The options for managing connection authorization for new client connections.
+            type: string
+            optional: true
+        client_login_banner_options:
+            description: Options for enabling a customizable text banner that will be displayed on AWS provided clients when a VPN session is established.
+            type: string
+            optional: true
+        connection_log_options:
+            description: Information about the client connection logging options for the Client VPN endpoint.
+            type: string
+            optional: true
+        description:
+            description: Brief description of the endpoint.
+            type: string
+            optional: true
+        dns_name:
+            description: DNS name to be used by clients when connecting to the Client VPN endpoint.
+            type: string
+            optional: true
+        dns_servers:
+            description: Information about the DNS servers to be used for DNS resolution.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the field to filter by, as defined by the underlying AWS API.
+            type: string
+            optional: true
+        security_group_ids:
+            description: IDs of the security groups for the target network associated with the Client VPN endpoint.
+            type: string
+            optional: true
+        self_service_portal:
+            description: Whether the self-service portal for the Client VPN endpoint is enabled.
+            type: string
+            optional: true
+        server_certificate_arn:
+            description: The ARN of the server certificate.
+            type: string
+            optional: true
+        session_timeout_hours:
+            description: The maximum VPN session duration time in hours.
+            type: string
+            optional: true
+        split_tunnel:
+            description: Whether split-tunnel is enabled in the AWS Client VPN endpoint.
+            type: string
+            optional: true
+        transport_protocol:
+            description: Transport protocol used by the Client VPN endpoint.
+            type: string
+            optional: true
+        values:
+            description: '(Required) Set of values that are accepted for the given field. An endpoint will be selected if any one of the given values matches.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        vpc_id:
+            description: ID of the VPC associated with the Client VPN endpoint.
+            type: string
+            optional: true
+        vpn_port:
+            description: 'Port number for the Client VPN endpoint.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

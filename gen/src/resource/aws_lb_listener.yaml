@@ -1,0 +1,211 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lb_listener
+spec:
+    args:
+        alpn_policy:
+            description: (Optional)  Name of the Application-Layer Protocol Negotiation (ALPN) policy. Can be set if protocol is TLS. Valid values are HTTP1Only, HTTP2Only, HTTP2Optional, HTTP2Preferred, and None.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the listener (matches id).
+            type: string
+            optional: true
+        authenticate_cognito:
+            description: (Optional) Configuration block for using Amazon Cognito to authenticate users. Specify only when type is authenticate-cognito. Detailed below.
+            type: string
+            optional: true
+        authenticate_oidc:
+            description: (Optional) Configuration block for an identity provider that is compliant with OpenID Connect (OIDC). Specify only when type is authenticate-oidc. Detailed below.
+            type: string
+            optional: true
+        authentication_request_extra_params:
+            description: '(Optional) Query parameters to include in the redirect request to the authorization endpoint. Max: 10.'
+            type: string
+            optional: true
+        authorization_endpoint:
+            description: (Required) Authorization endpoint of the IdP.
+            type: string
+            optional: true
+        certificate_arn:
+            description: (Optional) ARN of the default SSL server certificate. Exactly one certificate is required if the protocol is HTTPS. For adding additional SSL certificates, see the aws_lb_listener_certificate resource.
+            type: string
+            optional: true
+        client_id:
+            description: (Required) OAuth 2.0 client identifier.
+            type: string
+            optional: true
+        client_secret:
+            description: (Required) OAuth 2.0 client secret.
+            type: string
+            optional: true
+        content_type:
+            description: (Required) Content type. Valid values are text/plain, text/css, text/html, application/javascript and application/json.
+            type: string
+            optional: true
+        default_action:
+            description: (Required) Configuration block for default actions. Detailed below.
+            type: string
+            optional: true
+        duration:
+            description: (Required) Time period, in seconds, during which requests from a client should be routed to the same target group. The range is 1-604800 seconds (7 days).
+            type: string
+            optional: true
+        enabled:
+            description: '(Optional) Whether target group stickiness is enabled. Default is false.redirect~> strongNOTE:: You can reuse URI components using the following reserved keywords: #{protocol}, #{host}, #{port}, #{path} (the leading "/" is removed) and #{query}.'
+            type: string
+            optional: true
+        fixed_response:
+            description: (Optional) Information for creating an action that returns a custom HTTP response. Required if type is fixed-response.
+            type: string
+            optional: true
+        forward:
+            description: (Optional) Configuration block for creating an action that distributes requests among one or more target groups. Specify only if type is forward. If you specify both forward block and target_group_arn attribute, you can specify only one target group using forward and it must be the same target group specified in target_group_arn. Detailed below.
+            type: string
+            optional: true
+        host:
+            description: '(Optional) Hostname. This component is not percent-encoded. The hostname can contain #{host}. Defaults to #{host}.'
+            type: string
+            optional: true
+        id:
+            description: ARN of the listener (matches arn).
+            type: string
+            optional: true
+        issuer:
+            description: (Required) OIDC issuer identifier of the IdP.
+            type: string
+            optional: true
+        key:
+            description: (Required) Key of query parameter.
+            type: string
+            optional: true
+        load_balancer_arn:
+            description: (Required, Forces New Resource) ARN of the load balancer.
+            type: string
+            optional: true
+        message_body:
+            description: (Optional) Message body.
+            type: string
+            optional: true
+        on_unauthenticated_request:
+            description: '(Optional) Behavior if the user is not authenticated. Valid values: deny, allow and authenticate'
+            type: string
+            optional: true
+        order:
+            description: (Optional) Order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first. Valid values are between 1 and 50000.
+            type: string
+            optional: true
+        path:
+            description: '(Optional) Absolute path, starting with the leading "/". This component is not percent-encoded. The path can contain #{host}, #{path}, and #{port}. Defaults to /#{path}.'
+            type: string
+            optional: true
+        port:
+            description: '(Optional) Port. Specify a value from 1 to 65535 or #{port}. Defaults to #{port}.'
+            type: string
+            optional: true
+        protocol:
+            description: '(Optional) Protocol. Valid values are HTTP, HTTPS, or #{protocol}. Defaults to #{protocol}.'
+            type: string
+            optional: true
+        query:
+            description: '(Optional) Query parameters, URL-encoded when necessary, but not percent-encoded. Do not include the leading "?". Defaults to #{query}.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        redirect:
+            description: (Optional) Configuration block for creating a redirect action. Required if type is redirect. Detailed below.
+            type: string
+            optional: true
+        scope:
+            description: (Optional) Set of user claims to be requested from the IdP.
+            type: string
+            optional: true
+        session_cookie_name:
+            description: (Optional) Name of the cookie used to maintain session information.
+            type: string
+            optional: true
+        session_timeout:
+            description: (Optional) Maximum duration of the authentication session, in seconds.fixed_response
+            type: string
+            optional: true
+        ssl_policy:
+            description: (Optional) Name of the SSL Policy for the listener. Required if protocol is HTTPS or TLS.
+            type: string
+            optional: true
+        status_code:
+            description: (Required) HTTP redirect code. The redirect is either permanent (HTTP_301) or temporary (HTTP_302).
+            type: string
+            optional: true
+        stickiness:
+            description: (Optional) Configuration block for target group stickiness for the rule. Detailed below.target_group
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE:: Please note that listeners that are attached to Application Load Balancers must use either HTTP or HTTPS protocols while listeners that are attached to Network Load Balancers must use the TCP protocol.default_action'
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        target_group:
+            description: (Required) Set of 1-5 target group blocks. Detailed below.
+            type: string
+            optional: true
+        target_group_arn:
+            description: (Optional) ARN of the Target Group to which to route traffic. Specify only if type is forward and you want to route to a single target group. To route to one or more target groups, use a forward block instead.authenticate_cognito
+            type: string
+            optional: true
+        token_endpoint:
+            description: (Required) Token endpoint of the IdP.
+            type: string
+            optional: true
+        type:
+            description: (Required) Type of routing action. Valid values are forward, redirect, fixed-response, authenticate-cognito and authenticate-oidc.
+            type: string
+            optional: true
+        user_info_endpoint:
+            description: (Required) User info endpoint of the IdP.
+            type: string
+            optional: true
+        user_pool_arn:
+            description: (Required) ARN of the Cognito user pool.
+            type: string
+            optional: true
+        user_pool_client_id:
+            description: (Required) ID of the Cognito user pool client.
+            type: string
+            optional: true
+        user_pool_domain:
+            description: (Required) Domain prefix or fully-qualified domain name of the Cognito user pool.
+            type: string
+            optional: true
+        value:
+            description: (Required) Value of query parameter.authenticate_oidc
+            type: string
+            optional: true
+        weight:
+            description: (Optional) Weight. The range is 0 to 999.stickiness
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the listener (matches id).
+            type: string
+        id:
+            description: ARN of the listener (matches arn).
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

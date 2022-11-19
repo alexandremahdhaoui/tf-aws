@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lightsail_instance
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the Lightsail instance (matches id).
+            type: string
+        cpu_count:
+            description: The number of vCPUs the instance has.
+            type: string
+        created_at:
+            description: The timestamp when the instance was created.
+            type: string
+        id:
+            description: The ARN of the Lightsail instance (matches arn).
+            type: string
+        ipv6_address:
+            description: (strongDeprecated) The first IPv6 address of the Lightsail instance. Use ipv6_addresses attribute instead.
+            type: string
+        ipv6_addresses:
+            description: List of IPv6 addresses for the Lightsail instance.
+            type: string
+        is_static_ip:
+            description: A Boolean value indicating whether this instance has a static IP assigned to it.
+            type: string
+        private_ip_address:
+            description: The private IP address of the instance.
+            type: string
+        public_ip_address:
+            description: The public IP address of the instance.
+            type: string
+        ram_size:
+            description: The amount of RAM in GB on the instance (e.g., 1.0).
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        username:
+            description: The user name for connecting to the instance (e.g., ec2-user).
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

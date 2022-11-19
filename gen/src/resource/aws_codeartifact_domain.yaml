@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_codeartifact_domain
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the Domain.
+            type: string
+        asset_size_bytes:
+            description: The total size of all assets in the domain.
+            type: string
+        created_time:
+            description: A timestamp that represents the date and time the domain was created in RFC3339 format.
+            type: string
+        id:
+            description: The ARN of the Domain.
+            type: string
+        owner:
+            description: The AWS account ID that owns the domain.
+            type: string
+        repository_count:
+            description: The number of repositories in the domain.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_mskconnect_worker_configuration
+spec:
+    args:
+        arn:
+            description: the Amazon Resource Name (ARN) of the worker configuration.
+            type: string
+            optional: true
+        description:
+            description: '(Optional) A summary description of the worker configuration.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        latest_revision:
+            description: an ID of the latest successfully created revision of the worker configuration.
+            type: string
+            optional: true
+        name:
+            description: (Required) The name of the worker configuration.
+            type: string
+            optional: true
+        properties_file_content:
+            description: (Required) Contents of connect-distributed.properties file. The value can be either base64 encoded or in raw format.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: the Amazon Resource Name (ARN) of the worker configuration.
+            type: string
+        latest_revision:
+            description: an ID of the latest successfully created revision of the worker configuration.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

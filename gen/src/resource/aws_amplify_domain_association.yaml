@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_amplify_domain_association
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN for the domain association.
+            type: string
+        certificate_verification_dns_record:
+            description: 'The DNS record for certificate verification.The sub_domain configuration block exports the following attributes:'
+            type: string
+        dns_record:
+            description: DNS record for the subdomain.
+            type: string
+        verified:
+            description: Verified status of the subdomain.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

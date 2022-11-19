@@ -1,0 +1,71 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ce_anomaly_subscription
+spec:
+    args:
+        account_id:
+            description: (Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created.
+            type: string
+            optional: true
+        address:
+            description: (Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the anomaly subscription.
+            type: string
+            optional: true
+        frequency:
+            description: '(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY.'
+            type: string
+            optional: true
+        id:
+            description: Unique ID of the anomaly subscription. Same as arn.
+            type: string
+            optional: true
+        monitor_arn_list:
+            description: (Required) A list of cost anomaly monitors.
+            type: string
+            optional: true
+        name:
+            description: (Required) The name for the subscription.
+            type: string
+            optional: true
+        subscriber:
+            description: ""
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        threshold:
+            description: (Required) The dollar value that triggers a notification if the threshold is exceeded.
+            type: string
+            optional: true
+        type:
+            description: '(Required) The type of subscription. Valid Values: SNS | EMAIL.'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the anomaly subscription.
+            type: string
+        id:
+            description: Unique ID of the anomaly subscription. Same as arn.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,111 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_layer_version
+spec:
+    args:
+        arn:
+            description: ARN of the Lambda Layer with version.
+            type: string
+            optional: true
+        compatible_architectures:
+            description: (Optional) List of Architectures this layer is compatible with. Currently x86_64 and arm64 can be specified.
+            type: string
+            optional: true
+        compatible_runtimes:
+            description: (Optional) List of Runtimes this layer is compatible with. Up to 5 runtimes can be specified.
+            type: string
+            optional: true
+        created_date:
+            description: Date this resource was created.
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of what your Lambda Layer does.
+            type: string
+            optional: true
+        filename:
+            description: ' (Optional) Path to the function''s deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used.'
+            type: string
+            optional: true
+        layer_arn:
+            description: ARN of the Lambda Layer without version.
+            type: string
+            optional: true
+        layer_name:
+            description: (Required) Unique name for your Lambda Layer
+            type: string
+            optional: true
+        license_info:
+            description: (Optional) License info for your Lambda Layer. See License Info.
+            type: string
+            optional: true
+        s3_bucket:
+            description: (Optional) S3 bucket location containing the function's deployment package. Conflicts with filename. This bucket must reside in the same AWS region where you are creating the Lambda function.
+            type: string
+            optional: true
+        s3_key:
+            description: (Optional) S3 key of an object containing the function's deployment package. Conflicts with filename.
+            type: string
+            optional: true
+        s3_object_version:
+            description: (Optional) Object version containing the function's deployment package. Conflicts with filename.
+            type: string
+            optional: true
+        signing_job_arn:
+            description: ARN of a signing job.
+            type: string
+            optional: true
+        signing_profile_version_arn:
+            description: ARN for a signing profile version.
+            type: string
+            optional: true
+        skip_destroy:
+            description: (Optional) Whether to retain the old version of a previously deployed Lambda Layer. Default is false. When this is not set to true, changing any of compatible_architectures, compatible_runtimes, description, filename, layer_name, license_info, s3_bucket, s3_key, s3_object_version, or source_code_hash forces deletion of the existing layer version and creation of a new layer version.
+            type: string
+            optional: true
+        source_code_hash:
+            description: '(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either filename or s3_key. The usual way to set this is ${filebase64sha256("file.zip")} (Terraform 0.11.12 or later) or ${base64sha256(file("file.zip"))} (Terraform 0.11.11 and earlier), where "file.zip" is the local filename of the lambda layer source archive.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        source_code_size:
+            description: Size in bytes of the function .zip file.
+            type: string
+            optional: true
+        version:
+            description: Lambda Layer version.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Lambda Layer with version.
+            type: string
+        created_date:
+            description: Date this resource was created.
+            type: string
+        layer_arn:
+            description: ARN of the Lambda Layer without version.
+            type: string
+        signing_job_arn:
+            description: ARN of a signing job.
+            type: string
+        signing_profile_version_arn:
+            description: ARN for a signing profile version.
+            type: string
+        source_code_size:
+            description: Size in bytes of the function .zip file.
+            type: string
+        version:
+            description: Lambda Layer version.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

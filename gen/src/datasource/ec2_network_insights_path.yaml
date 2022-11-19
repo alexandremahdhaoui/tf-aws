@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ec2_network_insights_path
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the selected Network Insights Path.
+            type: string
+        destination:
+            description: AWS resource that is the destination of the path.
+            type: string
+        destination_ip:
+            description: IP address of the AWS resource that is the destination of the path.
+            type: string
+        destination_port:
+            description: Destination port.
+            type: string
+        protocol:
+            description: Protocol.
+            type: string
+        source:
+            description: AWS resource that is the source of the path.
+            type: string
+        source_ip:
+            description: IP address of the AWS resource that is the source of the path.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

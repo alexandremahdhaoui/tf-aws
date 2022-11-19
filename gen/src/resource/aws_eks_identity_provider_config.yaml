@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_eks_identity_provider_config
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the EKS Identity Provider Configuration.
+            type: string
+        create:
+            description: (Default 40m)
+            type: string
+        delete:
+            description: (Default 40m)
+            type: string
+        id:
+            description: EKS Cluster name and EKS Identity Provider Configuration name separated by a colon (:).
+            type: string
+        status:
+            description: Status of the EKS Identity Provider Configuration.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

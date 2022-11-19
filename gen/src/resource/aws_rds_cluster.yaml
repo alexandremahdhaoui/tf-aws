@@ -1,0 +1,193 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_rds_cluster
+spec:
+    args: {}
+    attrs:
+        allocated_storage:
+            description: (Optional) The amount of storage in gibibytes (GiB) to allocate to each DB instance in the Multi-AZ DB cluster. (This setting is required to create a Multi-AZ DB cluster).
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of cluster
+            type: string
+        auto_pause:
+            description: (Optional) Whether to enable automatic pause. A DB cluster can be paused only when it's idle (it has no connections). If a DB cluster is paused for more than seven days, the DB cluster might be backed up with a snapshot. In this case, the DB cluster is restored when there is a request to connect to it. Defaults to true.
+            type: string
+        availability_zones:
+            description: The availability zone of the instance
+            type: string
+        backup_retention_period:
+            description: The backup retention period
+            type: string
+        bucket_name:
+            description: (Required) The bucket name where your backup is stored
+            type: string
+        bucket_prefix:
+            description: (Optional) Can be blank, but is the path to your backup
+            type: string
+        cluster_identifier:
+            description: The RDS Cluster Identifier
+            type: string
+        cluster_members:
+            description: ' – List of RDS Instances that are a part of this cluster'
+            type: string
+        cluster_resource_id:
+            description: The RDS Cluster Resource ID
+            type: string
+        create:
+            description: (Default 120m)
+            type: string
+        database_name:
+            description: The database name
+            type: string
+        db_cluster_instance_class:
+            description: (Optional) The compute and memory capacity of each DB instance in the Multi-AZ DB cluster, for example db.m6g.xlarge. Not all DB instance classes are available in all AWS Regions, or for all database engines. For the full list of DB instance classes and availability for your engine, see DB instance class in the Amazon RDS User Guide. (This setting is required to create a Multi-AZ DB cluster).
+            type: string
+        delete:
+            description: (Default 120m
+            type: string
+        enable_global_write_forwarding:
+            description: (Optional) Whether cluster should forward writes to an associated global cluster. Applied to secondary clusters to enable them to forward writes to an aws_rds_global_cluster's primary cluster. See the Aurora Userguide documentation for more information.
+            type: string
+        endpoint:
+            description: The DNS address of the RDS instance
+            type: string
+        engine:
+            description: The database engine
+            type: string
+        engine_version_actual:
+            description: The running version of the database.
+            type: string
+        final_snapshot_identifier:
+            description: (Optional) The name of your final DB snapshot when this DB cluster is deleted. If omitted, no final snapshot will be made.
+            type: string
+        global_cluster_identifier:
+            description: (Optional) The global cluster identifier specified on aws_rds_global_cluster.
+            type: string
+        hosted_zone_id:
+            description: The Route53 Hosted Zone ID of the endpoint
+            type: string
+        iam_database_authentication_enabled:
+            description: (Optional) Specifies whether or not mappings of AWS Identity and Access Management (IAM) accounts to database accounts is enabled. Please see AWS Documentation for availability and limitations.
+            type: string
+        iam_roles:
+            description: (Optional) A List of ARNs for the IAM roles to associate to the RDS Cluster.
+            type: string
+        id:
+            description: The RDS Cluster Identifier
+            type: string
+        ingestion_role:
+            description: (Required) Role applied to load the data.
+            type: string
+        iops:
+            description: (Optional) The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for each DB instance in the Multi-AZ DB cluster. For information about valid Iops values, see Amazon RDS Provisioned IOPS storage to improve performance in the Amazon RDS User Guide. (This setting is required to create a Multi-AZ DB cluster). Must be a multiple between .5 and 50 of the storage amount for the DB cluster.
+            type: string
+        kms_key_id:
+            description: (Optional) The ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true.
+            type: string
+        master_password:
+            description: (Required unless a snapshot_identifier or replication_source_identifier is provided or unless a global_cluster_identifier is provided when the cluster is the "secondary" cluster of a global database) Password for the master DB user. Note that this may show up in logs, and it will be stored in the state file. Please refer to the RDS Naming Constraints
+            type: string
+        master_username:
+            description: The master username for the database
+            type: string
+        max_capacity:
+            description: (Required) The maximum capacity for an Aurora DB cluster in provisioned DB engine mode. The maximum capacity must be greater than or equal to the minimum capacity. Valid capacity values are in a range of 0.5 up to 128 in steps of 0.5.
+            type: string
+        min_capacity:
+            description: '(Required) The minimum capacity for an Aurora DB cluster in provisioned DB engine mode. The minimum capacity must be lesser than or equal to the maximum capacity. Valid capacity values are in a range of 0.5 up to 128 in steps of 0.5.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        network_type:
+            description: '(Optional) The network type of the cluster. Valid values: IPV4, DUAL.'
+            type: string
+        port:
+            description: The database port
+            type: string
+        preferred_backup_window:
+            description: The daily time range during which the backups happen
+            type: string
+        preferred_maintenance_window:
+            description: The maintenance window
+            type: string
+        reader_endpoint:
+            description: |-
+                A read-only endpoint for the Aurora cluster, automatically
+                load-balanced across replicas
+            type: string
+        replication_source_identifier:
+            description: ARN of the source DB cluster or DB instance if this DB cluster is created as a Read Replica.
+            type: string
+        restore_to_point_in_time:
+            description: (Optional) Nested attribute for point in time restore. More details below.
+            type: string
+        restore_to_time:
+            description: '(Optional) Date and time in UTC format to restore the database cluster to. Conflicts with use_latest_restorable_time.scaling_configuration Argument Reference~> strongNOTE: scaling_configuration configuration is only valid when engine_mode is set to serverless.Example:'
+            type: string
+        restore_type:
+            description: |-
+                (Optional) Type of restore to be performed.
+                Valid options are full-copy (default) and copy-on-write.
+            type: string
+        scaling_configuration:
+            description: (Optional) Nested attribute with scaling properties. Only valid when engine_mode is set to serverless. More details below.
+            type: string
+        seconds_until_auto_pause:
+            description: (Optional) The time, in seconds, before an Aurora DB cluster in serverless mode is paused. Valid values are 300 through 86400. Defaults to 300.
+            type: string
+        serverlessv2_scaling_configuration:
+            description: '- (Optional) Nested attribute with scaling properties for ServerlessV2. Only valid when engine_mode is set to provisioned. More details below.'
+            type: string
+        skip_final_snapshot:
+            description: (Optional) Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false.
+            type: string
+        snapshot_identifier:
+            description: (Optional) Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot.
+            type: string
+        source_cluster_identifier:
+            description: (Required) The identifier of the source database cluster from which to restore.
+            type: string
+        source_engine:
+            description: (Required) Source engine for the backup
+            type: string
+        source_engine_version:
+            description: '(Required) Version of the source engine used to make the backupThis will not recreate the resource if the S3 object changes in some way. It''s only used to initialize the database. This only works currently with the aurora engine. See AWS for currently supported engines and options. See Aurora S3 Migration Docs.restore_to_point_in_time Argument Reference~> strongNOTE:  The DB cluster is created from the source DB cluster with the same configuration as the original DB cluster, except that the new DB cluster is created with the default DB security group. Thus, the following arguments should only be specified with the source DB cluster''s respective values: database_name, master_username, storage_encrypted, replication_source_identifier, and source_region.Example:'
+            type: string
+        source_region:
+            description: (Optional) The source region for an encrypted replica DB cluster.
+            type: string
+        storage_encrypted:
+            description: Specifies whether the DB cluster is encrypted
+            type: string
+        storage_type:
+            description: '(Optional) Specifies the storage type to be associated with the DB cluster. (This setting is required to create a Multi-AZ DB cluster). Valid values: io1, Default: io1.'
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        timeout_action:
+            description: '(Optional) The action to take when the timeout is reached. Valid values: ForceApplyCapacityChange, RollbackCapacityChange. Defaults to RollbackCapacityChange. See documentation.serverlessv2_scaling_configuration Argument Reference~> strongNOTE: serverlessv2_scaling_configuration configuration is only valid when engine_mode is set to provisionedExample:'
+            type: string
+        update:
+            description: (Default 120m)
+            type: string
+        use_latest_restorable_time:
+            description: (Optional) Set to true to restore the database cluster to the latest restorable backup time. Defaults to false. Conflicts with restore_to_time.
+            type: string
+        vpc_security_group_ids:
+            description: '(Optional) List of VPC security groups to associate with the ClusterS3 Import OptionsFull details on the core parameters and impacts are in the API Docs: RestoreDBClusterFromS3. Requires that the S3 bucket be in the same region as the RDS cluster you''re trying to create. Sample:~> strongNOTE: RDS Aurora Serverless does not support loading data from S3, so its not possible to directly use engine_mode set to serverless with s3_import.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

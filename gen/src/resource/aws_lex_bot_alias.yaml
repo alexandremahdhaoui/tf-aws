@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lex_bot_alias
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the bot alias.
+            type: string
+        checksum:
+            description: Checksum of the bot alias.
+            type: string
+        create:
+            description: (Default 1m)
+            type: string
+        created_date:
+            description: The date that the bot alias was created.
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        last_updated_date:
+            description: 'The date that the bot alias was updated. When you create a resource, the creation date and the last updated date are the same.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 1m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_networkmanager_transit_gateway_peering
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Peering Amazon Resource Name (ARN).
+            type: string
+        core_network_arn:
+            description: The ARN of the core network.
+            type: string
+        edge_location:
+            description: The edge location for the peer.
+            type: string
+        id:
+            description: Peering ID.
+            type: string
+        owner_account_id:
+            description: The ID of the account owner.
+            type: string
+        peering_type:
+            description: The type of peering. This will be TRANSIT_GATEWAY.
+            type: string
+        resource_arn:
+            description: The resource ARN of the peer.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        transit_gateway_peering_attachment_id:
+            description: The ID of the transit gateway peering attachment.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

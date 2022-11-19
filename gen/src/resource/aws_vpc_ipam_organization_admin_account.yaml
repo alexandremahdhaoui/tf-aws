@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_vpc_ipam_organization_admin_account
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Organizations ARN for the delegate account.
+            type: string
+        email:
+            description: The Organizations email for the delegate account.
+            type: string
+        id:
+            description: The Organizations member account ID that you want to enable as the IPAM account.
+            type: string
+        name:
+            description: The Organizations name for the delegate account.
+            type: string
+        service_principal:
+            description: The AWS service principal.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

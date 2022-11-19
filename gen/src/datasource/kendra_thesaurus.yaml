@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: kendra_thesaurus
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Thesaurus.
+            type: string
+        bucket:
+            description: Name of the S3 bucket that contains the file.
+            type: string
+        created_at:
+            description: Unix datetime that the Thesaurus was created.
+            type: string
+        description:
+            description: Description of the Thesaurus.
+            type: string
+        error_message:
+            description: When the status field value is FAILED, this contains a message that explains why.
+            type: string
+        file_size_bytes:
+            description: Size of the Thesaurus file in bytes.
+            type: string
+        id:
+            description: Unique identifiers of the Thesaurus and index separated by a slash (/).
+            type: string
+        name:
+            description: Name of the Thesaurus.
+            type: string
+        role_arn:
+            description: ARN of a role with permission to access the S3 bucket that contains the Thesaurus. For more information, see IAM Roles for Amazon Kendra.
+            type: string
+        source_s3_path:
+            description: S3 location of the Thesaurus input data. Detailed below.
+            type: string
+        status:
+            description: Status of the Thesaurus. It is ready to use when the status is ACTIVE.
+            type: string
+        synonym_rule_count:
+            description: Number of synonym rules in the Thesaurus file.
+            type: string
+        tags:
+            description: 'Metadata that helps organize the Thesaurus you create.The source_s3_path configuration block supports the following attributes:'
+            type: string
+        term_count:
+            description: Number of unique terms in the Thesaurus file. For example, the synonyms a,b,c and a=>d, the term count would be 4.
+            type: string
+        updated_at:
+            description: Date and time that the Thesaurus was last updated.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

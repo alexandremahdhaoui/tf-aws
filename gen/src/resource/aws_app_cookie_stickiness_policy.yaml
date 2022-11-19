@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_app_cookie_stickiness_policy
+spec:
+    args: {}
+    attrs:
+        cookie_name:
+            description: Application cookie whose lifetime the ELB's cookie should follow.
+            type: string
+        id:
+            description: ID of the policy.
+            type: string
+        lb_port:
+            description: Load balancer port to which the policy is applied.
+            type: string
+        load_balancer:
+            description: Name of load balancer to which the policy is attached.
+            type: string
+        name:
+            description: Name of the stickiness policy.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

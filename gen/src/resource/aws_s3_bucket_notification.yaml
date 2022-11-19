@@ -1,0 +1,66 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_s3_bucket_notification
+spec:
+    args:
+        bucket:
+            description: (Required) Name of the bucket for notification configuration.
+            type: string
+            optional: true
+        eventbridge:
+            description: (Optional) Whether to enable Amazon EventBridge notifications.
+            type: string
+            optional: true
+        events:
+            description: (Required) Event for which to send notifications.
+            type: string
+            optional: true
+        filter_prefix:
+            description: (Optional) Object key name prefix.
+            type: string
+            optional: true
+        filter_suffix:
+            description: (Optional) Object key name suffix.
+            type: string
+            optional: true
+        id:
+            description: (Optional) Unique identifier for each of the notification configurations.
+            type: string
+            optional: true
+        lambda_function:
+            description: (Optional, Multiple) Used to configure notifications to a Lambda Function. See below.
+            type: string
+            optional: true
+        lambda_function_arn:
+            description: (Required) Lambda function ARN.queue
+            type: string
+            optional: true
+        queue:
+            description: (Optional) Notification configuration to SQS Queue. See below.
+            type: string
+            optional: true
+        queue_arn:
+            description: (Required) SQS queue ARN.topic
+            type: string
+            optional: true
+        topic:
+            description: (Optional) Notification configuration to SNS Topic. See below.lambda_function
+            type: string
+            optional: true
+        topic_arn:
+            description: (Required) SNS topic ARN.No additional attributes are exported.
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

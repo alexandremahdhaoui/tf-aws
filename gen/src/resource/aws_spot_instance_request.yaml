@@ -1,0 +1,50 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_spot_instance_request
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 10m)
+            type: string
+        id:
+            description: The Spot Instance Request ID.
+            type: string
+        private_dns:
+            description: ""
+            type: string
+        private_ip:
+            description: The private IP address assigned to the instance
+            type: string
+        public_dns:
+            description: ""
+            type: string
+        public_ip:
+            description: The public IP address assigned to the instance, if applicable.
+            type: string
+        spot_bid_status:
+            description: 'The current '
+            type: string
+        spot_instance_id:
+            description: |-
+                The Instance ID (if any) that is currently fulfilling
+                the Spot Instance request.
+            type: string
+        spot_request_state:
+            description: ' The current '
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

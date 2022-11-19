@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lb_target_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Target Group (matches id).
+            type: string
+        arn_suffix:
+            description: ARN suffix for use with CloudWatch Metrics.
+            type: string
+        id:
+            description: ARN of the Target Group (matches arn).
+            type: string
+        name:
+            description: Name of the Target Group.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

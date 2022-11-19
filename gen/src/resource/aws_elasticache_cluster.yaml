@@ -1,0 +1,233 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_elasticache_cluster
+spec:
+    args:
+        apply_immediately:
+            description: (Optional) Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information..
+            type: string
+            optional: true
+        arn:
+            description: The ARN of the created ElastiCache Cluster.
+            type: string
+            optional: true
+        auto_minor_version_upgrade:
+            description: '"redis"true.'
+            type: string
+            optional: true
+        availability_zone:
+            description: '(Optional) Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource.'
+            type: string
+            optional: true
+        az_mode:
+            description: (Optional, Memcached only) Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1.
+            type: string
+            optional: true
+        cache_nodes:
+            description: List of node objects including id, address, port and availability_zone.
+            type: string
+            optional: true
+        cluster_address:
+            description: (Memcached only) DNS name of the cache cluster without the port appended.
+            type: string
+            optional: true
+        cluster_id:
+            description: ' – (Required) Group identifier. ElastiCache converts this name to lowercase. Changing this value will re-create the resource.'
+            type: string
+            optional: true
+        configuration_endpoint:
+            description: (Memcached only) Configuration endpoint to allow host discovery.
+            type: string
+            optional: true
+        destination:
+            description: Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+            type: string
+            optional: true
+        destination_type:
+            description: For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+            type: string
+            optional: true
+        engine:
+            description: ' – (Optional, Required if replication_group_id is not specified) Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis.'
+            type: string
+            optional: true
+        engine_version:
+            description: Describe Cache Engine Versionsengine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.26.x5.0.6engine_version_actual, see  below.
+            type: string
+            optional: true
+        engine_version_actual:
+            description: Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine.
+            type: string
+            optional: true
+        final_snapshot_identifier:
+            description: (Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made.
+            type: string
+            optional: true
+        log_delivery_configuration:
+            description: (Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+            type: string
+            optional: true
+        log_format:
+            description: Valid values are json or text
+            type: string
+            optional: true
+        log_type:
+            description: Valid values are  slow-log or engine-log. Max 1 of each.
+            type: string
+            optional: true
+        maintenance_window:
+            description: ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00.
+            type: string
+            optional: true
+        node_type:
+            description: ' – (Required unless replication_group_id is provided) The instance class used. See AWS documentation for information on supported node types for Redis and guidance on selecting node types for Redis. See AWS documentation for information on supported node types for Memcached and guidance on selecting node types for Memcached. For Memcached, changing this value will re-create the resource.'
+            type: string
+            optional: true
+        notification_topic_arn:
+            description: ' – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic.'
+            type: string
+            optional: true
+        num_cache_nodes:
+            description: ' – (Required unless replication_group_id is provided) The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed.'
+            type: string
+            optional: true
+        parameter_group_name:
+            description: ' – (Required unless replication_group_id is provided) The name of the parameter group to associate with this cache cluster.'
+            type: string
+            optional: true
+        port:
+            description: ' – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource.'
+            type: string
+            optional: true
+        preferred_availability_zones:
+            description: '(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.'
+            type: string
+            optional: true
+        replication_group_id:
+            description: (Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
+            type: string
+            optional: true
+        security_group_ids:
+            description: ' – (Optional, VPC only) One or more VPC security groups associated with the cache cluster'
+            type: string
+            optional: true
+        security_group_names:
+            description: ' – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource.'
+            type: string
+            optional: true
+        snapshot_arns:
+            description: ' – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.'
+            type: string
+            optional: true
+        snapshot_name:
+            description: (Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
+            type: string
+            optional: true
+        snapshot_retention_limit:
+            description: (Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+            type: string
+            optional: true
+        snapshot_window:
+            description: '(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00'
+            type: string
+            optional: true
+        subnet_group_name:
+            description: ' – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource.'
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: The ARN of the created ElastiCache Cluster.
+            type: string
+        cache_nodes:
+            description: List of node objects including id, address, port and availability_zone.
+            type: string
+        cluster_address:
+            description: (Memcached only) DNS name of the cache cluster without the port appended.
+            type: string
+        configuration_endpoint:
+            description: (Memcached only) Configuration endpoint to allow host discovery.
+            type: string
+        destination:
+            description: Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource.
+            type: string
+        destination_type:
+            description: For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose.
+            type: string
+        engine_version_actual:
+            description: Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine.
+            type: string
+        final_snapshot_identifier:
+            description: (Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made.
+            type: string
+        log_delivery_configuration:
+            description: (Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details.
+            type: string
+        log_format:
+            description: Valid values are json or text
+            type: string
+        log_type:
+            description: Valid values are  slow-log or engine-log. Max 1 of each.
+            type: string
+        maintenance_window:
+            description: ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00.
+            type: string
+        notification_topic_arn:
+            description: ' – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic.'
+            type: string
+        port:
+            description: ' – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource.'
+            type: string
+        preferred_availability_zones:
+            description: '(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference.'
+            type: string
+        replication_group_id:
+            description: (Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group.
+            type: string
+        security_group_ids:
+            description: ' – (Optional, VPC only) One or more VPC security groups associated with the cache cluster'
+            type: string
+        security_group_names:
+            description: ' – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource.'
+            type: string
+        snapshot_arns:
+            description: ' – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource.'
+            type: string
+        snapshot_name:
+            description: (Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource.
+            type: string
+        snapshot_retention_limit:
+            description: (Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes
+            type: string
+        snapshot_window:
+            description: '(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00'
+            type: string
+        subnet_group_name:
+            description: ' – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource.'
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

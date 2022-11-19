@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_storagegateway_gateway
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the gateway.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        ec2_instance_id:
+            description: The ID of the Amazon EC2 instance that was used to launch the gateway.
+            type: string
+        endpoint_type:
+            description: The type of endpoint for your gateway.
+            type: string
+        gateway_id:
+            description: Identifier of the gateway.
+            type: string
+        gateway_network_interface:
+            description: An array that contains descriptions of the gateway network interfaces. See Gateway Network Interface.
+            type: string
+        host_environment:
+            description: The type of hypervisor environment used by the host.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the gateway.
+            type: string
+        ipv4_address:
+            description: 'The Internet Protocol version 4 (IPv4) address of the interface.TimeoutsConfiguration options:'
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Gateway Network Interface
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

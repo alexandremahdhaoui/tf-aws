@@ -1,0 +1,43 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_sesv2_dedicated_ip_assignment
+spec:
+    args:
+        create:
+            description: (Default 30m)
+            type: string
+            optional: true
+        destination_pool_name:
+            description: '(Required) Dedicated IP address.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        id:
+            description: 'A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        ip:
+            description: (Required) Dedicated IP address.
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        id:
+            description: 'A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

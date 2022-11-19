@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: resourcegroupstaggingapi_resources
+spec:
+    args: {}
+    attrs:
+        compliance_details:
+            description: ""
+            type: string
+        compliance_status:
+            description: Whether the resource is compliant.
+            type: string
+        'keys_with_noncompliant_values ':
+            description: Set of tag keys with non-compliant tag values.
+            type: string
+        'non_compliant_keys ':
+            description: Set of non-compliant tag keys.
+            type: string
+        resource_arn:
+            description: ARN of the resource.
+            type: string
+        resource_tag_mapping_list:
+            description: ""
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

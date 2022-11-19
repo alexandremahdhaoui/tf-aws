@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_volume_attachment
+spec:
+    args: {}
+    attrs:
+        device_name:
+            description: The device name exposed to the instance
+            type: string
+        instance_id:
+            description: ID of the Instance
+            type: string
+        volume_id:
+            description: ID of the Volume
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

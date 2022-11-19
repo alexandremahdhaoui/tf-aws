@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_neptune_cluster_instance
+spec:
+    args: {}
+    attrs:
+        address:
+            description: The hostname of the instance. See also endpoint and port.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of neptune instance
+            type: string
+        create:
+            description: (Default 90m)
+            type: string
+        dbi_resource_id:
+            description: The region-unique, immutable identifier for the neptune instance.
+            type: string
+        delete:
+            description: (Default 90m)
+            type: string
+        endpoint:
+            description: The connection endpoint in address:port format.
+            type: string
+        id:
+            description: The Instance identifier
+            type: string
+        kms_key_arn:
+            description: The ARN for the KMS encryption key if one is set to the neptune cluster.
+            type: string
+        storage_encrypted:
+            description: Specifies whether the neptune cluster is encrypted.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update:
+            description: (Default 90m)
+            type: string
+        writer:
+            description: ' – Boolean indicating if this instance is writable. False indicates this instance is a read replica.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

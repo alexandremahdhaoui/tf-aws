@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53recoverycontrolconfig_routing_control
+spec:
+    args:
+        arn:
+            description: ARN of the routing control.
+            type: string
+            optional: true
+        cluster_arn:
+            description: (Required) ARN of the cluster in which this routing control will reside.
+            type: string
+            optional: true
+        control_panel_arn:
+            description: '(Optional) ARN of the control panel in which this routing control will reside.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        name:
+            description: (Required) The name describing the routing control.
+            type: string
+            optional: true
+        status:
+            description: Status of routing control. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the routing control.
+            type: string
+        status:
+            description: Status of routing control. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

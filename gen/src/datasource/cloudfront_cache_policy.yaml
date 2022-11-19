@@ -1,0 +1,69 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: cloudfront_cache_policy
+spec:
+    args: {}
+    attrs:
+        comment:
+            description: Comment to describe the cache policy.
+            type: string
+        cookie_behavior:
+            description: Determines whether any cookies in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all.
+            type: string
+        cookies:
+            description: Object that contains a list of cookie names. See Items for more information.Headers Config
+            type: string
+        cookies_config:
+            description: Object that determines whether any cookies in viewer requests (and if so, which cookies) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Cookies Config for more information.
+            type: string
+        default_ttl:
+            description: Default amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated.
+            type: string
+        enable_accept_encoding_brotli:
+            description: A flag that can affect whether the Accept-Encoding HTTP header is included in the cache key and included in requests that CloudFront sends to the origin.
+            type: string
+        enable_accept_encoding_gzip:
+            description: A flag that can affect whether the Accept-Encoding HTTP header is included in the cache key and included in requests that CloudFront sends to the origin.Cookies Config
+            type: string
+        etag:
+            description: Current version of the cache policy.
+            type: string
+        header_behavior:
+            description: Determines whether any HTTP headers are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist.
+            type: string
+        headers:
+            description: Object that contains a list of header names. See Items for more information.Query String Config
+            type: string
+        headers_config:
+            description: Object that determines whether any HTTP headers (and if so, which headers) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Headers Config for more information.
+            type: string
+        max_ttl:
+            description: Maximum amount of time, in seconds, that objects stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated.
+            type: string
+        min_ttl:
+            description: Minimum amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated.
+            type: string
+        parameters_in_cache_key_and_forwarded_to_origin:
+            description: The HTTP headers, cookies, and URL query strings to include in the cache key. See Parameters In Cache Key And Forwarded To Origin for more information.Parameters In Cache Key And Forwarded To Origin
+            type: string
+        query_string_behavior:
+            description: Determines whether any URL query strings in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all.
+            type: string
+        query_strings:
+            description: Object that contains a list of query string names. See Items for more information.Items
+            type: string
+        query_strings_config:
+            description: Object that determines whether any URL query strings in viewer requests (and if so, which query strings) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Query String Config for more information.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

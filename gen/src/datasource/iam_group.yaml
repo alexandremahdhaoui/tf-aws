@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: iam_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: User ARN.
+            type: string
+        group_id:
+            description: Stable and unique string identifying the group.
+            type: string
+        path:
+            description: Path to the IAM user.
+            type: string
+        user_id:
+            description: Stable and unique string identifying the IAM user.
+            type: string
+        users:
+            description: List of objects containing group member information. See below.users
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

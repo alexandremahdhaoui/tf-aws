@@ -1,0 +1,53 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_accessanalyzer_archive_rule
+spec:
+    args:
+        analyzer_name:
+            description: (Required) Analyzer name.
+            type: string
+            optional: true
+        contains:
+            description: (Optional) Contains comparator.
+            type: string
+            optional: true
+        criteria:
+            description: (Required) Filter criteria.
+            type: string
+            optional: true
+        eq:
+            description: (Optional) Equals comparator.
+            type: string
+            optional: true
+        exists:
+            description: (Optional) Boolean comparator.
+            type: string
+            optional: true
+        filter:
+            description: (Required) Filter criteria for the archive rule. See Filter for more details.
+            type: string
+            optional: true
+        neq:
+            description: '(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        rule_name:
+            description: (Required) Rule name.FilterstrongNote One comparator must be included with each filter.
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: 'Resource ID in the format: analyzer_name/rule_name.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

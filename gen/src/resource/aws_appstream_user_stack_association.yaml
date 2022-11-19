@@ -1,0 +1,41 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_appstream_user_stack_association
+spec:
+    args:
+        authentication_type:
+            description: (Required) Authentication type for the user.
+            type: string
+            optional: true
+        id:
+            description: Unique ID of the appstream User Stack association.
+            type: string
+            optional: true
+        send_email_notification:
+            description: '(Optional) Whether a welcome email is sent to a user after the user is created in the user pool.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        stack_name:
+            description: ' (Required) Name of the stack that is associated with the user.'
+            type: string
+            optional: true
+        user_name:
+            description: ' (Required) Email address of the user who is associated with the stack.'
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: Unique ID of the appstream User Stack association.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

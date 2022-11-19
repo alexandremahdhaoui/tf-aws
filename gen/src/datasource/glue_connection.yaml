@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: glue_connection
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Glue Connection.
+            type: string
+        catalog_id:
+            description: Catalog ID of the Glue Connection.
+            type: string
+        connection_type:
+            description: Type of Glue Connection.
+            type: string
+        description:
+            description: ' – Description of the connection.'
+            type: string
+        match_criteria:
+            description: ' – A list of criteria that can be used in selecting this connection.'
+            type: string
+        name:
+            description: Name of the Glue Connection.
+            type: string
+        physical_connection_requirements:
+            description: A map of physical connection requirements, such as VPC and SecurityGroup.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

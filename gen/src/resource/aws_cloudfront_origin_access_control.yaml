@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudfront_origin_access_control
+spec:
+    args:
+        description:
+            description: (Required) The description of the Origin Access Control. It may be empty.
+            type: string
+            optional: true
+        id:
+            description: The unique identifier of this Origin Access Control.
+            type: string
+            optional: true
+        name:
+            description: (Required) A name that identifies the Origin Access Control.
+            type: string
+            optional: true
+        origin_access_control_origin_type:
+            description: (Required) The type of origin that this Origin Access Control is for. The only valid value is s3.
+            type: string
+            optional: true
+        signing_behavior:
+            description: '(Required) Specifies which requests CloudFront signs. Specify always for the most common use case. Allowed values: always, never, no-override.'
+            type: string
+            optional: true
+        signing_protocol:
+            description: '(Required) Determines how CloudFront signs (authenticates) requests. Valid values: sigv4.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        etag:
+            description: The current version of this Origin Access Control.
+            type: string
+        id:
+            description: The unique identifier of this Origin Access Control.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

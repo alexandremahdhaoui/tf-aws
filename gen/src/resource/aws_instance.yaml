@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_instance
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the instance.
+            type: string
+        capacity_reservation_specification:
+            description: Capacity reservation specification of the instance.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 20m)
+            type: string
+        device_name:
+            description: 'Device name, e.g., /dev/sdh or xvdh.TimeoutsConfiguration options:'
+            type: string
+        instance_state:
+            description: 'State of the instance. One of: pending, running, shutting-down, terminated, stopping, stopped. See Instance Lifecycle for more information.'
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost the instance is assigned to.
+            type: string
+        password_data:
+            description: Base-64 encoded encrypted password data for the instance. Useful for getting the administrator password for instances running Microsoft Windows. This attribute is only exported if get_password_data is true. Note that this encrypted value will be stored in the state file, as with all exported attributes. See GetPasswordData for more information.
+            type: string
+        primary_network_interface_id:
+            description: ID of the instance's primary network interface.
+            type: string
+        private_dns:
+            description: Private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC.
+            type: string
+        public_dns:
+            description: Public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC.
+            type: string
+        public_ip:
+            description: 'Public IP address assigned to the instance, if applicable. strongNOTE: If you are using an aws_eip with your instance, you should refer to the EIP''s address directly and not use public_ip as this field will change after the EIP is attached.'
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.For ebs_block_device, in addition to the arguments above, the following attribute is exported:'
+            type: string
+        update:
+            description: (Default 10m)
+            type: string
+        volume_id:
+            description: ID of the volume. For example, the ID can be accessed like this, aws_instance.web.root_block_device.0.volume_id.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

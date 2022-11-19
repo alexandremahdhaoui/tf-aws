@@ -1,0 +1,131 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_appstream_stack
+spec:
+    args:
+        access_endpoints:
+            description: |-
+                (Optional) Set of configuration blocks defining the interface VPC endpoints. Users of the stack can connect to AppStream 2.0 only through the specified endpoints.
+                See access_endpoints below.
+            type: string
+            optional: true
+        action:
+            description: |-
+                (Required) Action that is enabled or disabled.
+                Valid values are CLIPBOARD_COPY_FROM_LOCAL_DEVICE,  CLIPBOARD_COPY_TO_LOCAL_DEVICE, FILE_UPLOAD, FILE_DOWNLOAD, PRINTING_TO_LOCAL_DEVICE, DOMAIN_PASSWORD_SIGNIN, or DOMAIN_SMART_CARD_SIGNIN.
+            type: string
+            optional: true
+        application_settings:
+            description: |-
+                (Optional) Settings for application settings persistence.
+                See application_settings below.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the appstream stack.
+            type: string
+            optional: true
+        connector_type:
+            description: |-
+                (Required) Type of storage connector.
+                Valid values are HOMEFOLDERS, GOOGLE_DRIVE, or ONE_DRIVE.
+            type: string
+            optional: true
+        created_time:
+            description: Date and time, in UTC and extended RFC 3339 format, when the stack was created.
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description for the AppStream stack.
+            type: string
+            optional: true
+        display_name:
+            description: (Optional) Stack name to display.
+            type: string
+            optional: true
+        domains:
+            description: (Optional) Names of the domains for the account.
+            type: string
+            optional: true
+        embed_host_domains:
+            description: (Optional) Domains where AppStream 2.0 streaming sessions can be embedded in an iframe. You must approve the domains that you want to host embedded AppStream 2.0 streaming sessions.
+            type: string
+            optional: true
+        enabled:
+            description: (Required) Whether application settings should be persisted.
+            type: string
+            optional: true
+        endpoint_type:
+            description: |-
+                (Required) Type of the interface endpoint.
+                See the AccessEndpoint AWS API documentation for valid values.
+            type: string
+            optional: true
+        feedback_url:
+            description: (Optional) URL that users are redirected to after they click the Send Feedback link. If no URL is specified, no Send Feedback link is displayed. .
+            type: string
+            optional: true
+        id:
+            description: Unique ID of the appstream stack.
+            type: string
+            optional: true
+        name:
+            description: (Required) Unique name for the AppStream stack.
+            type: string
+            optional: true
+        permission:
+            description: 'ENABLED or DISABLED.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        redirect_url:
+            description: (Optional) URL that users are redirected to after their streaming session ends.
+            type: string
+            optional: true
+        resource_identifier:
+            description: (Optional) ARN of the storage connector.user_settings
+            type: string
+            optional: true
+        settings_group:
+            description: enabled is truestorage_connectors
+            type: string
+            optional: true
+        storage_connectors:
+            description: storage_connectors below.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.access_endpoints
+            type: string
+            optional: true
+        user_settings:
+            description: |-
+                (Optional) Configuration block for the actions that are enabled or disabled for users during their streaming sessions. By default, these actions are enabled.
+                See user_settings below.
+            type: string
+            optional: true
+        vpce_id:
+            description: (Optional) ID of the VPC in which the interface endpoint is used.application_settings
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the appstream stack.
+            type: string
+        created_time:
+            description: Date and time, in UTC and extended RFC 3339 format, when the stack was created.
+            type: string
+        id:
+            description: Unique ID of the appstream stack.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

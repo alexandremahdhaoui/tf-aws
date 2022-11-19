@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_storagegateway_cached_iscsi_volume
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678.
+            type: string
+        chap_enabled:
+            description: Whether mutual CHAP is enabled for the iSCSI target.
+            type: string
+        id:
+            description: Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678.
+            type: string
+        lun_number:
+            description: Logical disk number.
+            type: string
+        network_interface_port:
+            description: The port used to communicate with iSCSI targets.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        target_arn:
+            description: Target Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/target/iqn.1997-05.com.amazon:TargetName.
+            type: string
+        volume_arn:
+            description: Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678.
+            type: string
+        volume_id:
+            description: Volume ID, e.g., vol-12345678.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

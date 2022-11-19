@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_cloudfront_origin_access_identities
+spec:
+    args: {}
+    attrs:
+        iam_arns:
+            description: Set of ARNs of the matched origin access identities.
+            type: string
+        ids:
+            description: Set of ids of the matched origin access identities.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

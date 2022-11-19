@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_dynamodb_table
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the table
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 10m)
+            type: string
+        id:
+            description: Name of the table
+            type: string
+        stream_arn:
+            description: ARN of the Table Stream. Only available when stream_enabled = true
+            type: string
+        stream_label:
+            description: Timestamp, in ISO 8601 format, for this stream. Note that this timestamp is not a unique identifier for the stream on its own. However, the combination of AWS customer ID, table name and this field is guaranteed to be unique. It can be used for creating CloudWatch Alarms. Only available when stream_enabled = true
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeouts~> strongNote: There are a variety of default timeouts set internally. If you set a shorter custom timeout than one of the defaults, the custom timeout will not be respected as the longer of the custom or internal default will be used.Configuration options:'
+            type: string
+        update:
+            description: (Default 60m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

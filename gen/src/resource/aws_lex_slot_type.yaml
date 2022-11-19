@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lex_slot_type
+spec:
+    args: {}
+    attrs:
+        checksum:
+            description: ""
+            type: string
+        created_date:
+            description: The date when the slot type version was created.
+            type: string
+        last_updated_date:
+            description: The date when the $LATEST version of this slot type was updated.
+            type: string
+        version:
+            description: The version of the slot type.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

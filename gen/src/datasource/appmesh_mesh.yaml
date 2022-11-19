@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: appmesh_mesh
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the service mesh.
+            type: string
+        created_date:
+            description: Creation date of the service mesh.
+            type: string
+        egress_filter:
+            description: Egress filter rules for the service mesh.Egress Filter
+            type: string
+        last_updated_date:
+            description: Last update date of the service mesh.
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        spec:
+            description: Service mesh specification.
+            type: string
+        tags:
+            description: Map of tags.Spec
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

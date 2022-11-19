@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_timestreamwrite_database
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN that uniquely identifies this database.
+            type: string
+        id:
+            description: The name of the Timestream database.
+            type: string
+        kms_key_id:
+            description: The ARN of the KMS key used to encrypt the data stored in the database.
+            type: string
+        table_count:
+            description: The total number of tables found within the Timestream database.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

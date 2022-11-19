@@ -1,0 +1,72 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: autoscaling_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Auto Scaling group.
+            type: string
+        availability_zones:
+            description: One or more Availability Zones for the group.
+            type: string
+        default_cool_down:
+            description: Amount of time, in seconds, after a scaling activity completes before another scaling activity can start.
+            type: string
+        desired_capacity:
+            description: Desired size of the group.
+            type: string
+        enabled_metrics:
+            description: List of metrics enabled for collection.
+            type: string
+        health_check_grace_period:
+            description: The amount of time, in seconds, that Amazon EC2 Auto Scaling waits before checking the health status of an EC2 instance that has come into service.
+            type: string
+        health_check_type:
+            description: Service to use for the health checks. The valid values are EC2 and ELB.
+            type: string
+        id:
+            description: Name of the Auto Scaling Group.
+            type: string
+        launch_configuration:
+            description: The name of the associated launch configuration.
+            type: string
+        load_balancers:
+            description: One or more load balancers associated with the group.
+            type: string
+        max_size:
+            description: Maximum size of the group.
+            type: string
+        min_size:
+            description: Minimum size of the group.
+            type: string
+        name:
+            description: Name of the Auto Scaling Group.
+            type: string
+        placement_group:
+            description: Name of the placement group into which to launch your instances, if any. For more information, see Placement Groups (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the Amazon Elastic Compute Cloud User Guide.
+            type: string
+        service_linked_role_arn:
+            description: ARN of the service-linked role that the Auto Scaling group uses to call other AWS services on your behalf.
+            type: string
+        status:
+            description: Current state of the group when DeleteAutoScalingGroup is in progress.
+            type: string
+        target_group_arns:
+            description: ARNs of the target groups for your load balancer.
+            type: string
+        termination_policies:
+            description: The termination policies for the group.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

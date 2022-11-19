@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_workspaces_directory
+spec:
+    args: {}
+    attrs:
+        alias:
+            description: The directory alias.
+            type: string
+        customer_user_name:
+            description: The user name for the service account.
+            type: string
+        directory_name:
+            description: The name of the directory.
+            type: string
+        directory_type:
+            description: The directory type.
+            type: string
+        dns_ip_addresses:
+            description: The IP addresses of the DNS servers for the directory.
+            type: string
+        iam_role_id:
+            description: The identifier of the IAM role. This is the role that allows Amazon WorkSpaces to make calls to other services, such as Amazon EC2, on your behalf.
+            type: string
+        id:
+            description: The WorkSpaces directory identifier.
+            type: string
+        ip_group_ids:
+            description: The identifiers of the IP access control groups associated with the directory.
+            type: string
+        registration_code:
+            description: The registration code for the directory. This is the code that users enter in their Amazon WorkSpaces client application to connect to the directory.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        workspace_security_group_id:
+            description: The identifier of the security group that is assigned to new WorkSpaces.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

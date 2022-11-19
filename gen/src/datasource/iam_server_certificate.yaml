@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: iam_server_certificate
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ' is set to the ARN of the IAM Server Certificate'
+            type: string
+        certificate_body:
+            description: ' is the public key certificate (PEM-encoded). This is useful when configuring back-end instance authentication policy for load balancer'
+            type: string
+        certificate_chain:
+            description: ' is the public key certificate chain (PEM-encoded) if exists, empty otherwise'
+            type: string
+        expiration_date:
+            description: ' is set to the expiration date of the IAM Server Certificate'
+            type: string
+        id:
+            description: ' is set to the unique id of the IAM Server Certificate'
+            type: string
+        path:
+            description: ' is set to the path of the IAM Server Certificate'
+            type: string
+        upload_date:
+            description: ' is the date when the server certificate was uploaded'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

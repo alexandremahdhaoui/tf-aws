@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53_hosted_zone_dnssec
+spec:
+    args:
+        hosted_zone_id:
+            description: (Required) Identifier of the Route 53 Hosted Zone.
+            type: string
+            optional: true
+        id:
+            description: Route 53 Hosted Zone identifier.
+            type: string
+            optional: true
+        signing_status:
+            description: '(Optional) Hosted Zone signing status. Valid values: SIGNING, NOT_SIGNING. Defaults to SIGNING.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: Route 53 Hosted Zone identifier.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,56 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53recoverycontrolconfig_safety_rule
+spec:
+    args:
+        arn:
+            description: ARN of the safety rule.
+            type: string
+            optional: true
+        asserted_controls:
+            description: (Optional) Routing controls that are part of transactions that are evaluated to determine if a request to change a routing control state is allowed.
+            type: string
+            optional: true
+        gating_controls:
+            description: (Optional) Gating controls for the new gating rule. That is, routing controls that are evaluated by the rule configuration that you specify.
+            type: string
+            optional: true
+        inverted:
+            description: (Required) Logical negation of the rule.
+            type: string
+            optional: true
+        status:
+            description: Status of the safety rule. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise.
+            type: string
+            optional: true
+        target_controls:
+            description: (Optional) Routing controls that can only be set or unset if the specified rule_config evaluates to true for the specified gating_controls.rule_config
+            type: string
+            optional: true
+        threshold:
+            description: (Required) Number of controls that must be set when you specify an ATLEAST type rule.
+            type: string
+            optional: true
+        type:
+            description: '(Required) Rule type. Valid values are ATLEAST, AND, and OR.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the safety rule.
+            type: string
+        status:
+            description: Status of the safety rule. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

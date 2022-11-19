@@ -1,0 +1,81 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: imagebuilder_image
+spec:
+    args: {}
+    attrs:
+        account_id:
+            description: Account identifier of the AMI.
+            type: string
+        amis:
+            description: |
+                Set of objects with each Amazon Machine Image (AMI) created.
+            type: string
+        build_version_arn:
+            description: 'Build version ARN of the image. This will always have the #.#.#/# suffix.'
+            type: string
+        container_recipe_arn:
+            description: ARN of the container recipe.
+            type: string
+        date_created:
+            description: Date the image was created.
+            type: string
+        description:
+            description: Description of the AMI.
+            type: string
+        distribution_configuration_arn:
+            description: ARN of the Image Builder Distribution Configuration.
+            type: string
+        enhanced_image_metadata_enabled:
+            description: Whether additional information about the image being created is collected.
+            type: string
+        image:
+            description: Identifier of the AMI.
+            type: string
+        image_recipe_arn:
+            description: ARN of the image recipe.
+            type: string
+        image_tests_configuration:
+            description: |
+                List of an object with image tests configuration.
+            type: string
+        image_tests_enabled:
+            description: Whether image tests are enabled.
+            type: string
+        infrastructure_configuration_arn:
+            description: ARN of the Image Builder Infrastructure Configuration.
+            type: string
+        name:
+            description: Name of the AMI.
+            type: string
+        os_version:
+            description: Operating System version of the image.
+            type: string
+        output_resources:
+            description: |
+                List of objects with resources created by the image.
+            type: string
+        platform:
+            description: Platform of the image.
+            type: string
+        region:
+            description: Region of the AMI.
+            type: string
+        tags:
+            description: Key-value map of resource tags for the image.
+            type: string
+        timeout_minutes:
+            description: Number of minutes before image tests time out.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

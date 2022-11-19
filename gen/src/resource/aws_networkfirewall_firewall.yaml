@@ -1,0 +1,49 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_networkfirewall_firewall
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) that identifies the firewall.
+            type: string
+        attachment:
+            description: ""
+            type: string
+        availability_zone:
+            description: The Availability Zone where the subnet is configured.
+            type: string
+        endpoint_id:
+            description: The identifier of the firewall endpoint that AWS Network Firewall has instantiated in the subnet. You use this to identify the firewall endpoint in the VPC route tables, when you redirect the VPC traffic through the endpoint.
+            type: string
+        firewall_status:
+            description: Nested list of information about the current status of the firewall.
+            type: string
+        id:
+            description: The Amazon Resource Name (ARN) that identifies the firewall.
+            type: string
+        subnet_id:
+            description: The unique identifier of the subnet that you've specified to be used for a firewall endpoint.
+            type: string
+        sync_states:
+            description: |
+                Set of subnets configured for use by the firewall.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update_token:
+            description: A string token used when updating a firewall.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

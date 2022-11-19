@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: efs_mount_target
+spec:
+    args: {}
+    attrs:
+        availability_zone_id:
+            description: The unique and consistent identifier of the Availability Zone (AZ) that the mount target resides in.
+            type: string
+        availability_zone_name:
+            description: The name of the Availability Zone (AZ) that the mount target resides in.
+            type: string
+        dns_name:
+            description: DNS name for the EFS file system.
+            type: string
+        file_system_arn:
+            description: Amazon Resource Name of the file system for which the mount target is intended.
+            type: string
+        ip_address:
+            description: Address at which the file system may be mounted via the mount target.
+            type: string
+        mount_target_dns_name:
+            description: The DNS name for the given subnet/AZ per documented convention.
+            type: string
+        network_interface_id:
+            description: The ID of the network interface that Amazon EFS created when it created the mount target.
+            type: string
+        security_groups:
+            description: List of VPC security group IDs attached to the mount target.
+            type: string
+        subnet_id:
+            description: ID of the mount target's subnet.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

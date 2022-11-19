@@ -1,0 +1,61 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: servicecatalog_portfolio
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        arn:
+            description: Portfolio ARN.
+            type: string
+            optional: true
+        created_time:
+            description: Time the portfolio was created.
+            type: string
+            optional: true
+        description:
+            description: Description of the portfolio
+            type: string
+            optional: true
+        id:
+            description: (Required) Portfolio identifier.
+            type: string
+            optional: true
+        name:
+            description: Portfolio name.
+            type: string
+            optional: true
+        provider_name:
+            description: Name of the person or organization who owns the portfolio.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: Portfolio ARN.
+            type: string
+        created_time:
+            description: Time the portfolio was created.
+            type: string
+        description:
+            description: Description of the portfolio
+            type: string
+        name:
+            description: Portfolio name.
+            type: string
+        provider_name:
+            description: Name of the person or organization who owns the portfolio.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

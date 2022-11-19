@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_neptune_cluster
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Neptune Cluster Amazon Resource Name (ARN)
+            type: string
+        cluster_members:
+            description: ' – List of Neptune Instances that are a part of this cluster'
+            type: string
+        cluster_resource_id:
+            description: The Neptune Cluster Resource ID
+            type: string
+        create:
+            description: (Default 120m)
+            type: string
+        delete:
+            description: (Default 120m)
+            type: string
+        endpoint:
+            description: The DNS address of the Neptune instance
+            type: string
+        hosted_zone_id:
+            description: The Route53 Hosted Zone ID of the endpoint
+            type: string
+        id:
+            description: The Neptune Cluster Identifier
+            type: string
+        reader_endpoint:
+            description: A read-only endpoint for the Neptune cluster, automatically load-balanced across replicas
+            type: string
+        status:
+            description: The Neptune instance status
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 120m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

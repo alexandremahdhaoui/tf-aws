@@ -1,0 +1,43 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_cloudhsm_v2_cluster
+spec:
+    args: {}
+    attrs:
+        cluster_certificates:
+            description: |
+                The list of cluster certificates.
+            type: string
+        cluster_certificates.0.aws_hardware_certificate:
+            description: The HSM hardware certificate issued (signed) by AWS CloudHSM.
+            type: string
+        cluster_certificates.0.cluster_certificate:
+            description: The cluster certificate issued (signed) by the issuing certificate authority (CA) of the cluster's owner.
+            type: string
+        cluster_certificates.0.cluster_csr:
+            description: The certificate signing request (CSR). Available only in UNINITIALIZED state.
+            type: string
+        cluster_certificates.0.hsm_certificate:
+            description: The HSM certificate issued (signed) by the HSM hardware.
+            type: string
+        security_group_id:
+            description: ID of the security group associated with the CloudHSM cluster.
+            type: string
+        subnet_ids:
+            description: IDs of subnets in which cluster operates.
+            type: string
+        vpc_id:
+            description: ID of the VPC that the CloudHSM cluster resides in.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

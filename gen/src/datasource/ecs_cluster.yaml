@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ecs_cluster
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the ECS Cluster
+            type: string
+        pending_tasks_count:
+            description: Number of pending tasks for the ECS Cluster
+            type: string
+        registered_container_instances_count:
+            description: The number of registered container instances for the ECS Cluster
+            type: string
+        running_tasks_count:
+            description: Number of running tasks for the ECS Cluster
+            type: string
+        status:
+            description: Status of the ECS Cluster
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

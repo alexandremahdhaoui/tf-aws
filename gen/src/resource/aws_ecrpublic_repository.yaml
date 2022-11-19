@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ecrpublic_repository
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Full ARN of the repository.
+            type: string
+        delete:
+            description: (Default 20m)
+            type: string
+        id:
+            description: The repository name.
+            type: string
+        registry_id:
+            description: The registry ID where the repository was created.
+            type: string
+        repository_uri:
+            description: The URI of the repository.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

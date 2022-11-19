@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iam_policy
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN assigned by AWS to this policy.
+            type: string
+        description:
+            description: The description of the policy.
+            type: string
+        id:
+            description: The ARN assigned by AWS to this policy.
+            type: string
+        name:
+            description: The name of the policy.
+            type: string
+        path:
+            description: The path of the policy in IAM.
+            type: string
+        policy:
+            description: The policy document.
+            type: string
+        policy_id:
+            description: The policy's ID.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

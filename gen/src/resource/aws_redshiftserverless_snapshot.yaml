@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_redshiftserverless_snapshot
+spec:
+    args: {}
+    attrs:
+        accounts_with_provisioned_restore_access:
+            description: All of the Amazon Web Services accounts that have access to restore a snapshot to a provisioned cluster.
+            type: string
+        accounts_with_restore_access:
+            description: All of the Amazon Web Services accounts that have access to restore a snapshot to a namespace.
+            type: string
+        admin_username:
+            description: The username of the database within a snapshot.
+            type: string
+        arn:
+            description: The Amazon Resource Name (ARN) of the snapshot.
+            type: string
+        id:
+            description: The name of the snapshot.
+            type: string
+        kms_key_id:
+            description: The unique identifier of the KMS key used to encrypt the snapshot.
+            type: string
+        namespace_arn:
+            description: The Amazon Resource Name (ARN) of the namespace the snapshot was created from.
+            type: string
+        owner_account:
+            description: The owner Amazon Web Services; account of the snapshot.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,41 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_transit_gateway_prefix_list_reference
+spec:
+    args:
+        blackhole:
+            description: (Optional) Indicates whether to drop traffic that matches the Prefix List. Defaults to false.
+            type: string
+            optional: true
+        id:
+            description: EC2 Transit Gateway Route Table identifier and EC2 Prefix List identifier, separated by an underscore (_)
+            type: string
+            optional: true
+        prefix_list_id:
+            description: (Required) Identifier of EC2 Prefix List.
+            type: string
+            optional: true
+        transit_gateway_attachment_id:
+            description: '(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        transit_gateway_route_table_id:
+            description: (Required) Identifier of EC2 Transit Gateway Route Table.
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: EC2 Transit Gateway Route Table identifier and EC2 Prefix List identifier, separated by an underscore (_)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

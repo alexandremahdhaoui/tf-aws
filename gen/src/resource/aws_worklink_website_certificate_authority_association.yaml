@@ -1,0 +1,21 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_worklink_website_certificate_authority_association
+spec:
+    args: {}
+    attrs:
+        website_ca_id:
+            description: A unique identifier for the Certificate Authority.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

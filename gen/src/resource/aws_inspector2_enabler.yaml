@@ -1,0 +1,40 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_inspector2_enabler
+spec:
+    args:
+        account_ids:
+            description: (Required) Set of account IDs.
+            type: string
+            optional: true
+        create:
+            description: (Default 15m)
+            type: string
+            optional: true
+        resource_types:
+            description: '(Required) Type of resources to scan. Valid values are EC2 and ECR. If you only use one type, Terraform will ignore the status of the other type.No additional attributes are exported.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        update:
+            description: (Default 15m)
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 15m)
+            type: string
+        update:
+            description: (Default 15m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

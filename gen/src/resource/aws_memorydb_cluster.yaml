@@ -1,0 +1,232 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_memorydb_cluster
+spec:
+    args:
+        acl_name:
+            description: (Required) The name of the Access Control List to associate with the cluster.
+            type: string
+            optional: true
+        address:
+            description: DNS hostname of the node.
+            type: string
+            optional: true
+        arn:
+            description: The ARN of the cluster.
+            type: string
+            optional: true
+        auto_minor_version_upgrade:
+            description: (Optional, Forces new resource) When set to true, the cluster will automatically receive minor engine version upgrades after launch. Defaults to true.
+            type: string
+            optional: true
+        availability_zone:
+            description: The Availability Zone in which the node resides.
+            type: string
+            optional: true
+        cluster_endpoint:
+            description: ""
+            type: string
+            optional: true
+        create:
+            description: (Default 120m)
+            type: string
+            optional: true
+        create_time:
+            description: 'The date and time when the node was created. Example: 2022-01-01T21:00:00Z.'
+            type: string
+            optional: true
+        delete:
+            description: (Default 120m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description for the cluster. Defaults to "Managed by Terraform".
+            type: string
+            optional: true
+        endpoint:
+            description: ""
+            type: string
+            optional: true
+        engine_patch_version:
+            description: Patch version number of the Redis engine used by the cluster.
+            type: string
+            optional: true
+        engine_version:
+            description: (Optional) Version number of the Redis engine to be used for the cluster. Downgrades are not supported.
+            type: string
+            optional: true
+        final_snapshot_name:
+            description: (Optional) Name of the final cluster snapshot to be created when this resource is deleted. If omitted, no final snapshot will be made.
+            type: string
+            optional: true
+        id:
+            description: Same as name.
+            type: string
+            optional: true
+        kms_key_arn:
+            description: (Optional, Forces new resource) ARN of the KMS key used to encrypt the cluster at rest.
+            type: string
+            optional: true
+        maintenance_window:
+            description: '(Optional) Specifies the weekly time range during which maintenance on the cluster is performed. Specify as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Example: sun:23:00-mon:01:30.'
+            type: string
+            optional: true
+        name:
+            description: Name of this node.
+            type: string
+            optional: true
+        name_prefix:
+            description: (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name.
+            type: string
+            optional: true
+        node_type:
+            description: (Required) The compute and memory capacity of the nodes in the cluster. See AWS documentation on supported node types as well as vertical scaling.
+            type: string
+            optional: true
+        nodes:
+            description: |
+                Set of nodes in this shard.
+            type: string
+            optional: true
+        num_nodes:
+            description: Number of individual nodes in this shard.
+            type: string
+            optional: true
+        num_replicas_per_shard:
+            description: (Optional) The number of replicas to apply to each shard, up to a maximum of 5. Defaults to 1 (i.e. 2 nodes per shard).
+            type: string
+            optional: true
+        num_shards:
+            description: (Optional) The number of shards in the cluster. Defaults to 1.
+            type: string
+            optional: true
+        parameter_group_name:
+            description: (Optional) The name of the parameter group associated with the cluster.
+            type: string
+            optional: true
+        port:
+            description: Port number that this node is listening on.
+            type: string
+            optional: true
+        security_group_ids:
+            description: (Optional) Set of VPC Security Group ID-s to associate with this cluster.
+            type: string
+            optional: true
+        shards:
+            description: |
+                Set of shards in this cluster.
+            type: string
+            optional: true
+        slots:
+            description: 'Keyspace for this shard. Example: 0-16383.'
+            type: string
+            optional: true
+        snapshot_arns:
+            description: (Optional, Forces new resource) List of ARN-s that uniquely identify RDB snapshot files stored in S3. The snapshot files will be used to populate the new cluster. Object names in the ARN-s cannot contain any commas.
+            type: string
+            optional: true
+        snapshot_name:
+            description: (Optional, Forces new resource) The name of a snapshot from which to restore data into the new cluster.
+            type: string
+            optional: true
+        snapshot_retention_limit:
+            description: (Optional) The number of days for which MemoryDB retains automatic snapshots before deleting them. When set to 0, automatic backups are disabled. Defaults to 0.
+            type: string
+            optional: true
+        snapshot_window:
+            description: '(Optional) The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard. Example: 05:00-09:00.'
+            type: string
+            optional: true
+        sns_topic_arn:
+            description: (Optional) ARN of the SNS topic to which cluster notifications are sent.
+            type: string
+            optional: true
+        subnet_group_name:
+            description: (Optional, Forces new resource) The name of the subnet group to be used for the cluster. Defaults to a subnet group consisting of default VPC subnets.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        tls_enabled:
+            description: '(Optional, Forces new resource) A flag to enable in-transit encryption on the cluster. When set to false, the acl_name must be open-access. Defaults to true.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        update:
+            description: (Default 120m)
+            type: string
+            optional: true
+    attrs:
+        address:
+            description: DNS hostname of the node.
+            type: string
+        arn:
+            description: The ARN of the cluster.
+            type: string
+        availability_zone:
+            description: The Availability Zone in which the node resides.
+            type: string
+        cluster_endpoint:
+            description: ""
+            type: string
+        create:
+            description: (Default 120m)
+            type: string
+        create_time:
+            description: 'The date and time when the node was created. Example: 2022-01-01T21:00:00Z.'
+            type: string
+        delete:
+            description: (Default 120m)
+            type: string
+        endpoint:
+            description: ""
+            type: string
+        engine_patch_version:
+            description: Patch version number of the Redis engine used by the cluster.
+            type: string
+        id:
+            description: Same as name.
+            type: string
+        name:
+            description: Name of this node.
+            type: string
+        nodes:
+            description: |
+                Set of nodes in this shard.
+            type: string
+        num_nodes:
+            description: Number of individual nodes in this shard.
+            type: string
+        port:
+            description: Port number that this node is listening on.
+            type: string
+        shards:
+            description: |
+                Set of shards in this cluster.
+            type: string
+        slots:
+            description: 'Keyspace for this shard. Example: 0-16383.'
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 120m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

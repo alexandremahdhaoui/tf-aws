@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_macie2_custom_data_identifier
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the custom data identifier.
+            type: string
+        created_at:
+            description: The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created.
+            type: string
+        deleted:
+            description: Specifies whether the custom data identifier was deleted. If you delete a custom data identifier, Amazon Macie doesn't delete it permanently. Instead, it soft deletes the identifier.
+            type: string
+        id:
+            description: The unique identifier (ID) of the macie custom data identifier.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true
