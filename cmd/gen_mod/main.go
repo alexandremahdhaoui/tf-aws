@@ -1,3 +1,3 @@
 package main
 
-// Generates all terraform modules from the configs of `src/`
+// Generates terraform modules from the terraform resource definitions located in `gen/src/`

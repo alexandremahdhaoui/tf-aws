@@ -37,7 +37,7 @@ func parseTerraformDefinition(kind, providerVersionTag string) {
 	}
 }
 
-func saveDef(sourceKind string, data *apis.TerraformResource) {
+func saveDef(sourceKind string, data *apis.TerraformModuleDefinition) {
 	buf, err := yaml.Marshal(data)
 	panicE(err)
 	err = os.WriteFile(fmt.Sprintf(ModuleOutputPathTemplate, sourceKind, data.Metadata.Name), buf, 0644)

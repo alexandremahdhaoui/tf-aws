@@ -5,28 +5,19 @@
 | Path        | Description                                                                                                          |
 |-------------|----------------------------------------------------------------------------------------------------------------------|
 | cmd/        | Includes command line tools used in this project.                                                                    |
+| customize/  | Includes configuration files to customize behaviors of generated modules.                                            |
 | gen/mod/    | Generated modules.                                                                                                   |
 | gen/src/    | `TerraformModule` configuration files.                                                                               |
-| pkg/        | Includes go packages used by the golang cli tools defined in `cmd`.                                                  |
+| pkg/        | Includes go packages used by the cli tools defined in `cmd`.                                                         |
+| pkg/apis/   | Contains `TerraformModuleDefinition` structs.                                                                        | 
+| pkg/ast/    | Contains `NewTokenizer`, `FromHtmlDoc` & `ToTerraformDefinition` functions.                                          | 
 | pkg/tokens/ | Contains `Token`, `TokenStream` & `TokenTree` interfaces used to parse the markdowns into `TerraformModule` structs. |
-| templates/  | Includes all templating files used to generate the content inside src.                                               |
 
 
 # TODO
-- Get all the Data for resource & datasource from GitHub:
-  - Links
-    - https://github.com/hashicorp/terraform-provider-aws/tree/main/website/docs
-    - https://github.com/hashicorp/terraform-provider-aws/tree/v4.38.0/website/docs
-  - Parse MD files, get information & write them into `src`.
-  - We write data into `src` to control the intermediary data & modify some behavior, e.g. by adding values to 
-  `lifecycle.ignore_changes`.
-  - We do not really need to keep this data to be honest. Maybe for debugging it will be easier to keep it in the 
-  beginning.
-
-Important:
-- We should allow overwritting configurations from source, e.g. adding a new key for `lifecycle.ignore_changes`. 
+- We should allow overwriting configurations, e.g. adding a new key for `lifecycle.ignore_changes`. 
   - Maybe create a folder called `src_overwrite/`.
-- Don't store `gen/` in the repo but rather in `s3`
+- Don't store `gen/` in this repo but rather in `s3` ?
 
 # Modules
 
