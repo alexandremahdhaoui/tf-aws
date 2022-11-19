@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: lambda_code_signing_config
+spec:
+    args: {}
+    attrs:
+        allowed_publishers:
+            description: List of allowed publishers as signing profiles for this code signing configuration.
+            type: string
+        config_id:
+            description: Unique identifier for the code signing configuration.
+            type: string
+        description:
+            description: Code signing configuration description.
+            type: string
+        last_modified:
+            description: Date and time that the code signing configuration was last modified.
+            type: string
+        policies:
+            description: 'List of code signing policies that control the validation failure action for signature mismatch or expiry.allowed_publishers is exported with the following attribute:'
+            type: string
+        signing_profile_version_arns:
+            description: 'The ARN for each of the signing profiles. A signing profile defines a trusted user who can sign a code package.policies is exported with the following attribute:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

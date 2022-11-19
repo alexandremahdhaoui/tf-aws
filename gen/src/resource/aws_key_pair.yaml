@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_key_pair
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The key pair ARN.
+            type: string
+        fingerprint:
+            description: The MD5 public key fingerprint as specified in section 4 of RFC 4716.
+            type: string
+        id:
+            description: The key pair name.
+            type: string
+        key_name:
+            description: The key pair name.
+            type: string
+        key_pair_id:
+            description: The key pair ID.
+            type: string
+        key_type:
+            description: The type of key pair.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,78 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_memorydb_snapshot
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the snapshot.
+            type: string
+        cluster_configuration:
+            description: ""
+            type: string
+        create:
+            description: (Default 120m)
+            type: string
+        delete:
+            description: (Default 120m)
+            type: string
+        description:
+            description: Description for the cluster.
+            type: string
+        engine_version:
+            description: Version number of the Redis engine used by the cluster.
+            type: string
+        id:
+            description: The name of the snapshot.
+            type: string
+        maintenance_window:
+            description: The weekly time range during which maintenance on the cluster is performed.
+            type: string
+        name:
+            description: Name of the cluster.
+            type: string
+        node_type:
+            description: Compute and memory capacity of the nodes in the cluster.
+            type: string
+        num_shards:
+            description: Number of shards in the cluster.
+            type: string
+        parameter_group_name:
+            description: Name of the parameter group associated with the cluster.
+            type: string
+        port:
+            description: Port number on which the cluster accepts connections.
+            type: string
+        snapshot_retention_limit:
+            description: Number of days for which MemoryDB retains automatic snapshots before deleting them.
+            type: string
+        snapshot_window:
+            description: The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of the shard.
+            type: string
+        source:
+            description: Indicates whether the snapshot is from an automatic backup (automated) or was created manually (manual).
+            type: string
+        subnet_group_name:
+            description: Name of the subnet group used by the cluster.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        topic_arn:
+            description: ARN of the SNS topic to which cluster notifications are sent.
+            type: string
+        vpc_id:
+            description: The VPC in which the cluster exists.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

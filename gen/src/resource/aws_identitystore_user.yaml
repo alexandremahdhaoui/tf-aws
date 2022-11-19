@@ -1,0 +1,158 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_identitystore_user
+spec:
+    args:
+        addresses:
+            description: (Optional) Details about the user's address. At most 1 address is allowed. Detailed below.
+            type: string
+            optional: true
+        country:
+            description: (Optional) The country that this address is in.
+            type: string
+            optional: true
+        display_name:
+            description: (Required) The name that is typically displayed when the user is referenced.
+            type: string
+            optional: true
+        emails:
+            description: (Optional) Details about the user's email. At most 1 email is allowed. Detailed below.
+            type: string
+            optional: true
+        external_ids:
+            description: ""
+            type: string
+            optional: true
+        family_name:
+            description: (Required) The family name of the user.
+            type: string
+            optional: true
+        formatted:
+            description: (Optional) The name that is typically displayed when the name is shown for display.
+            type: string
+            optional: true
+        given_name:
+            description: (Required) The given name of the user.
+            type: string
+            optional: true
+        honorific_prefix:
+            description: (Optional) The honorific prefix of the user.
+            type: string
+            optional: true
+        honorific_suffix:
+            description: (Optional) The honorific suffix of the user.
+            type: string
+            optional: true
+        id:
+            description: The identifier issued to this resource by an external identity provider.
+            type: string
+            optional: true
+        identity_store_id:
+            description: (Required, Forces new resource) The globally unique identifier for the identity store that this user is in.
+            type: string
+            optional: true
+        issuer:
+            description: The issuer for an external identifier.
+            type: string
+            optional: true
+        locale:
+            description: (Optional) The user's geographical region or location.
+            type: string
+            optional: true
+        locality:
+            description: (Optional) The address locality.
+            type: string
+            optional: true
+        middle_name:
+            description: (Optional) The middle name of the user.phone_numbers Configuration Block
+            type: string
+            optional: true
+        name:
+            description: (Required) Details about the user's full name. Detailed below.
+            type: string
+            optional: true
+        nickname:
+            description: (Optional) An alternate name for the user.
+            type: string
+            optional: true
+        phone_numbers:
+            description: (Optional) Details about the user's phone number. At most 1 phone number is allowed. Detailed below.
+            type: string
+            optional: true
+        postal_code:
+            description: (Optional) The postal code of the address.
+            type: string
+            optional: true
+        preferred_language:
+            description: (Optional) The preferred language of the user.
+            type: string
+            optional: true
+        primary:
+            description: (Optional) When true, this is the primary phone number associated with the user.
+            type: string
+            optional: true
+        profile_url:
+            description: (Optional) An URL that may be associated with the user.
+            type: string
+            optional: true
+        region:
+            description: (Optional) The region of the address.
+            type: string
+            optional: true
+        street_address:
+            description: (Optional) The street of the address.
+            type: string
+            optional: true
+        timezone:
+            description: (Optional) The user's time zone.
+            type: string
+            optional: true
+        title:
+            description: (Optional) The user's title.
+            type: string
+            optional: true
+        type:
+            description: (Optional) The type of phone number.
+            type: string
+            optional: true
+        user_id:
+            description: The identifier for this user in the identity store.
+            type: string
+            optional: true
+        user_name:
+            description: (Required, Forces new resource) A unique string used to identify the user. This value can consist of letters, accented characters, symbols, numbers, and punctuation. This value is specified at the time the user is created and stored as an attribute of the user object in the identity store. The limit is 128 characters.
+            type: string
+            optional: true
+        user_type:
+            description: (Optional) The user type.addresses Configuration Block
+            type: string
+            optional: true
+        value:
+            description: '(Optional) The user''s phone number.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        external_ids:
+            description: ""
+            type: string
+        id:
+            description: The identifier issued to this resource by an external identity provider.
+            type: string
+        issuer:
+            description: The issuer for an external identifier.
+            type: string
+        user_id:
+            description: The identifier for this user in the identity store.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,57 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_kendra_index
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the Index.
+            type: string
+        created_at:
+            description: The Unix datetime that the index was created.
+            type: string
+        error_message:
+            description: When the Status field value is FAILED, this contains a message that explains why.
+            type: string
+        faq_statistics:
+            description: A block that specifies the number of question and answer topics in the index. Detailed below.
+            type: string
+        id:
+            description: The identifier of the Index.
+            type: string
+        index_statistics:
+            description: A block that provides information about the number of FAQ questions and answers and the number of text documents indexed. Detailed below.
+            type: string
+        indexed_question_answers_count:
+            description: 'The total number of FAQ questions and answers contained in the index.text_document_statisticsA text_document_statistics block supports the following attributes:'
+            type: string
+        indexed_text_bytes:
+            description: The total size, in bytes, of the indexed documents.
+            type: string
+        indexed_text_documents_count:
+            description: The number of text documents indexed.
+            type: string
+        status:
+            description: The current status of the index. When the value is ACTIVE, the index is ready for use. If the Status field value is FAILED, the error_message field contains a message that explains why.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.index_statisticsA index_statistics block supports the following attributes:'
+            type: string
+        text_document_statistics:
+            description: 'A block that specifies the number of text documents indexed. Detailed below.faq_statisticsA faq_statistics block supports the following attributes:'
+            type: string
+        updated_at:
+            description: The Unix datetime that the index was last updated.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

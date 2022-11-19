@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ami
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the AMI.
+            type: string
+        create:
+            description: (Default 40m)
+            type: string
+        delete:
+            description: (Default 90m)
+            type: string
+        hypervisor:
+            description: Hypervisor type of the image.
+            type: string
+        id:
+            description: ID of the created AMI.
+            type: string
+        image_owner_alias:
+            description: AWS account alias (for example, amazon, self) or the AWS account ID of the AMI owner.
+            type: string
+        image_type:
+            description: Type of image.
+            type: string
+        owner_id:
+            description: AWS account ID of the image owner.
+            type: string
+        platform:
+            description: This value is set to windows for Windows AMIs; otherwise, it is blank.
+            type: string
+        platform_details:
+            description: Platform details associated with the billing code of the AMI.
+            type: string
+        public:
+            description: Whether the image has public launch permissions.
+            type: string
+        root_snapshot_id:
+            description: Snapshot ID for the root volume (for EBS-backed AMIs)
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 40m)
+            type: string
+        usage_operation:
+            description: Operation of the Amazon EC2 instance and the billing code that is associated with the AMI.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

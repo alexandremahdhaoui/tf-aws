@@ -1,0 +1,259 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: identitystore_user
+spec:
+    args:
+        addresses:
+            description: ""
+            type: string
+            optional: true
+        alternate_identifier:
+            description: ' (Optional) A unique identifier for a user or group that is not the primary identifier. Conflicts with user_id and filter. Detailed below.'
+            type: string
+            optional: true
+        attribute_path:
+            description: '(Required) Attribute path that is used to specify which attribute name to search. For example: UserName. Refer to the User data type.'
+            type: string
+            optional: true
+        attribute_value:
+            description: '(Required) Value for an attribute.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        country:
+            description: The country that this address is in.
+            type: string
+            optional: true
+        display_name:
+            description: The name that is typically displayed when the user is referenced.
+            type: string
+            optional: true
+        emails:
+            description: |
+                List of details about the user's email.
+            type: string
+            optional: true
+        external_id:
+            description: (Optional) Configuration block for filtering by the identifier issued by an external identity provider. Detailed below.
+            type: string
+            optional: true
+        external_ids:
+            description: |
+                List of identifiers issued to this resource by an external identity provider.
+            type: string
+            optional: true
+        family_name:
+            description: The family name of the user.
+            type: string
+            optional: true
+        filter:
+            description: (Optional, strongDeprecated use the alternate_identifier attribute instead) Configuration block for filtering by a unique attribute of the user. Detailed below.
+            type: string
+            optional: true
+        formatted:
+            description: The name that is typically displayed when the name is shown for display.
+            type: string
+            optional: true
+        given_name:
+            description: The given name of the user.
+            type: string
+            optional: true
+        honorific_prefix:
+            description: The honorific prefix of the user.
+            type: string
+            optional: true
+        honorific_suffix:
+            description: The honorific suffix of the user.
+            type: string
+            optional: true
+        id:
+            description: The identifier issued to this resource by an external identity provider.
+            type: string
+            optional: true
+        identity_store_id:
+            description: (Required) Identity Store ID associated with the Single Sign-On Instance.
+            type: string
+            optional: true
+        issuer:
+            description: The issuer for an external identifier.
+            type: string
+            optional: true
+        locale:
+            description: The user's geographical region or location.
+            type: string
+            optional: true
+        locality:
+            description: The address locality.
+            type: string
+            optional: true
+        middle_name:
+            description: The middle name of the user.
+            type: string
+            optional: true
+        name:
+            description: ""
+            type: string
+            optional: true
+        nickname:
+            description: An alternate name for the user.
+            type: string
+            optional: true
+        phone_numbers:
+            description: |
+                List of details about the user's phone number.
+            type: string
+            optional: true
+        postal_code:
+            description: The postal code of the address.
+            type: string
+            optional: true
+        preferred_language:
+            description: The preferred language of the user.
+            type: string
+            optional: true
+        primary:
+            description: When true, this is the primary phone number associated with the user.
+            type: string
+            optional: true
+        profile_url:
+            description: An URL that may be associated with the user.
+            type: string
+            optional: true
+        region:
+            description: The region of the address.
+            type: string
+            optional: true
+        street_address:
+            description: The street of the address.
+            type: string
+            optional: true
+        timezone:
+            description: The user's time zone.
+            type: string
+            optional: true
+        title:
+            description: The user's title.
+            type: string
+            optional: true
+        type:
+            description: The type of phone number.
+            type: string
+            optional: true
+        unique_attribute:
+            description: '(Optional) An entity attribute that''s unique to a specific entity. Detailed below.-> Exactly one of the above arguments must be provided.external_id Configuration BlockThe following arguments are supported by the external_id configuration block:'
+            type: string
+            optional: true
+        user_id:
+            description: '(Optional) The identifier for a user in the Identity Store.-> Exactly one of the above arguments must be provided. Passing both filter and user_id is allowed for backwards compatibility.alternate_identifier Configuration BlockThe following arguments are supported by the alternate_identifier configuration block:'
+            type: string
+            optional: true
+        user_name:
+            description: User's user name value.
+            type: string
+            optional: true
+        value:
+            description: The user's phone number.
+            type: string
+            optional: true
+    attrs:
+        addresses:
+            description: ""
+            type: string
+        country:
+            description: The country that this address is in.
+            type: string
+        display_name:
+            description: The name that is typically displayed when the user is referenced.
+            type: string
+        emails:
+            description: |
+                List of details about the user's email.
+            type: string
+        external_ids:
+            description: |
+                List of identifiers issued to this resource by an external identity provider.
+            type: string
+        family_name:
+            description: The family name of the user.
+            type: string
+        formatted:
+            description: The name that is typically displayed when the name is shown for display.
+            type: string
+        given_name:
+            description: The given name of the user.
+            type: string
+        honorific_prefix:
+            description: The honorific prefix of the user.
+            type: string
+        honorific_suffix:
+            description: The honorific suffix of the user.
+            type: string
+        id:
+            description: The identifier issued to this resource by an external identity provider.
+            type: string
+        issuer:
+            description: The issuer for an external identifier.
+            type: string
+        locale:
+            description: The user's geographical region or location.
+            type: string
+        locality:
+            description: The address locality.
+            type: string
+        middle_name:
+            description: The middle name of the user.
+            type: string
+        name:
+            description: ""
+            type: string
+        nickname:
+            description: An alternate name for the user.
+            type: string
+        phone_numbers:
+            description: |
+                List of details about the user's phone number.
+            type: string
+        postal_code:
+            description: The postal code of the address.
+            type: string
+        preferred_language:
+            description: The preferred language of the user.
+            type: string
+        primary:
+            description: When true, this is the primary phone number associated with the user.
+            type: string
+        profile_url:
+            description: An URL that may be associated with the user.
+            type: string
+        region:
+            description: The region of the address.
+            type: string
+        street_address:
+            description: The street of the address.
+            type: string
+        timezone:
+            description: The user's time zone.
+            type: string
+        title:
+            description: The user's title.
+            type: string
+        type:
+            description: The type of phone number.
+            type: string
+        user_name:
+            description: User's user name value.
+            type: string
+        value:
+            description: The user's phone number.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

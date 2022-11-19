@@ -1,0 +1,817 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_medialive_channel
+spec:
+    args:
+        aac_settings:
+            description: (Optional) Aac Settings. See AAC Settings for more details.
+            type: string
+            optional: true
+        ac3_settings:
+            description: (Optional) Ac3 Settings. See AC3 Settings for more details.
+            type: string
+            optional: true
+        ad_markers:
+            description: (Optional) The ad marker type for this output group.
+            type: string
+            optional: true
+        adaptive_quantization:
+            description: (Optional) Enables or disables adaptive quantization.
+            type: string
+            optional: true
+        afd_signaling:
+            description: (Optional) Indicates that AFD values will be written into the output stream.
+            type: string
+            optional: true
+        algorithm:
+            description: (Optional) Audio normalization algorithm to use. itu17701 conforms to the CALM Act specification, itu17702 to the EBU R-128 specification.
+            type: string
+            optional: true
+        algorithm_control:
+            description: (Optional) Algorithm control for the audio description.
+            type: string
+            optional: true
+        archive_cdn_settings:
+            description: (Optional) Parameters that control the interactions with the CDN. See Archive CDN Settings for more details.
+            type: string
+            optional: true
+        archive_group_settings:
+            description: (Optional) Archive group settings. See Archive Group Settings for more details.
+            type: string
+            optional: true
+        archive_output_settings:
+            description: (Optional) Archive output settings. See Archive Output Settings for more details.
+            type: string
+            optional: true
+        archive_s3_settings:
+            description: (Optional) Archive S3 Settings. See Archive S3 Settings for more details.Archive S3 Settings
+            type: string
+            optional: true
+        arn:
+            description: ARN of the Channel.
+            type: string
+            optional: true
+        attenuation_control:
+            description: (Optional) Sets the attenuation control.
+            type: string
+            optional: true
+        audio_description_names:
+            description: (Optional) The names of the audio descriptions used as audio sources for the output.
+            type: string
+            optional: true
+        audio_descriptions:
+            description: (Required) Audio descriptions for the channel. See Audio Descriptions for more details.
+            type: string
+            optional: true
+        audio_normalization_settings:
+            description: (Optional) Advanced audio normalization settings. See Audio Normalization Settings for more details.
+            type: string
+            optional: true
+        audio_selector_name:
+            description: (Required) The name of the audio selector used as the source for this AudioDescription.
+            type: string
+            optional: true
+        audio_selectors:
+            description: (Optional) Used to select the audio stream to decode for inputs that have multiple. See Audio Selectors for more details.
+            type: string
+            optional: true
+        audio_type:
+            description: (Optional) Applies only if audioTypeControl is useConfigured. The values for audioType are defined in ISO-IEC 13818-1.
+            type: string
+            optional: true
+        audio_type_control:
+            description: (Optional) Determined how audio type is determined.
+            type: string
+            optional: true
+        audio_watermark_settings:
+            description: (Optional) Settings to configure one or more solutions that insert audio watermarks in the audio encode. See Audio Watermark Settings for more details.
+            type: string
+            optional: true
+        authentication_scheme:
+            description: (Optional) Authentication scheme to use when connecting with CDN.
+            type: string
+            optional: true
+        avail_blanking:
+            description: (Optional) Settings for ad avail blanking. See Avail Blanking for more details.Input Attachments
+            type: string
+            optional: true
+        avail_blanking_image:
+            description: (Optional) Blanking image to be used. See Avail Blanking Image for more details.
+            type: string
+            optional: true
+        bandwidth:
+            description: (Optional) The bitrate is specified in bits per second, as in an HLS manifest.
+            type: string
+            optional: true
+        bitrate:
+            description: (Optional) Average bitrate in bits/second.
+            type: string
+            optional: true
+        bitstream_mode:
+            description: (Optional) Specifies the bitstream mode (bsmod) for the emitted AC-3 stream.
+            type: string
+            optional: true
+        buf_fil_pct:
+            description: (Optional) Percentage of the buffer that should initially be filled.
+            type: string
+            optional: true
+        buf_size:
+            description: (Optional) Size of buffer in bits.
+            type: string
+            optional: true
+        buffer_msec:
+            description: (Optional) UDP output buffering in milliseconds.
+            type: string
+            optional: true
+        buffer_segments:
+            description: (Optional) Buffer segments.
+            type: string
+            optional: true
+        cache_full_behavior:
+            description: (Optional) Controls behavior when content cache fills up.
+            type: string
+            optional: true
+        cache_length:
+            description: (Optional) Cache length in seconds, is used to calculate buffer size.
+            type: string
+            optional: true
+        canned_acl:
+            description: (Optional) Specify the canned ACL to apply to each S3 request.Output Settings
+            type: string
+            optional: true
+        caption_data:
+            description: (Optional) Controls the types of data that passes to onCaptionInfo outputs.
+            type: string
+            optional: true
+        caption_description_names:
+            description: (Optional) The names of the caption descriptions used as audio sources for the output.
+            type: string
+            optional: true
+        caption_selectors:
+            description: (Optional) Used to select the caption input to use for inputs that have multiple available. See Caption Selectors for more details.
+            type: string
+            optional: true
+        capture_interval:
+            description: (Optional) The frequency at which to capture frames for inclusion in the output.
+            type: string
+            optional: true
+        capture_interval_units:
+            description: (Optional) Unit for the frame capture interval.H264 Settings
+            type: string
+            optional: true
+        cbet_check_digit:
+            description: (Required) CBET check digits to use for the watermark.
+            type: string
+            optional: true
+        cbet_stepaside:
+            description: (Required) Determines the method of CBET insertion mode when prior encoding is detected on the same layer.
+            type: string
+            optional: true
+        cdi_input_specification:
+            description: (Optional) Specification of CDI inputs for this channel. See CDI Input Specification for more details.
+            type: string
+            optional: true
+        certificate_mode:
+            description: (Optional) Setting to allow self signed or verified RTMP certificates.
+            type: string
+            optional: true
+        channel_class:
+            description: (Required) Concise argument description.
+            type: string
+            optional: true
+        channel_id:
+            description: 'ID of the Channel.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        check_digit:
+            description: (Required) Check digit string for the watermark.
+            type: string
+            optional: true
+        codec_settings:
+            description: (Optional) The video codec settings. See Video Codec Settings for more details.
+            type: string
+            optional: true
+        coding_mode:
+            description: (Optional) Dolby Digital Plus coding mode.Nielsen Watermark Settings
+            type: string
+            optional: true
+        color_metadata:
+            description: (Optional) Includes color space metadata in the output.
+            type: string
+            optional: true
+        column_depth:
+            description: (Optional) The height of the FEC protection matrix.
+            type: string
+            optional: true
+        connection_retry_interval:
+            description: (Optional) Number of seconds to wait before retrying connection to the flash media server if the connection is lost.
+            type: string
+            optional: true
+        container_settings:
+            description: (Required) UDP container settings. See Container Settings for more details.
+            type: string
+            optional: true
+        create:
+            description: (Default 15m)
+            type: string
+            optional: true
+        csid:
+            description: (Required) CBET source ID to use in the watermark.Nielsen NAES II NW Settings
+            type: string
+            optional: true
+        deblock_filter:
+            description: (Optional) Enable or disable the deblock filter when filtering.
+            type: string
+            optional: true
+        delete:
+            description: (Default 15m)
+            type: string
+            optional: true
+        denoise_filter:
+            description: (Optional) Enable or disable the denoise filter when filtering.
+            type: string
+            optional: true
+        destination:
+            description: (Required) Destination address and port number for RTP or UDP packets. See Destination for more details.
+            type: string
+            optional: true
+        destination_ref_id:
+            description: (Required) Reference ID for the destination.Archive CDN Settings
+            type: string
+            optional: true
+        destinations:
+            description: (Required) Destinations for channel. See Destinations for more details.
+            type: string
+            optional: true
+        dialnorm:
+            description: (Optional) Sets the dialnorm for the output.
+            type: string
+            optional: true
+        drc_line:
+            description: (Optional) Sets the Dolby dynamic range compression profile.
+            type: string
+            optional: true
+        drc_profile:
+            description: (Optional) If set to filmStandard, adds dynamic range compression signaling to the output bitstream as defined in the Dolby Digital specification.
+            type: string
+            optional: true
+        drc_rf:
+            description: (Optional) Sets the profile for heavy Dolby dynamic range compression.
+            type: string
+            optional: true
+        eac3_atmos_settings:
+            description: (Optional) - Eac3 Atmos Settings. See EAC3 Atmos Settings
+            type: string
+            optional: true
+        eac3_settings:
+            description: (Optional) - Eac3 Settings. See EAC3 SettingsAAC Settings
+            type: string
+            optional: true
+        encoder_settings:
+            description: (Required) Encoder settings. See Encoder Settings for more details.
+            type: string
+            optional: true
+        entropy_encoding:
+            description: (Optional) Entropy encoding mode.
+            type: string
+            optional: true
+        extension:
+            description: (Optional) Output file extension.
+            type: string
+            optional: true
+        fec_output_setting:
+            description: (Optional) Settings for enabling and adjusting Forward Error Correction on UDP outputs. See FEC Output Settings for more details.FEC Output Settings
+            type: string
+            optional: true
+        filter_settings:
+            description: (Optional) Filters to apply to an encode. See H264 Filter Settings for more details.
+            type: string
+            optional: true
+        filter_strength:
+            description: (Optional) Adjusts the magnitude of filtering from 1 (minimal) to 5 (strongest).
+            type: string
+            optional: true
+        fixed_afd:
+            description: (Optional) Four bit AFD value to write on all frames of video in the output stream.
+            type: string
+            optional: true
+        flicer_aq:
+            description: (Optional) Makes adjustments within each frame to reduce flicker on the I-frames.
+            type: string
+            optional: true
+        force_field_pictures:
+            description: (Optional) Controls whether coding is performed on a field basis or on a frame basis.
+            type: string
+            optional: true
+        frame_capture_settings:
+            description: (Optional) Frame capture settings. See Frame Capture Settings for more details.
+            type: string
+            optional: true
+        framerate_control:
+            description: (Optional) Indicates how the output video frame rate is specified.
+            type: string
+            optional: true
+        framerate_denominator:
+            description: (Optional) Framerate denominator.
+            type: string
+            optional: true
+        framerate_numerator:
+            description: (Optional) Framerate numerator.
+            type: string
+            optional: true
+        gop_b_reference:
+            description: (Optional) GOP-B reference.
+            type: string
+            optional: true
+        gop_closed_cadence:
+            description: (Optional) Frequency of closed GOPs.
+            type: string
+            optional: true
+        gop_num_b_frames:
+            description: (Optional) Number of B-frames between reference frames.
+            type: string
+            optional: true
+        gop_size:
+            description: (Optional) GOP size in units of either frames of seconds per gop_size_units.
+            type: string
+            optional: true
+        gop_size_units:
+            description: (Optional) Indicates if the gop_size is specified in frames or seconds.
+            type: string
+            optional: true
+        h264_settings:
+            description: (Optional) H264 settings. See H264 Settings for more details.Frame Capture Settings
+            type: string
+            optional: true
+        height:
+            description: Output video height in pixels.
+            type: string
+            optional: true
+        height_trim:
+            description: (Optional) Height dimensional trim.
+            type: string
+            optional: true
+        hls_input_settings:
+            description: (Optional) Specifies HLS input settings when the uri is for a HLS manifest. See HLS Input Settings for more details.
+            type: string
+            optional: true
+        id:
+            description: (Required) User-specified id. Ths is used in an output group or an output.
+            type: string
+            optional: true
+        include_fec:
+            description: (Optional) Enables column oly or column and row based FEC.
+            type: string
+            optional: true
+        input_attachment_name:
+            description: (Optional) User-specified name for the attachment.
+            type: string
+            optional: true
+        input_attachments:
+            description: (Optional) Input attachments for the channel. See Input Attachments for more details.
+            type: string
+            optional: true
+        input_filter:
+            description: (Optional) Turns on the filter for the input.
+            type: string
+            optional: true
+        input_id:
+            description: (Required) The ID of the input.
+            type: string
+            optional: true
+        input_loss_action:
+            description: (Optional) Specifies behavior of last resort when input video os lost.
+            type: string
+            optional: true
+        input_settings:
+            description: (Optional) Settings of an input. See Input Settings for more detailsInput Settings
+            type: string
+            optional: true
+        input_specification:
+            description: (Required) Specification of network and file inputs for the channel.
+            type: string
+            optional: true
+        input_type:
+            description: (Optional) Set to "broadcasterMixedAd" when input contains pre-mixed main audio + AD (narration) as a stereo pair.
+            type: string
+            optional: true
+        language_code:
+            description: (Optional) When specified this field indicates the three letter language code of the caption track to extract from the source.Network Input Settings
+            type: string
+            optional: true
+        level:
+            description: (Optional) H264 level.
+            type: string
+            optional: true
+        lfe_filter:
+            description: (Optional) When set to enabled, applies a 120Hz lowpass filter to the LFE channel prior to encoding.
+            type: string
+            optional: true
+        log_level:
+            description: (Optional) The log level to write to Cloudwatch logs.
+            type: string
+            optional: true
+        look_ahead_rate_control:
+            description: (Optional) Amount of lookahead.
+            type: string
+            optional: true
+        m2ts_settings:
+            description: (Optional) M2ts Settings. See M2ts Settings for more details.
+            type: string
+            optional: true
+        maintenance:
+            description: (Optional) Maintenance settings for this channel. See Maintenance for more details.
+            type: string
+            optional: true
+        maintenance_day:
+            description: (Optional) The day of the week to use for maintenance.
+            type: string
+            optional: true
+        maintenance_start_time:
+            description: (Optional) The hour maintenance will start.Media Package Settings
+            type: string
+            optional: true
+        max_bitrate:
+            description: (Optional) Set the maximum bitrate in order to accommodate expected spikes in the complexity of the video.
+            type: string
+            optional: true
+        media_package_group_settings:
+            description: (Optional) Media package group settings. See Media Package Group Settings for more details.
+            type: string
+            optional: true
+        media_package_output_settings:
+            description: (Optional) Media package output settings. This can be set as an empty block.
+            type: string
+            optional: true
+        media_package_settings:
+            description: (Optional) Destination settings for a MediaPackage output; one destination for both encoders. See Media Package Settings for more details.
+            type: string
+            optional: true
+        metadata_control:
+            description: (Optional) Metadata control.EAC3 Atmos Settings
+            type: string
+            optional: true
+        min_interval:
+            description: (Optional) Min interval.
+            type: string
+            optional: true
+        multiplex_group_sttings:
+            description: (Optional) Multiplex group settings. Attribute can be passed as an empty block.
+            type: string
+            optional: true
+        multiplex_id:
+            description: (Required) The ID of the Multiplex that the encoder is providing output to.
+            type: string
+            optional: true
+        multiplex_output_settings:
+            description: (Optional) Multiplex output settings. See Multiplex Output Settings for more details.
+            type: string
+            optional: true
+        multiplex_settings:
+            description: (Optional) Destination settings for a Multiplex output; one destination for both encoders. See Multiplex Settings for more details.
+            type: string
+            optional: true
+        name:
+            description: (Required) The name of the video description.
+            type: string
+            optional: true
+        name_modifier:
+            description: (Optional) String concatenated to the end of the destination filename. Required for multiple outputs of the same type.Multiplex Output Settings
+            type: string
+            optional: true
+        network_input_settings:
+            description: (Optional) Input settings. See Network Input Settings for more details.
+            type: string
+            optional: true
+        nielsen_cbet_settings:
+            description: (Optional) Used to insert watermarks of type Nielsen CBET. See Nielsen CBET Settings for more details.
+            type: string
+            optional: true
+        nielsen_distribution_type:
+            description: (Optional) Distribution types to assign to the watermarks. Options are PROGRAM_CONTENT and FINAL_DISTRIBUTOR.
+            type: string
+            optional: true
+        nielsen_naes_ii_nw_settings:
+            description: (Optional) Used to insert watermarks of type Nielsen NAES, II (N2) and Nielsen NAES VI (NW). See Nielsen NAES II NW Settings for more details.Nielsen CBET Settings
+            type: string
+            optional: true
+        nielsen_watermark_settings:
+            description: (Optional) Settings to configure Nielsen Watermarks in the audio encode. See Nielsen Watermark Settings for more details.Audio Codec Settings
+            type: string
+            optional: true
+        num_ref_frames:
+            description: (Optional) Number of reference frames to use.
+            type: string
+            optional: true
+        num_retries:
+            description: (Optional) Number of retry attempts.Container Settings
+            type: string
+            optional: true
+        output_group_settings:
+            description: (Required) Settings associated with the output group. See Output Group Settings for more details.
+            type: string
+            optional: true
+        output_groups:
+            description: (Required) Output groups for the channel. See Output Groups for more details.
+            type: string
+            optional: true
+        output_name:
+            description: (Required) The name used to identify an output.
+            type: string
+            optional: true
+        output_settings:
+            description: (Required) Settings for output. See Output Settings for more details.
+            type: string
+            optional: true
+        outputs:
+            description: (Required) List of outputs. See Outputs for more details.
+            type: string
+            optional: true
+        par_control:
+            description: (Optional) Indicates how the output pixel aspect ratio is specified.
+            type: string
+            optional: true
+        par_denominator:
+            description: (Optional) Pixel Aspect Ratio denominator.
+            type: string
+            optional: true
+        par_numerator:
+            description: (Optional) Pixel Aspect Ratio numerator.
+            type: string
+            optional: true
+        password_param:
+            description: (Optional) Key used to extract the password from EC2 Parameter store.
+            type: string
+            optional: true
+        post_filter_sharpening:
+            description: (Optional) Post filter sharpening.
+            type: string
+            optional: true
+        profile:
+            description: (Optional) H264 profile.
+            type: string
+            optional: true
+        program_name:
+            description: (Optional) The program name of the Multiplex program that the encoder is providing output to.Settings
+            type: string
+            optional: true
+        quality_level:
+            description: (Optional) Quality level.
+            type: string
+            optional: true
+        qvbr_quality_level:
+            description: (Optional) Controls the target quality for the video encode.
+            type: string
+            optional: true
+        rate_control_mode:
+            description: (Optional) Rate control mode.
+            type: string
+            optional: true
+        raw_format:
+            description: (Optional) Sets LATM/LOAS AAC output for raw containers.
+            type: string
+            optional: true
+        raw_settings:
+            description: '- (Optional) Raw Settings. This can be set as an empty block.UDP Output Settings'
+            type: string
+            optional: true
+        resolution:
+            description: (Required) - Maximum CDI input resolution.Destinations
+            type: string
+            optional: true
+        respond_to_afd:
+            description: (Optional) Indicate how to respond to the AFD values that might be in the input video.
+            type: string
+            optional: true
+        restart_delay:
+            description: (Optional) Number of seconds to wait until a restart is initiated.UDP Group Settings
+            type: string
+            optional: true
+        retries:
+            description: (Optional) The number of consecutive times that attempts to read a manifest or segment must fail before the input is considered unavailable.
+            type: string
+            optional: true
+        retry_interval:
+            description: (Optional) The number of seconds between retries when an attempt to read a manifest or segment fails.
+            type: string
+            optional: true
+        role_arn:
+            description: (Optional) Concise argument description.
+            type: string
+            optional: true
+        rollover_interval:
+            description: (Optional) Number of seconds to write to archive file before closing and starting a new one.Media Package Group Settings
+            type: string
+            optional: true
+        row_length:
+            description: '(Optional) The width of the FEC protection matrix.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        rtmp_group_settings:
+            description: (Optional) RTMP group settings. See RTMP Group Settings for more details.
+            type: string
+            optional: true
+        rtmp_output_settings:
+            description: (Optional) RTMP output settings. See RTMP Output Settings for more details.
+            type: string
+            optional: true
+        sample_rate:
+            description: (Optional) Sample rate in Hz.
+            type: string
+            optional: true
+        scaling_behavior:
+            description: (Optional) Behavior on how to scale.
+            type: string
+            optional: true
+        scan_type:
+            description: (Optional) Sets the scan type of the output.
+            type: string
+            optional: true
+        scene_change_detect:
+            description: (Optional) Scene change detection.
+            type: string
+            optional: true
+        scte35_pid:
+            description: (Optional) PID from which to read SCTE-35 messages.
+            type: string
+            optional: true
+        scte35_source_type:
+            description: (Optional) Identifies the source for the SCTE-35 messages that MediaLive will ingest.Maintenance
+            type: string
+            optional: true
+        server_validation:
+            description: (Optional) Check HTTPS server certificates.HLS Input Settings
+            type: string
+            optional: true
+        settings:
+            description: (Optional) Destination settings for a standard output; one destination for each redundant encoder. See Settings for more details.Encoder Settings
+            type: string
+            optional: true
+        sharpness:
+            description: (Optional) Changes the strength of the anti-alias filter used for scaling.
+            type: string
+            optional: true
+        sid:
+            description: (Required) The Nielsen Source ID to include in the watermark.Output Groups
+            type: string
+            optional: true
+        slices:
+            description: (Optional) Number of slices per picture.
+            type: string
+            optional: true
+        smpte2038_data_preference:
+            description: (Optional) Specifies whether to extract applicable ancillary data from a SMPTE-2038 source in the input.
+            type: string
+            optional: true
+        softness:
+            description: (Optional) Softness.
+            type: string
+            optional: true
+        source:
+            description: (Optional) The source for the timecode that will be associated with the events outputs.
+            type: string
+            optional: true
+        source_end_behavior:
+            description: (Optional) Loop input if it is a file.Audio Selectors
+            type: string
+            optional: true
+        spatial_aq:
+            description: (Optional) Makes adjustments within each frame based on spatial variation of content complexity.
+            type: string
+            optional: true
+        spec:
+            description: (Optional) Use MPEG-2 AAC audio instead of MPEG-4 AAC audio for raw or MPEG-2 Transport Stream containers.
+            type: string
+            optional: true
+        state:
+            description: (Optional) When set to enabled, causes video, audio and captions to be blanked when insertion metadata is added.Avail Blanking Image
+            type: string
+            optional: true
+        stream_name:
+            description: (Optional) Stream name RTMP destinations (URLs of type rtmp://)
+            type: string
+            optional: true
+        strength:
+            description: (Optional) Filter strength.Avail Blanking
+            type: string
+            optional: true
+        subgop_length:
+            description: (Optional) Subgop length.
+            type: string
+            optional: true
+        surround_trim:
+            description: (Optional) Surround dimensional trim.EAC3 Settings
+            type: string
+            optional: true
+        sync_threshold:
+            description: (Optional) Threshold in frames beyond which output timecode is resynchronized to the input timecode.Video Descriptions
+            type: string
+            optional: true
+        syntax:
+            description: (Optional) Produces a bitstream compliant with SMPTE RP-2027.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) A map of tags to assign to the channel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        target_lkfs:
+            description: (Optional) Target LKFS (loudness) to adjust volume to.Audio Watermark Settings
+            type: string
+            optional: true
+        temporal_aq:
+            description: (Optional) Makes adjustments within each frame based on temporal variation of content complexity.
+            type: string
+            optional: true
+        temporal_filter_settings:
+            description: (Optional) Temporal filter settings. See Temporal Filter SettingsTemporal Filter Settings
+            type: string
+            optional: true
+        timecode_config:
+            description: (Required) Contains settings used to acquire and adjust timecode information from inputs. See Timecode Config for more details.
+            type: string
+            optional: true
+        timecode_insertion:
+            description: (Optional) Determines how timecodes should be inserted into the video elementary stream.H264 Filter Settings
+            type: string
+            optional: true
+        timed_metadata_id3_frame:
+            description: (Optional) Indicates ID3 frame that has the timecode.
+            type: string
+            optional: true
+        timed_metadta_id3_perios:
+            description: '- (Optional) Timed metadata interval in seconds.Destination'
+            type: string
+            optional: true
+        udp_group_sttings:
+            description: (Optional) UDP group settings. See UDP Group Settings for more details.Outputs
+            type: string
+            optional: true
+        udp_output_settings:
+            description: (Optional) UDP output settings. See UDP Output Settings for more detailsArchive Output Settings
+            type: string
+            optional: true
+        update:
+            description: (Default 15m)
+            type: string
+            optional: true
+        uri:
+            description: (Required) Path to a file accessible to the live stream.
+            type: string
+            optional: true
+        url:
+            description: (Optional) A URL specifying a destination.
+            type: string
+            optional: true
+        username:
+            description: (Optional). Username to be used.Archive Group Settings
+            type: string
+            optional: true
+        vbr_quality:
+            description: (Optional) VBR Quality Level - Only used if rateControlMode is VBR.AC3 Settings
+            type: string
+            optional: true
+        video_description_name:
+            description: (Optional) The name of the video description used as audio sources for the output.Timecode Config
+            type: string
+            optional: true
+        video_descriptions:
+            description: (Required) Video Descriptions. See Video Descriptions for more details.
+            type: string
+            optional: true
+        vpc:
+            description: (Optional) Settings for the VPC outputs.CDI Input Specification
+            type: string
+            optional: true
+        width:
+            description: (Optional) Output video width in pixels.Video Codec Settings
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Channel.
+            type: string
+        channel_id:
+            description: 'ID of the Channel.TimeoutsConfiguration options:'
+            type: string
+        create:
+            description: (Default 15m)
+            type: string
+        delete:
+            description: (Default 15m)
+            type: string
+        update:
+            description: (Default 15m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

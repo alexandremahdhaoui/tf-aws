@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: api_gateway_sdk
+spec:
+    args: {}
+    attrs:
+        body:
+            description: SDK as a string.
+            type: string
+        content_type:
+            description: Content-type header value in the HTTP response.
+            type: string
+        id:
+            description: The REST-API-ID:STAGE-NAME
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

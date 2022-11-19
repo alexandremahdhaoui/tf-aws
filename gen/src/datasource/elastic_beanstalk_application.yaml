@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: elastic_beanstalk_application
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the application.
+            type: string
+        description:
+            description: Short description of the applicationApplication version lifecycle (appversion_lifecycle) supports the nested attribute containing.
+            type: string
+        id:
+            description: Name of the application
+            type: string
+        max_age_in_days:
+            description: Number of days to retain an application version.
+            type: string
+        max_count:
+            description: Maximum number of application versions to retain.
+            type: string
+        service_role:
+            description: ARN of an IAM service role under which the application version is deleted.  Elastic Beanstalk must have permission to assume this role.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

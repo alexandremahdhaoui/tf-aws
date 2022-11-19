@@ -1,10 +1,12 @@
 github.com/yuin/goldmark v1.5.3 h1:3HUJmBFbQW9fhQOzMgseU134xfi6hU+mjWywx5Ty+/M=
 github.com/yuin/goldmark v1.5.3/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
-gitlab.com/alexandre.mahdhaoui/go-fswatcher v0.0.0-20221009193659-74d4e2de9bf2 h1:2T6Mje2urpbLLi7l7ayxxyV+at/FF0wt78KLo7QPzcU=
-gitlab.com/alexandre.mahdhaoui/go-fswatcher v0.0.0-20221009193659-74d4e2de9bf2/go.mod h1:X6oANsTXe2bcln2hr8cuKJf4sFK62PsXM98TwzTU+3U=
 gitlab.com/alexandre.mahdhaoui/go-lib-ds-graph v0.0.0-20221114125011-90d95851e1a6 h1:iXUDoGYTEio+/ViqWJ3Ob/J3xqRXHTFXww9qGP9Fzgo=
 gitlab.com/alexandre.mahdhaoui/go-lib-ds-graph v0.0.0-20221114125011-90d95851e1a6/go.mod h1:Z4A5i89hQrMh+y15G2ssNoQJeh0HYdz9zx9x+lUjJm4=
 gitlab.com/alexandre.mahdhaoui/go-lib-visitor-html v0.0.0-20221114131301-14a1696d00c5 h1:rUjkLgfNLFOed/eNV96Iy80lBh0/HPB0SDCVDWPZ5uo=
 gitlab.com/alexandre.mahdhaoui/go-lib-visitor-html v0.0.0-20221114131301-14a1696d00c5/go.mod h1:pXH7u/qoHKe5vWZQRQ5woUKx3kSjX+qKa+p6aMZnedQ=
 golang.org/x/net v0.2.0 h1:sZfSu1wtKLGlWI4ZZayP0ck9Y73K1ynO6gqzTdBVdPU=
 golang.org/x/net v0.2.0/go.mod h1:KqCZLdyyvdV855qA2rE3GC2aiw5xGR5TEjj8smXukLY=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

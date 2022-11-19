@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iam_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN assigned by AWS for this group.
+            type: string
+        id:
+            description: The group's ID.
+            type: string
+        name:
+            description: The group's name.
+            type: string
+        path:
+            description: The path of the group in IAM.
+            type: string
+        unique_id:
+            description: The unique ID assigned by AWS.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

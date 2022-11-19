@@ -1,0 +1,60 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_fsx_ontap_file_system
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name of the file system.
+            type: string
+        create:
+            description: (Default 60m)
+            type: string
+        delete:
+            description: (Default 60m)
+            type: string
+        dns_name:
+            description: The Domain Name Service (DNS) name for the file system. You can mount your file system using its DNS name.
+            type: string
+        endpoints:
+            description: The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below.
+            type: string
+        id:
+            description: Identifier of the file system, e.g., fs-12345678
+            type: string
+        intercluster:
+            description: An endpoint for managing your file system by setting up NetApp SnapMirror with other ONTAP systems. See Endpoint.
+            type: string
+        ip_addresses:
+            description: 'IP addresses of the file system endpoint.TimeoutsConfiguration options:'
+            type: string
+        management:
+            description: An endpoint for managing your file system using the NetApp ONTAP CLI and NetApp ONTAP API. See Endpoint.Endpoint
+            type: string
+        network_interface_ids:
+            description: Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface.
+            type: string
+        owner_id:
+            description: AWS account identifier that created the file system.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update:
+            description: (Default 60m)
+            type: string
+        vpc_id:
+            description: Identifier of the Virtual Private Cloud for the file system.Endpoints
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

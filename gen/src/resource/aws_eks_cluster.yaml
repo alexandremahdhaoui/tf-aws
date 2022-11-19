@@ -1,0 +1,255 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_eks_cluster
+spec:
+    args:
+        1–20 nodes, then we recommend specifying a large instance type.:
+            description: ""
+            type: string
+            optional: true
+        21–100 nodes, then we recommend specifying an xlarge instance type.:
+            description: ""
+            type: string
+            optional: true
+        101–250 nodes, then we recommend specifying a 2xlarge instance type.:
+            description: For a list of the available Amazon EC2 instance types, see Compute and storage in AWS Outposts rack features  The control plane is not automatically scaled by Amazon EKS.
+            type: string
+            optional: true
+        Between /24 and /12.:
+            description: ""
+            type: string
+            optional: true
+        Doesn't overlap with any CIDR block assigned to the VPC that you selected for VPC.:
+            description: ""
+            type: string
+            optional: true
+        'Within one of the following private IP address blocks: 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16.':
+            description: ""
+            type: string
+            optional: true
+        arn:
+            description: ARN of the cluster.
+            type: string
+            optional: true
+        certificate_authority:
+            description: Attribute block containing certificate-authority-data for your cluster. Detailed below.
+            type: string
+            optional: true
+        cluster_security_group_id:
+            description: Cluster security group that was created by Amazon EKS for the cluster. Managed node groups use this security group for control-plane-to-data-plane communication.
+            type: string
+            optional: true
+        control_plane_instance_type:
+            description: '(Required) The Amazon EC2 instance type that you want to use for your local Amazon EKS cluster on Outposts. The instance type that you specify is used for all Kubernetes control plane instances. The instance type can''t be changed after cluster creation. Choose an instance type based on the number of nodes that your cluster will have. If your cluster will have:'
+            type: string
+            optional: true
+        create:
+            description: (Default 30m)
+            type: string
+            optional: true
+        created_at:
+            description: Unix epoch timestamp in seconds for when the cluster was created.
+            type: string
+            optional: true
+        data:
+            description: Base64 encoded certificate data required to communicate with your cluster. Add this to the certificate-authority-data section of the kubeconfig file for your cluster.identity
+            type: string
+            optional: true
+        delete:
+            description: (Default 15m)
+            type: string
+            optional: true
+        enabled_cluster_log_types:
+            description: (Optional) List of the desired control plane logging to enable. For more information, see Amazon EKS Control Plane Logging.
+            type: string
+            optional: true
+        encryption_config:
+            description: (Optional) Configuration block with encryption configuration for the cluster. Only available on Kubernetes 1.13 and above clusters created after March 6, 2020. Detailed below.
+            type: string
+            optional: true
+        endpoint:
+            description: Endpoint for your Kubernetes API server.
+            type: string
+            optional: true
+        endpoint_private_access:
+            description: (Optional) Whether the Amazon EKS private API server endpoint is enabled. Default is false.
+            type: string
+            optional: true
+        endpoint_public_access:
+            description: (Optional) Whether the Amazon EKS public API server endpoint is enabled. Default is true.
+            type: string
+            optional: true
+        id:
+            description: Name of the cluster.
+            type: string
+            optional: true
+        identity:
+            description: Attribute block containing identity provider information for your cluster. Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019. Detailed below.
+            type: string
+            optional: true
+        ip_family:
+            description: '(Optional) The IP family used to assign Kubernetes pod and service addresses. Valid values are ipv4 (default) and ipv6. You can only specify an IP family when you create a cluster, changing this value will force a new cluster to be created.outpost_configThe following arguments are supported in the outpost_config configuration block:'
+            type: string
+            optional: true
+        issuer:
+            description: Issuer URL for the OpenID Connect identity provider.vpc_config Attributes
+            type: string
+            optional: true
+        key_arn:
+            description: (Required) ARN of the Key Management Service (KMS) customer master key (CMK). The CMK must be symmetric, created in the same region as the cluster, and if the CMK was created in a different account, the user must have access to the CMK. For more information, see Allowing Users in Other Accounts to Use a CMK in the AWS Key Management Service Developer Guide.vpc_config Arguments
+            type: string
+            optional: true
+        kubernetes_network_config:
+            description: (Optional) Configuration block with kubernetes network configuration for the cluster. Detailed below. If removed, Terraform will only perform drift detection if a configuration value is provided.
+            type: string
+            optional: true
+        kubernetes_network_config.service_ipv6_cidr:
+            description: The CIDR block that Kubernetes pod and service IP addresses are assigned from if you specified ipv6 for ipFamily when you created the cluster. Kubernetes assigns service addresses from the unique local address range (fc00::/7) because you can't specify a custom IPv6 CIDR block when you create the cluster.
+            type: string
+            optional: true
+        name:
+            description: ' – (Required) Name of the cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\-_]+$).'
+            type: string
+            optional: true
+        oidc:
+            description: Nested block containing OpenID Connect identity provider information for the cluster. Detailed below.oidc
+            type: string
+            optional: true
+        outpost_arns:
+            description: '(Required) The ARN of the Outpost that you want to use for your local Amazon EKS cluster on Outposts. This argument is a list of arns, but only a single Outpost ARN is supported currently.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        outpost_config:
+            description: (Optional) Configuration block representing the configuration of your local Amazon EKS cluster on an AWS Outpost. This block isn't available for creating Amazon EKS clusters on the AWS cloud.
+            type: string
+            optional: true
+        platform_version:
+            description: Platform version for the cluster.
+            type: string
+            optional: true
+        provider:
+            description: (Required) Configuration block with provider for encryption. Detailed below.
+            type: string
+            optional: true
+        public_access_cidrs:
+            description: (Optional) List of CIDR blocks. Indicates which CIDR blocks can access the Amazon EKS public API server endpoint when enabled. EKS defaults this to a list with 0.0.0.0/0. Terraform will only perform drift detection of its value when present in a configuration.
+            type: string
+            optional: true
+        resources:
+            description: '(Required) List of strings with resources to be encrypted. Valid values: secrets.providerThe following arguments are supported in the provider configuration block:'
+            type: string
+            optional: true
+        role_arn:
+            description: (Required) ARN of the IAM role that provides permissions for the Kubernetes control plane to make calls to AWS API operations on your behalf. Ensure the resource configuration includes explicit dependencies on the IAM Role permissions by adding depends_on if using the aws_iam_role_policy resource or aws_iam_role_policy_attachment resource, otherwise EKS cannot delete EKS managed EC2 infrastructure such as Security Groups on EKS Cluster deletion.
+            type: string
+            optional: true
+        security_group_ids:
+            description: ' – (Optional) List of security group IDs for the cross-account elastic network interfaces that Amazon EKS creates to use to allow communication between your worker nodes and the Kubernetes control plane.'
+            type: string
+            optional: true
+        service_ipv4_cidr:
+            description: '(Optional) The CIDR block to assign Kubernetes pod and service IP addresses from. If you don''t specify a block, Kubernetes assigns addresses from either the 10.100.0.0/16 or 172.20.0.0/16 CIDR blocks. We recommend that you specify a block that does not overlap with resources in other networks that are peered or connected to your VPC. You can only specify a custom CIDR block when you create a cluster, changing this value will force a new cluster to be created. The block must meet the following requirements:'
+            type: string
+            optional: true
+        status:
+            description: Status of the EKS cluster. One of CREATING, ACTIVE, DELETING, FAILED.
+            type: string
+            optional: true
+        subnet_ids:
+            description: ' – (Required) List of subnet IDs. Must be in at least two different availability zones. Amazon EKS creates cross-account elastic network interfaces in these subnets to allow communication between your worker nodes and the Kubernetes control plane.kubernetes_network_configThe following arguments are supported in the kubernetes_network_config configuration block:'
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        update:
+            description: (Default 60mupdate timeout is used separately for both version and vpc_config update timeouts.
+            type: string
+            optional: true
+        version:
+            description: ' – (Optional) Desired Kubernetes master version. If you do not specify a value, the latest available version at resource creation is used and no upgrades will occur except those automatically triggered by EKS. The value must be configured and increased to upgrade the version when desired. Downgrades are not supported by EKS.encryption_configThe following arguments are supported in the encryption_config configuration block:'
+            type: string
+            optional: true
+        vpc_config:
+            description: Configuration block emargument that also includes attributes for the VPC associated with your cluster. Detailed below.certificate_authority
+            type: string
+            optional: true
+        vpc_id:
+            description: 'ID of the VPC associated with your cluster.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the cluster.
+            type: string
+        certificate_authority:
+            description: Attribute block containing certificate-authority-data for your cluster. Detailed below.
+            type: string
+        cluster_security_group_id:
+            description: Cluster security group that was created by Amazon EKS for the cluster. Managed node groups use this security group for control-plane-to-data-plane communication.
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        created_at:
+            description: Unix epoch timestamp in seconds for when the cluster was created.
+            type: string
+        data:
+            description: Base64 encoded certificate data required to communicate with your cluster. Add this to the certificate-authority-data section of the kubeconfig file for your cluster.identity
+            type: string
+        delete:
+            description: (Default 15m)
+            type: string
+        endpoint:
+            description: Endpoint for your Kubernetes API server.
+            type: string
+        id:
+            description: Name of the cluster.
+            type: string
+        identity:
+            description: Attribute block containing identity provider information for your cluster. Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019. Detailed below.
+            type: string
+        issuer:
+            description: Issuer URL for the OpenID Connect identity provider.vpc_config Attributes
+            type: string
+        kubernetes_network_config.service_ipv6_cidr:
+            description: The CIDR block that Kubernetes pod and service IP addresses are assigned from if you specified ipv6 for ipFamily when you created the cluster. Kubernetes assigns service addresses from the unique local address range (fc00::/7) because you can't specify a custom IPv6 CIDR block when you create the cluster.
+            type: string
+        oidc:
+            description: Nested block containing OpenID Connect identity provider information for the cluster. Detailed below.oidc
+            type: string
+        platform_version:
+            description: Platform version for the cluster.
+            type: string
+        status:
+            description: Status of the EKS cluster. One of CREATING, ACTIVE, DELETING, FAILED.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update:
+            description: (Default 60mupdate timeout is used separately for both version and vpc_config update timeouts.
+            type: string
+        vpc_config:
+            description: Configuration block emargument that also includes attributes for the VPC associated with your cluster. Detailed below.certificate_authority
+            type: string
+        vpc_id:
+            description: 'ID of the VPC associated with your cluster.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: cloudwatch_event_connection
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN (Amazon Resource Name) for the connection.
+            type: string
+        name:
+            description: Name of the connection.
+            type: string
+        secret_arn:
+            description: ARN (Amazon Resource Name) for the secret created from the authorization parameters specified for the connection.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

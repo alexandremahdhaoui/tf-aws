@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_appconfig_hosted_configuration_version
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the AppConfig  hosted configuration version.
+            type: string
+        id:
+            description: AppConfig application ID, configuration profile ID, and version number separated by a slash (/).
+            type: string
+        version_number:
+            description: Version number of the hosted configuration.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

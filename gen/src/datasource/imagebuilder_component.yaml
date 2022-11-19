@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: imagebuilder_component
+spec:
+    args: {}
+    attrs:
+        change_description:
+            description: Change description of the component.
+            type: string
+        data:
+            description: Data of the component.
+            type: string
+        date_created:
+            description: Date the component was created.
+            type: string
+        description:
+            description: Description of the component.
+            type: string
+        encrypted:
+            description: Encryption status of the component.
+            type: string
+        kms_key_id:
+            description: ARN of the Key Management Service (KMS) Key used to encrypt the component.
+            type: string
+        name:
+            description: Name of the component.
+            type: string
+        owner:
+            description: Owner of the component.
+            type: string
+        platform:
+            description: Platform of the component.
+            type: string
+        supported_os_versions:
+            description: Operating Systems (OSes) supported by the component.
+            type: string
+        tags:
+            description: Key-value map of resource tags for the component.
+            type: string
+        type:
+            description: Type of the component.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

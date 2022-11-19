@@ -1,0 +1,25 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: organizations_delegated_services
+spec:
+    args: {}
+    attrs:
+        delegated_services:
+            description: |
+                Services for which the account is a delegated administrator, which have the following attributes:
+            type: string
+        delegation_enabled_date:
+            description: The date that the account became a delegated administrator for this service.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

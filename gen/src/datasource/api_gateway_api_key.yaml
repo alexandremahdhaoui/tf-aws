@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: api_gateway_api_key
+spec:
+    args: {}
+    attrs:
+        created_date:
+            description: Date and time when the API Key was created.
+            type: string
+        description:
+            description: Description of the API Key.
+            type: string
+        enabled:
+            description: Whether the API Key is enabled.
+            type: string
+        id:
+            description: Set to the ID of the API Key.
+            type: string
+        last_updated_date:
+            description: Date and time when the API Key was last updated.
+            type: string
+        name:
+            description: Set to the name of the API Key.
+            type: string
+        value:
+            description: Set to the value of the API Key.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

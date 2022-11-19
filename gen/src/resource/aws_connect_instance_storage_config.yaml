@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_connect_instance_storage_config
+spec:
+    args: {}
+    attrs:
+        association_id:
+            description: The existing association identifier that uniquely identifies the resource type and storage config for the given instance ID.
+            type: string
+        id:
+            description: The identifier of the hosting Amazon Connect Instance, association_id, and resource_type separated by a colon (:).
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,107 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_provisioning_artifact
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). The default value is en.'
+            type: string
+            optional: true
+        active:
+            description: (Optional) Whether the product version is active. Inactive provisioning artifacts are invisible to end users. End users cannot launch or update a provisioned product from an inactive provisioning artifact. Default is true.
+            type: string
+            optional: true
+        create:
+            description: (Default 3m)
+            type: string
+            optional: true
+        created_time:
+            description: Time when the provisioning artifact was created.
+            type: string
+            optional: true
+        delete:
+            description: (Default 3m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of the provisioning artifact (i.e., version), including how it differs from the previous provisioning artifact.
+            type: string
+            optional: true
+        disable_template_validation:
+            description: (Optional) Whether AWS Service Catalog stops validating the specified provisioning artifact template even if it is invalid.
+            type: string
+            optional: true
+        guidance:
+            description: (Optional) Information set by the administrator to provide guidance to end users about which provisioning artifacts to use. Valid values are DEFAULT and DEPRECATED. The default is DEFAULT. Users are able to make updates to a provisioned product of a deprecated version but cannot launch new provisioned products using a deprecated version.
+            type: string
+            optional: true
+        id:
+            description: Provisioning Artifact identifier and product identifier separated by a colon.
+            type: string
+            optional: true
+        name:
+            description: (Optional) Name of the provisioning artifact (for example, v1, v2beta). No spaces are allowed.
+            type: string
+            optional: true
+        product_id:
+            description: (Required) Identifier of the product.
+            type: string
+            optional: true
+        read:
+            description: (Default 10m)
+            type: string
+            optional: true
+        status:
+            description: 'Status of the provisioning artifact.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        template_physical_id:
+            description: (Required if template_url is not provided) Template source as the physical ID of the resource that contains the template. Currently only supports CloudFormation stack ARN. Specify the physical ID as arn:[partition]:cloudformation:[region]:[account ID]:stack/[stack name]/[resource ID].
+            type: string
+            optional: true
+        template_url:
+            description: (Required if template_physical_id is not provided) Template source as URL of the CloudFormation template in Amazon S3.
+            type: string
+            optional: true
+        type:
+            description: '(Optional) Type of provisioning artifact. Valid values: CLOUD_FORMATION_TEMPLATE, MARKETPLACE_AMI, MARKETPLACE_CAR (Marketplace Clusters and AWS Resources).In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        update:
+            description: (Default 3m)
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 3m)
+            type: string
+        created_time:
+            description: Time when the provisioning artifact was created.
+            type: string
+        delete:
+            description: (Default 3m)
+            type: string
+        id:
+            description: Provisioning Artifact identifier and product identifier separated by a colon.
+            type: string
+        read:
+            description: (Default 10m)
+            type: string
+        status:
+            description: 'Status of the provisioning artifact.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 3m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

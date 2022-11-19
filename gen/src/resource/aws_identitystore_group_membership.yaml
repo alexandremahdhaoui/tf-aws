@@ -1,0 +1,21 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_identitystore_group_membership
+spec:
+    args: {}
+    attrs:
+        membership_id:
+            description: The identifier of the newly created group membership in the Identity Store.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

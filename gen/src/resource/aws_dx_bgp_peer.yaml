@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_dx_bgp_peer
+spec:
+    args: {}
+    attrs:
+        aws_device:
+            description: 'The Direct Connect endpoint on which the BGP peer terminates.TimeoutsConfiguration options:'
+            type: string
+        bgp_peer_id:
+            description: The ID of the BGP peer.
+            type: string
+        bgp_status:
+            description: The Up/Down state of the BGP peer.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        id:
+            description: The ID of the BGP peer resource.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

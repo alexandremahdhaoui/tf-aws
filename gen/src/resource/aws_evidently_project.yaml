@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_evidently_project
+spec:
+    args: {}
+    attrs:
+        active_experiment_count:
+            description: The number of ongoing experiments currently in the project.
+            type: string
+        active_launch_count:
+            description: The number of ongoing launches currently in the project.
+            type: string
+        arn:
+            description: The ARN of the project.
+            type: string
+        created_time:
+            description: The date and time that the project is created.
+            type: string
+        experiment_count:
+            description: The number of experiments currently in the project. This includes all experiments that have been created and not deleted, whether they are ongoing or not.
+            type: string
+        feature_count:
+            description: The number of features currently in the project.
+            type: string
+        id:
+            description: The ID has the same value as the arn of the project.
+            type: string
+        last_updated_time:
+            description: The date and time that the project was most recently updated.
+            type: string
+        launch_count:
+            description: The number of launches currently in the project. This includes all launches that have been created and not deleted, whether they are ongoing or not.
+            type: string
+        status:
+            description: The current state of the project. Valid values are AVAILABLE and UPDATING.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

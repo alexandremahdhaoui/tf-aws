@@ -1,0 +1,102 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_redshift_cluster
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of cluster
+            type: string
+        automated_snapshot_retention_period:
+            description: The backup retention period
+            type: string
+        availability_zone:
+            description: The availability zone of the Cluster
+            type: string
+        cluster_identifier:
+            description: The Cluster Identifier
+            type: string
+        cluster_nodes:
+            description: The nodes in the cluster. Cluster node blocks are documented below
+            type: string
+        cluster_parameter_group_name:
+            description: The name of the parameter group to be associated with this cluster
+            type: string
+        cluster_public_key:
+            description: The public key for the cluster
+            type: string
+        cluster_revision_number:
+            description: The specific revision number of the database in the cluster
+            type: string
+        cluster_security_groups:
+            description: The security groups associated with the cluster
+            type: string
+        cluster_subnet_group_name:
+            description: The name of a cluster subnet group to be associated with this cluster
+            type: string
+        cluster_type:
+            description: The cluster type
+            type: string
+        cluster_version:
+            description: The version of Redshift engine software
+            type: string
+        create:
+            description: (Default 75m)
+            type: string
+        database_name:
+            description: The name of the default database in the Cluster
+            type: string
+        delete:
+            description: (Default 40m)
+            type: string
+        dns_name:
+            description: The DNS name of the cluster
+            type: string
+        encrypted:
+            description: Whether the data in the cluster is encrypted
+            type: string
+        endpoint:
+            description: The connection endpoint
+            type: string
+        id:
+            description: The Redshift Cluster ID.
+            type: string
+        node_role:
+            description: Whether the node is a leader node or a compute node
+            type: string
+        node_type:
+            description: The type of nodes in the cluster
+            type: string
+        port:
+            description: The Port the cluster responds on
+            type: string
+        preferred_maintenance_window:
+            description: The backup window
+            type: string
+        private_ip_address:
+            description: The private IP address of a node within a cluster
+            type: string
+        public_ip_address:
+            description: 'The public IP address of a node within a clusterTimeoutsConfiguration options:'
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Cluster nodes (for cluster_nodes) support the following attributes:'
+            type: string
+        update:
+            description: (Default 75m)
+            type: string
+        vpc_security_group_ids:
+            description: The VPC security group Ids associated with the cluster
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

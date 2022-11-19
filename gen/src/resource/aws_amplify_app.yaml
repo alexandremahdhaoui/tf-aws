@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_amplify_app
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Amplify app.
+            type: string
+        branch_name:
+            description: Branch name for the production branch.
+            type: string
+        default_domain:
+            description: Default domain for the Amplify app.
+            type: string
+        id:
+            description: Unique ID of the Amplify app.
+            type: string
+        last_deploy_time:
+            description: Last deploy time of the production branch.
+            type: string
+        production_branch:
+            description: Describes the information about a production branch for an Amplify app. A production_branch block is documented below.
+            type: string
+        status:
+            description: Status of the production branch.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A production_branch block supports the following attributes:'
+            type: string
+        thumbnail_url:
+            description: Thumbnail URL for the production branch.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

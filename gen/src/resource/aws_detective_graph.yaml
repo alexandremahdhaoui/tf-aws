@@ -1,0 +1,43 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_detective_graph
+spec:
+    args:
+        created_time:
+            description: Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created.
+            type: string
+            optional: true
+        graph_arn:
+            description: ARN of the Detective Graph.
+            type: string
+            optional: true
+        id:
+            description: ARN of the Detective Graph.
+            type: string
+            optional: true
+        tags:
+            description: ' (Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        created_time:
+            description: Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created.
+            type: string
+        graph_arn:
+            description: ARN of the Detective Graph.
+            type: string
+        id:
+            description: ARN of the Detective Graph.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

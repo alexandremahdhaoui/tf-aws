@@ -1,0 +1,92 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_medialive_multiplex_program
+spec:
+    args:
+        constant_bitrate:
+            description: (Optional) Constant bitrate value.
+            type: string
+            optional: true
+        example_attribute:
+            description: Concise description.
+            type: string
+            optional: true
+        id:
+            description: ID of the MultiplexProgram.
+            type: string
+            optional: true
+        maximum_bitrate:
+            description: (Optional) Maximum bitrate.
+            type: string
+            optional: true
+        minimum_bitrate:
+            description: (Optional) Minimum bitrate.
+            type: string
+            optional: true
+        multiplex_id:
+            description: (Required) Multiplex ID.
+            type: string
+            optional: true
+        multiplex_program_settings:
+            description: (Required) MultiplexProgram settings. See Multiplex Program Settings for more details.Multiple Program Settings
+            type: string
+            optional: true
+        preferred_channel_pipeline:
+            description: (Required) Enum for preferred channel pipeline. Options are CURRENTLY_ACTIVE, PIPELINE_0, or PIPELINE_1.
+            type: string
+            optional: true
+        priority:
+            description: '(Optional) Priority value.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        program_name:
+            description: (Required) Unique program name.
+            type: string
+            optional: true
+        program_number:
+            description: (Required) Unique program number.
+            type: string
+            optional: true
+        provider_name:
+            description: (Required) Unique provider name.
+            type: string
+            optional: true
+        service_descriptor:
+            description: (Optional) Service Descriptor. See Service Descriptor for more details.
+            type: string
+            optional: true
+        service_name:
+            description: (Required) Unique service name.Video Settings
+            type: string
+            optional: true
+        statemux_settings:
+            description: (Optional, strongDeprecated) Statemux settings. See Statmux Settings for more details. Settings from this attribute will apply to statmux_settings. Conflicts with statmux_settings.
+            type: string
+            optional: true
+        statmux_settings:
+            description: (Optional) Statmux settings. See Statmux Settings for more details Conflicts with statemux_settings.Statmux Settings
+            type: string
+            optional: true
+        video_settings:
+            description: (Optional) Video settings. See Video Settings for more details.Service Descriptor
+            type: string
+            optional: true
+    attrs:
+        example_attribute:
+            description: Concise description.
+            type: string
+        id:
+            description: ID of the MultiplexProgram.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

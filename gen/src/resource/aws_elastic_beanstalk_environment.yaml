@@ -1,0 +1,66 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_elastic_beanstalk_environment
+spec:
+    args: {}
+    attrs:
+        all_settings:
+            description: setting
+            type: string
+        application:
+            description: ' – The Elastic Beanstalk Application specified for this environment.'
+            type: string
+        autoscaling_groups:
+            description: The autoscaling groups used by this Environment.
+            type: string
+        cname:
+            description: Fully qualified DNS name for this Environment.
+            type: string
+        description:
+            description: Description of the Elastic Beanstalk Environment.
+            type: string
+        endpoint_url:
+            description: The URL to the Load Balancer for this Environment
+            type: string
+        id:
+            description: ID of the Elastic Beanstalk Environment.
+            type: string
+        instances:
+            description: Instances used by this Environment.
+            type: string
+        launch_configurations:
+            description: Launch configurations in use by this Environment.
+            type: string
+        load_balancers:
+            description: Elastic load balancers in use by this Environment.
+            type: string
+        name:
+            description: Name of the Elastic Beanstalk Environment.
+            type: string
+        queues:
+            description: SQS queues in use by this Environment.
+            type: string
+        setting:
+            description: ' – Settings specifically set for this Environment.'
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        tier:
+            description: The environment tier specified.
+            type: string
+        triggers:
+            description: Autoscaling triggers in use by this Environment.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

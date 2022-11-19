@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_autoscaling_policy
+spec:
+    args: {}
+    attrs:
+        adjustment_type:
+            description: Scaling policy's adjustment type.
+            type: string
+        arn:
+            description: ARN assigned by AWS to the scaling policy.
+            type: string
+        autoscaling_group_name:
+            description: The scaling policy's assigned autoscaling group.
+            type: string
+        name:
+            description: Scaling policy's name.
+            type: string
+        policy_type:
+            description: Scaling policy's type.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

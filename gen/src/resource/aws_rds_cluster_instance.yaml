@@ -1,0 +1,78 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_rds_cluster_instance
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of cluster instance
+            type: string
+        availability_zone:
+            description: The availability zone of the instance
+            type: string
+        cluster_identifier:
+            description: The RDS Cluster Identifier
+            type: string
+        create:
+            description: (Default 90m)
+            type: string
+        dbi_resource_id:
+            description: The region-unique, immutable identifier for the DB instance.
+            type: string
+        delete:
+            description: (Default 90m)
+            type: string
+        endpoint:
+            description: The DNS address for this instance. May not be writable
+            type: string
+        engine:
+            description: The database engine
+            type: string
+        engine_version_actual:
+            description: The database engine version
+            type: string
+        id:
+            description: The Instance identifier
+            type: string
+        identifier:
+            description: The Instance identifier
+            type: string
+        kms_key_id:
+            description: The ARN for the KMS encryption key if one is set to the cluster.
+            type: string
+        network_type:
+            description: The network type of the DB instance.
+            type: string
+        performance_insights_enabled:
+            description: Specifies whether Performance Insights is enabled or not.
+            type: string
+        performance_insights_kms_key_id:
+            description: The ARN for the KMS encryption key used by Performance Insights.
+            type: string
+        port:
+            description: The database port
+            type: string
+        storage_encrypted:
+            description: Specifies whether the DB cluster is encrypted.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 90m)
+            type: string
+        writer:
+            description: ' – Boolean indicating if this instance is writable. False indicates this instance is a read replica.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ec2_managed_prefix_list
+spec:
+    args: {}
+    attrs:
+        address_family:
+            description: Address family of the prefix list. Valid values are IPv4 and IPv6.
+            type: string
+        arn:
+            description: ARN of the selected prefix list.
+            type: string
+        entries:
+            description: Set of entries in this prefix list. Each entry is an object with cidr and description.
+            type: string
+        id:
+            description: ID of the selected prefix list.
+            type: string
+        max_entries:
+            description: When then prefix list is managed, the maximum number of entries it supports, or null otherwise.
+            type: string
+        name:
+            description: Name of the selected prefix list.
+            type: string
+        owner_id:
+            description: Account ID of the owner of a customer-managed prefix list, or AWS otherwise.
+            type: string
+        tags:
+            description: 'Map of tags assigned to the resource.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

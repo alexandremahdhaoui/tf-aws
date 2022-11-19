@@ -1,0 +1,69 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: memorydb_parameter_group
+spec:
+    args:
+        arn:
+            description: ARN of the parameter group.
+            type: string
+            optional: true
+        description:
+            description: Description of the parameter group.
+            type: string
+            optional: true
+        family:
+            description: Engine version that the parameter group can be used with.
+            type: string
+            optional: true
+        id:
+            description: Name of the parameter group.
+            type: string
+            optional: true
+        name:
+            description: Name of the parameter.
+            type: string
+            optional: true
+        parameter:
+            description: |
+                Set of user-defined MemoryDB parameters applied by the parameter group.
+            type: string
+            optional: true
+        value:
+            description: Value of the parameter.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the parameter group.
+            type: string
+        description:
+            description: Description of the parameter group.
+            type: string
+        family:
+            description: Engine version that the parameter group can be used with.
+            type: string
+        id:
+            description: Name of the parameter group.
+            type: string
+        name:
+            description: Name of the parameter.
+            type: string
+        parameter:
+            description: |
+                Set of user-defined MemoryDB parameters applied by the parameter group.
+            type: string
+        value:
+            description: Value of the parameter.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_amplify_branch
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN for the branch.
+            type: string
+        associated_resources:
+            description: A list of custom resources that are linked to this branch.
+            type: string
+        custom_domains:
+            description: Custom domains for the branch.
+            type: string
+        destination_branch:
+            description: Destination branch if the branch is a pull request branch.
+            type: string
+        source_branch:
+            description: Source branch if the branch is a pull request branch.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

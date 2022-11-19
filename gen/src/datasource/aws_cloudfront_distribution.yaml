@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_cloudfront_distribution
+spec:
+    args: {}
+    attrs:
+        aliases:
+            description: List that contains information about CNAMEs (alternate domain names), if any, for this distribution.
+            type: string
+        arn:
+            description: 'ARN (Amazon Resource Name) for the distribution. For example: arn:aws:cloudfront::123456789012:distribution/EDFDVBD632BHDS5, where 123456789012 is your AWS account ID.'
+            type: string
+        domain_name:
+            description: d604721fxaaqy9.cloudfront.net.
+            type: string
+        etag:
+            description: E2QWRUHAPOMQZL.
+            type: string
+        id:
+            description: 'Identifier for the distribution. For example: EDFDVBD632BHDS5.'
+            type: string
+        in_progress_validation_batches:
+            description: ""
+            type: string
+        last_modified_time:
+            description: Date and time the distribution was last modified.
+            type: string
+        status:
+            description: Current status of the distribution. Deployed
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,129 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: db_instance
+spec:
+    args: {}
+    attrs:
+        address:
+            description: Hostname of the RDS instance. See also endpoint and port.
+            type: string
+        allocated_storage:
+            description: Allocated storage size specified in gigabytes.
+            type: string
+        auto_minor_version_upgrade:
+            description: Indicates that minor version patches are applied automatically.
+            type: string
+        availability_zone:
+            description: Name of the Availability Zone the DB instance is located in.
+            type: string
+        backup_retention_period:
+            description: Specifies the number of days for which automatic DB snapshots are retained.
+            type: string
+        db_cluster_identifier:
+            description: If the DB instance is a member of a DB cluster, contains the name of the DB cluster that the DB instance is a member of.
+            type: string
+        db_instance_arn:
+            description: ARN for the DB instance.
+            type: string
+        db_instance_class:
+            description: Contains the name of the compute and memory capacity class of the DB instance.
+            type: string
+        db_instance_port:
+            description: Port that the DB instance listens on.
+            type: string
+        db_name:
+            description: Contains the name of the initial database of this instance that was provided at create time, if one was specified when the DB instance was created. This same name is returned for the life of the DB instance.
+            type: string
+        db_parameter_groups:
+            description: Provides the list of DB parameter groups applied to this DB instance.
+            type: string
+        db_security_groups:
+            description: Provides List of DB security groups associated to this DB instance.
+            type: string
+        db_subnet_group:
+            description: Name of the subnet group associated with the DB instance.
+            type: string
+        enabled_cloudwatch_logs_exports:
+            description: List of log types to export to cloudwatch.
+            type: string
+        endpoint:
+            description: Connection endpoint in address:port format.
+            type: string
+        engine:
+            description: Provides the name of the database engine to be used for this DB instance.
+            type: string
+        engine_version:
+            description: Database engine version.
+            type: string
+        hosted_zone_id:
+            description: Canonical hosted zone ID of the DB instance (to be used in a Route 53 Alias record).
+            type: string
+        iops:
+            description: Provisioned IOPS (I/O operations per second) value.
+            type: string
+        kms_key_id:
+            description: If StorageEncrypted is true, the KMS key identifier for the encrypted DB instance.
+            type: string
+        license_model:
+            description: License model information for this DB instance.
+            type: string
+        master_username:
+            description: Contains the master username for the DB instance.
+            type: string
+        monitoring_interval:
+            description: Interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance.
+            type: string
+        monitoring_role_arn:
+            description: ARN for the IAM role that permits RDS to send Enhanced Monitoring metrics to CloudWatch Logs.
+            type: string
+        multi_az:
+            description: If the DB instance is a Multi-AZ deployment.
+            type: string
+        network_type:
+            description: Network type of the DB instance.
+            type: string
+        option_group_memberships:
+            description: Provides the list of option group memberships for this DB instance.
+            type: string
+        port:
+            description: Database port.
+            type: string
+        preferred_backup_window:
+            description: Specifies the daily time range during which automated backups are created.
+            type: string
+        preferred_maintenance_window:
+            description: ' Specifies the weekly time range during which system maintenance can occur in UTC.'
+            type: string
+        publicly_accessible:
+            description: Accessibility options for the DB instance.
+            type: string
+        replicate_source_db:
+            description: Identifier of the source DB that this is a replica of.
+            type: string
+        resource_id:
+            description: RDS Resource ID of this instance.
+            type: string
+        storage_encrypted:
+            description: Whether the DB instance is encrypted.
+            type: string
+        storage_type:
+            description: Storage type associated with DB instance.
+            type: string
+        timezone:
+            description: Time zone of the DB instance.
+            type: string
+        vpc_security_groups:
+            description: Provides a list of VPC security group elements that the DB instance belongs to.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

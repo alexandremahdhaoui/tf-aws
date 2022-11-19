@@ -1,0 +1,110 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ec2_host
+spec:
+    args:
+        arn:
+            description: ARN of the Dedicated Host.
+            type: string
+            optional: true
+        auto_placement:
+            description: Whether auto-placement is on or off.
+            type: string
+            optional: true
+        availability_zone:
+            description: Availability Zone of the Dedicated Host.
+            type: string
+            optional: true
+        cores:
+            description: Number of cores on the Dedicated Host.
+            type: string
+            optional: true
+        host_recovery:
+            description: Whether host recovery is enabled or disabled for the Dedicated Host.
+            type: string
+            optional: true
+        id:
+            description: ID of the Dedicated Host.
+            type: string
+            optional: true
+        instance_family:
+            description: Instance family supported by the Dedicated Host. For example, "m5".
+            type: string
+            optional: true
+        instance_type:
+            description: Instance type supported by the Dedicated Host. For example, "m5.large". If the host supports multiple instance types, no instanceType is returned.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the field to filter by, as defined by the underlying AWS API.
+            type: string
+            optional: true
+        outpost_arn:
+            description: ARN of the AWS Outpost on which the Dedicated Host is allocated.
+            type: string
+            optional: true
+        owner_id:
+            description: ID of the AWS account that owns the Dedicated Host.
+            type: string
+            optional: true
+        sockets:
+            description: Number of sockets on the Dedicated Host.
+            type: string
+            optional: true
+        total_vcpus:
+            description: 'Total number of vCPUs on the Dedicated Host.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        values:
+            description: '(Required) Set of values that are accepted for the given field. A host will be selected if any one of the given values matches.In addition to the attributes above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Dedicated Host.
+            type: string
+        auto_placement:
+            description: Whether auto-placement is on or off.
+            type: string
+        availability_zone:
+            description: Availability Zone of the Dedicated Host.
+            type: string
+        cores:
+            description: Number of cores on the Dedicated Host.
+            type: string
+        host_recovery:
+            description: Whether host recovery is enabled or disabled for the Dedicated Host.
+            type: string
+        id:
+            description: ID of the Dedicated Host.
+            type: string
+        instance_family:
+            description: Instance family supported by the Dedicated Host. For example, "m5".
+            type: string
+        instance_type:
+            description: Instance type supported by the Dedicated Host. For example, "m5.large". If the host supports multiple instance types, no instanceType is returned.
+            type: string
+        outpost_arn:
+            description: ARN of the AWS Outpost on which the Dedicated Host is allocated.
+            type: string
+        owner_id:
+            description: ID of the AWS account that owns the Dedicated Host.
+            type: string
+        sockets:
+            description: Number of sockets on the Dedicated Host.
+            type: string
+        total_vcpus:
+            description: 'Total number of vCPUs on the Dedicated Host.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

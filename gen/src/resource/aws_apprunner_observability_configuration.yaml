@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_apprunner_observability_configuration
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of this observability configuration.
+            type: string
+        latest:
+            description: Whether the observability configuration has the highest observability_configuration_revision among all configurations that share the same observability_configuration_name.
+            type: string
+        observability_configuration_revision:
+            description: The revision of this observability configuration.
+            type: string
+        status:
+            description: Current state of the observability configuration. An INACTIVE configuration revision has been deleted and can't be used. It is permanently removed some time after deletion.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudformation_stack_set_instance
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        id:
+            description: StackSet name, target AWS account ID, and target AWS region separated by commas (,)
+            type: string
+        organizational_unit_id:
+            description: The organization root ID or organizational unit (OU) IDs specified for deployment_targets.
+            type: string
+        stack_id:
+            description: 'Stack identifierTimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

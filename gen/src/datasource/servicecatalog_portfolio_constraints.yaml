@@ -1,0 +1,57 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: servicecatalog_portfolio_constraints
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.'
+            type: string
+            optional: true
+        constraint_id:
+            description: Identifier of the constraint.
+            type: string
+            optional: true
+        description:
+            description: Description of the constraint.
+            type: string
+            optional: true
+        details:
+            description: List of information about the constraints. See details below.details
+            type: string
+            optional: true
+        portfolio_id:
+            description: Identifier of the portfolio the product resides in. The constraint applies only to the instance of the product that lives within this portfolio.
+            type: string
+            optional: true
+        product_id:
+            description: Identifier of the product the constraint applies to. A constraint applies to a specific instance of a product within a certain portfolio.
+            type: string
+            optional: true
+    attrs:
+        constraint_id:
+            description: Identifier of the constraint.
+            type: string
+        description:
+            description: Description of the constraint.
+            type: string
+        details:
+            description: List of information about the constraints. See details below.details
+            type: string
+        portfolio_id:
+            description: Identifier of the portfolio the product resides in. The constraint applies only to the instance of the product that lives within this portfolio.
+            type: string
+        product_id:
+            description: Identifier of the product the constraint applies to. A constraint applies to a specific instance of a product within a certain portfolio.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

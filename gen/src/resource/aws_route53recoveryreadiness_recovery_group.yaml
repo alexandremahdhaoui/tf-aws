@@ -1,0 +1,47 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53recoveryreadiness_recovery_group
+spec:
+    args:
+        arn:
+            description: ARN of the recovery group
+            type: string
+            optional: true
+        cells:
+            description: (Optional) List of cell arns to add as nested fault domains within this recovery group
+            type: string
+            optional: true
+        recovery_group_name:
+            description: '(Required) A unique name describing the recovery group.The following argument are optional:'
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the recovery group
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

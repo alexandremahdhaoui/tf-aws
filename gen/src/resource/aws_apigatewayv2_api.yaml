@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_apigatewayv2_api
+spec:
+    args: {}
+    attrs:
+        api_endpoint:
+            description: URI of the API, of the form https://{api-id}.execute-api.{region}.amazonaws.com for HTTP APIs and wss://{api-id}.execute-api.{region}.amazonaws.com for WebSocket APIs.
+            type: string
+        arn:
+            description: ARN of the API.
+            type: string
+        execution_arn:
+            description: ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details.
+            type: string
+        id:
+            description: API identifier.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

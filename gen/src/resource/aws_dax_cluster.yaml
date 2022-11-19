@@ -1,0 +1,47 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_dax_cluster
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the DAX cluster
+            type: string
+        cluster_address:
+            description: The DNS name of the DAX cluster without the port appended
+            type: string
+        configuration_endpoint:
+            description: |-
+                The configuration endpoint for this DAX cluster,
+                consisting of a DNS name and a port number
+            type: string
+        create:
+            description: (Default 45m)
+            type: string
+        delete:
+            description: (Default 90m)
+            type: string
+        nodes:
+            description: List of node objects including id, address, portavailability_zone${aws_dax_cluster.test.nodes.0.address}
+            type: string
+        port:
+            description: The port used by the configuration endpoint
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 45m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

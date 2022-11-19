@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: service_discovery_service
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the service.
+            type: string
+        description:
+            description: Description of the service.
+            type: string
+        dns_config:
+            description: Complex type that contains information about the resource record sets that you want Amazon Route 53 to create when you register an instance.
+            type: string
+        dns_records:
+            description: An array that contains one DnsRecord object for each resource record set.
+            type: string
+        failure_threshold:
+            description: Number of consecutive health checks. Maximum value of 10.
+            type: string
+        health_check_config:
+            description: Complex type that contains settings for an optional health check. Only for Public DNS namespaces.
+            type: string
+        health_check_custom_config:
+            description: ' A complex type that contains settings for ECS managed health checks.'
+            type: string
+        id:
+            description: ID of the service.
+            type: string
+        namespace_id:
+            description: ID of the namespace to use for DNS configuration.
+            type: string
+        resource_path:
+            description: Path that you want Route 53 to request when performing health checks. Route 53 automatically adds the DNS name for the service. If you don't specify a value, the default value is /.
+            type: string
+        routing_policy:
+            description: 'Routing policy that you want to apply to all records that Route 53 creates when you register an instance and specify the service. Valid Values: MULTIVALUE, WEIGHTEDdns_recordsThe following arguments are supported:'
+            type: string
+        tags:
+            description: Map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.dns_configThe following arguments are supported:'
+            type: string
+        ttl:
+            description: Amount of time, in seconds, that you want DNS resolvers to cache the settings for this resource record set.
+            type: string
+        type:
+            description: ' The type of health check that you want to create, which indicates how Route 53 determines whether an endpoint is healthy. Valid Values: HTTP, HTTPS, TCPhealth_check_custom_configThe following arguments are supported:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

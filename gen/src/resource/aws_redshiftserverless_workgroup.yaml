@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_redshiftserverless_workgroup
+spec:
+    args: {}
+    attrs:
+        address:
+            description: The DNS address of the VPC endpoint.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the Redshift Serverless Workgroup.
+            type: string
+        availability_zone:
+            description: The availability Zone.
+            type: string
+        endpoint:
+            description: The endpoint that is created from the workgroup. See Endpoint below.
+            type: string
+        id:
+            description: The Redshift Workgroup Name.
+            type: string
+        network_interface:
+            description: The network interfaces of the endpoint.. See Network Interface below.Network Interface
+            type: string
+        network_interface_id:
+            description: The unique identifier of the network interface.
+            type: string
+        port:
+            description: The port that Amazon Redshift Serverless listens on.
+            type: string
+        private_ip_address:
+            description: The IPv4 address of the network interface within the subnet.
+            type: string
+        subnet_id:
+            description: The unique identifier of the subnet.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Endpoint
+            type: string
+        vpc_endpoint:
+            description: The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint
+            type: string
+        vpc_endpoint_id:
+            description: The DNS address of the VPC endpoint.
+            type: string
+        vpc_id:
+            description: The port that Amazon Redshift Serverless listens on.
+            type: string
+        workgroup_id:
+            description: The Redshift Workgroup ID.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,38 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudcontrolapi_resource
+spec:
+    args:
+        desired_state:
+            description: (Required) JSON string matching the CloudFormation resource type schema with desired configuration. Terraform configuration expressions can be converted into JSON using the jsonencode() function.
+            type: string
+            optional: true
+        role_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the IAM Role to assume for operations.
+            type: string
+            optional: true
+        schema:
+            description: (Optional) JSON string of the CloudFormation resource type schema which is used for plan time validation where possible. Automatically fetched if not provided. In large scale environments with multiple resources using the same type_name, it is recommended to fetch the schema once via the aws_cloudformation_type data source and use this argument to reduce DescribeType API operation throttling. This value is marked sensitive only to prevent large plan differences from showing.
+            type: string
+            optional: true
+        type_name:
+            description: (Required) CloudFormation resource type name. For example, AWS::EC2::VPC.
+            type: string
+            optional: true
+        type_version_id:
+            description: '(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

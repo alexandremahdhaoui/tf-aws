@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_grafana_license_association
+spec:
+    args:
+        free_trial_expiration:
+            description: If license_type is set to ENTERPRISE_FREE_TRIAL, this is the expiration date of the free trial.
+            type: string
+            optional: true
+        license_type:
+            description: (Required) The type of license for the workspace license association. Valid values are ENTERPRISE and ENTERPRISE_FREE_TRIAL.
+            type: string
+            optional: true
+        workspace_id:
+            description: '(Required) The workspace id.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        free_trial_expiration:
+            description: If license_type is set to ENTERPRISE_FREE_TRIAL, this is the expiration date of the free trial.
+            type: string
+        license_expiration:
+            description: If license_type is set to ENTERPRISE, this is the expiration date of the enterprise license.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

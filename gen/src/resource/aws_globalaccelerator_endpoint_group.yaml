@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_globalaccelerator_endpoint_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: 'The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:'
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        id:
+            description: The Amazon Resource Name (ARN) of the endpoint group.
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

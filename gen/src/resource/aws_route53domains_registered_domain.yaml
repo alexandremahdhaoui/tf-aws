@@ -1,0 +1,57 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53domains_registered_domain
+spec:
+    args: {}
+    attrs:
+        abuse_contact_email:
+            description: Email address to contact to report incorrect contact information for a domain, to report that the domain is being used to send spam, to report that someone is cybersquatting on a domain name, or report some other type of abuse.
+            type: string
+        abuse_contact_phone:
+            description: Phone number for reporting abuse.
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        creation_date:
+            description: The date when the domain was created as found in the response to a WHOIS query.
+            type: string
+        expiration_date:
+            description: The date when the registration for the domain is set to expire.
+            type: string
+        id:
+            description: The domain name.
+            type: string
+        registrar_name:
+            description: Name of the registrar of the domain as identified in the registry.
+            type: string
+        registrar_url:
+            description: Web address of the registrar.
+            type: string
+        reseller:
+            description: Reseller of the domain.
+            type: string
+        status_list:
+            description: List of domain name status codes.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        updated_date:
+            description: The last updated date of the domain as found in the response to a WHOIS query.
+            type: string
+        whois_server:
+            description: 'The fully qualified name of the WHOIS server that can answer the WHOIS query for the domain.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_codedeploy_deployment_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the CodeDeploy deployment group.
+            type: string
+        compute_platform:
+            description: The destination platform type for the deployment.
+            type: string
+        deployment_group_id:
+            description: The ID of the CodeDeploy deployment group.
+            type: string
+        id:
+            description: Application name and deployment group name.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

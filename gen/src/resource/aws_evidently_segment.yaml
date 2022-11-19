@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_evidently_segment
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the segment.
+            type: string
+        created_time:
+            description: The date and time that the segment is created.
+            type: string
+        experiment_count:
+            description: The number of experiments that this segment is used in. This count includes all current experiments, not just those that are currently running.
+            type: string
+        id:
+            description: The ID has the same value as the ARN of the segment.
+            type: string
+        last_updated_time:
+            description: The date and time that this segment was most recently updated.
+            type: string
+        launch_count:
+            description: The number of launches that this segment is used in. This count includes all current launches, not just those that are currently running.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

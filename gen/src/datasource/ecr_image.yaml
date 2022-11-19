@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ecr_image
+spec:
+    args: {}
+    attrs:
+        id:
+            description: SHA256 digest of the image manifest.
+            type: string
+        image_pushed_at:
+            description: Date and time, expressed as a unix timestamp, at which the current image was pushed to the repository.
+            type: string
+        image_size_in_bytes:
+            description: Size, in bytes, of the image in the repository.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

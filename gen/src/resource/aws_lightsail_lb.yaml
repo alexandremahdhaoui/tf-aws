@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lightsail_lb
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the Lightsail load balancer.
+            type: string
+        created_at:
+            description: The timestamp when the load balancer was created.
+            type: string
+        dns_name:
+            description: The DNS name of the load balancer.
+            type: string
+        id:
+            description: The name used for this load balancer (matches name).
+            type: string
+        protocol:
+            description: The protocol of the load balancer.
+            type: string
+        public_ports:
+            description: The public ports of the load balancer.
+            type: string
+        support_code:
+            description: The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

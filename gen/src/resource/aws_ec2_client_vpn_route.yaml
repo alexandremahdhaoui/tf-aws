@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_client_vpn_route
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 1m)
+            type: string
+        delete:
+            description: (Default 1m)
+            type: string
+        id:
+            description: The ID of the Client VPN endpoint.
+            type: string
+        origin:
+            description: Indicates how the Client VPN route was added. Will be add-route for routes created by this resource.
+            type: string
+        type:
+            description: 'The type of the route.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

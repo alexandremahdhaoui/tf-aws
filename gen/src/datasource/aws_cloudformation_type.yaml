@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_cloudformation_type
+spec:
+    args: {}
+    attrs:
+        default_version_id:
+            description: Identifier of the CloudFormation Type default version.
+            type: string
+        deprecated_status:
+            description: Deprecation status of the CloudFormation Type.
+            type: string
+        description:
+            description: Description of the CloudFormation Type.
+            type: string
+        documentation_url:
+            description: URL of the documentation for the CloudFormation Type.
+            type: string
+        execution_role_arn:
+            description: ARN of the IAM Role used to register the CloudFormation Type.
+            type: string
+        is_default_version:
+            description: Whether the CloudFormation Type version is the default version.
+            type: string
+        log_group_name:
+            description: Name of the CloudWatch Log Group where CloudFormation sends error logging information when invoking the type's handlers.
+            type: string
+        log_role_arn:
+            description: ARN of the IAM Role CloudFormation assumes when sending error logging information to CloudWatch Logs.
+            type: string
+        logging_config:
+            description: ""
+            type: string
+        provisioning_type:
+            description: Provisioning behavior of the CloudFormation Type.
+            type: string
+        schema:
+            description: JSON document of the CloudFormation Type schema.
+            type: string
+        source_url:
+            description: URL of the source code for the CloudFormation Type.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

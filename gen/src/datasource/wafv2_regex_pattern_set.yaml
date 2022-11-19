@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: wafv2_regex_pattern_set
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the entity.
+            type: string
+        description:
+            description: Description of the set that helps with identification.
+            type: string
+        id:
+            description: Unique identifier for the set.
+            type: string
+        regular_expression:
+            description: 'One or more blocks of regular expression patterns that AWS WAF is searching for. See Regular Expression below for details.Regular ExpressionEach regular_expression supports the following argument:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

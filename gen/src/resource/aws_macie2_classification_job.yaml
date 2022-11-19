@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_macie2_classification_job
+spec:
+    args: {}
+    attrs:
+        created_at:
+            description: ' The date and time, in UTC and extended RFC 3339 format, when the job was created.'
+            type: string
+        id:
+            description: The unique identifier (ID) of the macie classification job.
+            type: string
+        user_paused_details:
+            description: If the current status of the job is USER_PAUSED, specifies when the job was paused and when the job or job run will expire and be cancelled if it isn't resumed. This value is present only if the value for job-status is USER_PAUSED.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

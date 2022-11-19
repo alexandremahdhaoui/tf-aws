@@ -45,9 +45,11 @@ func cleanToken(tkn token.Token) token.Token {
 	switch tkn.Kind() {
 	case H, Li, ArgumentReference, RequiredArgs, OptionalArgs, AttributesReference, token.Literal:
 		return tkn
-	case Resource:
+	case ModuleName:
 		data := tkn.Data()
 		data = bytes.Replace(data, []byte("Resource: "), []byte(""), 1)
+		data = bytes.Replace(data, []byte("Data Source: "), []byte(""), 1)
+		data = bytes.Replace(data, []byte("Data source: "), []byte(""), 1)
 		return token.New(data, tkn.Kind())
 	case Description:
 		data := tkn.Data()

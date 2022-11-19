@@ -1,0 +1,93 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_config_remediation_configuration
+spec:
+    args:
+        arn:
+            description: ARN of the Config Remediation Configuration.
+            type: string
+            optional: true
+        automatic:
+            description: (Optional) Remediation is triggered automatically if true.
+            type: string
+            optional: true
+        concurrent_execution_rate_percentage:
+            description: (Optional) Maximum percentage of remediation actions allowed to run in parallel on the non-compliant resources for that specific rule. The default value is 10%.
+            type: string
+            optional: true
+        config_rule_name:
+            description: (Required) Name of the AWS Config rule.
+            type: string
+            optional: true
+        error_percentage:
+            description: (Optional) Percentage of errors that are allowed before SSM stops running automations on non-compliant resources for that specific rule. The default is 50%.parameterThe value is either a dynamic (resource) value or a static value. You must select either a dynamic value or a static value.
+            type: string
+            optional: true
+        execution_controls:
+            description: (Optional) Configuration block for execution controls. See below.
+            type: string
+            optional: true
+        maximum_automatic_attempts:
+            description: (Optional) Maximum number of failed attempts for auto-remediation. If you do not select a number, the default is 5.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the attribute.
+            type: string
+            optional: true
+        parameter:
+            description: (Optional) Can be specified multiple times for each parameter. Each parameter block supports arguments below.
+            type: string
+            optional: true
+        resource_type:
+            description: (Optional) Type of resource.
+            type: string
+            optional: true
+        resource_value:
+            description: (Optional) Value is dynamic and changes at run-time.
+            type: string
+            optional: true
+        retry_attempt_seconds:
+            description: (Optional) Maximum time in seconds that AWS Config runs auto-remediation. If you do not select a number, the default is 60 seconds.
+            type: string
+            optional: true
+        ssm_controls:
+            description: (Required) Configuration block for SSM controls. See below.ssm_controlsOne or both of these values are required.
+            type: string
+            optional: true
+        static_value:
+            description: (Optional) Value is static and does not change at run-time.
+            type: string
+            optional: true
+        static_values:
+            description: '(Optional) List of static values.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        target_id:
+            description: (Required) Target ID is the name of the public document.
+            type: string
+            optional: true
+        target_type:
+            description: (Required) Type of the target. Target executes remediation. For example, SSM document.
+            type: string
+            optional: true
+        target_version:
+            description: (Optional) Version of the target. For example, version of the SSM documentexecution_controls
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Config Remediation Configuration.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

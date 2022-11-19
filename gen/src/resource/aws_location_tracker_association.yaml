@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_location_tracker_association
+spec:
+    args:
+        consumer_arn:
+            description: (Required) The Amazon Resource Name (ARN) for the geofence collection to be associated to tracker resource. Used when you need to specify a resource across all AWS.
+            type: string
+            optional: true
+        create:
+            description: '(Optional, Default: 30m)'
+            type: string
+            optional: true
+        tracker_name:
+            description: '(Required) The name of the tracker resource to be associated with a geofence collection.No additional attributes are exported.Timeoutsaws_location_tracker_association provides the following Timeouts configuration options:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: '(Optional, Default: 30m)'
+            type: string
+        delete:
+            description: '(Optional, Default: 30m)'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

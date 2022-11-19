@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_api_gateway_client_certificate
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN
+            type: string
+        created_date:
+            description: Date when the client certificate was created.
+            type: string
+        expiration_date:
+            description: Date when the client certificate will expire.
+            type: string
+        id:
+            description: Identifier of the client certificate.
+            type: string
+        pem_encoded_certificate:
+            description: The PEM-encoded public key of the client certificate.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,60 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_eip
+spec:
+    args: {}
+    attrs:
+        allocation_id:
+            description: ID that AWS assigns to represent the allocation of the Elastic IP address for use with instances in a VPC.
+            type: string
+        association_id:
+            description: ID representing the association of the address with an instance in a VPC.
+            type: string
+        carrier_ip:
+            description: Carrier IP address.
+            type: string
+        customer_owned_ip:
+            description: Customer owned IP.
+            type: string
+        delete:
+            description: (Default 3m)
+            type: string
+        domain:
+            description: Indicates if this EIP is for use in VPC (vpc) or EC2-Classic (standard).
+            type: string
+        id:
+            description: Contains the EIP allocation ID.
+            type: string
+        private_dns:
+            description: The Private DNS associated with the Elastic IP address (if in VPC).
+            type: string
+        private_ip:
+            description: Contains the private IP address (if in VPC).
+            type: string
+        public_dns:
+            description: Public DNS associated with the Elastic IP address.
+            type: string
+        public_ip:
+            description: Contains the public IP address.
+            type: string
+        read:
+            description: (Default 15m)
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.~> strongNote: The resource computes the public_dns and private_dns attributes according to the VPC DNS Guide as they are not available with the EC2 API.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 5m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

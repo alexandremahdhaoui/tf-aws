@@ -1,0 +1,47 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_provisioned_concurrency_config
+spec:
+    args:
+        create:
+            description: (Default 15m)
+            type: string
+            optional: true
+        function_name:
+            description: (Required) Name or Amazon Resource Name (ARN) of the Lambda Function.
+            type: string
+            optional: true
+        id:
+            description: 'Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        provisioned_concurrent_executions:
+            description: (Required) Amount of capacity to allocate. Must be greater than or equal to 1.
+            type: string
+            optional: true
+        qualifier:
+            description: '(Required) Lambda Function version or Lambda Alias name.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 15m)
+            type: string
+        id:
+            description: 'Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 15m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

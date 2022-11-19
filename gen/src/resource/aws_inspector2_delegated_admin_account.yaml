@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_inspector2_delegated_admin_account
+spec:
+    args:
+        account_id:
+            description: '(Required) Account to enable as delegated admin account.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        create:
+            description: (Default 15m)
+            type: string
+            optional: true
+        relationship_status:
+            description: 'Status of this delegated admin account.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 15m)
+            type: string
+        delete:
+            description: (Default 15m)
+            type: string
+        relationship_status:
+            description: 'Status of this delegated admin account.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

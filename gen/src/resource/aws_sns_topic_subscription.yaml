@@ -1,0 +1,129 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_sns_topic_subscription
+spec:
+    args:
+        application:
+            description: Delivers JSON-encoded messages. endpoint is the endpoint ARN of a mobile app and device.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the subscription.
+            type: string
+            optional: true
+        confirmation_timeout_in_minutes:
+            description: (Optional) Integer indicating number of minutes to wait in retrying mode for fetching subscription arn before marking it as failure. Only applicable for http and https protocols. Default is 1.
+            type: string
+            optional: true
+        confirmation_was_authenticated:
+            description: Whether the subscription confirmation request was authenticated.
+            type: string
+            optional: true
+        delivery_policy:
+            description: (Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details.
+            type: string
+            optional: true
+        email:
+            description: Delivers messages via SMTP. endpoint is an email address.
+            type: string
+            optional: true
+        email-json:
+            description: Delivers JSON-encoded messages via SMTP. endpoint is an email address.
+            type: string
+            optional: true
+        endpoint:
+            description: (Required) Endpoint to send data to. The contents vary with the protocol. See details below.
+            type: string
+            optional: true
+        endpoint_auto_confirms:
+            description: (Optional) Whether the endpoint is capable of auto confirming subscription (e.g., PagerDuty). Default is false.
+            type: string
+            optional: true
+        filter_policy:
+            description: (Optional) JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource. Refer to the SNS docs for more details.
+            type: string
+            optional: true
+        firehose:
+            description: Delivers JSON-encoded messages. endpointarn:aws:firehose:us-east-1:123456789012:deliverystream/ticketUploadStream).
+            type: string
+            optional: true
+        http:
+            description: ' -- Delivers JSON-encoded messages via HTTP POST. endpoint is a URL beginning with http://.'
+            type: string
+            optional: true
+        https:
+            description: ' -- Delivers JSON-encoded messages via HTTPS POST. endpoint is a URL beginning with https://.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        id:
+            description: ARN of the subscription.
+            type: string
+            optional: true
+        lambda:
+            description: Delivers JSON-encoded messages. endpoint is the ARN of an AWS Lambda function.
+            type: string
+            optional: true
+        owner_id:
+            description: AWS account ID of the subscription's owner.
+            type: string
+            optional: true
+        pending_confirmation:
+            description: Whether the subscription has not been confirmed.
+            type: string
+            optional: true
+        protocol:
+            description: '(Required) Protocol to use. Valid values are: sqs, sms, lambda, firehose, and application. Protocols email, email-json, http and https are also valid but partially supported. See details below.'
+            type: string
+            optional: true
+        raw_message_delivery:
+            description: (Optional) Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property). Default is false.
+            type: string
+            optional: true
+        redrive_policy:
+            description: '(Optional) JSON String with the redrive policy that will be used in the subscription. Refer to the SNS docs for more details.Protocol supportSupported values for protocol include:'
+            type: string
+            optional: true
+        sms:
+            description: Delivers text messages via SMS. endpoint is the phone number of an SMS-enabled device.
+            type: string
+            optional: true
+        sqs:
+            description: 'Delivers JSON-encoded messages. endpoint is the ARN of an Amazon SQS queue (e.g., arn:aws:sqs:us-west-2:123456789012:terraform-queue-too).Partially supported values for protocol include:~> strongNOTE: If an aws_sns_topic_subscription uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of Terraform (e.g., clicking on a "Confirm Subscription" link in an email), Terraform cannot delete / unsubscribe the subscription. Attempting to destroy an unconfirmed subscription will remove the aws_sns_topic_subscription from Terraform''s state but strongemwill not remove the subscription from AWS. The pending_confirmation attribute provides confirmation status.'
+            type: string
+            optional: true
+        subscription_role_arn:
+            description: (Required if protocol is firehose) ARN of the IAM role to publish to Kinesis Data Firehose delivery stream. Refer to SNS docs.
+            type: string
+            optional: true
+        topic_arn:
+            description: (Required) ARN of the SNS topic to subscribe to.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the subscription.
+            type: string
+        confirmation_was_authenticated:
+            description: Whether the subscription confirmation request was authenticated.
+            type: string
+        id:
+            description: ARN of the subscription.
+            type: string
+        owner_id:
+            description: AWS account ID of the subscription's owner.
+            type: string
+        pending_confirmation:
+            description: Whether the subscription has not been confirmed.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

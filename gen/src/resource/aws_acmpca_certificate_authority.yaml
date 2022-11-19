@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_acmpca_certificate_authority
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the certificate authority.
+            type: string
+        certificate:
+            description: Base64-encoded certificate authority (CA) certificate. Only available after the certificate authority certificate has been imported.
+            type: string
+        certificate_chain:
+            description: Base64-encoded certificate chain that includes any intermediate certificates and chains up to root on-premises certificate that you used to sign your private CA certificate. The chain does not include your private CA certificate. Only available after the certificate authority certificate has been imported.
+            type: string
+        certificate_signing_request:
+            description: The base64 PEM-encoded certificate signing request (CSR) for your private CA certificate.
+            type: string
+        create:
+            description: (Default 1m)
+            type: string
+        id:
+            description: ARN of the certificate authority.
+            type: string
+        not_after:
+            description: Date and time after which the certificate authority is not valid. Only available after the certificate authority certificate has been imported.
+            type: string
+        not_before:
+            description: Date and time before which the certificate authority is not valid. Only available after the certificate authority certificate has been imported.
+            type: string
+        serial:
+            description: Serial number of the certificate authority. Only available after the certificate authority certificate has been imported.
+            type: string
+        status:
+            description: (strongDeprecated use the enabled attribute instead) Status of the certificate authority.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

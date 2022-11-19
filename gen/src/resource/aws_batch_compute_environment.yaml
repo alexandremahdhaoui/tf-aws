@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_batch_compute_environment
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the compute environment.
+            type: string
+        ecs_cluster_arn:
+            description: The Amazon Resource Name (ARN) of the underlying Amazon ECS cluster used by the compute environment.
+            type: string
+        status:
+            description: The current status of the compute environment (for example, CREATING or VALID).
+            type: string
+        status_reason:
+            description: A short, human-readable string to provide additional details about the current status of the compute environment.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

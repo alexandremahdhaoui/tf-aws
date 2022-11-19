@@ -1,0 +1,111 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_budgets_budget
+spec:
+    args: {}
+    attrs:
+        AZ:
+            description: ""
+            type: string
+        LinkedAccount:
+            description: ""
+            type: string
+        Operation:
+            description: ""
+            type: string
+        PurchaseType:
+            description: ""
+            type: string
+        Service:
+            description: ""
+            type: string
+        TagKeyValue:
+            description: 'Refer to AWS CostFilter documentation for further detail.Cost FiltersstrongNote: Attribute cost_filters is deprecated. Use cost_filter instead.Valid key for cost_filters is same as cost_filter. Please refer to Cost Filter.Budget NotificationValid keys for notification parameter.'
+            type: string
+        UsageType:<service name>:
+            description: ""
+            type: string
+        amount:
+            description: (Required) The amount of cost or usage being measured for a budget.
+            type: string
+        arn:
+            description: 'The ARN of the budget.Auto Adjust DataThe parameters that determine the budget amount for an auto-adjusting budget.auto_adjust_type (Required) - The string that defines whether your budget auto-adjusts based on historical or forecasted data. Valid values: FORECAST,HISTORICALhistorical_options (Optional) - Configuration block of Historical Options. Required for auto_adjust_type of HISTORICALlast_auto_adjust_time (Optional) - The last time that your budget was auto-adjusted.Historical Optionsbudget_adjustment_periodlookback_available_periods (Optional) - The integer that describes how many budget periods in your BudgetAdjustmentPeriod are included in the calculation of your current budget limit. If the first budget period in your BudgetAdjustmentPeriod has no cost data, then that budget period isn’t included in the average that determines your budget limit. You can’t set your own LookBackAvailablePeriods. The value is automatically calculated from the budget_adjustment_period and your historical cost data.Cost TypesValid keys for cost_types parameter.'
+            type: string
+        comparison_operator:
+            description: (Required) Comparison operator to use to evaluate the condition. Can be LESS_THAN, EQUAL_TO or GREATER_THAN.
+            type: string
+        cost:
+            description: ""
+            type: string
+        id:
+            description: id of resource.
+            type: string
+        include_credit:
+            description: A boolean value whether to include credits in the cost budget. Defaults to true
+            type: string
+        include_discount:
+            description: Whether a budget includes discounts. Defaults to true
+            type: string
+        include_other_subscription:
+            description: A boolean value whether to include other subscription costs in the cost budget. Defaults to true
+            type: string
+        include_recurring:
+            description: A boolean value whether to include recurring costs in the cost budget. Defaults to true
+            type: string
+        include_refund:
+            description: A boolean value whether to include refunds in the cost budget. Defaults to true
+            type: string
+        include_subscription:
+            description: A boolean value whether to include subscriptions in the cost budget. Defaults to true
+            type: string
+        include_support:
+            description: A boolean value whether to include support costs in the cost budget. Defaults to true
+            type: string
+        include_tax:
+            description: A boolean value whether to include tax in the cost budget. Defaults to true
+            type: string
+        include_upfront:
+            description: A boolean value whether to include upfront costs in the cost budget. Defaults to true
+            type: string
+        notification_type:
+            description: (Required) What kind of budget value to notify on. Can be ACTUAL or FORECASTED
+            type: string
+        start_time:
+            description: '(Required) The start time of the budget limit. Format: 2017-01-01_12:00. See PlannedBudgetLimits documentation.'
+            type: string
+        subscriber_email_addresses:
+            description: (Optional) E-Mail addresses to notify. Either this or subscriber_sns_topic_arns is required.
+            type: string
+        subscriber_sns_topic_arns:
+            description: (Optional) SNS topics to notify. Either this or subscriber_email_addresses is required.Planned Budget LimitsValid keys for planned_limit parameter.
+            type: string
+        threshold:
+            description: (Required) Threshold when the notification should be sent.
+            type: string
+        threshold_type:
+            description: (Required) What kind of threshold is defined. Can be PERCENTAGE OR ABSOLUTE_VALUE.
+            type: string
+        unit:
+            description: (Required) The unit of measurement used for the budget forecast, actual spend, or budget threshold, such as dollars or GB. See Spend documentation.
+            type: string
+        usage:
+            description: ""
+            type: string
+        use_amortized:
+            description: Whether a budget uses the amortized rate. Defaults to false
+            type: string
+        use_blended:
+            description: A boolean value whether to use blended costs in the cost budget. Defaults to falseRefer to AWS CostTypes documentation for further detail.Cost FilterValid name for cost_filter parameter vary depending on the budget_type value.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_appconfig_extension_association
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the AppConfig Extension Association.
+            type: string
+        extension_version:
+            description: The version number for the extension defined in the association.
+            type: string
+        id:
+            description: AppConfig Extension Association ID.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

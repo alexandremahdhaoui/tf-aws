@@ -1,0 +1,61 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_s3control_bucket
+spec:
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the bucket.
+            type: string
+            optional: true
+        bucket:
+            description: (Required) Name of the bucket.
+            type: string
+            optional: true
+        creation_date:
+            description: UTC creation date in RFC3339 format.
+            type: string
+            optional: true
+        id:
+            description: Amazon Resource Name (ARN) of the bucket.
+            type: string
+            optional: true
+        outpost_id:
+            description: (Required) Identifier of the Outpost to contain this bucket.
+            type: string
+            optional: true
+        public_access_block_enabled:
+            description: Boolean whether Public Access Block is enabled.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the bucket.
+            type: string
+        creation_date:
+            description: UTC creation date in RFC3339 format.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the bucket.
+            type: string
+        public_access_block_enabled:
+            description: Boolean whether Public Access Block is enabled.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

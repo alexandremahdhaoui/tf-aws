@@ -1,0 +1,126 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: route53_traffic_policy_document
+spec:
+    args:
+        bias:
+            description: (Optional) Specify a value for bias if you want to route more traffic to an endpoint from nearby endpoints (positive values) or route less traffic to an endpoint (negative values).
+            type: string
+            optional: true
+        continent:
+            description: (Optional) Value of a continent.
+            type: string
+            optional: true
+        country:
+            description: (Optional) Value of a country.
+            type: string
+            optional: true
+        endpoint:
+            description: ' (Optional) - Configuration block for the definitions of the endpoints that you want to use in this traffic policy. See below'
+            type: string
+            optional: true
+        endpoint_reference:
+            description: (Optional) References to an endpoint.
+            type: string
+            optional: true
+        evaluate_target_health:
+            description: (Optional) Indicates whether you want Amazon Route 53 to evaluate the health of the endpoint and route traffic only to healthy endpoints.
+            type: string
+            optional: true
+        geo_proximity_location:
+            description: (Optional) Configuration block for when you add a geoproximity rule, you configure Amazon Route 53 to route traffic to your resources based on the geographic location of your resources. Only valid for geoproximity type. See below
+            type: string
+            optional: true
+        health_check:
+            description: '(Optional) If you want to associate a health check with the endpoint or rule.The following attribute is exported:'
+            type: string
+            optional: true
+        id:
+            description: (Required) ID of a rule you want to assign.
+            type: string
+            optional: true
+        is_default:
+            description: (Optional) Indicates whether this set of values represents the default location.
+            type: string
+            optional: true
+        items:
+            description: (Optional) Configuration block for when you add a multivalue answer rule, you configure your traffic policy to route traffic approximately randomly to your healthy resources.  Only valid for multivalue type. See belowprimary and secondary
+            type: string
+            optional: true
+        latitude:
+            description: (Optional) Represents the location south (negative) or north (positive) of the equator. Valid values are -90 degrees to 90 degrees.
+            type: string
+            optional: true
+        location:
+            description: (Optional) Configuration block for when you add a geolocation rule, you configure your traffic policy to route your traffic based on the geographic location of your users.  Only valid for geo type. See below
+            type: string
+            optional: true
+        longitude:
+            description: (Optional) Represents the location west (negative) or east (positive) of the prime meridian. Valid values are -180 degrees to 180 degrees.
+            type: string
+            optional: true
+        primary:
+            description: (Optional) Configuration block for the settings for the rule or endpoint that you want to route traffic to whenever the corresponding resources are available. Only valid for failover type. See below
+            type: string
+            optional: true
+        record_type:
+            description: ' (Optional) - DNS type of all of the resource record sets that Amazon Route 53 will create based on this traffic policy.'
+            type: string
+            optional: true
+        region:
+            description: (Optional) Region code for the AWS Region that you created the resource in.
+            type: string
+            optional: true
+        regions:
+            description: (Optional) Configuration block for when you add a latency rule, you configure your traffic policy to route your traffic based on the latency (the time delay) between your users and the AWS regions where you've created AWS resources such as ELB load balancers and Amazon S3 buckets. Only valid for latency type. See below
+            type: string
+            optional: true
+        rule:
+            description: ' (Optional) - Configuration block for definitions of the rules that you want to use in this traffic policy. See below'
+            type: string
+            optional: true
+        rule_reference:
+            description: (Optional) References to a rule.item
+            type: string
+            optional: true
+        secondary:
+            description: (Optional) Configuration block for the rule or endpoint that you want to route traffic to whenever the primary resources are not available. Only valid for failover type. See below
+            type: string
+            optional: true
+        start_endpoint:
+            description: ' (Optional) - An endpoint to be as the starting point for the traffic policy.'
+            type: string
+            optional: true
+        start_rule:
+            description: ' (Optional) - A rule to be as the starting point for the traffic policy.'
+            type: string
+            optional: true
+        subdivision:
+            description: (Optional) Value of a subdivision.geo_proximity_location
+            type: string
+            optional: true
+        type:
+            description: (Optional) Type of the rule.
+            type: string
+            optional: true
+        value:
+            description: (Optional) Value of the type.rule
+            type: string
+            optional: true
+        version:
+            description: ' (Optional) - Version of the traffic policy format.endpoint'
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

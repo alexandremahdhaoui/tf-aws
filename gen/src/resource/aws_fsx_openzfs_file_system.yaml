@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_fsx_openzfs_file_system
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name of the file system.
+            type: string
+        create:
+            description: (Default 60m)
+            type: string
+        delete:
+            description: (Default 60m)
+            type: string
+        dns_name:
+            description: DNS name for the file system, e.g., fs-12345678.fsx.us-west-2.amazonaws.com
+            type: string
+        id:
+            description: Identifier of the file system, e.g., fs-12345678
+            type: string
+        network_interface_ids:
+            description: Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface.
+            type: string
+        owner_id:
+            description: AWS account identifier that created the file system.
+            type: string
+        root_volume_id:
+            description: Identifier of the root volume, e.g., fsvol-12345678
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update:
+            description: (Default 60m)
+            type: string
+        vpc_id:
+            description: 'Identifier of the Virtual Private Cloud for the file system.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

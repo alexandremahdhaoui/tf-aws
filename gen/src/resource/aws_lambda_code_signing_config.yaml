@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_code_signing_config
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the code signing configuration.
+            type: string
+        config_id:
+            description: Unique identifier for the code signing configuration.
+            type: string
+        last_modified:
+            description: The date and time that the code signing configuration was last modified.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

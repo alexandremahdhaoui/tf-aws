@@ -1,0 +1,184 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_comprehend_entity_recognizer
+spec:
+    args:
+        annotation_data_s3_uri:
+            description: (Optional) Location of annotation files.
+            type: string
+            optional: true
+        annotations:
+            description: |-
+                (Optional) Specifies location of the document annotation data.
+                See the annotations Configuration Blockannotations or entity_list is required.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the Entity Recognizer version.
+            type: string
+            optional: true
+        attribute_names:
+            description: (Required) The JSON attribute that contains the annotations for the training documents.
+            type: string
+            optional: true
+        augmented_manifests:
+            description: data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below.
+            type: string
+            optional: true
+        create:
+            description: '(Optional, Default: 60m)'
+            type: string
+            optional: true
+        data_access_role_arn:
+            description: (Required) The ARN for an IAM Role which allows Comprehend to read the training and testing data.
+            type: string
+            optional: true
+        data_format:
+            description: '(Optional, Default: COMPREHEND_CSVCOMPREHEND_CSV or AUGMENTED_MANIFEST.'
+            type: string
+            optional: true
+        delete:
+            description: '(Optional, Default: 30m)'
+            type: string
+            optional: true
+        document_type:
+            description: '(Optional, Default: PLAIN_TEXT_DOCUMENTPLAIN_TEXT_DOCUMENT or SEMI_STRUCTURED_DOCUMENT.'
+            type: string
+            optional: true
+        documents:
+            description: data_format is COMPREHEND_CSVdocuments Configuration Block section below.
+            type: string
+            optional: true
+        entity_list:
+            description: |-
+                (Optional) Specifies location of the entity list data.
+                See the entity_list Configuration Blockentity_list or annotations is required.
+            type: string
+            optional: true
+        entity_types:
+            description: |-
+                (Required) Set of entity types to be recognized.
+                Has a maximum of 25 items.
+                See the entity_types Configuration Block section below.annotations Configuration Block
+            type: string
+            optional: true
+        input_data_config:
+            description: |-
+                (Required) Configuration for the training and testing data.
+                See the input_data_config Configuration Block section below.
+            type: string
+            optional: true
+        input_format:
+            description: '(Optional, Default: ONE_DOC_PER_LINEONE_DOC_PER_LINE or ONE_DOC_PER_FILE.'
+            type: string
+            optional: true
+        language_code:
+            description: en, es, fr, it, de, or pt.
+            type: string
+            optional: true
+        model_kms_key_id:
+            description: (Optional) The ID or ARN of a KMS Key used to encrypt trained Entity Recognizers.
+            type: string
+            optional: true
+        name:
+            description: |-
+                (Required) Name for the Entity Recognizer.
+                Has a maximum length of 63 characters.
+                Can contain upper- and lower-case letters, numbers, and hypen (-).
+            type: string
+            optional: true
+        s3_uri:
+            description: (Required) Location of entity list.entity_types Configuration Block
+            type: string
+            optional: true
+        security_group_ids:
+            description: (Required) List of security group IDs.
+            type: string
+            optional: true
+        source_documents_s3_uri:
+            description: (Optional) Location of source PDF files.
+            type: string
+            optional: true
+        split:
+            description: '(Optional, Default: TRAINTRAIN or TEST.documents Configuration Block'
+            type: string
+            optional: true
+        subnets:
+            description: '(Required) List of VPC subnets.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags Configuration Block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_comprehend_entity_recognizer provides the following Timeouts configuration options:'
+            type: string
+            optional: true
+        test_s3uri:
+            description: (Optional) Location of test documents.entity_list Configuration Block
+            type: string
+            optional: true
+        type:
+            description: |-
+                (Required) An entity type to be matched by the Entity Recognizer.
+                Cannot contain a newline (\n), carriage return (\r), or tab (\t).vpc_config Configuration Block
+            type: string
+            optional: true
+        update:
+            description: '(Optional, Default: 60m)'
+            type: string
+            optional: true
+        version_name:
+            description: |-
+                (Optional) Name for the version of the Entity Recognizer.
+                Each version must have a unique name within the Entity Recognizer.
+                If omitted, Terraform will assign a random, unique version name.
+                If explicitly set to ""-version_name_prefix.
+            type: string
+            optional: true
+        version_name_prefix:
+            description: |-
+                (Optional) Creates a unique version name beginning with the specified prefix.
+                Has a maximum length of 37 characters.
+                Can contain upper- and lower-case letters, numbers, and hypen (-version_name.
+            type: string
+            optional: true
+        volume_kms_key_id:
+            description: (Optional) ID or ARN of a KMS Key used to encrypt storage volumes during job processing.
+            type: string
+            optional: true
+        vpc_config:
+            description: |-
+                (Optional) Configuration parameters for VPC to contain Entity Recognizer resources.
+                See the vpc_config Configuration Block section below.input_data_config Configuration Block
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Entity Recognizer version.
+            type: string
+        create:
+            description: '(Optional, Default: 60m)'
+            type: string
+        delete:
+            description: '(Optional, Default: 30m)'
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_comprehend_entity_recognizer provides the following Timeouts configuration options:'
+            type: string
+        update:
+            description: '(Optional, Default: 60m)'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_alias
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) identifying your Lambda function alias.
+            type: string
+        invoke_arn:
+            description: The ARN to be used for invoking Lambda Function from API Gateway - to be used in aws_api_gateway_integration's uri
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

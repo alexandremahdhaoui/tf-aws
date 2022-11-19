@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_service_discovery_public_dns_namespace
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN that Amazon Route 53 assigns to the namespace when you create it.
+            type: string
+        hosted_zone:
+            description: The ID for the hosted zone that Amazon Route 53 creates when you create a namespace.
+            type: string
+        id:
+            description: The ID of a namespace.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,21 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: lakeformation_resource
+spec:
+    args: {}
+    attrs:
+        last_modified:
+            description: Date and time the resource was last modified in RFC 3339 format.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

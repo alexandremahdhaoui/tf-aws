@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_worklink_fleet
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the created WorkLink Fleet.
+            type: string
+        company_code:
+            description: The identifier used by users to sign in to the Amazon WorkLink app.
+            type: string
+        created_time:
+            description: The time that the fleet was created.
+            type: string
+        id:
+            description: The ARN of the created WorkLink Fleet.
+            type: string
+        last_updated_time:
+            description: The time that the fleet was last updated.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

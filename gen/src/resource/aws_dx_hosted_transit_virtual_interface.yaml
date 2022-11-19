@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_dx_hosted_transit_virtual_interface
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the virtual interface.
+            type: string
+        aws_device:
+            description: The Direct Connect endpoint on which the virtual interface terminates.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 10m)
+            type: string
+        id:
+            description: The ID of the virtual interface.
+            type: string
+        jumbo_frame_capable:
+            description: 'Indicates whether jumbo frames (8500 MTU) are supported.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 10m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

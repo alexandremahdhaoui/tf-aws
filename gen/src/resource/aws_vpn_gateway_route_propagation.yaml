@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_vpn_gateway_route_propagation
+spec:
+    args:
+        create:
+            description: (Default 2m)
+            type: string
+            optional: true
+        route_table_id:
+            description: 'The id of the aws_route_table to propagate routes into.No additional attributes are exported.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        vpn_gateway_id:
+            description: The id of the aws_vpn_gateway to propagate routes from.
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 2m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

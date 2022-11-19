@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_transit_gateway_multicast_domain
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: EC2 Transit Gateway Multicast Domain Amazon Resource Name (ARN).
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 10m)
+            type: string
+        id:
+            description: EC2 Transit Gateway Multicast Domain identifier.
+            type: string
+        owner_id:
+            description: Identifier of the AWS account that owns the EC2 Transit Gateway Multicast Domain.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

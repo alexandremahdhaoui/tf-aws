@@ -1,0 +1,37 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ses_domain_mail_from
+spec:
+    args:
+        behavior_on_mx_failure:
+            description: '(Optional) The action that you want Amazon SES to take if it cannot successfully read the required MX record when you send an email. Defaults to UseDefaultValue. See the SES API documentation for more information.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        domain:
+            description: (Required) Verified domain name or email identity to generate DKIM tokens for.
+            type: string
+            optional: true
+        id:
+            description: The domain name.
+            type: string
+            optional: true
+        mail_from_domain:
+            description: (Required) Subdomain (of above domain) which is to be used as MAIL FROM address (Required for DMARC validation)
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: The domain name.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

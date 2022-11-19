@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_rum_app_monitor
+spec:
+    args: {}
+    attrs:
+        app_monitor_id:
+            description: The unique ID of the app monitor. Useful for JS templates.
+            type: string
+        arn:
+            description: The Amazon Resource Name (ARN) specifying the app monitor.
+            type: string
+        cw_log_group:
+            description: The name of the log group where the copies are stored.
+            type: string
+        id:
+            description: The CloudWatch RUM name as it is the identifier of a RUM.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

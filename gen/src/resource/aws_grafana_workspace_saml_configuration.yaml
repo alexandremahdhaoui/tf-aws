@@ -1,0 +1,77 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_grafana_workspace_saml_configuration
+spec:
+    args:
+        admin_role_values:
+            description: (Optional) The admin role values.
+            type: string
+            optional: true
+        allowed_organizations:
+            description: (Optional) The allowed organizations.
+            type: string
+            optional: true
+        editor_role_values:
+            description: (Required) The editor role values.
+            type: string
+            optional: true
+        email_assertion:
+            description: (Optional) The email assertion.
+            type: string
+            optional: true
+        groups_assertion:
+            description: (Optional) The groups assertion.
+            type: string
+            optional: true
+        idp_metadata_url:
+            description: (Optional) The IDP Metadata URL. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified.
+            type: string
+            optional: true
+        idp_metadata_xml:
+            description: (Optional) The IDP Metadata XML. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified.
+            type: string
+            optional: true
+        login_assertion:
+            description: (Optional) The login assertion.
+            type: string
+            optional: true
+        login_validity_duration:
+            description: (Optional) The login validity duration.
+            type: string
+            optional: true
+        name_assertion:
+            description: (Optional) The name assertion.
+            type: string
+            optional: true
+        org_assertion:
+            description: (Optional) The org assertion.
+            type: string
+            optional: true
+        role_assertion:
+            description: '(Optional) The role assertion.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        status:
+            description: The status of the SAML configuration.
+            type: string
+            optional: true
+        workspace_id:
+            description: (Required) The workspace id.
+            type: string
+            optional: true
+    attrs:
+        status:
+            description: The status of the SAML configuration.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

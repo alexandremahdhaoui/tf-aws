@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_glue_schema
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the schema.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the schema.
+            type: string
+        latest_schema_version:
+            description: The latest version of the schema associated with the returned schema definition.
+            type: string
+        next_schema_version:
+            description: The next version of the schema associated with the returned schema definition.
+            type: string
+        registry_name:
+            description: The name of the Glue Registry.
+            type: string
+        schema_checkpoint:
+            description: The version number of the checkpoint (the last time the compatibility mode was changed).
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

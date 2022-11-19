@@ -1,0 +1,34 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_grafana_role_association
+spec:
+    args:
+        group_ids:
+            description: (Optional) The AWS SSO group ids to be assigned the role given in role.
+            type: string
+            optional: true
+        role:
+            description: (Required) The grafana role. Valid values can be found here.
+            type: string
+            optional: true
+        user_ids:
+            description: (Optional) The AWS SSO user ids to be assigned the role given in role.
+            type: string
+            optional: true
+        workspace_id:
+            description: (Required) The workspace id.
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

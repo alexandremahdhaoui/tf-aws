@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: vpc_ipam_pool
+spec:
+    args: {}
+    attrs:
+        address_family:
+            description: IP protocol assigned to this pool.
+            type: string
+        allocation_default_netmask_length:
+            description: A default netmask length for allocations added to this pool. If, for example, the CIDR assigned to this pool is 10.0.0.0/8 and you enter 16 here, new allocations will default to 10.0.0.0/16.
+            type: string
+        allocation_max_netmask_length:
+            description: The maximum netmask length that will be required for CIDR allocations in this pool.
+            type: string
+        allocation_min_netmask_length:
+            description: The minimum netmask length that will be required for CIDR allocations in this pool.
+            type: string
+        allocation_resource_tags:
+            description: Tags that are required to create resources in using this pool.
+            type: string
+        arn:
+            description: ARN of the pool
+            type: string
+        auto_import:
+            description: If enabled, IPAM will continuously look for resources within the CIDR range of this pool and automatically import them as allocations into your IPAM.
+            type: string
+        aws_service:
+            description: Limits which service in AWS that the pool can be used in. "ec2", for example, allows users to use space for Elastic IP addresses and VPCs.
+            type: string
+        description:
+            description: Description for the IPAM pool.
+            type: string
+        id:
+            description: ID of the IPAM pool.
+            type: string
+        ipam_scope_id:
+            description: ID of the scope the pool belongs to.
+            type: string
+        locale:
+            description: Locale is the Region where your pool is available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region.
+            type: string
+        publicly_advertisable:
+            description: Defines whether or not IPv6 pool space is publicly ∂advertisable over the internet.
+            type: string
+        source_ipam_pool_id:
+            description: ID of the source IPAM pool.
+            type: string
+        tags:
+            description: 'Map of tags to assigned to the resource.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

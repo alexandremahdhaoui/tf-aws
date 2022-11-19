@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudfront_public_key
+spec:
+    args: {}
+    attrs:
+        caller_reference:
+            description: Internal value used by CloudFront to allow future updates to the public key configuration.
+            type: string
+        etag:
+            description: 'The current version of the public key. For example: E2QWRUHAPOMQZL.'
+            type: string
+        id:
+            description: 'The identifier for the public key. For example: K3D5EWEUDCCXON.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

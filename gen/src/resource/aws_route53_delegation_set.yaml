@@ -1,0 +1,29 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53_delegation_set
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the Delegation Set.
+            type: string
+        id:
+            description: The delegation set ID
+            type: string
+        name_servers:
+            description: |-
+                A list of authoritative name servers for the hosted zone
+                (effectively a list of NS records).
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_guardduty_member
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 1m)
+            type: string
+        id:
+            description: The ID of the GuardDuty member
+            type: string
+        relationship_status:
+            description: 'The status of the relationship between the member account and its primary account. More information can be found in Amazon GuardDuty API Reference.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 1m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,64 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lightsail_container_service
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the container service.
+            type: string
+        availability_zone:
+            description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        id:
+            description: Same as name.
+            type: string
+        power_id:
+            description: The ID of the power of the container service.
+            type: string
+        principal_arn:
+            description: ""
+            type: string
+        private_domain_name:
+            description: |-
+                The private domain name of the container service. The private domain name is accessible only
+                by other resources within the default virtual private cloud (VPC) of your Lightsail account.
+            type: string
+        region_name:
+            description: The AWS Region name.
+            type: string
+        resource_type:
+            description: The Lightsail resource type of the container service (i.e., ContainerService).
+            type: string
+        state:
+            description: The current state of the container service.
+            type: string
+        tags_all:
+            description: |-
+                A map of tags assigned to the resource, including those inherited from the provider
+                default_tags configuration block.
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+        url:
+            description: 'TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

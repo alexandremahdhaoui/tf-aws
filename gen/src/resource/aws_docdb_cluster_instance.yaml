@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_docdb_cluster_instance
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of cluster instance
+            type: string
+        ca_cert_identifier:
+            description: '(Optional) The identifier of the CA certificate for the DB instance.TimeoutsConfiguration options:'
+            type: string
+        create:
+            description: (Default 90m
+            type: string
+        db_subnet_group_name:
+            description: The DB subnet group to associate with this DB instance.
+            type: string
+        dbi_resource_id:
+            description: The region-unique, immutable identifier for the DB instance.
+            type: string
+        delete:
+            description: (Default 90m
+            type: string
+        endpoint:
+            description: The DNS address for this instance. May not be writable
+            type: string
+        engine_version:
+            description: The database engine version
+            type: string
+        kms_key_id:
+            description: The ARN for the KMS encryption key if one is set to the cluster.
+            type: string
+        port:
+            description: The database port
+            type: string
+        preferred_backup_window:
+            description: The daily time range during which automated backups are created if automated backups are enabled.
+            type: string
+        storage_encrypted:
+            description: Specifies whether the DB cluster is encrypted.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update:
+            description: (Default 90m)
+            type: string
+        writer:
+            description: ' – Boolean indicating if this instance is writable. False indicates this instance is a read replica.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

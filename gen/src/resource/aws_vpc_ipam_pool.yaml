@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_vpc_ipam_pool
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of IPAM
+            type: string
+        id:
+            description: The ID of the IPAM
+            type: string
+        state:
+            description: The ID of the IPAM
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

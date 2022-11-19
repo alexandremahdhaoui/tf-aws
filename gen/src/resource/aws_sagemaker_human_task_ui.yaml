@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_sagemaker_human_task_ui
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this Human Task UI.
+            type: string
+        content_sha256:
+            description: The SHA-256 digest of the contents of the template.
+            type: string
+        id:
+            description: The name of the Human Task UI.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        ui_template:
+            description: (Required) The Liquid template for the worker user interface. See UI Template below.UI Template
+            type: string
+        url:
+            description: The URL for the user interface template.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

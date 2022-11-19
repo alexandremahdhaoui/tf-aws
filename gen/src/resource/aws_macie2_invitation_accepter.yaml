@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_macie2_invitation_accepter
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The unique identifier (ID) of the macie invitation accepter.
+            type: string
+        invitation_id:
+            description: The unique identifier for the invitation.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,63 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ssm_document
+spec:
+    args: {}
+    attrs:
+        account_ids:
+            description: The AWS user accounts that should have access to the document. The account IDs can either be a group of account IDs or All.
+            type: string
+        created_date:
+            description: The date the document was created.
+            type: string
+        default_version:
+            description: The default version of the document.
+            type: string
+        description:
+            description: The description of the document.
+            type: string
+        document_version:
+            description: The document version.
+            type: string
+        hash:
+            description: The sha1 or sha256 of the document content
+            type: string
+        hash_type:
+            description: '"Sha1" "Sha256". The hashing algorithm used when hashing the content.'
+            type: string
+        latest_version:
+            description: The latest version of the document.
+            type: string
+        owner:
+            description: The AWS user account of the person who created the document.
+            type: string
+        parameter:
+            description: The parameters that are available to this document.
+            type: string
+        platform_types:
+            description: A list of OS platforms compatible with this SSM document, either "Windows" or "Linux".
+            type: string
+        schema_version:
+            description: The schema version of the document.
+            type: string
+        status:
+            description: '"Creating", "Active" or "Deleting". The current status of the document.'
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:'
+            type: string
+        type:
+            description: The permission type for the document. The permission type can be Share.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

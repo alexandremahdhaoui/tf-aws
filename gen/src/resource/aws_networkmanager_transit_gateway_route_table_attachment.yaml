@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_networkmanager_transit_gateway_route_table_attachment
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Attachment Amazon Resource Name (ARN).
+            type: string
+        attachment_policy_rule_number:
+            description: The policy rule number associated with the attachment.
+            type: string
+        attachment_type:
+            description: The type of attachment.
+            type: string
+        core_network_arn:
+            description: The ARN of the core network.
+            type: string
+        core_network_id:
+            description: The ID of the core network.
+            type: string
+        edge_location:
+            description: The edge location for the peer.
+            type: string
+        id:
+            description: The ID of the attachment.
+            type: string
+        owner_account_id:
+            description: The ID of the attachment account owner.
+            type: string
+        resource_arn:
+            description: The attachment resource ARN.
+            type: string
+        segment_name:
+            description: The name of the segment attachment.
+            type: string
+        state:
+            description: The state of the attachment.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

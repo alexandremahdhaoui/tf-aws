@@ -1,0 +1,114 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: launch_configuration
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name of the launch configuration.
+            type: string
+        associate_public_ip_address:
+            description: Whether a Public IP address is associated with the instance.
+            type: string
+        delete_on_termination:
+            description: Whether the EBS Volume will be deleted on instance termination.
+            type: string
+        device_name:
+            description: Name of the device.
+            type: string
+        ebs_block_device:
+            description: EBS Block Devices attached to the instance.
+            type: string
+        ebs_optimized:
+            description: Whether the launched EC2 instance will be EBS-optimized.
+            type: string
+        enable_monitoring:
+            description: Whether Detailed Monitoring is Enabled.
+            type: string
+        encrypted:
+            description: Whether the volume is Encrypted.
+            type: string
+        ephemeral_block_device:
+            description: The Ephemeral volumes on the instance.
+            type: string
+        http_endpoint:
+            description: 'State of the metadata service: enabled, disabled.'
+            type: string
+        http_put_response_hop_limit:
+            description: The desired HTTP PUT response hop limit for instance metadata requests.
+            type: string
+        http_tokens:
+            description: 'If session tokens are required: optional, required.'
+            type: string
+        iam_instance_profile:
+            description: The IAM Instance Profile to associate with launched instances.
+            type: string
+        id:
+            description: ID of the launch configuration.
+            type: string
+        image_id:
+            description: EC2 Image ID of the instance.
+            type: string
+        instance_type:
+            description: Instance Type of the instance to launch.
+            type: string
+        iops:
+            description: Provisioned IOPs of the volume.
+            type: string
+        key_name:
+            description: Key Name that should be used for the instance.
+            type: string
+        metadata_options:
+            description: ""
+            type: string
+        name:
+            description: Name of the launch configuration.
+            type: string
+        no_device:
+            description: Whether the device in the block device mapping of the AMI is suppressed.
+            type: string
+        placement_tenancy:
+            description: 'Tenancy of the instance.root_block_device is exported with the following attributes:'
+            type: string
+        root_block_device:
+            description: Root Block Device of the instance.
+            type: string
+        security_groups:
+            description: List of associated Security Group IDS.
+            type: string
+        snapshot_id:
+            description: Snapshot ID of the mount.
+            type: string
+        spot_price:
+            description: Price to use for reserving Spot instances.
+            type: string
+        throughput:
+            description: Throughput of the volume.
+            type: string
+        user_data:
+            description: User Data of the instance.
+            type: string
+        volume_size:
+            description: Size of the volume.
+            type: string
+        volume_type:
+            description: 'Type of the volume.ephemeral_block_device is exported with the following attributes:'
+            type: string
+        vpc_classic_link_id:
+            description: ID of a ClassicLink-enabled VPC.
+            type: string
+        vpc_classic_link_security_groups:
+            description: The IDs of one or more Security Groups for the specified ClassicLink-enabled VPC.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

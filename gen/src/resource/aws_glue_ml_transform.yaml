@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_glue_ml_transform
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of Glue ML Transform.
+            type: string
+        data_type:
+            description: The type of data in the column.
+            type: string
+        id:
+            description: Glue ML Transform ID.
+            type: string
+        label_count:
+            description: The number of labels available for this transform.
+            type: string
+        name:
+            description: The name of the column.
+            type: string
+        schema:
+            description: The object that represents the schema that this transform accepts. see Schema.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

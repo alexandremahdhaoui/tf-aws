@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_sagemaker_image_version
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this Image Version.
+            type: string
+        container_image:
+            description: The registry path of the container image that contains this image version.
+            type: string
+        id:
+            description: The name of the Image.
+            type: string
+        image_arn:
+            description: '- The Amazon Resource Name (ARN) of the image the version is based on.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

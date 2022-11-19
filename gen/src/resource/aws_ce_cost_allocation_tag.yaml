@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ce_cost_allocation_tag
+spec:
+    args:
+        id:
+            description: The key for the cost allocation tag.
+            type: string
+            optional: true
+        status:
+            description: '(Required) The status of a cost allocation tag. Valid values are Active and Inactive.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tag_key:
+            description: (Required) The key for the cost allocation tag.
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: The key for the cost allocation tag.
+            type: string
+        type:
+            description: The type of cost allocation tag.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

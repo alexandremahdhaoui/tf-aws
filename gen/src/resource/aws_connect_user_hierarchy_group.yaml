@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_connect_user_hierarchy_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ' The Amazon Resource Name (ARN) of the hierarchy group.'
+            type: string
+        hierarchy_group_id:
+            description: The identifier for the hierarchy group.
+            type: string
+        hierarchy_path:
+            description: A block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below.
+            type: string
+        id:
+            description: ' The identifier of the hierarchy group.'
+            type: string
+        level_five:
+            description: 'A block that defines the details of level five. The level block is documented below.A level block supports the following attributes:'
+            type: string
+        level_four:
+            description: A block that defines the details of level four. The level block is documented below.
+            type: string
+        level_id:
+            description: The identifier of the level in the hierarchy group.
+            type: string
+        level_one:
+            description: A block that defines the details of level one. The level block is documented below.
+            type: string
+        level_three:
+            description: A block that defines the details of level three. The level block is documented below.
+            type: string
+        level_two:
+            description: A block that defines the details of level two. The level block is documented below.
+            type: string
+        name:
+            description: The name of the hierarchy group.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

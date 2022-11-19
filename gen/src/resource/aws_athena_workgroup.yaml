@@ -1,0 +1,38 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_athena_workgroup
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the workgroup
+            type: string
+        configuration:
+            description: |
+                Configuration block with various settings for the workgroup
+            type: string
+        effective_engine_version:
+            description: ' The engine version on which the query runs. If selected_engine_version is set to AUTO, the effective engine version is chosen by Athena.'
+            type: string
+        engine_version:
+            description: |
+                Configuration block for the Athena Engine Versioning
+            type: string
+        id:
+            description: Workgroup name
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

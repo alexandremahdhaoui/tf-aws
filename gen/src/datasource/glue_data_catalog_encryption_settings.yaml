@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: glue_data_catalog_encryption_settings
+spec:
+    args: {}
+    attrs:
+        aws_kms_key_id:
+            description: KMS key ARN that is used to encrypt the connection password.encryption_at_rest
+            type: string
+        catalog_encryption_mode:
+            description: The encryption-at-rest mode for encrypting Data Catalog data.
+            type: string
+        connection_password_encryption:
+            description: When connection password protection is enabled, the Data Catalog uses a customer-provided key to encrypt the password as part of CreateConnection or UpdateConnection and store it in the ENCRYPTED_PASSWORD field in the connection properties. You can enable catalog encryption or only password encryption. see Connection Password Encryption.
+            type: string
+        data_catalog_encryption_settings:
+            description: ' – The security configuration to set. see Data Catalog Encryption Settings.'
+            type: string
+        encryption_at_rest:
+            description: Encryption-at-rest configuration for the Data Catalog. see Encryption At Rest.connection_password_encryption
+            type: string
+        id:
+            description: ' – The ID of the Data Catalog to set the security configuration for.data_catalog_encryption_settings'
+            type: string
+        return_connection_password_encrypted:
+            description: When set to true, passwords remain encrypted in the responses of GetConnection and GetConnections. This encryption takes effect independently of the catalog encryption.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

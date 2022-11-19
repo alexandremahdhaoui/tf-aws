@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_connect_routing_profile
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the Routing Profile.
+            type: string
+        id:
+            description: The identifier of the hosting Amazon Connect Instance and identifier of the Routing Profile separated by a colon (:).
+            type: string
+        queue_arn:
+            description: ARN for the queue.
+            type: string
+        queue_configs:
+            description: In addition to the arguments used in the queue_configs argument block, there are additional attributes exported within the queue_configs block. These additional attributes are documented below.
+            type: string
+        queue_name:
+            description: Name for the queue.
+            type: string
+        routing_profile_id:
+            description: The identifier for the Routing Profile.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A queue_configs block supports the following attributes in addition to the arguments defined earlier:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

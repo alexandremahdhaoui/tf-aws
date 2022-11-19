@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_apprunner_vpc_connector
+spec:
+    args: {}
+    attrs:
+        status:
+            description: Current state of the VPC connector. If the status of a connector revision is INACTIVE, it was deleted and can't be used. Inactive connector revisions are permanently removed some time after they are deleted.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        vpc_connector_arn:
+            description: ARN of VPC connector.
+            type: string
+        vpc_connector_revision:
+            description: 'The revision of VPC connector. It''s unique among all the active connectors ("Status": "ACTIVE") that share the same Name.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

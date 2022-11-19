@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iam_service_linked_role
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) specifying the role.
+            type: string
+        create_date:
+            description: The creation date of the IAM role.
+            type: string
+        id:
+            description: The Amazon Resource Name (ARN) of the role.
+            type: string
+        name:
+            description: The name of the role.
+            type: string
+        path:
+            description: The path of the role.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        unique_id:
+            description: The stable and unique string identifying the role.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

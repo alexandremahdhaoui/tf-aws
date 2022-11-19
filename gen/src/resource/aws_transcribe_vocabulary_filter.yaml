@@ -1,0 +1,59 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_transcribe_vocabulary_filter
+spec:
+    args:
+        arn:
+            description: ARN of the VocabularyFilter.
+            type: string
+            optional: true
+        download_uri:
+            description: Generated download URI.
+            type: string
+            optional: true
+        id:
+            description: VocabularyFilter name.
+            type: string
+            optional: true
+        language_code:
+            description: (Required) The language code you selected for your vocabulary filter. Refer to the supported languages page for accepted codes.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) A map of tags to assign to the VocabularyFilter. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        vocabulary_filter_file_uri:
+            description: (Required) The Amazon S3 location (URI) of the text file that contains your custom VocabularyFilter. Conflicts with words.
+            type: string
+            optional: true
+        vocabulary_filter_name:
+            description: (Required) The name of the VocabularyFilter.
+            type: string
+            optional: true
+        words:
+            description: (Required) - A list of terms to include in the vocabulary. Conflicts with vocabulary_file_uri
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the VocabularyFilter.
+            type: string
+        download_uri:
+            description: Generated download URI.
+            type: string
+        id:
+            description: VocabularyFilter name.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: api_gateway_rest_api
+spec:
+    args: {}
+    attrs:
+        api_key_source:
+            description: Source of the API key for requests.
+            type: string
+        arn:
+            description: ARN of the REST API.
+            type: string
+        binary_media_types:
+            description: List of binary media types supported by the REST API.
+            type: string
+        description:
+            description: Description of the REST API.
+            type: string
+        endpoint_configuration:
+            description: The endpoint configuration of this RestApi showing the endpoint types of the API.
+            type: string
+        execution_arn:
+            description: Execution ARN part to be used in lambda_permission's source_arn when allowing API Gateway to invoke a Lambda function, e.g., arn:aws:execute-api:eu-west-2:123456789012:z4675bid1j, which can be concatenated with allowed stage, method and resource path.
+            type: string
+        id:
+            description: Set to the ID of the found REST API.
+            type: string
+        minimum_compression_size:
+            description: Minimum response size to compress for the REST API.
+            type: string
+        policy:
+            description: JSON formatted policy document that controls access to the API Gateway.
+            type: string
+        root_resource_id:
+            description: Set to the ID of the API Gateway Resource on the found REST API where the route matches '/'.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

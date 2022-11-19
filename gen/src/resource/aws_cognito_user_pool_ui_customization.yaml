@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cognito_user_pool_ui_customization
+spec:
+    args: {}
+    attrs:
+        creation_date:
+            description: The creation date in RFC3339 format for the UI customization.
+            type: string
+        css_version:
+            description: The CSS version number.
+            type: string
+        image_url:
+            description: The logo image URL for the UI customization.
+            type: string
+        last_modified_date:
+            description: The last-modified date in RFC3339 format for the UI customization.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

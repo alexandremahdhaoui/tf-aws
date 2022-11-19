@@ -1,0 +1,54 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_vpc_peering_connection_accepter
+spec:
+    args: {}
+    attrs:
+        accept_status:
+            description: The status of the VPC Peering Connection request.
+            type: string
+        accepter:
+            description: ""
+            type: string
+        allow_classic_link_to_remote_vpc:
+            description: ""
+            type: string
+        allow_remote_vpc_dns_resolution:
+            description: ""
+            type: string
+        allow_vpc_to_remote_classic_link:
+            description: ""
+            type: string
+        id:
+            description: The ID of the VPC Peering Connection.
+            type: string
+        peer_owner_id:
+            description: The AWS account ID of the owner of the requester VPC.
+            type: string
+        peer_region:
+            description: The region of the accepter VPC.
+            type: string
+        peer_vpc_id:
+            description: The ID of the requester VPC.
+            type: string
+        requester:
+            description: ""
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference
+            type: string
+        vpc_id:
+            description: The ID of the accepter VPC.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

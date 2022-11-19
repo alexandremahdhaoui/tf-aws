@@ -1,0 +1,83 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53recoveryreadiness_resource_set
+spec:
+    args:
+        arn:
+            description: ARN of the resource set
+            type: string
+            optional: true
+        dns_target_resource:
+            description: (Required if resource_arn is not set) Component for DNS/Routing Control Readiness Checks.
+            type: string
+            optional: true
+        domain_name:
+            description: (Optional) Domain name that is targeted.
+            type: string
+            optional: true
+        hosted_zone_arn:
+            description: (Optional) Hosted Zone ARN that contains the DNS record with the provided name of target resource.
+            type: string
+            optional: true
+        nlb_resource:
+            description: (Optional) NLB resource a DNS Target Resource points to. Required if r53_resource is not set.
+            type: string
+            optional: true
+        r53_resource:
+            description: (Optional) Route53 resource a DNS Target Resource record points to.nlb_resource
+            type: string
+            optional: true
+        readiness_scopes:
+            description: (Optional) Recovery group ARN or cell ARN that contains this resource set.
+            type: string
+            optional: true
+        record_set_id:
+            description: '(Optional) Resource record set ID that is targeted.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        record_type:
+            description: (Optional) Type of DNS Record of target resource.
+            type: string
+            optional: true
+        resource_arn:
+            description: (Required if dns_target_resource is not set) ARN of the resource.dns_target_resource
+            type: string
+            optional: true
+        resources.#.component_id:
+            description: Unique identified for DNS Target Resources, use for readiness checks.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.resources
+            type: string
+            optional: true
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness resource set name can be imported via the resource set name, e.g.,TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        target_resource:
+            description: (Optional) Target resource the R53 record specified with the above params points to.target_resource
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the resource set
+            type: string
+        resources.#.component_id:
+            description: Unique identified for DNS Target Resources, use for readiness checks.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness resource set name can be imported via the resource set name, e.g.,TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

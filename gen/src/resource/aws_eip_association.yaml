@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_eip_association
+spec:
+    args: {}
+    attrs:
+        allocation_id:
+            description: As above
+            type: string
+        association_id:
+            description: ""
+            type: string
+        instance_id:
+            description: As above
+            type: string
+        network_interface_id:
+            description: As above
+            type: string
+        private_ip_address:
+            description: As above
+            type: string
+        public_ip:
+            description: As above
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

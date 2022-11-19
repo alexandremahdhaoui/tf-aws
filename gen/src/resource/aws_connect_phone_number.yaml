@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_connect_phone_number
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the phone number.
+            type: string
+        create:
+            description: (Default 2m)
+            type: string
+        delete:
+            description: (Default 2m)
+            type: string
+        id:
+            description: The identifier of the phone number.
+            type: string
+        message:
+            description: The status message.
+            type: string
+        phone_number:
+            description: The phone number. Phone numbers are formatted [+] [country code] [subscriber number including area code].
+            type: string
+        status:
+            description: 'The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:'
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.statusThe status configuration block supports the following attributes:'
+            type: string
+        update:
+            description: (Default 2m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

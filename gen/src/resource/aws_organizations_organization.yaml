@@ -1,0 +1,56 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_organizations_organization
+spec:
+    args: {}
+    attrs:
+        accounts:
+            description: List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts
+            type: string
+        arn:
+            description: ARN of the root
+            type: string
+        email:
+            description: Email of the account
+            type: string
+        id:
+            description: Identifier of the root
+            type: string
+        master_account_arn:
+            description: ARN of the master account
+            type: string
+        master_account_email:
+            description: Email address of the master account
+            type: string
+        master_account_id:
+            description: Identifier of the master account
+            type: string
+        name:
+            description: The name of the policy type
+            type: string
+        non_master_accounts:
+            description: List of organization accounts excluding the master account. For a list including the master account, see the accounts
+            type: string
+        policy_types:
+            description: |
+                List of policy types enabled for this root. All elements have these attributes:
+            type: string
+        roots:
+            description: |
+                List of organization roots. All elements have these attributes:
+            type: string
+        status:
+            description: The status of the policy type as it relates to the associated root
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

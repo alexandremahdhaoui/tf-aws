@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_glue_partition
+spec:
+    args: {}
+    attrs:
+        creation_time:
+            description: The time at which the partition was created.
+            type: string
+        id:
+            description: partition id.
+            type: string
+        last_accessed_time:
+            description: The last time at which the partition was accessed.
+            type: string
+        last_analyzed_time:
+            description: The last time at which column statistics were computed for this partition.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_api_gateway_usage_plan_key
+spec:
+    args: {}
+    attrs:
+        id:
+            description: ID of a usage plan key.
+            type: string
+        key_id:
+            description: Identifier of the API gateway key resource.
+            type: string
+        key_type:
+            description: Type of a usage plan key. Currently, the valid key type is API_KEY.
+            type: string
+        name:
+            description: Name of a usage plan key.
+            type: string
+        usage_plan_id:
+            description: ID of the API resource
+            type: string
+        value:
+            description: Value of a usage plan key.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

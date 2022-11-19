@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: nat_gateway
+spec:
+    args: {}
+    attrs:
+        allocation_id:
+            description: ID of the EIP allocated to the selected Nat Gateway.
+            type: string
+        connectivity_type:
+            description: Connectivity type of the NAT Gateway.
+            type: string
+        network_interface_id:
+            description: The ID of the ENI allocated to the selected Nat Gateway.
+            type: string
+        private_ip:
+            description: Private Ip address of the selected Nat Gateway.
+            type: string
+        public_ip:
+            description: 'Public Ip (EIP) address of the selected Nat Gateway.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_codecommit_approval_rule_template
+spec:
+    args: {}
+    attrs:
+        approval_rule_template_id:
+            description: The ID of the approval rule template
+            type: string
+        creation_date:
+            description: The date the approval rule template was created, in RFC3339 format.
+            type: string
+        last_modified_date:
+            description: The date the approval rule template was most recently changed, in RFC3339 format.
+            type: string
+        last_modified_user:
+            description: The Amazon Resource Name (ARN) of the user who made the most recent changes to the approval rule template.
+            type: string
+        rule_content_sha256:
+            description: The SHA-256 hash signature for the content of the approval rule template.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

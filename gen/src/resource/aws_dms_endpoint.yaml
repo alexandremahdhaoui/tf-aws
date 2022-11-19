@@ -1,0 +1,395 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_dms_endpoint
+spec:
+    args:
+        add_column_name:
+            description: (Optional) Whether to add column name information to the .csv output file. Default is false.
+            type: string
+            optional: true
+        auth_mechanism:
+            description: (Optional) Authentication mechanism to access the MongoDB source endpoint. Default is default.
+            type: string
+            optional: true
+        auth_password:
+            description: (Optional) The password provided with the auth-role and auth-token options of the AuthType setting for a Redis target endpoint.
+            type: string
+            optional: true
+        auth_source:
+            description: (Optional) Authentication database name. Not used when auth_type is no. Default is admin.
+            type: string
+            optional: true
+        auth_type:
+            description: (Required) The type of authentication to perform when connecting to a Redis target. Options include none, auth-token, and auth-role. The auth-token option requires an auth_password value to be provided. The auth-role option requires auth_user_name and auth_password values to be provided.
+            type: string
+            optional: true
+        auth_user_name:
+            description: (Optional) The username provided with the auth-role option of the AuthType setting for a Redis target endpoint.
+            type: string
+            optional: true
+        broker:
+            description: (Required) Kafka broker location. Specify in the form broker-hostname-or-ip:port.
+            type: string
+            optional: true
+        bucket_folder:
+            description: (Optional) S3 object prefix.
+            type: string
+            optional: true
+        bucket_name:
+            description: (Optional) S3 bucket name.
+            type: string
+            optional: true
+        canned_acl_for_objects:
+            description: (Optional) Predefined (canned) access control list for objects created in an S3 bucket. Valid values include NONE, PRIVATE, PUBLIC_READ, PUBLIC_READ_WRITE, AUTHENTICATED_READ, AWS_EXEC_READ, BUCKET_OWNER_READ, and BUCKET_OWNER_FULL_CONTROL. Default is NONE.
+            type: string
+            optional: true
+        cdc_inserts_and_updates:
+            description: (Optional) Whether to write insert and update operations to .csv or .parquet output files. Default is false.
+            type: string
+            optional: true
+        cdc_inserts_only:
+            description: (Optional) Whether to write insert operations to .csv or .parquet output files. Default is false.
+            type: string
+            optional: true
+        cdc_max_batch_interval:
+            description: (Optional) Maximum length of the interval, defined in seconds, after which to output a file to Amazon S3. Default is 60.
+            type: string
+            optional: true
+        cdc_min_file_size:
+            description: (Optional) Minimum file size, defined in megabytes, to reach for a file output. Default is 32.
+            type: string
+            optional: true
+        cdc_path:
+            description: (Optional) Folder path of CDC files. For an S3 source, this setting is required if a task captures change data; otherwise, it's optional. If cdc_path is set, AWS DMS reads CDC files from this path and replicates the data changes to the target endpoint. Supported in AWS DMS versions 3.4.2 and later.
+            type: string
+            optional: true
+        certificate_arn:
+            description: '(Optional, Default: empty string) ARN for the certificate.'
+            type: string
+            optional: true
+        compression_type:
+            description: (Optional) Set to compress target files. Default is NONE. Valid values are GZIP and NONE.
+            type: string
+            optional: true
+        csv_delimiter:
+            description: (Optional) Delimiter used to separate columns in the source files. Default is ,.
+            type: string
+            optional: true
+        csv_no_sup_value:
+            description: (Optional) String to use for all columns not included in the supplemental log.
+            type: string
+            optional: true
+        csv_null_value:
+            description: (Optional) String to as null when writing to the target.
+            type: string
+            optional: true
+        csv_row_delimiter:
+            description: (Optional) Delimiter used to separate rows in the source files. Default is \n.
+            type: string
+            optional: true
+        data_format:
+            description: (Optional) Output format for the files that AWS DMS uses to create S3 objects. Valid values are csv and parquet. Default is csv.
+            type: string
+            optional: true
+        data_page_size:
+            description: (Optional) Size of one data page in bytes. Default is 1048576 (1 MiB).
+            type: string
+            optional: true
+        database_name:
+            description: (Optional) Name of the endpoint database.
+            type: string
+            optional: true
+        date_partition_delimiter:
+            description: (Optional) Date separating delimiter to use during folder partitioning. Valid values are SLASH, UNDERSCORE, DASH, and NONE. Default is SLASH.
+            type: string
+            optional: true
+        date_partition_enabled:
+            description: (Optional) Partition S3 bucket folders based on transaction commit dates. Default is false.
+            type: string
+            optional: true
+        date_partition_sequence:
+            description: (Optional) Date format to use during folder partitioning. Use this parameter when date_partition_enabled is set to true. Valid values are YYYYMMDD, YYYYMMDDHH, YYYYMM, MMYYYYDD, and DDMMYYYY. Default is YYYYMMDD.
+            type: string
+            optional: true
+        dict_page_size_limit:
+            description: (Optional) Maximum size in bytes of an encoded dictionary page of a column. Default is 1048576 (1 MiB).
+            type: string
+            optional: true
+        docs_to_investigate:
+            description: (Optional) Number of documents to preview to determine the document organization. Use this setting when nesting_level is set to one. Default is 1000.
+            type: string
+            optional: true
+        elasticsearch_settings:
+            description: (Optional) Configuration block for OpenSearch settings. See below.
+            type: string
+            optional: true
+        enable_statistics:
+            description: (Optional) Whether to enable statistics for Parquet pages and row groups. Default is true.
+            type: string
+            optional: true
+        encoding_type:
+            description: (Optional) Type of encoding to use. Value values are rle_dictionary, plain, and plain_dictionary. Default is rle_dictionary.
+            type: string
+            optional: true
+        encryption_mode:
+            description: (Optional) Server-side encryption mode that you want to encrypt your .csv or .parquet object files copied to S3. Valid values are SSE_S3 and SSE_KMS. Default is SSE_S3.
+            type: string
+            optional: true
+        endpoint_arn:
+            description: ARN for the endpoint.
+            type: string
+            optional: true
+        endpoint_id:
+            description: (Required) Database endpoint identifier. Identifiers must contain from 1 to 255 alphanumeric characters or hyphens, begin with a letter, contain only ASCII letters, digits, and hyphens, not end with a hyphen, and not contain two consecutive hyphens.
+            type: string
+            optional: true
+        endpoint_type:
+            description: (Required) Type of endpoint. Valid values are source, target.
+            type: string
+            optional: true
+        endpoint_uri:
+            description: (Required) Endpoint for the OpenSearch cluster.
+            type: string
+            optional: true
+        engine_name:
+            description: (Required) Type of engine for the endpoint. Valid values are aurora, aurora-postgresql, azuredb, db2, docdb, dynamodb, elasticsearch, kafka, kinesis, mariadb, mongodb, mysql, opensearch, oracle, postgres, redshift, s3, sqlserver, sybase. Please note that some of engine names are available only for target endpoint type (e.g. redshift).
+            type: string
+            optional: true
+        error_retry_duration:
+            description: (Optional) Maximum number of seconds for which DMS retries failed API requests to the OpenSearch cluster. Default is 300.
+            type: string
+            optional: true
+        external_table_definition:
+            description: (Optional) JSON document that describes how AWS DMS should interpret the data.
+            type: string
+            optional: true
+        extra_connection_attributes:
+            description: (Optional) Additional attributes associated with the connection. For available attributes see Using Extra Connection Attributes with AWS Database Migration Service.
+            type: string
+            optional: true
+        extract_doc_id:
+            description: (Optional) Document ID. Use this setting when nesting_level is set to none. Default is false.
+            type: string
+            optional: true
+        full_load_error_percentage:
+            description: (Optional) Maximum percentage of records that can fail to be written before a full load operation stops. Default is 10.
+            type: string
+            optional: true
+        ignore_headers_row:
+            description: (Optional) When this value is set to 1, DMS ignores the first row header in a .csv file. Default is 0.
+            type: string
+            optional: true
+        include_control_details:
+            description: (Optional) Shows detailed control information for table definition, column definition, and table and column changes in the Kinesis message output. Default is false.
+            type: string
+            optional: true
+        include_null_and_empty:
+            description: (Optional) Include NULL and empty columns in the target. Default is false.
+            type: string
+            optional: true
+        include_op_for_full_load:
+            description: (Optional) Whether to enable a full load to write INSERT operations to the .csv output files only to indicate how the rows were added to the source database. Default is false.
+            type: string
+            optional: true
+        include_partition_value:
+            description: (Optional) Shows the partition value within the Kinesis message output, unless the partition type is schema-table-type. Default is false.
+            type: string
+            optional: true
+        include_table_alter_operations:
+            description: (Optional) Includes any data definition language (DDL) operations that change the table in the control data. Default is false.
+            type: string
+            optional: true
+        include_transaction_details:
+            description: (Optional) Provides detailed transaction information from the source database. Default is false.
+            type: string
+            optional: true
+        kafka_settings:
+            description: (Optional) Configuration block for Kafka settings. See below.
+            type: string
+            optional: true
+        kinesis_settings:
+            description: (Optional) Configuration block for Kinesis settings. See below.
+            type: string
+            optional: true
+        kms_key_arn:
+            description: (Required when engine_name is mongodb, optional otherwise) ARN for the KMS key that will be used to encrypt the connection parameters. If you do not specify a value for kms_key_arn, then AWS DMS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region.
+            type: string
+            optional: true
+        max_file_size:
+            description: (Optional) Maximum size (in KB) of any .csv file to be created while migrating to an S3 target during full load. Valid values are from 1 to 1048576. Default is 1048576 (1 GB).
+            type: string
+            optional: true
+        message_format:
+            description: (Optional) Output format for the records created. Default is json. Valid values are json and json-unformatted (a single line with no tab).
+            type: string
+            optional: true
+        message_max_bytes:
+            description: (Optional) Maximum size in bytes for records created on the endpoint Default is 1,000,000.
+            type: string
+            optional: true
+        mongodb_settings:
+            description: (Optional) Configuration block for MongoDB settings. See below.
+            type: string
+            optional: true
+        nesting_level:
+            description: (Optional) Specifies either document or table mode. Default is none. Valid values are one (table mode) and none (document mode).redis_settings-> Additional information can be found in the Using Redis as a target for AWS Database Migration Service.
+            type: string
+            optional: true
+        no_hex_prefix:
+            description: (Optional) Set this optional parameter to true to avoid adding a '0x' prefix to raw data in hexadecimal format. For example, by default, AWS DMS adds a '0x' prefix to the LOB column type in hexadecimal format moving from an Oracle source to a Kafka target. Use the no_hex_prefix endpoint setting to enable migration of RAW data type columns without adding the '0x' prefix.
+            type: string
+            optional: true
+        parquet_timestamp_in_millisecond:
+            description: (Optional) - Specifies the precision of any TIMESTAMP column values written to an S3 object file in .parquet format. Default is false.
+            type: string
+            optional: true
+        parquet_version:
+            description: (Optional) Version of the .parquet file format. Default is parquet-1-0. Valid values are parquet-1-0 and parquet-2-0.
+            type: string
+            optional: true
+        partition_include_schema_table:
+            description: (Optional) Prefixes schema and table names to partition values, when the partition type is primary-key-type. Default is false.
+            type: string
+            optional: true
+        password:
+            description: (Optional) Password to be used to login to the endpoint database.
+            type: string
+            optional: true
+        port:
+            description: (Required) Transmission Control Protocol (TCP) port for the endpoint.
+            type: string
+            optional: true
+        preserve_transactions:
+            description: (Optional) Whether DMS saves the transaction order for a CDC load on the S3 target specified by cdc_path. Default is false.
+            type: string
+            optional: true
+        redshift_settings:
+            description: (Optional) Configuration block for Redshift settings. See below.
+            type: string
+            optional: true
+        rfc_4180:
+            description: (Optional) For an S3 source, whether each leading double quotation mark has to be followed by an ending double quotation mark. Default is true.
+            type: string
+            optional: true
+        row_group_length:
+            description: (Optional) Number of rows in a row group. Default is 10000.
+            type: string
+            optional: true
+        s3_settings:
+            description: (Optional) Configuration block for S3 settings. See below.
+            type: string
+            optional: true
+        sasl_password:
+            description: (Optional) Secure password you created when you first set up your MSK cluster to validate a client identity and make an encrypted connection between server and client using SASL-SSL authentication.
+            type: string
+            optional: true
+        sasl_username:
+            description: (Optional) Secure user name you created when you first set up your MSK cluster to validate a client identity and make an encrypted connection between server and client using SASL-SSL authentication.
+            type: string
+            optional: true
+        secrets_manager_access_role_arn:
+            description: (Optional) ARN of the IAM role that specifies AWS DMS as the trusted entity and has the required permissions to access the value in SecretsManagerSecret.
+            type: string
+            optional: true
+        secrets_manager_arn:
+            description: (Optional) Full ARN, partial ARN, or friendly name of the SecretsManagerSecret that contains the endpoint connection details. Supported only for engine_name as aurora, aurora-postgresql, mariadb, mongodb, mysql, oracle, postgres, redshift or sqlserver.
+            type: string
+            optional: true
+        security_protocol:
+            description: (Optional) Set secure connection to a Kafka target endpoint using Transport Layer Security (TLS). Options include ssl-encryption, ssl-authentication, and sasl-ssl. sasl-ssl requires sasl_username and sasl_password.
+            type: string
+            optional: true
+        server_name:
+            description: (Required) Fully qualified domain name of the endpoint.
+            type: string
+            optional: true
+        server_side_encryption_kms_key_id:
+            description: (Optional) If you set encryptionMode to SSE_KMS, set this parameter to the ARN for the AWS KMS key.
+            type: string
+            optional: true
+        service_access_role:
+            description: (Optional) ARN used by the service access IAM role for dynamodb endpoints.
+            type: string
+            optional: true
+        service_access_role_arn:
+            description: (Optional) ARN of the IAM Role with permissions to read from or write to the S3 Bucket.
+            type: string
+            optional: true
+        ssl_ca_certificate_arn:
+            description: (Optional) The Amazon Resource Name (ARN) for the certificate authority (CA) that DMS uses to connect to your Redis target endpoint.
+            type: string
+            optional: true
+        ssl_client_certificate_arn:
+            description: (Optional) ARN of the client certificate used to securely connect to a Kafka target endpoint.
+            type: string
+            optional: true
+        ssl_client_key_arn:
+            description: (Optional) ARN for the client private key used to securely connect to a Kafka target endpoint.
+            type: string
+            optional: true
+        ssl_client_key_password:
+            description: (Optional) Password for the client private key used to securely connect to a Kafka target endpoint.
+            type: string
+            optional: true
+        ssl_mode:
+            description: '(Optional, Default: none) SSL mode to use for the connection. Valid values are none, require, verify-ca, verify-full'
+            type: string
+            optional: true
+        ssl_security_protocol:
+            description: '- (Optional) The plaintext option doesn''t provide Transport Layer Security (TLS) encryption for traffic between endpoint and database. Options include plaintext, ssl-encryption. The default is ssl-encryption.redshift_settings-> Additional information can be found in the Using Amazon Redshift as a Target for AWS Database Migration Service documentation.'
+            type: string
+            optional: true
+        stream_arn:
+            description: (Optional) ARN of the Kinesis data stream.mongodb_settings-> Additional information can be found in the Using MongoDB as a Source for AWS DMS documentation.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        timestamp_column_name:
+            description: (Optional) Column to add with timestamp information to the endpoint data for an Amazon S3 target.
+            type: string
+            optional: true
+        topic:
+            description: (Optional) Kafka topic for migration. Default is kafka-default-topic.kinesis_settings-> Additional information can be found in the Using Amazon Kinesis Data Streams as a Target for AWS Database Migration Service documentation.
+            type: string
+            optional: true
+        use_csv_no_sup_value:
+            description: (Optional) Whether to use csv_no_sup_value for columns not included in the supplemental log.
+            type: string
+            optional: true
+        use_task_start_time_for_full_load_timestamp:
+            description: |-
+                (Optional) When set to true, uses the task start time as the timestamp column value instead of the time data is written to target.
+                For full load, when set to true, each row of the timestamp column contains the task start time. For CDC loads, each row of the timestamp column contains the transaction commit time.
+                When set to false, the full load timestamp in the timestamp column increments with the time data arrives at the target. Default is false.In addition to all arguments above, the following attributes are exported:
+            type: string
+            optional: true
+        username:
+            description: (Optional) User name to be used to login to the endpoint database.elasticsearch_settings-> Additional information can be found in the Using Amazon OpenSearch Service as a Target for AWS Database Migration Service documentation.
+            type: string
+            optional: true
+    attrs:
+        endpoint_arn:
+            description: ARN for the endpoint.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

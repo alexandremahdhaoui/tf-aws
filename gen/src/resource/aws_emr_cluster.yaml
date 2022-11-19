@@ -1,0 +1,383 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_emr_cluster
+spec:
+    args:
+        action_on_failure:
+            description: '(Required) Action to take if the step fails. Valid values: TERMINATE_JOB_FLOW, TERMINATE_CLUSTER, CANCEL_AND_WAIT, and CONTINUE'
+            type: string
+            optional: true
+        ad_domain_join_password:
+            description: (Optional) Active Directory password for ad_domain_join_user. Terraform cannot perform drift detection of this configuration.
+            type: string
+            optional: true
+        ad_domain_join_user:
+            description: (Optional) Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain. Terraform cannot perform drift detection of this configuration.
+            type: string
+            optional: true
+        additional_info:
+            description: '(Optional) JSON string for selecting additional features such as adding proxy information. Note: Currently there is no API to retrieve the value of this argument after EMR cluster creation from provider, therefore Terraform cannot detect drift from the actual EMR cluster if its value is changed outside Terraform.'
+            type: string
+            optional: true
+        additional_master_security_groups:
+            description: (Optional) String containing a comma separated list of additional Amazon EC2 security group IDs for the master node.
+            type: string
+            optional: true
+        additional_slave_security_groups:
+            description: (Optional) String containing a comma separated list of additional Amazon EC2 security group IDs for the slave nodes as a comma separated string.
+            type: string
+            optional: true
+        allocation_strategy:
+            description: (Required) Specifies the strategy to use in launching Spot instance fleets. Currently, the only option is capacity-optimized (the default), which launches instances from Spot instance pools with optimal capacity for the number of instances that are launching.
+            type: string
+            optional: true
+        applications:
+            description: Applications installed on this cluster.
+            type: string
+            optional: true
+        args:
+            description: (Optional) List of command line arguments passed to the JAR file's main function when executed.
+            type: string
+            optional: true
+        arn:
+            description: '- ARN of the cluster.'
+            type: string
+            optional: true
+        auto_termination_policy:
+            description: (Optional) An auto-termination policy for an Amazon EMR cluster. An auto-termination policy defines the amount of idle time in seconds after which a cluster automatically terminates. See Auto Termination Policy Below.
+            type: string
+            optional: true
+        autoscaling_policy:
+            description: (Optional) String containing the EMR Auto Scaling Policy JSON.
+            type: string
+            optional: true
+        autoscaling_role:
+            description: (Optional) IAM role for automatic scaling policies. The IAM role provides permissions that the automatic scaling feature requires to launch and terminate EC2 instances in an instance group.
+            type: string
+            optional: true
+        bid_price:
+            description: (Optional) Bid price for each EC2 instance in the instance group, expressed in USD. By setting this attribute, the instance group is being declared as a Spot Instance, and will implicitly create a Spot request. Leave this blank to use On-Demand Instances.
+            type: string
+            optional: true
+        bid_price_as_percentage_of_on_demand_price:
+            description: (Optional) Bid price, as a percentage of On-Demand price, for each EC2 Spot instance as defined by instance_type. Expressed as a number (for example, 20 specifies 20%). If neither bid_price nor bid_price_as_percentage_of_on_demand_price is provided, bid_price_as_percentage_of_on_demand_price defaults to 100%.
+            type: string
+            optional: true
+        block_duration_minutes:
+            description: (Optional) Defined duration for Spot instances (also known as Spot blocks) in minutes. When specified, the Spot instance does not terminate before the defined duration expires, and defined duration pricing for Spot instances applies. Valid values are 60, 120, 180, 240, 300, or 360. The duration period starts as soon as a Spot instance receives its instance ID. At the end of the duration, Amazon EC2 marks the Spot instance for termination and provides a Spot instance termination notice, which gives the instance a two-minute warning before it terminates.
+            type: string
+            optional: true
+        bootstrap_action:
+            description: List of bootstrap actions that will be run before Hadoop is started on the cluster nodes.
+            type: string
+            optional: true
+        classification:
+            description: (Optional) Classification within a configuration.
+            type: string
+            optional: true
+        configurations:
+            description: List of Configurations supplied to the EMR cluster.
+            type: string
+            optional: true
+        configurations_json:
+            description: '(Optional) JSON string for supplying list of configurations for the EMR cluster.~> strongNOTE on configurations_json: If the Configurations value is empty then you should skip the Configurations field instead of providing an empty list as a value, "Configurations": [].'
+            type: string
+            optional: true
+        core_instance_fleet:
+            description: (Optional) Configuration block to use an Instance Fleet for the core node type. Cannot be specified if any core_instance_group configuration blocks are set. Detailed below.
+            type: string
+            optional: true
+        core_instance_group:
+            description: (Optional) Configuration block to use an Instance Group for the core node type.
+            type: string
+            optional: true
+        core_instance_group.0.id:
+            description: Core node type Instance Group ID, if using Instance Group for this node type.
+            type: string
+            optional: true
+        cross_realm_trust_principal_password:
+            description: (Optional) Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms. Terraform cannot perform drift detection of this configuration.
+            type: string
+            optional: true
+        custom_ami_id:
+            description: (Optional) Custom Amazon Linux AMI for the cluster (instead of an EMR-owned AMI). Available in Amazon EMR version 5.7.0 and later.
+            type: string
+            optional: true
+        ebs_config:
+            description: (Optional) Configuration block(s) for EBS volumes attached to each instance in the instance group. Detailed below.
+            type: string
+            optional: true
+        ebs_root_volume_size:
+            description: (Optional) Size in GiB of the EBS root device volume of the Linux AMI that is used for each EC2 instance. Available in Amazon EMR version 4.x and later.
+            type: string
+            optional: true
+        ec2_attributes:
+            description: 'Provides information about the EC2 instances in a cluster grouped by category: key name, subnet ID, IAM instance profile, and so on.'
+            type: string
+            optional: true
+        emr_managed_master_security_group:
+            description: (Optional) Identifier of the Amazon EC2 EMR-Managed security group for the master node.
+            type: string
+            optional: true
+        emr_managed_slave_security_group:
+            description: (Optional) Identifier of the Amazon EC2 EMR-Managed security group for the slave nodes.
+            type: string
+            optional: true
+        hadoop_jar_step:
+            description: (Required) JAR file used for the step. See below.
+            type: string
+            optional: true
+        id:
+            description: ID of the cluster.
+            type: string
+            optional: true
+        idle_timeout:
+            description: (Optional) Specifies the amount of idle time in seconds after which the cluster automatically terminates. You can specify a minimum of 60 seconds and a maximum of 604800 seconds (seven days).configurationsA configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software that run on the cluster. See Configuring Applications.
+            type: string
+            optional: true
+        instance_count:
+            description: (Optional) Target number of instances for the instance group. Must be 1 or 3. Defaults to 1. Launching with multiple master nodes is only supported in EMR version 5.23.0+, and requires this resource's core_instance_group to be configured. Public (Internet accessible) instances must be created in VPC subnets that have map public IP on launch enabled. Termination protection is automatically enabled when launched with multiple master nodes and Terraform must have the termination_protection = false configuration applied before destroying this resource.
+            type: string
+            optional: true
+        instance_profile:
+            description: (Required) Instance Profile for EC2 instances of the cluster assume this role.
+            type: string
+            optional: true
+        instance_type:
+            description: (Required) EC2 instance type for all instances in the instance group.
+            type: string
+            optional: true
+        instance_type_configs:
+            description: (Optional) Configuration block for instance fleet.
+            type: string
+            optional: true
+        iops:
+            description: (Optional) Number of I/O operations per second (IOPS) that the volume supports.
+            type: string
+            optional: true
+        jar:
+            description: (Required) Path to a JAR file run during the step.
+            type: string
+            optional: true
+        kdc_admin_password:
+            description: (Required) Password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster. Terraform cannot perform drift detection of this configuration.
+            type: string
+            optional: true
+        keep_job_flow_alive_when_no_steps:
+            description: (Optional) Switch on/off run cluster with no steps or when all steps are complete (default is on)
+            type: string
+            optional: true
+        kerberos_attributes:
+            description: (Optional) Kerberos configuration for the cluster. See below.
+            type: string
+            optional: true
+        key_name:
+            description: (Optional) Amazon EC2 key pair that can be used to ssh to the master node as the user called hadoop.
+            type: string
+            optional: true
+        launch_specifications:
+            description: (Optional) Configuration block for launch specification.
+            type: string
+            optional: true
+        list_steps_states:
+            description: (Optional) List of step states used to filter returned steps
+            type: string
+            optional: true
+        log_encryption_kms_key_id:
+            description: (Optional) AWS KMS customer master key (CMK) key ID or arn used for encrypting log files. This attribute is only available with EMR version 5.30.0 and later, excluding EMR 6.0.0.
+            type: string
+            optional: true
+        log_uri:
+            description: Path to the Amazon S3 location where logs for this cluster are stored.
+            type: string
+            optional: true
+        main_class:
+            description: (Optional) Name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.
+            type: string
+            optional: true
+        master_instance_fleet:
+            description: (Optional) Configuration block to use an Instance Fleet for the master node type. Cannot be specified if any master_instance_group configuration blocks are set. Detailed below.
+            type: string
+            optional: true
+        master_instance_group:
+            description: (Optional) Configuration block to use an Instance Group for the master node type.
+            type: string
+            optional: true
+        master_instance_group.0.id:
+            description: Master node type Instance Group ID, if using Instance Group for this node type.
+            type: string
+            optional: true
+        master_public_dns:
+            description: The DNS name of the master node. If the cluster is on a private subnet, this is the private DNS name. On a public subnet, this is the public DNS name.
+            type: string
+            optional: true
+        name:
+            description: Name of the cluster.
+            type: string
+            optional: true
+        on_demand_specification:
+            description: (Optional) Configuration block for on demand instances launch specifications.
+            type: string
+            optional: true
+        path:
+            description: (Required) Location of the script to run during a bootstrap action. Can be either a location in Amazon S3 or on a local file system.auto_termination_policy
+            type: string
+            optional: true
+        properties:
+            description: '(Optional) Key-Value map of Java properties that are set when the step runs. You can use these properties to pass key value pairs to your main function.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        realm:
+            description: (Required) Name of the Kerberos realm to which all nodes in a cluster belong. For example, EC2.INTERNALmaster_instance_fleet
+            type: string
+            optional: true
+        release_label:
+            description: Release label for the Amazon EMR release.
+            type: string
+            optional: true
+        scale_down_behavior:
+            description: (Optional) Way that individual Amazon EC2 instances terminate when an automatic scale-in activity occurs or an instance group is resized.
+            type: string
+            optional: true
+        security_configuration:
+            description: (Optional) Security configuration name to attach to the EMR cluster. Only valid for EMR clusters with release_label 4.8.0 or greater.
+            type: string
+            optional: true
+        service_access_security_group:
+            description: (Optional) Identifier of the Amazon EC2 service-access security group - required when the cluster runs on a private subnet.
+            type: string
+            optional: true
+        service_role:
+            description: IAM role that will be assumed by the Amazon EMR service to access AWS resources on your behalf.
+            type: string
+            optional: true
+        size:
+            description: (Required) Volume size, in gibibytes (GiB).
+            type: string
+            optional: true
+        spot_specification:
+            description: (Optional) Configuration block for spot instances launch specifications.on_demand_specification
+            type: string
+            optional: true
+        step:
+            description: (Optional) List of steps to run when creating the cluster. See below. It is highly recommended to utilize the lifecycle configuration block with ignore_changes if other steps are being managed outside of Terraform. This argument is processed in attribute-as-blocks mode.
+            type: string
+            optional: true
+        step_concurrency_level:
+            description: (Optional) Number of steps that can be executed concurrently. You can specify a maximum of 256 steps. Only valid for EMR clusters with release_label 5.28.0 or greater (default is 1).
+            type: string
+            optional: true
+        subnet_id:
+            description: (Optional) VPC subnet id where you want the job flow to launch. Cannot specify the cc1.4xlarge instance type for nodes of a job flow launched in an Amazon VPC.
+            type: string
+            optional: true
+        subnet_ids:
+            description: '(Optional) List of VPC subnet id-s where you want the job flow to launch.  Amazon EMR identifies the best Availability Zone to launch instances according to your fleet specifications.~> strongNOTE on EMR-Managed security groups: These security groups will have any missing inbound or outbound access rules added and maintained by AWS, to ensure proper communication between instances in a cluster. The EMR service will maintain these rules for groups provided in emr_managed_master_security_group and emr_managed_slave_security_group; attempts to remove the required rules may succeed, only for the EMR service to re-add them in a matter of minutes. This may cause Terraform to fail to destroy an environment that contains an EMR cluster, because the EMR service does not revoke rules added on deletion, leaving a cyclic dependency between the security groups that prevents their deletion. To avoid this, use the revoke_rules_on_delete optional attribute for any Security Group used in emr_managed_master_security_group and emr_managed_slave_security_group. See Amazon EMR-Managed Security Groups for more information about the EMR-managed security group rules.kerberos_attributes'
+            type: string
+            optional: true
+        tags:
+            description: (Optional) list of tags to apply to the EMR Cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        target_on_demand_capacity:
+            description: (Optional) Target capacity of On-Demand units for the instance fleet, which determines how many On-Demand instances to provision.
+            type: string
+            optional: true
+        target_spot_capacity:
+            description: '(Optional) Target capacity of Spot units for the instance fleet, which determines how many Spot instances to provision.instance_type_configsSee instance_type_configs above, under core_instance_fleet.launch_specificationsSee launch_specifications above, under core_instance_fleet.master_instance_groupSupported nested arguments for the master_instance_group configuration block:'
+            type: string
+            optional: true
+        termination_protection:
+            description: (Optional) Switch on/off termination protection (default is false, except when using multiple master nodes). Before attempting to destroy the resource when termination protection is enabled, this configuration must be applied with its value set to false.
+            type: string
+            optional: true
+        throughput:
+            description: (Optional) The throughput, in mebibyte per second (MiB/s).
+            type: string
+            optional: true
+        timeout_action:
+            description: (Required) Action to take when TargetSpotCapacity has not been fulfilled when the TimeoutDurationMinutes has expired; that is, when all Spot instances could not be provisioned within the Spot provisioning timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND. SWITCH_TO_ON_DEMAND specifies that if no Spot instances are available, On-Demand Instances should be provisioned to fulfill any remaining Spot capacity.
+            type: string
+            optional: true
+        timeout_duration_minutes:
+            description: (Required) Spot provisioning timeout period in minutes. If Spot instances are not provisioned within this time period, the TimeOutAction is taken. Minimum value is 5 and maximum value is 1440. The timeout applies only during initial provisioning, when the cluster is first created.core_instance_group
+            type: string
+            optional: true
+        type:
+            description: (Required) Volume type. Valid options are gp3, gp2, io1, standard, st1 and sc1. See EBS Volume Types.
+            type: string
+            optional: true
+        visible_to_all_users:
+            description: Indicates whether the job flow is visible to all IAM users of the AWS account associated with the job flow.
+            type: string
+            optional: true
+        volumes_per_instance:
+            description: '(Optional) Number of EBS volumes with this configuration to attach to each EC2 instance in the instance group (default is 1).ec2_attributesAttributes for the Amazon EC2 instances running the job flow:'
+            type: string
+            optional: true
+        weighted_capacity:
+            description: (Optional) Number of units that a provisioned instance of this type provides toward fulfilling the target capacities defined in aws_emr_instance_fleet.launch_specifications
+            type: string
+            optional: true
+    attrs:
+        applications:
+            description: Applications installed on this cluster.
+            type: string
+        arn:
+            description: '- ARN of the cluster.'
+            type: string
+        bootstrap_action:
+            description: List of bootstrap actions that will be run before Hadoop is started on the cluster nodes.
+            type: string
+        configurations:
+            description: List of Configurations supplied to the EMR cluster.
+            type: string
+        core_instance_group.0.id:
+            description: Core node type Instance Group ID, if using Instance Group for this node type.
+            type: string
+        ec2_attributes:
+            description: 'Provides information about the EC2 instances in a cluster grouped by category: key name, subnet ID, IAM instance profile, and so on.'
+            type: string
+        id:
+            description: ID of the cluster.
+            type: string
+        log_uri:
+            description: Path to the Amazon S3 location where logs for this cluster are stored.
+            type: string
+        master_instance_group.0.id:
+            description: Master node type Instance Group ID, if using Instance Group for this node type.
+            type: string
+        master_public_dns:
+            description: The DNS name of the master node. If the cluster is on a private subnet, this is the private DNS name. On a public subnet, this is the public DNS name.
+            type: string
+        name:
+            description: Name of the cluster.
+            type: string
+        release_label:
+            description: Release label for the Amazon EMR release.
+            type: string
+        service_role:
+            description: IAM role that will be assumed by the Amazon EMR service to access AWS resources on your behalf.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        visible_to_all_users:
+            description: Indicates whether the job flow is visible to all IAM users of the AWS account associated with the job flow.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

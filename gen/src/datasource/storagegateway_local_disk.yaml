@@ -1,0 +1,21 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: storagegateway_local_disk
+spec:
+    args: {}
+    attrs:
+        disk_id:
+            description: Disk identifierE.g., pci-0000:03:00.0-scsi-0:0:0:0
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

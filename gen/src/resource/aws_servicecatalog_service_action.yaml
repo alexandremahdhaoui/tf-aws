@@ -1,0 +1,85 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_service_action
+spec:
+    args:
+        accept_language:
+            description: (Optional) Language code. Valid values are en (English), jp (Japanese), and zh (Chinese). Default is en.
+            type: string
+            optional: true
+        assume_role:
+            description: (Optional) ARN of the role that performs the self-service actions on your behalf. For example, arn:aws:iam::12345678910:role/ActionRole. To reuse the provisioned product launch role, set to LAUNCH_ROLE.
+            type: string
+            optional: true
+        create:
+            description: (Default 3m)
+            type: string
+            optional: true
+        definition:
+            description: (Required) Self-service action definition configuration block. Detailed below.
+            type: string
+            optional: true
+        delete:
+            description: (Default 3m)
+            type: string
+            optional: true
+        description:
+            description: '(Optional) Self-service action description.definitionThe definition configuration block supports the following attributes:'
+            type: string
+            optional: true
+        id:
+            description: 'Identifier of the service action.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the SSM document. For example, AWS-RestartEC2Instance. If you are using a shared SSM document, you must provide the ARN instead of the name.
+            type: string
+            optional: true
+        parameters:
+            description: '(Optional) List of parameters in JSON format. For example: [{\"Name\":\"InstanceId\",\"Type\":\"TARGET\"}] or [{\"Name\":\"InstanceId\",\"Type\":\"TEXT_VALUE\"}].'
+            type: string
+            optional: true
+        read:
+            description: (Default 10m)
+            type: string
+            optional: true
+        type:
+            description: (Optional) Service action definition type. Valid value is SSM_AUTOMATION. Default is SSM_AUTOMATION.
+            type: string
+            optional: true
+        update:
+            description: (Default 3m)
+            type: string
+            optional: true
+        version:
+            description: '(Required) SSM document version. For example, 1.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 3m)
+            type: string
+        delete:
+            description: (Default 3m)
+            type: string
+        id:
+            description: 'Identifier of the service action.TimeoutsConfiguration options:'
+            type: string
+        read:
+            description: (Default 10m)
+            type: string
+        update:
+            description: (Default 3m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

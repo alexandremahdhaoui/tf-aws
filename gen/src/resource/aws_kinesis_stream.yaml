@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_kinesis_stream
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) specifying the Stream (same as id)
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        delete:
+            description: (Default 120m)
+            type: string
+        id:
+            description: The unique Stream id
+            type: string
+        name:
+            description: The unique Stream name
+            type: string
+        shard_count:
+            description: The count of Shards for this Stream
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 120m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

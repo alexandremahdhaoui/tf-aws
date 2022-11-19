@@ -1,0 +1,307 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_mq_broker
+spec:
+    args:
+        'For ':
+            description: RabbitMQ
+            type: string
+            optional: true
+        amqp+ssl://broker-id.mq.us-west-2.amazonaws.com:5671:
+            description: ""
+            type: string
+            optional: true
+        amqps://broker-id.mq.us-west-2.amazonaws.com:5671:
+            description: ""
+            type: string
+            optional: true
+        apply_immediately:
+            description: (Optional) Specifies whether any broker modifications are applied immediately, or during the next maintenance window. Default is false.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the broker.
+            type: string
+            optional: true
+        audit:
+            description: (Optional) Enables audit logging. Auditing is only possible for engine_type of ActiveMQ. User management action made using JMX or the ActiveMQ Web Console is logged. Defaults to false.
+            type: string
+            optional: true
+        authentication_strategy:
+            description: (Optional) Authentication strategy used to secure the broker. Valid values are simple and ldap. ldap is not supported for engine_type RabbitMQ.
+            type: string
+            optional: true
+        auto_minor_version_upgrade:
+            description: (Optional) Whether to automatically upgrade to new minor versions of brokers as Amazon MQ makes releases available.
+            type: string
+            optional: true
+        broker_name:
+            description: (Required) Name of the broker.
+            type: string
+            optional: true
+        configuration:
+            description: (Optional) Configuration block for broker configuration. Applies to engine_type of ActiveMQ only. Detailed below.
+            type: string
+            optional: true
+        console_access:
+            description: (Optional) Whether to enable access to the ActiveMQ Web Console for the user. Applies to engine_type of ActiveMQ only.
+            type: string
+            optional: true
+        create:
+            description: (Default 30m)
+            type: string
+            optional: true
+        day_of_week:
+            description: (Required) Day of the week, e.g., MONDAY, TUESDAY, or WEDNESDAY.
+            type: string
+            optional: true
+        delete:
+            description: (Default 30m)
+            type: string
+            optional: true
+        deployment_mode:
+            description: (Optional) Deployment mode of the broker. Valid values are SINGLE_INSTANCE, ACTIVE_STANDBY_MULTI_AZ, and CLUSTER_MULTI_AZ. Default is SINGLE_INSTANCE.
+            type: string
+            optional: true
+        encryption_options:
+            description: (Optional) Configuration block containing encryption options. Detailed below.
+            type: string
+            optional: true
+        engine_type:
+            description: (Required) Type of broker engine. Valid values are ActiveMQ and RabbitMQ.
+            type: string
+            optional: true
+        engine_version:
+            description: (Required) Version of the broker engine. See the AmazonMQ Broker Engine docs for supported versions. For example, 5.15.0.
+            type: string
+            optional: true
+        general:
+            description: (Optional) Enables general logging via CloudWatch. Defaults to false.maintenance_window_start_time
+            type: string
+            optional: true
+        groups:
+            description: (Optional) List of groups (20 maximum) to which the ActiveMQ user belongs. Applies to engine_type of ActiveMQ only.
+            type: string
+            optional: true
+        host_instance_type:
+            description: (Required) Broker's instance type. For example, mq.t3.micro, mq.m5.large.
+            type: string
+            optional: true
+        hosts:
+            description: (Optional) List of a fully qualified domain name of the LDAP server and an optional failover server.
+            type: string
+            optional: true
+        id:
+            description: Unique ID that Amazon MQ generates for the broker.
+            type: string
+            optional: true
+        instances:
+            description: |
+                List of information about allocated brokers (both active & standby).
+            type: string
+            optional: true
+        instances.0.console_url:
+            description: The URL of the broker's ActiveMQ Web Console.
+            type: string
+            optional: true
+        instances.0.endpoints:
+            description: Broker's wire-level protocol endpoints in the following order & format referenceable e.g., as instances.0.endpoints.0
+            type: string
+            optional: true
+        instances.0.ip_address:
+            description: IP Address of the broker.
+            type: string
+            optional: true
+        kms_key_id:
+            description: (Optional) Amazon Resource Name (ARN) of Key Management Service (KMS) Customer Master Key (CMK) to use for encryption at rest. Requires setting use_aws_owned_key to false. To perform drift detection when AWS-managed CMKs or customer-managed CMKs are in use, this value must be configured.
+            type: string
+            optional: true
+        ldap_server_metadata:
+            description: (Optional) Configuration block for the LDAP server used to authenticate and authorize connections to the broker. Not supported for engine_type RabbitMQ. Detailed below. (Currently, AWS may not process changes to LDAP server metadata.)
+            type: string
+            optional: true
+        logs:
+            description: (Optional) Configuration block for the logging configuration of the broker. Detailed below.
+            type: string
+            optional: true
+        maintenance_window_start_time:
+            description: (Optional) Configuration block for the maintenance window start time. Detailed below.
+            type: string
+            optional: true
+        mqtt+ssl://broker-id.mq.us-west-2.amazonaws.com:8883:
+            description: ""
+            type: string
+            optional: true
+        password:
+            description: (Required) Password of the user. It must be 12 to 250 characters long, at least 4 unique characters, and must not contain commas.
+            type: string
+            optional: true
+        publicly_accessible:
+            description: (Optional) Whether to enable connections from applications outside of the VPC that hosts the broker's subnets.
+            type: string
+            optional: true
+        revision:
+            description: (Optional) Revision of the Configuration.encryption_options
+            type: string
+            optional: true
+        role_base:
+            description: (Optional) Fully qualified name of the directory to search for a user’s groups.
+            type: string
+            optional: true
+        role_name:
+            description: (Optional) Specifies the LDAP attribute that identifies the group name attribute in the object returned from the group membership query.
+            type: string
+            optional: true
+        role_search_matching:
+            description: (Optional) Search criteria for groups.
+            type: string
+            optional: true
+        role_search_subtree:
+            description: (Optional) Whether the directory search scope is the entire sub-tree.
+            type: string
+            optional: true
+        security_groups:
+            description: (Optional) List of security group IDs assigned to the broker.
+            type: string
+            optional: true
+        service_account_password:
+            description: (Optional) Service account password.
+            type: string
+            optional: true
+        service_account_username:
+            description: (Optional) Service account username.
+            type: string
+            optional: true
+        ssl://broker-id.mq.us-west-2.amazonaws.com:61617:
+            description: ""
+            type: string
+            optional: true
+        stomp+ssl://broker-id.mq.us-west-2.amazonaws.com:61614:
+            description: ""
+            type: string
+            optional: true
+        storage_type:
+            description: (Optional) Storage type of the broker. For engine_type ActiveMQ, the valid values are efs and ebs, and the AWS-default is efs. For engine_type RabbitMQ, only ebs is supported. When using ebs, only the mq.m5 broker instance type family is supported.
+            type: string
+            optional: true
+        subnet_ids:
+            description: (Optional) List of subnet IDs in which to launch the broker. A SINGLE_INSTANCE deployment requires one subnet. An ACTIVE_STANDBY_MULTI_AZ deployment requires multiple subnets.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Map of tags to assign to the broker. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        time_of_day:
+            description: (Required) Time, in 24-hour format, e.g., 02:00.
+            type: string
+            optional: true
+        time_zone:
+            description: (Required) Time zone in either the Country/City format or the UTC offset format, e.g., CET.user
+            type: string
+            optional: true
+        update:
+            description: (Default 30m)
+            type: string
+            optional: true
+        use_aws_owned_key:
+            description: (Optional) Whether to enable an AWS-owned KMS CMK that is not in your account. Defaults to true. Setting to false without configuring kms_key_id will create an AWS-managed CMK aliased to aws/mq in your account.ldap_server_metadata
+            type: string
+            optional: true
+        user:
+            description: (Required) Configuration block for broker users. For engine_type of RabbitMQ, Amazon MQ does not return broker users preventing this resource from making user updates and drift detection. Detailed below.
+            type: string
+            optional: true
+        user_base:
+            description: (Optional) Fully qualified name of the directory where you want to search for users.
+            type: string
+            optional: true
+        user_role_name:
+            description: (Optional) Specifies the name of the LDAP attribute for the user group membership.
+            type: string
+            optional: true
+        user_search_matching:
+            description: (Optional) Search criteria for users.
+            type: string
+            optional: true
+        user_search_subtree:
+            description: (Optional) Whether the directory search scope is the entire sub-tree.logs
+            type: string
+            optional: true
+        username:
+            description: '(Required) Username of the user.~> strongNOTE: AWS currently does not support updating RabbitMQ users. Updates to users can only be in the RabbitMQ UI.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        wss://broker-id.mq.us-west-2.amazonaws.com:61619:
+            description: ""
+            type: string
+            optional: true
+    attrs:
+        'For ':
+            description: RabbitMQ
+            type: string
+        amqp+ssl://broker-id.mq.us-west-2.amazonaws.com:5671:
+            description: ""
+            type: string
+        amqps://broker-id.mq.us-west-2.amazonaws.com:5671:
+            description: ""
+            type: string
+        arn:
+            description: ARN of the broker.
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        id:
+            description: Unique ID that Amazon MQ generates for the broker.
+            type: string
+        instances:
+            description: |
+                List of information about allocated brokers (both active & standby).
+            type: string
+        instances.0.console_url:
+            description: The URL of the broker's ActiveMQ Web Console.
+            type: string
+        instances.0.endpoints:
+            description: Broker's wire-level protocol endpoints in the following order & format referenceable e.g., as instances.0.endpoints.0
+            type: string
+        instances.0.ip_address:
+            description: IP Address of the broker.
+            type: string
+        mqtt+ssl://broker-id.mq.us-west-2.amazonaws.com:8883:
+            description: ""
+            type: string
+        ssl://broker-id.mq.us-west-2.amazonaws.com:61617:
+            description: ""
+            type: string
+        stomp+ssl://broker-id.mq.us-west-2.amazonaws.com:61614:
+            description: ""
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+        wss://broker-id.mq.us-west-2.amazonaws.com:61619:
+            description: ""
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

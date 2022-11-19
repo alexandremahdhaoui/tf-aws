@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: cloudfront_function
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN identifying your CloudFront Function.
+            type: string
+        comment:
+            description: Comment.
+            type: string
+        etag:
+            description: ETag hash of the function
+            type: string
+        last_modified_time:
+            description: When this resource was last modified.
+            type: string
+        runtime:
+            description: Identifier of the function's runtime.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

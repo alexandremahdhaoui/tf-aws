@@ -1,0 +1,335 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_kendra_data_source
+spec:
+    args:
+        EVERYTHING:
+            description: ' – crawl the website host names with subdomains and other domains that the webpages link to.The site_maps_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        HOST_ONLY:
+            description: ' – crawl only the website host names. For example, if the seed URL is "abc.example.com", then only URLs with host name "abc.example.com" are crawled.'
+            type: string
+            optional: true
+        SUBDOMAINS:
+            description: ' – crawl the website host names with subdomains. For example, if the seed URL is "abc.example.com", then "a.abc.example.com" and "b.abc.example.com" are also crawled.'
+            type: string
+            optional: true
+        access_control_list_configuration:
+            description: (Optional) A block that provides the path to the S3 bucket that contains the user context filtering files for the data source. For the format of the file, see Access control for S3 data sources. Detailed below.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the Data Source.
+            type: string
+            optional: true
+        authentication_configuration:
+            description: (Optional) A block with the configuration information required to connect to websites using authentication. You can connect to websites using basic authentication of user name and password. You use a secret in AWS Secrets Manager to store your authentication credentials. You must provide the website host name and port number. For example, the host name of https://a.example.com/page1.html is "a.example.com" and the port is 443, the standard port for HTTPS. Detailed below.
+            type: string
+            optional: true
+        basic_authentication:
+            description: '(Optional) The list of configuration information that''s required to connect to and crawl a website host using basic authentication credentials. The list includes the name and port number of the website host. Detailed below.The basic_authentication configuration block supports the following arguments:'
+            type: string
+            optional: true
+        bucket_name:
+            description: (Required) The name of the bucket that contains the documents.
+            type: string
+            optional: true
+        condition:
+            description: (Optional) Configuration of the condition used for the target document attribute or metadata field when ingesting documents into Amazon Kendra. See Document Attribute Condition.
+            type: string
+            optional: true
+        condition_document_attribute_key:
+            description: (Required) The identifier of the document attribute used for the condition. For example, _source_uri could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Kendra currently does not support _document_body as an attribute key used for the condition.
+            type: string
+            optional: true
+        condition_on_value:
+            description: (Optional) The value used by the operator. For example, you can specify the value 'financial' for strings in the _source_uri field that partially match or contain this value. See Document Attribute Value.
+            type: string
+            optional: true
+        configuration:
+            description: (Optional) A block with the configuration information to connect to your Data Source repository. You can't specify the configuration argument when the type parameter is set to CUSTOM. Detailed below.
+            type: string
+            optional: true
+        crawl_depth:
+            description: (Optional) Specifies the number of levels in a website that you want to crawl. The first level begins from the website seed or starting point URL. For example, if a website has 3 levels – index level (i.e. seed in this example), sections level, and subsections level – and you are only interested in crawling information up to the sections level (i.e. levels 0-1), you can set your depth to 1. The default crawl depth is set to 2. Minimum value of 0. Maximum value of 10.
+            type: string
+            optional: true
+        create:
+            description: (Default 30m)
+            type: string
+            optional: true
+        created_at:
+            description: The Unix timestamp of when the Data Source was created.
+            type: string
+            optional: true
+        credentials:
+            description: (Optional) Your secret ARN, which you can create in AWS Secrets Manager. The credentials are optional. You use a secret if web proxy credentials are required to connect to a website host. Amazon Kendra currently support basic authentication to connect to a web proxy server. The secret stores your credentials.
+            type: string
+            optional: true
+        custom_document_enrichment_configuration:
+            description: (Optional) A block with the configuration information for altering document metadata and content during the document ingestion process. For more information on how to create, modify and delete document metadata, or make other content alterations when you ingest documents into Amazon Kendra, see Customizing document metadata during the ingestion process. Detailed below.
+            type: string
+            optional: true
+        data_source_id:
+            description: The unique identifiers of the Data Source.
+            type: string
+            optional: true
+        date_value:
+            description: (Optional) A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. As of this writing only UTC is supported. For example, 2012-03-25T12:30:10+00:00.
+            type: string
+            optional: true
+        delete:
+            description: (Default 30m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) A description for the Data Source connector.
+            type: string
+            optional: true
+        document_content_deletion:
+            description: (Optional) TRUE to delete content if the condition used for the target attribute is met.
+            type: string
+            optional: true
+        documents_metadata_configuration:
+            description: (Optional) A block that defines the Ddcument metadata files that contain information such as the document access control information, source URI, document author, and custom attributes. Each metadata file contains metadata about a single document. Detailed below.
+            type: string
+            optional: true
+        error_message:
+            description: When the Status field value is FAILED, the ErrorMessage field contains a description of the error that caused the Data Source to fail.
+            type: string
+            optional: true
+        exclusion_patterns:
+            description: (Optional) A list of glob patterns for documents that should not be indexed. If a document that matches an inclusion prefix or inclusion pattern also matches an exclusion pattern, the document is not indexed. Refer to Exclusion Patterns for more examples.
+            type: string
+            optional: true
+        host:
+            description: (Required) The name of the website host you want to connect to via a web proxy server. For example, the host name of https://a.example.com/page1.html is "a.example.com".
+            type: string
+            optional: true
+        id:
+            description: The unique identifiers of the Data Source and index separated by a slash (/).
+            type: string
+            optional: true
+        inclusion_patterns:
+            description: (Optional) A list of glob patterns for documents that should be indexed. If a document that matches an inclusion pattern also matches an exclusion pattern, the document is not indexed. Refer to Inclusion Patterns for more examples.
+            type: string
+            optional: true
+        inclusion_prefixes:
+            description: '(Optional) A list of S3 prefixes for the documents that should be included in the index.access_control_list_configurationThe access_control_list_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        index_id:
+            description: (Required, Forces new resource) The identifier of the index for your Amazon Kendra data_source.
+            type: string
+            optional: true
+        inline_configurations:
+            description: (Optional) Configuration information to alter document attributes or metadata fields and content when ingesting documents into Amazon Kendra. Minimum number of 0 items. Maximum number of 100 items. Detailed below.
+            type: string
+            optional: true
+        invocation_condition:
+            description: (Optional) A block that specifies the condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Kendra should invoke a function that inserts the current date-time. See Document Attribute Condition.
+            type: string
+            optional: true
+        key_path:
+            description: '(Optional) Path to the AWS S3 bucket that contains the ACL files.documents_metadata_configurationThe documents_metadata_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        lambda_arn:
+            description: (Required) The Amazon Resource Name (ARN) of a Lambda Function that can manipulate your document metadata fields or attributes and content.
+            type: string
+            optional: true
+        language_code:
+            description: (Optional) The code for a language. This allows you to support a language for all documents when creating the Data Source connector. English is supported by default. For more information on supported languages, including their codes, see Adding documents in languages other than English.
+            type: string
+            optional: true
+        long_value:
+            description: (Optional) A long integer value.
+            type: string
+            optional: true
+        max_content_size_per_page_in_mega_bytes:
+            description: (Optional) The maximum size (in MB) of a webpage or attachment to crawl. Files larger than this size (in MB) are skipped/not crawled. The default maximum size of a webpage or attachment is set to 50 MB. Minimum value of 1.0e-06. Maximum value of 50.
+            type: string
+            optional: true
+        max_links_per_page:
+            description: (Optional) The maximum number of URLs on a webpage to include when crawling a website. This number is per webpage. As a website’s webpages are crawled, any URLs the webpages link to are also crawled. URLs on a webpage are crawled in order of appearance. The default maximum links per page is 100. Minimum value of 1. Maximum value of 1000.
+            type: string
+            optional: true
+        max_urls_per_minute_crawl_rate:
+            description: (Optional) The maximum number of URLs crawled per website host per minute. The default maximum number of URLs crawled per website host per minute is 300. Minimum value of 1. Maximum value of 300.
+            type: string
+            optional: true
+        name:
+            description: (Required) A name for your Data Source connector.
+            type: string
+            optional: true
+        operator:
+            description: '(Required) The condition operator. For example, you can use Contains to partially match a string. Valid Values: GreaterThan | GreaterThanOrEquals | LessThan | LessThanOrEquals | Equals | NotEquals | Contains | NotContains | Exists | NotExists | BeginsWith.Document Attribute ValueThe condition_on_value and target_document_attribute_value configuration blocks supports the following arguments:'
+            type: string
+            optional: true
+        port:
+            description: '(Required) The port number of the website host you want to connect to via a web proxy server. For example, the port for https://a.example.com/page1.html is 443, the standard port for HTTPS.urlsThe urls configuration block supports the following arguments:'
+            type: string
+            optional: true
+        post_extraction_hook_configuration:
+            description: (Optional) A block that specifies the configuration information for invoking a Lambda function in AWS Lambda on the structured documents with their metadata and text extracted. You can use a Lambda function to apply advanced logic for creating, modifying, or deleting document metadata and content. For more information, see Advanced data manipulation. Detailed below.
+            type: string
+            optional: true
+        pre_extraction_hook_configuration:
+            description: (Optional) Configuration information for invoking a Lambda function in AWS Lambda on the original or raw documents before extracting their metadata and text. You can use a Lambda function to apply advanced logic for creating, modifying, or deleting document metadata and content. For more information, see Advanced data manipulation. Detailed below.
+            type: string
+            optional: true
+        proxy_configuration:
+            description: (Optional) Configuration information required to connect to your internal websites via a web proxy. You must provide the website host name and port number. For example, the host name of https://a.example.com/page1.html is "a.example.com" and the port is 443, the standard port for HTTPS. Web proxy credentials are optional and you can use them to connect to a web proxy server that requires basic authentication. To store web proxy credentials, you use a secret in AWS Secrets Manager. Detailed below.
+            type: string
+            optional: true
+        role_arn:
+            description: '(Optional) The Amazon Resource Name (ARN) of a role with permission to run pre_extraction_hook_configuration and post_extraction_hook_configuration for altering document metadata and content during the document ingestion process. For more information, see IAM roles for Amazon Kendra.inline_configurationsThe inline_configurations configuration block supports the following arguments:'
+            type: string
+            optional: true
+        s3_bucket:
+            description: '(Required) Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions.Document Attribute ConditionThe condition and invocation_condition configuration blocks supports the following arguments:'
+            type: string
+            optional: true
+        s3_configuration:
+            description: (Required if type is set to S3) A block that provides the configuration information to connect to an Amazon S3 bucket as your data source. Detailed below.
+            type: string
+            optional: true
+        s3_prefix:
+            description: '(Optional) A prefix used to filter metadata configuration files in the AWS S3 bucket. The S3 bucket might contain multiple metadata files. Use s3_prefix to include only the desired metadata files.web_crawler_configurationThe web_crawler_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        schedule:
+            description: (Optional) Sets the frequency for Amazon Kendra to check the documents in your Data Source repository and update the index. If you don't set a schedule Amazon Kendra will not periodically update the index. You can call the StartDataSourceSyncJob API to update the index.
+            type: string
+            optional: true
+        seed_url_configuration:
+            description: (Optional) A block that specifies the configuration of the seed or starting point URLs of the websites you want to crawl. You can choose to crawl only the website host names, or the website host names with subdomains, or the website host names with subdomains and other domains that the webpages link to. You can list up to 100 seed URLs. Detailed below.
+            type: string
+            optional: true
+        seed_urls:
+            description: '(Required) The list of seed or starting point URLs of the websites you want to crawl. The list can include a maximum of 100 seed URLs. Array Members: Minimum number of 0 items. Maximum number of 100 items. Length Constraints: Minimum length of 1. Maximum length of 2048.'
+            type: string
+            optional: true
+        site_maps:
+            description: '(Required) The list of sitemap URLs of the websites you want to crawl. The list can include a maximum of 3 sitemap URLs.custom_document_enrichment_configurationThe custom_document_enrichment_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        site_maps_configuration:
+            description: '(Optional) A block that specifies the configuration of the sitemap URLs of the websites you want to crawl. Only URLs belonging to the same website host names are crawled. You can list up to 3 sitemap URLs. Detailed below.The seed_url_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        status:
+            description: The current status of the Data Source. When the status is ACTIVE the Data Source is ready to use. When the status is FAILED, the error_message field contains the reason that the Data Source failed.
+            type: string
+            optional: true
+        string:
+            description: '(Optional) A string, such as "department".In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        string_list_value:
+            description: (Optional) A list of strings.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configurationThe configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        target:
+            description: '(Optional) Configuration of the target document attribute or metadata field when ingesting documents into Amazon Kendra. You can also include a value. Detailed below.targetThe target configuration block supports the following arguments:'
+            type: string
+            optional: true
+        target_document_attribute_key:
+            description: (Optional) The identifier of the target document attribute or metadata field. For example, 'Department' could be an identifier for the target attribute or metadata field that includes the department names associated with the documents.
+            type: string
+            optional: true
+        target_document_attribute_value:
+            description: Document Attribute Value.
+            type: string
+            optional: true
+        target_document_attribute_value_deletion:
+            description: '(Optional) TRUE to delete the existing target value for your specified target attribute key. You cannot create a target value and set this to TRUE. To create a target value (TargetDocumentAttributeValue), set this to FALSE.hook_configurationThe hook_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        type:
+            description: (Required, Forces new resource) The type of data source repository. For an updated list of values, refer to Valid Values for Type.
+            type: string
+            optional: true
+        update:
+            description: (Default 30m)
+            type: string
+            optional: true
+        updated_at:
+            description: The Unix timestamp of when the Data Source was last updated.
+            type: string
+            optional: true
+        url_exclusion_patterns:
+            description: '(Optional) A list of regular expression patterns to exclude certain URLs to crawl. URLs that match the patterns are excluded from the index. URLs that don''t match the patterns are included in the index. If a URL matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the URL file isn''t included in the index. Array Members: Minimum number of 0 items. Maximum number of 100 items. Length Constraints: Minimum length of 1. Maximum length of 150.'
+            type: string
+            optional: true
+        url_inclusion_patterns:
+            description: '(Optional) A list of regular expression patterns to include certain URLs to crawl. URLs that match the patterns are included in the index. URLs that don''t match the patterns are excluded from the index. If a URL matches both an inclusion and exclusion pattern, the exclusion pattern takes precedence and the URL file isn''t included in the index. Array Members: Minimum number of 0 items. Maximum number of 100 items. Length Constraints: Minimum length of 1. Maximum length of 150.'
+            type: string
+            optional: true
+        urls:
+            description: '(Required) A block that specifies the seed or starting point URLs of the websites or the sitemap URLs of the websites you want to crawl. You can include website subdomains. You can list up to 100 seed URLs and up to 3 sitemap URLs. You can only crawl websites that use the secure communication protocol, Hypertext Transfer Protocol Secure (HTTPS). If you receive an error when crawling a website, it could be that the website is blocked from crawling. When selecting websites to index, you must adhere to the Amazon Acceptable Use Policy and all other Amazon terms. Remember that you must only use Amazon Kendra Web Crawler to index your own webpages, or webpages that you have authorization to index. Detailed below.authentication_configurationThe authentication_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        web_crawler_configuration:
+            description: '(Required if type is set to WEBCRAWLER) A block that provides the configuration information required for Amazon Kendra Web Crawler. Detailed below.s3_configurationThe s3_configuration configuration block supports the following arguments:'
+            type: string
+            optional: true
+        web_crawler_mode:
+            description: (Optional) The default mode is set to HOST_ONLY
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Data Source.
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        created_at:
+            description: The Unix timestamp of when the Data Source was created.
+            type: string
+        data_source_id:
+            description: The unique identifiers of the Data Source.
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        error_message:
+            description: When the Status field value is FAILED, the ErrorMessage field contains a description of the error that caused the Data Source to fail.
+            type: string
+        id:
+            description: The unique identifiers of the Data Source and index separated by a slash (/).
+            type: string
+        status:
+            description: The current status of the Data Source. When the status is ACTIVE the Data Source is ready to use. When the status is FAILED, the error_message field contains the reason that the Data Source failed.
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
+        updated_at:
+            description: The Unix timestamp of when the Data Source was last updated.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

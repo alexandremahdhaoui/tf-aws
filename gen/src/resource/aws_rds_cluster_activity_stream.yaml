@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_rds_cluster_activity_stream
+spec:
+    args: {}
+    attrs:
+        id:
+            description: The Amazon Resource Name (ARN) of the DB cluster.
+            type: string
+        kinesis_stream_name:
+            description: The name of the Amazon Kinesis data stream to be used for the database activity stream.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

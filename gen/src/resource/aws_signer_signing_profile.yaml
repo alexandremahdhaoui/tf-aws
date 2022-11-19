@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_signer_signing_profile
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) for the signing profile.
+            type: string
+        name:
+            description: The name of the target signing profile.
+            type: string
+        platform_display_name:
+            description: A human-readable name for the signing platform associated with the signing profile.
+            type: string
+        revocation_record:
+            description: Revocation information for a signing profile.
+            type: string
+        status:
+            description: The status of the target signing profile.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        version:
+            description: The current version of the signing profile.
+            type: string
+        version_arn:
+            description: The signing profile ARN, including the profile version.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

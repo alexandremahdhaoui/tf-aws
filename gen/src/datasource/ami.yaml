@@ -1,0 +1,175 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: ami
+spec:
+    args: {}
+    attrs:
+        architecture:
+            description: 'OS architecture of the AMI (ie: i386 or x86_64).'
+            type: string
+        arn:
+            description: ARN of the AMI.
+            type: string
+        block_device_mappings:
+            description: ""
+            type: string
+        boot_mode:
+            description: Boot mode of the image.
+            type: string
+        creation_date:
+            description: Date and time the image was created.
+            type: string
+        delete_on_termination:
+            description: true if the EBS volume will be deleted on termination.
+            type: string
+        deprecation_time:
+            description: Date and time when the image will be deprecated.
+            type: string
+        description:
+            description: |-
+                Description of the AMI that was provided during image
+                creation.
+            type: string
+        device_name:
+            description: Physical name of the device.
+            type: string
+        ebs:
+            description: Map containing EBS information, if the device is EBS based. Unlike most object attributes, these are accessed directly (e.g., ebs.volume_size or ebs["volume_size"]) rather than accessed through the first element of a list (e.g., ebs[0].volume_size
+            type: string
+        ena_support:
+            description: 'Whether enhanced networking with ENA is enabled.TimeoutsConfiguration options:'
+            type: string
+        encrypted:
+            description: true if the EBS volume is encrypted.
+            type: string
+        hypervisor:
+            description: Hypervisor type of the image.
+            type: string
+        image_id:
+            description: ID of the AMI. Should be the same as the resource id.
+            type: string
+        image_location:
+            description: Location of the AMI.
+            type: string
+        image_owner_alias:
+            description: AWS account alias (for example, amazon, self
+            type: string
+        image_type:
+            description: Type of image.
+            type: string
+        imds_support:
+            description: Instance Metadata Service (IMDS) support mode for the image. Set to v2.0 if instances ran from this image enforce IMDSv2.
+            type: string
+        iops:
+            description: 0 if the EBS volume is not a provisioned IOPS image, otherwise the supported IOPS count.
+            type: string
+        kernel_id:
+            description: |-
+                Kernel associated with the image, if any. Only applicable
+                for machine images.
+            type: string
+        name:
+            description: Name of the AMI that was provided during image creation.
+            type: string
+        no_device:
+            description: Suppresses the specified device included in the block device mapping of the AMI.
+            type: string
+        owner_id:
+            description: AWS account ID of the image owner.
+            type: string
+        platform:
+            description: Value is Windows for Windows AMIs; otherwise blank.
+            type: string
+        platform_details:
+            description: Platform details associated with the billing code of the AMI.
+            type: string
+        product_codes:
+            description: |
+                Any product codes associated with the AMI.
+            type: string
+        product_codes.#.product_code_id:
+            description: The product code.
+            type: string
+        product_codes.#.product_code_type:
+            description: The type of product code.
+            type: string
+        public:
+            description: true if the image has public launch permissions.
+            type: string
+        ramdisk_id:
+            description: |-
+                RAM disk associated with the image, if any. Only applicable
+                for machine images.
+            type: string
+        root_device_name:
+            description: Device name of the root device.
+            type: string
+        root_device_type:
+            description: 'Type of root device (ie: ebs or instance-store).'
+            type: string
+        root_snapshot_id:
+            description: |-
+                Snapshot id associated with the root device, if any
+                (only applies to ebs root devices).
+            type: string
+        snapshot_id:
+            description: The ID of the snapshot.
+            type: string
+        sriov_net_support:
+            description: Whether enhanced networking is enabled.
+            type: string
+        state:
+            description: Current state of the AMI. If the state is available
+            type: string
+        state_reason:
+            description: Describes a state change. Fields are UNSET
+            type: string
+        state_reason.code:
+            description: The reason code for the state change.
+            type: string
+        state_reason.message:
+            description: The message for the state change.
+            type: string
+        tags:
+            description: |
+                Any tags assigned to the image.
+            type: string
+        tags.#.key:
+            description: Key name of the tag.
+            type: string
+        tags.#.value:
+            description: Value of the tag.
+            type: string
+        throughput:
+            description: The throughput that the EBS volume supports, in MiB/s.
+            type: string
+        tpm_support:
+            description: If the image is configured for NitroTPM support, the value is v2.0.
+            type: string
+        usage_operation:
+            description: Operation of the Amazon EC2 instance and the billing code that is associated with the AMI.
+            type: string
+        virtual_name:
+            description: Virtual device name (for instance stores).
+            type: string
+        virtualization_type:
+            description: 'Type of virtualization of the AMI (ie: hvmparavirtual).'
+            type: string
+        volume_size:
+            description: The size of the volume, in GiB.
+            type: string
+        volume_type:
+            description: The volume type.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

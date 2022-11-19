@@ -5,58 +5,89 @@ import (
 	"fmt"
 	"github.com/yuin/goldmark"
 	"gitlab.com/alexandre.mahdhaoui/go-lib-visitor-html/pkg/visitor"
+	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg"
+	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/apis"
 	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/ast"
-	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/token"
 	"golang.org/x/net/html"
+	"gopkg.in/yaml.v3"
 	"io"
 	"os"
 	"strings"
 )
 
+const TerraformAwsProviderUrlTemplate = "https://raw.githubusercontent.com/hashicorp/terraform-provider-aws/%s/website/docs/%s/%s"
+const SourcePathTemplate = "./cmd/gen_src/%s.txt"
+const ModuleOutputPathTemplate = "./gen/src/%s/%s.yaml"
+
 func main() {
-	doc := getHtmlDoc()
-	node := visitor.NewNode(doc)
-	tt := ast.FromHtmlNode(&node)
-	tkns := ast.Flatten(tt)
-	resource := ast.ToTerraformResource(tkns)
-	resource.Debug(0)
+	providerVersionTag := "v4.40.0"
+	parseTerraformDefinition("resource", providerVersionTag)
+	parseTerraformDefinition("datasource", providerVersionTag)
 }
 
-func getHtmlDoc() *html.Node {
-	file, err := os.Open("cmd/gen_src/raw_markdown.md")
-	if err != nil {
-		panic(err)
+func parseTerraformDefinition(kind, providerVersionTag string) {
+	for _, moduleInfo := range urls(kind, providerVersionTag) {
+		fmt.Printf("parsing %s...\n", moduleInfo.url)
+		doc := parseMarkdownToHtml(moduleInfo.url)
+		node := visitor.NewNode(doc)
+		tt := ast.FromHtmlNode(&node)
+		tkns := ast.Flatten(tt)
+		def := ast.ToTerraformDefinition(tkns, kind, moduleInfo.name, providerVersionTag)
+		saveDef(kind, &def)
 	}
+}
 
-	b, err := io.ReadAll(file)
-	if err != nil {
-		panic(err)
+func saveDef(sourceKind string, data *apis.TerraformResource) {
+	buf, err := yaml.Marshal(data)
+	panicE(err)
+	err = os.WriteFile(fmt.Sprintf(ModuleOutputPathTemplate, sourceKind, data.Metadata.Name), buf, 0644)
+	panicE(err)
+}
+
+func panicE(e error) {
+	if e != nil {
+		panic(e)
 	}
+}
+
+func parseMarkdownToHtml(url string) *html.Node {
+	b, err := pkg.HttpGet(url)
+	panicE(err)
 
 	var buf bytes.Buffer
-	if err := goldmark.Convert(b, &buf); err != nil {
-		panic(err)
-	}
+	err = goldmark.Convert(b, &buf)
+	panicE(err)
 
 	b, err = io.ReadAll(&buf)
-	if err != nil {
-		panic(err)
-	}
+	panicE(err)
 
 	doc, err := html.Parse(bytes.NewReader(b))
-	if err != nil {
-		panic(err)
-	}
+	panicE(err)
 	return doc
 }
 
-func printAST(tree token.Tree, indent int) {
-	if tkn := tree.Token(); tkn != nil {
-		fmt.Printf("%s\t%v:\t%s\n", strings.Repeat("|-", indent), tkn.Kind(), string(tkn.Data()))
-	}
-	if stream := tree.TokenStream(); stream != nil {
-		for _, tt := range stream.AsSlice() {
-			printAST(tt, indent+1)
+type moduleInfo struct {
+	name, url string
+}
+
+func urls(sourceKind, providerVersionTag string) []moduleInfo {
+	var infos []moduleInfo
+	for _, line := range readFileAndSplitLine(fmt.Sprintf(SourcePathTemplate, sourceKind)) {
+		info := moduleInfo{
+			name: strings.ReplaceAll(line, ".html.markdown", ""),
+			url:  fmt.Sprintf(TerraformAwsProviderUrlTemplate, providerVersionTag, sourceKind[0:1], line),
 		}
+		infos = append(infos, info)
 	}
+	return infos
+}
+
+func readFileAndSplitLine(path string) []string {
+	file, err := os.Open(path)
+	panicE(err)
+
+	b, err := io.ReadAll(file)
+	panicE(err)
+
+	return strings.Split(string(b), "\n")
 }

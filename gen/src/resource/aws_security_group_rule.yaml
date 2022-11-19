@@ -1,0 +1,83 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_security_group_rule
+spec:
+    args:
+        cidr_blocks:
+            description: (Optional) List of CIDR blocks. Cannot be specified with source_security_group_id or self.
+            type: string
+            optional: true
+        create:
+            description: (Default 5m)
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of the rule.
+            type: string
+            optional: true
+        from_port:
+            description: (Required) Start port (or ICMP type number if protocol is "icmp" or "icmpv6").
+            type: string
+            optional: true
+        id:
+            description: ID of the security group rule.
+            type: string
+            optional: true
+        ipv6_cidr_blocks:
+            description: (Optional) List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self.
+            type: string
+            optional: true
+        prefix_list_ids:
+            description: (Optional) List of Prefix List IDs.
+            type: string
+            optional: true
+        protocol:
+            description: (Required) Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number
+            type: string
+            optional: true
+        security_group_id:
+            description: (Required) Security group to apply this rule to.
+            type: string
+            optional: true
+        security_group_rule_id:
+            description: 'If the aws_security_group_rule resource has a single source or destination then this is the AWS Security Group Rule resource ID. Otherwise it is empty.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        self:
+            description: (Optional) Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id.
+            type: string
+            optional: true
+        source_security_group_id:
+            description: '(Optional) Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        to_port:
+            description: (Required) End port (or ICMP code if protocol is "icmp").
+            type: string
+            optional: true
+        type:
+            description: (Required) Type of rule being created. Valid options are ingressegress (outbound).
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 5m)
+            type: string
+        id:
+            description: ID of the security group rule.
+            type: string
+        security_group_rule_id:
+            description: 'If the aws_security_group_rule resource has a single source or destination then this is the AWS Security Group Rule resource ID. Otherwise it is empty.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

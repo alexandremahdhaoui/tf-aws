@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: workspaces_bundle
+spec:
+    args: {}
+    attrs:
+        bundle_id:
+            description: ' – The ID of the bundle.'
+            type: string
+        capacity:
+            description: Size of the root volume.user_storage
+            type: string
+        compute_type:
+            description: ' – The compute type. See supported fields below.'
+            type: string
+        description:
+            description: ' – The description of the bundle.'
+            type: string
+        name:
+            description: Name of the compute type.root_storage
+            type: string
+        owner:
+            description: ' – The owner of the bundle.'
+            type: string
+        root_storage:
+            description: ' – The root volume. See supported fields below.'
+            type: string
+        user_storage:
+            description: ' – The user storage. See supported fields below.compute_type'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

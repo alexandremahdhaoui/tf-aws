@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_connect_instance
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the instance.
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        created_time:
+            description: When the instance was created.
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        id:
+            description: The identifier of the instance.
+            type: string
+        service_role:
+            description: The service role of the instance.
+            type: string
+        status:
+            description: 'The state of the instance.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

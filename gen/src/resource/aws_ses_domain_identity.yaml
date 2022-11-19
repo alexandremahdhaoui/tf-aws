@@ -1,0 +1,28 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ses_domain_identity
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the domain identity.
+            type: string
+        verification_token:
+            description: |-
+                A code which when added to the domain as a TXT record
+                will signal to SES that the owner of the domain has authorised SES to act on
+                their behalf. The domain identity will be in state "verification pending"
+                until this is done. See the With Route53 Record.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

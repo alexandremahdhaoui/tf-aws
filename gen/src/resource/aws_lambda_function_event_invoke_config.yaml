@@ -1,0 +1,57 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_function_event_invoke_config
+spec:
+    args:
+        destination:
+            description: '(Required) Amazon Resource Name (ARN) of the destination resource. See the Lambda Developer Guide for acceptable resource types and associated IAM permissions.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        destination_config:
+            description: (Optional) Configuration block with destination configuration. See below for details.
+            type: string
+            optional: true
+        function_name:
+            description: (Required) Name or Amazon Resource Name (ARN) of the Lambda Function, omitting any version or alias qualifier.
+            type: string
+            optional: true
+        id:
+            description: Fully qualified Lambda Function name or Amazon Resource Name (ARN)
+            type: string
+            optional: true
+        maximum_event_age_in_seconds:
+            description: (Optional) Maximum age of a request that Lambda sends to a function for processing in seconds. Valid values between 60 and 21600.
+            type: string
+            optional: true
+        maximum_retry_attempts:
+            description: (Optional) Maximum number of times to retry when the function returns an error. Valid values between 0 and 2. Defaults to 2.
+            type: string
+            optional: true
+        on_failure:
+            description: (Optional) Configuration block with destination configuration for failed asynchronous invocations. See below for details.
+            type: string
+            optional: true
+        on_success:
+            description: (Optional) Configuration block with destination configuration for successful asynchronous invocations. See below for details.destination_config on_failure Configuration Block
+            type: string
+            optional: true
+        qualifier:
+            description: '(Optional) Lambda Function published version, $LATEST, or Lambda Alias name.destination_config Configuration Block~> strongNOTE: At least one of on_failure or on_success must be configured when using this configuration block, otherwise remove it completely to prevent perpetual differences in Terraform runs.'
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: Fully qualified Lambda Function name or Amazon Resource Name (ARN)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

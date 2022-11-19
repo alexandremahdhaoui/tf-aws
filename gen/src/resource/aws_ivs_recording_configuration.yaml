@@ -1,0 +1,89 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ivs_recording_configuration
+spec:
+    args:
+        arn:
+            description: ARN of the Recording Configuration.
+            type: string
+            optional: true
+        bucket_name:
+            description: S3 bucket name where recorded videos will be stored.
+            type: string
+            optional: true
+        create:
+            description: (Default 10m)
+            type: string
+            optional: true
+        delete:
+            description: (Default 10m)
+            type: string
+            optional: true
+        destination_configuration:
+            description: ""
+            type: string
+            optional: true
+        name:
+            description: (Optional) Recording Configuration name.
+            type: string
+            optional: true
+        recording_mode:
+            description: '(Optional) Thumbnail recording mode. Valid values: DISABLED, INTERVAL.'
+            type: string
+            optional: true
+        recording_reconnect_window_seconds:
+            description: (Optional) If a broadcast disconnects and then reconnects within the specified interval, the multiple streams will be considered a single broadcast and merged together.
+            type: string
+            optional: true
+        s3:
+            description: ""
+            type: string
+            optional: true
+        state:
+            description: ' The current state of the Recording Configuration.'
+            type: string
+            optional: true
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        target_interval_seconds:
+            description: ' (Configurable [and required] only if recording_mode is INTERVAL) - The targeted thumbnail-generation interval in seconds.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        thumbnail_configuration:
+            description: ""
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Recording Configuration.
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 10m)
+            type: string
+        state:
+            description: ' The current state of the Recording Configuration.'
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

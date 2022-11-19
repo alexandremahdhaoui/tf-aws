@@ -1,0 +1,67 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_network_insights_path
+spec:
+    args:
+        arn:
+            description: ARN of the Network Insights Path.
+            type: string
+            optional: true
+        destination:
+            description: (Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway.
+            type: string
+            optional: true
+        destination_ip:
+            description: (Optional) IP address of the destination resource.
+            type: string
+            optional: true
+        destination_port:
+            description: (Optional) Destination port to analyze access to.
+            type: string
+            optional: true
+        id:
+            description: ID of the Network Insights Path.
+            type: string
+            optional: true
+        protocol:
+            description: (Required) Protocol to use for analysis. Valid options are tcp or udp.
+            type: string
+            optional: true
+        source:
+            description: (Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway.
+            type: string
+            optional: true
+        source_ip:
+            description: (Optional) IP address of the source resource.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Network Insights Path.
+            type: string
+        id:
+            description: ID of the Network Insights Path.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

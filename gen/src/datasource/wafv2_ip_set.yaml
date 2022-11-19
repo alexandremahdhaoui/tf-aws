@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: wafv2_ip_set
+spec:
+    args: {}
+    attrs:
+        addresses:
+            description: An array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation.
+            type: string
+        arn:
+            description: ARN of the entity.
+            type: string
+        description:
+            description: Description of the set that helps with identification.
+            type: string
+        id:
+            description: Unique identifier for the set.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

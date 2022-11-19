@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_nat_gateway
+spec:
+    args: {}
+    attrs:
+        allocation_id:
+            description: The Allocation ID of the Elastic IP address for the gateway.
+            type: string
+        id:
+            description: The ID of the NAT Gateway.
+            type: string
+        network_interface_id:
+            description: The ENI ID of the network interface created by the NAT gateway.
+            type: string
+        private_ip:
+            description: The private IP address of the NAT Gateway.
+            type: string
+        public_ip:
+            description: The public IP address of the NAT Gateway.
+            type: string
+        subnet_id:
+            description: The Subnet ID of the subnet in which the NAT gateway is placed.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

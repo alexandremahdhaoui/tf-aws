@@ -1,0 +1,96 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_imagebuilder_component
+spec:
+    args:
+        arn:
+            description: (Required) Amazon Resource Name (ARN) of the component.
+            type: string
+            optional: true
+        change_description:
+            description: (Optional) Change description of the component.
+            type: string
+            optional: true
+        data:
+            description: (Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration.
+            type: string
+            optional: true
+        date_created:
+            description: Date the component was created.
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of the component.
+            type: string
+            optional: true
+        encrypted:
+            description: Encryption status of the component.
+            type: string
+            optional: true
+        kms_key_id:
+            description: (Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the component.
+            type: string
+            optional: true
+        owner:
+            description: Owner of the component.
+            type: string
+            optional: true
+        platform:
+            description: (Required) Platform of the component.
+            type: string
+            optional: true
+        supported_os_versions:
+            description: (Optional) Set of Operating Systems (OS) supported by the component.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        uri:
+            description: '(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        version:
+            description: '(Required) Version of the component.The following attributes are optional:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: (Required) Amazon Resource Name (ARN) of the component.
+            type: string
+        date_created:
+            description: Date the component was created.
+            type: string
+        encrypted:
+            description: Encryption status of the component.
+            type: string
+        owner:
+            description: Owner of the component.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        type:
+            description: Type of the component.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

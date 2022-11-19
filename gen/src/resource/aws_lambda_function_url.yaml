@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lambda_function_url
+spec:
+    args: {}
+    attrs:
+        function_arn:
+            description: The Amazon Resource Name (ARN) of the function.
+            type: string
+        function_url:
+            description: The HTTP URL endpoint for the function in the format https://<url_id>.lambda-url.<region>.on.aws.
+            type: string
+        url_id:
+            description: A generated ID for the endpoint.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

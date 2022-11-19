@@ -1,0 +1,86 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_scheduler_schedule_group
+spec:
+    args:
+        arn:
+            description: ARN of the schedule group.
+            type: string
+            optional: true
+        create:
+            description: (Default 5m)
+            type: string
+            optional: true
+        creation_date:
+            description: Time at which the schedule group was created.
+            type: string
+            optional: true
+        delete:
+            description: (Default 5m)
+            type: string
+            optional: true
+        id:
+            description: Name of the schedule group.
+            type: string
+            optional: true
+        last_modification_date:
+            description: Time at which the schedule group was last modified.
+            type: string
+            optional: true
+        name:
+            description: (Optional, Forces new resource) Name of the schedule group. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix.
+            type: string
+            optional: true
+        name_prefix:
+            description: (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name.
+            type: string
+            optional: true
+        state:
+            description: State of the schedule group. Can be ACTIVE or DELETING.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the schedule group.
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        creation_date:
+            description: Time at which the schedule group was created.
+            type: string
+        delete:
+            description: (Default 5m)
+            type: string
+        id:
+            description: Name of the schedule group.
+            type: string
+        last_modification_date:
+            description: Time at which the schedule group was last modified.
+            type: string
+        state:
+            description: State of the schedule group. Can be ACTIVE or DELETING.
+            type: string
+        tags_all:
+            description: 'Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

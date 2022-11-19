@@ -1,0 +1,60 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_autoscaling_group
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN for this Auto Scaling Group
+            type: string
+        availability_zones:
+            description: Availability zones of the Auto Scaling Group.
+            type: string
+        default_cooldown:
+            description: Time between a scaling activity and the succeeding scaling activity.
+            type: string
+        default_instance_warmup:
+            description: The duration of the default instance warmup, in seconds.
+            type: string
+        delete:
+            description: '(Default 10m)Waiting for CapacityA newly-created ASG is initially empty and begins to scale to min_sizedesired_capacityWaiting for ASG Capacitymin_size (or desired_capacityIf min_size or desired_capacityTerraform considers an instance "healthy" when the ASG reports HealthStatus: "Healthy" and LifecycleState: "InService". See the wait_for_capacity_timeoutSetting wait_for_capacity_timeout to "0" disables ASG Capacity waiting.Waiting for ELB Capacityload_balancers attribute or with ALBs specified with target_group_arns.The min_elb_capacity"InService"If wait_for_elb_capacity"InService"As with ASG Capacity, Terraform will wait for up to wait_for_capacity_timeoutTroubleshooting Capacity Waiting Timeouts'
+            type: string
+        desired_capacity:
+            description: ' -The number of Amazon EC2 instances that should be running in the group.'
+            type: string
+        health_check_grace_period:
+            description: Time after instance comes into service before checking health.
+            type: string
+        health_check_type:
+            description: '"EC2" or "ELB". Controls how health checking is done.'
+            type: string
+        id:
+            description: Auto Scaling Group id.
+            type: string
+        launch_configuration:
+            description: The launch configuration of the Auto Scaling Group
+            type: string
+        max_size:
+            description: Maximum size of the Auto Scaling Group
+            type: string
+        min_size:
+            description: Minimum size of the Auto Scaling Group
+            type: string
+        name:
+            description: Name of the Auto Scaling Group
+            type: string
+        vpc_zone_identifier:
+            description: ' (Optional) - The VPC zone identifier~> strongNOTE: When using ELB as the health_check_type, health_check_grace_period is required.~> strongNOTE:initial_lifecycle_hookaws_autoscaling_lifecycle_hookinitial_lifecycle_hookaws_autoscaling_lifecycle_hookcapacityinitial_lifecycle_hookaws_autoscaling_lifecycle_hook.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

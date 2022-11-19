@@ -1,0 +1,117 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_vpn_connection
+spec:
+    args: {}
+    attrs:
+        accepted_route_count:
+            description: The number of accepted routes.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the VPN Connection.
+            type: string
+        certificate_arn:
+            description: The Amazon Resource Name (ARN) of the VPN tunnel endpoint certificate.
+            type: string
+        core_network_arn:
+            description: The ARN of the core network.
+            type: string
+        core_network_attachment_arn:
+            description: The ARN of the core network attachment.
+            type: string
+        customer_gateway_configuration:
+            description: The configuration information for the VPN connection's customer gateway (in the native XML format).
+            type: string
+        customer_gateway_id:
+            description: The ID of the customer gateway to which the connection is attached.
+            type: string
+        destination_cidr_block:
+            description: The CIDR block associated with the local subnet of the customer data center.
+            type: string
+        id:
+            description: The amazon-assigned ID of the VPN connection.
+            type: string
+        last_status_change:
+            description: The date and time of the last change in status.
+            type: string
+        outside_ip_address:
+            description: The Internet-routable IP address of the virtual private gateway's outside interface.
+            type: string
+        routes:
+            description: The static routes associated with the VPN connection. Detailed below.
+            type: string
+        source:
+            description: Indicates how the routes were provided.
+            type: string
+        state:
+            description: The current state of the static route.vgw_telemetry
+            type: string
+        static_routes_only:
+            description: Whether the VPN connection uses static routes exclusively.
+            type: string
+        status:
+            description: The status of the VPN tunnel.
+            type: string
+        status_message:
+            description: If an error occurs, a description of the error.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        transit_gateway_attachment_id:
+            description: When associated with an EC2 Transit Gateway (transit_gateway_id argument), the attachment ID. See also the aws_ec2_tag resource for tagging the EC2 Transit Gateway VPN Attachment.
+            type: string
+        tunnel1_address:
+            description: The public IP address of the first VPN tunnel.
+            type: string
+        tunnel1_bgp_asn:
+            description: The bgp asn number of the first VPN tunnel.
+            type: string
+        tunnel1_bgp_holdtime:
+            description: The bgp holdtime of the first VPN tunnel.
+            type: string
+        tunnel1_cgw_inside_address:
+            description: The RFC 6890 link-local address of the first VPN tunnel (Customer Gateway Side).
+            type: string
+        tunnel1_preshared_key:
+            description: The preshared key of the first VPN tunnel.
+            type: string
+        tunnel1_vgw_inside_address:
+            description: The RFC 6890 link-local address of the first VPN tunnel (VPN Gateway Side).
+            type: string
+        tunnel2_address:
+            description: The public IP address of the second VPN tunnel.
+            type: string
+        tunnel2_bgp_asn:
+            description: The bgp asn number of the second VPN tunnel.
+            type: string
+        tunnel2_bgp_holdtime:
+            description: The bgp holdtime of the second VPN tunnel.
+            type: string
+        tunnel2_cgw_inside_address:
+            description: The RFC 6890 link-local address of the second VPN tunnel (Customer Gateway Side).
+            type: string
+        tunnel2_preshared_key:
+            description: The preshared key of the second VPN tunnel.
+            type: string
+        tunnel2_vgw_inside_address:
+            description: The RFC 6890 link-local address of the second VPN tunnel (VPN Gateway Side).
+            type: string
+        vgw_telemetry:
+            description: Telemetry for the VPN tunnels. Detailed below.
+            type: string
+        vpn_gateway_id:
+            description: The ID of the virtual private gateway to which the connection is attached.routes
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

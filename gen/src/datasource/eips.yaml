@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: eips
+spec:
+    args: {}
+    attrs:
+        allocation_ids:
+            description: List of all the allocation IDs for address for use with EC2-VPC.
+            type: string
+        id:
+            description: AWS Region.
+            type: string
+        public_ips:
+            description: 'List of all the Elastic IP addresses.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

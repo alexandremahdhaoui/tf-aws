@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_api_gateway_account
+spec:
+    args: {}
+    attrs:
+        burst_limit:
+            description: Absolute maximum number of times API Gateway allows the API to be called per second (RPS).
+            type: string
+        rate_limit:
+            description: Number of times API Gateway allows the API to be called per second on average (RPS).
+            type: string
+        throttle_settings:
+            description: 'Account-Level throttle settings. See exported fields below.throttle_settings block exports the following:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: availability_zones
+spec:
+    args: {}
+    attrs:
+        group_names:
+            description: ' A set of the Availability Zone Group names. For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1.'
+            type: string
+        id:
+            description: Region of the Availability Zones.
+            type: string
+        names:
+            description: List of the Availability Zone names available to the account.
+            type: string
+        zone_ids:
+            description: 'List of the Availability Zone IDs available to the account.Note that the indexes of Availability Zone names and IDs correspond.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

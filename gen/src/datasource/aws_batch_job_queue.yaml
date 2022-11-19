@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_batch_job_queue
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the job queue.
+            type: string
+        compute_environment_order:
+            description: |
+                The compute environments that are attached to the job queue and the order in
+                which job placement is preferred. Compute environments are selected for job placement in ascending order.
+            type: string
+        compute_environment_order.#.order:
+            description: The order of the compute environment.
+            type: string
+        priority:
+            description: |-
+                Priority of the job queue. Job queues with a higher priority are evaluated first when
+                associated with the same compute environment.
+            type: string
+        scheduling_policy_arn:
+            description: The ARN of the fair share scheduling policy. If this attribute has a value, the job queue uses a fair share scheduling policy. If this attribute does not have a value, the job queue uses a first in, first out (FIFO) scheduling policy.
+            type: string
+        state:
+            description: Describes the ability of the queue to accept new jobs (for example, ENABLED or DISABLED).
+            type: string
+        status:
+            description: Current status of the job queue (for example, CREATING or VALID).
+            type: string
+        status_reason:
+            description: |-
+                Short, human-readable string to provide additional details about the current status
+                of the job queue.
+            type: string
+        tags:
+            description: Key-value map of resource tags
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

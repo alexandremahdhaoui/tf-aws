@@ -1,0 +1,24 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_amplify_backend_environment
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN for a backend environment that is part of an Amplify app.
+            type: string
+        id:
+            description: Unique ID of the Amplify backend environment.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,51 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: lambda_layer_version
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the Lambda Layer with version.
+            type: string
+        compatible_architectures:
+            description: A list of Architectures the specific Lambda Layer version is compatible with.
+            type: string
+        compatible_runtimes:
+            description: List of Runtimes the specific Lambda Layer version is compatible with.
+            type: string
+        created_date:
+            description: Date this resource was created.
+            type: string
+        description:
+            description: Description of the specific Lambda Layer version.
+            type: string
+        layer_arn:
+            description: ARN of the Lambda Layer without version.
+            type: string
+        license_info:
+            description: License info associated with the specific Lambda Layer version.
+            type: string
+        signing_job_arn:
+            description: ARN of a signing job.
+            type: string
+        signing_profile_version_arn:
+            description: The ARN for a signing profile version.
+            type: string
+        source_code_hash:
+            description: Base64-encoded representation of raw SHA-256 sum of the zip file.
+            type: string
+        source_code_size:
+            description: Size in bytes of the function .zip file.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

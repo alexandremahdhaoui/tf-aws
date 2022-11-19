@@ -1,0 +1,71 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_applicationinsights_application
+spec:
+    args:
+        arn:
+            description: ARN of the Application.
+            type: string
+            optional: true
+        auto_config_enabled:
+            description: (Optional)  Indicates whether Application Insights automatically configures unmonitored resources in the resource group.
+            type: string
+            optional: true
+        auto_create:
+            description: (Optional) Configures all of the resources in the resource group by applying the recommended configurations.
+            type: string
+            optional: true
+        cwe_monitor_enabled:
+            description: (Optional)  Indicates whether Application Insights can listen to CloudWatch events for the application resources, such as instance terminated, failed deployment, and others.
+            type: string
+            optional: true
+        grouping_type:
+            description: (Optional) Application Insights can create applications based on a resource group or on an account. To create an account-based application using all of the resources in the account, set this parameter to ACCOUNT_BASED.
+            type: string
+            optional: true
+        id:
+            description: Name of the resource group.
+            type: string
+            optional: true
+        ops_center_enabled:
+            description: (Optional) When set to true, creates opsItems for any problems detected on an application.
+            type: string
+            optional: true
+        ops_item_sns_topic_arn:
+            description: (Optional) SNS topic provided to Application Insights that is associated to the created opsItem. Allows you to receive notifications for updates to the opsItem.
+            type: string
+            optional: true
+        resource_group_name:
+            description: (Required) Name of the resource group.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the Application.
+            type: string
+        id:
+            description: Name of the resource group.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

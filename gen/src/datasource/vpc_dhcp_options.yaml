@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: vpc_dhcp_options
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the DHCP Options Set.
+            type: string
+        dhcp_options_id:
+            description: EC2 DHCP Options ID
+            type: string
+        domain_name:
+            description: Suffix domain name to used when resolving non Fully Qualified Domain NamesE.g., the search value in the /etc/resolv.conf file.
+            type: string
+        domain_name_servers:
+            description: List of name servers.
+            type: string
+        id:
+            description: EC2 DHCP Options ID
+            type: string
+        netbios_name_servers:
+            description: List of NETBIOS name servers.
+            type: string
+        netbios_node_type:
+            description: NetBIOS node type (1, 2, 4, or 8). For more information about these node types, see RFC 2132.
+            type: string
+        ntp_servers:
+            description: List of NTP servers.
+            type: string
+        owner_id:
+            description: 'ID of the AWS account that owns the DHCP options set.TimeoutsConfiguration options:'
+            type: string
+        tags:
+            description: Map of tags assigned to the resource.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

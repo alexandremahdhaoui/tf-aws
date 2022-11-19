@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ssm_activation
+spec:
+    args: {}
+    attrs:
+        activation_code:
+            description: The code the system generates when it processes the activation.
+            type: string
+        description:
+            description: The description of the resource that was registered.
+            type: string
+        expiration_date:
+            description: The date by which this activation request should expire. The default value is 24 hours.
+            type: string
+        expired:
+            description: If the current activation has expired.
+            type: string
+        iam_role:
+            description: The IAM Role attached to the managed instance.
+            type: string
+        id:
+            description: The activation ID.
+            type: string
+        name:
+            description: The default name of the registered managed instance.
+            type: string
+        registration_count:
+            description: The number of managed instances that are currently registered using this activation.
+            type: string
+        registration_limit:
+            description: The maximum number of managed instances you want to be registered. The default value is 1 instance.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

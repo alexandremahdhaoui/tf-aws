@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloudfront_origin_access_identity
+spec:
+    args: {}
+    attrs:
+        caller_reference:
+            description: ""
+            type: string
+        cloudfront_access_identity_path:
+            description: ""
+            type: string
+        etag:
+            description: E2QWRUHAPOMQZL.
+            type: string
+        iam_arn:
+            description: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E2QWRUHAPOMQZL.
+            type: string
+        id:
+            description: 'The identifier for the distribution. For example: EDFDVBD632BHDS5.'
+            type: string
+        s3_canonical_user_id:
+            description: 'Using With CloudFrontorigin-access-identity/cloudfront/cloudfront_access_identity_paths3_origin_configaws_cloudfront_distribution resource:Updating your bucket policyNote that the AWS API may translate the s3_canonical_user_id CanonicalUserAWSaws_s3_bucketiam_arn instead:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

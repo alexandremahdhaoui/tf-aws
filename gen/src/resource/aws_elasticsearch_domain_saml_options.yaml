@@ -1,0 +1,69 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_elasticsearch_domain_saml_options
+spec:
+    args:
+        domain_name:
+            description: (Required) Name of the domain.
+            type: string
+            optional: true
+        enabled:
+            description: (Required) Whether SAML authentication is enabled.
+            type: string
+            optional: true
+        entity_id:
+            description: (Required) The unique Entity ID of the application in SAML Identity Provider.
+            type: string
+            optional: true
+        id:
+            description: The name of the domain the SAML options are associated with.
+            type: string
+            optional: true
+        idp:
+            description: (Optional) Information from your identity provider.
+            type: string
+            optional: true
+        master_backend_role:
+            description: (Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user.
+            type: string
+            optional: true
+        master_user_name:
+            description: (Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user.
+            type: string
+            optional: true
+        metadata_content:
+            description: '(Required) The Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        roles_key:
+            description: (Optional) Element of the SAML assertion to use for backend roles. Default is roles.
+            type: string
+            optional: true
+        saml_options:
+            description: (Optional) The SAML authentication options for an AWS Elasticsearch Domain.saml_options
+            type: string
+            optional: true
+        session_timeout_minutes:
+            description: (Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440.
+            type: string
+            optional: true
+        subject_key:
+            description: (Optional) Custom SAML attribute to use for user names. Default is an empty string - "". This will cause Elasticsearch to use the NameID element of the Subject, which is the default location for name identifiers in the SAML specification.idp
+            type: string
+            optional: true
+    attrs:
+        id:
+            description: The name of the domain the SAML options are associated with.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

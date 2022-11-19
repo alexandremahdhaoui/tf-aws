@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_api_gateway_usage_plan
+spec:
+    args: {}
+    attrs:
+        api_stages:
+            description: Associated API stages of the usage plan.
+            type: string
+        arn:
+            description: ARN
+            type: string
+        description:
+            description: Description of a usage plan.
+            type: string
+        id:
+            description: ID of the API resource
+            type: string
+        name:
+            description: Name of the usage plan.
+            type: string
+        product_code:
+            description: AWS Marketplace product identifier to associate with the usage plan as a SaaS product on AWS Marketplace.
+            type: string
+        quota_settings:
+            description: Quota of the usage plan.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        throttle_settings:
+            description: Throttling limits of the usage plan.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

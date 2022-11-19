@@ -1,0 +1,72 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_tag_option
+spec:
+    args:
+        active:
+            description: '(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        create:
+            description: (Default 3m)
+            type: string
+            optional: true
+        delete:
+            description: (Default 3m)
+            type: string
+            optional: true
+        id:
+            description: Identifier (e.g., tag-pjtvagohlyo3m).
+            type: string
+            optional: true
+        key:
+            description: (Required) Tag option key.
+            type: string
+            optional: true
+        owner_id:
+            description: 'AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        read:
+            description: (Default 10m)
+            type: string
+            optional: true
+        update:
+            description: (Default 3m)
+            type: string
+            optional: true
+        value:
+            description: (Required) Tag option value.
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 3m)
+            type: string
+        delete:
+            description: (Default 3m)
+            type: string
+        id:
+            description: Identifier (e.g., tag-pjtvagohlyo3m).
+            type: string
+        owner_id:
+            description: 'AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:'
+            type: string
+        read:
+            description: (Default 10m)
+            type: string
+        update:
+            description: (Default 3m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

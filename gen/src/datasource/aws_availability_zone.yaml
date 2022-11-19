@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_availability_zone
+spec:
+    args: {}
+    attrs:
+        group_name:
+            description: For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1.
+            type: string
+        name_suffix:
+            description: |-
+                Part of the AZ name that appears after the region name, uniquely identifying the AZ within its region.
+                For Availability Zones this is usually a single letter, for example  for the us-west-2awl1-sfo-wlz-1 for the us-west-2-wl1-sfo-wlz-1 zone.
+            type: string
+        network_border_group:
+            description: The name of the location from which the address is advertised.
+            type: string
+        opt_in_status:
+            description: For Availability Zones, this always has the value of opt-in-not-required. For Local Zones, this is the opt in status. The possible values are opted-in and not-opted-in.
+            type: string
+        parent_zone_id:
+            description: ID of the zone that handles some of the Local Zone or Wavelength Zone control plane operations, such as API calls.
+            type: string
+        parent_zone_name:
+            description: Name of the zone that handles some of the Local Zone or Wavelength Zone control plane operations, such as API calls.
+            type: string
+        region:
+            description: Region where the selected availability zone resides. This is always the region selected on the provider, since this data source searches only within that region.
+            type: string
+        zone_type:
+            description: 'Type of zone. Values are availability-zone, local-zone, and wavelength-zone.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

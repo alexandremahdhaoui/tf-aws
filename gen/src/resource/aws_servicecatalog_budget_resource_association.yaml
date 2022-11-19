@@ -1,0 +1,50 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_servicecatalog_budget_resource_association
+spec:
+    args:
+        budget_name:
+            description: (Required) Budget name.
+            type: string
+            optional: true
+        create:
+            description: (Default 3m)
+            type: string
+            optional: true
+        id:
+            description: 'Identifier of the association.TimeoutsConfiguration options:'
+            type: string
+            optional: true
+        read:
+            description: (Default 10m)
+            type: string
+            optional: true
+        resource_id:
+            description: '(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        create:
+            description: (Default 3m)
+            type: string
+        delete:
+            description: (Default 3m)
+            type: string
+        id:
+            description: 'Identifier of the association.TimeoutsConfiguration options:'
+            type: string
+        read:
+            description: (Default 10m)
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,69 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_db_snapshot_copy
+spec:
+    args: {}
+    attrs:
+        allocated_storage:
+            description: Specifies the allocated storage size in gigabytes (GB).
+            type: string
+        availability_zone:
+            description: Specifies the name of the Availability Zone the DB instance was located in at the time of the DB snapshot.
+            type: string
+        create:
+            description: (Default 20m)
+            type: string
+        db_snapshot_arn:
+            description: The Amazon Resource Name (ARN) for the DB snapshot.
+            type: string
+        encrypted:
+            description: Specifies whether the DB snapshot is encrypted.
+            type: string
+        engine:
+            description: Specifies the name of the database engine.
+            type: string
+        engine_version:
+            description: Specifies the version of the database engine.
+            type: string
+        id:
+            description: Snapshot Identifier.
+            type: string
+        iops:
+            description: Specifies the Provisioned IOPS (I/O operations per second) value of the DB instance at the time of the snapshot.
+            type: string
+        kms_key_id:
+            description: The ARN for the KMS encryption key.
+            type: string
+        license_model:
+            description: License model information for the restored DB instance.
+            type: string
+        option_group_name:
+            description: Provides the option group name for the DB snapshot.
+            type: string
+        source_db_snapshot_identifier:
+            description: The DB snapshot Arn that the DB snapshot was copied from. It only has value in case of cross customer or cross region copy.
+            type: string
+        source_region:
+            description: The region that the DB snapshot was created in or copied from.
+            type: string
+        storage_type:
+            description: Specifies the storage type associated with DB snapshot.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        vpc_id:
+            description: 'Provides the VPC ID associated with the DB snapshot.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

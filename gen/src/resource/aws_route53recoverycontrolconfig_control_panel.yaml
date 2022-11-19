@@ -1,0 +1,50 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53recoverycontrolconfig_control_panel
+spec:
+    args:
+        arn:
+            description: ARN of the control panel.
+            type: string
+            optional: true
+        cluster_arn:
+            description: (Required) ARN of the cluster in which this control panel will reside.
+            type: string
+            optional: true
+        default_control_panel:
+            description: Whether a control panel is default.
+            type: string
+            optional: true
+        name:
+            description: '(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        routing_control_count:
+            description: Number routing controls in a control panel.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the control panel.
+            type: string
+        default_control_panel:
+            description: Whether a control panel is default.
+            type: string
+        routing_control_count:
+            description: Number routing controls in a control panel.
+            type: string
+        status:
+            description: 'Status of control panel: PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise.'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

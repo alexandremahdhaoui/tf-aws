@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: s3_objects
+spec:
+    args: {}
+    attrs:
+        common_prefixes:
+            description: List of any keys between prefix and the next occurrence of delimiter (i.e., similar to subdirectories of the prefix "directory"); the list is only returned when you specify delimiter
+            type: string
+        id:
+            description: S3 Bucket.
+            type: string
+        keys:
+            description: List of strings representing object keys
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

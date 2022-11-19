@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_cloudfront_realtime_log_config
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN (Amazon Resource Name) of the CloudFront real-time log configuration.
+            type: string
+        endpoint:
+            description: (Required) Amazon Kinesis data streams where real-time log data is sent.
+            type: string
+        fields:
+            description: (Required) Fields that are included in each real-time log record. See the AWS documentation for supported values.
+            type: string
+        kinesis_stream_config:
+            description: (Required) Amazon Kinesis data stream configuration.
+            type: string
+        role_arn:
+            description: (Required) ARN of an IAM roleAWS documentation for more information.
+            type: string
+        sampling_rate:
+            description: '(Required) Sampling rate for this real-time log configuration. The sampling rate determines the percentage of viewer requests that are represented in the real-time log data. An integer between 1 and 100, inclusive.The endpoint object supports the following:'
+            type: string
+        stream_type:
+            description: '(Required) Type of data stream where real-time log data is sent. The only valid value is Kinesis.The kinesis_stream_config object supports the following:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

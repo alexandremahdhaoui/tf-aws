@@ -1,0 +1,74 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_mq_configuration
+spec:
+    args:
+        arn:
+            description: ARN of the configuration.
+            type: string
+            optional: true
+        authentication_strategy:
+            description: (Optional) Authentication strategy associated with the configuration. Valid values are simple and ldap. ldap is not supported for engine_type RabbitMQ.
+            type: string
+            optional: true
+        data:
+            description: (Required) Broker configuration in XML format. See official docs for supported parameters and format of the XML.
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of the configuration.
+            type: string
+            optional: true
+        engine_type:
+            description: (Required) Type of broker engine. Valid values are ActiveMQ and RabbitMQ.
+            type: string
+            optional: true
+        engine_version:
+            description: (Required) Version of the broker engine.
+            type: string
+            optional: true
+        id:
+            description: Unique ID that Amazon MQ generates for the configuration.
+            type: string
+            optional: true
+        latest_revision:
+            description: Latest revision of the configuration.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the configuration.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: ARN of the configuration.
+            type: string
+        id:
+            description: Unique ID that Amazon MQ generates for the configuration.
+            type: string
+        latest_revision:
+            description: Latest revision of the configuration.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

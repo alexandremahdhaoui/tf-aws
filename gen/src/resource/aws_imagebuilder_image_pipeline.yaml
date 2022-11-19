@@ -1,0 +1,131 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_imagebuilder_image_pipeline
+spec:
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the image pipeline.
+            type: string
+            optional: true
+        container_recipe_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the container recipe.
+            type: string
+            optional: true
+        date_created:
+            description: Date the image pipeline was created.
+            type: string
+            optional: true
+        date_last_run:
+            description: Date the image pipeline was last run.
+            type: string
+            optional: true
+        date_next_run:
+            description: Date the image pipeline will run next.
+            type: string
+            optional: true
+        date_updated:
+            description: Date the image pipeline was updated.
+            type: string
+            optional: true
+        description:
+            description: (Optional) Description of the image pipeline.
+            type: string
+            optional: true
+        distribution_configuration_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration.
+            type: string
+            optional: true
+        enhanced_image_metadata_enabled:
+            description: (Optional) Whether additional information about the image being created is collected. Defaults to true.
+            type: string
+            optional: true
+        image_recipe_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the image recipe.
+            type: string
+            optional: true
+        image_tests_configuration:
+            description: (Optional) Configuration block with image tests configuration. Detailed below.
+            type: string
+            optional: true
+        image_tests_enabled:
+            description: (Optional) Whether image tests are enabled. Defaults to true.
+            type: string
+            optional: true
+        infrastructure_configuration_arn:
+            description: (Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration.
+            type: string
+            optional: true
+        name:
+            description: (Required) Name of the image pipeline.
+            type: string
+            optional: true
+        pipeline_execution_start_condition:
+            description: (Optional) Condition when the pipeline should trigger a new image build. Valid values are EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE and EXPRESSION_MATCH_ONLY. Defaults to EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE.
+            type: string
+            optional: true
+        platform:
+            description: Platform of the image pipeline.
+            type: string
+            optional: true
+        schedule:
+            description: (Optional) Configuration block with schedule settings. Detailed below.
+            type: string
+            optional: true
+        schedule_expression:
+            description: (Required) Cron expression of how often the pipeline start condition is evaluated. For example, cron(0 0 * * ? *) is evaluated every day at midnight UTC. Configurations using the five field syntax that was previously accepted by the API, such as cron(0 0 * * *), must be updated to the six field syntax. For more information, see the Image Builder User Guide.
+            type: string
+            optional: true
+        status:
+            description: (Optional) Status of the image pipeline. Valid values are DISABLED and ENABLED. Defaults to ENABLED.
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value map of resource tags for the image pipeline. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        timeout_minutes:
+            description: (Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.schedule
+            type: string
+            optional: true
+        timezone:
+            description: '(Optional) The timezone that applies to the scheduling expression. For example, "Etc/UTC", "America/Los_Angeles" in the IANA timezone format. If not specified this defaults to UTC.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        arn:
+            description: Amazon Resource Name (ARN) of the image pipeline.
+            type: string
+        date_created:
+            description: Date the image pipeline was created.
+            type: string
+        date_last_run:
+            description: Date the image pipeline was last run.
+            type: string
+        date_next_run:
+            description: Date the image pipeline will run next.
+            type: string
+        date_updated:
+            description: Date the image pipeline was updated.
+            type: string
+        platform:
+            description: Platform of the image pipeline.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

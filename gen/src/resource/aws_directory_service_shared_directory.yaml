@@ -1,0 +1,59 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_directory_service_shared_directory
+spec:
+    args:
+        delete:
+            description: (Default 60 minutes) Used for shared directory deletion
+            type: string
+            optional: true
+        directory_id:
+            description: (Required) Identifier of the Managed Microsoft AD directory that you want to share with other accounts.
+            type: string
+            optional: true
+        id:
+            description: Identifier of the shared directory.
+            type: string
+            optional: true
+        method:
+            description: (Optional) Method used when sharing a directory. Valid values are ORGANIZATIONS and HANDSHAKE. Default is HANDSHAKE.
+            type: string
+            optional: true
+        notes:
+            description: (Optional, Sensitive) Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation.target
+            type: string
+            optional: true
+        shared_directory_id:
+            description: 'Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.Timeoutsaws_directory_service_shared_directory provides the following Timeouts configuration options:'
+            type: string
+            optional: true
+        target:
+            description: (Required) Identifier for the directory consumer account with whom the directory is to be shared. See below.
+            type: string
+            optional: true
+        type:
+            description: '(Optional) Type of identifier to be used in the id field. Valid value is ACCOUNT. Default is ACCOUNT.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+    attrs:
+        delete:
+            description: (Default 60 minutes) Used for shared directory deletion
+            type: string
+        id:
+            description: Identifier of the shared directory.
+            type: string
+        shared_directory_id:
+            description: 'Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.Timeoutsaws_directory_service_shared_directory provides the following Timeouts configuration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

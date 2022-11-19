@@ -1,0 +1,64 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: lakeformation_data_lake_settings
+spec:
+    args:
+        admins:
+            description: ' – List of ARNs of AWS Lake Formation principals (IAM users or roles).'
+            type: string
+            optional: true
+        catalog_id:
+            description: ' – (Optional) Identifier for the Data Catalog. By default, the account ID.In addition to arguments above, the following attributes are exported.'
+            type: string
+            optional: true
+        create_database_default_permissions:
+            description: Up to three configuration blocks of principal permissions for default create database permissions. Detailed below.
+            type: string
+            optional: true
+        create_table_default_permissions:
+            description: Up to three configuration blocks of principal permissions for default create table permissions. Detailed below.
+            type: string
+            optional: true
+        permissions:
+            description: List of permissions granted to the principal.
+            type: string
+            optional: true
+        principal:
+            description: Principal who is granted permissions.create_table_default_permissions
+            type: string
+            optional: true
+        trusted_resource_owners:
+            description: ' – List of the resource-owning account IDs that the caller''s account can use to share their user access details (user ARNs).create_database_default_permissions'
+            type: string
+            optional: true
+    attrs:
+        admins:
+            description: ' – List of ARNs of AWS Lake Formation principals (IAM users or roles).'
+            type: string
+        create_database_default_permissions:
+            description: Up to three configuration blocks of principal permissions for default create database permissions. Detailed below.
+            type: string
+        create_table_default_permissions:
+            description: Up to three configuration blocks of principal permissions for default create table permissions. Detailed below.
+            type: string
+        permissions:
+            description: List of permissions granted to the principal.
+            type: string
+        principal:
+            description: Principal who is granted permissions.create_table_default_permissions
+            type: string
+        trusted_resource_owners:
+            description: ' – List of the resource-owning account IDs that the caller''s account can use to share their user access details (user ARNs).create_database_default_permissions'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

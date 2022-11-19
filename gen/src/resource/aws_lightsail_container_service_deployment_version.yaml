@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lightsail_container_service_deployment_version
+spec:
+    args: {}
+    attrs:
+        create:
+            description: (Default 30m)
+            type: string
+        created_at:
+            description: The timestamp when the deployment was created.
+            type: string
+        id:
+            description: The service_name and version separation by a slash (/).
+            type: string
+        state:
+            description: The current state of the container service.
+            type: string
+        version:
+            description: 'The version number of the deployment.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

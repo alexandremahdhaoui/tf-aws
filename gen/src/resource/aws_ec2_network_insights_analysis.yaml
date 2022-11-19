@@ -1,0 +1,132 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_network_insights_analysis
+spec:
+    args:
+        alternate_path_hints:
+            description: Potential intermediate components of a feasible path. Described below.
+            type: string
+            optional: true
+        arn:
+            description: ARN of the Network Insights Analysis.
+            type: string
+            optional: true
+        component_arn:
+            description: The Amazon Resource Name (ARN) of the component.
+            type: string
+            optional: true
+        component_id:
+            description: The ID of the component.
+            type: string
+            optional: true
+        explanations:
+            description: Explanation codes for an unreachable path. See the AWS documentation for details.
+            type: string
+            optional: true
+        filter_in_arns:
+            description: (Optional) A list of ARNs for resources the path must traverse.
+            type: string
+            optional: true
+        forward_path_components:
+            description: The components in the path from source to destination. See the AWS documentation for details.
+            type: string
+            optional: true
+        id:
+            description: ID of the Network Insights Analysis.
+            type: string
+            optional: true
+        network_insights_path_id:
+            description: (Required) ID of the Network Insights Path to run an analysis on.
+            type: string
+            optional: true
+        path_found:
+            description: Set to true if the destination was reachable.
+            type: string
+            optional: true
+        return_path_components:
+            description: The components in the path from destination to source. See the AWS documentation for details.
+            type: string
+            optional: true
+        start_date:
+            description: The date/time the analysis was started.
+            type: string
+            optional: true
+        status:
+            description: The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found.
+            type: string
+            optional: true
+        status_message:
+            description: A message to provide more context when the status is failed.
+            type: string
+            optional: true
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        wait_for_completion:
+            description: '(Optional) If enabled, the resource will wait for the Network Insights Analysis status to change to succeeded or failed. Setting this to false will skip the process. Default: true.'
+            type: string
+            optional: true
+        warning_message:
+            description: 'The warning message.The alternate_path_hints object supports the following:'
+            type: string
+            optional: true
+    attrs:
+        alternate_path_hints:
+            description: Potential intermediate components of a feasible path. Described below.
+            type: string
+        arn:
+            description: ARN of the Network Insights Analysis.
+            type: string
+        component_arn:
+            description: The Amazon Resource Name (ARN) of the component.
+            type: string
+        component_id:
+            description: The ID of the component.
+            type: string
+        explanations:
+            description: Explanation codes for an unreachable path. See the AWS documentation for details.
+            type: string
+        forward_path_components:
+            description: The components in the path from source to destination. See the AWS documentation for details.
+            type: string
+        id:
+            description: ID of the Network Insights Analysis.
+            type: string
+        path_found:
+            description: Set to true if the destination was reachable.
+            type: string
+        return_path_components:
+            description: The components in the path from destination to source. See the AWS documentation for details.
+            type: string
+        start_date:
+            description: The date/time the analysis was started.
+            type: string
+        status:
+            description: The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found.
+            type: string
+        status_message:
+            description: A message to provide more context when the status is failed.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        warning_message:
+            description: 'The warning message.The alternate_path_hints object supports the following:'
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

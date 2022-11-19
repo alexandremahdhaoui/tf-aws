@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: organizations_organizational_units
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the organizational unit
+            type: string
+        children:
+            description: ""
+            type: string
+        id:
+            description: ID of the organizational unit
+            type: string
+        name:
+            description: Name of the organizational unit
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

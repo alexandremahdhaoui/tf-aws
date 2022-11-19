@@ -1,0 +1,30 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_iot_certificate
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN of the created certificate.
+            type: string
+        certificate_pem:
+            description: The certificate data, in PEM format.
+            type: string
+        id:
+            description: The internal ID assigned to this certificate.
+            type: string
+        public_key:
+            description: When neither CSR nor certificate is provided, the public key.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

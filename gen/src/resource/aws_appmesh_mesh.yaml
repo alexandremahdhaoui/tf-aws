@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_appmesh_mesh
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the service mesh.
+            type: string
+        created_date:
+            description: Creation date of the service mesh.
+            type: string
+        id:
+            description: ID of the service mesh.
+            type: string
+        last_updated_date:
+            description: Last update date of the service mesh.
+            type: string
+        mesh_owner:
+            description: AWS account ID of the service mesh's owner.
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

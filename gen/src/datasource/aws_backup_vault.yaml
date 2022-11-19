@@ -1,0 +1,27 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_backup_vault
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the vault.
+            type: string
+        kms_key_arn:
+            description: Server-side encryption key that is used to protect your backups.
+            type: string
+        recovery_points:
+            description: Number of recovery points that are stored in a backup vault.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

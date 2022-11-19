@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_ec2_transit_gateway_vpc_attachment_accepter
+spec:
+    args: {}
+    attrs:
+        appliance_mode_support:
+            description: 'Whether Appliance Mode support is enabled. Valid values: disable, enable.'
+            type: string
+        dns_support:
+            description: 'Whether DNS support is enabled. Valid values: disable, enable.'
+            type: string
+        id:
+            description: EC2 Transit Gateway Attachment identifier
+            type: string
+        ipv6_support:
+            description: 'Whether IPv6 support is enabled. Valid values: disable, enable.'
+            type: string
+        subnet_ids:
+            description: Identifiers of EC2 Subnets.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        transit_gateway_id:
+            description: Identifier of EC2 Transit Gateway.
+            type: string
+        vpc_id:
+            description: Identifier of EC2 VPC.
+            type: string
+        vpc_owner_id:
+            description: Identifier of the AWS account that owns the EC2 VPC.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

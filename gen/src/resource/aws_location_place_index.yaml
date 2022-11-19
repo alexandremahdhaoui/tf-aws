@@ -1,0 +1,70 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_location_place_index
+spec:
+    args:
+        create_time:
+            description: The timestamp for when the place index resource was created in ISO 8601 format.
+            type: string
+            optional: true
+        data_source:
+            description: (Required) Specifies the geospatial data provider for the new place index.
+            type: string
+            optional: true
+        data_source_configuration:
+            description: (Optional) Configuration block with the data storage option chosen for requesting Places. Detailed below.
+            type: string
+            optional: true
+        description:
+            description: (Optional) The optional description for the place index resource.
+            type: string
+            optional: true
+        index_arn:
+            description: The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS.
+            type: string
+            optional: true
+        index_name:
+            description: (Required) The name of the place index resource.
+            type: string
+            optional: true
+        intended_use:
+            description: '(Optional) Specifies how the results of an operation will be stored by the caller. Valid values: SingleUse, Storage. Default: SingleUse.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        tags:
+            description: (Optional) Key-value tags for the place index. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.data_source_configuration
+            type: string
+            optional: true
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+            optional: true
+        update_time:
+            description: The timestamp for when the place index resource was last update in ISO 8601.
+            type: string
+            optional: true
+    attrs:
+        create_time:
+            description: The timestamp for when the place index resource was created in ISO 8601 format.
+            type: string
+        index_arn:
+            description: The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        update_time:
+            description: The timestamp for when the place index resource was last update in ISO 8601.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

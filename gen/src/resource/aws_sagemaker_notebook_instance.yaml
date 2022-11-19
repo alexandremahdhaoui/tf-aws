@@ -1,0 +1,33 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_sagemaker_notebook_instance
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this notebook instance.
+            type: string
+        id:
+            description: The name of the notebook instance.
+            type: string
+        network_interface_id:
+            description: The network interface ID that Amazon SageMaker created at the time of creating the instance. Only available when setting subnet_id.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        url:
+            description: The URL that you use to connect to the Jupyter notebook that is running in your notebook instance.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

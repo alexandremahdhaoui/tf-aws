@@ -1,0 +1,42 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_lightsail_instance_public_ports
+spec:
+    args:
+        cidrs:
+            description: '(Optional) Set of CIDR blocks.In addition to all arguments above, the following attributes are exported:'
+            type: string
+            optional: true
+        from_port:
+            description: (Required) First port in a range of open ports on an instance.
+            type: string
+            optional: true
+        instance_name:
+            description: (Required) Name of the Lightsail Instance.
+            type: string
+            optional: true
+        port_info:
+            description: (Required) Configuration block with port information. AWS closes all currently open ports that are not included in the port_info. Detailed below.port_info
+            type: string
+            optional: true
+        protocol:
+            description: (Required) IP protocol name. Valid values are tcp, all, udp, and icmp.
+            type: string
+            optional: true
+        to_port:
+            description: (Required) Last port in a range of open ports on an instance.
+            type: string
+            optional: true
+    attrs: {}
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true

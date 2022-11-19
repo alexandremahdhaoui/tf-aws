@@ -1,0 +1,58 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_vpc_endpoint_service
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The Amazon Resource Name (ARN) of the VPC endpoint service.
+            type: string
+        availability_zones:
+            description: A set of Availability Zones in which the service is available.
+            type: string
+        base_endpoint_dns_names:
+            description: A set of DNS names for the service.
+            type: string
+        id:
+            description: The ID of the VPC endpoint service.
+            type: string
+        manages_vpc_endpoints:
+            description: Whether or not the service manages its VPC endpoints - true or false.
+            type: string
+        name:
+            description: Name of the record subdomain the service provider needs to create.
+            type: string
+        private_dns_name_configuration:
+            description: |
+                List of objects containing information about the endpoint service private DNS name configuration.
+            type: string
+        service_name:
+            description: The service name.
+            type: string
+        service_type:
+            description: The service type, Gateway or Interface.
+            type: string
+        state:
+            description: Verification state of the VPC endpoint service. Consumers of the endpoint service can use the private name only when the state is verified.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        type:
+            description: Endpoint service verification type, for example TXT.
+            type: string
+        value:
+            description: Value the service provider adds to the private DNS name domain record before verification.
+            type: string
+    terraform:
+        backend: ""
+        version: ""
+        provider:
+            assume_role: false
+            name: aws
+            region: ""
+            source: hashicorp/aws
+            version: v4.40.0
+            default_tags:
+                enabled: true
