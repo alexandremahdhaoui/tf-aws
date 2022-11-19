@@ -5,22 +5,22 @@ import (
 	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/token"
 )
 
-func ToTerraformDefinition(tkns []token.Token, kind, moduleName, providerVersion string) apis.TerraformResource {
-	return apis.TerraformResource{
+func ToTerraformDefinition(tkns []token.Token, kind, moduleName, providerVersion string) apis.TerraformModuleDefinition {
+	return apis.TerraformModuleDefinition{
 		ApiVersion: apis.ApiVersion(),
 		Kind:       toKind(kind),
 		Metadata: apis.Metadata{
 			Name: moduleName,
 		},
-		Spec: apis.TerraformResourceSpec{
+		Spec: apis.Spec{
 			Args:  args(tkns),
 			Attrs: attrs(tkns),
-			Terraform: apis.TerraformResourceTerraform{
-				Provider: apis.TerraformResourceProvider{
+			Terraform: apis.TerraformConfig{
+				Provider: apis.TerraformProvider{
 					Name:    "aws",
 					Source:  "hashicorp/aws",
 					Version: providerVersion,
-					DefaultTags: apis.TerraformResourceDefaultTags{
+					DefaultTags: apis.DefaultTags{
 						Enabled: true,
 					},
 				},
@@ -31,7 +31,7 @@ func ToTerraformDefinition(tkns []token.Token, kind, moduleName, providerVersion
 
 func toKind(kind string) string {
 	if kind == "resource" {
-		return "TerraformResource"
+		return "TerraformModuleDefinition"
 	}
 	if kind == "datasource" {
 		return "TerraformDatasource"
@@ -39,7 +39,7 @@ func toKind(kind string) string {
 	panic("kind should be `resource` or `datasource`")
 }
 
-func args(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribute {
+func args(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 	m := requiredArgs(tkns)
 	for k, v := range optionalArgs(tkns) {
 		m[k] = v
@@ -47,8 +47,8 @@ func args(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribute
 	return m
 }
 
-func requiredArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribute {
-	m := make(map[string]apis.TerraformResourceArgumentAttribute)
+func requiredArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
+	m := make(map[string]apis.ArgumentOrAttribute)
 	var stack []token.Kind
 	var queue []token.Token
 	var tkn token.Token
@@ -82,7 +82,7 @@ func requiredArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentA
 				currentDescription = append(currentDescription, tkn.Data()...)
 			case Li:
 				if len(currentArg) != 0 {
-					m[string(currentArg)] = apis.TerraformResourceArgumentAttribute{
+					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
 						Optional:    true,
@@ -94,7 +94,7 @@ func requiredArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentA
 				currentDescription = make([]byte, 0)
 			case OptionalArgs:
 				if len(currentArg) != 0 {
-					m[string(currentArg)] = apis.TerraformResourceArgumentAttribute{
+					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
 						Optional:    true,
@@ -126,8 +126,8 @@ func evalKind(stack []token.Kind, kind token.Kind) bool {
 	return false
 }
 
-func optionalArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribute {
-	m := make(map[string]apis.TerraformResourceArgumentAttribute)
+func optionalArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
+	m := make(map[string]apis.ArgumentOrAttribute)
 	var stack []token.Kind
 	var queue []token.Token
 	var tkn token.Token
@@ -161,7 +161,7 @@ func optionalArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentA
 				currentDescription = append(currentDescription, tkn.Data()...)
 			case Li:
 				if len(currentArg) != 0 {
-					m[string(currentArg)] = apis.TerraformResourceArgumentAttribute{
+					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
 						Optional:    true,
@@ -172,7 +172,7 @@ func optionalArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentA
 				currentDescription = make([]byte, 0)
 			case H:
 				if len(currentArg) != 0 {
-					m[string(currentArg)] = apis.TerraformResourceArgumentAttribute{
+					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
 						Optional:    true,
@@ -185,8 +185,8 @@ func optionalArgs(tkns []token.Token) map[string]apis.TerraformResourceArgumentA
 	return m
 }
 
-func attrs(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribute {
-	m := make(map[string]apis.TerraformResourceArgumentAttribute)
+func attrs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
+	m := make(map[string]apis.ArgumentOrAttribute)
 	stack := make([]token.Kind, 0)
 	var queue []token.Token
 	var tkn token.Token
@@ -220,7 +220,7 @@ func attrs(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribut
 				currentDescription = append(currentDescription, tkn.Data()...)
 			case Li:
 				if len(currentArg) != 0 {
-					m[string(currentArg)] = apis.TerraformResourceArgumentAttribute{
+					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
 					}
@@ -230,7 +230,7 @@ func attrs(tkns []token.Token) map[string]apis.TerraformResourceArgumentAttribut
 				currentDescription = make([]byte, 0)
 			case H:
 				if len(currentArg) != 0 {
-					m[string(currentArg)] = apis.TerraformResourceArgumentAttribute{
+					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
 					}
