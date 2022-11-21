@@ -3,19 +3,66 @@ kind: TerraformResource
 metadata:
     name: aws_apigatewayv2_authorizer
 spec:
-    args: {}
+    args:
+        api_id:
+            description: (Required) API identifier.
+            type: string
+        audience:
+            description: (Optional) List of the intended recipients of the JWT. A valid JWT must provide an aud that matches at least one entry in this list.
+            optional: true
+            type: string
+        authorizer_credentials_arn:
+            description: |-
+                (Optional) Required credentials as an IAM role for API Gateway to invoke the authorizer.
+                Supported only for REQUEST authorizers.
+            optional: true
+            type: string
+        authorizer_payload_format_version:
+            description: 1.0, 2.0.
+            type: string
+        authorizer_result_ttl_in_seconds:
+            description: "300"
+            type: string
+        authorizer_type:
+            description: '(Required) Authorizer type. Valid values: JWT, REQUESTREQUESTJWT to use JSON Web Tokens.'
+            type: string
+        authorizer_uri:
+            description: |-
+                (Optional) Authorizer's Uniform Resource Identifier (URI).
+                For REQUEST authorizers this must be a well-formed Lambda function URI, such as the invoke_arn attribute of the aws_lambda_functionREQUEST authorizers. Must be between 1 and 2048 characters in length.
+            optional: true
+            type: string
+        enable_simple_responses:
+            description: |-
+                (Optional) Whether a Lambda authorizer returns a response in a simple format. If enabled, the Lambda authorizer can return a boolean value instead of an IAM policy.
+                Supported only for HTTP APIs.
+            optional: true
+            type: string
+        identity_sources:
+            description: REQUESTJWT authorizers the single entry specifies where to extract the JSON Web Token (JWT) from inbound requests.
+            type: string
+        issuer:
+            description: '(Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the endpoint attribute of the aws_cognito_user_pool resource.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        jwt_configuration:
+            description: '(Optional) Configuration of a JWT authorizer. Required for the JWTThe jwt_configuration object supports the following:'
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the authorizer. Must be between 1 and 128 characters in length.
+            type: string
     attrs:
         id:
             description: Authorizer identifier.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

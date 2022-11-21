@@ -7,47 +7,43 @@ spec:
         access_string:
             description: (Required) The access permissions string used for this user.
             type: string
-            optional: true
         arn:
             description: The ARN of the user.
-            type: string
             optional: true
+            type: string
         authentication_mode:
             description: ""
-            type: string
             optional: true
+            type: string
         id:
             description: Same as user_name.
-            type: string
             optional: true
+            type: string
         minimum_engine_version:
             description: The minimum engine version supported for the user.
-            type: string
             optional: true
+            type: string
         password_count:
             description: The number of passwords belonging to the user.
-            type: string
             optional: true
+            type: string
         passwords:
             description: (Required) The set of passwords used for authentication. You can create up to two passwords for each user.
             type: string
-            optional: true
         tags:
             description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.authentication_mode Configuration Block
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         type:
             description: '(Required) Indicates whether the user requires a password to authenticate. Must be set to password.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         user_name:
             description: (Required, Forces new resource) Name of the MemoryDB user. Up to 40 characters.
             type: string
-            optional: true
     attrs:
         arn:
             description: The ARN of the user.
@@ -69,12 +65,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

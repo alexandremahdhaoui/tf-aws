@@ -3,7 +3,142 @@ kind: TerraformResource
 metadata:
     name: aws_autoscalingplans_scaling_plan
 spec:
-    args: {}
+    args:
+        application_source:
+            description: (Required) CloudFormation stack or set of tags. You can create one scaling plan per application source.
+            type: string
+        cloudformation_stack_arn:
+            description: (Optional) ARN of a AWS CloudFormation stack.
+            optional: true
+            type: string
+        customized_load_metric_specification:
+            description: (Optional) Customized load metric to use for predictive scaling. You must specify either customized_load_metric_specification or predefined_load_metric_specificationAWS Auto Scaling API Reference.
+            optional: true
+            type: string
+        customized_scaling_metric_specification:
+            description: (Optional) Customized metric. You can specify either customized_scaling_metric_specification or predefined_scaling_metric_specificationAWS Auto Scaling API Reference.
+            optional: true
+            type: string
+        dimensions:
+            description: (Optional) Dimensions of the metric.
+            optional: true
+            type: string
+        disable_dynamic_scaling:
+            description: (Optional) Boolean controlling whether dynamic scaling by AWS Auto Scaling is disabled. Defaults to false.
+            optional: true
+            type: string
+        disable_scale_in:
+            description: (Optional) Boolean indicating whether scale in by the target tracking scaling policy is disabled. Defaults to false.
+            optional: true
+            type: string
+        estimated_instance_warmup:
+            description: ""
+            type: string
+        id:
+            description: Scaling plan identifier.
+            type: string
+        key:
+            description: (Required) Tag key.
+            type: string
+        max_capacity:
+            description: (Required) Maximum capacity of the resource. The exception to this upper limit is if you specify a non-default setting for predictive_scaling_max_capacity_behavior.
+            type: string
+        metric_name:
+            description: (Required) Name of the metric.
+            type: string
+        min_capacity:
+            description: (Required) Minimum capacity of the resource.
+            type: string
+        name:
+            description: (Required) Name of the scaling plan. Names cannot contain vertical bars, colons, or forward slashes.
+            type: string
+        namespace:
+            description: (Required) Namespace of the metric.
+            type: string
+        predefined_load_metric_specification:
+            description: (Optional) Predefined load metric to use for predictive scaling. You must specify either predefined_load_metric_specification or customized_load_metric_specificationAWS Auto Scaling API Reference.
+            optional: true
+            type: string
+        predefined_load_metric_type:
+            description: '(Required) Metric type. Valid values: ALBTargetGroupRequestCount, ASGTotalCPUUtilization, ASGTotalNetworkIn, ASGTotalNetworkOut.'
+            type: string
+        predefined_scaling_metric_specification:
+            description: (Optional) Predefined metric. You can specify either predefined_scaling_metric_specification or customized_scaling_metric_specificationAWS Auto Scaling API Reference.
+            optional: true
+            type: string
+        predefined_scaling_metric_type:
+            description: '(Required) Metric type. Valid values: ALBRequestCountPerTarget, ASGAverageCPUUtilization, ASGAverageNetworkIn, ASGAverageNetworkOut, DynamoDBReadCapacityUtilization, DynamoDBWriteCapacityUtilization, ECSServiceAverageCPUUtilization, ECSServiceAverageMemoryUtilization, EC2SpotFleetRequestAverageCPUUtilization, EC2SpotFleetRequestAverageNetworkIn, EC2SpotFleetRequestAverageNetworkOut, RDSReaderAverageCPUUtilization, RDSReaderAverageDatabaseConnections.'
+            type: string
+        predictive_scaling_max_capacity_behavior:
+            description: SetForecastCapacityToMaxCapacity, SetMaxCapacityAboveForecastCapacity, SetMaxCapacityToForecastCapacity.
+            type: string
+        predictive_scaling_max_capacity_buffer:
+            description: (Optional) Size of the capacity buffer to use when the forecast capacity is close to or exceeds the maximum capacity.
+            optional: true
+            type: string
+        predictive_scaling_mode:
+            description: '(Optional) Predictive scaling mode. Valid values: ForecastAndScale, ForecastOnly.'
+            optional: true
+            type: string
+        resource_id:
+            description: (Required) ID of the resource. This string consists of the resource type and unique identifier.
+            type: string
+        resource_label:
+            description: '(Optional) Identifies the resource associated with the metric type.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        scalable_dimension:
+            description: '(Required) Scalable dimension associated with the resource. Valid values: autoscaling:autoScalingGroup:DesiredCapacity, dynamodb:index:ReadCapacityUnits, dynamodb:index:WriteCapacityUnits, dynamodb:table:ReadCapacityUnits, dynamodb:table:WriteCapacityUnits, ecs:service:DesiredCount, ec2:spot-fleet-request:TargetCapacity, rds:cluster:ReadReplicaCount.'
+            type: string
+        scale_in_cooldown:
+            description: |-
+                (Optional) Amount of time, in seconds, after a scale in activity completes before another scale in activity can start.
+                This value is not used if the scalable resource is an Auto Scaling group.
+            optional: true
+            type: string
+        scale_out_cooldown:
+            description: |-
+                (Optional) Amount of time, in seconds, after a scale-out activity completes before another scale-out activity can start.
+                This value is not used if the scalable resource is an Auto Scaling group.The customized_scaling_metric_specification object supports the following:
+            optional: true
+            type: string
+        scaling_instruction:
+            description: '(Required) Scaling instructions. More details can be found in the AWS Auto Scaling API Reference.The application_source object supports the following:'
+            type: string
+        scaling_policy_update_behavior:
+            description: '(Optional) Controls whether a resource''s externally created scaling policies are kept or replaced. Valid values: KeepExternalPolicies, ReplaceExternalPolicies. Defaults to KeepExternalPolicies.'
+            optional: true
+            type: string
+        scheduled_action_buffer_time:
+            description: '(Optional) Amount of time, in seconds, to buffer the run time of scheduled scaling actions when scaling out.The customized_load_metric_specification object supports the following:'
+            optional: true
+            type: string
+        service_namespace:
+            description: '(Required) Namespace of the AWS service. Valid values: autoscaling, dynamodb, ecs, ec2, rds.'
+            type: string
+        statistic:
+            description: '(Required) Statistic of the metric. Valid values: Average, Maximum, Minimum, SampleCount, Sum.'
+            type: string
+        tag_filter:
+            description: '(Optional) Set of tags.The tag_filter object supports the following:'
+            optional: true
+            type: string
+        target_tracking_configuration:
+            description: |-
+                (Required) Structure that defines new target tracking configurations. Each of these structures includes a specific scaling metric and a target value for the metric, along with various parameters to use with dynamic scaling.
+                More details can be found in the AWS Auto Scaling API Reference.
+            type: string
+        target_value:
+            description: (Required) Target value for the metric.
+            type: string
+        unit:
+            description: '(Optional) Unit of the metric.The predefined_scaling_metric_specification object supports the following:'
+            optional: true
+            type: string
+        values:
+            description: '(Optional) Tag values.The scaling_instruction object supports the following:'
+            optional: true
+            type: string
     attrs:
         id:
             description: Scaling plan identifier.
@@ -13,12 +148,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

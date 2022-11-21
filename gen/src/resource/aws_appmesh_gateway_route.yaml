@@ -3,7 +3,102 @@ kind: TerraformResource
 metadata:
     name: aws_appmesh_gateway_route
 spec:
-    args: {}
+    args:
+        action:
+            description: (Required) Action to take if a match is determined.
+            type: string
+        arn:
+            description: ARN of the gateway route.
+            type: string
+        created_date:
+            description: Creation date of the gateway route.
+            type: string
+        default_prefix:
+            description: '(Optional) Default prefix used to replace the incoming route prefix when rewritten. Valid values: ENABLED, DISABLED.'
+            optional: true
+            type: string
+        default_target_hostname:
+            description: '(Required) Default target host name to write to. Valid values: ENABLED, DISABLED.The prefix object supports the following:'
+            type: string
+        exact:
+            description: (Optional) Exact host name to match on.
+            optional: true
+            type: string
+        grpc_route:
+            description: (Optional) Specification of a gRPC gateway route.
+            optional: true
+            type: string
+        hostname:
+            description: (Optional) Host name to match on.
+            optional: true
+            type: string
+        http_route:
+            description: (Optional) Specification of an HTTP gateway route.
+            optional: true
+            type: string
+        http2_route:
+            description: '(Optional) Specification of an HTTP/2 gateway route.The grpc_route, http_route and http2_route objects supports the following:'
+            optional: true
+            type: string
+        id:
+            description: ID of the gateway route.
+            type: string
+        last_updated_date:
+            description: Last update date of the gateway route.
+            type: string
+        match:
+            description: '(Required) Criteria for determining a request match.The grpc_route, http_route and http2_route''s action object supports the following:'
+            type: string
+        mesh_name:
+            description: (Required) Name of the service mesh in which to create the gateway route. Must be between 1 and 255 characters in length.
+            type: string
+        mesh_owner:
+            description: (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name to use for the gateway route. Must be between 1 and 255 characters in length.
+            type: string
+        prefix:
+            description: '(Required) Path to match requests with. This parameter must always start with /, which by itself matches all requests to the virtual service name.The hostname object supports the following:'
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        rewrite:
+            description: '(Optional) Gateway route action to rewrite.The rewrite object supports the following:'
+            optional: true
+            type: string
+        service_name:
+            description: '(Required) Fully qualified domain name for the service to match from the request.The http_route and http2_route''s match object supports the following:'
+            type: string
+        spec:
+            description: (Required) Gateway route specification to apply.
+            type: string
+        suffix:
+            description: '(Optional) Specified ending characters of the host name to match on.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:'
+            optional: true
+            type: string
+        target:
+            description: '(Required) Target that traffic is routed to when a request matches the gateway route.The target object supports the following:'
+            type: string
+        value:
+            description: '(Optional) Value used to replace the incoming route prefix when rewritten.The grpc_route''s match object supports the following:'
+            optional: true
+            type: string
+        virtual_gateway_name:
+            description: (Required) Name of the virtual gateway to associate the gateway route with. Must be between 1 and 255 characters in length.
+            type: string
+        virtual_service:
+            description: '(Required) Virtual service gateway route target.The virtual_service object supports the following:'
+            type: string
+        virtual_service_name:
+            description: '(Required) Name of the virtual service that traffic is routed to. Must be between 1 and 255 characters in length.The http_route and http2_route''s action object additionally supports the following:'
+            type: string
     attrs:
         arn:
             description: ARN of the gateway route.
@@ -25,12 +120,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

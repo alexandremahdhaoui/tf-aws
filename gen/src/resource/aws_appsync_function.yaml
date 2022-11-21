@@ -3,7 +3,60 @@ kind: TerraformResource
 metadata:
     name: aws_appsync_function
 spec:
-    args: {}
+    args:
+        api_id:
+            description: (Required) ID of the associated AppSync API.
+            type: string
+        arn:
+            description: ARN of the Function object.
+            type: string
+        conflict_detection:
+            description: (Optional) Conflict Detection strategy to use. Valid values are NONE and VERSION.
+            optional: true
+            type: string
+        conflict_handler:
+            description: (Optional) Conflict Resolution strategy to perform in the event of a conflict. Valid values are NONE, OPTIMISTIC_CONCURRENCY, AUTOMERGE, and LAMBDA.
+            optional: true
+            type: string
+        data_source:
+            description: (Required) Function data source name.
+            type: string
+        description:
+            description: (Optional) Function description.
+            optional: true
+            type: string
+        function_version:
+            description: (Optional) Version of the request mapping template. Currently the supported value is 2018-05-29.Sync Config
+            optional: true
+            type: string
+        id:
+            description: API Function ID (Formatted as ApiId-FunctionId)
+            type: string
+        lambda_conflict_handler_arn:
+            description: '(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        lambda_conflict_handler_config:
+            description: (Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config
+            optional: true
+            type: string
+        max_batch_size:
+            description: (Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000.
+            optional: true
+            type: string
+        name:
+            description: (Required) Function name. The function name does not have to be unique.
+            type: string
+        request_mapping_template:
+            description: (Required) Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template.
+            type: string
+        response_mapping_template:
+            description: (Required) Function response mapping template.
+            type: string
+        sync_config:
+            description: (Optional) Describes a Sync configuration for a resolver. See Sync Config.
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the Function object.
@@ -16,12 +69,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,19 +3,330 @@ kind: TerraformResource
 metadata:
     name: aws_appflow_flow
 spec:
-    args: {}
+    args:
+        aggregation_config:
+            description: (Optional) Aggregation settings that you can use to customize the output format of your flow data. See Aggregation Config for more details.
+            optional: true
+            type: string
+        aggregation_type:
+            description: (Optional) Whether Amazon AppFlow aggregates the flow records into a single file, or leave them unaggregated. Valid values are None and SingleFile.Prefix Config
+            optional: true
+            type: string
+        amplitude:
+            description: (Optional) Operation to be performed on the provided Amplitude source fields. The only valid value is BETWEEN.
+            optional: true
+            type: string
+        api_version:
+            description: (Optional) API version that the destination connector uses.
+            optional: true
+            type: string
+        bucket_name:
+            description: (Required) Amazon S3 bucket name where the source files are stored.
+            type: string
+        bucket_prefix:
+            description: (Optional) Object key for the Amazon S3 bucket in which the source files are stored.
+            optional: true
+            type: string
+        connector_operator:
+            description: (Optional) Operation to be performed on the provided source fields. See Connector Operator for details.
+            optional: true
+            type: string
+        connector_profile_name:
+            description: (Optional) Name of the connector profile. This name must be unique for each connector profile in the AWS account.
+            optional: true
+            type: string
+        connector_type:
+            description: (Required) Type of connector, such as Salesforce, Amplitude, and so on. Valid values are Salesforce, Singular, Slack, Redshift, S3, Marketo, Googleanalytics, Zendesk, Servicenow, Datadog, Trendmicro, Snowflake, Dynatrace, Infornexus, Amplitude, Veeva, EventBridge, LookoutMetrics, Upsolver, Honeycode, CustomerProfiles, SAPOData, and CustomConnector.
+            type: string
+        custom_connector:
+            description: (Optional) Operators supported by the custom connector. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, CONTAINS, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        custom_properties:
+            description: (Optional) Custom properties that are specific to the connector when it's used as a source in the flow. Maximum of 50 items.S3 Source Properties
+            optional: true
+            type: string
+        customer_profiles:
+            description: (Optional) Properties that are required to query Amazon Connect Customer Profiles. See Customer Profiles Destination Properties for more details.
+            optional: true
+            type: string
+        data_pull_mode:
+            description: (Optional) Whether a scheduled flow has an incremental data transfer or a complete data transfer for each flow run. Valid values are Incremental and Complete.
+            optional: true
+            type: string
+        datadog:
+            description: (Optional) Operation to be performed on the provided Datadog source fields. Valid values are PROJECTION, BETWEEN, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        datetime_type_field_name:
+            description: (Optional) Field that specifies the date time or timestamp field as the criteria to use when importing incremental records from the source.Task
+            optional: true
+            type: string
+        description:
+            description: (Optional) Description of the flow you want to create.
+            optional: true
+            type: string
+        destination_connector_properties:
+            description: (Required) This stores the information that is required to query a particular connector. See Destination Connector Properties for more information.
+            type: string
+        destination_field:
+            description: (Optional) Field in a destination connector, or a field value against which Amazon AppFlow validates a source field.
+            optional: true
+            type: string
+        destination_flow_config:
+            description: (Required) A Destination Flow Config that controls how Amazon AppFlow places data in the destination connector.
+            type: string
+        document_type:
+            description: (Optional) Document type specified in the Veeva document extract flow.
+            optional: true
+            type: string
+        domain_name:
+            description: (Required) Unique name of the Amazon Connect Customer Profiles domain.
+            type: string
+        dynatrace:
+            description: (Optional) Operation to be performed on the provided Dynatrace source fields. Valid values are PROJECTION, BETWEEN, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        dynratrace:
+            description: (Optional) Information that is required for querying Dynatrace. See Generic Source Properties for more details.
+            optional: true
+            type: string
+        enable_dynamic_field_update:
+            description: (Optional, boolean) Flag that enables dynamic fetching of new (recently added) fields in the Salesforce objects while running a flow.
+            type: string
+        entity_name:
+            description: (Required) Entity specified in the custom connector as a source in the flow.
+            type: string
+        error_handling_config:
+            description: (Optional) Settings that determine how Amazon AppFlow handles an error when placing data in the destination. See Error Handling Config for more details.
+            optional: true
+            type: string
+        event_bridge:
+            description: (Optional) Properties that are required to query Amazon EventBridge. See Generic Destination Properties for more details.
+            optional: true
+            type: string
+        fail_on_first_destination_error:
+            description: (Optional, boolean) If the flow should fail after the first instance of a failure when attempting to place data in the destination.Source Flow Config
+            type: string
+        file_type:
+            description: (Optional) File type that Amazon AppFlow places in the Upsolver Amazon S3 bucket. Valid values are CSV, JSON, and PARQUET.
+            optional: true
+            type: string
+        first_execution_from:
+            description: (Optional) Date range for the records to import from the connector in the first flow run. Must be a valid RFC3339 timestamp.
+            optional: true
+            type: string
+        google_analytics:
+            description: (Optional) Operation to be performed on the provided Google Analytics source fields. Valid values are PROJECTION and BETWEEN.
+            optional: true
+            type: string
+        honeycode:
+            description: (Optional) Properties that are required to query Amazon Honeycode. See Generic Destination Properties for more details.
+            optional: true
+            type: string
+        id_field_names:
+            description: (Optional) Name of the field that Amazon AppFlow uses as an ID when performing a write operation such as update or delete.
+            optional: true
+            type: string
+        include_all_versions:
+            description: (Optional, boolean) Boolean value to include All Versions of files in Veeva document extract flow.
+            type: string
+        include_deleted_records:
+            description: (Optional, boolean) Whether Amazon AppFlow includes deleted files in the flow run.SAPOData Source Properties
+            type: string
+        include_renditions:
+            description: (Optional, boolean) Boolean value to include file renditions in Veeva document extract flow.
+            type: string
+        include_source_files:
+            description: (Optional, boolean) Boolean value to include source files in Veeva document extract flow.Incremental Pull Config
+            type: string
+        incremental_pull_config:
+            description: (Optional) Defines the configuration for a scheduled incremental data pull. If a valid configuration is provided, the fields specified in the configuration are used when querying for the incremental data pull. See Incremental Pull Config for more details.Source Connector Properties
+            optional: true
+            type: string
+        infor_nexus:
+            description: (Optional) Operation to be performed on the provided Infor Nexus source fields. Valid values are PROJECTION, BETWEEN, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        intermediate_bucket_name:
+            description: (Required) Intermediate bucket that Amazon AppFlow uses when moving data into Amazon Snowflake.
+            type: string
+        kms_arn:
+            description: (Optional) ARN (Amazon Resource Name) of the Key Management Service (KMS) key you provide for encryption. This is required if you do not want to use the Amazon AppFlow-managed KMS key. If you don't provide anything here, Amazon AppFlow uses the Amazon AppFlow-managed KMS key.
+            optional: true
+            type: string
+        marketo:
+            description: (Optional) Operation to be performed on the provided Marketo source fields. Valid values are PROJECTION, BETWEEN, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the flow.
+            type: string
+        object:
+            description: (Required) Object specified in the Veeva flow source.
+            type: string
+        object_path:
+            description: (Optional) Object path specified in the SAPOData flow source.Veeva Source Properties
+            optional: true
+            type: string
+        object_type_name:
+            description: (Optional) Object specified in the Amazon Connect Customer Profiles flow destination.Redshift Destination Properties
+            optional: true
+            type: string
+        prefix_config:
+            description: (Optional) Determines the prefix that Amazon AppFlow applies to the folder name in the Amazon S3 bucket. You can name folders according to the flow frequency and date. See Prefix Config for more details.Aggregation Config
+            optional: true
+            type: string
+        prefix_format:
+            description: (Optional) Determines the level of granularity that's included in the prefix. Valid values are YEAR, MONTH, DAY, HOUR, and MINUTE.
+            optional: true
+            type: string
+        prefix_type:
+            description: (Optional) Determines the format of the prefix, and whether it applies to the file name, file path, or both. Valid values are FILENAME, PATH, and PATH_AND_FILENAME.Zendesk Destination Properties
+            optional: true
+            type: string
+        redshift:
+            description: (Optional) Properties that are required to query Amazon Redshift. See Redshift Destination Properties for more details.
+            optional: true
+            type: string
+        s3:
+            description: (Optional) Operation to be performed on the provided Amazon S3 source fields. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        s3_input_file_type:
+            description: (Optional) File type that Amazon AppFlow gets from your Amazon S3 bucket. Valid values are CSV and JSON.Salesforce Source Properties
+            optional: true
+            type: string
+        s3_input_format_config:
+            description: (Optional) When you use Amazon S3 as the source, the configuration format that you provide the flow input data. See S3 Input Format Config for details.S3 Input Format Config
+            optional: true
+            type: string
+        s3_output_format_config:
+            description: (Optional) Configuration that determines how Amazon AppFlow should format the flow output data when Upsolver is used as the destination. See Upsolver S3 Output Format Config for more details.Upsolver S3 Output Format Config
+            optional: true
+            type: string
+        salesforce:
+            description: (Optional) Operation to be performed on the provided Salesforce source fields. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, CONTAINS, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        sapo_data:
+            description: (Optional) Operation to be performed on the provided SAPOData source fields. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, CONTAINS, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        schedule_end_time:
+            description: (Optional) Scheduled end time for a schedule-triggered flow. Must be a valid RFC3339 timestamp.
+            optional: true
+            type: string
+        schedule_expression:
+            description: (Required) Scheduling expression that determines the rate at which the schedule will run, for example rate(5minutes).
+            type: string
+        schedule_offset:
+            description: (Optional) Optional offset that is added to the time interval for a schedule-triggered flow. Maximum value of 36000.
+            optional: true
+            type: string
+        schedule_start_time:
+            description: (Optional) Scheduled start time for a schedule-triggered flow. Must be a valid RFC3339 timestamp.
+            optional: true
+            type: string
+        service_now:
+            description: (Optional) Operation to be performed on the provided ServiceNow source fields. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, CONTAINS, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        singular:
+            description: (Optional) Operation to be performed on the provided Singular source fields. Valid values are PROJECTION, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        slack:
+            description: (Optional) Operation to be performed on the provided Slack source fields. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        snowflake:
+            description: (Optional) Properties that are required to query Snowflake. See Snowflake Destination Properties for more details.
+            optional: true
+            type: string
+        source_connector_properties:
+            description: (Required) Information that is required to query a particular source connector. See Source Connector Properties for details.
+            type: string
+        source_fields:
+            description: (Required) Source fields to which a particular task is applied.
+            type: string
+        source_flow_config:
+            description: (Required) The Source Flow Config that controls how Amazon AppFlow retrieves data from the source connector.
+            type: string
+        success_response_handling_config:
+            description: (Optional) Determines how Amazon AppFlow handles the success response that it gets from the connector after placing data. See Success Response Handling Config for more details.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Destination Flow Config
+            type: string
+        task:
+            description: (Required) A Task that Amazon AppFlow performs while transferring the data in the flow run.
+            type: string
+        task_properties:
+            description: (Optional) Map used to store task-related information. The execution service looks for particular information based on the TaskType. Valid keys are VALUE, VALUES, DATA_TYPE, UPPER_BOUND, LOWER_BOUND, SOURCE_DATA_TYPE, DESTINATION_DATA_TYPE, VALIDATION_ACTION, MASK_VALUE, MASK_LENGTH, TRUNCATE_LENGTH, MATH_OPERATION_FIELDS_ORDER, CONCAT_FORMAT, SUBFIELD_CATEGORY_MAP, and EXCLUDE_SOURCE_FIELDS_LIST.Connector Operator
+            optional: true
+            type: string
+        task_type:
+            description: (Required) Particular task implementation that Amazon AppFlow performs. Valid values are Arithmetic, Filter, Map, Map_all, Mask, Merge, Passthrough, Truncate, and Validate.
+            type: string
+        timezone:
+            description: '(Optional) Time zone used when referring to the date and time of a scheduled-triggered flow, such as America/New_York.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        trend_micro:
+            description: (Optional) Information that is required for querying Trend Micro. See Generic Source Properties for more details.
+            optional: true
+            type: string
+        trendmicro:
+            description: (Optional) Operation to be performed on the provided Trend Micro source fields. Valid values are PROJECTION, EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        trigger_config:
+            description: (Required) A Trigger that determine how and when the flow runs.
+            type: string
+        trigger_properties:
+            description: '(Optional) Configuration details of a schedule-triggered flow as defined by the user. Currently, these settings only apply to the Scheduled trigger type. See Scheduled Trigger Properties for details.Scheduled Trigger PropertiesThe trigger_properties block only supports one attribute: scheduled, a block which in turn supports the following:'
+            optional: true
+            type: string
+        trigger_type:
+            description: (Required) Type of flow trigger. Valid values are Scheduled, Event, and OnDemand.
+            type: string
+        upsolver:
+            description: (Optional) Properties that are required to query Upsolver. See Upsolver Destination Properties for more details.
+            optional: true
+            type: string
+        veeva:
+            description: (Optional) Operation to be performed on the provided Veeva source fields. Valid values are PROJECTION, LESS_THAN, GREATER_THAN, CONTAINS, BETWEEN, LESS_THAN_OR_EQUAL_TO, GREATER_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.
+            optional: true
+            type: string
+        write_operation:
+            description: (Optional) Possible write operations in the destination connector. When this value is not provided, this defaults to the INSERT operation. Valid values are INSERT, UPSERT, UPDATE, and DELETE.Success Response Handling Config
+            optional: true
+            type: string
+        write_operation_type:
+            description: (Optional) This specifies the type of write operation to be performed in Zendesk. When the value is UPSERT, then id_field_names is required. Valid values are INSERT, UPSERT, UPDATE, and DELETE.Error Handling Config
+            optional: true
+            type: string
+        zendesk:
+            description: (Optional) Operation to be performed on the provided Zendesk source fields. Valid values are PROJECTION, GREATER_THAN, ADDITION, MULTIPLICATION, DIVISION, SUBTRACTION, MASK_ALL, MASK_FIRST_N, MASK_LAST_N, VALIDATE_NON_NULL, VALIDATE_NON_ZERO, VALIDATE_NON_NEGATIVE, VALIDATE_NUMERIC, and NO_OP.Trigger Config
+            optional: true
+            type: string
     attrs:
         arn:
             description: Flow's ARN.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -1,0 +1,381 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cognito_user_pool.markdown
+spec:
+    args:
+        account_recovery_setting:
+            description: (Optional) Configuration block to define which verified available method a user can use to recover their forgotten password. Detailed below.
+            optional: true
+            type: string
+        admin_create_user_config:
+            description: (Optional) Configuration block for creating a new user profile. Detailed below.
+            optional: true
+            type: string
+        advanced_security_mode:
+            description: (Required) Mode for advanced security, must be one of OFF, AUDIT or ENFORCED.username_configuration
+            type: string
+        alias_attributes:
+            description: '(Optional) Attributes supported as an alias for this user pool. Valid values: phone_number, email, or preferred_username. Conflicts with username_attributes.'
+            optional: true
+            type: string
+        allow_admin_create_user_only:
+            description: (Optional) Set to True if only the administrator is allowed to create user profiles. Set to False if users can sign themselves up via an app.
+            optional: true
+            type: string
+        arn:
+            description: ARN of the user pool.
+            optional: true
+            type: string
+        attribute_data_type:
+            description: (Required) Attribute data type. Must be one of Boolean, Number, String, DateTime.
+            type: string
+        attributes_require_verification_before_update:
+            description: '(Required) A list of attributes requiring verification before update. If set, the provided value(s) must also be set in auto_verified_attributes. Valid values: email, phone_number.user_pool_add_ons'
+            type: string
+        auto_verified_attributes:
+            description: '(Optional) Attributes to be auto-verified. Valid values: email, phone_number.'
+            optional: true
+            type: string
+        case_sensitive:
+            description: (Required) Whether username case sensitivity will be applied for all users in the user pool through Cognito APIs.verification_message_template
+            type: string
+        challenge_required_on_new_device:
+            description: (Optional) Whether a challenge is required on a new device. Only applicable to a new device.
+            optional: true
+            type: string
+        configuration_set:
+            description: (Optional) Email configuration set name from SES.
+            optional: true
+            type: string
+        create_auth_challenge:
+            description: (Optional) ARN of the lambda creating an authentication challenge.
+            optional: true
+            type: string
+        creation_date:
+            description: Date the user pool was created.
+            optional: true
+            type: string
+        custom_domain:
+            description: 'A custom domain name that you provide to Amazon Cognito. This parameter applies only if you use a custom domain to host the sign-up and sign-in pages for your application. For example: auth.example.com.'
+            optional: true
+            type: string
+        custom_email_sender:
+            description: (Optional) A custom email sender AWS Lambda trigger. See custom_email_sender Below.
+            optional: true
+            type: string
+        custom_message:
+            description: (Optional) Custom Message AWS Lambda trigger.
+            optional: true
+            type: string
+        custom_sms_sender:
+            description: (Optional) A custom SMS sender AWS Lambda trigger. See custom_sms_sender Below.custom_email_sender
+            optional: true
+            type: string
+        default_email_option:
+            description: (Optional) Default email option. Must be either CONFIRM_WITH_CODE or CONFIRM_WITH_LINK. Defaults to CONFIRM_WITH_CODE.
+            optional: true
+            type: string
+        define_auth_challenge:
+            description: (Optional) Defines the authentication challenge.
+            optional: true
+            type: string
+        deletion_protection:
+            description: (Optional) When active, DeletionProtection prevents accidental deletion of your user pool. Before you can delete a user pool that you have protected against deletion, you must deactivate this feature. Valid values are ACTIVE and INACTIVE, Default value is INACTIVE.
+            optional: true
+            type: string
+        developer_only_attribute:
+            description: (Optional) Whether the attribute type is developer only.
+            optional: true
+            type: string
+        device_configuration:
+            description: (Optional) Configuration block for the user pool's device tracking. Detailed below.
+            optional: true
+            type: string
+        device_only_remembered_on_user_prompt:
+            description: (Optional) Whether a device is only remembered on user prompt. false equates to "Always" remember, true is "User Opt In," and not using a device_configuration block is "No."email_configuration
+            optional: true
+            type: string
+        domain:
+            description: Holds the domain prefix if the user pool has a domain associated with it.
+            optional: true
+            type: string
+        email_configuration:
+            description: (Optional) Configuration block for configuring email. Detailed below.
+            optional: true
+            type: string
+        email_message:
+            description: (Optional) Email message template. Must contain the {####} placeholder. Conflicts with email_verification_message argument.
+            optional: true
+            type: string
+        email_message_by_link:
+            description: (Optional) Email message template for sending a confirmation link to the user, it must contain the {##Click Here##} placeholder.
+            optional: true
+            type: string
+        email_sending_account:
+            description: (Optional) Email delivery method to use. COGNITO_DEFAULT for the default email functionality built into Cognito or DEVELOPER to use your Amazon SES configuration.
+            optional: true
+            type: string
+        email_subject:
+            description: (Optional) Subject line for the email message template. Conflicts with email_verification_subject argument.
+            optional: true
+            type: string
+        email_subject_by_link:
+            description: (Optional) Subject line for the email message template for sending a confirmation link to the user.
+            optional: true
+            type: string
+        email_verification_message:
+            description: (Optional) String representing the email verification message. Conflicts with verification_message_template configuration block email_message argument.
+            optional: true
+            type: string
+        email_verification_subject:
+            description: (Optional) String representing the email verification subject. Conflicts with verification_message_template configuration block email_subject argument.
+            optional: true
+            type: string
+        enabled:
+            description: (Required) Boolean whether to enable software token Multi-Factor (MFA) tokens, such as Time-based One-Time Password (TOTP). To disable software token MFA When sms_configuration is not present, the mfa_configuration argument must be set to OFF and the software_token_mfa_configuration configuration block must be fully removed.user_attribute_update_settings
+            type: string
+        endpoint:
+            description: 'Endpoint name of the user pool. Example format: cognito-idp.REGION.amazonaws.com/xxxx_yyyyy'
+            optional: true
+            type: string
+        estimated_number_of_users:
+            description: A number estimating the size of the user pool.
+            optional: true
+            type: string
+        external_id:
+            description: (Required) External ID used in IAM role trust relationships. For more information about using external IDs, see How to Use an External ID When Granting Access to Your AWS Resources to a Third Party.
+            type: string
+        from_email_address:
+            description: (Optional) Sender’s email address or sender’s display name with their email address (e.g., john@example.com, John Smith <john@example.com> or \"John Smith Ph.D.\" <john@example.com>). Escaped double quotes are required around display names that contain certain characters as specified in RFC 5322.
+            optional: true
+            type: string
+        id:
+            description: ID of the user pool.
+            optional: true
+            type: string
+        invite_message_template:
+            description: (Optional) Invite message template structure. Detailed below.invite_message_template
+            optional: true
+            type: string
+        kms_key_id:
+            description: (Optional) The Amazon Resource Name of Key Management Service Customer master keys. Amazon Cognito uses the key to encrypt codes and temporary passwords sent to CustomEmailSender and CustomSMSSender.
+            optional: true
+            type: string
+        lambda_arn:
+            description: (Required) The Lambda Amazon Resource Name of the Lambda function that Amazon Cognito triggers to send SMS notifications to users.
+            type: string
+        lambda_config:
+            description: (Optional) Configuration block for the AWS Lambda triggers associated with the user pool. Detailed below.
+            optional: true
+            type: string
+        lambda_version:
+            description: (Required) The Lambda version represents the signature of the "request" attribute in the "event" information Amazon Cognito passes to your custom SMS Lambda function. The only supported value is V1_0.password_policy
+            type: string
+        last_modified_date:
+            description: Date the user pool was last modified.
+            optional: true
+            type: string
+        max_length:
+            description: (Optional) Maximum length of an attribute value of the string type.
+            optional: true
+            type: string
+        max_value:
+            description: (Optional) Maximum value of an attribute that is of the number data type.
+            optional: true
+            type: string
+        mfa_configuration:
+            description: (Optional) Multi-Factor Authentication (MFA) configuration for the User Pool. Defaults of OFF. Valid values are OFF (MFA Tokens are not required), ON (MFA is required for all users to sign in; requires at least one of sms_configuration or software_token_mfa_configuration to be configured), or OPTIONAL (MFA Will be required only for individual users who have MFA Enabled; requires at least one of sms_configuration or software_token_mfa_configuration to be configured).
+            optional: true
+            type: string
+        min_length:
+            description: (Optional) Minimum length of an attribute value of the string type.sms_configuration
+            optional: true
+            type: string
+        min_value:
+            description: (Optional) Minimum value of an attribute that is of the number data type.string_attribute_constraints
+            optional: true
+            type: string
+        minimum_length:
+            description: (Optional) Minimum length of the password policy that you have set.
+            optional: true
+            type: string
+        mutable:
+            description: (Optional) Whether the attribute can be changed once it has been created.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the attribute.
+            type: string
+        number_attribute_constraints:
+            description: (Required when attribute_data_type is Number) Configuration block for the constraints for an attribute of the number type. Detailed below.
+            optional: true
+            type: string
+        password_policy:
+            description: (Optional) Configuration blocked for information about the user pool password policy. Detailed below.
+            optional: true
+            type: string
+        post_authentication:
+            description: (Optional) Post-authentication AWS Lambda trigger.
+            optional: true
+            type: string
+        post_confirmation:
+            description: (Optional) Post-confirmation AWS Lambda trigger.
+            optional: true
+            type: string
+        pre_authentication:
+            description: (Optional) Pre-authentication AWS Lambda trigger.
+            optional: true
+            type: string
+        pre_sign_up:
+            description: (Optional) Pre-registration AWS Lambda trigger.
+            optional: true
+            type: string
+        pre_token_generation:
+            description: (Optional) Allow to customize identity token claims before token generation.
+            optional: true
+            type: string
+        priority:
+            description: (Required) Positive integer specifying priority of a method with 1 being the highest priority.admin_create_user_config
+            type: string
+        recovery_mechanism:
+            description: |
+                (Required) List of Account Recovery Options of the following structure:
+            type: string
+        reply_to_email_address:
+            description: (Optional) REPLY-TO email address.
+            optional: true
+            type: string
+        require_lowercase:
+            description: (Optional) Whether you have required users to use at least one lowercase letter in their password.
+            optional: true
+            type: string
+        require_numbers:
+            description: (Optional) Whether you have required users to use at least one number in their password.
+            optional: true
+            type: string
+        require_symbols:
+            description: (Optional) Whether you have required users to use at least one symbol in their password.
+            optional: true
+            type: string
+        require_uppercase:
+            description: (Optional) Whether you have required users to use at least one uppercase letter in their password.
+            optional: true
+            type: string
+        required:
+            description: (Optional) Whether a user pool attribute is required. If the attribute is required and the user does not provide a value, registration or sign-in will fail.
+            optional: true
+            type: string
+        schema:
+            description: (Optional) Configuration block for the schema attributes of a user pool. Detailed below. Schema attributes from the standard attribute set only need to be specified if they are different from the default configuration. Attributes can be added, but not modified or removed. Maximum of 50 attributes.
+            optional: true
+            type: string
+        sms_authentication_message:
+            description: (Optional) String representing the SMS authentication message. The Message must contain the {####} placeholder, which will be replaced with the code.
+            optional: true
+            type: string
+        sms_configuration:
+            description: (Optional) Configuration block for Short Message Service (SMS) settings. Detailed below. These settings apply to SMS user verification and SMS Multi-Factor Authentication (MFA). Due to Cognito API restrictions, the SMS configuration cannot be removed without recreating the Cognito User Pool. For user data safety, this resource will ignore the removal of this configuration by disabling drift detection. To force resource recreation after this configuration has been applied, see the taint command.
+            optional: true
+            type: string
+        sms_message:
+            description: '(Optional) SMS message template. Must contain the {####} placeholder. Conflicts with sms_verification_message argument.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        sms_verification_message:
+            description: (Optional) String representing the SMS verification message. Conflicts with verification_message_template configuration block sms_message argument.
+            optional: true
+            type: string
+        sns_caller_arn:
+            description: '(Required) ARN of the Amazon SNS caller. This is usually the IAM role that you''ve given Cognito permission to assume.software_token_mfa_configurationThe following arguments are required in the software_token_mfa_configuration configuration block:'
+            type: string
+        software_token_mfa_configuration:
+            description: (Optional) Configuration block for software token Mult-Factor Authentication (MFA) settings. Detailed below.
+            optional: true
+            type: string
+        source_arn:
+            description: (Optional) ARN of the SES verified email identity to to use. Required if email_sending_account is set to DEVELOPER.lambda_config
+            optional: true
+            type: string
+        string_attribute_constraints:
+            description: '(Required when attribute_data_type is String) Constraints for an attribute of the string type. Detailed below.schema: Defaults for Standard AttributesThe standard attributes have the following defaults. Note that attributes which match the default values are not stored in Terraform state when importing.number_attribute_constraints'
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Map of tags to assign to the User Pool. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            optional: true
+            type: string
+        temporary_password_validity_days:
+            description: '(Optional) In the password policy you have set, refers to the number of days a temporary password is valid. If the user does not sign-in during this time, their password will need to be reset by an administrator.schema~> strongNOTE: When defining an attribute_data_type of String or Number, the respective attribute constraints configuration block (e.g string_attribute_constraints or number_attribute_constraints) is strongrequired to prevent recreation of the Terraform resource. This requirement is true for both standard (e.g., name, email) and custom schema attributes.'
+            optional: true
+            type: string
+        user_attribute_update_settings:
+            description: (Optional) Configuration block for user attribute update settings. Detailed below.
+            optional: true
+            type: string
+        user_migration:
+            description: (Optional) User migration Lambda config type.
+            optional: true
+            type: string
+        user_pool_add_ons:
+            description: (Optional) Configuration block for user pool add-ons to enable user pool advanced security mode features. Detailed below.
+            optional: true
+            type: string
+        username_attributes:
+            description: (Optional) Whether email addresses or phone numbers can be specified as usernames when a user signs up. Conflicts with alias_attributes.
+            optional: true
+            type: string
+        username_configuration:
+            description: (Optional) Configuration block for username configuration. Detailed below.
+            optional: true
+            type: string
+        verification_message_template:
+            description: (Optional) Configuration block for verification message templates. Detailed below.account_recovery_setting
+            optional: true
+            type: string
+        verify_auth_challenge_response:
+            description: (Optional) Verifies the authentication challenge response.
+            optional: true
+            type: string
+    attrs:
+        arn:
+            description: ARN of the user pool.
+            type: string
+        creation_date:
+            description: Date the user pool was created.
+            type: string
+        custom_domain:
+            description: 'A custom domain name that you provide to Amazon Cognito. This parameter applies only if you use a custom domain to host the sign-up and sign-in pages for your application. For example: auth.example.com.'
+            type: string
+        domain:
+            description: Holds the domain prefix if the user pool has a domain associated with it.
+            type: string
+        endpoint:
+            description: 'Endpoint name of the user pool. Example format: cognito-idp.REGION.amazonaws.com/xxxx_yyyyy'
+            type: string
+        estimated_number_of_users:
+            description: A number estimating the size of the user pool.
+            type: string
+        id:
+            description: ID of the user pool.
+            type: string
+        last_modified_date:
+            description: Date the user pool was last modified.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

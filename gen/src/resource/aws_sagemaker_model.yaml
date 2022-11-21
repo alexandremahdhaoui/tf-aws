@@ -3,7 +3,74 @@ kind: TerraformResource
 metadata:
     name: aws_sagemaker_model
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this model.
+            type: string
+        container:
+            description: ' (Optional) -  Specifies containers in the inference pipeline. If not specified, the primary_container argument is required. Fields are documented below.'
+            optional: true
+            type: string
+        container_hostname:
+            description: (Optional) The DNS host name for the container.
+            optional: true
+            type: string
+        enable_network_isolation:
+            description: ' (Optional) - Isolates the model container. No inbound or outbound network calls can be made to or from the model container.'
+            optional: true
+            type: string
+        environment:
+            description: |-
+                (Optional) Environment variables for the Docker container.
+                A list of key value pairs.
+            optional: true
+            type: string
+        execution_role_arn:
+            description: (Required) A role that SageMaker can assume to access model artifacts and docker images for deployment.
+            type: string
+        image:
+            description: (Required) The registry path where the inference code image is stored in Amazon ECR.
+            type: string
+        image_config:
+            description: (Optional) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). For more information see Using a Private Docker Registry for Real-Time Inference Containers. see Image Config.Image Config
+            optional: true
+            type: string
+        inference_execution_config:
+            description: (Optional) Specifies details of how containers in a multi-container endpoint are called. see Inference Execution Config.
+            optional: true
+            type: string
+        mode:
+            description: '(Required) How containers in a multi-container are run. The following values are valid Serial and Direct.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        model_data_url:
+            description: (Optional) The URL for the S3 location where model artifacts are stored.
+            optional: true
+            type: string
+        name:
+            description: The name of the model.
+            type: string
+        primary_container:
+            description: (Optional) The primary docker image containing inference code that is used when the model is deployed for predictions.  If not specified, the container argument is required. Fields are documented below.
+            optional: true
+            type: string
+        repository_access_mode:
+            description: '(Required) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). Allowed values are: Platform and Vpc.'
+            type: string
+        repository_auth_config:
+            description: (Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication. see Repository Auth Config.Repository Auth Config
+            optional: true
+            type: string
+        repository_credentials_provider_arn:
+            description: (Required) The Amazon Resource Name (ARN) of an AWS Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an AWS Lambda function, see Create a Lambda function with the console in the emAWS Lambda Developer Guide.Inference Execution Config
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The primary_container and container block both support:'
+            optional: true
+            type: string
+        vpc_config:
+            description: ' (Optional) - Specifies the VPC that you want your model to connect to. VpcConfig is used in hosting services and in batch transform.'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) assigned by AWS to this model.
@@ -16,12 +83,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

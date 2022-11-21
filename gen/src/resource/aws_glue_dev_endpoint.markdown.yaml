@@ -1,0 +1,135 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_glue_dev_endpoint.markdown
+spec:
+    args:
+        arguments:
+            description: (Optional) A map of arguments used to configure the endpoint.
+            optional: true
+            type: string
+        arn:
+            description: The ARN of the endpoint.
+            type: string
+        availability_zone:
+            description: The AWS availability zone where this endpoint is located.
+            type: string
+        extra_jars_s3_path:
+            description: (Optional) Path to one or more Java Jars in an S3 bucket that should be loaded in this endpoint.
+            optional: true
+            type: string
+        extra_python_libs_s3_path:
+            description: (Optional) Path(s) to one or more Python libraries in an S3 bucket that should be loaded in this endpoint. Multiple values must be complete paths separated by a comma.
+            optional: true
+            type: string
+        failure_reason:
+            description: The reason for a current failure in this endpoint.
+            type: string
+        glue_version:
+            description: (Optional) -  Specifies the versions of Python and Apache Spark to use. Defaults to AWS Glue version 0.9.
+            optional: true
+            type: string
+        name:
+            description: The name of the new endpoint.
+            type: string
+        number_of_nodes:
+            description: (Optional) The number of AWS Glue Data Processing Units (DPUs) to allocate to this endpoint. Conflicts with worker_type.
+            optional: true
+            type: string
+        number_of_workers:
+            description: (Optional) The number of workers of a defined worker type that are allocated to this endpoint. This field is available only when you choose worker type G.1X or G.2X.
+            optional: true
+            type: string
+        private_address:
+            description: A private IP address to access the endpoint within a VPC, if this endpoint is created within one.
+            type: string
+        public_address:
+            description: The public IP address used by this endpoint. The PublicAddress field is present only when you create a non-VPC endpoint.
+            type: string
+        public_key:
+            description: (Optional) The public key to be used by this endpoint for authentication.
+            optional: true
+            type: string
+        public_keys:
+            description: (Optional) A list of public keys to be used by this endpoint for authentication.
+            optional: true
+            type: string
+        role_arn:
+            description: (Required) The IAM role for this endpoint.
+            type: string
+        security_configuration:
+            description: (Optional) The name of the Security Configuration structure to be used with this endpoint.
+            optional: true
+            type: string
+        security_group_ids:
+            description: (Optional) Security group IDs for the security groups to be used by this endpoint.
+            optional: true
+            type: string
+        status:
+            description: The current status of this endpoint.
+            type: string
+        subnet_id:
+            description: (Optional) The subnet ID for the new endpoint to use.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        vpc_id:
+            description: he ID of the VPC used by this endpoint.
+            type: string
+        worker_type:
+            description: '(Optional) The type of predefined worker that is allocated to this endpoint. Accepts a value of Standard, G.1X, or G.2X.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        yarn_endpoint_address:
+            description: The YARN endpoint address used by this endpoint.
+            type: string
+        zeppelin_remote_spark_interpreter_port:
+            description: The Apache Zeppelin port for the remote Apache Spark interpreter.
+            type: string
+    attrs:
+        arn:
+            description: The ARN of the endpoint.
+            type: string
+        availability_zone:
+            description: The AWS availability zone where this endpoint is located.
+            type: string
+        failure_reason:
+            description: The reason for a current failure in this endpoint.
+            type: string
+        name:
+            description: The name of the new endpoint.
+            type: string
+        private_address:
+            description: A private IP address to access the endpoint within a VPC, if this endpoint is created within one.
+            type: string
+        public_address:
+            description: The public IP address used by this endpoint. The PublicAddress field is present only when you create a non-VPC endpoint.
+            type: string
+        status:
+            description: The current status of this endpoint.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        vpc_id:
+            description: he ID of the VPC used by this endpoint.
+            type: string
+        yarn_endpoint_address:
+            description: The YARN endpoint address used by this endpoint.
+            type: string
+        zeppelin_remote_spark_interpreter_port:
+            description: The Apache Zeppelin port for the remote Apache Spark interpreter.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

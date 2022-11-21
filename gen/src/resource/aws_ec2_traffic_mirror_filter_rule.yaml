@@ -3,7 +3,52 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_traffic_mirror_filter_rule
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the traffic mirror filter rule.
+            type: string
+        description:
+            description: (Optional) Description of the traffic mirror filter rule.
+            optional: true
+            type: string
+        destination_cidr_block:
+            description: (Required) Destination CIDR block to assign to the Traffic Mirror rule.
+            type: string
+        destination_port_range:
+            description: (Optional) Destination port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below
+            optional: true
+            type: string
+        from_port:
+            description: (Optional) Starting port of the range
+            optional: true
+            type: string
+        protocol:
+            description: (Optional) Protocol number, for example 17 (UDP), to assign to the Traffic Mirror rule. For information about the protocol value, see Protocol Numbers on the Internet Assigned Numbers Authority (IANA) website.
+            optional: true
+            type: string
+        rule_action:
+            description: (Required) Action to take (accept | reject) on the filtered traffic. Valid values are accept and reject
+            type: string
+        rule_number:
+            description: (Required) Number of the Traffic Mirror rule. This number must be unique for each Traffic Mirror rule in a given direction. The rules are processed in ascending order by rule number.
+            type: string
+        source_cidr_block:
+            description: (Required) Source CIDR block to assign to the Traffic Mirror rule.
+            type: string
+        source_port_range:
+            description: (Optional) Source port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below
+            optional: true
+            type: string
+        to_port:
+            description: '(Optional) Ending port of the rangeIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        traffic_direction:
+            description: '(Required) Direction of traffic to be captured. Valid values are ingress and egressTraffic mirror port range support following attributes:'
+            type: string
+        traffic_mirror_filter_id:
+            description: '  - (Required) ID of the traffic mirror filter to which this rule should be added'
+            type: string
     attrs:
         arn:
             description: ARN of the traffic mirror filter rule.
@@ -13,12 +58,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

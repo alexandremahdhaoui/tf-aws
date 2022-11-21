@@ -1,0 +1,66 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_servicecatalog_constraint
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        description:
+            description: Description of the constraint.
+            optional: true
+            type: string
+        id:
+            description: Constraint identifier.
+            type: string
+        owner:
+            description: Owner of the constraint.
+            optional: true
+            type: string
+        parameters:
+            description: Constraint parameters in JSON format.
+            optional: true
+            type: string
+        portfolio_id:
+            description: Portfolio identifier.
+            optional: true
+            type: string
+        product_id:
+            description: Product identifier.
+            optional: true
+            type: string
+        status:
+            description: Constraint status.
+            optional: true
+            type: string
+    attrs:
+        description:
+            description: Description of the constraint.
+            type: string
+        owner:
+            description: Owner of the constraint.
+            type: string
+        parameters:
+            description: Constraint parameters in JSON format.
+            type: string
+        portfolio_id:
+            description: Portfolio identifier.
+            type: string
+        product_id:
+            description: Product identifier.
+            type: string
+        status:
+            description: Constraint status.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,32 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_route53_resolver_firewall_rule_group.markdown
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: The ARN (Amazon Resource Name) of the rule group.
+            type: string
+        id:
+            description: The ID of the rule group.
+            type: string
+        owner_id:
+            description: The AWS account ID for the account that created the rule group. When a rule group is shared with your account, this is the account that has shared the rule group with you.
+            type: string
+        share_status:
+            description: 'Whether the rule group is shared with other AWS accounts, or was shared with the current account by another AWS account. Sharing is configured through AWS Resource Access Manager (AWS RAM). Valid values: NOT_SHARED, SHARED_BY_ME, SHARED_WITH_ME'
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

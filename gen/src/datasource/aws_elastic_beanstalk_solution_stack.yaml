@@ -1,0 +1,17 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_elastic_beanstalk_solution_stack
+spec:
+    args: {}
+    attrs: {}
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

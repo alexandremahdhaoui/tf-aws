@@ -3,7 +3,117 @@ kind: TerraformResource
 metadata:
     name: aws_datasync_task
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the DataSync Task.
+            type: string
+        atime:
+            description: '(Optional) A file metadata that shows the last time a file was accessed (that is when the file was read or written to). If set to BEST_EFFORT, the DataSync Task attempts to preserve the original (that is, the version before sync PREPARING phase) atime attribute on all source files. Valid values: BEST_EFFORT, NONE. Default: BEST_EFFORT.'
+            optional: true
+            type: string
+        bytes_per_second:
+            description: '(Optional) Limits the bandwidth utilized. For example, to set a maximum of 1 MB, set this value to 1048576. Value values: -1 or greater. Default: -1 (unlimited).'
+            optional: true
+            type: string
+        cloudwatch_log_group_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the CloudWatch Log Group that is used to monitor and log events in the sync task.
+            optional: true
+            type: string
+        destination_location_arn:
+            description: (Required) Amazon Resource Name (ARN) of destination DataSync Location.
+            type: string
+        excludes:
+            description: (Optional) Filter rules that determines which files to exclude from a task.
+            optional: true
+            type: string
+        filter_type:
+            description: '(Optional) The type of filter rule to apply. Valid values: SIMPLE_PATTERN.'
+            optional: true
+            type: string
+        gid:
+            description: '(Optional) Group identifier of the file''s owners. Valid values: BOTH, INT_VALUE, NAME, NONE. Default: INT_VALUE (preserve integer value of the ID).'
+            optional: true
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the DataSync Task.
+            type: string
+        includes:
+            description: (Optional) Filter rules that determines which files to include in a task.
+            optional: true
+            type: string
+        log_level:
+            description: '(Optional) Determines the type of logs that DataSync publishes to a log stream in the Amazon CloudWatch log group that you provide. Valid values: OFF, BASIC, TRANSFER. Default: OFF.'
+            optional: true
+            type: string
+        mtime:
+            description: '(Optional) A file metadata that indicates the last time a file was modified (written to) before the sync PREPARING phase. Value values: NONE, PRESERVE. Default: PRESERVE.'
+            optional: true
+            type: string
+        name:
+            description: (Optional) Name of the DataSync Task.
+            optional: true
+            type: string
+        options:
+            description: (Optional) Configuration block containing option that controls the default behavior when you start an execution of this DataSync Task. For each individual task execution, you can override these options by specifying an overriding configuration in those executions.
+            optional: true
+            type: string
+        overwrite_mode:
+            description: '(Optional) Determines whether files at the destination should be overwritten or preserved when copying files. Valid values: ALWAYS, NEVER. Default: ALWAYS.'
+            optional: true
+            type: string
+        posix_permissions:
+            description: '(Optional) Determines which users or groups can access a file for a specific purpose such as reading, writing, or execution of the file. Valid values: NONE, PRESERVE. Default: PRESERVE.'
+            optional: true
+            type: string
+        preserve_deleted_files:
+            description: '(Optional) Whether files deleted in the source should be removed or preserved in the destination file system. Valid values: PRESERVE, REMOVE. Default: PRESERVE.'
+            optional: true
+            type: string
+        preserve_devices:
+            description: '(Optional) Whether the DataSync Task should preserve the metadata of block and character devices in the source files system, and recreate the files with that device name and metadata on the destination. The DataSync Task can’t sync the actual contents of such devices, because many of the devices are non-terminal and don’t return an end of file (EOF) marker. Valid values: NONE, PRESERVE. Default: NONE (ignore special devices).'
+            optional: true
+            type: string
+        schedule:
+            description: (Optional) Specifies a schedule used to periodically transfer files from a source to a destination location.
+            optional: true
+            type: string
+        schedule_expression:
+            description: (Required) Specifies the schedule you want your task to use for repeated executions. For more information, see Schedule Expressions for Rules.excludes Argument Reference
+            type: string
+        security_descriptor_copy_flags:
+            description: '(Optional) Determines which components of the SMB security descriptor are copied from source to destination objects. This value is only used for transfers between SMB and Amazon FSx for Windows File Server locations, or between two Amazon FSx for Windows File Server locations. Valid values: NONE, OWNER_DACL, OWNER_DACL_SACL.'
+            optional: true
+            type: string
+        source_location_arn:
+            description: (Required) Amazon Resource Name (ARN) of source DataSync Location.
+            type: string
+        tags:
+            description: '(Optional) Key-value pairs of resource tags to assign to the DataSync Task. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options Argument Reference~> strongNOTE: If atime is set to BEST_EFFORT, mtime must be set to PRESERVE. If atime is set to NONE, mtime must be set to NONE.options configuration block:'
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        task_queueing:
+            description: '(Optional) Determines whether tasks should be queued before executing the tasks. Valid values: ENABLED, DISABLED. Default ENABLED.'
+            optional: true
+            type: string
+        transfer_mode:
+            description: '(Optional) Determines whether DataSync transfers only the data and metadata that differ between the source and the destination location, or whether DataSync transfers all the content from the source, without comparing to the destination location. Valid values: CHANGED, ALL. Default: CHANGED'
+            optional: true
+            type: string
+        uid:
+            description: '(Optional) User identifier of the file''s owners. Valid values: BOTH, INT_VALUE, NAME, NONE. Default: INT_VALUE (preserve integer value of the ID).'
+            optional: true
+            type: string
+        value:
+            description: '(Optional) A single filter string that consists of the patterns to include. The patterns are delimited by "|" (that is, a pipe), for example: /folder1|/folder2In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        verify_mode:
+            description: '(Optional) Whether a data integrity verification should be performed at the end of a task execution after all data and metadata have been transferred. Valid values: NONE, POINT_IN_TIME_CONSISTENT, ONLY_FILES_TRANSFERRED. Default: POINT_IN_TIME_CONSISTENT.Schedule'
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the DataSync Task.
@@ -19,12 +129,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

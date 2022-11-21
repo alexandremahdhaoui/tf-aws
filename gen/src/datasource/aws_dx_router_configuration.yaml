@@ -1,0 +1,62 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_dx_router_configuration
+spec:
+    args:
+        customer_router_config:
+            description: Instructions for configuring your router
+            type: string
+        platform:
+            description: Router platform
+            type: string
+        router:
+            description: 'Block of the router type detailsA router block supports the following attributes:'
+            type: string
+        router_type_identifier:
+            description: Router type identifier
+            type: string
+        software:
+            description: Router operating system
+            type: string
+        vendor:
+            description: Router vendor
+            type: string
+        virtual_interface_id:
+            description: (Required) ID of the Direct Connect Virtual Interface
+            type: string
+        xslt_template_name:
+            description: Router XSLT Template Name
+            type: string
+    attrs:
+        customer_router_config:
+            description: Instructions for configuring your router
+            type: string
+        platform:
+            description: Router platform
+            type: string
+        router:
+            description: 'Block of the router type detailsA router block supports the following attributes:'
+            type: string
+        router_type_identifier:
+            description: Router type identifier
+            type: string
+        software:
+            description: Router operating system
+            type: string
+        vendor:
+            description: Router vendor
+            type: string
+        xslt_template_name:
+            description: Router XSLT Template Name
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

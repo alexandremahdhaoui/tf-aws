@@ -3,7 +3,110 @@ kind: TerraformResource
 metadata:
     name: aws_acm_certificate
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the certificate
+            type: string
+        certificate_authority_arn:
+            description: (Required) ARN of an ACM PCA
+            type: string
+        certificate_body:
+            description: (Required) Certificate's PEM-formatted public key
+            type: string
+        certificate_chain:
+            description: (Optional) Certificate's PEM-formatted chain
+            optional: true
+            type: string
+        certificate_transparency_logging_preference:
+            description: '(Optional) Whether certificate details should be added to a certificate transparency log. Valid values are ENABLED or DISABLED. See https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency for more details.validation_option Configuration BlockSupported nested arguments for the validation_option configuration block:'
+            optional: true
+            type: string
+        domain_name:
+            description: Domain to be validated
+            type: string
+        domain_validation_options:
+            description: |-
+                Set of domain validation objects which can be used to complete certificate validation.
+                Can have more than one element, e.g., if SANs are defined.
+                Only set if DNS-validation was used.
+            type: string
+        early_renewal_duration:
+            description: |-
+                (Optional) Amount of time to start automatic renewal process before expiration.
+                Has no effect if less than 60 days.
+                Represented by either
+                a subset of RFC 3339 duration supporting years, months, and days (e.g., P90D2160h.
+            optional: true
+            type: string
+        id:
+            description: ARN of the certificate
+            type: string
+        not_after:
+            description: Expiration date and time of the certificate.
+            type: string
+        not_before:
+            description: Start of the validity period of the certificate.
+            type: string
+        options:
+            description: (Optional) Configuration block used to set certificate options. Detailed below.
+            optional: true
+            type: string
+        pending_renewal:
+            description: true if a Private certificate eligible for managed renewal is within the early_renewal_duration period.
+            type: string
+        private_key:
+            description: (Required) Certificate's PEM-formatted private key
+            type: string
+        renewal_eligibility:
+            description: Whether the certificate is eligible for managed renewal.
+            type: string
+        renewal_status:
+            description: The status of ACM's managed renewal of the certificate
+            type: string
+        renewal_summary:
+            description: Contains information about the status of ACM's managed renewal for the certificate.
+            type: string
+        resource_record_name:
+            description: The name of the DNS record to create to validate the certificate
+            type: string
+        resource_record_type:
+            description: The type of DNS record to create
+            type: string
+        resource_record_value:
+            description: 'The value the DNS record needs to haveRenewal summary objects export the following attributes:'
+            type: string
+        status:
+            description: Status of the certificate.
+            type: string
+        subject_alternative_names:
+            description: |-
+                (Optional) Set of domains that should be SANs in the issued certificate.
+                To remove all elements of a previously configured list, set this value equal to an empty list ([]terraform taint command to trigger recreation.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options Configuration BlockSupported nested arguments for the options configuration block:'
+            optional: true
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        type:
+            description: Source of the certificate.
+            type: string
+        validation_domain:
+            description: '(Required) Domain name that you want ACM to use to send you validation emails. This domain name is the suffix of the email addresses that you want ACM to use. This must be the same as the domain_name value or a superdomain of the domain_name value. For example, if you request a certificate for "testing.example.com", you can specify "example.com" for this value.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        validation_emails:
+            description: 'List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:'
+            type: string
+        validation_method:
+            description: (Required) Which method to use for validation. DNS or EMAIL are valid, NONE can be used for certificates that were imported into ACM and then into Terraform.
+            type: string
+        validation_option:
+            description: (Optional) Configuration block used to specify information about the initial validation of each domain name. Detailed below.
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the certificate
@@ -64,12 +167,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

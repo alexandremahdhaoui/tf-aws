@@ -1,0 +1,41 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_pinpoint_sms_channel.markdown
+spec:
+    args:
+        application_id:
+            description: (Required) The application ID.
+            type: string
+        enabled:
+            description: (Optional) Whether the channel is enabled or disabled. Defaults to true.
+            optional: true
+            type: string
+        promotional_messages_per_second:
+            description: Promotional messages per second that can be sent.
+            type: string
+        sender_id:
+            description: (Optional) Sender identifier of your messages.
+            optional: true
+            type: string
+        short_code:
+            description: '(Optional) The Short Code registered with the phone provider.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+    attrs:
+        promotional_messages_per_second:
+            description: Promotional messages per second that can be sent.
+            type: string
+        transactional_messages_per_second:
+            description: Transactional messages per second that can be sent.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

@@ -6,148 +6,140 @@ spec:
     args:
         account_id:
             description: The account ID that this configuration applies to.
-            type: string
             optional: true
+            type: string
         ami_distribution_configuration:
             description: (Optional) Configuration block with Amazon Machine Image (AMI) distribution settings. Detailed below.
-            type: string
             optional: true
+            type: string
         ami_tags:
             description: (Optional) Key-value map of tags to apply to the distributed AMI.
-            type: string
             optional: true
+            type: string
         arn:
             description: (Required) Amazon Resource Name (ARN) of the distribution configuration.
             type: string
-            optional: true
         container_distribution_configuration:
             description: (Optional) Configuration block with container distribution settings. Detailed below.
-            type: string
             optional: true
+            type: string
         container_tags:
             description: (Optional) Set of tags that are attached to the container distribution configuration.
-            type: string
             optional: true
+            type: string
         date_created:
             description: Date the distribution configuration was created.
-            type: string
             optional: true
+            type: string
         date_updated:
             description: Date the distribution configuration was updated.
-            type: string
             optional: true
+            type: string
         default:
             description: (Optional) Indicates whether to set the specified Amazon EC2 launch template as the default launch template. Defaults to true.
-            type: string
             optional: true
+            type: string
         description:
             description: (Optional) Description of the container distribution configuration.
-            type: string
             optional: true
+            type: string
         distribution:
             description: (Required) One or more configuration blocks with distribution settings. Detailed below.
             type: string
-            optional: true
         enabled:
             description: (Required) A Boolean that represents the current state of faster launching for the Windows AMI. Set to true to start using Windows faster launching, or false to stop using it.
             type: string
-            optional: true
         fast_launch_configuration:
             description: (Optional) Set of Windows faster-launching configurations to use for AMI distribution. Detailed below.
-            type: string
             optional: true
+            type: string
         kms_key_id:
             description: (Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key to encrypt the distributed AMI.
-            type: string
             optional: true
+            type: string
         launch_permission:
             description: (Optional) Configuration block of EC2 launch permissions to apply to the distributed AMI. Detailed below.
-            type: string
             optional: true
+            type: string
         launch_template:
             description: (Optional) Configuration block for the launch template that the fast-launch enabled Windows AMI uses when it launches Windows instances to create pre-provisioned snapshots. Detailed below.
-            type: string
             optional: true
+            type: string
         launch_template_configuration:
             description: (Optional) Set of launch template configuration settings that apply to image distribution. Detailed below.
-            type: string
             optional: true
+            type: string
         launch_template_id:
             description: '(Required) The ID of the Amazon EC2 launch template to use.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         launch_template_name:
             description: (Optional) The name of the launch template to use for faster launching for a Windows AMI.
-            type: string
             optional: true
+            type: string
         launch_template_version:
             description: (Optional) The version of the launch template to use for faster launching for a Windows AMI.snapshot_configuration
-            type: string
             optional: true
+            type: string
         license_configuration_arns:
             description: (Optional) Set of Amazon Resource Names (ARNs) of License Manager License Configurations.ami_distribution_configuration
-            type: string
             optional: true
+            type: string
         max_parallel_launches:
             description: (Optional) The maximum number of parallel instances that are launched for creating resources.
-            type: string
             optional: true
+            type: string
         name:
             description: (Optional) Name to apply to the distributed AMI.
-            type: string
             optional: true
+            type: string
         organization_arns:
             description: (Optional) Set of AWS Organization ARNs to assign.
-            type: string
             optional: true
+            type: string
         organizational_unit_arns:
             description: (Optional) Set of AWS Organizational Unit ARNs to assign.
-            type: string
             optional: true
+            type: string
         region:
             description: (Required) AWS Region for the distribution.
             type: string
-            optional: true
         repository_name:
             description: (Required) The name of the container repository where the output container image is stored. This name is prefixed by the repository location.
             type: string
-            optional: true
         service:
             description: '(Required) The service in which this image is registered. Valid values: ECR.fast_launch_configuration'
             type: string
-            optional: true
         snapshot_configuration:
             description: (Optional) Configuration block for managing the number of snapshots that are created from pre-provisioned instances for the Windows AMI when faster launching is enabled. Detailed below.launch_template
-            type: string
             optional: true
+            type: string
         tags:
             description: (Optional) Key-value map of resource tags for the distribution configuration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.distribution
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         target_account_ids:
             description: (Optional) Set of AWS Account identifiers to distribute the AMI.launch_permission
-            type: string
             optional: true
+            type: string
         target_repository:
             description: ' (Required) Configuration block with the destination repository for the container distribution configuration.target_repository'
             type: string
-            optional: true
         target_resource_count:
             description: (Optional) The number of pre-provisioned snapshots to keep on hand for a fast-launch enabled Windows AMI.launch_template_configuration
-            type: string
             optional: true
+            type: string
         user_groups:
             description: (Optional) Set of EC2 launch permission user groups to assign. Use all to distribute a public AMI.
-            type: string
             optional: true
+            type: string
         user_ids:
             description: (Optional) Set of AWS Account identifiers to assign.container_distribution_configuration
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: (Required) Amazon Resource Name (ARN) of the distribution configuration.
@@ -163,12 +155,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

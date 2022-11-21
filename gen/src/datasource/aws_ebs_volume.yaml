@@ -1,0 +1,108 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ebs_volume
+spec:
+    args:
+        arn:
+            description: Volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e).
+            type: string
+        availability_zone:
+            description: AZ where the EBS volume exists.
+            type: string
+        encrypted:
+            description: Whether the disk is encrypted.
+            type: string
+        filter:
+            description: 'describe-volumes in the AWS CLI reference.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        id:
+            description: Volume ID (e.g., vol-59fcb34e).
+            type: string
+        iops:
+            description: Amount of IOPS for the disk.
+            type: string
+        kms_key_id:
+            description: ARN for the KMS encryption key.
+            type: string
+        most_recent:
+            description: ""
+            type: string
+        multi_attach_enabled:
+            description: (Optional) Specifies whether Amazon EBS Multi-Attach is enabled.
+            optional: true
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost.
+            type: string
+        size:
+            description: Size of the drive in GiBs.
+            type: string
+        snapshot_id:
+            description: Snapshot_id the EBS volume is based off.
+            type: string
+        tags:
+            description: Map of tags for the resource.
+            type: string
+        throughput:
+            description: 'Throughput that the volume supports, in MiB/s.TimeoutsConfiguration options:'
+            type: string
+        volume_id:
+            description: Volume ID (e.g., vol-59fcb34e).
+            type: string
+        volume_type:
+            description: Type of EBS volume.
+            type: string
+    attrs:
+        arn:
+            description: Volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e).
+            type: string
+        availability_zone:
+            description: AZ where the EBS volume exists.
+            type: string
+        encrypted:
+            description: Whether the disk is encrypted.
+            type: string
+        id:
+            description: Volume ID (e.g., vol-59fcb34e).
+            type: string
+        iops:
+            description: Amount of IOPS for the disk.
+            type: string
+        kms_key_id:
+            description: ARN for the KMS encryption key.
+            type: string
+        multi_attach_enabled:
+            description: (Optional) Specifies whether Amazon EBS Multi-Attach is enabled.
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost.
+            type: string
+        size:
+            description: Size of the drive in GiBs.
+            type: string
+        snapshot_id:
+            description: Snapshot_id the EBS volume is based off.
+            type: string
+        tags:
+            description: Map of tags for the resource.
+            type: string
+        throughput:
+            description: 'Throughput that the volume supports, in MiB/s.TimeoutsConfiguration options:'
+            type: string
+        volume_id:
+            description: Volume ID (e.g., vol-59fcb34e).
+            type: string
+        volume_type:
+            description: Type of EBS volume.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,40 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_vpc_ipam_preview_next_cidr
+spec:
+    args:
+        cidr:
+            description: Previewed CIDR from the pool.
+            type: string
+        disallowed_cidrs:
+            description: (Optional) Exclude a particular CIDR range from being returned by the pool.
+            optional: true
+            type: string
+        id:
+            description: 'ID of the preview.TimeoutsConfiguration options:'
+            type: string
+        ipam_pool_id:
+            description: (Required) ID of the pool to which you want to assign a CIDR.
+            type: string
+        netmask_length:
+            description: '(Optional) Netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+    attrs:
+        cidr:
+            description: Previewed CIDR from the pool.
+            type: string
+        id:
+            description: 'ID of the preview.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

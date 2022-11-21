@@ -3,7 +3,42 @@ kind: TerraformResource
 metadata:
     name: aws_directory_service_radius_settings
 spec:
-    args: {}
+    args:
+        authentication_protocol:
+            description: '(Optional) The protocol specified for your RADIUS endpoints. Valid values: PAP, CHAP, MS-CHAPv1, MS-CHAPv2.'
+            optional: true
+            type: string
+        create:
+            description: (Default 30 minutes) Used for RADIUS settings creation
+            type: string
+        directory_id:
+            description: (Required) The identifier of the directory for which you want to manager RADIUS settings.
+            type: string
+        display_label:
+            description: (Required) Display label.
+            type: string
+        id:
+            description: 'The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:'
+            type: string
+        radius_port:
+            description: (Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers.
+            type: string
+        radius_retries:
+            description: (Required) The maximum number of times that communication with the RADIUS server is attempted. Minimum value of 0. Maximum value of 10.
+            type: string
+        radius_servers:
+            description: (Required) An array of strings that contains the fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer.
+            type: string
+        radius_timeout:
+            description: (Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50.
+            type: string
+        shared_secret:
+            description: (Required) Required for enabling RADIUS on the directory.
+            type: string
+        use_same_username:
+            description: '(Optional) Not currently used.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         create:
             description: (Default 30 minutes) Used for RADIUS settings creation
@@ -16,12 +51,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

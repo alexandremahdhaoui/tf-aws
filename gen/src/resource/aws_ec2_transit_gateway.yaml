@@ -3,7 +3,71 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_transit_gateway
 spec:
-    args: {}
+    args:
+        amazon_side_asn:
+            description: '(Optional) Private Autonomous System Number (ASN) for the Amazon side of a BGP session. The range is 64512 to 65534 for 16-bit ASNs and 4200000000 to 4294967294 for 32-bit ASNs. Default value: 64512.-> strongNOTE: Modifying amazon_side_asn on a Transit Gateway with active BGP sessions is not allowed. You must first delete all Transit Gateway attachments that have BGP configured prior to modifying amazon_side_asn.'
+            optional: true
+            type: string
+        arn:
+            description: EC2 Transit Gateway Amazon Resource Name (ARN)
+            type: string
+        association_default_route_table_id:
+            description: Identifier of the default association route table
+            type: string
+        auto_accept_shared_attachments:
+            description: '(Optional) Whether resource attachment requests are automatically accepted. Valid values: disable, enable. Default value: disable.'
+            optional: true
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        default_route_table_association:
+            description: '(Optional) Whether resource attachments are automatically associated with the default association route table. Valid values: disable, enable. Default value: enable.'
+            optional: true
+            type: string
+        default_route_table_propagation:
+            description: '(Optional) Whether resource attachments automatically propagate routes to the default propagation route table. Valid values: disable, enable. Default value: enable.'
+            optional: true
+            type: string
+        description:
+            description: (Optional) Description of the EC2 Transit Gateway.
+            optional: true
+            type: string
+        dns_support:
+            description: '(Optional) Whether DNS support is enabled. Valid values: disable, enable. Default value: enable.'
+            optional: true
+            type: string
+        id:
+            description: EC2 Transit Gateway identifier
+            type: string
+        multicast_support:
+            description: '(Optional) Whether Multicast support is enabled. Required to use ec2_transit_gateway_multicast_domain. Valid values: disable, enable. Default value: disable.'
+            optional: true
+            type: string
+        owner_id:
+            description: Identifier of the AWS account that owns the EC2 Transit Gateway
+            type: string
+        propagation_default_route_table_id:
+            description: 'Identifier of the default propagation route tableTimeoutsConfiguration options:'
+            type: string
+        tags:
+            description: (Optional) Key-value tags for the EC2 Transit Gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        transit_gateway_cidr_blocks:
+            description: (Optional) One or more IPv4 or IPv6 CIDR blocks for the transit gateway. Must be a size /24 CIDR block or larger for IPv4, or a size /64 CIDR block or larger for IPv6.
+            optional: true
+            type: string
+        update:
+            description: (Default 10m)
+            type: string
+        vpn_ecmp_support:
+            description: '(Optional) Whether VPN Equal Cost Multipath Protocol support is enabled. Valid values: disable, enable. Default value: enable.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: EC2 Transit Gateway Amazon Resource Name (ARN)
@@ -34,12 +98,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

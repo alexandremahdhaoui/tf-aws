@@ -7,67 +7,64 @@ spec:
         account_access_type:
             description: (Required) The type of account access for the workspace. Valid values are CURRENT_ACCOUNT and ORGANIZATION. If ORGANIZATION is specified, then organizational_units must also be present.
             type: string
-            optional: true
         arn:
             description: The Amazon Resource Name (ARN) of the Grafana workspace.
-            type: string
             optional: true
+            type: string
         authentication_providers:
             description: (Required) The authentication providers for the workspace. Valid values are AWS_SSO, SAML, or both.
             type: string
-            optional: true
         data_sources:
             description: (Optional) The data sources for the workspace. Valid values are AMAZON_OPENSEARCH_SERVICE, ATHENA, CLOUDWATCH, PROMETHEUS, REDSHIFT, SITEWISE, TIMESTREAM, XRAY
-            type: string
             optional: true
+            type: string
         description:
             description: (Optional) The workspace description.
-            type: string
             optional: true
+            type: string
         endpoint:
             description: The endpoint of the Grafana workspace.
-            type: string
             optional: true
+            type: string
         grafana_version:
             description: The version of Grafana running on the workspace.
-            type: string
             optional: true
+            type: string
         name:
             description: (Optional) The Grafana workspace name.
-            type: string
             optional: true
+            type: string
         notification_destinations:
             description: (Optional) The notification destinations. If a data source is specified here, Amazon Managed Grafana will create IAM roles and permissions needed to use these destinations. Must be set to SNS.
-            type: string
             optional: true
+            type: string
         organization_role_name:
             description: (Optional) The role name that the workspace uses to access resources through Amazon Organizations.
-            type: string
             optional: true
+            type: string
         organizational_units:
             description: (Optional) The Amazon Organizations organizational units that the workspace is authorized to use data sources from.
-            type: string
             optional: true
+            type: string
         permission_type:
             description: (Required) The permission type of the workspace. If SERVICE_MANAGED is specified, the IAM roles and IAM policy attachments are generated automatically. If CUSTOMER_MANAGED is specified, the IAM roles and IAM policy attachments will not be created.
             type: string
-            optional: true
         role_arn:
             description: (Optional) The IAM role ARN that the workspace assumes.
-            type: string
             optional: true
+            type: string
         stack_set_name:
             description: (Optional) The AWS CloudFormation stack set name that provisions IAM roles to be used by the workspace.
-            type: string
             optional: true
+            type: string
         tags:
             description: '(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         tags_all:
             description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) of the Grafana workspace.
@@ -83,12 +80,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

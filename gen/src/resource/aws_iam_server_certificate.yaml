@@ -3,7 +3,48 @@ kind: TerraformResource
 metadata:
     name: aws_iam_server_certificate
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) specifying the server certificate.
+            type: string
+        certificate_body:
+            description: ""
+            type: string
+        certificate_chain:
+            description: ""
+            type: string
+        expiration:
+            description: Date and time in RFC3339 format on which the certificate is set to expire.
+            type: string
+        id:
+            description: The unique Server Certificate name
+            type: string
+        name:
+            description: The name of the Server Certificate
+            type: string
+        name_prefix:
+            description: |-
+                (Optional) Creates a unique name beginning with the specified
+                prefix. Conflicts with name.
+            optional: true
+            type: string
+        path:
+            description: |-
+                (Optional) The IAM path for the server certificate.  If it is not
+                included, it defaults to a slash (/). If this certificate is for use with
+                AWS CloudFront, the path must be in format /cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths.
+            optional: true
+            type: string
+        private_key:
+            description: ' – (Required) The contents of the private key in PEM-encoded format.'
+            type: string
+        tags:
+            description: '(Optional) Map of resource tags for the server certificate. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE: AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in terraform forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that certificate_body contains only one certificate. All other certificates should go in certificate_chain. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) specifying the server certificate.
@@ -25,12 +66,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -20,34 +20,32 @@ const SourcePathTemplate = "./cmd/gen_src/%s.txt"
 const ModuleOutputPathTemplate = "./gen/src/%s/%s.yaml"
 
 func main() {
-	providerVersionTag := "v4.40.0"
-	parseTerraformDefinition("resource", providerVersionTag)
-	parseTerraformDefinition("datasource", providerVersionTag)
+	err := apis.SetTerraformVersionTag("1.3.4")
+	panicE(err)
+	err = apis.SetProviderVersionTag("v4.38.0")
+	panicE(err)
+	parseTerraformDefinition(apis.Resource)
+	parseTerraformDefinition(apis.Datasource)
 }
 
-func parseTerraformDefinition(kind, providerVersionTag string) {
-	for _, moduleInfo := range urls(kind, providerVersionTag) {
-		fmt.Printf("parsing %s...\n", moduleInfo.url)
-		doc := parseMarkdownToHtml(moduleInfo.url)
+func parseTerraformDefinition(kind apis.Kind) {
+	providerVersionTag := apis.ProviderVersionTag()
+	for _, info := range urls(kind, providerVersionTag) {
+		fmt.Printf("parsing %s...\n", info.url)
+		doc := parseMarkdownToHtml(info.url)
 		node := visitor.NewNode(doc)
 		tt := ast.FromHtmlNode(&node)
 		tkns := ast.Flatten(tt)
-		def := ast.ToTerraformDefinition(tkns, kind, moduleInfo.name, providerVersionTag)
+		def := ast.ToTerraformDefinition(tkns, kind, info.name)
 		saveDef(kind, &def)
 	}
 }
 
-func saveDef(sourceKind string, data *apis.TerraformModuleDefinition) {
+func saveDef(sourceKind apis.Kind, data *apis.TerraformModuleDefinition) {
 	buf, err := yaml.Marshal(data)
 	panicE(err)
-	err = os.WriteFile(fmt.Sprintf(ModuleOutputPathTemplate, sourceKind, data.Metadata.Name), buf, 0644)
+	err = os.WriteFile(fmt.Sprintf(ModuleOutputPathTemplate, apis.KindSlug(sourceKind), data.Metadata.Name), buf, 0644)
 	panicE(err)
-}
-
-func panicE(e error) {
-	if e != nil {
-		panic(e)
-	}
 }
 
 func parseMarkdownToHtml(url string) *html.Node {
@@ -70,12 +68,13 @@ type moduleInfo struct {
 	name, url string
 }
 
-func urls(sourceKind, providerVersionTag string) []moduleInfo {
+func urls(sourceKind apis.Kind, providerVersionTag string) []moduleInfo {
+	kind := apis.KindSlug(sourceKind)
 	var infos []moduleInfo
-	for _, line := range readFileAndSplitLine(fmt.Sprintf(SourcePathTemplate, sourceKind)) {
+	for _, line := range readFileAndSplitLine(fmt.Sprintf(SourcePathTemplate, kind)) {
 		info := moduleInfo{
-			name: strings.ReplaceAll(line, ".html.markdown", ""),
-			url:  fmt.Sprintf(TerraformAwsProviderUrlTemplate, providerVersionTag, sourceKind[0:1], line),
+			name: strings.ReplaceAll(fmt.Sprintf("aws_%s", line), ".html.markdown", ""),
+			url:  fmt.Sprintf(TerraformAwsProviderUrlTemplate, providerVersionTag, kind[0:1], line),
 		}
 		infos = append(infos, info)
 	}
@@ -90,4 +89,10 @@ func readFileAndSplitLine(path string) []string {
 	panicE(err)
 
 	return strings.Split(string(b), "\n")
+}
+
+func panicE(e error) {
+	if e != nil {
+		panic(e)
+	}
 }

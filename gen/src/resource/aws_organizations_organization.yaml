@@ -3,7 +3,56 @@ kind: TerraformResource
 metadata:
     name: aws_organizations_organization
 spec:
-    args: {}
+    args:
+        accounts:
+            description: List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts
+            type: string
+        arn:
+            description: ARN of the root
+            type: string
+        aws_service_access_principals:
+            description: (Optional) List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must have feature_set set to ALL. Some services do not support enablement via this endpoint, see warning in aws docs.
+            optional: true
+            type: string
+        email:
+            description: Email of the account
+            type: string
+        enabled_policy_types:
+            description: (Optional) List of Organizations policy types to enable in the Organization Root. Organization must have feature_set set to ALL. For additional information about valid policy types (e.g., AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY, and TAG_POLICY), see the AWS Organizations API Reference.
+            optional: true
+            type: string
+        feature_set:
+            description: '(Optional) Specify "ALL" (default) or "CONSOLIDATED_BILLING".In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        id:
+            description: Identifier of the root
+            type: string
+        master_account_arn:
+            description: ARN of the master account
+            type: string
+        master_account_email:
+            description: Email address of the master account
+            type: string
+        master_account_id:
+            description: Identifier of the master account
+            type: string
+        name:
+            description: The name of the policy type
+            type: string
+        non_master_accounts:
+            description: List of organization accounts excluding the master account. For a list including the master account, see the accounts
+            type: string
+        policy_types:
+            description: ""
+            type: string
+        roots:
+            description: |
+                List of organization roots. All elements have these attributes:
+            type: string
+        status:
+            description: Current status of the account
+            type: string
     attrs:
         accounts:
             description: List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts
@@ -33,8 +82,7 @@ spec:
             description: List of organization accounts excluding the master account. For a list including the master account, see the accounts
             type: string
         policy_types:
-            description: |
-                List of policy types enabled for this root. All elements have these attributes:
+            description: ""
             type: string
         roots:
             description: |
@@ -45,12 +93,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

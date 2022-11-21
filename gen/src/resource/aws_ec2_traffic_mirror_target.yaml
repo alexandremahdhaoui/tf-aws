@@ -3,7 +3,32 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_traffic_mirror_target
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the traffic mirror target.
+            type: string
+        description:
+            description: (Optional, Forces new) A description of the traffic mirror session.
+            type: string
+        gateway_load_balancer_endpoint_id:
+            description: (Optional, Forces new) The VPC Endpoint Id of the Gateway Load Balancer that is associated with the target.
+            type: string
+        id:
+            description: The ID of the Traffic Mirror target.
+            type: string
+        network_interface_id:
+            description: (Optional, Forces new) The network interface ID that is associated with the target.
+            type: string
+        network_load_balancer_arn:
+            description: (Optional, Forces new) The Amazon Resource Name (ARN) of the Network Load Balancer that is associated with the target.
+            type: string
+        tags:
+            description: '(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongNOTE: Either network_interface_id or network_load_balancer_arn should be specified and both should not be specified togetherIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
     attrs:
         arn:
             description: The ARN of the traffic mirror target.
@@ -19,12 +44,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

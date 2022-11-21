@@ -2,21 +2,37 @@
 
 # Repository structure
 
-| Path        | Description                                                                                                          |
-|-------------|----------------------------------------------------------------------------------------------------------------------|
-| cmd/        | Includes command line tools used in this project.                                                                    |
-| customize/  | Includes configuration files to customize behaviors of generated modules.                                            |
-| gen/mod/    | Generated modules.                                                                                                   |
-| gen/src/    | `TerraformModule` configuration files.                                                                               |
-| pkg/        | Includes go packages used by the cli tools defined in `cmd`.                                                         |
-| pkg/apis/   | Contains `TerraformModuleDefinition` structs.                                                                        | 
-| pkg/ast/    | Contains `NewTokenizer`, `FromHtmlDoc` & `ToTerraformDefinition` functions.                                          | 
-| pkg/tokens/ | Contains `Token`, `TokenStream` & `TokenTree` interfaces used to parse the markdowns into `TerraformModule` structs. |
+| Path          | Description                                                                                                          |
+|---------------|----------------------------------------------------------------------------------------------------------------------|
+| `cmd/`        | Includes command line tools used in this project.                                                                    |
+| `cmd/gen_src` | CLI generating `TerraformModuleDefinition`s from GitHub repository of `terraform-provider-aws`.                      |
+| `cmd/gen_mod` | CLI generating Terraform modules from `TerraformModuleDefiniton`s located in `gen/src/` & `customize/`.              |
+| `customize/`  | Includes configuration files to customize behaviors of generated modules.                                            |
+| `gen/mod/`    | Generated modules.                                                                                                   |
+| `gen/src/`    | `TerraformModule` configuration files.                                                                               |
+| `pkg/`        | Includes go packages used by the cli tools defined in `cmd`.                                                         |
+| `pkg/apis/`   | Contains `TerraformModuleDefinition` structs.                                                                        | 
+| `pkg/ast/`    | Contains `NewTokenizer`, `FromHtmlDoc` & `ToTerraformDefinition` functions.                                          | 
+| `pkg/tokens/` | Contains `Token`, `TokenStream` & `TokenTree` interfaces used to parse the markdowns into `TerraformModule` structs. |
 
 
 # TODO
-- We should allow overwriting configurations, e.g. adding a new key for `lifecycle.ignore_changes`. 
-  - Maybe create a folder called `src_overwrite/`.
+
+## cmd/gen_mod/
+- [ ] Deserialize both data in `gen/src/` & `customize/`.
+- [ ] Overwrite values of `gen/src/` by the one in `customize/` if applicable.
+- [ ] Using `hcl` library, write a `Serializer` that takes a `TerraformModuleDefinition` as input and outputs a valid
+Terraform module.
+- [ ] Once it is done, outsource this module into [template-mod-tf](https://gitlab.com/alexandre.mahdhaoui/template-mod-tf).
+  - [ ] Rename the repository of the outsourced module to: `go-lib-gen-tf` (better respects the naming convention).
+
+## Other
+- [ ] Once todo items for `cmd/gen_mod/` are done, please add tests to the repository and enhance automation when generating modules.
+- [ ] `cmd/gen_src`: Add ability to specify provider version tag from CLI.
+- [ ] `cmd/gen_src`: Add ability to fetch all the modules name,urls from the GitHub API instead of hard sourcing these in 
+`cmd/gen_src/{datasource,resource}.txt`.
+
+Maybe in the future:
 - Don't store `gen/` in this repo but rather in `s3` ?
 
 # Modules

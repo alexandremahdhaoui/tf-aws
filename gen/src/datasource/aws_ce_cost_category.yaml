@@ -7,107 +7,84 @@ spec:
         and:
             description: Return results that match both Dimension objects.
             type: string
-            optional: true
         arn:
             description: ARN of the cost category.
             type: string
-            optional: true
         cost_category:
             description: Configuration block for the filter that's based on CostCategory values. See below.
             type: string
-            optional: true
         cost_category_arn:
             description: '(Required) Unique name for the Cost Category.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         dimension:
             description: Configuration block for the specific Dimension to use for Expression. See below.
             type: string
-            optional: true
         dimension_key:
             description: Key to extract cost category values.
             type: string
-            optional: true
         dimension_name:
             description: Name of the dimension that's used to group costs. If you specify LINKED_ACCOUNT_NAME, the cost category value is based on account name. If you specify TAG, the cost category value will be based on the value of the specified tag key. Valid values are LINKED_ACCOUNT_NAME, TAGrule
             type: string
-            optional: true
         effective_end:
             description: Effective end data of your Cost Category.
             type: string
-            optional: true
         effective_start:
             description: Effective state data of your Cost Category.
             type: string
-            optional: true
         id:
             description: Unique ID of the cost category.
             type: string
-            optional: true
         inherited_value:
             description: Configuration block for the value the line item is categorized as if the line item contains the matched dimension. See below.
             type: string
-            optional: true
         key:
             description: Key for the tag.
             type: string
-            optional: true
         match_options:
             description: 'Match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. Valid values are: EQUALS,  ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE.'
             type: string
-            optional: true
         method:
             description: Method that's used to define how to split your source costs across your targets. Valid values are FIXED, PROPORTIONAL, EVEN
             type: string
-            optional: true
         not:
             description: Return results that match both Dimension object.
             type: string
-            optional: true
         or:
             description: Return results that match both Dimension object.
             type: string
-            optional: true
         parameter:
             description: Configuration block for the parameters for a split charge method. This is only required for the FIXED method. See below.
             type: string
-            optional: true
         rule:
             description: Configuration block for the Expression object used to categorize costs. See below.
             type: string
-            optional: true
         rule_version:
             description: Rule schema version in this particular Cost Category.
             type: string
-            optional: true
         source:
             description: Cost Category value that you want to split.
             type: string
-            optional: true
         split_charge_rule:
             description: Configuration block for the split charge rules used to allocate your charges between your Cost Category values. See below.
             type: string
-            optional: true
-        tags:
+        tag:
             description: Configuration block for the specific Tag to use for Expression. See below.cost_category
             type: string
-            optional: true
+        tags:
+            description: Resource tags.rule
+            type: string
         targets:
             description: Cost Category values that you want to split costs across. These values can't be used as a source in other split charge rules.parameter
             type: string
-            optional: true
         type:
             description: Parameter type.
             type: string
-            optional: true
         value:
             description: Default value for the cost category.inherited_value
             type: string
-            optional: true
         values:
             description: Specific value of the Cost Category.split_charge_rule
             type: string
-            optional: true
     attrs:
         and:
             description: Return results that match both Dimension objects.
@@ -169,8 +146,11 @@ spec:
         split_charge_rule:
             description: Configuration block for the split charge rules used to allocate your charges between your Cost Category values. See below.
             type: string
-        tags:
+        tag:
             description: Configuration block for the specific Tag to use for Expression. See below.cost_category
+            type: string
+        tags:
+            description: Resource tags.rule
             type: string
         targets:
             description: Cost Category values that you want to split costs across. These values can't be used as a source in other split charge rules.parameter
@@ -186,12 +166,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

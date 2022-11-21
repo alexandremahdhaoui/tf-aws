@@ -3,19 +3,31 @@ kind: TerraformResource
 metadata:
     name: aws_macie2_classification_export_configuration
 spec:
-    args: {}
+    args:
+        bucket_name:
+            description: (Required) The Amazon S3 bucket name in which Amazon Macie exports the data classification results.
+            type: string
+        key_prefix:
+            description: (Optional) The object key for the bucket in which Amazon Macie exports the data classification results.
+            optional: true
+            type: string
+        kms_key_arn:
+            description: '(Required) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.Additional information can be found in the Storing and retaining sensitive data discovery results with Amazon Macie for AWS Macie documentation.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        s3_destination:
+            description: '(Required) Configuration block for a S3 Destination. Defined belows3_destination Configuration BlockThe s3_destination configuration block supports the following arguments:'
+            type: string
     attrs:
         id:
             description: The unique identifier (ID) of the configuration.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

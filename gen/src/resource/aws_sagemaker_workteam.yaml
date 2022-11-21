@@ -3,7 +3,59 @@ kind: TerraformResource
 metadata:
     name: aws_sagemaker_workteam
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this Workteam.
+            type: string
+        client_id:
+            description: (Required) An identifier for an application client. You must create the app client ID using Amazon Cognito.
+            type: string
+        cognito_member_definition:
+            description: (Optional) The Amazon Cognito user group that is part of the work team. See Cognito Member Definition details below.
+            optional: true
+            type: string
+        description:
+            description: (Required) A description of the work team.
+            type: string
+        groups:
+            description: (Required) A list of comma separated strings that identifies user groups in your OIDC IdP. Each user group is made up of a group of private workers.Notification Configuration
+            type: string
+        id:
+            description: The name of the Workteam.
+            type: string
+        member_definition:
+            description: (Required) A list of Member Definitions that contains objects that identify the workers that make up the work team. Workforces can be created using Amazon Cognito or your own OIDC Identity Provider (IdP). For private workforces created using Amazon Cognito use cognito_member_definition. For workforces created using your own OIDC identity provider (IdP) use oidc_member_definition. Do not provide input for both of these parameters in a single request. see Member Definition details below.
+            type: string
+        notification_configuration:
+            description: (Optional) Configures notification of workers regarding available or expiring work items. see Notification Configuration details below.
+            optional: true
+            type: string
+        notification_topic_arn:
+            description: '(Required) The ARN for the SNS topic to which notifications should be published.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        oidc_member_definition:
+            description: (Optional) A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. See Cognito Member Definition details below.Cognito Member Definition
+            optional: true
+            type: string
+        subdomain:
+            description: The subdomain for your OIDC Identity Provider.
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Member Definition
+            optional: true
+            type: string
+        user_group:
+            description: (Required) An identifier for a user group.Oidc Member Definition
+            type: string
+        user_pool:
+            description: (Required) An identifier for a user pool. The user pool must be in the same region as the service that you are calling.
+            type: string
+        workforce_name:
+            description: (Required) The name of the Workteam (must be unique).
+            type: string
+        workteam_name:
+            description: (Required) The name of the workforce.
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) assigned by AWS to this Workteam.
@@ -19,12 +71,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -1,0 +1,52 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ec2_transit_gateway_attachment
+spec:
+    args:
+        arn:
+            description: ARN of the attachment.
+            type: string
+        filter:
+            description: (Optional) One or more configuration blocks containing name-values filters. Detailed below.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the field to filter by, as defined by the underlying AWS API.
+            type: string
+        resource_id:
+            description: ID of the resource.
+            type: string
+        resource_owner_id:
+            description: ID of the AWS account that owns the resource.
+            type: string
+        resource_type:
+            description: Resource type.
+            type: string
+        state:
+            description: Attachment state.
+            type: string
+        tags:
+            description: Key-value tags for the attachment.
+            type: string
+        transit_gateway_attachment_id:
+            description: (Optional) ID of the attachment.filter Argument Reference
+            optional: true
+            type: string
+        transit_gateway_id:
+            description: ID of the transit gateway.
+            type: string
+        values:
+            description: '(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs: {}
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

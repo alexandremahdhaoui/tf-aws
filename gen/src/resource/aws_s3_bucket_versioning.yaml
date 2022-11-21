@@ -3,19 +3,37 @@ kind: TerraformResource
 metadata:
     name: aws_s3_bucket_versioning
 spec:
-    args: {}
+    args:
+        bucket:
+            description: (Required, Forces new resource) The name of the S3 bucket.
+            type: string
+        expected_bucket_owner:
+            description: (Optional, Forces new resource) The account ID of the expected bucket owner.
+            type: string
+        mfa:
+            description: '(Optional, Required if versioning_configuration mfa_delete is enabled) The concatenation of the authentication device''s serial number, a space, and the value that is displayed on your authentication device.versioning_configuration~> strongNote: While the versioning_configuration.status parameter supports Disabled, this value is only intended for emcreating or emimportingEnabled or Suspended to Disabled will result in errors as the AWS S3 API does not support returning buckets to an unversioned state.The versioning_configuration configuration block supports the following arguments:'
+            type: string
+        mfa_delete:
+            description: '(Optional) Specifies whether MFA delete is enabled in the bucket versioning configuration. Valid values: Enabled or Disabled.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        status:
+            description: '(Required) The versioning state of the bucket. Valid values: Enabled, Suspended, or Disabled. Disabled should only be used when creating or importing resources that correspond to unversioned S3 buckets.'
+            type: string
+        versioning_configuration:
+            description: (Required) Configuration block for the versioning parameters detailed below.
+            type: string
     attrs:
         id:
             description: The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

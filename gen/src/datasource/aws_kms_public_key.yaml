@@ -1,0 +1,79 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_kms_public_key
+spec:
+    args:
+        'Alias ARN - E.g. - ':
+            description: arn:aws:kms:us-east-1:111122223333:alias/my-key
+            type: string
+        'Alias name. E.g. - ':
+            description: alias/my-key
+            type: string
+        'Key ARN. E.g. - ':
+            description: arn:aws:kms:us-east-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab
+            type: string
+        'Key ID. E.g - ':
+            description: 1234abcd-12ab-34cd-56ef-1234567890ab
+            type: string
+        arn:
+            description: Key ARN of the asymmetric CMK from which the public key was downloaded.
+            type: string
+        customer_master_key_spec:
+            description: Type of the public key that was downloaded.
+            type: string
+        encryption_algorithms:
+            description: Encryption algorithms that AWS KMS supports for this key. Only set when the key_usage of the public key is ENCRYPT_DECRYPT.
+            type: string
+        grant_tokens:
+            description: '(Optional) List of grant tokensIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        id:
+            description: Key ARN of the asymmetric CMK from which the public key was downloaded.
+            type: string
+        key_id:
+            description: |
+                (Required) Key identifier which can be one of the following format:
+            type: string
+        key_usage:
+            description: Permitted use of the public key. Valid values are ENCRYPT_DECRYPT or SIGN_VERIFY
+            type: string
+        public_key:
+            description: Exported public key. The value is a DER-encoded X.509 public key, also known as SubjectPublicKeyInfo (SPKI), as defined in RFC 5280. The value is Base64-encoded.
+            type: string
+        public_key_pem:
+            description: Exported public key. The value is Privacy Enhanced Mail (PEM) encoded.
+            type: string
+    attrs:
+        arn:
+            description: Key ARN of the asymmetric CMK from which the public key was downloaded.
+            type: string
+        customer_master_key_spec:
+            description: Type of the public key that was downloaded.
+            type: string
+        encryption_algorithms:
+            description: Encryption algorithms that AWS KMS supports for this key. Only set when the key_usage of the public key is ENCRYPT_DECRYPT.
+            type: string
+        id:
+            description: Key ARN of the asymmetric CMK from which the public key was downloaded.
+            type: string
+        key_usage:
+            description: Permitted use of the public key. Valid values are ENCRYPT_DECRYPT or SIGN_VERIFY
+            type: string
+        public_key:
+            description: Exported public key. The value is a DER-encoded X.509 public key, also known as SubjectPublicKeyInfo (SPKI), as defined in RFC 5280. The value is Base64-encoded.
+            type: string
+        public_key_pem:
+            description: Exported public key. The value is Privacy Enhanced Mail (PEM) encoded.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

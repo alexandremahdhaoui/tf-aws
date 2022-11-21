@@ -3,7 +3,37 @@ kind: TerraformResource
 metadata:
     name: aws_datasync_location_nfs
 spec:
-    args: {}
+    args:
+        agent_arns:
+            description: '(Required) List of Amazon Resource Names (ARNs) of the DataSync Agents used to connect to the NFS server.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the DataSync Location.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the DataSync Location.
+            type: string
+        mount_options:
+            description: (Optional) Configuration block containing mount options used by DataSync to access the NFS Server.
+            optional: true
+            type: string
+        on_prem_config:
+            description: (Required) Configuration block containing information for connecting to the NFS File System.
+            type: string
+        server_hostname:
+            description: (Required) Specifies the IP address or DNS name of the NFS server. The DataSync Agent(s) use this to mount the NFS server.
+            type: string
+        subdirectory:
+            description: (Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server.
+            type: string
+        tags:
+            description: '(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.mount_options Argument Referencemount_options configuration block:'
+            optional: true
+            type: string
+        version:
+            description: '(Optional) The specific NFS version that you want DataSync to use for mounting your NFS share. Valid values: AUTOMATIC, NFS3, NFS4_0 and NFS4_1. Default: AUTOMATICon_prem_config Argument Referenceon_prem_config configuration block:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the DataSync Location.
@@ -16,12 +46,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

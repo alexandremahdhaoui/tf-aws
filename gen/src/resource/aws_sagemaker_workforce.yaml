@@ -3,7 +3,77 @@ kind: TerraformResource
 metadata:
     name: aws_sagemaker_workforce
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this Workforce.
+            type: string
+        authorization_endpoint:
+            description: (Required) The OIDC IdP authorization endpoint used to configure your private workforce.
+            type: string
+        cidrs:
+            description: (Required) A list of up to 10 CIDR values.Workforce VPC Config
+            type: string
+        client_id:
+            description: (Required) The OIDC IdP client ID used to configure your private workforce.
+            type: string
+        client_secret:
+            description: (Required) The OIDC IdP client secret used to configure your private workforce.
+            type: string
+        cognito_config:
+            description: (Optional) Use this parameter to configure an Amazon Cognito private workforce. A single Cognito workforce is created using and corresponds to a single Amazon Cognito user pool. Conflicts with oidc_config. see Cognito Config details below.
+            optional: true
+            type: string
+        id:
+            description: The name of the Workforce.
+            type: string
+        issuer:
+            description: (Required) The OIDC IdP issuer used to configure your private workforce.
+            type: string
+        jwks_uri:
+            description: (Required) The OIDC IdP JSON Web Key Set (Jwks) URI used to configure your private workforce.
+            type: string
+        logout_endpoint:
+            description: (Required) The OIDC IdP logout endpoint used to configure your private workforce.
+            type: string
+        oidc_config:
+            description: (Optional) Use this parameter to configure a private workforce using your own OIDC Identity Provider. Conflicts with cognito_config. see OIDC Config details below.
+            optional: true
+            type: string
+        security_group_ids:
+            description: (Optional) The VPC security group IDs. The security groups must be for the same VPC as specified in the subnet.
+            optional: true
+            type: string
+        source_ip_config:
+            description: (Optional) A list of IP address ranges Used to create an allow list of IP addresses for a private workforce. By default, a workforce isn't restricted to specific IP addresses. see Source Ip Config details below.
+            optional: true
+            type: string
+        subdomain:
+            description: The subdomain for your OIDC Identity Provider.
+            type: string
+        subnets:
+            description: (Optional) The ID of the subnets in the VPC that you want to connect.
+            optional: true
+            type: string
+        token_endpoint:
+            description: (Required) The OIDC IdP token endpoint used to configure your private workforce.
+            type: string
+        user_info_endpoint:
+            description: (Required) The OIDC IdP user information endpoint used to configure your private workforce.Source Ip Config
+            type: string
+        user_pool:
+            description: (Required) ID for your Amazon Cognito user pool.Oidc Config
+            type: string
+        vpc_id:
+            description: '(Optional) The ID of the VPC that the workforce uses for communication.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        workforce_name:
+            description: (Required) The name of the Workforce (must be unique).
+            type: string
+        workforce_vpc_config:
+            description: (Optional) configure a workforce using VPC. see Workforce VPC Config details below.Cognito Config
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) assigned by AWS to this Workforce.
@@ -19,12 +89,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

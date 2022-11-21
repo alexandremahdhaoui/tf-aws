@@ -3,7 +3,23 @@ kind: TerraformResource
 metadata:
     name: aws_waf_ipset
 spec:
-    args: {}
+    args:
+        id:
+            description: The ID of the WAF IPSet.
+            type: string
+        ip_set_descriptors:
+            description: (Optional) One or more pairs specifying the IP address type (IPV4 or IPV6) and the IP address range (in CIDR format) from which web requests originate.Nested Blocksip_set_descriptorsArguments
+            optional: true
+            type: string
+        name:
+            description: (Required) The name or description of the IPSet.
+            type: string
+        type:
+            description: (Required) Type of the IP address - IPV4 or IPV6.
+            type: string
+        value:
+            description: '(Required) An IPv4 or IPv6 address specified via CIDR notationE.g., 192.0.2.44/32 or 1111:0000:0000:0000:0000:0000:0000:0000/64In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: The ARN of the WAF IPSet.
@@ -13,12 +29,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

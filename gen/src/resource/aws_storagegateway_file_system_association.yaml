@@ -3,7 +3,44 @@ kind: TerraformResource
 metadata:
     name: aws_storagegateway_file_system_association
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the newly created file system association.
+            type: string
+        audit_destination_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the storage used for the audit logs.
+            optional: true
+            type: string
+        cache_attributes:
+            description: (Optional) Refresh cache information. see Cache Attributes for more details.
+            optional: true
+            type: string
+        cache_stale_timeout_in_seconds:
+            description: |-
+                (Optional) Refreshes a file share's cache by using Time To Live (TTL).
+                TTL is the length of time since the last refresh after which access to the directory would cause the file gateway
+                to first refresh that directory's contents from the Amazon S3 bucket. Valid Values: 0 or 300 to 2592000 seconds (5 minutes to 30 days). Defaults to 0In addition to all arguments above, the following attributes are exported:
+            optional: true
+            type: string
+        gateway_arn:
+            description: (Required) The Amazon Resource Name (ARN) of the gateway.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the FSx file system association
+            type: string
+        location_arn:
+            description: (Required) The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway.
+            type: string
+        password:
+            description: (Required, sensitive) The password of the user credential.
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.cache_attributes
+            optional: true
+            type: string
+        username:
+            description: (Required) The user name of the user credential that has permission to access the root share of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group.
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the newly created file system association.
@@ -16,12 +53,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -1,0 +1,109 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_gamelift_game_server_group.markdown
+spec:
+    args:
+        arn:
+            description: The ARN of the GameLift Game Server Group.
+            type: string
+        auto_scaling_group_arn:
+            description: 'The ARN of the created EC2 Auto Scaling group.TimeoutsConfiguration options:'
+            type: string
+        balancing_strategy:
+            description: |-
+                (Optional) Indicates how GameLift FleetIQ balances the use of Spot Instances and On-Demand Instances.
+                Valid values: SPOT_ONLY, SPOT_PREFERRED, ON_DEMAND_ONLY. Defaults to SPOT_PREFERRED.
+            optional: true
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        estimated_instance_warmup:
+            description: 60.target_tracking_configurationPercentUtilizedGameServers
+            type: string
+        game_server_group_name:
+            description: |-
+                (Required) Name of the game server group.
+                This value is used to generate unique ARN identifiers for the EC2 Auto Scaling group and the GameLift FleetIQ game server group.
+            type: string
+        game_server_protection_policy:
+            description: |-
+                (Optional) Indicates whether instances in the game server group are protected from early termination.
+                Unprotected instances that have active game servers running might be terminated during a scale-down event,
+                causing players to be dropped from the game.
+                Protected instances cannot be terminated while there are active game servers running except in the event
+                of a forced game server group deletion.
+                Valid values: NO_PROTECTION, FULL_PROTECTION. Defaults to NO_PROTECTION.
+            optional: true
+            type: string
+        id:
+            description: The name of the GameLift Game Server Group.
+            type: string
+        instance_type:
+            description: (Required) An EC2 instance type.
+            type: string
+        max_size:
+            description: ""
+            type: string
+        min_size:
+            description: ""
+            type: string
+        name:
+            description: (Optional) A readable identifier for an existing EC2 launch template.
+            optional: true
+            type: string
+        role_arn:
+            description: (Required) ARN for an IAM role that allows Amazon GameLift to access your EC2 Auto Scaling groups.
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags
+            optional: true
+            type: string
+        target_value:
+            description: (Required) Desired value to use with a game server group target-based scaling policy.instance_definition
+            type: string
+        version:
+            description: '(Optional) The version of the EC2 launch template to use. If none is set, the default is the first version created.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        vpc_subnets:
+            description: |-
+                (Optional) A list of VPC subnets to use with instances in the game server group.
+                By default, all GameLift FleetIQ-supported Availability Zones are used.auto_scaling_policyPercentUtilizedGameServers
+            optional: true
+            type: string
+        weighted_capacity:
+            description: |-
+                (Optional) Instance weighting that indicates how much this instance type contributes
+                to the total capacity of a game server group.
+                Instance weights are used by GameLift FleetIQ to calculate the instance type's cost per unit hour and better identify
+                the most cost-effective options.launch_template
+            optional: true
+            type: string
+    attrs:
+        arn:
+            description: The ARN of the GameLift Game Server Group.
+            type: string
+        auto_scaling_group_arn:
+            description: 'The ARN of the created EC2 Auto Scaling group.TimeoutsConfiguration options:'
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        delete:
+            description: (Default 30m)
+            type: string
+        id:
+            description: The name of the GameLift Game Server Group.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

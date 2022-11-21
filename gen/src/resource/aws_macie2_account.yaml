@@ -3,7 +3,24 @@ kind: TerraformResource
 metadata:
     name: aws_macie2_account
 spec:
-    args: {}
+    args:
+        created_at:
+            description: The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created.
+            type: string
+        finding_publishing_frequency:
+            description: ' (Optional) Specifies how often to publish updates to policy findings for the account. This includes publishing updates to AWS Security Hub and Amazon EventBridge (formerly called Amazon CloudWatch Events). Valid values are FIFTEEN_MINUTES, ONE_HOUR or SIX_HOURS.'
+            optional: true
+            type: string
+        id:
+            description: The unique identifier (ID) of the macie account.
+            type: string
+        service_role:
+            description: The Amazon Resource Name (ARN) of the service-linked role that allows Macie to monitor and analyze data in AWS resources for the account.
+            type: string
+        status:
+            description: '(Optional) Specifies the status for the account. To enable Amazon Macie and start all Macie activities for the account, set this value to ENABLED. Valid values are ENABLED or PAUSED.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         created_at:
             description: The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created.
@@ -19,12 +36,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

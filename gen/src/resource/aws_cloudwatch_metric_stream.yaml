@@ -7,75 +7,68 @@ spec:
         additional_statistics:
             description: (Required) The additional statistics to stream for the metrics listed in include_metrics.
             type: string
-            optional: true
         arn:
             description: ARN of the metric stream.
-            type: string
             optional: true
+            type: string
         creation_date:
             description: Date and time in RFC3339 format that the metric stream was created.
-            type: string
             optional: true
+            type: string
         exclude_filter:
             description: (Optional) List of exclusive metric filters. If you specify this parameter, the stream sends metrics from all metric namespaces except for the namespaces that you specify here. Conflicts with include_filter.
-            type: string
             optional: true
+            type: string
         firehose_arn:
             description: (Required) ARN of the Amazon Kinesis Firehose delivery stream to use for this metric stream.
             type: string
-            optional: true
         include_filter:
             description: (Optional) List of inclusive metric filters. If you specify this parameter, the stream sends only the metrics from the metric namespaces that you specify here. Conflicts with exclude_filter.
-            type: string
             optional: true
+            type: string
         include_metric:
             description: (Required) An array that defines the metrics that are to have additional statistics streamed. See details below.include_metrics
             type: string
-            optional: true
         last_update_date:
             description: Date and time in RFC3339 format that the metric stream was last updated.
-            type: string
             optional: true
+            type: string
         metric_name:
             description: (Required) The name of the metric.
             type: string
-            optional: true
         name:
             description: (Optional, Forces new resource) Friendly name of the metric stream. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix.
-            type: string
             optional: true
+            type: string
         name_prefix:
             description: (Optional, Forces new resource) Creates a unique friendly name beginning with the specified prefix. Conflicts with name.
-            type: string
             optional: true
+            type: string
         namespace:
             description: '(Required) The namespace of the metric.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         output_format:
             description: (Required) Output format for the stream. Possible values are json and opentelemetry0.7. For more information about output formats, see Metric streams output formats.
             type: string
-            optional: true
         role_arn:
             description: (Required) ARN of the IAM role that this metric stream will use to access Amazon Kinesis Firehose resources. For more information about role permissions, see Trust between CloudWatch and Kinesis Data Firehose.
             type: string
-            optional: true
         state:
             description: State of the metric stream. Possible values are running and stopped.
-            type: string
             optional: true
+            type: string
         statistics_configuration:
             description: (Optional) For each entry in this array, you specify one or more metrics and the list of additional statistics to stream for those metrics. The additional statistics that you can stream depend on the stream's output_format. If the OutputFormat is json, you can stream any additional statistic that is supported by CloudWatch, listed in CloudWatch statistics definitions. If the OutputFormat is opentelemetry0.7, you can stream percentile statistics (p99 etc.). See details below.Nested Fieldsexclude_filter
-            type: string
             optional: true
+            type: string
         tags:
             description: (Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the metric stream.
@@ -94,12 +87,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

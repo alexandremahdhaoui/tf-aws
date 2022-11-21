@@ -3,7 +3,176 @@ kind: TerraformResource
 metadata:
     name: aws_appmesh_route
 spec:
-    args: {}
+    args:
+        action:
+            description: (Required) Action to take if a match is determined.
+            type: string
+        arn:
+            description: ARN of the route.
+            type: string
+        created_date:
+            description: Creation date of the route.
+            type: string
+        end:
+            description: (Required) End of the range.
+            type: string
+        exact:
+            description: (Optional) Header value sent by the client must match the specified value exactly.
+            optional: true
+            type: string
+        grpc_retry_events:
+            description: |-
+                (Optional) List of gRPC retry events.
+                Valid values: cancelled, deadline-exceeded, internal, resource-exhausted, unavailable.
+            optional: true
+            type: string
+        grpc_route:
+            description: (Optional) GRPC routing information for the route.
+            optional: true
+            type: string
+        header:
+            description: (Optional) Client request headers to match on.
+            optional: true
+            type: string
+        http_retry_events:
+            description: |-
+                (Optional) List of HTTP retry events.
+                Valid values: client-error (HTTP status code 409), gateway-error (HTTP status codes 502, 503, and 504), server-error (HTTP status codes 500, 501, 502, 503, 504, 505, 506, 507, 508, 510, and 511), stream-error (retry on refused stream).
+            optional: true
+            type: string
+        http_route:
+            description: (Optional) HTTP routing information for the route.
+            optional: true
+            type: string
+        http2_route:
+            description: (Optional) HTTP/2 routing information for the route.
+            optional: true
+            type: string
+        id:
+            description: ID of the route.
+            type: string
+        idle:
+            description: (Optional) Idle timeout. An idle timeout bounds the amount of time that a connection may be idle.
+            optional: true
+            type: string
+        invert:
+            description: (Optional) If true, the match is on the opposite of the match method and value. Default is false.
+            optional: true
+            type: string
+        last_updated_date:
+            description: Last update date of the route.
+            type: string
+        match:
+            description: '(Optional) Method and value to match the header value sent with a request. Specify one match method.The header''s match object supports the following:'
+            optional: true
+            type: string
+        max_retries:
+            description: (Required) Maximum number of retries.
+            type: string
+        mesh_name:
+            description: (Required) Name of the service mesh in which to create the route. Must be between 1 and 255 characters in length.
+            type: string
+        mesh_owner:
+            description: (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to.
+            optional: true
+            type: string
+        metadata:
+            description: (Optional) Data to match from the gRPC request.
+            optional: true
+            type: string
+        method:
+            description: '(Optional) Client request header method to match on. Valid values: GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH.'
+            optional: true
+            type: string
+        method_name:
+            description: (Optional) Method name to match from the request. If you specify a name, you must also specify a service_name.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name for the HTTP header in the client request that will be matched on.
+            type: string
+        per_request:
+            description: '(Optional) Per request timeout.The idle and per_request objects support the following:'
+            optional: true
+            type: string
+        per_retry_timeout:
+            description: (Required) Per-retry timeout.
+            type: string
+        prefix:
+            description: (Optional) Header value sent by the client must begin with the specified characters.
+            optional: true
+            type: string
+        priority:
+            description: (Optional) Priority for the route, between 0 and 10000 is the highest priority.
+            optional: true
+            type: string
+        range:
+            description: '- (Optional) Object that specifies the range of numbers that the header value sent by the client must be included in.'
+            optional: true
+            type: string
+        regex:
+            description: (Optional) Header value sent by the client must include the specified characters.
+            optional: true
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        retry_policy:
+            description: (Optional) Retry policy.
+            optional: true
+            type: string
+        scheme:
+            description: '(Optional) Client request header scheme to match on. Valid values: http, https.The http2_route and http_route''s retry_policy object supports the following:'
+            optional: true
+            type: string
+        service_name:
+            description: '(Optional) Fully qualified domain name for the service to match from the request.The metadata object supports the following:'
+            optional: true
+            type: string
+        spec:
+            description: (Required) Route specification to apply.
+            type: string
+        start:
+            description: '(Requited) Start of the range.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        suffix:
+            description: '(Optional) Header value sent by the client must end with the specified characters.The range object supports the following:'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:'
+            optional: true
+            type: string
+        tcp_retry_events:
+            description: '(Optional) List of TCP retry events. The only valid value is connection-error.You must specify at least one value for http_retry_events, or at least one value for tcp_retry_events.The http2_route and http_route''s timeout object supports the following:'
+            optional: true
+            type: string
+        tcp_route:
+            description: '(Optional) TCP routing information for the route.The grpc_route object supports the following:'
+            optional: true
+            type: string
+        timeout:
+            description: '(Optional) Types of timeouts.The action object supports the following:'
+            optional: true
+            type: string
+        unit:
+            description: '(Required) Retry unit. Valid values: ms, s.'
+            type: string
+        value:
+            description: '(Required) Retry value.The weighted_target object supports the following:'
+            type: string
+        virtual_node:
+            description: (Required) Virtual node to associate with the weighted target. Must be between 1 and 255 characters in length.
+            type: string
+        virtual_router_name:
+            description: (Required) Name of the virtual router in which to create the route. Must be between 1 and 255 characters in length.
+            type: string
+        weight:
+            description: '(Required) Relative weight of the weighted target. An integer between 0 and 100.The header object supports the following:'
+            type: string
+        weighted_target:
+            description: 'The timeout object supports the following:'
+            type: string
     attrs:
         arn:
             description: ARN of the route.
@@ -25,12 +194,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

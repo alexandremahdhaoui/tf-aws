@@ -3,19 +3,131 @@ kind: TerraformResource
 metadata:
     name: aws_s3_bucket_replication_configuration
 spec:
-    args: {}
+    args:
+        access_control_translation:
+            description: (Optional) A configuration block that specifies the overrides to use for object owners on replication documented below. Specify this only in a cross-account scenario (where source and destination bucket owners are not the same), and you want to change replica ownership to the AWS account that owns the destination bucket. If this is not specified in the replication configuration, the replicas are owned by same AWS account that owns the source object. Must be used in conjunction with account owner override configuration.
+            optional: true
+            type: string
+        account:
+            description: (Optional) The Account ID to specify the replica ownership. Must be used in conjunction with access_control_translation override configuration.
+            optional: true
+            type: string
+        and:
+            description: (Optional) A configuration block for specifying rule filters. This element is required only if you specify more than one filter. See and below for more details.
+            optional: true
+            type: string
+        bucket:
+            description: (Required) The name of the S3 bucket where you want Amazon S3 to store replicas of the objects identified by the rule.
+            type: string
+        delete_marker_replication:
+            description: (Optional) Whether delete markers are replicated. This argument is only valid with V2 replication configurations (i.e., when filter is used)documented below.
+            optional: true
+            type: string
+        destination:
+            description: (Required) Specifies the destination for the rule documented below.
+            type: string
+        encryption_configuration:
+            description: (Optional) A configuration block that provides information about encryption documented below. If source_selection_criteria is specified, you must specify this element.
+            optional: true
+            type: string
+        event_threshold:
+            description: (Optional) A configuration block that specifies the time threshold for emitting the s3:Replication:OperationMissedThreshold event documented below.
+            optional: true
+            type: string
+        existing_object_replication:
+            description: (Optional) Replicate existing objects in the source bucket according to the rule configurations documented below.
+            optional: true
+            type: string
+        filter:
+            description: (Optional, Conflicts with prefix) Filter that identifies subset of objects to which the replication rule applies documented below. If not specified, the rule will default to using prefix.
+            type: string
+        id:
+            description: (Optional) Unique identifier for the rule. Must be less than or equal to 255 characters in length.
+            optional: true
+            type: string
+        key:
+            description: (Required) Name of the object key.
+            type: string
+        metrics:
+            description: (Optional) A configuration block that specifies replication metrics-related settings enabling replication metrics and events documented below.
+            optional: true
+            type: string
+        minutes:
+            description: '(Required) Time in minutes. Valid values: 15.existing_object_replication~> strongNOTE: Replication for existing objects requires activation by AWS Support.  See userguide/replication-what-is-isnot-replicatedThe existing_object_replication configuration block supports the following arguments:'
+            type: string
+        owner:
+            description: '(Required) Specifies the replica ownership. For default and valid values, see PUT bucket replication in the Amazon S3 API Reference. Valid values: Destination.encryption_configurationThe encryption_configuration configuration block supports the following arguments:'
+            type: string
+        prefix:
+            description: (Optional) An object key name prefix that identifies subset of objects to which the rule applies. Must be less than or equal to 1024 characters in length.
+            optional: true
+            type: string
+        priority:
+            description: (Optional) The priority associated with the rule. Priority should only be set if filter is configured. If not provided, defaults to 0. Priority must be unique between multiple rules.
+            optional: true
+            type: string
+        replica_kms_key_id:
+            description: '(Required) The ID (Key ARN or Alias ARN) of the customer managed AWS KMS key stored in AWS Key Management Service (KMS) for the destination bucket.metricsThe metrics configuration block supports the following arguments:'
+            type: string
+        replica_modifications:
+            description: (Optional) A configuration block that you can specify for selections for modifications on replicas. Amazon S3 doesn't replicate replica modifications by default. In the latest version of replication configuration (when filter is specified), you can specify this element and set the status to Enabled to replicate modifications on replicas.
+            optional: true
+            type: string
+        replication_time:
+            description: (Optional) A configuration block that specifies S3 Replication Time Control (S3 RTC), including whether S3 RTC is enabled and the time when all objects and operations on objects must be replicated documented below. Replication Time Control must be used in conjunction with metrics.
+            optional: true
+            type: string
+        role:
+            description: (Required) The ARN of the IAM role for Amazon S3 to assume when replicating the objects.
+            type: string
+        rule:
+            description: (Required) List of configuration blocks describing the rules managing the replication documented below.
+            type: string
+        source_selection_criteria:
+            description: (Optional) Specifies special object selection criteria documented below.
+            optional: true
+            type: string
+        sse_kms_encrypted_objects:
+            description: '(Optional) A configuration block for filter information for the selection of Amazon S3 objects encrypted with AWS KMS. If specified, replica_kms_key_id in destination encryption_configuration must be specified as well.replica_modificationsThe replica_modifications configuration block supports the following arguments:'
+            optional: true
+            type: string
+        status:
+            description: '(Required) Whether the existing objects should be replicated. Either "Enabled" or "Disabled".In addition to all arguments above, the following attributes are exported:'
+            type: string
+        storage_class:
+            description: '(Optional) The storage class used to store the object. By default, Amazon S3 uses the storage class of the source object to create the object replica.access_control_translationThe access_control_translation configuration block supports the following arguments:'
+            optional: true
+            type: string
+        tag:
+            description: '(Optional) A configuration block for specifying a tag key and value documented below.andThe and configuration block supports the following arguments:'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional, Required if prefix is configured) A map of tags (key and value pairs) that identifies a subset of objects to which the rule applies. The rule applies only to objects having all the tags in its tagset.tagThe tag configuration block supports the following arguments:'
+            type: string
+        time:
+            description: '(Required) A configuration block specifying the time by which replication should be complete for all objects and operations on objects documented below.timeThe time configuration block supports the following arguments:'
+            type: string
+        token:
+            description: |-
+                (Optional) A token to allow replication to be enabled on an Object Lock-enabled bucket. You must contact AWS support for the bucket's "Object Lock token".
+                For more details, see Using S3 Object Lock with replication.rule~> strongNOTE: Replication to multiple destination buckets requires that priority is specified in the rule object. If the corresponding rule requires no filter, an empty configuration block filter {} must be specified.~> strongNOTE: Amazon S3's latest version of the replication configuration is V2, which includes the filter attribute for replication rules.~> strongNOTE: The existing_object_replication parameter is not supported by Amazon S3 at this time and should not be included in your rule configurations. Specifying this parameter will result in MalformedXMLReplicating existing objects with S3 Batch Replication documentation in the Amazon S3 User Guide.The rule configuration block supports the following arguments:
+            optional: true
+            type: string
+        value:
+            description: '(Required) Value of the tag.source_selection_criteriaThe source_selection_criteria configuration block supports the following arguments:'
+            type: string
     attrs:
         id:
             description: The S3 source bucket name.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

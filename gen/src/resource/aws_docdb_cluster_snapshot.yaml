@@ -3,7 +3,43 @@ kind: TerraformResource
 metadata:
     name: aws_docdb_cluster_snapshot
 spec:
-    args: {}
+    args:
+        availability_zones:
+            description: List of EC2 Availability Zones that instances in the DocDB cluster snapshot can be restored in.
+            type: string
+        db_cluster_identifier:
+            description: (Required) The DocDB Cluster Identifier from which to take the snapshot.
+            type: string
+        db_cluster_snapshot_arn:
+            description: The Amazon Resource Name (ARN) for the DocDB Cluster Snapshot.
+            type: string
+        db_cluster_snapshot_identifier:
+            description: '(Required) The Identifier for the snapshot.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        engine:
+            description: Specifies the name of the database engine.
+            type: string
+        engine_version:
+            description: Version of the database engine for this DocDB cluster snapshot.
+            type: string
+        kms_key_id:
+            description: If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocDB cluster snapshot.
+            type: string
+        port:
+            description: Port that the DocDB cluster was listening on at the time of the snapshot.
+            type: string
+        source_db_cluster_snapshot_identifier:
+            description: The DocDB Cluster Snapshot Arn that the DocDB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy.
+            type: string
+        status:
+            description: The status of this DocDB Cluster Snapshot.
+            type: string
+        storage_encrypted:
+            description: Specifies whether the DocDB cluster snapshot is encrypted.
+            type: string
+        vpc_id:
+            description: 'The VPC ID associated with the DocDB cluster snapshot.TimeoutsConfiguration options:'
+            type: string
     attrs:
         availability_zones:
             description: List of EC2 Availability Zones that instances in the DocDB cluster snapshot can be restored in.
@@ -40,12 +76,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

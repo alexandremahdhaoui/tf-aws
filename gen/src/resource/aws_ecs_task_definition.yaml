@@ -6,200 +6,187 @@ spec:
     args:
         access_point_id:
             description: (Optional) Access point ID to use. If an access point is specified, the root directory value will be relative to the directory set for the access point. If specified, transit encryption must be enabled in the EFSVolumeConfiguration.
-            type: string
             optional: true
+            type: string
         arn:
             description: Full ARN of the Task Definition (including both family and revision).
-            type: string
             optional: true
+            type: string
         authorization_config:
             description: (Required) Configuration block for authorization for the Amazon FSx for Windows File Server file system detailed below.authorization_config
             type: string
-            optional: true
         autoprovision:
             description: '(Optional) If this value is true, the Docker volume is created if it does not already exist. emNote: This field is only used if the scope is shared.'
-            type: string
             optional: true
+            type: string
         container_definitions:
             description: (Required) A list of valid container definitions provided as a single valid JSON document. Please note that you should only provide values that are part of the container definition document. For a detailed description of what parameters are available, see the Task Definition Parameters section from the official Developer Guide.
             type: string
-            optional: true
         container_name:
             description: (Required) Name of the container that will serve as the App Mesh proxy.
             type: string
-            optional: true
         cpu:
             description: (Optional) Number of cpu units used by the task. If the requires_compatibilities is FARGATE this field is required.
-            type: string
             optional: true
+            type: string
         cpu_architecture:
             description: (Optional) Must be set to either X86_64 or ARM64; see cpu architectureauthorization_config
-            type: string
             optional: true
+            type: string
         credentials_parameter:
             description: (Required) The authorization credential option to use. The authorization credential options can be provided using either the Amazon Resource Name (ARN) of an AWS Secrets Manager secret or AWS Systems Manager Parameter Store parameter. The ARNs refer to the stored credentials.
             type: string
-            optional: true
         device_name:
             description: (Required) Elastic Inference accelerator device name. The deviceName must also be referenced in a container definition as a ResourceRequirement.
             type: string
-            optional: true
         device_type:
             description: '(Required) Elastic Inference accelerator type to use.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         docker_volume_configuration:
             description: (Optional) Configuration block to configure a docker volume. Detailed below.
-            type: string
             optional: true
+            type: string
         domain:
             description: (Required) A fully qualified domain name hosted by an AWS Directory Service Managed Microsoft AD (Active Directory) or self-hosted AD on Amazon EC2.placement_constraints
             type: string
-            optional: true
         driver:
             description: (Optional) Docker volume driver to use. The driver value must match the driver name provided by Docker because it is used for task placement.
-            type: string
             optional: true
+            type: string
         driver_opts:
             description: (Optional) Map of Docker driver specific options.
-            type: string
             optional: true
+            type: string
         efs_volume_configuration:
             description: (Optional) Configuration block for an EFS volume. Detailed below.
-            type: string
             optional: true
+            type: string
         ephemeral_storage:
             description: (Optional)  The amount of ephemeral storage to allocate for the task. This parameter is used to expand the total amount of ephemeral storage available, beyond the default amount, for tasks hosted on AWS Fargate. See Ephemeral Storage.
-            type: string
             optional: true
+            type: string
         execution_role_arn:
             description: (Optional) ARN of the task execution role that the Amazon ECS container agent and the Docker daemon can assume.
-            type: string
             optional: true
+            type: string
         expression:
             description: ' (Optional) Cluster Query Language expression to apply to the constraint. For more information, see Cluster Query Language in the Amazon EC2 Container Service Developer Guide.'
-            type: string
             optional: true
+            type: string
         family:
             description: (Required) A unique name for your task definition.
             type: string
-            optional: true
         file_system_id:
             description: (Required) The Amazon FSx for Windows File Server file system ID to use.
             type: string
-            optional: true
         fsx_windows_file_server_volume_configuration:
             description: (Optional) Configuration block for an FSX Windows File Server volume. Detailed below.
-            type: string
             optional: true
+            type: string
         host_path:
             description: (Optional) Path on the host container instance that is presented to the container. If not set, ECS will create a nonpersistent data volume that starts empty and is deleted after the task has finished.
-            type: string
             optional: true
+            type: string
         iam:
             description: '(Optional) Whether or not to use the Amazon ECS task IAM role defined in a task definition when mounting the Amazon EFS file system. If enabled, transit encryption must be enabled in the EFSVolumeConfiguration. Valid values: ENABLED, DISABLED. If this parameter is omitted, the default value of DISABLED is used.fsx_windows_file_server_volume_configurationFor more information, see Specifying an FSX Windows File Server volume in your Task Definition Developer Guide'
-            type: string
             optional: true
+            type: string
         inference_accelerator:
             description: (Optional) Configuration block(s) with Inference Accelerators settings. Detailed below.
-            type: string
             optional: true
+            type: string
         ipc_mode:
             description: (Optional) IPC resource namespace to be used for the containers in the task The valid values are host, task, and none.
-            type: string
             optional: true
+            type: string
         labels:
             description: (Optional) Map of custom metadata to add to your Docker volume.
-            type: string
             optional: true
+            type: string
         memory:
             description: (Optional) Amount (in MiB) of memory used by the task. If the requires_compatibilities is FARGATE this field is required.
-            type: string
             optional: true
+            type: string
         name:
             description: (Required) Name of the volume. This name is referenced in the sourceVolumemountPoints section.docker_volume_configurationFor more information, see Specifying a Docker volume in your Task Definition Developer Guide
             type: string
-            optional: true
         network_mode:
             description: (Optional) Docker networking mode to use for the containers in the task. Valid values are none, bridge, awsvpc, and host.
-            type: string
             optional: true
+            type: string
         operating_system_family:
             description: (Optional) If the requires_compatibilities is FARGATE this field is required; must be set to a valid option from the operating system family in the runtime platform setting
-            type: string
             optional: true
+            type: string
         pid_mode:
             description: (Optional) Process namespace to use for the containers in the task. The valid values are host and task.
-            type: string
             optional: true
+            type: string
         placement_constraints:
             description: (Optional) Configuration block for rules that are taken into consideration during task placement. Maximum number of placement_constraints is 10. Detailed below.
-            type: string
             optional: true
+            type: string
         properties:
             description: (Required) Set of network configuration parameters to provide the Container Network Interface (CNI) plugin, specified a key-value mapping.
             type: string
-            optional: true
         proxy_configuration:
             description: (Optional) Configuration block for the App Mesh proxy. Detailed below.
-            type: string
             optional: true
+            type: string
         requires_compatibilities:
             description: (Optional) Set of launch types required by the task. The valid values are EC2 and FARGATE.
-            type: string
             optional: true
+            type: string
         revision:
             description: Revision of the task in a particular family.
-            type: string
             optional: true
+            type: string
         root_directory:
             description: (Required) The directory within the Amazon FSx for Windows File Server file system to mount as the root directory inside the host.
             type: string
-            optional: true
         runtime_platform:
             description: (Optional) Configuration block for runtime_platform that containers in your task may use.
-            type: string
             optional: true
+            type: string
         scope:
             description: (Optional) Scope for the Docker volume, which determines its lifecycle, either task or shared.  Docker volumes that are scoped to a task are automatically provisioned when the task starts and destroyed when the task stops. Docker volumes that are scoped as shared persist after the task stops.efs_volume_configurationFor more information, see Specifying an EFS volume in your Task Definition Developer Guide
-            type: string
             optional: true
+            type: string
         size_in_gib:
             description: (Required) The total amount, in GiB, of ephemeral storage to set for the task. The minimum supported value is 21 GiB and the maximum supported value is 200 GiB.inference_accelerator
             type: string
-            optional: true
         skip_destroy:
             description: (Optional) Whether to retain the old revision when the resource is destroyed or replacement is necessary. Default is false.
-            type: string
             optional: true
+            type: string
         tags:
             description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-            type: string
             optional: true
+            type: string
         tags_all:
             description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         task_role_arn:
             description: (Optional) ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services.
-            type: string
             optional: true
+            type: string
         transit_encryption:
             description: '(Optional) Whether or not to enable encryption for Amazon EFS data in transit between the Amazon ECS host and the Amazon EFS server. Transit encryption must be enabled if Amazon EFS IAM authorization is used. Valid values: ENABLED, DISABLED. If this parameter is omitted, the default value of DISABLED is used.'
-            type: string
             optional: true
+            type: string
         transit_encryption_port:
             description: (Optional) Port to use for transit encryption. If you do not specify a transit encryption port, it will use the port selection strategy that the Amazon EFS mount helper uses.
-            type: string
             optional: true
+            type: string
         type:
             description: (Optional) Proxy type. The default value is APPMESH. The only supported value is APPMESH.ephemeral_storage
-            type: string
             optional: true
+            type: string
         volume:
             description: (Optional) Configuration block for volumes that containers in your task may use. Detailed below.volume
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: Full ARN of the Task Definition (including both family and revision).
@@ -212,12 +199,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

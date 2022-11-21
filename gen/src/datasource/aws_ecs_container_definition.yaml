@@ -1,0 +1,65 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ecs_container_definition
+spec:
+    args:
+        container_name:
+            description: '(Required) Name of the container definitionIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        cpu:
+            description: CPU limit for this container definition
+            type: string
+        disable_networking:
+            description: Indicator if networking is disabled
+            type: string
+        environment:
+            description: Environment in use
+            type: string
+        image:
+            description: Docker image in use, including the digest
+            type: string
+        image_digest:
+            description: Digest of the docker image in use
+            type: string
+        memory:
+            description: Memory limit for this container definition
+            type: string
+        memory_reservation:
+            description: Soft limit (in MiB) of memory to reserve for the container. When system memory is under contention, Docker attempts to keep the container memory to this soft limit
+            type: string
+        task_definition:
+            description: (Required) ARN of the task definition which contains the container
+            type: string
+    attrs:
+        cpu:
+            description: CPU limit for this container definition
+            type: string
+        disable_networking:
+            description: Indicator if networking is disabled
+            type: string
+        environment:
+            description: Environment in use
+            type: string
+        image:
+            description: Docker image in use, including the digest
+            type: string
+        image_digest:
+            description: Digest of the docker image in use
+            type: string
+        memory:
+            description: Memory limit for this container definition
+            type: string
+        memory_reservation:
+            description: Soft limit (in MiB) of memory to reserve for the container. When system memory is under contention, Docker attempts to keep the container memory to this soft limit
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

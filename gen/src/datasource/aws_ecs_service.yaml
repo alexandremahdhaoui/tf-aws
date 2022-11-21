@@ -1,0 +1,53 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ecs_service
+spec:
+    args:
+        arn:
+            description: ARN of the ECS Service
+            type: string
+        cluster_arn:
+            description: '(Required) ARN of the ECS ClusterIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        desired_count:
+            description: Number of tasks for the ECS Service
+            type: string
+        launch_type:
+            description: Launch type for the ECS Service
+            type: string
+        scheduling_strategy:
+            description: Scheduling strategy for the ECS Service
+            type: string
+        service_name:
+            description: (Required) Name of the ECS Service
+            type: string
+        task_definition:
+            description: Family for the latest ACTIVE revision
+            type: string
+    attrs:
+        arn:
+            description: ARN of the ECS Service
+            type: string
+        desired_count:
+            description: Number of tasks for the ECS Service
+            type: string
+        launch_type:
+            description: Launch type for the ECS Service
+            type: string
+        scheduling_strategy:
+            description: Scheduling strategy for the ECS Service
+            type: string
+        task_definition:
+            description: Family for the latest ACTIVE revision
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

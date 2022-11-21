@@ -3,16 +3,18 @@ kind: TerraformResource
 metadata:
     name: aws_sqs_queue_policy
 spec:
-    args: {}
+    args:
+        queue_url:
+            description: (Required) The URL of the SQS Queue to which to attach the policy
+            type: string
     attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

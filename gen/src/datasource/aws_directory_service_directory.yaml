@@ -1,0 +1,89 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_directory_service_directory
+spec:
+    args: {}
+    attrs:
+        access_url:
+            description: Access URL for the directory/connector, such as http://alias.awsapps.com.
+            type: string
+        alias:
+            description: Alias for the directory/connector, such as d-991708b282.awsapps.com.
+            type: string
+        authentication_protocol:
+            description: The protocol specified for your RADIUS endpoints.
+            type: string
+        connect_ips:
+            description: IP addresses of the AD Connector servers.
+            type: string
+        customer_dns_ips:
+            description: DNS IP addresses of the domain to connect to.
+            type: string
+        customer_username:
+            description: Username corresponding to the password provided.
+            type: string
+        description:
+            description: Textual description for the directory/connector.
+            type: string
+        display_label:
+            description: Display label.
+            type: string
+        dns_ip_addresses:
+            description: List of IP addresses of the DNS servers for the directory/connector.
+            type: string
+        edition:
+            description: (for MicrosoftAD) Microsoft AD edition (Standard or Enterprise).
+            type: string
+        enable_sso:
+            description: Directory/connector single-sign on status.
+            type: string
+        name:
+            description: Fully qualified name for the directory/connector.
+            type: string
+        password:
+            description: Password for the directory administrator or connector user.
+            type: string
+        radius_port:
+            description: Port that your RADIUS server is using for communications.
+            type: string
+        radius_retries:
+            description: Maximum number of times that communication with the RADIUS server is attempted.
+            type: string
+        radius_servers:
+            description: Set of strings that contains the fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer.
+            type: string
+        radius_timeout:
+            description: Amount of time, in seconds, to wait for the RADIUS server to respond.
+            type: string
+        security_group_id:
+            description: ID of the security group created by the directory/connector.
+            type: string
+        short_name:
+            description: Short name of the directory/connector, such as CORP.
+            type: string
+        size:
+            description: (for SimpleAD and ADConnector) Size of the directory/connector (Small or Large).
+            type: string
+        subnet_ids:
+            description: Identifiers of the subnets for the connector servers (2 subnets in 2 different AZs).
+            type: string
+        tags:
+            description: ' – A map of tags assigned to the directory/connector.vpc_settings (for SimpleAD and MicrosoftAD) is also exported with the following attributes:'
+            type: string
+        type:
+            description: Directory type (SimpleAD, ADConnector or MicrosoftAD).
+            type: string
+        vpc_id:
+            description: 'ID of the VPC that the connector is in.radius_settings is also exported with the following attributes:'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

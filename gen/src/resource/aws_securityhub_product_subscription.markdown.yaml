@@ -1,0 +1,116 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_securityhub_product_subscription.markdown
+spec:
+    args:
+        arn:aws:securityhub:${var.region}::product/alertlogic/althreatmanagement:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/armordefense/armoranywhere:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/aws/guardduty:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/aws/inspector:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/aws/macie:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/barracuda/cloudsecurityguardian:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/checkpoint/cloudguard-iaas:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/checkpoint/dome9-arc:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/crowdstrike/crowdstrike-falcon:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/cyberark/cyberark-pta:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/f5networks/f5-advanced-waf:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/fortinet/fortigate:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/guardicore/aws-infection-monkey:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/guardicore/guardicore:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/ibm/qradar-siem:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/imperva/imperva-attack-analytics:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/mcafee-skyhigh/mcafee-mvision-cloud-aws:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/paloaltonetworks/redlock:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/paloaltonetworks/vm-series:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/qualys/qualys-pc:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/qualys/qualys-vm:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/rapid7/insightvm:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/sophos/sophos-server-protection:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/splunk/splunk-enterprise:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/splunk/splunk-phantom:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/sumologicinc/sumologic-mda:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/symantec-corp/symantec-cwp:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/tenable/tenable-io:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/trend-micro/deep-security:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/turbot/turbot:
+            description: ""
+            type: string
+        arn:aws:securityhub:${var.region}::product/twistlock/twistlock-enterprise:
+            description: 'In addition to all arguments above, the following attributes are exported:'
+            type: string
+        product_arn:
+            description: '(Required) The ARN of the product that generates findings that you want to import into Security Hub - see below.Amazon maintains a list of Product integrations in AWS Security Hub that changes over time. Any of the products on the linked Available AWS service integrations or Available third-party partner product integrations can be configured using aws_securityhub_product_subscription.Available products can also be listed by running the AWS CLI command aws securityhub describe-products.A subset of currently available products (remember to replace ${var.region} as appropriate) includes:'
+            type: string
+    attrs:
+        arn:
+            description: The ARN of a resource that represents your subscription to the product that generates the findings that you want to import into Security Hub.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

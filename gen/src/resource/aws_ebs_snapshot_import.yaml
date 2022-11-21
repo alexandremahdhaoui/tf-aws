@@ -3,7 +3,103 @@ kind: TerraformResource
 metadata:
     name: aws_ebs_snapshot_import
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the EBS Snapshot.
+            type: string
+        client_data:
+            description: (Optional) The client-specific data. Detailed below.
+            optional: true
+            type: string
+        comment:
+            description: (Optional) A user-defined comment about the disk upload.
+            optional: true
+            type: string
+        create:
+            description: (Default 60m)
+            type: string
+        data_encryption_key_id:
+            description: The data encryption key identifier for the snapshot.
+            type: string
+        delete:
+            description: '(Default 10m)In addition to all arguments above, the following attributes are exported:'
+            type: string
+        description:
+            description: (Optional) The description of the disk image being imported.
+            optional: true
+            type: string
+        disk_container:
+            description: (Required) Information about the disk container. Detailed below.
+            type: string
+        encrypted:
+            description: (Optional) Specifies whether the destination snapshot of the imported image should be encrypted. The default KMS key for EBS is used unless you specify a non-default KMS key using KmsKeyId.
+            optional: true
+            type: string
+        format:
+            description: (Required) The format of the disk image being imported. One of VHD or VMDK.
+            type: string
+        id:
+            description: The snapshot ID (e.g., snap-59fcb34e).
+            type: string
+        kms_key_id:
+            description: (Optional) An identifier for the symmetric KMS key to use when creating the encrypted snapshot. This parameter is only required if you want to use a non-default KMS key; if this parameter is not specified, the default KMS key for EBS is used. If a KmsKeyId is specified, the Encrypted flag must also be set.
+            optional: true
+            type: string
+        owner_alias:
+            description: Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners.
+            type: string
+        owner_id:
+            description: The AWS account ID of the EBS snapshot owner.
+            type: string
+        permanent_restore:
+            description: (Optional) Indicates whether to permanently restore an archived snapshot.
+            optional: true
+            type: string
+        role_name:
+            description: '(Optional) The name of the IAM Role the VM Import/Export service will assume. This role needs certain permissions. See https://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html#vmimport-role. Default: vmimport'
+            optional: true
+            type: string
+        s3_bucket:
+            description: The name of the Amazon S3 bucket where the disk image is located.
+            type: string
+        s3_key:
+            description: 'The file name of the disk image.TimeoutsConfiguration options:'
+            type: string
+        storage_tier:
+            description: (Optional) The name of the storage tier. Valid values are archive and standard. Default value is standard.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the snapshot.client_data Configuration Block
+            optional: true
+            type: string
+        temporary_restore_days:
+            description: (Optional) Specifies the number of days for which to temporarily restore an archived snapshot. Required for temporary restores only. The snapshot will be automatically re-archived after this period.
+            optional: true
+            type: string
+        upload_end:
+            description: (Optional) The time that the disk upload ends.
+            optional: true
+            type: string
+        upload_size:
+            description: (Optional) The size of the uploaded disk image, in GiB.disk_container Configuration Block
+            optional: true
+            type: string
+        upload_start:
+            description: (Optional) The time that the disk upload starts.
+            optional: true
+            type: string
+        url:
+            description: (Optional) The URL to the Amazon S3-based disk image being imported. It can either be a https URL (https://..) or an Amazon S3 URL (s3://..). One of url or user_bucket must be set.
+            optional: true
+            type: string
+        user_bucket:
+            description: (Optional) The Amazon S3 bucket for the disk image. One of url or user_bucket must be set. Detailed below.user_bucket Configuration Block
+            optional: true
+            type: string
+        volume_size:
+            description: The size of the drive in GiBs.
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the EBS Snapshot.
@@ -25,12 +121,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

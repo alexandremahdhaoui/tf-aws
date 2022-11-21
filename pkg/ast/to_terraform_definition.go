@@ -1,14 +1,15 @@
 package ast
 
 import (
+	"bytes"
 	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/apis"
 	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/token"
 )
 
-func ToTerraformDefinition(tkns []token.Token, kind, moduleName, providerVersion string) apis.TerraformModuleDefinition {
+func ToTerraformDefinition(tkns []token.Token, kind apis.Kind, moduleName string) apis.TerraformModuleDefinition {
 	return apis.TerraformModuleDefinition{
 		ApiVersion: apis.ApiVersion(),
-		Kind:       toKind(kind),
+		Kind:       kind,
 		Metadata: apis.Metadata{
 			Name: moduleName,
 		},
@@ -16,10 +17,11 @@ func ToTerraformDefinition(tkns []token.Token, kind, moduleName, providerVersion
 			Args:  args(tkns),
 			Attrs: attrs(tkns),
 			Terraform: apis.TerraformConfig{
+				Version: apis.CleanVersion(apis.TerraformVersionTag),
 				Provider: apis.TerraformProvider{
 					Name:    "aws",
 					Source:  "hashicorp/aws",
-					Version: providerVersion,
+					Version: apis.CleanVersion(apis.ProviderVersionTag),
 					DefaultTags: apis.DefaultTags{
 						Enabled: true,
 					},
@@ -27,16 +29,6 @@ func ToTerraformDefinition(tkns []token.Token, kind, moduleName, providerVersion
 			},
 		},
 	}
-}
-
-func toKind(kind string) string {
-	if kind == "resource" {
-		return "TerraformModuleDefinition"
-	}
-	if kind == "datasource" {
-		return "TerraformDatasource"
-	}
-	panic("kind should be `resource` or `datasource`")
 }
 
 func args(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
@@ -82,10 +74,14 @@ func requiredArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 				currentDescription = append(currentDescription, tkn.Data()...)
 			case Li:
 				if len(currentArg) != 0 {
+					optional := false
+					if bytes.Contains(currentDescription, []byte("(Optional)")) {
+						optional = true
+					}
 					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
-						Optional:    true,
+						Optional:    optional,
 					}
 				}
 
@@ -94,10 +90,14 @@ func requiredArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 				currentDescription = make([]byte, 0)
 			case OptionalArgs:
 				if len(currentArg) != 0 {
+					optional := false
+					if bytes.Contains(currentDescription, []byte("(Optional)")) {
+						optional = true
+					}
 					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
-						Optional:    true,
+						Optional:    optional,
 					}
 				}
 				break
@@ -161,10 +161,14 @@ func optionalArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 				currentDescription = append(currentDescription, tkn.Data()...)
 			case Li:
 				if len(currentArg) != 0 {
+					optional := true
+					if bytes.Contains(currentDescription, []byte("(Required)")) {
+						optional = false
+					}
 					m[string(currentArg)] = apis.ArgumentOrAttribute{
 						Description: string(currentDescription),
 						Type:        "string",
-						Optional:    true,
+						Optional:    optional,
 					}
 				}
 				stack = make([]token.Kind, 0)
@@ -241,3 +245,5 @@ func attrs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 	}
 	return m
 }
+
+// ====================================================== Helpers ======================================================

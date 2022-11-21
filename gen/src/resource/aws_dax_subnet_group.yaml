@@ -3,7 +3,20 @@ kind: TerraformResource
 metadata:
     name: aws_dax_subnet_group
 spec:
-    args: {}
+    args:
+        description:
+            description: (Optional) A description of the subnet group.
+            optional: true
+            type: string
+        id:
+            description: The name of the subnet group.
+            type: string
+        name:
+            description: ' – (Required) The name of the subnet group.'
+            type: string
+        subnet_ids:
+            description: ' – (Required) A list of VPC subnet IDs for the subnet group.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         id:
             description: The name of the subnet group.
@@ -13,12 +26,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,57 @@ kind: TerraformResource
 metadata:
     name: aws_appmesh_virtual_service
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the virtual service.
+            type: string
+        created_date:
+            description: Creation date of the virtual service.
+            type: string
+        id:
+            description: ID of the virtual service.
+            type: string
+        last_updated_date:
+            description: Last update date of the virtual service.
+            type: string
+        mesh_name:
+            description: (Required) Name of the service mesh in which to create the virtual service. Must be between 1 and 255 characters in length.
+            type: string
+        mesh_owner:
+            description: (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name to use for the virtual service. Must be between 1 and 255 characters in length.
+            type: string
+        provider:
+            description: '- (Optional) App Mesh object that is acting as the provider for a virtual service. You can specify a single virtual node or virtual router.The provider object supports the following:'
+            optional: true
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        spec:
+            description: (Required) Virtual service specification to apply.
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:'
+            optional: true
+            type: string
+        virtual_node:
+            description: (Optional) Virtual node associated with a virtual service.
+            optional: true
+            type: string
+        virtual_node_name:
+            description: '(Required) Name of the virtual node that is acting as a service provider. Must be between 1 and 255 characters in length.The virtual_router object supports the following:'
+            type: string
+        virtual_router:
+            description: '(Optional) Virtual router associated with a virtual service.The virtual_node object supports the following:'
+            optional: true
+            type: string
+        virtual_router_name:
+            description: '(Required) Name of the virtual router that is acting as a service provider. Must be between 1 and 255 characters in length.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: ARN of the virtual service.
@@ -25,12 +75,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

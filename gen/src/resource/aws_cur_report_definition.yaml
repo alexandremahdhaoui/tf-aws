@@ -3,19 +3,54 @@ kind: TerraformResource
 metadata:
     name: aws_cur_report_definition
 spec:
-    args: {}
+    args:
+        additional_artifacts:
+            description: '(Required) A list of additional artifacts. Valid values are: REDSHIFT, QUICKSIGHT, ATHENA. When ATHENA exists within additional_artifacts, no other artifact type can be declared and report_versioning must be OVERWRITE_REPORT.'
+            type: string
+        additional_schema_elements:
+            description: '(Required) A list of schema elements. Valid values are: RESOURCES.'
+            type: string
+        compression:
+            description: '(Required) Compression format for report. Valid values are: GZIP, ZIP, Parquet. If Parquet is used, then format must also be Parquet.'
+            type: string
+        format:
+            description: '(Required) Format for report. Valid values are: textORcsv, Parquet. If Parquet is used, then Compression must also be Parquet.'
+            type: string
+        refresh_closed_reports:
+            description: (Optional) Set to true to update your reports after they have been finalized if AWS detects charges related to previous months.
+            optional: true
+            type: string
+        report_name:
+            description: (Required) Unique name for the report. Must start with a number/letter and is case sensitive. Limited to 256 characters.
+            type: string
+        report_versioning:
+            description: '(Optional) Overwrite the previous version of each report or to deliver the report in addition to the previous versions. Valid values are: CREATE_NEW_REPORT and OVERWRITE_REPORT.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        s3_bucket:
+            description: (Required) Name of the existing S3 bucket to hold generated reports.
+            type: string
+        s3_prefix:
+            description: (Optional) Report path prefix. Limited to 256 characters.
+            optional: true
+            type: string
+        s3_region:
+            description: (Required) Region of the existing S3 bucket to hold generated reports.
+            type: string
+        time_unit:
+            description: '(Required) The frequency on which report data are measured and displayed.  Valid values are: HOURLY, DAILY.'
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) specifying the cur report.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -1,0 +1,56 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_emrcontainers_virtual_cluster.markdown
+spec:
+    args:
+        arn:
+            description: ARN of the cluster.
+            type: string
+        container_provider:
+            description: (Required) Configuration block for the container provider associated with your cluster.
+            type: string
+        eks_info:
+            description: |
+                Nested list containing EKS-specific information about the cluster where the EMR Containers cluster is running
+            type: string
+        id:
+            description: The ID of the cluster.
+            type: string
+        info:
+            description: |
+                Nested list containing information about the configuration of the container provider
+            type: string
+        name:
+            description: ' – (Required) Name of the virtual cluster.'
+            type: string
+        namespace:
+            description: The namespace where the EMR Containers cluster is running
+            type: string
+        tags:
+            description: (Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.container_provider Arguments
+            optional: true
+            type: string
+        type:
+            description: 'The type of the container providerIn addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs:
+        arn:
+            description: ARN of the cluster.
+            type: string
+        id:
+            description: The ID of the cluster.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

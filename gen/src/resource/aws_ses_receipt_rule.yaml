@@ -3,7 +3,118 @@ kind: TerraformResource
 metadata:
     name: aws_ses_receipt_rule
 spec:
-    args: {}
+    args:
+        add_header_action:
+            description: (Optional) A list of Add Header Action blocks. Documented below.
+            optional: true
+            type: string
+        after:
+            description: (Optional) The name of the rule to place this rule after
+            optional: true
+            type: string
+        bounce_action:
+            description: (Optional) A list of Bounce Action blocks. Documented below.
+            optional: true
+            type: string
+        bucket_name:
+            description: (Required) The name of the S3 bucket
+            type: string
+        enabled:
+            description: (Optional) If true, the rule will be enabled
+            optional: true
+            type: string
+        encoding:
+            description: '(Optional) The encoding to use for the email within the Amazon SNS notification. Default value is UTF-8.Stop actions support the following:'
+            optional: true
+            type: string
+        function_arn:
+            description: (Required) The ARN of the Lambda function to invoke
+            type: string
+        header_name:
+            description: (Required) The name of the header to add
+            type: string
+        header_value:
+            description: (Required) The value of the header to add
+            type: string
+        id:
+            description: The SES receipt rule name.
+            type: string
+        invocation_type:
+            description: (Optional) Event or RequestResponse
+            optional: true
+            type: string
+        kms_key_arn:
+            description: (Optional) The ARN of the KMS key
+            optional: true
+            type: string
+        lambda_action:
+            description: (Optional) A list of Lambda Action blocks. Documented below.
+            optional: true
+            type: string
+        message:
+            description: (Required) The message to send
+            type: string
+        name:
+            description: (Required) The name of the rule
+            type: string
+        object_key_prefix:
+            description: (Optional) The key prefix of the S3 bucket
+            optional: true
+            type: string
+        organization_arn:
+            description: (Required) The ARN of the WorkMail organization
+            type: string
+        position:
+            description: '(Required) The position of the action in the receipt ruleIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        recipients:
+            description: (Optional) A list of email addresses
+            optional: true
+            type: string
+        rule_set_name:
+            description: (Required) The name of the rule set
+            type: string
+        s3_action:
+            description: (Optional) A list of S3 Action blocks. Documented below.
+            optional: true
+            type: string
+        scan_enabled:
+            description: (Optional) If true, incoming emails will be scanned for spam and viruses
+            optional: true
+            type: string
+        scope:
+            description: (Required) The scope to apply. The only acceptable value is RuleSet.
+            type: string
+        sender:
+            description: (Required) The email address of the sender
+            type: string
+        smtp_reply_code:
+            description: (Required) The RFC 5321 SMTP reply code
+            type: string
+        sns_action:
+            description: (Optional) A list of SNS Action blocks. Documented below.
+            optional: true
+            type: string
+        status_code:
+            description: (Optional) The RFC 3463 SMTP enhanced status code
+            optional: true
+            type: string
+        stop_action:
+            description: (Optional) A list of Stop Action blocks. Documented below.
+            optional: true
+            type: string
+        tls_policy:
+            description: (Optional) Require or Optional
+            optional: true
+            type: string
+        topic_arn:
+            description: (Optional) The ARN of an SNS topic to notify
+            optional: true
+            type: string
+        workmail_action:
+            description: '(Optional) A list of WorkMail Action blocks. Documented below.Add header actions support the following:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The SES receipt rule ARN.
@@ -13,12 +124,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

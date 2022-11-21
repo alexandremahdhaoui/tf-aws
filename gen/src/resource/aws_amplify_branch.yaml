@@ -3,7 +3,88 @@ kind: TerraformResource
 metadata:
     name: aws_amplify_branch
 spec:
-    args: {}
+    args:
+        app_id:
+            description: (Required) Unique ID for an Amplify app.
+            type: string
+        arn:
+            description: ARN for the branch.
+            type: string
+        associated_resources:
+            description: A list of custom resources that are linked to this branch.
+            type: string
+        backend_environment_arn:
+            description: (Optional) ARN for a backend environment that is part of an Amplify app.
+            optional: true
+            type: string
+        basic_auth_credentials:
+            description: (Optional) Basic authorization credentials for the branch.
+            optional: true
+            type: string
+        branch_name:
+            description: (Required) Name for the branch.
+            type: string
+        custom_domains:
+            description: Custom domains for the branch.
+            type: string
+        description:
+            description: (Optional) Description for the branch.
+            optional: true
+            type: string
+        destination_branch:
+            description: Destination branch if the branch is a pull request branch.
+            type: string
+        display_name:
+            description: (Optional) Display name for a branch. This is used as the default domain prefix.
+            optional: true
+            type: string
+        enable_auto_build:
+            description: (Optional) Enables auto building for the branch.
+            optional: true
+            type: string
+        enable_basic_auth:
+            description: (Optional) Enables basic authorization for the branch.
+            optional: true
+            type: string
+        enable_notification:
+            description: (Optional) Enables notifications for the branch.
+            optional: true
+            type: string
+        enable_performance_mode:
+            description: (Optional) Enables performance mode for the branch.
+            optional: true
+            type: string
+        enable_pull_request_preview:
+            description: (Optional) Enables pull request previews for this branch.
+            optional: true
+            type: string
+        environment_variables:
+            description: (Optional) Environment variables for the branch.
+            optional: true
+            type: string
+        framework:
+            description: (Optional) Framework for the branch.
+            optional: true
+            type: string
+        pull_request_environment_name:
+            description: (Optional) Amplify environment name for the pull request.
+            optional: true
+            type: string
+        source_branch:
+            description: Source branch if the branch is a pull request branch.
+            type: string
+        stage:
+            description: '(Optional) Describes the current stage for the branch. Valid values: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST.'
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        ttl:
+            description: '(Optional) Content Time To Live (TTL) for the website in seconds.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN for the branch.
@@ -25,12 +106,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

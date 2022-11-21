@@ -3,7 +3,152 @@ kind: TerraformResource
 metadata:
     name: aws_ssm_maintenance_window_task
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the maintenance window task.
+            type: string
+        automation_parameters:
+            description: (Optional) The parameters for an AUTOMATION task type. Documented below.
+            optional: true
+            type: string
+        client_context:
+            description: (Optional) Pass client-specific information to the Lambda function that you are invoking.
+            optional: true
+            type: string
+        cloudwatch_config:
+            description: '(Optional) Configuration options for sending command output to CloudWatch Logs. Documented below.step_functions_parameters supports the following:'
+            optional: true
+            type: string
+        cloudwatch_log_group_name:
+            description: '(Optional) The name of the CloudWatch log group where you want to send command output. If you don''t specify a group name, Systems Manager automatically creates a log group for you. The log group uses the following naming format: aws/ssm/SystemsManagerDocumentName.'
+            optional: true
+            type: string
+        cloudwatch_output_enabled:
+            description: '(Optional) Enables Systems Manager to send command output to CloudWatch Logs.parameter supports the following:'
+            optional: true
+            type: string
+        comment:
+            description: (Optional) Information about the command(s) to execute.
+            optional: true
+            type: string
+        cutoff_behavior:
+            description: (Optional) Indicates whether tasks should continue to run after the cutoff time specified in the maintenance windows is reached. Valid values are CONTINUE_TASK and CANCEL_TASK.
+            optional: true
+            type: string
+        description:
+            description: (Optional) The description of the maintenance window task.
+            optional: true
+            type: string
+        document_hash:
+            description: (Optional) The SHA-256 or SHA-1 hash created by the system when the document was created. SHA-1 hashes have been deprecated.
+            optional: true
+            type: string
+        document_hash_type:
+            description: '(Optional) SHA-256 or SHA-1. SHA-1 hashes have been deprecated. Valid values: Sha256 and Sha1'
+            optional: true
+            type: string
+        document_version:
+            description: (Optional) The version of an Automation document to use during task execution.
+            optional: true
+            type: string
+        id:
+            description: The ID of the maintenance window task.
+            type: string
+        input:
+            description: (Optional) The inputs for the STEP_FUNCTION task.
+            optional: true
+            type: string
+        lambda_parameters:
+            description: (Optional) The parameters for a LAMBDA task type. Documented below.
+            optional: true
+            type: string
+        max_concurrency:
+            description: (Optional) The maximum number of targets this task can be run for in parallel.
+            optional: true
+            type: string
+        max_errors:
+            description: (Optional) The maximum number of errors allowed before this task stops being scheduled.
+            optional: true
+            type: string
+        name:
+            description: (Required) The parameter name.
+            type: string
+        notification_arn:
+            description: (Optional) An Amazon Resource Name (ARN) for a Simple Notification Service (SNS) topic. Run Command pushes notifications about command status changes to this topic.
+            optional: true
+            type: string
+        notification_config:
+            description: (Optional) Configurations for sending notifications about command status changes on a per-instance basis. Documented below.
+            optional: true
+            type: string
+        notification_events:
+            description: '(Optional) The different events for which you can receive notifications. Valid values: All, InProgress, Success, TimedOut, Cancelled, and Failed'
+            optional: true
+            type: string
+        notification_type:
+            description: '(Optional) When specified with Command, receive notification when the status of a command changes. When specified with Invocation, for commands sent to multiple instances, receive notification on a per-instance basis when the status of a command changes. Valid values: Command and Invocationcloudwatch_config supports the following:'
+            optional: true
+            type: string
+        output_s3_bucket:
+            description: (Optional) The name of the Amazon S3 bucket.
+            optional: true
+            type: string
+        output_s3_key_prefix:
+            description: (Optional) The Amazon S3 bucket subfolder.
+            optional: true
+            type: string
+        parameter:
+            description: (Optional) The parameters for the RUN_COMMAND task execution. Documented below.
+            optional: true
+            type: string
+        payload:
+            description: (Optional) JSON to provide to your Lambda function as input.
+            optional: true
+            type: string
+        priority:
+            description: (Optional) The priority of the task in the Maintenance Window, the lower the number the higher the priority. Tasks in a Maintenance Window are scheduled in priority order with tasks that have the same priority scheduled in parallel.
+            optional: true
+            type: string
+        qualifier:
+            description: '(Optional) Specify a Lambda function version or alias name.run_command_parameters supports the following:'
+            optional: true
+            type: string
+        run_command_parameters:
+            description: (Optional) The parameters for a RUN_COMMAND task type. Documented below.
+            optional: true
+            type: string
+        service_role_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) service role to use to publish Amazon Simple Notification Service (Amazon SNS) notifications for maintenance window Run Command tasks.
+            optional: true
+            type: string
+        step_functions_parameters:
+            description: '(Optional) The parameters for a STEP_FUNCTIONS task type. Documented below.automation_parameters supports the following:'
+            optional: true
+            type: string
+        targets:
+            description: (Optional) The targets (either instances or window target ids). Instances are specified using Key=InstanceIds,Values=instanceid1,instanceid2. Window target ids are specified using Key=WindowTargetIds,Values=window target id1, window target id2.
+            optional: true
+            type: string
+        task_arn:
+            description: (Required) The ARN of the task to execute.
+            type: string
+        task_invocation_parameters:
+            description: '(Optional) Configuration block with parameters for task execution.task_invocation_parameters supports the following:'
+            optional: true
+            type: string
+        task_type:
+            description: '(Required) The type of task being registered. Valid values: AUTOMATION, LAMBDA, RUN_COMMAND or STEP_FUNCTIONS.'
+            type: string
+        timeout_seconds:
+            description: (Optional) If this time is reached and the command has not already started executing, it doesn't run.
+            optional: true
+            type: string
+        values:
+            description: '(Required) The array of strings.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        window_id:
+            description: (Required) The Id of the maintenance window to register the task with.
+            type: string
     attrs:
         arn:
             description: The ARN of the maintenance window task.
@@ -16,12 +161,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

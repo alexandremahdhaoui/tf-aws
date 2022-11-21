@@ -3,7 +3,117 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_client_vpn_endpoint
 spec:
-    args: {}
+    args:
+        active_directory_id:
+            description: (Optional) The ID of the Active Directory to be used for authentication if type is directory-service-authentication.
+            optional: true
+            type: string
+        arn:
+            description: The ARN of the Client VPN endpoint.
+            type: string
+        authentication_options:
+            description: (Required) Information about the authentication method to be used to authenticate clients.
+            type: string
+        banner_text:
+            description: (Optional) Customizable text that will be displayed in a banner on AWS provided clients when a VPN session is established. UTF-8 encoded characters only. Maximum of 1400 characters.
+            optional: true
+            type: string
+        client_cidr_block:
+            description: (Required) The IPv4 address range, in CIDR notation, from which to assign client IP addresses. The address range cannot overlap with the local CIDR of the VPC in which the associated subnet is located, or the routes that you add manually. The address range cannot be changed after the Client VPN endpoint has been created. The CIDR block should be /22 or greater.
+            type: string
+        client_connect_options:
+            description: (Optional) The options for managing connection authorization for new client connections.
+            optional: true
+            type: string
+        client_login_banner_options:
+            description: (Optional) Options for enabling a customizable text banner that will be displayed on AWS provided clients when a VPN session is established.
+            optional: true
+            type: string
+        cloudwatch_log_group:
+            description: (Optional) The name of the CloudWatch Logs log group.
+            optional: true
+            type: string
+        cloudwatch_log_stream:
+            description: (Optional) The name of the CloudWatch Logs log stream to which the connection data is published.
+            optional: true
+            type: string
+        connection_log_options:
+            description: (Required) Information about the client connection logging options.
+            type: string
+        description:
+            description: (Optional) A brief description of the Client VPN endpoint.
+            optional: true
+            type: string
+        dns_name:
+            description: The DNS name to be used by clients when establishing their VPN session.
+            type: string
+        dns_servers:
+            description: (Optional) Information about the DNS servers to be used for DNS resolution. A Client VPN endpoint can have up to two DNS servers. If no DNS server is specified, the DNS address of the connecting device is used.
+            optional: true
+            type: string
+        enabled:
+            description: '(Required) Indicates whether connection logging is enabled.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        id:
+            description: The ID of the Client VPN endpoint.
+            type: string
+        lambda_function_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the Lambda function used for connection authorization.client_login_banner_options Argument reference
+            optional: true
+            type: string
+        root_certificate_chain_arn:
+            description: (Optional) The ARN of the client certificate. The certificate must be signed by a certificate authority (CA) and it must be provisioned in AWS Certificate Manager (ACM). Only necessary when type is set to certificate-authentication.
+            optional: true
+            type: string
+        saml_provider_arn:
+            description: (Optional) The ARN of the IAM SAML identity provider if type is federated-authentication.
+            optional: true
+            type: string
+        security_group_ids:
+            description: (Optional) The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups.
+            optional: true
+            type: string
+        self_service_portal:
+            description: (Optional) Specify whether to enable the self-service portal for the Client VPN endpoint. Values can be enabled or disabled. Default value is disabled.
+            optional: true
+            type: string
+        self_service_saml_provider_arn:
+            description: (Optional) The ARN of the IAM SAML identity provider for the self service portal if type is federated-authentication.
+            optional: true
+            type: string
+        server_certificate_arn:
+            description: (Required) The ARN of the ACM server certificate.
+            type: string
+        session_timeout_hours:
+            description: '(Optional) The maximum session duration is a trigger by which end-users are required to re-authenticate prior to establishing a VPN session. Default value is 24Valid values: 8 | 10 | 12 | 24'
+            optional: true
+            type: string
+        split_tunnel:
+            description: (Optional) Indicates whether split-tunnel is enabled on VPN endpoint. Default value is false.
+            optional: true
+            type: string
+        status:
+            description: strongDeprecated The current state of the Client VPN endpoint.
+            type: string
+        tags:
+            description: (Optional) A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        transport_protocol:
+            description: (Optional) The transport protocol to be used by the VPN session. Default value is udp.
+            optional: true
+            type: string
+        type:
+            description: (Required) The type of client authentication to be used. Specify certificate-authentication to use certificate-based authentication, directory-service-authentication to use Active Directory authentication, or federated-authentication to use Federated Authentication via SAML 2.0.client_connect_options Argument reference
+            type: string
+        vpc_id:
+            description: (Optional) The ID of the VPC to associate with the Client VPN endpoint. If no security group IDs are specified in the request, the default security group for the VPC is applied.
+            optional: true
+            type: string
+        vpn_port:
+            description: '(Optional) The port number for the Client VPN endpoint. Valid values are 443 and 1194. Default value is 443.authentication_options Argument ReferenceOne of the following arguments must be supplied:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the Client VPN endpoint.
@@ -22,12 +132,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

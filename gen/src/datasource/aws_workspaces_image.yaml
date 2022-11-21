@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_workspaces_image
+spec:
+    args:
+        description:
+            description: ' – The description of the image.'
+            type: string
+        image_id:
+            description: ' – (Required) ID of the image.The following attributes are exported:'
+            type: string
+        name:
+            description: ' – The name of the image.'
+            type: string
+        os:
+            description: ' – The operating system that the image is running.'
+            type: string
+        required_tenancy:
+            description: ' – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images.'
+            type: string
+    attrs:
+        description:
+            description: ' – The description of the image.'
+            type: string
+        name:
+            description: ' – The name of the image.'
+            type: string
+        os:
+            description: ' – The operating system that the image is running.'
+            type: string
+        required_tenancy:
+            description: ' – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images.'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

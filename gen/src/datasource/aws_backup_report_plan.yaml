@@ -3,7 +3,49 @@ kind: TerraformDatasource
 metadata:
     name: aws_backup_report_plan
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the backup report plan.
+            type: string
+        creation_time:
+            description: Date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC).
+            type: string
+        deployment_status:
+            description: 'Deployment status of a report plan. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED.'
+            type: string
+        description:
+            description: Description of the report plan.
+            type: string
+        formats:
+            description: 'List of the format of your reports: CSV, JSON, or both.'
+            type: string
+        framework_arns:
+            description: ARNs of the frameworks a report covers.
+            type: string
+        id:
+            description: ID of the report plan.
+            type: string
+        name:
+            description: '(Required) Backup report plan name.In addition to the arguments above, the following attributes are exported:'
+            type: string
+        number_of_frameworks:
+            description: Specifies the number of frameworks a report covers.
+            type: string
+        report_delivery_channel:
+            description: An object that contains information about where and how to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports. Detailed below.
+            type: string
+        report_setting:
+            description: An object that identifies the report template for the report. Reports are built using a report template. Detailed below.
+            type: string
+        s3_bucket_name:
+            description: Unique name of the S3 bucket that receives your reports.
+            type: string
+        s3_key_prefix:
+            description: 'Prefix for where Backup Audit Manager delivers your reports to Amazon S3. The prefix is this part of the following path: s3://your-bucket-name/prefix/Backup/us-west-2/year/month/day/report-name.Report Setting AttributesFor strongreport_setting the following attributes are supported:'
+            type: string
+        tags:
+            description: 'Metadata that you can assign to help organize the report plans you create.Report Delivery Channel AttributesFor strongreport_delivery_channel the following attributes are supported:'
+            type: string
     attrs:
         arn:
             description: ARN of the backup report plan.
@@ -46,12 +88,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

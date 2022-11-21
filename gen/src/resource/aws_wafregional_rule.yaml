@@ -3,7 +3,36 @@ kind: TerraformResource
 metadata:
     name: aws_wafregional_rule
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the WAF Regional Rule.
+            type: string
+        data_id:
+            description: (Required) The unique identifier of a predicate, such as the ID of a ByteMatchSet or IPSet.
+            type: string
+        id:
+            description: The ID of the WAF Regional Rule.
+            type: string
+        metric_name:
+            description: (Required) The name or description for the Amazon CloudWatch metric of this rule.
+            type: string
+        name:
+            description: (Required) The name or description of the rule.
+            type: string
+        negated:
+            description: '(Required) Whether to use the settings or the negated settings that you specified in the objects.RemarksIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        predicate:
+            description: (Optional) The objects to include in a rule (documented below).
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested FieldspredicateSee the WAF Documentation for more information.Arguments
+            optional: true
+            type: string
+        type:
+            description: '(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch'
+            type: string
     attrs:
         arn:
             description: The ARN of the WAF Regional Rule.
@@ -16,12 +45,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

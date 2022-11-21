@@ -3,7 +3,119 @@ kind: TerraformResource
 metadata:
     name: aws_opsworks_mysql_layer
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name(ARN) of the layer.
+            type: string
+        auto_assign_elastic_ips:
+            description: (Optional) Whether to automatically assign an elastic IP address to the layer's instances.
+            optional: true
+            type: string
+        auto_assign_public_ips:
+            description: (Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances.
+            optional: true
+            type: string
+        auto_healing:
+            description: (Optional) Whether to enable auto-healing for the layer.
+            optional: true
+            type: string
+        custom_configure_recipes:
+            description: ""
+            type: string
+        custom_deploy_recipes:
+            description: ""
+            type: string
+        custom_instance_profile_arn:
+            description: (Optional) The ARN of an IAM profile that will be used for the layer's instances.
+            optional: true
+            type: string
+        custom_json:
+            description: (Optional) Custom JSON attributes to apply to the layer.
+            optional: true
+            type: string
+        custom_security_group_ids:
+            description: (Optional) Ids for a set of security groups to apply to the layer's instances.
+            optional: true
+            type: string
+        custom_setup_recipes:
+            description: ""
+            type: string
+        custom_shutdown_recipes:
+            description: ""
+            type: string
+        custom_undeploy_recipes:
+            description: 'An ebs_volume block supports the following arguments:'
+            type: string
+        drain_elb_on_shutdown:
+            description: (Optional) Whether to enable Elastic Load Balancing connection draining.
+            optional: true
+            type: string
+        ebs_volume:
+            description: (Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances.
+            optional: true
+            type: string
+        elastic_load_balancer:
+            description: (Optional) Name of an Elastic Load Balancer to attach to this layer
+            optional: true
+            type: string
+        id:
+            description: The id of the layer.
+            type: string
+        install_updates_on_boot:
+            description: (Optional) Whether to install OS and package updates on each instance when it boots.
+            optional: true
+            type: string
+        instance_shutdown_timeout:
+            description: (Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event.
+            optional: true
+            type: string
+        iops:
+            description: '(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        mount_point:
+            description: (Required) The path to mount the EBS volume on the layer's instances.
+            type: string
+        name:
+            description: (Optional) A human-readable name for the layer.
+            optional: true
+            type: string
+        number_of_disks:
+            description: (Required) The number of disks to use for the EBS volume.
+            type: string
+        raid_level:
+            description: (Required) The RAID level to use for the volume.
+            type: string
+        root_password:
+            description: (Optional) Root password to use for MySQL.
+            optional: true
+            type: string
+        root_password_on_all_instances:
+            description: (Optional) Whether to set the root user password to all instances in the stack so they can access the instances in this layer.
+            optional: true
+            type: string
+        size:
+            description: (Required) The size of the volume in gigabytes.
+            type: string
+        stack_id:
+            description: (Required) ID of the stack the layer will belong to.
+            type: string
+        system_packages:
+            description: (Optional) Names of a set of system packages to install on the layer's instances.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        type:
+            description: (Optional) The type of volume to create. This may be standard (the default), io1 or gp2.
+            optional: true
+            type: string
+        use_ebs_optimized_instances:
+            description: (Optional) Whether to use EBS-optimized instances.
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name(ARN) of the layer.
@@ -13,12 +125,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

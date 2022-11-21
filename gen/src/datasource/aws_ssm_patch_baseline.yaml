@@ -1,0 +1,154 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ssm_patch_baseline
+spec:
+    args:
+        approval_rule:
+            description: |
+                List of rules used to include patches in the baseline.
+            type: string
+        approve_after_days:
+            description: The number of days after the release date of each patch matched by the rule the patch is marked as approved in the patch baseline.
+            type: string
+        approve_until_date:
+            description: The cutoff date for auto approval of released patches. Any patches released on or before this date are installed automatically. Date is formatted as YYYY-MM-DD. Conflicts with approve_after_days
+            type: string
+        approved_patches:
+            description: List of explicitly approved patches for the baseline.
+            type: string
+        approved_patches_compliance_level:
+            description: The compliance level for approved patches.
+            type: string
+        approved_patches_enable_non_security:
+            description: Indicates whether the list of approved patches includes non-security updates that should be applied to the instances.
+            type: string
+        compliance_level:
+            description: The compliance level for patches approved by this rule.
+            type: string
+        configuration:
+            description: The value of the yum repo configuration.
+            type: string
+        default_baseline:
+            description: (Optional) Filters the results against the baselines default_baseline field.
+            optional: true
+            type: string
+        description:
+            description: Description of the baseline.
+            type: string
+        enable_non_security:
+            description: Boolean enabling the application of non-security updates.
+            type: string
+        global_filter:
+            description: |
+                Set of global filters used to exclude patches from the baseline.
+            type: string
+        id:
+            description: ID of the baseline.
+            type: string
+        key:
+            description: The key for the filter.
+            type: string
+        name:
+            description: The name specified to identify the patch source.
+            type: string
+        name_prefix:
+            description: (Optional) Filter results by the baseline name prefix.
+            optional: true
+            type: string
+        operating_system:
+            description: '(Optional) Specified OS for the baseline. Valid values: AMAZON_LINUX, AMAZON_LINUX_2, UBUNTU, REDHAT_ENTERPRISE_LINUX, SUSE, CENTOS, ORACLE_LINUX, DEBIAN, MACOS, RASPBIAN and ROCKY_LINUX.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        owner:
+            description: '(Required) Owner of the baseline. Valid values: All, AWS, Self (the current account).'
+            type: string
+        patch_filter:
+            description: |
+                The patch filter group that defines the criteria for the rule.
+            type: string
+        rejected_patches:
+            description: List of rejected patches.
+            type: string
+        rejected_patches_action:
+            description: The action specified to take on patches included in the rejected_patches list.
+            type: string
+        source:
+            description: |
+                Information about the patches to use to update the managed nodes, including target operating systems and source repositories.
+            type: string
+        values:
+            description: The value for the filter.
+            type: string
+    attrs:
+        approval_rule:
+            description: |
+                List of rules used to include patches in the baseline.
+            type: string
+        approve_after_days:
+            description: The number of days after the release date of each patch matched by the rule the patch is marked as approved in the patch baseline.
+            type: string
+        approve_until_date:
+            description: The cutoff date for auto approval of released patches. Any patches released on or before this date are installed automatically. Date is formatted as YYYY-MM-DD. Conflicts with approve_after_days
+            type: string
+        approved_patches:
+            description: List of explicitly approved patches for the baseline.
+            type: string
+        approved_patches_compliance_level:
+            description: The compliance level for approved patches.
+            type: string
+        approved_patches_enable_non_security:
+            description: Indicates whether the list of approved patches includes non-security updates that should be applied to the instances.
+            type: string
+        compliance_level:
+            description: The compliance level for patches approved by this rule.
+            type: string
+        configuration:
+            description: The value of the yum repo configuration.
+            type: string
+        description:
+            description: Description of the baseline.
+            type: string
+        enable_non_security:
+            description: Boolean enabling the application of non-security updates.
+            type: string
+        global_filter:
+            description: |
+                Set of global filters used to exclude patches from the baseline.
+            type: string
+        id:
+            description: ID of the baseline.
+            type: string
+        key:
+            description: The key for the filter.
+            type: string
+        name:
+            description: The name specified to identify the patch source.
+            type: string
+        patch_filter:
+            description: |
+                The patch filter group that defines the criteria for the rule.
+            type: string
+        rejected_patches:
+            description: List of rejected patches.
+            type: string
+        rejected_patches_action:
+            description: The action specified to take on patches included in the rejected_patches list.
+            type: string
+        source:
+            description: |
+                Information about the patches to use to update the managed nodes, including target operating systems and source repositories.
+            type: string
+        values:
+            description: The value for the filter.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

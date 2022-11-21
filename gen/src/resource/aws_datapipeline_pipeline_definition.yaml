@@ -7,59 +7,51 @@ spec:
         attribute:
             description: (Required) Configuration block for attributes of the parameter object. See below
             type: string
-            optional: true
         field:
             description: (Required) Configuration block for Key-value pairs that define the properties of the object. See below
             type: string
-            optional: true
         id:
             description: Unique ID of the datapipeline definition.
-            type: string
             optional: true
+            type: string
         key:
             description: (Required) Field identifier.
             type: string
-            optional: true
         name:
             description: (Required) ARN of the storage connector.field
             type: string
-            optional: true
         parameter_object:
             description: (Optional) Configuration block for the parameter objects used in the pipeline definition. See below
-            type: string
             optional: true
+            type: string
         parameter_value:
             description: (Optional) Configuration block for the parameter values used in the pipeline definition. See belowpipeline_object
-            type: string
             optional: true
+            type: string
         pipeline_id:
             description: (Required) ID of the pipeline.
             type: string
-            optional: true
         pipeline_object:
             description: (Required) Configuration block for the objects that define the pipeline. See below
             type: string
-            optional: true
         ref_value:
             description: (Optional) Field value, expressed as the identifier of another object
-            type: string
             optional: true
+            type: string
         string_value:
             description: '(Required) Field value, expressed as a String.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
     attrs:
         id:
             description: Unique ID of the datapipeline definition.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

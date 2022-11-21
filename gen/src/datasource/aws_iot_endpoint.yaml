@@ -1,0 +1,32 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_iot_endpoint
+spec:
+    args: {}
+    attrs:
+        'No ':
+            description: 'endpoint_type: Either iot:Data or iot:Data-ATS depending on region'
+            type: string
+        endpoint_address:
+            description: Endpoint based on endpoint_type
+            type: string
+        iot:CredentialsProvider:
+            description: ': IDENTIFIER.credentials.iot.REGION.amazonaws.com'
+            type: string
+        iot:Data:
+            description: ': IDENTIFIER.iot.REGION.amazonaws.com'
+            type: string
+        iot:Data-ATS:
+            description: ': IDENTIFIER-ats.iot.REGION.amazonaws.com'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

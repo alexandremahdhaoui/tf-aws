@@ -3,7 +3,38 @@ kind: TerraformResource
 metadata:
     name: aws_gamelift_alias
 spec:
-    args: {}
+    args:
+        arn:
+            description: Alias ARN.
+            type: string
+        description:
+            description: (Optional) Description of the alias.
+            optional: true
+            type: string
+        fleet_id:
+            description: (Optional) ID of the GameLift Fleet to point the alias to.
+            optional: true
+            type: string
+        id:
+            description: Alias ID.
+            type: string
+        message:
+            description: (Optional) Message text to be used with the TERMINAL routing strategy.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the alias.
+            type: string
+        routing_strategy:
+            description: (Required) Specifies the fleet and/or routing type to use for the alias.
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsrouting_strategy
+            optional: true
+            type: string
+        type:
+            description: '(Required) Type of routing strategyE.g., SIMPLE or TERMINALIn addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: Alias ARN.
@@ -16,12 +47,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

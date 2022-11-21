@@ -1,0 +1,56 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ecs_task_definition
+spec:
+    args:
+        arn:
+            description: ARN of the task definition
+            type: string
+        family:
+            description: Family of this task definition
+            type: string
+        id:
+            description: ARN of the task definition
+            type: string
+        network_mode:
+            description: Docker networking mode to use for the containers in this task.
+            type: string
+        revision:
+            description: Revision of this task definition
+            type: string
+        status:
+            description: Status of this task definition
+            type: string
+        task_definition:
+            description: '(Required) Family for the latest ACTIVE revision, family and revision (family:revision) for a specific revision in the family, the ARN of the task definition to access to.In addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs:
+        arn:
+            description: ARN of the task definition
+            type: string
+        family:
+            description: Family of this task definition
+            type: string
+        id:
+            description: ARN of the task definition
+            type: string
+        network_mode:
+            description: Docker networking mode to use for the containers in this task.
+            type: string
+        revision:
+            description: Revision of this task definition
+            type: string
+        status:
+            description: Status of this task definition
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

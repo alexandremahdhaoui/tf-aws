@@ -1,0 +1,108 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_servicecatalog_product
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        arn:
+            description: ARN of the product.
+            optional: true
+            type: string
+        created_time:
+            description: Time when the product was created.
+            optional: true
+            type: string
+        description:
+            description: Description of the product.
+            optional: true
+            type: string
+        distributor:
+            description: Distributor (i.e., vendor) of the product.
+            optional: true
+            type: string
+        has_default_path:
+            description: Whether the product has a default path.
+            optional: true
+            type: string
+        id:
+            description: (Required) Product ID.
+            type: string
+        name:
+            description: Name of the product.
+            optional: true
+            type: string
+        owner:
+            description: Owner of the product.
+            optional: true
+            type: string
+        status:
+            description: Status of the product.
+            optional: true
+            type: string
+        support_description:
+            description: Support information about the product.
+            optional: true
+            type: string
+        support_email:
+            description: Contact email for product support.
+            optional: true
+            type: string
+        support_url:
+            description: Contact URL for product support.
+            optional: true
+            type: string
+        tags:
+            description: Tags to apply to the product.
+            optional: true
+            type: string
+    attrs:
+        arn:
+            description: ARN of the product.
+            type: string
+        created_time:
+            description: Time when the product was created.
+            type: string
+        description:
+            description: Description of the product.
+            type: string
+        distributor:
+            description: Distributor (i.e., vendor) of the product.
+            type: string
+        has_default_path:
+            description: Whether the product has a default path.
+            type: string
+        name:
+            description: Name of the product.
+            type: string
+        owner:
+            description: Owner of the product.
+            type: string
+        status:
+            description: Status of the product.
+            type: string
+        support_description:
+            description: Support information about the product.
+            type: string
+        support_email:
+            description: Contact email for product support.
+            type: string
+        support_url:
+            description: Contact URL for product support.
+            type: string
+        tags:
+            description: Tags to apply to the product.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

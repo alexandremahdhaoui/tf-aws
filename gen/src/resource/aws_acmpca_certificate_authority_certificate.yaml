@@ -3,16 +3,21 @@ kind: TerraformResource
 metadata:
     name: aws_acmpca_certificate_authority_certificate
 spec:
-    args: {}
+    args:
+        certificate:
+            description: (Required) PEM-encoded certificate for the Certificate Authority.
+            type: string
+        certificate_authority_arn:
+            description: (Required) ARN of the Certificate Authority.
+            type: string
     attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

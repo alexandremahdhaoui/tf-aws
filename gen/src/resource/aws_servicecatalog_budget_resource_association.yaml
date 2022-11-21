@@ -7,23 +7,18 @@ spec:
         budget_name:
             description: (Required) Budget name.
             type: string
-            optional: true
         create:
             description: (Default 3m)
             type: string
-            optional: true
         id:
             description: 'Identifier of the association.TimeoutsConfiguration options:'
             type: string
-            optional: true
         read:
             description: (Default 10m)
             type: string
-            optional: true
         resource_id:
             description: '(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
     attrs:
         create:
             description: (Default 3m)
@@ -39,12 +34,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

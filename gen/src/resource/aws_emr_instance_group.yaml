@@ -3,7 +3,62 @@ kind: TerraformResource
 metadata:
     name: aws_emr_instance_group
 spec:
-    args: {}
+    args:
+        autoscaling_policy:
+            description: (Optional) The autoscaling policy document. This is a JSON formatted string. See EMR Auto Scaling
+            optional: true
+            type: string
+        bid_price:
+            description: (Optional) If set, the bid price for each EC2 instance in the instance group, expressed in USD. By setting this attribute, the instance group is being declared as a Spot Instance, and will implicitly create a Spot request. Leave this blank to use On-Demand Instances.
+            optional: true
+            type: string
+        cluster_id:
+            description: ' (Required) ID of the EMR Cluster to attach to. Changing this forces a new resource to be created.'
+            type: string
+        configurations_json:
+            description: '(Optional) A JSON string for supplying list of configurations specific to the EMR instance group. Note that this can only be changed when using EMR release 5.21 or later.ebs_config supports the following:'
+            optional: true
+            type: string
+        ebs_config:
+            description: ' (Optional) One or more ebs_config blocks as defined below. Changing this forces a new resource to be created.'
+            optional: true
+            type: string
+        ebs_optimized:
+            description: ' (Optional) Indicates whether an Amazon EBS volume is EBS-optimized. Changing this forces a new resource to be created.'
+            optional: true
+            type: string
+        id:
+            description: The EMR Instance ID
+            type: string
+        instance_count:
+            description: ' (Optional) target number of instances for the instance group. defaults to 0.'
+            optional: true
+            type: string
+        instance_type:
+            description: ' (Required) The EC2 instance type for all instances in the instance group. Changing this forces a new resource to be created.'
+            type: string
+        iops:
+            description: (Optional) The number of I/O operations per second (IOPS) that the volume supports.
+            optional: true
+            type: string
+        name:
+            description: ' (Required) Human friendly name given to the instance group. Changing this forces a new resource to be created.'
+            type: string
+        running_instance_count:
+            description: ' The number of instances currently running in this instance group.'
+            type: string
+        size:
+            description: (Optional) The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10.
+            optional: true
+            type: string
+        type:
+            description: (Optional) The volume type. Valid options are 'gp2', 'io1' and 'standard'.
+            optional: true
+            type: string
+        volumes_per_instance:
+            description: '(Optional) The number of EBS Volumes to attach per instance.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         id:
             description: The EMR Instance ID
@@ -16,12 +71,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

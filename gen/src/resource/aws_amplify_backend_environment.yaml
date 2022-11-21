@@ -3,7 +3,24 @@ kind: TerraformResource
 metadata:
     name: aws_amplify_backend_environment
 spec:
-    args: {}
+    args:
+        app_id:
+            description: (Required) Unique ID for an Amplify app.
+            type: string
+        arn:
+            description: ARN for a backend environment that is part of an Amplify app.
+            type: string
+        deployment_artifacts:
+            description: (Optional) Name of deployment artifacts.
+            optional: true
+            type: string
+        environment_name:
+            description: (Required) Name for the backend environment.
+            type: string
+        stack_name:
+            description: '(Optional) AWS CloudFormation stack name of a backend environment.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN for a backend environment that is part of an Amplify app.
@@ -13,12 +30,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

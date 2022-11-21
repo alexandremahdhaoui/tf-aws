@@ -3,7 +3,85 @@ kind: TerraformResource
 metadata:
     name: aws_subnet
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the subnet.
+            type: string
+        assign_ipv6_address_on_creation:
+            description: "false"
+            type: string
+        availability_zone:
+            description: (Optional) AZ for the subnet.
+            optional: true
+            type: string
+        availability_zone_id:
+            description: (Optional) AZ ID of the subnet. This argument is not supported in all regions or partitions. If necessary, use availability_zone instead.
+            optional: true
+            type: string
+        cidr_block:
+            description: (Optional) The IPv4 CIDR block for the subnet.
+            optional: true
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        customer_owned_ipv4_pool:
+            description: (Optional) The customer owned IPv4 address pool. Typically used with the map_customer_owned_ip_on_launch argument. The outpost_arn argument must be specified when configured.
+            optional: true
+            type: string
+        enable_dns64:
+            description: '(Optional) Indicates whether DNS queries made to the Amazon-provided DNS Resolver in this subnet should return synthetic IPv6 addresses for IPv4-only destinations. Default: false.'
+            optional: true
+            type: string
+        enable_resource_name_dns_a_record_on_launch:
+            description: '(Optional) Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: false.'
+            optional: true
+            type: string
+        enable_resource_name_dns_aaaa_record_on_launch:
+            description: '(Optional) Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records. Default: false.'
+            optional: true
+            type: string
+        id:
+            description: The ID of the subnet
+            type: string
+        ipv6_cidr_block:
+            description: ""
+            type: string
+        ipv6_cidr_block_association_id:
+            description: The association ID for the IPv6 CIDR block.
+            type: string
+        ipv6_native:
+            description: '(Optional) Indicates whether to create an IPv6-only subnet. Default: false.'
+            optional: true
+            type: string
+        map_customer_owned_ip_on_launch:
+            description: ' (Optional) Specify true to indicate that network interfaces created in the subnet should be assigned a customer owned IP address. The customer_owned_ipv4_pool and outpost_arn arguments must be specified when set to true. Default is false.'
+            optional: true
+            type: string
+        map_public_ip_on_launch:
+            description: false.
+            type: string
+        outpost_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the Outpost.
+            optional: true
+            type: string
+        owner_id:
+            description: The ID of the AWS account that owns the subnet.
+            type: string
+        private_dns_hostname_type_on_launch:
+            description: '(Optional) The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: ip-name, resource-name.'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        vpc_id:
+            description: (Required) The VPC ID.
+            type: string
     attrs:
         arn:
             description: The ARN of the subnet.
@@ -28,12 +106,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

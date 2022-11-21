@@ -1,0 +1,26 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ip_ranges
+spec:
+    args: {}
+    attrs:
+        cidr_blocks:
+            description: Lexically ordered list of CIDR blocks.
+            type: string
+        create_date:
+            description: Publication time of the IP ranges (e.g., 2016-08-03-23-46-05).
+            type: string
+        ipv6_cidr_blocks:
+            description: Lexically ordered list of IPv6 CIDR blocks.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

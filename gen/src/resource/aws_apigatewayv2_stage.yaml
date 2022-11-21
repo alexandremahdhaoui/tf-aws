@@ -3,7 +3,93 @@ kind: TerraformResource
 metadata:
     name: aws_apigatewayv2_stage
 spec:
-    args: {}
+    args:
+        access_log_settings:
+            description: |-
+                (Optional) Settings for logging access in this stage.
+                Use the aws_api_gateway_account resource to configure permissions for CloudWatch Logging.
+            optional: true
+            type: string
+        api_id:
+            description: (Required) API identifier.
+            type: string
+        arn:
+            description: ARN of the stage.
+            type: string
+        auto_deploy:
+            description: (Optional) Whether updates to an API automatically trigger a new deployment. Defaults to false. Applicable for HTTP APIs.
+            optional: true
+            type: string
+        client_certificate_id:
+            description: (Optional) Identifier of a client certificate for the stage. Use the aws_api_gateway_client_certificate
+            optional: true
+            type: string
+        data_trace_enabled:
+            description: |-
+                (Optional) Whether data trace logging is enabled for the route. Affects the log entries pushed to Amazon CloudWatch Logs.
+                Defaults to false. Supported only for WebSocket APIs.
+            optional: true
+            type: string
+        default_route_settings:
+            description: (Optional) Default route settings for the stage.
+            optional: true
+            type: string
+        deployment_id:
+            description: (Optional) Deployment identifier of the stage. Use the aws_apigatewayv2_deployment resource to configure a deployment.
+            optional: true
+            type: string
+        description:
+            description: (Optional) Description for the stage. Must be less than or equal to 1024 characters in length.
+            optional: true
+            type: string
+        destination_arn:
+            description: (Required) ARN of the CloudWatch Logs log group to receive access logs. Any trailing :* is trimmed from the ARN.
+            type: string
+        detailed_metrics_enabled:
+            description: (Optional) Whether detailed metrics are enabled for the route. Defaults to false.
+            optional: true
+            type: string
+        execution_arn:
+            description: ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details.
+            type: string
+        format:
+            description: '(Required) Single line format of the access logs of data, as specified by selected $context variables.The default_route_settings object supports the following:'
+            type: string
+        id:
+            description: Stage identifier.
+            type: string
+        invoke_url:
+            description: wss://z4675bid1j.execute-api.eu-west-2.amazonaws.com/example-stage, or https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/
+            type: string
+        logging_level:
+            description: ERROR, INFO, OFF. Defaults to OFF. Supported only for WebSocket APIs. Terraform will only perform drift detection of its value when present in a configuration.
+            type: string
+        name:
+            description: (Required) Name of the stage. Must be between 1 and 128 characters in length.
+            type: string
+        route_key:
+            description: (Required) Route key.
+            type: string
+        route_settings:
+            description: (Optional) Route settings for the stage.
+            optional: true
+            type: string
+        stage_variables:
+            description: (Optional) Map that defines the stage variables for the stage.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the stage. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The access_log_settings object supports the following:'
+            optional: true
+            type: string
+        throttling_burst_limit:
+            description: (Optional) Throttling burst limit for the route.
+            optional: true
+            type: string
+        throttling_rate_limit:
+            description: '(Optional) Throttling rate limit for the route.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the stage.
@@ -15,21 +101,18 @@ spec:
             description: Stage identifier.
             type: string
         invoke_url:
-            description: |-
-                URL to invoke the API pointing to the stage,
-                e.g., wss://z4675bid1j.execute-api.eu-west-2.amazonaws.com/example-stage, or https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/
+            description: wss://z4675bid1j.execute-api.eu-west-2.amazonaws.com/example-stage, or https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/
             type: string
         tags_all:
             description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

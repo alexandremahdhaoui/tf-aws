@@ -3,7 +3,129 @@ kind: TerraformResource
 metadata:
     name: aws_sagemaker_user_profile
 spec:
-    args: {}
+    args:
+        amazon_forecast_role_arn:
+            description: (Optional)  The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the UserProfile that launches the Canvas app. If an execution role is not specified in the UserProfile, Canvas uses the execution role specified in the Domain that owns the UserProfile. To allow time series forecasting, this IAM role should have the AmazonSageMakerCanvasForecastAccess policy attached and forecast.amazonaws.com added in the trust relationship as a service principal.
+            optional: true
+            type: string
+        app_image_config_name:
+            description: (Required) The name of the App Image Config.
+            type: string
+        arn:
+            description: The user profile Amazon Resource Name (ARN).
+            type: string
+        canvas_app_settings:
+            description: (Optional) The Canvas app settings. See Canvas App Settings below.Canvas App Settings
+            optional: true
+            type: string
+        custom_image:
+            description: (Optional) A list of custom SageMaker images that are configured to run as a KernelGateway app. see Custom Image below.Default Resource Spec
+            optional: true
+            type: string
+        default_resource_spec:
+            description: (Optional) The default instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance. see Default Resource Spec below.
+            optional: true
+            type: string
+        domain_id:
+            description: (Required) The ID of the associated Domain.
+            type: string
+        execution_role:
+            description: (Required) The execution role ARN for the user.
+            type: string
+        home_efs_file_system_uid:
+            description: The ID of the user's profile in the Amazon Elastic File System (EFS) volume.
+            type: string
+        id:
+            description: The user profile Amazon Resource Name (ARN).
+            type: string
+        image_name:
+            description: (Required) The name of the Custom Image.
+            type: string
+        image_version_number:
+            description: (Optional) The version number of the Custom Image.Time Series Forecasting Settings
+            optional: true
+            type: string
+        instance_type:
+            description: (Optional) The instance type.
+            optional: true
+            type: string
+        jupyter_server_app_settings:
+            description: (Optional) The Jupyter server's app settings. See Jupyter Server App Settings below.
+            optional: true
+            type: string
+        kernel_gateway_app_settings:
+            description: (Optional) The kernel gateway app settings. See Kernel Gateway App Settings below.
+            optional: true
+            type: string
+        lifecycle_config_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource.
+            optional: true
+            type: string
+        lifecycle_config_arns:
+            description: (Optional) The Amazon Resource Name (ARN) of the Lifecycle Configurations.RSession App Settings
+            optional: true
+            type: string
+        notebook_output_option:
+            description: (Optional) Whether to include the notebook cell output when sharing the notebook. The default is Disabled. Valid values are Allowed and Disabled.
+            optional: true
+            type: string
+        r_session_app_settings:
+            description: (Optional) The RSession app settings. See RSession App Settings below.
+            optional: true
+            type: string
+        s3_kms_key_id:
+            description: (Optional) When notebook_output_option is Allowed, the AWS Key Management Service (KMS) encryption key ID used to encrypt the notebook cell output in the Amazon S3 bucket.
+            optional: true
+            type: string
+        s3_output_path:
+            description: (Optional) When notebook_output_option is Allowed, the Amazon S3 bucket used to save the notebook cell output.TensorBoard App Settings
+            optional: true
+            type: string
+        sagemaker_image_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the SageMaker image created on the instance.
+            optional: true
+            type: string
+        sagemaker_image_version_arn:
+            description: (Optional) The ARN of the image version created on the instance.Custom Image
+            optional: true
+            type: string
+        security_groups:
+            description: (Optional) The security groups.
+            optional: true
+            type: string
+        sharing_settings:
+            description: (Optional) The sharing settings. See Sharing Settings below.
+            optional: true
+            type: string
+        single_sign_on_user_identifier:
+            description: (Optional) A specifier for the type of value specified in single_sign_on_user_value. Currently, the only supported value is UserName. If the Domain's AuthMode is SSO, this field is required. If the Domain's AuthMode is not SSO, this field cannot be specified.
+            optional: true
+            type: string
+        single_sign_on_user_value:
+            description: (Required) The username of the associated AWS Single Sign-On User for this User Profile. If the Domain's AuthMode is SSO, this field is required, and must match a valid username of a user in your directory. If the Domain's AuthMode is not SSO, this field cannot be specified.
+            type: string
+        status:
+            description: '(Optional) Describes whether time series forecasting is enabled or disabled in the Canvas app. Valid values are ENABLED and DISABLED.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.User Settings
+            optional: true
+            type: string
+        tensor_board_app_settings:
+            description: (Optional) The TensorBoard app settings. See TensorBoard App Settings below.
+            optional: true
+            type: string
+        time_series_forecasting_settings:
+            description: (Optional) Time series forecast settings for the Canvas app. see Time Series Forecasting Settings below.Sharing Settings
+            optional: true
+            type: string
+        user_profile_name:
+            description: (Required) The name for the User Profile.
+            type: string
+        user_settings:
+            description: (Required) The user settings. See User Settings below.
+            type: string
     attrs:
         arn:
             description: The user profile Amazon Resource Name (ARN).
@@ -19,12 +141,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

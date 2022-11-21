@@ -3,7 +3,46 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_transit_gateway_vpc_attachment_accepter
 spec:
-    args: {}
+    args:
+        appliance_mode_support:
+            description: 'Whether Appliance Mode support is enabled. Valid values: disable, enable.'
+            type: string
+        dns_support:
+            description: 'Whether DNS support is enabled. Valid values: disable, enable.'
+            type: string
+        id:
+            description: EC2 Transit Gateway Attachment identifier
+            type: string
+        ipv6_support:
+            description: 'Whether IPv6 support is enabled. Valid values: disable, enable.'
+            type: string
+        subnet_ids:
+            description: Identifiers of EC2 Subnets.
+            type: string
+        tags:
+            description: '(Optional) Key-value tags for the EC2 Transit Gateway VPC Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        transit_gateway_attachment_id:
+            description: (Required) The ID of the EC2 Transit Gateway Attachment to manage.
+            type: string
+        transit_gateway_default_route_table_association:
+            description: '(Optional) Boolean whether the VPC Attachment should be associated with the EC2 Transit Gateway association default route table. Default value: true.'
+            optional: true
+            type: string
+        transit_gateway_default_route_table_propagation:
+            description: '(Optional) Boolean whether the VPC Attachment should propagate routes with the EC2 Transit Gateway propagation default route table. Default value: true.'
+            optional: true
+            type: string
+        transit_gateway_id:
+            description: Identifier of EC2 Transit Gateway.
+            type: string
+        vpc_id:
+            description: Identifier of EC2 VPC.
+            type: string
     attrs:
         appliance_mode_support:
             description: 'Whether Appliance Mode support is enabled. Valid values: disable, enable.'
@@ -34,12 +73,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

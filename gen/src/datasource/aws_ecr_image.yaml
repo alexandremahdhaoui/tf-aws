@@ -1,0 +1,50 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ecr_image
+spec:
+    args:
+        id:
+            description: SHA256 digest of the image manifest.
+            type: string
+        image_digest:
+            description: (Optional) Sha256 digest of the image manifest. At least one of image_digest or image_tag must be specified.
+            optional: true
+            type: string
+        image_pushed_at:
+            description: Date and time, expressed as a unix timestamp, at which the current image was pushed to the repository.
+            type: string
+        image_size_in_bytes:
+            description: Size, in bytes, of the image in the repository.
+            type: string
+        image_tag:
+            description: '(Optional) Tag associated with this image. At least one of image_digest or image_tag must be specified.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        registry_id:
+            description: (Optional) ID of the Registry where the repository resides.
+            optional: true
+            type: string
+        repository_name:
+            description: (Required) Name of the ECR Repository.
+            type: string
+    attrs:
+        id:
+            description: SHA256 digest of the image manifest.
+            type: string
+        image_pushed_at:
+            description: Date and time, expressed as a unix timestamp, at which the current image was pushed to the repository.
+            type: string
+        image_size_in_bytes:
+            description: Size, in bytes, of the image in the repository.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

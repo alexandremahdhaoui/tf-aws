@@ -1,0 +1,23 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_vpc_peering_connections
+spec:
+    args: {}
+    attrs:
+        id:
+            description: AWS Region.
+            type: string
+        ids:
+            description: 'IDs of the VPC Peering Connections.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

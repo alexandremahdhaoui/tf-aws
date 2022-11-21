@@ -6,60 +6,58 @@ spec:
     args:
         allowed_pattern:
             description: (Optional) Regular expression used to validate the parameter value.
-            type: string
             optional: true
+            type: string
         arn:
             description: ARN of the parameter.
-            type: string
             optional: true
+            type: string
         data_type:
             description: '(Optional) Data type of the parameter. Valid values: text, aws:ssm:integration and aws:ec2:image for AMI format, see the Native parameter support for Amazon Machine Image IDs.'
-            type: string
             optional: true
+            type: string
         description:
             description: (Optional) Description of the parameter.
-            type: string
             optional: true
+            type: string
         insecure_value:
             description: '(Optional, exactly one of value or insecure_value is required) Value of the parameter. strongUse caution: This value is emnever marked as sensitive in the Terraform plan output. This argument is not valid with a type of SecureString.'
-            type: string
             optional: true
+            type: string
         key_id:
             description: (Optional) KMS key ID or ARN for encrypting a SecureString.
-            type: string
             optional: true
+            type: string
         name:
             description: (Required) Name of the parameter. If the name contains a path (e.g., any forward slashes (/)), it must be fully qualified with a leading forward slash (/). For additional requirements and constraints, see the AWS SSM User Guide.
             type: string
-            optional: true
         overwrite:
             description: (Optional) Overwrite an existing parameter. If not specified, will default to false if the resource has not been created by terraform to avoid overwrite of existing resource and will default to true otherwise (terraform lifecycle rules should then be used to manage the update behavior).
-            type: string
             optional: true
+            type: string
         tags:
             description: (Optional) Map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-            type: string
             optional: true
+            type: string
         tags_all:
             description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         tier:
             description: (Optional) Parameter tier to assign to the parameter. If not specified, will use the default parameter tier for the region. Valid tiers are Standard, Advanced, and Intelligent-Tiering. Downgrading an Advanced tier parameter to Standard will recreate the resource. For more information on parameter tiers, see the AWS SSM Parameter tier comparison and guide.
-            type: string
             optional: true
+            type: string
         type:
             description: (Required) Type of the parameter. Valid types are String, StringList and SecureString.
             type: string
-            optional: true
         value:
             description: '(Optional, exactly one of value or insecure_value is required) Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide.~> strongNOTE: aws:ssm:integration data_type parameters must be of the type SecureString and the name must start with the prefix /d9d01087-4a3f-49e0-b0b4-d568d7826553/ssm/integrations/webhook/. See here for information on the usage of aws:ssm:integration parameters.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         version:
             description: Version of the parameter.
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the parameter.
@@ -72,12 +70,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

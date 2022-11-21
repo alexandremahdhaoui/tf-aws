@@ -3,7 +3,26 @@ kind: TerraformDatasource
 metadata:
     name: aws_codestarconnections_connection
 spec:
-    args: {}
+    args:
+        arn:
+            description: (Optional) CodeStar Connection ARN.
+            optional: true
+            type: string
+        connection_status:
+            description: CodeStar Connection status. Possible values are PENDING, AVAILABLE and ERROR.
+            type: string
+        host_arn:
+            description: ARN of the host associated with the connection.
+            type: string
+        id:
+            description: CodeStar Connection ARN.
+            type: string
+        name:
+            description: Name of the CodeStar Connection. The name is unique in the calling AWS account.
+            type: string
+        provider_type:
+            description: Name of the external provider where your third-party code repository is configured. Possible values are Bitbucket and GitHub. For connections to a GitHub Enterprise Server instance, you must create an aws_codestarconnections_host resource and use host_arn instead.
+            type: string
     attrs:
         connection_status:
             description: CodeStar Connection status. Possible values are PENDING, AVAILABLE and ERROR.
@@ -22,12 +41,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

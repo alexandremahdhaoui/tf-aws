@@ -3,7 +3,37 @@ kind: TerraformResource
 metadata:
     name: aws_db_proxy_target
 spec:
-    args: {}
+    args:
+        db_cluster_identifier:
+            description: '(Optional, Forces new resource) DB cluster identifier.strongNOTE: Either db_instance_identifier or db_cluster_identifier should be specified and both should not be specified togetherIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        db_instance_identifier:
+            description: (Optional, Forces new resource) DB instance identifier.
+            type: string
+        db_proxy_name:
+            description: (Required, Forces new resource) The name of the DB proxy.
+            type: string
+        endpoint:
+            description: Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type.
+            type: string
+        id:
+            description: Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/).
+            type: string
+        port:
+            description: Port for the target RDS DB Instance or Aurora DB Cluster.
+            type: string
+        rds_resource_id:
+            description: Identifier representing the DB Instance or DB Cluster target.
+            type: string
+        target_arn:
+            description: Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API.
+            type: string
+        target_group_name:
+            description: (Required, Forces new resource) The name of the target group.
+            type: string
+        tracked_cluster_id:
+            description: DB Cluster identifier for the DB Instance target. Not returned unless manually importing an RDS_INSTANCE target that is part of a DB Cluster.
+            type: string
     attrs:
         endpoint:
             description: Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type.
@@ -28,12 +58,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

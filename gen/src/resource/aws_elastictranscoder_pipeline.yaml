@@ -3,7 +3,74 @@ kind: TerraformResource
 metadata:
     name: aws_elastictranscoder_pipeline
 spec:
-    args: {}
+    args:
+        access:
+            description: The permission that you want to give to the AWS user that you specified in thumbnail_config_permissions.grantee. Valid values are Read, ReadAcp, WriteAcp or FullControl.
+            type: string
+        aws_kms_key_arn:
+            description: (Optional) The AWS Key Management Service (AWS KMS) key that you want to use with this pipeline.
+            optional: true
+            type: string
+        bucket:
+            description: The Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files.
+            type: string
+        completed:
+            description: The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing a job in this pipeline.
+            type: string
+        content_config:
+            description: (Optional) The ContentConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. (documented below)
+            optional: true
+            type: string
+        content_config_permissions:
+            description: (Optional) The permissions for the content_config object. (documented below)
+            optional: true
+            type: string
+        error:
+            description: The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition while processing a job in this pipeline.
+            type: string
+        grantee:
+            description: The AWS user or group that you want to have access to thumbnail files.
+            type: string
+        grantee_type:
+            description: 'Specify the type of value that appears in the thumbnail_config_permissions.grantee object. Valid values are Canonical, Email or Group.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        id:
+            description: The ID of the Elastictranscoder pipeline.
+            type: string
+        input_bucket:
+            description: (Required) The Amazon S3 bucket in which you saved the media files that you want to transcode and the graphics that you want to use as watermarks.
+            type: string
+        name:
+            description: (Optional, Forces new resource) The name of the pipeline. Maximum 40 characters
+            type: string
+        notifications:
+            description: (Optional) The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status. (documented below)
+            optional: true
+            type: string
+        output_bucket:
+            description: (Optional) The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files.
+            optional: true
+            type: string
+        progressing:
+            description: The topic ARN for the Amazon Simple Notification Service (Amazon SNS) topic that you want to notify when Elastic Transcoder has started to process a job in this pipeline.
+            type: string
+        role:
+            description: (Required) The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to transcode jobs for this pipeline.
+            type: string
+        storage_class:
+            description: 'The Amazon S3 storage class, Standard or ReducedRedundancy, that you want Elastic Transcoder to assign to the thumbnails that it stores in your Amazon S3 bucket.The thumbnail_config_permissions object supports the following:'
+            type: string
+        thumbnail_config:
+            description: (Optional) The ThumbnailConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. (documented below)
+            optional: true
+            type: string
+        thumbnail_config_permissions:
+            description: '(Optional) The permissions for the thumbnail_config object. (documented below)The content_configcontent_configthumbnail_config. If you specify values for content_configthumbnail_config, omit the output_bucket object.The content_config object supports the following:'
+            optional: true
+            type: string
+        warning:
+            description: 'The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters a warning condition while processing a job in this pipeline.The thumbnail_configcontent_configthumbnail_configcontent_config and thumbnail_config, omit the OutputBucket object.The thumbnail_config object supports the following:'
+            type: string
     attrs:
         arn:
             description: The ARN of the Elastictranscoder pipeline.
@@ -13,12 +80,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

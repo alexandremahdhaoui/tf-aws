@@ -3,19 +3,28 @@ kind: TerraformResource
 metadata:
     name: aws_acm_certificate_validation
 spec:
-    args: {}
+    args:
+        certificate_arn:
+            description: (Required) ARN of the certificate that is being validated.
+            type: string
+        id:
+            description: 'Time at which the certificate was issuedTimeoutsConfiguration options:'
+            type: string
+        validation_record_fqdns:
+            description: '(Optional) List of FQDNs that implement the validation. Only valid for DNS validation method ACM certificates. If this is set, the resource can implement additional sanity checks and has an explicit dependency on the resource that is implementing the validationIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         id:
             description: 'Time at which the certificate was issuedTimeoutsConfiguration options:'
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

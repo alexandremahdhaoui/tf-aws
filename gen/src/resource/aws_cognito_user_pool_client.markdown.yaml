@@ -1,0 +1,149 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cognito_user_pool_client.markdown
+spec:
+    args:
+        access_token:
+            description: (Optional) Time unit in for the value in access_token_validity, defaults to hours.
+            optional: true
+            type: string
+        access_token_validity:
+            description: (Optional) Time limit, between 5 minutes and 1 day, after which the access token is no longer valid and cannot be used. This value will be overridden if you have entered a value in token_validity_units.
+            optional: true
+            type: string
+        allowed_oauth_flows:
+            description: (Optional) List of allowed OAuth flows (code, implicit, client_credentials).
+            optional: true
+            type: string
+        allowed_oauth_flows_user_pool_client:
+            description: (Optional) Whether the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.
+            optional: true
+            type: string
+        allowed_oauth_scopes:
+            description: (Optional) List of allowed OAuth scopes (phone, email, openid, profile, and aws.cognito.signin.user.admin).
+            optional: true
+            type: string
+        analytics_configuration:
+            description: (Optional) Configuration block for Amazon Pinpoint analytics for collecting metrics for this user pool. Detailed below.
+            optional: true
+            type: string
+        application_arn:
+            description: (Optional) Application ARN for an Amazon Pinpoint application. Conflicts with external_id and role_arn.
+            optional: true
+            type: string
+        application_id:
+            description: (Optional) Application ID for an Amazon Pinpoint application.
+            optional: true
+            type: string
+        auth_session_validity:
+            description: (Optional) Amazon Cognito creates a session token for each API request in an authentication flow. AuthSessionValidity is the duration, in minutes, of that session token. Your user pool native user must respond to each authentication challenge before the session expires. Valid values between 3 and 15. Default value is 3.
+            optional: true
+            type: string
+        callback_urls:
+            description: (Optional) List of allowed callback URLs for the identity providers.
+            optional: true
+            type: string
+        client_secret:
+            description: Client secret of the user pool client.
+            optional: true
+            type: string
+        default_redirect_uri:
+            description: (Optional) Default redirect URI. Must be in the list of callback URLs.
+            optional: true
+            type: string
+        enable_propagate_additional_user_context_data:
+            description: (Optional) Activates the propagation of additional user context data.
+            optional: true
+            type: string
+        enable_token_revocation:
+            description: (Optional) Enables or disables token revocation.
+            optional: true
+            type: string
+        explicit_auth_flows:
+            description: (Optional) List of authentication flows (ADMIN_NO_SRP_AUTH, CUSTOM_AUTH_FLOW_ONLY, USER_PASSWORD_AUTH, ALLOW_ADMIN_USER_PASSWORD_AUTH, ALLOW_CUSTOM_AUTH, ALLOW_USER_PASSWORD_AUTH, ALLOW_USER_SRP_AUTH, ALLOW_REFRESH_TOKEN_AUTH).
+            optional: true
+            type: string
+        external_id:
+            description: (Optional) ID for the Analytics Configuration. Conflicts with application_arn.
+            optional: true
+            type: string
+        generate_secret:
+            description: (Optional) Should an application secret be generated.
+            optional: true
+            type: string
+        id:
+            description: ID of the user pool client.
+            optional: true
+            type: string
+        id_token:
+            description: (Optional) Time unit in for the value in id_token_validity, defaults to hours.
+            optional: true
+            type: string
+        id_token_validity:
+            description: (Optional) Time limit, between 5 minutes and 1 day, after which the ID token is no longer valid and cannot be used. This value will be overridden if you have entered a value in token_validity_units.
+            optional: true
+            type: string
+        logout_urls:
+            description: (Optional) List of allowed logout URLs for the identity providers.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the application client.
+            type: string
+        prevent_user_existence_errors:
+            description: (Optional) Choose which errors and responses are returned by Cognito APIs during authentication, account confirmation, and password recovery when the user does not exist in the user pool. When set to ENABLED and the user does not exist, authentication returns an error indicating either the username or password was incorrect, and account confirmation and password recovery return a response indicating a code was sent to a simulated destination. When set to LEGACY, those APIs will return a UserNotFoundException exception if the user does not exist in the user pool.
+            optional: true
+            type: string
+        read_attributes:
+            description: (Optional) List of user pool attributes the application client can read from.
+            optional: true
+            type: string
+        refresh_token:
+            description: '(Optional) Time unit in for the value in refresh_token_validity, defaults to days.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        refresh_token_validity:
+            description: (Optional) Time limit in days refresh tokens are valid for.
+            optional: true
+            type: string
+        role_arn:
+            description: (Optional) ARN of an IAM role that authorizes Amazon Cognito to publish events to Amazon Pinpoint analytics. Conflicts with application_arn.
+            optional: true
+            type: string
+        supported_identity_providers:
+            description: (Optional) List of provider names for the identity providers that are supported on this client. Uses the provider_name attribute of aws_cognito_identity_provider resource(s), or the equivalent string(s).
+            optional: true
+            type: string
+        token_validity_units:
+            description: (Optional) Configuration block for units in which the validity times are represented in. Detailed below.
+            optional: true
+            type: string
+        user_data_shared:
+            description: ' (Optional) If set to true, Amazon Cognito will include user data in the events it publishes to Amazon Pinpoint analytics.token_validity_unitsValid values for the following arguments are: seconds, minutes, hours or days.'
+            optional: true
+            type: string
+        user_pool_id:
+            description: (Required) User pool the client belongs to.
+            type: string
+        write_attributes:
+            description: (Optional) List of user pool attributes the application client can write to.analytics_configurationEither application_arn or application_id is required.
+            optional: true
+            type: string
+    attrs:
+        client_secret:
+            description: Client secret of the user pool client.
+            type: string
+        id:
+            description: ID of the user pool client.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

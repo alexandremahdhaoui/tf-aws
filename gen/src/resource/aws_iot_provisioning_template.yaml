@@ -3,7 +3,46 @@ kind: TerraformResource
 metadata:
     name: aws_iot_provisioning_template
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN that identifies the provisioning template.
+            type: string
+        default_version_id:
+            description: The default version of the fleet provisioning template.
+            type: string
+        description:
+            description: (Optional) The description of the fleet provisioning template.
+            optional: true
+            type: string
+        enabled:
+            description: (Optional) True to enable the fleet provisioning template, otherwise false.
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the fleet provisioning template.
+            type: string
+        payload_version:
+            description: (Optional) The version of the payload that was sent to the target function. The only valid (and the default) payload version is "2020-04-01".
+            optional: true
+            type: string
+        pre_provisioning_hook:
+            description: (Optional) Creates a pre-provisioning hook template. Details below.
+            optional: true
+            type: string
+        provisioning_role_arn:
+            description: (Required) The role ARN for the role associated with the fleet provisioning template. This IoT role grants permission to provision a device.
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        target_arb:
+            description: '(Optional) The ARN of the target function.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        template_body:
+            description: '(Required) The JSON formatted contents of the fleet provisioning template.pre_provisioning_hookThe pre_provisioning_hook configuration block supports the following:'
+            type: string
     attrs:
         arn:
             description: The ARN that identifies the provisioning template.
@@ -16,12 +55,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

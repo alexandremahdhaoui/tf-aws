@@ -6,36 +6,32 @@ spec:
     args:
         identity_id:
             description: '- (Optional) The globally unique identifier (GUID) of the user or group from the Amazon Web Services SSO Identity Store.'
-            type: string
             optional: true
+            type: string
         identity_name:
             description: (Optional) The name of the user or group from the Amazon Web Services SSO Identity Store.
-            type: string
             optional: true
+            type: string
         identity_type:
             description: (Required) Specifies whether the identity to map to the Amazon EMR Studio is a USER or a GROUP.
             type: string
-            optional: true
         session_policy_arn:
             description: (Required) The Amazon Resource Name (ARN) for the session policy that will be applied to the user or group. You should specify the ARN for the session policy that you want to apply, not the ARN of your user role.
             type: string
-            optional: true
         studio_id:
             description: '(Required) The ID of the Amazon EMR Studio to which the user or group will be mapped.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
     attrs:
         id:
             description: '- The id of the Elastic MapReduce Studio Session Mapping.'
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

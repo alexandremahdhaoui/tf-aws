@@ -1,0 +1,107 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_kendra_query_suggestions_block_list
+spec:
+    args:
+        arn:
+            description: ARN of the block list.
+            type: string
+        bucket:
+            description: Name of the S3 bucket that contains the file.
+            type: string
+        created_at:
+            description: Date-time a block list was created.
+            type: string
+        description:
+            description: Description for the block list.
+            type: string
+        error_message:
+            description: Error message containing details if there are issues processing the block list.
+            type: string
+        file_size_bytes:
+            description: Current size of the block list text file in S3.
+            type: string
+        id:
+            description: Unique identifiers of the block list and index separated by a slash (/).
+            type: string
+        index_id:
+            description: (Required) Identifier of the index that contains the block list.
+            type: string
+        item_count:
+            description: Current number of valid, non-empty words or phrases in the block list text file.
+            type: string
+        name:
+            description: Name of the block list.
+            type: string
+        query_suggestions_block_list_id:
+            description: '(Required) Identifier of the block list.In addition to all of the arguments above, the following attributes are exported:'
+            type: string
+        role_arn:
+            description: ARN of a role with permission to access the S3 bucket that contains the block list. For more information, see IAM Roles for Amazon Kendra.
+            type: string
+        source_s3_path:
+            description: S3 location of the block list input data. Detailed below.
+            type: string
+        status:
+            description: Current status of the block list. When the value is ACTIVE, the block list is ready for use.
+            type: string
+        tags:
+            description: 'Metadata that helps organize the block list you create.The source_s3_path configuration block supports the following attributes:'
+            type: string
+        updated_at:
+            description: Date and time that the block list was last updated.
+            type: string
+    attrs:
+        arn:
+            description: ARN of the block list.
+            type: string
+        bucket:
+            description: Name of the S3 bucket that contains the file.
+            type: string
+        created_at:
+            description: Date-time a block list was created.
+            type: string
+        description:
+            description: Description for the block list.
+            type: string
+        error_message:
+            description: Error message containing details if there are issues processing the block list.
+            type: string
+        file_size_bytes:
+            description: Current size of the block list text file in S3.
+            type: string
+        id:
+            description: Unique identifiers of the block list and index separated by a slash (/).
+            type: string
+        item_count:
+            description: Current number of valid, non-empty words or phrases in the block list text file.
+            type: string
+        name:
+            description: Name of the block list.
+            type: string
+        role_arn:
+            description: ARN of a role with permission to access the S3 bucket that contains the block list. For more information, see IAM Roles for Amazon Kendra.
+            type: string
+        source_s3_path:
+            description: S3 location of the block list input data. Detailed below.
+            type: string
+        status:
+            description: Current status of the block list. When the value is ACTIVE, the block list is ready for use.
+            type: string
+        tags:
+            description: 'Metadata that helps organize the block list you create.The source_s3_path configuration block supports the following attributes:'
+            type: string
+        updated_at:
+            description: Date and time that the block list was last updated.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

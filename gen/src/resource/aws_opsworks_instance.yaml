@@ -6,228 +6,226 @@ spec:
     args:
         agent_version:
             description: (Optional) OpsWorks agent to install. Default is INHERIT.
-            type: string
             optional: true
+            type: string
         ami_id:
             description: (Optional) AMI to use for the instance.  If an AMI is specified, os must be Custom.
-            type: string
             optional: true
+            type: string
         architecture:
             description: (Optional) Machine architecture for created instances.  Valid values are x86_64 or i386. The default is x86_64.
-            type: string
             optional: true
+            type: string
         auto_scaling_type:
             description: (Optional) Creates load-based or time-based instances.  Valid values are load, timer.
-            type: string
             optional: true
+            type: string
         availability_zone:
             description: (Optional) Name of the availability zone where instances will be created by default.
-            type: string
             optional: true
+            type: string
         create:
             description: (Default 10m)
-            type: string
             optional: true
+            type: string
         created_at:
             description: Time that the instance was created.
-            type: string
             optional: true
+            type: string
         delete:
             description: (Default 10m)
-            type: string
             optional: true
+            type: string
         delete_ebs:
             description: (Optional) Whether to delete EBS volume on deletion. Default is true.
-            type: string
             optional: true
+            type: string
         delete_eip:
             description: (Optional) Whether to delete the Elastic IP on deletion.
-            type: string
             optional: true
+            type: string
         delete_on_termination:
             description: (Optional) Whether the volume should be destroyed on instance termination. Default is true.
-            type: string
             optional: true
+            type: string
         device_name:
             description: Name of the block device to mount on the instance.
-            type: string
             optional: true
+            type: string
         ebs_block_device:
             description: (Optional) Configuration block for additional EBS block devices to attach to the instance. See Block Devices below.
-            type: string
             optional: true
+            type: string
         ebs_optimized:
             description: (Optional) Whether the launched EC2 instance will be EBS-optimized.
-            type: string
             optional: true
+            type: string
         ec2_instance_id:
             description: EC2 instance ID.
-            type: string
             optional: true
+            type: string
         ecs_cluster_arn:
             description: (Optional) ECS cluster's ARN for container instances.
-            type: string
             optional: true
+            type: string
         elastic_ip:
             description: (Optional) Instance Elastic IP address.
-            type: string
             optional: true
+            type: string
         ephemeral_block_device:
             description: (Optional) Configuration block for ephemeral (also known as "Instance Store") volumes on the instance. See Block Devices below.
-            type: string
             optional: true
+            type: string
         hostname:
             description: (Optional) Instance's host name.
-            type: string
             optional: true
+            type: string
         id:
             description: ID of the OpsWorks instance.
-            type: string
             optional: true
+            type: string
         infrastructure_class:
             description: '(Optional) For registered instances, infrastructure class: ec2 or on-premises.'
-            type: string
             optional: true
+            type: string
         install_updates_on_boot:
             description: (Optional) Controls where to install OS and package updates when the instance boots.  Default is true.
-            type: string
             optional: true
+            type: string
         instance_profile_arn:
             description: (Optional) ARN of the instance's IAM profile.
-            type: string
             optional: true
+            type: string
         instance_type:
             description: (Optional) Type of instance to start.
-            type: string
             optional: true
+            type: string
         iops:
             description: (Optional) Amount of provisioned IOPS. This must be set with a volume_type of io1.
-            type: string
             optional: true
+            type: string
         last_service_error_id:
             description: ID of the last service error.
-            type: string
             optional: true
+            type: string
         layer_ids:
             description: (Required) List of the layers the instance will belong to.
             type: string
-            optional: true
         os:
             description: (Optional) Name of operating system that will be installed.
-            type: string
             optional: true
+            type: string
         platform:
             description: Instance's platform.
-            type: string
             optional: true
+            type: string
         private_dns:
             description: Private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC.
-            type: string
             optional: true
+            type: string
         private_ip:
             description: Private IP address assigned to the instance.
-            type: string
             optional: true
+            type: string
         public_dns:
             description: Public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC.
-            type: string
             optional: true
+            type: string
         public_ip:
             description: Public IP address assigned to the instance, if applicable.
-            type: string
             optional: true
+            type: string
         registered_by:
             description: For registered instances, who performed the registration.
-            type: string
             optional: true
+            type: string
         reported_agent_version:
             description: Instance's reported AWS OpsWorks Stacks agent version.
-            type: string
             optional: true
+            type: string
         reported_os_family:
             description: For registered instances, the reported operating system family.
-            type: string
             optional: true
+            type: string
         reported_os_name:
             description: For registered instances, the reported operating system name.
-            type: string
             optional: true
+            type: string
         reported_os_version:
             description: For registered instances, the reported operating system version.
-            type: string
             optional: true
+            type: string
         root_block_device:
             description: (Optional) Configuration block for the root block device of the instance. See Block Devices below.
-            type: string
             optional: true
+            type: string
         root_device_type:
             description: (Optional) Name of the type of root device instances will have by default. Valid values are ebs or instance-store.
-            type: string
             optional: true
+            type: string
         root_device_volume_id:
             description: Root device volume ID.
-            type: string
             optional: true
+            type: string
         security_group_ids:
             description: Associated security groups.
-            type: string
             optional: true
+            type: string
         snapshot_id:
             description: (Optional) Snapshot ID to mount.
-            type: string
             optional: true
+            type: string
         ssh_host_dsa_key_fingerprint:
             description: SSH key's Deep Security Agent (DSA) fingerprint.
-            type: string
             optional: true
+            type: string
         ssh_host_rsa_key_fingerprint:
             description: SSH key's RSA fingerprint.
-            type: string
             optional: true
+            type: string
         ssh_key_name:
             description: (Optional) Name of the SSH keypair that instances will have by default.
-            type: string
             optional: true
+            type: string
         stack_id:
             description: (Required) Identifier of the stack the instance will belong to.
             type: string
-            optional: true
         state:
             description: (Optional) Desired state of the instance. Valid values are running or stopped.
-            type: string
             optional: true
+            type: string
         status:
             description: 'Instance status. Will be one of booting, connection_lost, online, pending, rebooting, requested, running_setup, setup_failed, shutting_down, start_failed, stop_failed, stopped, stopping, terminated, or terminating.TimeoutsConfiguration options:'
-            type: string
             optional: true
+            type: string
         subnet_id:
             description: (Optional) Subnet ID to attach to.
-            type: string
             optional: true
+            type: string
         tenancy:
             description: (Optional) Instance tenancy to use. Valid values are default, dedicated or host.
-            type: string
             optional: true
+            type: string
         update:
             description: (Default 10m)
-            type: string
             optional: true
+            type: string
         virtual_name:
             description: The Instance Store Device Name (e.g., ephemeral0).virtual_name in the format ephemeral{0..N}.root_block_device
-            type: string
             optional: true
+            type: string
         virtualization_type:
             description: (Optional) Keyword to choose what virtualization mode created instances will use. Valid values are paravirtual or hvm.Block devicesEach of the *_block_deviceebs_block_device
-            type: string
             optional: true
+            type: string
         volume_size:
             description: (Optional) Size of the volume in gigabytes.
-            type: string
             optional: true
+            type: string
         volume_type:
             description: '(Optional) Type of volume. Valid values are standard, gp2, or io1. Default is standard.Modifying any of the root_block_device~> strongNOTE: Currently, changes to *_block_device configuration of emexistingtaint command.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
     attrs:
         create:
             description: (Default 10m)
@@ -297,12 +295,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,64 @@ kind: TerraformResource
 metadata:
     name: aws_timestreamwrite_table
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN that uniquely identifies this table.
+            type: string
+        bucket_name:
+            description: (Optional) Bucket name of the customer S3 bucket.
+            optional: true
+            type: string
+        database_name:
+            description: ' – (Required) The name of the Timestream database.'
+            type: string
+        enable_magnetic_store_writes:
+            description: (Required) A flag to enable magnetic store writes.
+            type: string
+        encryption_option:
+            description: (Optional) Encryption option for the customer s3 location. Options are S3 server side encryption with an S3-managed key or KMS managed key. Valid values are SSE_KMS and SSE_S3.
+            optional: true
+            type: string
+        id:
+            description: The table_name and database_name separated by a colon (:).
+            type: string
+        kms_key_id:
+            description: (Optional) KMS key arn for the customer s3 location when encrypting with a KMS managed key.
+            optional: true
+            type: string
+        magnetic_store_rejected_data_location:
+            description: '(Optional) The location to write error reports for records rejected asynchronously during magnetic store writes. See Magnetic Store Rejected Data Location below for more details.Magnetic Store Rejected Data LocationThe magnetic_store_rejected_data_location block supports the following arguments:'
+            optional: true
+            type: string
+        magnetic_store_retention_period_in_days:
+            description: (Required) The duration for which data must be stored in the magnetic store. Minimum value of 1. Maximum value of 73000.
+            type: string
+        magnetic_store_write_properties:
+            description: (Optional) Contains properties to set on the table when enabling magnetic store writes. See Magnetic Store Write Properties below for more details.
+            optional: true
+            type: string
+        memory_store_retention_period_in_hours:
+            description: '(Required) The duration for which data must be stored in the memory store. Minimum value of 1. Maximum value of 8766.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        object_key_prefix:
+            description: '(Optional) Object key prefix for the customer S3 location.Retention PropertiesThe retention_properties block supports the following arguments:'
+            optional: true
+            type: string
+        retention_properties:
+            description: (Optional) The retention duration for the memory store and magnetic store. See Retention Properties below for more details. If not provided, magnetic_store_retention_period_in_days default to 73000 and memory_store_retention_period_in_hours defaults to 6.
+            optional: true
+            type: string
+        s3_configuration:
+            description: '(Optional) Configuration of an S3 location to write error reports for records rejected, asynchronously, during magnetic store writes. See S3 Configuration below for more details.S3 ConfigurationThe s3_configuration block supports the following arguments:'
+            optional: true
+            type: string
+        table_name:
+            description: (Required) The name of the Timestream table.
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Magnetic Store Write PropertiesThe magnetic_store_write_properties block supports the following arguments:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN that uniquely identifies this table.
@@ -16,12 +73,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

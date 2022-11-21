@@ -3,7 +3,139 @@ kind: TerraformResource
 metadata:
     name: aws_storagegateway_gateway
 spec:
-    args: {}
+    args:
+        activation_key:
+            description: (Optional) Gateway activation key during resource creation. Conflicts with gateway_ip_address. Additional information is available in the Storage Gateway User Guide.
+            optional: true
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the gateway.
+            type: string
+        average_download_rate_limit_in_bits_per_sec:
+            description: (Optional) The average download bandwidth rate limit in bits per second. This is supported for the CACHED, STORED, and VTL gateway types.
+            optional: true
+            type: string
+        average_upload_rate_limit_in_bits_per_sec:
+            description: (Optional) The average upload bandwidth rate limit in bits per second. This is supported for the CACHED, STORED, and VTL gateway types.
+            optional: true
+            type: string
+        cloudwatch_log_group_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the Amazon CloudWatch log group to use to monitor and log events in the gateway.
+            optional: true
+            type: string
+        day_of_month:
+            description: (Optional) The day of the month component of the maintenance start time represented as an ordinal number from 1 to 28, where 1 represents the first day of the month and 28 represents the last day of the month.
+            optional: true
+            type: string
+        day_of_week:
+            description: (Optional) The day of the week component of the maintenance start time week represented as an ordinal number from 0 to 6, where 0 represents Sunday and 6 Saturday.
+            optional: true
+            type: string
+        domain_controllers:
+            description: |-
+                (Optional) List of IPv4 addresses, NetBIOS names, or host names of your domain server.
+                If you need to specify the port number include it after the colon (“:”). For example, mydc.mydomain.com:389.In addition to all arguments above, the following attributes are exported:
+            optional: true
+            type: string
+        domain_name:
+            description: (Required) The name of the domain that you want the gateway to join.
+            type: string
+        ec2_instance_id:
+            description: The ID of the Amazon EC2 instance that was used to launch the gateway.
+            type: string
+        endpoint_type:
+            description: The type of endpoint for your gateway.
+            type: string
+        gateway_id:
+            description: Identifier of the gateway.
+            type: string
+        gateway_ip_address:
+            description: (Optional) Gateway IP address to retrieve activation key during resource creation. Conflicts with activation_key. Gateway must be accessible on port 80 from where Terraform is running. Additional information is available in the Storage Gateway User Guide.
+            optional: true
+            type: string
+        gateway_name:
+            description: (Required) Name of the gateway.
+            type: string
+        gateway_network_interface:
+            description: An array that contains descriptions of the gateway network interfaces. See Gateway Network Interface.
+            type: string
+        gateway_timezone:
+            description: (Required) Time zone for the gateway. The time zone is of the format "GMT", "GMT-hr:mm", or "GMT+hr:mm". For example, GMT-4:00 indicates the time is 4 hours behind GMT. The time zone is used, for example, for scheduling snapshots and your gateway's maintenance schedule.
+            type: string
+        gateway_type:
+            description: '(Optional) Type of the gateway. The default value is STORED. Valid values: CACHED, FILE_FSX_SMB, FILE_S3, STORED, VTL.'
+            optional: true
+            type: string
+        gateway_vpc_endpoint:
+            description: (Optional) VPC endpoint address to be used when activating your gateway. This should be used when your instance is in a private subnet. Requires HTTP access from client computer running terraform. More info on what ports are required by your VPC Endpoint Security group in Activating a Gateway in a Virtual Private Cloud.
+            optional: true
+            type: string
+        host_environment:
+            description: The type of hypervisor environment used by the host.
+            type: string
+        hour_of_day:
+            description: (Required) The hour component of the maintenance start time represented as emhh, where emhh is the hour (00 to 23). The hour of the day is in the time zone of the gateway.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the gateway.
+            type: string
+        ipv4_address:
+            description: 'The Internet Protocol version 4 (IPv4) address of the interface.TimeoutsConfiguration options:'
+            type: string
+        maintenance_start_time:
+            description: (Optional) The gateway's weekly maintenance start time information, including day and time of the week. The maintenance time is the time in your gateway's time zone. More details below.
+            optional: true
+            type: string
+        medium_changer_type:
+            description: '(Optional) Type of medium changer to use for tape gateway. Terraform cannot detect drift of this argument. Valid values: STK-L700, AWS-Gateway-VTL, IBM-03584L32-0402.'
+            optional: true
+            type: string
+        minute_of_hour:
+            description: '(Required) The minute component of the maintenance start time represented as emmm, where emmm is the minute (00 to 59). The minute of the hour is in the time zone of the gateway.smb_active_directory_settingsInformation to join the gateway to an Active Directory domain for Server Message Block (SMB) file shares.~> strongNOTE It is not possible to unconfigure this setting without recreating the gateway. Also, Terraform can only detect drift of the domain_name argument from the gateway.~> strongNOTE: The Storage Gateway needs to be able to resolve the name of your Active Directory Domain Controller. If the gateway is hosted on EC2, ensure that DNS/DHCP is configured prior to creating the EC2 instance. If you are receiving NETWORK_ERROR errors during resource creation (gateway joining the domain), ensure your gateway instance meets the FSx File Gateway requirements.'
+            type: string
+        organizational_unit:
+            description: |-
+                (Optional) The organizational unit (OU) is a container in an Active Directory that can hold users, groups,
+                computers, and other OUs and this parameter specifies the OU that the gateway will join within the AD domain.
+            optional: true
+            type: string
+        password:
+            description: (Required) The password of the user who has permission to add the gateway to the Active Directory domain.
+            type: string
+        smb_active_directory_settings:
+            description: (Optional) Nested argument with Active Directory domain join information for Server Message Block (SMB) file shares. Only valid for FILE_S3 and FILE_FSX_SMB gateway types. Must be set before creating ActiveDirectory authentication SMB file shares. More details below.
+            optional: true
+            type: string
+        smb_file_share_visibility:
+            description: (Optional) Specifies whether the shares on this gateway appear when listing shares.
+            optional: true
+            type: string
+        smb_guest_password:
+            description: (Optional) Guest password for Server Message Block (SMB) file shares. Only valid for FILE_S3 and FILE_FSX_SMB gateway types. Must be set before creating GuestAccess authentication SMB file shares. Terraform can only detect drift of the existence of a guest password, not its actual value from the gateway. Terraform can however update the password with changing the argument.
+            optional: true
+            type: string
+        smb_security_strategy:
+            description: '(Optional) Specifies the type of security strategy. Valid values are: ClientSpecified, MandatorySigning, and MandatoryEncryption. See Setting a Security Level for Your Gateway for more information.'
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.maintenance_start_time
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Gateway Network Interface
+            type: string
+        tape_drive_type:
+            description: '(Optional) Type of tape drive to use for tape gateway. Terraform cannot detect drift of this argument. Valid values: IBM-ULT3580-TD5.'
+            optional: true
+            type: string
+        timeout_in_seconds:
+            description: (Optional) Specifies the time in seconds, in which the JoinDomain operation must complete. The default is 20 seconds.
+            optional: true
+            type: string
+        username:
+            description: (Required) The user name of user who has permission to add the gateway to the Active Directory domain.
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the gateway.
@@ -37,12 +169,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

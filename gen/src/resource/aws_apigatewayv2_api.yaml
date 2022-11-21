@@ -3,7 +3,103 @@ kind: TerraformResource
 metadata:
     name: aws_apigatewayv2_api
 spec:
-    args: {}
+    args:
+        allow_credentials:
+            description: (Optional) Whether credentials are included in the CORS request.
+            optional: true
+            type: string
+        allow_headers:
+            description: (Optional) Set of allowed HTTP headers.
+            optional: true
+            type: string
+        allow_methods:
+            description: (Optional) Set of allowed HTTP methods.
+            optional: true
+            type: string
+        allow_origins:
+            description: (Optional) Set of allowed origins.
+            optional: true
+            type: string
+        api_endpoint:
+            description: URI of the API, of the form https://{api-id}.execute-api.{region}.amazonaws.com for HTTP APIs and wss://{api-id}.execute-api.{region}.amazonaws.com for WebSocket APIs.
+            type: string
+        api_key_selection_expression:
+            description: (Optional) An API key selection expression$context.authorizer.usageIdentifierKey, $request.header.x-api-key. Defaults to $request.header.x-api-key
+            optional: true
+            type: string
+        arn:
+            description: ARN of the API.
+            type: string
+        aws_apigatewayv2_integration:
+            description: ""
+            type: string
+        aws_apigatewayv2_route:
+            description: 'Further more, the name, description, cors_configuration, tags and version fields should be specified in the Terraform configuration and the values will override any values specified in the OpenAPI document.The cors_configuration object supports the following:'
+            type: string
+        body:
+            description: (Optional) An OpenAPI specification that defines the set of routes and integrations to create as part of the HTTP APIs. Supported only for HTTP APIs.
+            optional: true
+            type: string
+        cors_configuration:
+            description: (Optional) Cross-origin resource sharing (CORS) configuration. Applicable for HTTP APIs.
+            optional: true
+            type: string
+        credentials_arn:
+            description: (Optional) Part of emquick create. Specifies any credentials required for the integration. Applicable for HTTP APIs.
+            optional: true
+            type: string
+        description:
+            description: (Optional) Description of the API. Must be less than or equal to 1024 characters in length.
+            optional: true
+            type: string
+        disable_execute_api_endpoint:
+            description: (Optional) Whether clients can invoke the API by using the default execute-api{api_id}.execute-api.{region}.amazonaws.com endpoint
+            optional: true
+            type: string
+        execution_arn:
+            description: ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details.
+            type: string
+        expose_headers:
+            description: (Optional) Set of exposed HTTP headers.
+            optional: true
+            type: string
+        fail_on_warnings:
+            description: '(Optional) Whether warnings should return an error while API Gateway is creating or updating the resource using an OpenAPI specification. Defaults to false. Applicable for HTTP APIs.strongNote: If the body argument is provided, the OpenAPI specification will be used to configure the integrations and route for the HTTP API. If this argument is provided, the following resources should not be managed as separate ones, as updates may cause manual resource updates to be overwritten:'
+            optional: true
+            type: string
+        id:
+            description: API identifier.
+            type: string
+        max_age:
+            description: '(Optional) Number of seconds that the browser should cache preflight request results.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the API. Must be less than or equal to 128 characters in length.
+            type: string
+        protocol_type:
+            description: '(Required) API protocol. Valid values: HTTP, WEBSOCKET.'
+            type: string
+        route_key:
+            description: (Optional) Part of emquick create. Specifies any route key. Applicable for HTTP APIs.
+            optional: true
+            type: string
+        route_selection_expression:
+            description: (Optional) The route selection expression$request.method $request.path.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Map of tags to assign to the API. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        target:
+            description: (Optional) Part of emquick createHTTP_PROXY or AWS_PROXY, respectively. Applicable for HTTP APIs.
+            optional: true
+            type: string
+        version:
+            description: (Optional) Version identifier for the API. Must be between 1 and 64 characters in length.
+            optional: true
+            type: string
     attrs:
         api_endpoint:
             description: URI of the API, of the form https://{api-id}.execute-api.{region}.amazonaws.com for HTTP APIs and wss://{api-id}.execute-api.{region}.amazonaws.com for WebSocket APIs.
@@ -22,12 +118,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

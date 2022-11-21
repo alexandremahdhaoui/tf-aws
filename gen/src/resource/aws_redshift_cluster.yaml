@@ -3,7 +3,207 @@ kind: TerraformResource
 metadata:
     name: aws_redshift_cluster
 spec:
-    args: {}
+    args:
+        allow_version_upgrade:
+            description: (Optional) If true , major version upgrades can be applied during the maintenance window to the Amazon Redshift engine that is running on the cluster. Default is true.
+            optional: true
+            type: string
+        apply_immediately:
+            description: (Optional) Specifies whether any cluster modifications are applied immediately, or during the next maintenance window. Default is false.
+            optional: true
+            type: string
+        aqua_configuration_status:
+            description: (Optional) The value represents how the cluster is configured to use AQUA (Advanced Query Accelerator) after the cluster is restored. Possible values are enabled, disabled, and auto. Requires Cluster reboot.
+            optional: true
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of cluster
+            type: string
+        automated_snapshot_retention_period:
+            description: The backup retention period
+            type: string
+        availability_zone:
+            description: The availability zone of the Cluster
+            type: string
+        availability_zone_relocation_enabled:
+            description: (Optional) If true, the cluster can be relocated to another availabity zone, either automatically by AWS or when requested. Default is false. Available for use on clusters from the RA3 instance family.
+            optional: true
+            type: string
+        bucket_name:
+            description: (Optional, required when enable is true and log_destination_type is s3documentation
+            type: string
+        cluster_identifier:
+            description: The Cluster Identifier
+            type: string
+        cluster_nodes:
+            description: The nodes in the cluster. Cluster node blocks are documented below
+            type: string
+        cluster_parameter_group_name:
+            description: The name of the parameter group to be associated with this cluster
+            type: string
+        cluster_public_key:
+            description: The public key for the cluster
+            type: string
+        cluster_revision_number:
+            description: The specific revision number of the database in the cluster
+            type: string
+        cluster_security_groups:
+            description: The security groups associated with the cluster
+            type: string
+        cluster_subnet_group_name:
+            description: The name of a cluster subnet group to be associated with this cluster
+            type: string
+        cluster_type:
+            description: The cluster type
+            type: string
+        cluster_version:
+            description: The version of Redshift engine software
+            type: string
+        create:
+            description: (Default 75m)
+            type: string
+        database_name:
+            description: The name of the default database in the Cluster
+            type: string
+        default_iam_role_arn:
+            description: (Optional) The Amazon Resource Name (ARN) for the IAM role that was set as default for the cluster when the cluster was created.
+            optional: true
+            type: string
+        destination_region:
+            description: (Required) The destination region that you want to copy snapshots to.
+            type: string
+        dns_name:
+            description: The DNS name of the cluster
+            type: string
+        elastic_ip:
+            description: (Optional) The Elastic IP (EIP) address for the cluster.
+            optional: true
+            type: string
+        enable:
+            description: (Required) Enables logging information such as queries and connection attempts, for the specified Amazon Redshift cluster.
+            type: string
+        encrypted:
+            description: Whether the data in the cluster is encrypted
+            type: string
+        endpoint:
+            description: The connection endpoint
+            type: string
+        enhanced_vpc_routing:
+            description: (Optional) If true , enhanced VPC routing is enabled.
+            optional: true
+            type: string
+        final_snapshot_identifier:
+            description: (Optional) The identifier of the final snapshot that is to be created immediately before deleting the cluster. If this parameter is provided, skip_final_snapshot must be false.
+            optional: true
+            type: string
+        grant_name:
+            description: '(Optional) The name of the snapshot copy grant to use when snapshots of an AWS KMS-encrypted cluster are copied to the destination region.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        iam_roles:
+            description: (Optional) A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time.
+            optional: true
+            type: string
+        id:
+            description: The Redshift Cluster ID.
+            type: string
+        kms_key_id:
+            description: (Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true.
+            optional: true
+            type: string
+        log_destination_type:
+            description: (Optional) The log destination type. An enum with possible values of s3 and cloudwatch.
+            optional: true
+            type: string
+        log_exports:
+            description: (Optional) The collection of exported log types. Log types include the connection log, user log and user activity log. Required when log_destination_type is cloudwatch. Valid log types are connectionlog, userlog, and useractivitylog.snapshot_copy
+            optional: true
+            type: string
+        logging:
+            description: (Optional) Logging, documented below.
+            optional: true
+            type: string
+        maintenance_track_name:
+            description: (Optional) The name of the maintenance track for the restored cluster. When you take a snapshot, the snapshot inherits the MaintenanceTrack value from the cluster. The snapshot might be on a different track than the cluster that was the source for the snapshot. For example, suppose that you take a snapshot of  a cluster that is on the current track and then change the cluster to be on the trailing track. In this case, the snapshot and the source cluster are on different tracks. Default value is current.
+            optional: true
+            type: string
+        manual_snapshot_retention_period:
+            description: (Optional)  The default number of days to retain a manual snapshot. If the value is -1, the snapshot is retained indefinitely. This setting doesn't change the retention period of existing snapshots. Valid values are between -1 and 3653. Default value is -1.
+            optional: true
+            type: string
+        master_password:
+            description: (Required unless a snapshot_identifier
+            type: string
+        master_username:
+            description: (Required unless a snapshot_identifier is provided) Username for the master DB user.
+            type: string
+        node_role:
+            description: Whether the node is a leader node or a compute node
+            type: string
+        node_type:
+            description: The type of nodes in the cluster
+            type: string
+        number_of_nodes:
+            description: (Optional) The number of compute nodes in the cluster. This parameter is required when the ClusterType parameter is specified as multi-node. Default is 1.
+            optional: true
+            type: string
+        owner_account:
+            description: (Optional) The AWS customer account used to create or copy the snapshot. Required if you are restoring a snapshot you do not own, optional if you own the snapshot.
+            optional: true
+            type: string
+        port:
+            description: The Port the cluster responds on
+            type: string
+        preferred_maintenance_window:
+            description: The backup window
+            type: string
+        private_ip_address:
+            description: The private IP address of a node within a cluster
+            type: string
+        public_ip_address:
+            description: 'The public IP address of a node within a clusterTimeoutsConfiguration options:'
+            type: string
+        publicly_accessible:
+            description: (Optional) If true, the cluster can be accessed from a public network. Default is true.
+            optional: true
+            type: string
+        retention_period:
+            description: (Optional) The number of days to retain automated snapshots in the destination region after they are copied from the source region. Defaults to 7.
+            optional: true
+            type: string
+        s3_key_prefix:
+            description: (Optional) The prefix applied to the log file names.
+            optional: true
+            type: string
+        skip_final_snapshot:
+            description: (Optional) Determines whether a final snapshot of the cluster is created before Amazon Redshift deletes the cluster. If true , a final cluster snapshot is not created. If false , a final cluster snapshot is created before the cluster is deleted. Default is false.
+            optional: true
+            type: string
+        snapshot_cluster_identifier:
+            description: (Optional) The name of the cluster the source snapshot was created from.
+            optional: true
+            type: string
+        snapshot_copy:
+            description: (Optional) Configuration of automatic copy of snapshots from one region to another. Documented below.
+            optional: true
+            type: string
+        snapshot_identifier:
+            description: (Optional) The name of the snapshot from which to create the new cluster.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blockslogging
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Cluster nodes (for cluster_nodes) support the following attributes:'
+            type: string
+        update:
+            description: (Default 75m)
+            type: string
+        vpc_security_group_ids:
+            description: The VPC security group Ids associated with the cluster
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of cluster
@@ -91,12 +291,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

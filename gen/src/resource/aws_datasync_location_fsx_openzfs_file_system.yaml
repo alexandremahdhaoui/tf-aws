@@ -3,7 +3,47 @@ kind: TerraformResource
 metadata:
     name: aws_datasync_location_fsx_openzfs_file_system
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the DataSync Location.
+            type: string
+        fsx_filesystem_arn:
+            description: (Required) The Amazon Resource Name (ARN) for the FSx for OpenZfs file system.
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the DataSync Location.
+            type: string
+        mount_options:
+            description: (Required) Represents the mount options that are available for DataSync to access an NFS location. See below.mount_options
+            type: string
+        nfs:
+            description: (Required) Represents the Network File System (NFS) protocol that DataSync uses to access your FSx for OpenZFS file system. See below.nfs
+            type: string
+        protocol:
+            description: (Required) The type of protocol that DataSync uses to access your file system. See below.
+            type: string
+        security_group_arns:
+            description: (Optional) The Amazon Resource Names (ARNs) of the security groups that are to use to configure the FSx for openzfs file system.
+            optional: true
+            type: string
+        subdirectory:
+            description: (Optional) Subdirectory to perform actions as source or destination. Must start with /fsx.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.protocol
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        uri:
+            description: The URL of the FSx for openzfs location that was described.
+            type: string
+        version:
+            description: '(Optional) The specific NFS version that you want DataSync to use for mounting your NFS share. Valid values: AUTOMATIC, NFS3, NFS4_0 and NFS4_1. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the DataSync Location.
@@ -22,12 +62,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

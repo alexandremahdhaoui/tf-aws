@@ -3,7 +3,132 @@ kind: TerraformResource
 metadata:
     name: aws_rds_cluster_instance
 spec:
-    args: {}
+    args:
+        apply_immediately:
+            description: |-
+                (Optional) Specifies whether any database modifications
+                are applied immediately, or during the next maintenance window. Default isfalse.
+            optional: true
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of cluster instance
+            type: string
+        auto_minor_version_upgrade:
+            description: (Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true.
+            optional: true
+            type: string
+        availability_zone:
+            description: The availability zone of the instance
+            type: string
+        ca_cert_identifier:
+            description: (Optional) The identifier of the CA certificate for the DB instance.
+            optional: true
+            type: string
+        cluster_identifier:
+            description: The RDS Cluster Identifier
+            type: string
+        copy_tags_to_snapshot:
+            description: ' – (Optional, boolean) Indicates whether to copy all of the user-defined tags from the DB instance to snapshots of the DB instance. Default false.'
+            type: string
+        create:
+            description: (Default 90m)
+            type: string
+        db_parameter_group_name:
+            description: (Optional) The name of the DB parameter group to associate with this instance.
+            optional: true
+            type: string
+        db_subnet_group_name:
+            description: '(Required if publicly_accessible = false, Optional otherwise, Forces new resource) A DB subnet group to associate with this DB instance. strongNOTE: This must match the db_subnet_group_name of the attached aws_rds_cluster.'
+            type: string
+        dbi_resource_id:
+            description: The region-unique, immutable identifier for the DB instance.
+            type: string
+        endpoint:
+            description: The DNS address for this instance. May not be writable
+            type: string
+        engine:
+            description: The database engine
+            type: string
+        engine_version:
+            description: (Optional) The database engine version.
+            optional: true
+            type: string
+        engine_version_actual:
+            description: The database engine version
+            type: string
+        id:
+            description: The Instance identifier
+            type: string
+        identifier:
+            description: The Instance identifier
+            type: string
+        identifier_prefix:
+            description: (Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier.
+            type: string
+        instance_class:
+            description: |-
+                (Required) The instance class to use. For details on CPU
+                and memory, see Scaling Aurora DB Instances. Aurora uses db.* instance classes/types. Please see AWS Documentation for currently available instance classes and complete details.
+            type: string
+        kms_key_id:
+            description: The ARN for the KMS encryption key if one is set to the cluster.
+            type: string
+        monitoring_interval:
+            description: '(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60.'
+            optional: true
+            type: string
+        monitoring_role_arn:
+            description: AWS Documentation
+            type: string
+        network_type:
+            description: The network type of the DB instance.
+            type: string
+        performance_insights_enabled:
+            description: Specifies whether Performance Insights is enabled or not.
+            type: string
+        performance_insights_kms_key_id:
+            description: The ARN for the KMS encryption key used by Performance Insights.
+            type: string
+        performance_insights_retention_period:
+            description: (Optional) Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'.
+            optional: true
+            type: string
+        port:
+            description: The database port
+            type: string
+        preferred_backup_window:
+            description: '(Optional) The daily time range during which automated backups are created if automated backups are enabled. Eg: "04:00-09:00". strongNOTE: If preferred_backup_window is set at the cluster level, this argument strongmust be omitted.'
+            optional: true
+            type: string
+        preferred_maintenance_window:
+            description: ""
+            type: string
+        promotion_tier:
+            description: (Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoted to writer.
+            optional: true
+            type: string
+        publicly_accessible:
+            description: |-
+                (Optional) Bool to control if instance is publicly accessible.
+                Default false. See the documentation on Creating DB Instances
+            optional: true
+            type: string
+        storage_encrypted:
+            description: Specifies whether the DB cluster is encrypted.
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 90m)
+            type: string
+        writer:
+            description: ' – Boolean indicating if this instance is writable. False indicates this instance is a read replica.'
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of cluster instance
@@ -67,12 +192,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

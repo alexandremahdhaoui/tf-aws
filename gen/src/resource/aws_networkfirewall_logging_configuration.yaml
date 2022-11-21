@@ -3,19 +3,45 @@ kind: TerraformResource
 metadata:
     name: aws_networkfirewall_logging_configuration
 spec:
-    args: {}
+    args:
+        'For a CloudWatch log group, specify the key ':
+            description: logGroup with the name of the CloudWatch log group.
+            type: string
+        'For a Kinesis Data Firehose delivery stream, specify the key ':
+            description: deliveryStream with the name of the delivery stream.
+            type: string
+        'For an Amazon S3 bucket, specify the key ':
+            description: bucketName with the name of the bucket and optionally specify the key prefix with a path.
+            type: string
+        firewall_arn:
+            description: (Required, Forces new resource) The Amazon Resource Name (ARN) of the Network Firewall firewall.
+            type: string
+        log_destination:
+            description: (Required) A map describing the logging destination for the chosen log_destination_type.
+            type: string
+        log_destination_config:
+            description: '(Required) Set of configuration blocks describing the logging details for a firewall. See Log Destination Config below for details. At most, only two blocks can be specified; one for FLOW logs and one for ALERT logs.Log Destination ConfigThe log_destination_config block supports the following arguments:'
+            type: string
+        log_destination_type:
+            description: '(Required) The location to send logs to. Valid values: S3, CloudWatchLogs, KinesisDataFirehose.'
+            type: string
+        log_type:
+            description: '(Required) The type of log to send. Valid values: ALERT or FLOW. Alert logs report traffic that matches a StatefulRule with an action setting that sends a log message. Flow logs are standard network traffic flow logs.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        logging_configuration:
+            description: '(Required) A configuration block describing how AWS Network Firewall performs logging for a firewall. See Logging Configuration below for details.Logging ConfigurationThe logging_configuration block supports the following arguments:'
+            type: string
     attrs:
         id:
             description: The Amazon Resource Name (ARN) of the associated firewall.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

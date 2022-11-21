@@ -3,7 +3,38 @@ kind: TerraformResource
 metadata:
     name: aws_evidently_segment
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the segment.
+            type: string
+        created_time:
+            description: The date and time that the segment is created.
+            type: string
+        description:
+            description: (Optional, Forces new resource) Specifies the description of the segment.
+            type: string
+        experiment_count:
+            description: The number of experiments that this segment is used in. This count includes all current experiments, not just those that are currently running.
+            type: string
+        id:
+            description: The ID has the same value as the name of the segment.
+            type: string
+        last_updated_time:
+            description: The date and time that this segment was most recently updated.
+            type: string
+        launch_count:
+            description: The number of launches that this segment is used in. This count includes all current launches, not just those that are currently running.
+            type: string
+        name:
+            description: (Required, Forces new resource) A name for the segment.
+            type: string
+        pattern:
+            description: (Required, Forces new resource) The pattern to use for the segment. For more information about pattern syntax, see Segment rule pattern syntax.
+            type: string
+        tags:
+            description: '(Optional) Tags to apply to the segment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the segment.
@@ -15,7 +46,7 @@ spec:
             description: The number of experiments that this segment is used in. This count includes all current experiments, not just those that are currently running.
             type: string
         id:
-            description: The ID has the same value as the ARN of the segment.
+            description: The ID has the same value as the name of the segment.
             type: string
         last_updated_time:
             description: The date and time that this segment was most recently updated.
@@ -28,12 +59,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

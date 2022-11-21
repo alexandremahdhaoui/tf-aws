@@ -3,7 +3,79 @@ kind: TerraformResource
 metadata:
     name: aws_s3control_multi_region_access_point
 spec:
-    args: {}
+    args:
+        Ignore all public ACLs on buckets in this account and any objects that they contain.:
+            description: ""
+            type: string
+        Only the bucket owner and AWS Services can access buckets with public policies.:
+            description: 'Region ConfigurationThe region block supports the following:'
+            type: string
+        PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.:
+            description: ""
+            type: string
+        PUT Bucket calls fail if the request includes a public ACL.:
+            description: ""
+            type: string
+        PUT Object calls fail if the request includes a public ACL.:
+            description: ""
+            type: string
+        Reject calls to PUT Bucket policy if the specified bucket policy allows public access.:
+            description: ""
+            type: string
+        account_id:
+            description: (Optional) The AWS account ID for the owner of the buckets for which you want to create a Multi-Region Access Point. Defaults to automatically determined account ID of the Terraform AWS provider.
+            optional: true
+            type: string
+        alias:
+            description: The alias for the Multi-Region Access Point.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the Multi-Region Access Point.
+            type: string
+        block_public_acls:
+            description: (Optional) Whether Amazon S3 should block public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect existing policies or ACLs. When set to true
+            optional: true
+            type: string
+        block_public_policy:
+            description: (Optional) Whether Amazon S3 should block public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect existing bucket policies. When set to true
+            optional: true
+            type: string
+        bucket:
+            description: '(Required) The name of the associated bucket for the Region.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        create:
+            description: (Default 60m)
+            type: string
+        delete:
+            description: '(Default 15m)Details ConfigurationThe details block supports the following:'
+            type: string
+        details:
+            description: '(Required) A configuration block containing details about the Multi-Region Access Point. See Details Configuration Block below for more detailsTimeoutsConfiguration options:'
+            type: string
+        domain_name:
+            description: The DNS domain name of the S3 Multi-Region Access Point in the format emalias.accesspoint.s3-global.amazonaws.com. For more information, see the documentation on Multi-Region Access Point Requests.
+            type: string
+        id:
+            description: The AWS account ID and access point name separated by a colon (:).
+            type: string
+        ignore_public_acls:
+            description: (Optional) Whether Amazon S3 should ignore public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the Multi-Region Access Point.
+            type: string
+        public_access_block:
+            description: (Optional) Configuration block to manage the PublicAccessBlock configuration that you want to apply to this Multi-Region Access Point. You can enable the configuration options in any combination. See Public Access Block Configuration below for more details.
+            optional: true
+            type: string
+        region:
+            description: '(Required) The Region configuration block to specify the bucket associated with the Multi-Region Access Point. See Region Configuration below for more details.For more information, see the documentation on Multi-Region Access Points.Public Access Block ConfigurationThe public_access_block block supports the following:'
+            type: string
+        restrict_public_buckets:
+            description: (Optional) Whether Amazon S3 should restrict public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true
+            optional: true
+            type: string
     attrs:
         alias:
             description: The alias for the Multi-Region Access Point.
@@ -22,12 +94,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

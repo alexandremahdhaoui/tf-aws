@@ -3,10 +3,59 @@ kind: TerraformResource
 metadata:
     name: aws_lex_slot_type
 spec:
-    args: {}
+    args:
+        checksum:
+            description: |-
+                Checksum identifying the version of the slot type that was created. The checksum is
+                not included as an argument because the resource will add it automatically when updating the slot type.
+            type: string
+        create:
+            description: (Default 1m)
+            type: string
+        create_version:
+            description: |-
+                (Optional)
+                Determines if a new slot type version is created when the initial resource is created and on each
+                update. Defaults to false.
+            optional: true
+            type: string
+        created_date:
+            description: The date when the slot type version was created.
+            type: string
+        delete:
+            description: '(Default 5m)In addition to all arguments above, the following attributes are exported:'
+            type: string
+        description:
+            description: (Optional) A description of the slot type. Must be less than or equal to 200 characters in length.
+            optional: true
+            type: string
+        enumeration_value:
+            description: enumeration_value.
+            type: string
+        last_updated_date:
+            description: The date when the $LATEST version of this slot type was updated.
+            type: string
+        name:
+            description: (Required) The name of the slot type. The name is not case sensitive. Must be less than or equal to 100 characters in length.
+            type: string
+        synonyms:
+            description: (Optional) Additional values related to the slot type value. Each item must be less than or equal to 140 characters in length.
+            optional: true
+            type: string
+        update:
+            description: (Default 1m)
+            type: string
+        value:
+            description: '(Required) The value of the slot type. Must be less than or equal to 140 characters in length.TimeoutsConfiguration options:'
+            type: string
+        value_selection_strategy:
+            description: ORIGINAL_VALUETOP_RESOLUTIONORIGINAL_VALUE.enumeration_value
+            type: string
     attrs:
         checksum:
-            description: ""
+            description: |-
+                Checksum identifying the version of the slot type that was created. The checksum is
+                not included as an argument because the resource will add it automatically when updating the slot type.
             type: string
         created_date:
             description: The date when the slot type version was created.
@@ -19,12 +68,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

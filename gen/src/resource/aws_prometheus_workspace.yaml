@@ -3,7 +3,31 @@ kind: TerraformResource
 metadata:
     name: aws_prometheus_workspace
 spec:
-    args: {}
+    args:
+        alias:
+            description: (Optional) The alias of the prometheus workspace. See more in AWS Docs.
+            optional: true
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the workspace.
+            type: string
+        id:
+            description: Identifier of the workspace
+            type: string
+        log_group_arn:
+            description: '(Required) The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        logging_configuration:
+            description: (Optional) Logging configuration for the workspace. See Logging Configuration below for details.
+            optional: true
+            type: string
+        prometheus_endpoint:
+            description: Prometheus endpoint available for this workspace.
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Logging ConfigurationThe logging_configuration block supports the following arguments:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the workspace.
@@ -19,12 +43,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

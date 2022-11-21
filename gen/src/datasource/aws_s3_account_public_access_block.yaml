@@ -1,0 +1,45 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_s3_account_public_access_block
+spec:
+    args:
+        account_id:
+            description: '(Optional) AWS account ID to configure. Defaults to automatically determined account ID of the Terraform AWS provider.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        block_public_acls:
+            description: Whether or not Amazon S3 should block public ACLs for buckets in this account is enabled. Returns as true or false.
+            type: string
+        block_public_policy:
+            description: Whether or not Amazon S3 should block public bucket policies for buckets in this account is enabled. Returns as true or false.
+            type: string
+        id:
+            description: AWS account ID
+            type: string
+        ignore_public_acls:
+            description: Whether or not Amazon S3 should ignore public ACLs for buckets in this account is enabled. Returns as true or false.
+            type: string
+    attrs:
+        block_public_acls:
+            description: Whether or not Amazon S3 should block public ACLs for buckets in this account is enabled. Returns as true or false.
+            type: string
+        block_public_policy:
+            description: Whether or not Amazon S3 should block public bucket policies for buckets in this account is enabled. Returns as true or false.
+            type: string
+        id:
+            description: AWS account ID
+            type: string
+        ignore_public_acls:
+            description: Whether or not Amazon S3 should ignore public ACLs for buckets in this account is enabled. Returns as true or false.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

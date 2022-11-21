@@ -1,0 +1,66 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_servicecatalog_launch_paths
+spec:
+    args:
+        accept_language:
+            description: '(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        constraint_summaries:
+            description: Block for constraints on the portfolio-product relationship. See details below.
+            optional: true
+            type: string
+        description:
+            description: Description of the constraint.
+            optional: true
+            type: string
+        name:
+            description: Name of the portfolio to which the path was assigned.
+            optional: true
+            type: string
+        path_id:
+            description: Identifier of the product path.
+            optional: true
+            type: string
+        product_id:
+            description: (Required) Product identifier.
+            type: string
+        summaries:
+            description: Block with information about the launch path. See details below.summaries
+            optional: true
+            type: string
+        tags:
+            description: Tags associated with this product path.constraint_summaries
+            optional: true
+            type: string
+    attrs:
+        constraint_summaries:
+            description: Block for constraints on the portfolio-product relationship. See details below.
+            type: string
+        description:
+            description: Description of the constraint.
+            type: string
+        name:
+            description: Name of the portfolio to which the path was assigned.
+            type: string
+        path_id:
+            description: Identifier of the product path.
+            type: string
+        summaries:
+            description: Block with information about the launch path. See details below.summaries
+            type: string
+        tags:
+            description: Tags associated with this product path.constraint_summaries
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

@@ -3,7 +3,30 @@ kind: TerraformResource
 metadata:
     name: aws_organizations_organizational_unit
 spec:
-    args: {}
+    args:
+        accounts:
+            description: |
+                List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:
+            type: string
+        arn:
+            description: ARN of the organizational unit
+            type: string
+        email:
+            description: Email of the account
+            type: string
+        id:
+            description: Identifier of the organization unit
+            type: string
+        name:
+            description: Name of the account
+            type: string
+        parent_id:
+            description: ID of the parent organizational unit, which may be the root
+            type: string
+        tags:
+            description: '(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         accounts:
             description: |
@@ -26,12 +49,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

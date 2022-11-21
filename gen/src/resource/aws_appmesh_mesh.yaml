@@ -3,7 +3,44 @@ kind: TerraformResource
 metadata:
     name: aws_appmesh_mesh
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the service mesh.
+            type: string
+        created_date:
+            description: Creation date of the service mesh.
+            type: string
+        egress_filter:
+            description: '- (Optional) Egress filter rules for the service mesh.The egress_filter object supports the following:'
+            optional: true
+            type: string
+        id:
+            description: ID of the service mesh.
+            type: string
+        last_updated_date:
+            description: Last update date of the service mesh.
+            type: string
+        mesh_owner:
+            description: AWS account ID of the service mesh's owner.
+            type: string
+        name:
+            description: (Required) Name to use for the service mesh. Must be between 1 and 255 characters in length.
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        spec:
+            description: (Optional) Service mesh specification to apply.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:'
+            optional: true
+            type: string
+        type:
+            description: '(Optional) Egress filter type. By default, the type is DROP_ALLALLOW_ALL and DROP_ALL.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the service mesh.
@@ -28,12 +65,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

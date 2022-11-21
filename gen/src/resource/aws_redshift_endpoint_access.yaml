@@ -3,7 +3,54 @@ kind: TerraformResource
 metadata:
     name: aws_redshift_endpoint_access
 spec:
-    args: {}
+    args:
+        address:
+            description: The DNS address of the endpoint.
+            type: string
+        availability_zone:
+            description: The Availability Zone.
+            type: string
+        cluster_identifier:
+            description: (Required) The cluster identifier of the cluster to access.
+            type: string
+        endpoint_name:
+            description: (Required) The Redshift-managed VPC endpoint name.
+            type: string
+        id:
+            description: The Redshift-managed VPC endpoint name.
+            type: string
+        network_interface:
+            description: One or more network interfaces of the endpoint. Also known as an interface endpoint. See details below.
+            type: string
+        network_interface_id:
+            description: The network interface identifier.
+            type: string
+        port:
+            description: The port number on which the cluster accepts incoming connections.
+            type: string
+        private_ip_address:
+            description: The IPv4 address of the network interface within the subnet.
+            type: string
+        resource_owner:
+            description: (Optional) The Amazon Web Services account ID of the owner of the cluster. This is only required if the cluster is in another Amazon Web Services account.
+            optional: true
+            type: string
+        subnet_group_name:
+            description: (Required) The subnet group from which Amazon Redshift chooses the subnet to deploy the endpoint.
+            type: string
+        vpc_endpoint:
+            description: The connection endpoint for connecting to an Amazon Redshift cluster through the proxy. See details below.VPC Endpoint
+            type: string
+        vpc_endpoint_id:
+            description: The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy.
+            type: string
+        vpc_id:
+            description: The VPC identifier that the endpoint is associated.Network Interface
+            type: string
+        vpc_security_group_ids:
+            description: '(Optional) The security group that defines the ports, protocols, and sources for inbound traffic that you are authorizing into your endpoint.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         address:
             description: The DNS address of the endpoint.
@@ -40,12 +87,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

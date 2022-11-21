@@ -3,7 +3,52 @@ kind: TerraformResource
 metadata:
     name: aws_dx_hosted_connection
 spec:
-    args: {}
+    args:
+        aws_device:
+            description: The Direct Connect endpoint on which the physical connection terminates.
+            type: string
+        bandwidth:
+            description: '(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps and 10Gbps. Case sensitive.'
+            type: string
+        connection_id:
+            description: (Required) The ID of the interconnect or LAG.
+            type: string
+        has_logical_redundancy:
+            description: Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6).
+            type: string
+        id:
+            description: The ID of the connection.
+            type: string
+        jumbo_frame_capable:
+            description: Boolean value representing if jumbo frames have been enabled for this connection.
+            type: string
+        lag_id:
+            description: The ID of the LAG.
+            type: string
+        loa_issue_time:
+            description: The time of the most recent call to DescribeLoa for this connection.
+            type: string
+        location:
+            description: The location of the connection.
+            type: string
+        name:
+            description: (Required) The name of the connection.
+            type: string
+        owner_account_id:
+            description: (Required) The ID of the AWS account of the customer for the connection.
+            type: string
+        partner_name:
+            description: The name of the AWS Direct Connect service provider associated with the connection.
+            type: string
+        provider_name:
+            description: The name of the service provider associated with the connection.
+            type: string
+        state:
+            description: 'The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state.'
+            type: string
+        vlan:
+            description: '(Required) The dedicated VLAN provisioned to the hosted connection.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         aws_device:
             description: The Direct Connect endpoint on which the physical connection terminates.
@@ -37,12 +82,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

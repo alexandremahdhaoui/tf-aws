@@ -1,0 +1,32 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_iam_policy
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the policy.
+            type: string
+        description:
+            description: Description of the policy.
+            type: string
+        path:
+            description: Path to the policy.
+            type: string
+        policy:
+            description: Policy document of the policy.
+            type: string
+        policy_id:
+            description: Policy's ID.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

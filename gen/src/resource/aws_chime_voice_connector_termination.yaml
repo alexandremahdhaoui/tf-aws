@@ -3,19 +3,39 @@ kind: TerraformResource
 metadata:
     name: aws_chime_voice_connector_termination
 spec:
-    args: {}
+    args:
+        calling_regions:
+            description: (Required) The countries to which calls are allowed, in ISO 3166-1 alpha-2 format.
+            type: string
+        cidr_allow_list:
+            description: (Required) The IP addresses allowed to make calls, in CIDR format.
+            type: string
+        cps_limit:
+            description: '(Optional) The limit on calls per second. Max value based on account service quota. Default value of 1.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        default_phone_number:
+            description: (Optional) The default caller ID phone number.
+            optional: true
+            type: string
+        disabled:
+            description: (Optional) When termination settings are disabled, outbound calls can not be made.
+            optional: true
+            type: string
+        voice_connector_id:
+            description: (Required) The Amazon Chime Voice Connector ID.
+            type: string
     attrs:
         id:
             description: The Amazon Chime Voice Connector ID.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

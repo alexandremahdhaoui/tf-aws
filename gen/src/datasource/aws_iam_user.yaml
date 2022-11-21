@@ -1,0 +1,32 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_iam_user
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN assigned by AWS for this user.
+            type: string
+        path:
+            description: Path in which this user was created.
+            type: string
+        permissions_boundary:
+            description: The ARN of the policy that is used to set the permissions boundary for the user.
+            type: string
+        user_id:
+            description: Unique ID assigned by AWS for this user.
+            type: string
+        user_name:
+            description: Name associated to this User
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

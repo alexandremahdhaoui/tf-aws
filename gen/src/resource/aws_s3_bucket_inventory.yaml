@@ -3,16 +3,70 @@ kind: TerraformResource
 metadata:
     name: aws_s3_bucket_inventory
 spec:
-    args: {}
+    args:
+        account_id:
+            description: (Optional) The ID of the account that owns the destination bucket. Recommended to be set to prevent problems if the destination bucket ownership changes.
+            optional: true
+            type: string
+        bucket:
+            description: '(Required) The S3 bucket configuration where inventory results are published (documented below).The bucket configuration supports the following:'
+            type: string
+        bucket_arn:
+            description: (Required) The Amazon S3 bucket ARN of the destination.
+            type: string
+        destination:
+            description: (Required) Contains information about where to publish the inventory results (documented below).
+            type: string
+        enabled:
+            description: '(Optional, Default: true) Specifies whether the inventory is enabled or disabled.'
+            type: string
+        encryption:
+            description: '(Optional) Contains the type of server-side encryption to use to encrypt the inventory (documented below).The encryption configuration supports the following:'
+            optional: true
+            type: string
+        filter:
+            description: (Optional) Specifies an inventory filter. The inventory only includes objects that meet the filter's criteria (documented below).
+            optional: true
+            type: string
+        format:
+            description: (Required) Specifies the output format of the inventory results. Can be CSV, ORC or Parquet.
+            type: string
+        frequency:
+            description: '(Required) Specifies how frequently inventory results are produced. Valid values: Daily, Weekly.The destination configuration supports the following:'
+            type: string
+        included_object_versions:
+            description: '(Required) Object versions to include in the inventory list. Valid values: All, Current.'
+            type: string
+        name:
+            description: (Required) Unique identifier of the inventory configuration for the bucket.
+            type: string
+        optional_fields:
+            description: '(Optional) List of optional fields that are included in the inventory results. Please refer to the S3 documentation for more details.The filter configuration supports the following:'
+            optional: true
+            type: string
+        prefix:
+            description: (Optional) The prefix that is prepended to all inventory results.
+            optional: true
+            type: string
+        schedule:
+            description: (Required) Specifies the schedule for generating inventory results (documented below).
+            type: string
+        sse_kms:
+            description: (Optional) Specifies to use server-side encryption with AWS KMS-managed keys to encrypt the inventory file (documented below).
+            optional: true
+            type: string
+        sse_s3:
+            description: '(Optional) Specifies to use server-side encryption with Amazon S3-managed keys (SSE-S3) to encrypt the inventory file.The sse_kms configuration supports the following:'
+            optional: true
+            type: string
     attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true
