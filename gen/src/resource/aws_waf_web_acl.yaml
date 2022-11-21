@@ -3,7 +3,68 @@ kind: TerraformResource
 metadata:
     name: aws_waf_web_acl
 spec:
-    args: {}
+    args:
+        action:
+            description: (Optional) The action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Not used if type is GROUP
+            optional: true
+            type: string
+        arn:
+            description: The ARN of the WAF WebACL.
+            type: string
+        data:
+            description: (Optional) When the value of type is HEADER, enter the name of the header that you want the WAF to search, for example, User-Agent or Referer. If the value of type is any other value, omit data.
+            optional: true
+            type: string
+        default_action:
+            description: (Required) Configuration block with action that you want AWS WAF to take when a request doesn't match the criteria in any of the rules that are associated with the web ACL. Detailed below.
+            type: string
+        field_to_match:
+            description: (Required) Set of configuration blocks for fields to redact. Detailed below.field_to_match Configuration Block-> Additional information about this configuration can be found in the AWS WAF Regional API Reference.
+            type: string
+        id:
+            description: The ID of the WAF WebACL.
+            type: string
+        log_destination:
+            description: (Required) Amazon Resource Name (ARN) of Kinesis Firehose Delivery Stream
+            type: string
+        logging_configuration:
+            description: (Optional) Configuration block to enable WAF logging. Detailed below.
+            optional: true
+            type: string
+        metric_name:
+            description: (Required) The name or description for the Amazon CloudWatch metric of this web ACL.
+            type: string
+        name:
+            description: (Required) The name or description of the web ACL.
+            type: string
+        override_action:
+            description: (Optional) Override the action that a group requests CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Only used if type is GROUP
+            optional: true
+            type: string
+        priority:
+            description: |-
+                (Required) Specifies the order in which the rules in a WebACL are evaluated.
+                Rules with a lower value are evaluated before rules with a higher value.
+            type: string
+        redacted_fields:
+            description: (Optional) Configuration block containing parts of the request that you want redacted from the logs. Detailed below.redacted_fields Configuration Block
+            optional: true
+            type: string
+        rule_id:
+            description: (Required) ID of the associated WAF (Global) rule (e.g., aws_waf_rule). WAF (Regional) rules cannot be used.
+            type: string
+        rules:
+            description: (Optional) Configuration blocks containing rules to associate with the web ACL and the settings for each rule. Detailed below.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.default_action Configuration Block
+            optional: true
+            type: string
+        type:
+            description: '(Optional) The rule type, either REGULAR, as defined by Rule, RATE_BASED, as defined by RateBasedRule, or GROUP, as defined by RuleGroup. The default is REGULAR. If you add a RATE_BASED rule, you need to set type as RATE_BASED. If you add a GROUP rule, you need to set type as GROUP.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the WAF WebACL.
@@ -16,12 +77,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

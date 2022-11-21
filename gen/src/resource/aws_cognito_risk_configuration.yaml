@@ -3,19 +3,106 @@ kind: TerraformResource
 metadata:
     name: aws_cognito_risk_configuration
 spec:
-    args: {}
+    args:
+        account_takeover_risk_configuration:
+            description: (Optional) The account takeover risk configuration. See details below.
+            optional: true
+            type: string
+        actions:
+            description: (Required) The compromised credentials risk configuration actions. See details below.actions
+            type: string
+        block_email:
+            description: (Optional) Email template used when a detected risk event is blocked. See notify email type below.
+            optional: true
+            type: string
+        blocked_ip_range_list:
+            description: (Optional) Overrides the risk decision to always block the pre-authentication requests. The IP range is in CIDR notation, a compact representation of an IP address and its routing prefix.
+            optional: true
+            type: string
+        client_id:
+            description: (Optional) The app client ID. When the client ID is not provided, the same risk configuration is applied to all the clients in the User Pool.
+            optional: true
+            type: string
+        compromised_credentials_risk_configuration:
+            description: (Optional) The compromised credentials risk configuration. See details below.
+            optional: true
+            type: string
+        event_action:
+            description: (Optional) The event action. Valid values are BLOCK or NO_ACTION.risk_exception_configuration
+            optional: true
+            type: string
+        event_filter:
+            description: (Optional) Perform the action for these events. The default is to perform all events if no event filter is specified. Valid values are SIGN_IN, PASSWORD_CHANGE, and SIGN_UP.
+            optional: true
+            type: string
+        from:
+            description: (Optional) The email address that is sending the email. The address must be either individually verified with Amazon Simple Email Service, or from a domain that has been verified with Amazon SES.
+            optional: true
+            type: string
+        high_action:
+            description: (Optional) Action to take for a high risk. See action block below.
+            optional: true
+            type: string
+        html_body:
+            description: (Required) The email HTML body.
+            type: string
+        low_action:
+            description: (Optional) Action to take for a low risk. See action block below.
+            optional: true
+            type: string
+        medium_action:
+            description: (Optional) Action to take for a medium risk. See action block below.action
+            optional: true
+            type: string
+        mfa_email:
+            description: (Optional) The multi-factor authentication (MFA) email template used when MFA is challenged as part of a detected risk. See notify email type below.
+            optional: true
+            type: string
+        no_action_email:
+            description: (Optional) The email template used when a detected risk event is allowed. See notify email type below.
+            optional: true
+            type: string
+        notify:
+            description: (Required) Whether to send a notification.compromised_credentials_risk_configuration
+            type: string
+        notify_configuration:
+            description: (Required) The notify configuration used to construct email notifications. See details below.
+            type: string
+        reply_to:
+            description: (Optional) The destination to which the receiver of an email should reply to.
+            optional: true
+            type: string
+        risk_exception_configuration:
+            description: (Optional) The configuration to override the risk decision. See details below.account_takeover_risk_configuration
+            optional: true
+            type: string
+        skipped_ip_range_list:
+            description: '(Optional) Risk detection isn''t performed on the IP addresses in this range list. The IP range is in CIDR notation.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        source_arn:
+            description: (Required) The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. This identity permits Amazon Cognito to send for the email address specified in the From parameter.notify email type
+            type: string
+        subject:
+            description: (Required) The email subject.
+            type: string
+        test_body:
+            description: (Required) The email text body.actions
+            type: string
+        user_pool_id:
+            description: (Required) The user pool ID.
+            type: string
     attrs:
         id:
             description: 'The user pool ID. or The user pool ID and Client Id separated by a : if the configuration is client specific.'
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

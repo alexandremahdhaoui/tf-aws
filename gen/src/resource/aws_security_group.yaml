@@ -6,64 +6,87 @@ spec:
     args:
         arn:
             description: ARN of the security group.
-            type: string
             optional: true
+            type: string
         cidr_blocks:
             description: (Optional) List of CIDR blocks.
-            type: string
             optional: true
+            type: string
         create:
             description: (Default 10m)
-            type: string
             optional: true
+            type: string
         delete:
             description: (Default 15m)
-            type: string
             optional: true
+            type: string
         description:
             description: (Optional) Description of this egress rule.
-            type: string
             optional: true
+            type: string
+        egress:
+            description: (Optional, VPC only) Configuration block for egress rules. Can be specified multiple times for each egress rule. Each egress block supports fields documented below. This argument is processed in attribute-as-blocks mode.
+            type: string
         from_port:
             description: (Required) Start port (or ICMP type number if protocol is icmp)
             type: string
-            optional: true
         id:
             description: ID of the security group.
-            type: string
             optional: true
+            type: string
+        ingress:
+            description: (Optional) Configuration block for ingress rules. Can be specified multiple times for each ingress rule. Each ingress block supports fields documented below. This argument is processed in attribute-as-blocks mode.
+            optional: true
+            type: string
         ipv6_cidr_blocks:
             description: (Optional) List of IPv6 CIDR blocks.
-            type: string
             optional: true
+            type: string
+        name:
+            description: (Optional, Forces new resource) Name of the security group. If omitted, Terraform will assign a random, unique name.
+            type: string
+        name_prefix:
+            description: (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name.
+            type: string
         owner_id:
             description: Owner ID.
-            type: string
             optional: true
+            type: string
         prefix_list_ids:
             description: (Optional) List of Prefix List IDs.
-            type: string
             optional: true
+            type: string
         protocol:
             description: (Required) Protocol. If you select a protocol of -1 (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0.  The supported values are defined in the IpProtocol argument in the IpPermission API reference. This argument is normalized to a lowercase value to match the AWS API requirement when using Terraform 0.12.x and above. Please make sure that the value of the protocol is specified as lowercase when used with older version of Terraform to avoid issues during upgrade.
             type: string
+        revoke_rules_on_delete:
+            description: (Optional) Instruct Terraform to revoke all of the Security Groups attached ingress and egress rules before deleting the rule itself. This is normally not needed, however certain AWS services such as Elastic Map Reduce may automatically add required rules to security groups used with the service, and those rules may contain a cyclic dependency that prevent the security groups from being destroyed without removing the dependency first. Default false.
             optional: true
+            type: string
         security_groups:
             description: (Optional) List of security groups. A group name can be used relative to the default VPC. Otherwise, group ID.
-            type: string
             optional: true
+            type: string
         self:
             description: '(Optional) Whether the security group itself will be added as a source to this egress rule.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
+        tags:
+            description: (Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
         tags_all:
             description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
-            type: string
             optional: true
+            type: string
         to_port:
             description: (Required) End range port (or ICMP code if protocol is icmp).
             type: string
-            optional: true
+        vpc_id:
+            description: |-
+                (Optional, Forces new resource) VPC ID.
+                Defaults to the region's default VPC.ingressThis argument is processed in attribute-as-blocks mode.
+            type: string
     attrs:
         arn:
             description: ARN of the security group.
@@ -85,12 +108,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

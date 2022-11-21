@@ -1,0 +1,32 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_msk_configuration
+spec:
+    args:
+        arn:
+            description: ARN of the configuration.
+            type: string
+        description:
+            description: Description of the configuration.
+            type: string
+        kafka_versions:
+            description: List of Apache Kafka versions which can use this configuration.
+            type: string
+        latest_revision:
+            description: Latest revision of the configuration.
+            type: string
+        name:
+            description: '(Required) Name of the configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs: {}
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

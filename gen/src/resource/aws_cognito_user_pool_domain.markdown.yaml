@@ -1,0 +1,48 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cognito_user_pool_domain.markdown
+spec:
+    args:
+        aws_account_id:
+            description: The AWS account ID for the user pool owner.
+            type: string
+        certificate_arn:
+            description: '(Optional) The ARN of an ISSUED ACM certificate in us-east-1 for a custom domain.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        cloudfront_distribution_arn:
+            description: The URL of the CloudFront distribution. This is required to generate the ALIAS aws_route53_record
+            type: string
+        domain:
+            description: (Required) For custom domains, this is the fully-qualified domain name, such as auth.example.com. For Amazon Cognito prefix domains, this is the prefix alone, such as auth.
+            type: string
+        s3_bucket:
+            description: The S3 bucket where the static files for this domain are stored.
+            type: string
+        user_pool_id:
+            description: (Required) The user pool ID.
+            type: string
+    attrs:
+        aws_account_id:
+            description: The AWS account ID for the user pool owner.
+            type: string
+        cloudfront_distribution_arn:
+            description: The URL of the CloudFront distribution. This is required to generate the ALIAS aws_route53_record
+            type: string
+        s3_bucket:
+            description: The S3 bucket where the static files for this domain are stored.
+            type: string
+        version:
+            description: The app version.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

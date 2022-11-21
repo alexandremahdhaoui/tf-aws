@@ -1,0 +1,50 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_location_geofence_collection
+spec:
+    args:
+        collection_arn:
+            description: ARN for the geofence collection resource. Used when you need to specify a resource across all AWS.
+            type: string
+        collection_name:
+            description: '(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        create_time:
+            description: Timestamp for when the geofence collection resource was created in ISO 8601 format.
+            type: string
+        description:
+            description: Optional description of the geofence collection resource.
+            type: string
+        kms_key_id:
+            description: Key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource.
+            type: string
+        tags:
+            description: Key-value map of resource tags for the geofence collection.
+            type: string
+    attrs:
+        collection_arn:
+            description: ARN for the geofence collection resource. Used when you need to specify a resource across all AWS.
+            type: string
+        create_time:
+            description: Timestamp for when the geofence collection resource was created in ISO 8601 format.
+            type: string
+        description:
+            description: Optional description of the geofence collection resource.
+            type: string
+        kms_key_id:
+            description: Key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource.
+            type: string
+        tags:
+            description: Key-value map of resource tags for the geofence collection.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

@@ -1,0 +1,75 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_codepipeline_webhook.markdown
+spec:
+    args:
+        allowed_ip_range:
+            description: '(Optional) A valid CIDR block for IP filtering. Required for IP.A filter block supports the following arguments:'
+            optional: true
+            type: string
+        arn:
+            description: The CodePipeline webhook's ARN.
+            type: string
+        authentication:
+            description: (Required) The type of authentication  to use. One of IP, GITHUB_HMAC, or UNAUTHENTICATED.
+            type: string
+        authentication_configuration:
+            description: (Optional) An auth block. Required for IP and GITHUB_HMAC. Auth blocks are documented below.
+            optional: true
+            type: string
+        filter:
+            description: ' (Required) One or more filter blocks. Filter blocks are documented below.'
+            type: string
+        id:
+            description: The CodePipeline webhook's ARN.
+            type: string
+        json_path:
+            description: (Required) The JSON path to filter on.
+            type: string
+        match_equals:
+            description: '(Required) The value to match on (e.g., refs/heads/{Branch}). See AWS docs for details.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        name:
+            description: (Required) The name of the webhook.
+            type: string
+        secret_token:
+            description: (Optional) The shared secret for the GitHub repository webhook. Set this as secret in your github_repository_webhook's configuration block. Required for GITHUB_HMAC.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An authentication_configuration block supports the following arguments:'
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        target_action:
+            description: (Required) The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline.
+            type: string
+        target_pipeline:
+            description: (Required) The name of the pipeline.
+            type: string
+    attrs:
+        arn:
+            description: The CodePipeline webhook's ARN.
+            type: string
+        id:
+            description: The CodePipeline webhook's ARN.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        url:
+            description: The CodePipeline webhook's URL. POST events to this endpoint to trigger the target.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

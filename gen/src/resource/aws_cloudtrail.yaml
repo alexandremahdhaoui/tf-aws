@@ -6,144 +6,139 @@ spec:
     args:
         advanced_event_selector:
             description: (Optional) Specifies an advanced event selector for enabling data event logging. Fields documented below. Conflicts with event_selector.
-            type: string
             optional: true
+            type: string
         arn:
             description: ARN of the trail.
-            type: string
             optional: true
+            type: string
         cloud_watch_logs_group_arn:
             description: (Optional) Log group name using an ARN that represents the log group to which CloudTrail logs will be delivered. Note that CloudTrail requires the Log Stream wildcard.
-            type: string
             optional: true
+            type: string
         cloud_watch_logs_role_arn:
             description: (Optional) Role for the CloudWatch Logs endpoint to assume to write to a user’s log group.
-            type: string
             optional: true
+            type: string
         data_resource:
             description: (Optional) Configuration block for data events. See details below.
-            type: string
             optional: true
+            type: string
         enable_log_file_validation:
             description: (Optional) Whether log file integrity validation is enabled. Defaults to false.
-            type: string
             optional: true
+            type: string
         enable_logging:
             description: (Optional) Enables logging for the trail. Defaults to true. Setting this to false will pause logging.
-            type: string
             optional: true
+            type: string
         ends_with:
             description: ' (Optional) - A list of values that includes events that match the last few characters of the event record field specified as the value of field.'
-            type: string
             optional: true
+            type: string
         equals:
             description: ' (Optional) - A list of values that includes events that match the exact value of the event record field specified as the value of field. This is the only valid operator that you can use with the readOnly, eventCategory, and resources.type fields.'
-            type: string
             optional: true
+            type: string
         event_selector:
             description: (Optional) Specifies an event selector for enabling data event logging. Fields documented below. Please note the CloudTrail limits when configuring these. Conflicts with advanced_event_selector.
-            type: string
             optional: true
+            type: string
         exclude_management_event_sources:
             description: ' (Optional) -  A set of event sources to exclude. Valid values include: kms.amazonaws.com and rdsdata.amazonaws.com. include_management_events must be set totrue to allow this.'
-            type: string
             optional: true
+            type: string
         field:
             description: ' (Required) - Field in an event record on which to filter events to be logged. You can specify only the following values: readOnly, eventSource, eventName, eventCategory, resources.type, resources.ARN.'
             type: string
-            optional: true
         field_selector:
             description: ' (Required) - Specifies the selector statements in an advanced event selector. Fields documented below.Field Selector ArgumentsFor strongfield_selector the following attributes are supported.'
             type: string
-            optional: true
         home_region:
             description: Region in which the trail was created.
-            type: string
             optional: true
+            type: string
         id:
             description: Name of the trail.
-            type: string
             optional: true
+            type: string
         include_global_service_events:
             description: (Optional) Whether the trail is publishing events from global services such as IAM to the log files. Defaults to true.
-            type: string
             optional: true
+            type: string
         include_management_events:
             description: (Optional) Whether to include management events for your trail. Defaults to true.
-            type: string
             optional: true
+            type: string
         insight_selector:
             description: (Optional) Configuration block for identifying unusual operational activity. See details below.
-            type: string
             optional: true
+            type: string
         insight_type:
             description: '(Optional) Type of insights to log on a trail. Valid values are: ApiCallRateInsight and ApiErrorRateInsight.Advanced Event Selector ArgumentsFor strongadvanced_event_selector the following attributes are supported.'
-            type: string
             optional: true
+            type: string
         is_multi_region_trail:
             description: (Optional) Whether the trail is created in the current region or in all regions. Defaults to false.
-            type: string
             optional: true
+            type: string
         is_organization_trail:
             description: (Optional) Whether the trail is an AWS Organizations trail. Organization trails log events for the master account and all member accounts. Can only be created in the organization master account. Defaults to false.
-            type: string
             optional: true
+            type: string
         kms_key_id:
             description: (Optional) KMS key ARN to use to encrypt the logs delivered by CloudTrail.
-            type: string
             optional: true
+            type: string
         name:
             description: ' (Optional) - Name of the advanced event selector.'
-            type: string
             optional: true
+            type: string
         not_ends_with:
             description: ' (Optional) - A list of values that excludes events that match the last few characters of the event record field specified as the value of field.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         not_equals:
             description: ' (Optional) - A list of values that excludes events that match the exact value of the event record field specified as the value of field.'
-            type: string
             optional: true
+            type: string
         not_starts_with:
             description: ' (Optional) - A list of values that excludes events that match the first few characters of the event record field specified as the value of field.'
-            type: string
             optional: true
+            type: string
         read_write_type:
             description: '(Optional) Type of events to log. Valid values are ReadOnly, WriteOnly, All. Default value is All.data_resourceThis configuration block supports the following attributes:'
-            type: string
             optional: true
+            type: string
         s3_bucket_name:
             description: (Required) Name of the S3 bucket designated for publishing log files.
             type: string
-            optional: true
         s3_key_prefix:
             description: (Optional) S3 key prefix that follows the name of the bucket you have designated for log file delivery.
-            type: string
             optional: true
+            type: string
         sns_topic_name:
             description: (Optional) Name of the Amazon SNS topic defined for notification of log file delivery.
-            type: string
             optional: true
+            type: string
         starts_with:
             description: ' (Optional) - A list of values that includes events that match the first few characters of the event record field specified as the value of field.'
-            type: string
             optional: true
+            type: string
         tags:
             description: '(Optional) Map of tags to assign to the trail. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.event_selectorThis configuration block supports the following attributes:'
-            type: string
             optional: true
+            type: string
         tags_all:
             description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         type:
             description: '(Required) Resource type in which you want to log data events. You can specify only the following value: "AWS::S3::Object", "AWS::Lambda::Function" and "AWS::DynamoDB::Table".'
             type: string
-            optional: true
         values:
             description: '(Required) List of ARN strings or partial ARN strings to specify selectors for data audit events over data resources. ARN list is specific to single-valued type. For example, arn:aws:s3:::<bucket name>/ for all objects in a bucket, arn:aws:s3:::<bucket name>/key for specific objects, arn:aws:lambda for all lambda events within an account, arn:aws:lambda:<region>:<account number>:function:<function name> for a specific Lambda function, arn:aws:dynamodb for all DDB events for all tables within an account, or arn:aws:dynamodb:<region>:<account number>:table/<table name> for a specific DynamoDB table.insight_selectorThis configuration block supports the following attributes:'
             type: string
-            optional: true
     attrs:
         arn:
             description: ARN of the trail.
@@ -159,12 +154,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

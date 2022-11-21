@@ -1,0 +1,26 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_licensemanager_association.markdown
+spec:
+    args:
+        license_configuration_arn:
+            description: (Required) ARN of the license configuration.
+            type: string
+        resource_arn:
+            description: '(Required) ARN of the resource associated with the license configuration.In addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs:
+        id:
+            description: The license configuration ARN.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

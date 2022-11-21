@@ -3,7 +3,32 @@ kind: TerraformResource
 metadata:
     name: aws_account_alternate_contact
 spec:
-    args: {}
+    args:
+        account_id:
+            description: (Optional) ID of the target account when managing member accounts. Will manage current user's account by default if omitted.
+            optional: true
+            type: string
+        alternate_contact_type:
+            description: '(Required) Type of the alternate contact. Allowed values are: BILLING, OPERATIONS, SECURITY.'
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        email_address:
+            description: (Required) An email address for the alternate contact.
+            type: string
+        name:
+            description: (Required) Name of the alternate contact.
+            type: string
+        phone_number:
+            description: (Required) Phone number for the alternate contact.
+            type: string
+        title:
+            description: '(Required) Title for the alternate contact.No additional attributes are exported.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 5m)
+            type: string
     attrs:
         create:
             description: (Default 5m)
@@ -16,12 +41,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

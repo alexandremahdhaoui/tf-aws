@@ -3,7 +3,58 @@ kind: TerraformResource
 metadata:
     name: aws_connect_instance
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of the instance.
+            type: string
+        auto_resolve_best_voices_enabled:
+            description: (Optional) Specifies whether auto resolve best voices is enabled. Defaults to true.
+            optional: true
+            type: string
+        contact_flow_logs_enabled:
+            description: (Optional) Specifies whether contact flow logs are enabled. Defaults to false.
+            optional: true
+            type: string
+        contact_lens_enabled:
+            description: (Optional) Specifies whether contact lens is enabled. Defaults to true.
+            optional: true
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        created_time:
+            description: When the instance was created.
+            type: string
+        directory_id:
+            description: (Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY.
+            optional: true
+            type: string
+        early_media_enabled:
+            description: (Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled.
+            optional: true
+            type: string
+        id:
+            description: The identifier of the instance.
+            type: string
+        identity_management_type:
+            description: '(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY.'
+            type: string
+        inbound_calls_enabled:
+            description: (Required) Specifies whether inbound calls are enabled.
+            type: string
+        instance_alias:
+            description: (Optional) Specifies the name of the instance. Required if directory_id not specified.
+            optional: true
+            type: string
+        outbound_calls_enabled:
+            description: '(Required) Specifies whether outbound calls are enabled. raw HTML omitted In addition to all arguments above, the following attributes are exported:'
+            type: string
+        service_role:
+            description: The service role of the instance.
+            type: string
+        status:
+            description: 'The state of the instance.TimeoutsConfiguration options:'
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the instance.
@@ -28,12 +79,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

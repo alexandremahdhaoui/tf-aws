@@ -1,0 +1,65 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_codestarnotifications_notification_rule.markdown
+spec:
+    args:
+        address:
+            description: (Required) The ARN of notification rule target. For example, a SNS Topic ARN.
+            type: string
+        arn:
+            description: The codestar notification rule ARN.
+            type: string
+        detail_type:
+            description: (Required) The level of detail to include in the notifications for this resource. Possible values are BASIC and FULL.
+            type: string
+        event_type_ids:
+            description: |-
+                (Required) A list of event types associated with this notification rule.
+                For list of allowed events see here.
+            type: string
+        id:
+            description: The codestar notification rule ARN.
+            type: string
+        name:
+            description: (Required) The name of notification rule.
+            type: string
+        resource:
+            description: (Required) The ARN of the resource to associate with the notification rule.
+            type: string
+        status:
+            description: (Optional) The status of the notification rule. Possible values are ENABLED and DISABLED, default is ENABLED.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        target:
+            description: '(Optional) Configuration blocks containing notification target information. Can be specified multiple times. At least one target must be specified on creation.An target block supports the following arguments:'
+            optional: true
+            type: string
+        type:
+            description: '(Optional) The type of the notification target. Default value is SNS.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+    attrs:
+        arn:
+            description: The codestar notification rule ARN.
+            type: string
+        id:
+            description: The codestar notification rule ARN.
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

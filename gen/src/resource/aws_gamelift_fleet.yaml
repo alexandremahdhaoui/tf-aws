@@ -3,7 +3,128 @@ kind: TerraformResource
 metadata:
     name: aws_gamelift_fleet
 spec:
-    args: {}
+    args:
+        arn:
+            description: Fleet ARN.
+            type: string
+        build_arn:
+            description: Build ARN.
+            type: string
+        build_id:
+            description: (Optional) ID of the GameLift Build to be deployed on the fleet.
+            optional: true
+            type: string
+        certificate_configuration:
+            description: (Optional) Prompts GameLift to generate a TLS/SSL certificate for the fleet. See certificate_configuration.
+            optional: true
+            type: string
+        certificate_type:
+            description: (Optional) Indicates whether a TLS/SSL certificate is generated for a fleet. Valid values are DISABLED and GENERATED. Default value is DISABLED.ec2_inbound_permission
+            optional: true
+            type: string
+        concurrent_executions:
+            description: (Required) Number of server processes using this configuration to run concurrently on an instance.
+            type: string
+        create:
+            description: (Default 70m)
+            type: string
+        description:
+            description: (Optional) Human-readable description of the fleet.
+            optional: true
+            type: string
+        ec2_inbound_permission:
+            description: (Optional) Range of IP addresses and port settings that permit inbound traffic to access server processes running on the fleet. See below.
+            optional: true
+            type: string
+        ec2_instance_type:
+            description: (Required) Name of an EC2 instance typeE.g., t2.micro
+            type: string
+        fleet_type:
+            description: (Optional) Type of fleet. This value must be ON_DEMAND or SPOT. Defaults to ON_DEMAND.
+            optional: true
+            type: string
+        from_port:
+            description: (Required) Starting value for a range of allowed port numbers.
+            type: string
+        game_session_activation_timeout_seconds:
+            description: (Optional) Maximum amount of time (in seconds) that a game session can remain in status ACTIVATING.
+            optional: true
+            type: string
+        id:
+            description: Fleet ID.
+            type: string
+        instance_role_arn:
+            description: (Optional) ARN of an IAM role that instances in the fleet can assume.
+            optional: true
+            type: string
+        ip_range:
+            description: (Required) Range of allowed IP addresses expressed in CIDR notationE.g., 000.000.000.000/[subnet mask] or 0.0.0.0/[subnet mask].
+            type: string
+        launch_path:
+            description: '(Required) Location of the server executable in a game build. All game builds are installed on instances at the root : for Windows instances C:\game, and for Linux instances /local/game.'
+            type: string
+        max_concurrent_game_session_activations:
+            description: (Optional) Maximum number of game sessions with status ACTIVATING to allow on an instance simultaneously.
+            optional: true
+            type: string
+        metric_groups:
+            description: (Optional) List of names of metric groups to add this fleet to. A metric group tracks metrics across all fleets in the group. Defaults to default.
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the fleet.
+            type: string
+        new_game_session_protection_policy:
+            description: (Optional) Game session protection policy to apply to all instances in this fleetE.g., FullProtection. Defaults to NoProtection.
+            optional: true
+            type: string
+        new_game_sessions_per_creator:
+            description: (Optional) Maximum number of game sessions that an individual can create during the policy period.
+            optional: true
+            type: string
+        operating_system:
+            description: Operating system of the fleet's computing resources.
+            type: string
+        parameters:
+            description: '(Optional) Optional list of parameters to pass to the server executable on launch.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        policy_period_in_minutes:
+            description: (Optional) Time span used in evaluating the resource creation limit policy.runtime_configuration
+            optional: true
+            type: string
+        protocol:
+            description: (Required) Network communication protocol used by the fleetE.g., TCP or UDP
+            type: string
+        resource_creation_limit_policy:
+            description: (Optional) Policy that limits the number of game sessions an individual player can create over a span of time for this fleet. See below.
+            optional: true
+            type: string
+        runtime_configuration:
+            description: (Optional) Instructions for launching server processes on each instance in the fleet. See below.
+            optional: true
+            type: string
+        script_arn:
+            description: Script ARN.
+            type: string
+        script_id:
+            description: (Optional) ID of the GameLift Script to be deployed on the fleet.
+            optional: true
+            type: string
+        server_process:
+            description: (Optional) Collection of server process configurations that describe which server processes to run on each instance in a fleet. See below.server_process
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldscertificate_configuration
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        to_port:
+            description: (Required) Ending value for a range of allowed port numbers. Port numbers are end-inclusive. This value must be higher than from_port.resource_creation_limit_policy
+            type: string
     attrs:
         arn:
             description: Fleet ARN.
@@ -31,12 +152,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

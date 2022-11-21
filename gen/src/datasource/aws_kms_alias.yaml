@@ -1,0 +1,26 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_kms_alias
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: Amazon Resource Name(ARN) of the key alias.
+            type: string
+        id:
+            description: Amazon Resource Name(ARN) of the key alias.
+            type: string
+        target_key_id:
+            description: Key identifier pointed to by the alias.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

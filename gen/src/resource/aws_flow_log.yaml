@@ -3,7 +3,83 @@ kind: TerraformResource
 metadata:
     name: aws_flow_log
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the Flow Log.
+            type: string
+        destination_options:
+            description: (Optional) Describes the destination options for a flow log. More details below.
+            optional: true
+            type: string
+        eni_id:
+            description: (Optional) Elastic Network Interface ID to attach to
+            optional: true
+            type: string
+        file_format:
+            description: '(Optional) The format for the flow log. Default value: plain-text. Valid values: plain-text, parquet.'
+            optional: true
+            type: string
+        hive_compatible_partitions:
+            description: '(Optional) Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. Default value: false.'
+            optional: true
+            type: string
+        iam_role_arn:
+            description: (Optional) The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group
+            optional: true
+            type: string
+        id:
+            description: The Flow Log ID
+            type: string
+        log_destination:
+            description: (Optional) The ARN of the logging destination. Either log_destination or log_group_name must be set.
+            optional: true
+            type: string
+        log_destination_type:
+            description: '(Optional) The type of the logging destination. Valid values: cloud-watch-logs, s3, kinesis-data-firehose. Default: cloud-watch-logs.'
+            optional: true
+            type: string
+        log_format:
+            description: (Optional) The fields to include in the flow log record, in the order in which they should appear.
+            optional: true
+            type: string
+        log_group_name:
+            description: '(Optional) emDeprecated: Use log_destination instead. The name of the CloudWatch log group. Either log_group_name or log_destination must be set.'
+            optional: true
+            type: string
+        max_aggregation_interval:
+            description: |-
+                (Optional) The maximum interval of time
+                during which a flow of packets is captured and aggregated into a flow
+                log record. Valid Values: 60 seconds (1 minute) or 600600. When transit_gateway_id or transit_gateway_attachment_id is specified, max_aggregation_interval emmust be 60 seconds (1 minute).
+            optional: true
+            type: string
+        per_hour_partition:
+            description: '(Optional) Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. Default value: false.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        subnet_id:
+            description: (Optional) Subnet ID to attach to
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.destination_optionsDescribes the destination options for a flow log.
+            optional: true
+            type: string
+        traffic_type:
+            description: '(Required) The type of traffic to capture. Valid values: ACCEPT,REJECT, ALL.'
+            type: string
+        transit_gateway_attachment_id:
+            description: (Optional) Transit Gateway Attachment ID to attach to
+            optional: true
+            type: string
+        transit_gateway_id:
+            description: (Optional) Transit Gateway ID to attach to
+            optional: true
+            type: string
+        vpc_id:
+            description: (Optional) VPC ID to attach to
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the Flow Log.
@@ -16,12 +92,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

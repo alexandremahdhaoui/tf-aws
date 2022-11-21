@@ -6,44 +6,44 @@ spec:
     args:
         arn:
             description: ARN assigned by AWS to the instance profile.
-            type: string
             optional: true
+            type: string
         create_date:
             description: Creation timestamp of the instance profile.
-            type: string
             optional: true
+            type: string
         id:
             description: Instance profile's ID.
-            type: string
             optional: true
+            type: string
         name:
             description: '(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed.'
-            type: string
             optional: true
+            type: string
         name_prefix:
             description: (Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name.
-            type: string
             optional: true
+            type: string
         path:
             description: (Optional, default "/") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\u0021) through the DEL character (\u007F), including most punctuation characters, digits, and upper and lowercase letters.
-            type: string
             optional: true
+            type: string
         role:
             description: (Optional) Name of the role to add to the profile.
-            type: string
             optional: true
+            type: string
         tags:
             description: '(Optional) Map of resource tags for the IAM Instance Profile. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         unique_id:
             description: Unique ID assigned by AWS.
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: ARN assigned by AWS to the instance profile.
@@ -62,12 +62,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

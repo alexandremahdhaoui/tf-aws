@@ -1,0 +1,23 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ebs_default_kms_key
+spec:
+    args: {}
+    attrs:
+        id:
+            description: 'Region of the default KMS Key.TimeoutsConfiguration options:'
+            type: string
+        key_arn:
+            description: ARN of the default KMS key uses to encrypt an EBS volume in this region when no key is specified in an API call that creates the volume and encryption by default is enabled.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

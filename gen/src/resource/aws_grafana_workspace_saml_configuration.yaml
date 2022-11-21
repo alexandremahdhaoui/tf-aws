@@ -6,72 +6,69 @@ spec:
     args:
         admin_role_values:
             description: (Optional) The admin role values.
-            type: string
             optional: true
+            type: string
         allowed_organizations:
             description: (Optional) The allowed organizations.
-            type: string
             optional: true
+            type: string
         editor_role_values:
             description: (Required) The editor role values.
             type: string
-            optional: true
         email_assertion:
             description: (Optional) The email assertion.
-            type: string
             optional: true
+            type: string
         groups_assertion:
             description: (Optional) The groups assertion.
-            type: string
             optional: true
+            type: string
         idp_metadata_url:
             description: (Optional) The IDP Metadata URL. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified.
-            type: string
             optional: true
+            type: string
         idp_metadata_xml:
             description: (Optional) The IDP Metadata XML. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified.
-            type: string
             optional: true
+            type: string
         login_assertion:
             description: (Optional) The login assertion.
-            type: string
             optional: true
+            type: string
         login_validity_duration:
             description: (Optional) The login validity duration.
-            type: string
             optional: true
+            type: string
         name_assertion:
             description: (Optional) The name assertion.
-            type: string
             optional: true
+            type: string
         org_assertion:
             description: (Optional) The org assertion.
-            type: string
             optional: true
+            type: string
         role_assertion:
             description: '(Optional) The role assertion.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         status:
             description: The status of the SAML configuration.
-            type: string
             optional: true
+            type: string
         workspace_id:
             description: (Required) The workspace id.
             type: string
-            optional: true
     attrs:
         status:
             description: The status of the SAML configuration.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

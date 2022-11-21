@@ -3,7 +3,42 @@ kind: TerraformResource
 metadata:
     name: aws_api_gateway_authorizer
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the API Gateway Authorizer
+            type: string
+        authorizer_credentials:
+            description: (Optional) Credentials required for the authorizer. To specify an IAM Role for API Gateway to assume, use the IAM Role ARN.
+            optional: true
+            type: string
+        authorizer_result_ttl_in_seconds:
+            description: (Optional) TTL of cached authorizer results in seconds. Defaults to 300.
+            optional: true
+            type: string
+        authorizer_uri:
+            description: (Optional, required for type TOKEN/REQUEST) Authorizer's Uniform Resource Identifier (URI). This must be a well-formed Lambda function URI in the form of arn:aws:apigateway:{region}:lambda:path/{service_api}arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:012345678912:function:my-function/invocations
+            type: string
+        identity_source:
+            description: (Optional) Source of the identity in an incoming request. Defaults to method.request.header.Authorization. For REQUEST type, this may be a comma-separated list of values, including headers, query string parameters and stage variables - e.g., "method.request.header.SomeHeaderName,method.request.querystring.SomeQueryStringName,stageVariables.SomeStageVariableName"
+            optional: true
+            type: string
+        identity_validation_expression:
+            description: (Optional) Validation expression for the incoming identity. For TOKEN type, this value should be a regular expression. The incoming token from the client is matched against this expression, and will proceed if the token matches. If the token doesn't match, the client receives a 401 Unauthorized response.
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the authorizer
+            type: string
+        provider_arns:
+            description: '(Optional, required for type COGNITO_USER_POOLS) List of the Amazon Cognito user pool ARNs. Each element is of this format: arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        rest_api_id:
+            description: (Required) ID of the associated REST API
+            type: string
+        type:
+            description: (Optional) Type of the authorizer. Possible values are TOKEN for a Lambda function using a single authorization token submitted in a custom header, REQUEST for a Lambda function using incoming request parameters, or COGNITO_USER_POOLS for using an Amazon Cognito user pool. Defaults to TOKEN.
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the API Gateway Authorizer
@@ -13,12 +48,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,65 @@ kind: TerraformResource
 metadata:
     name: aws_sfn_state_machine
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the state machine.
+            type: string
+        creation_date:
+            description: The date the state machine was created.
+            type: string
+        definition:
+            description: (Required) The Amazon States Language definition of the state machine.
+            type: string
+        enabled:
+            description: '(Optional) When set to true, AWS X-Ray tracing is enabled. Make sure the State Machine has the correct IAM policies for logging. See the AWS Step Functions Developer Guide for details.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        id:
+            description: The ARN of the state machine.
+            type: string
+        include_execution_data:
+            description: (Optional) Determines whether execution data is included in your log. When set to false, data is excluded.
+            optional: true
+            type: string
+        level:
+            description: '(Optional) Defines which category of execution history events are logged. Valid values: ALL, ERROR, FATAL, OFF'
+            optional: true
+            type: string
+        log_destination:
+            description: (Optional) Amazon Resource Name (ARN) of a CloudWatch log group. Make sure the State Machine has the correct IAM policies for logging. The ARN must end with :*tracing_configuration Configuration Block
+            optional: true
+            type: string
+        logging_configuration:
+            description: (Optional) Defines what execution history events are logged and where they are logged. The logging_configuration parameter is only valid when type is set to EXPRESS. Defaults to OFF. For more information see Logging Express Workflows and Log Levels in the AWS Step Functions User Guide.
+            optional: true
+            type: string
+        name:
+            description: (Optional) The name of the state machine. The name should only contain 0-9, A-Z, -z, - and _. If omitted, Terraform will assign a random, unique name.
+            optional: true
+            type: string
+        name_prefix:
+            description: (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name.
+            optional: true
+            type: string
+        role_arn:
+            description: (Required) The Amazon Resource Name (ARN) of the IAM role to use for this state machine.
+            type: string
+        status:
+            description: The current status of the state machine. Either ACTIVE or DELETING.
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        tracing_configuration:
+            description: (Optional) Selects whether AWS X-Ray tracing is enabled.
+            optional: true
+            type: string
+        type:
+            description: '(Optional) Determines whether a Standard or Express state machine is created. The default is STANDARD. You cannot update the type of a state machine once it has been created. Valid values: STANDARD, EXPRESS.logging_configuration Configuration Block'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the state machine.
@@ -22,12 +80,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

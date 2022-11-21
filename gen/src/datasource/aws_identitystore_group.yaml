@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_identitystore_group
+spec:
+    args:
+        attribute_path:
+            description: (Required) Attribute path that is used to specify which attribute name to search. Currently, DisplayName is the only valid attribute path.
+            type: string
+        attribute_value:
+            description: '(Required) Value for an attribute.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        filter:
+            description: (Required) Configuration block(s) for filtering. Currently, the AWS Identity Store API supports only 1 filter. Detailed below.
+            type: string
+        group_id:
+            description: (Optional)  The identifier for a group in the Identity Store.
+            optional: true
+            type: string
+        id:
+            description: Identifier of the group in the Identity Store.
+            type: string
+        identity_store_id:
+            description: '(Required) Identity Store ID associated with the Single Sign-On Instance.filter Configuration Blockfilter configuration block:'
+            type: string
+    attrs:
+        id:
+            description: Identifier of the group in the Identity Store.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

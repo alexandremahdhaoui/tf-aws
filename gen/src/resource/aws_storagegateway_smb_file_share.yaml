@@ -3,7 +3,132 @@ kind: TerraformResource
 metadata:
     name: aws_storagegateway_smb_file_share
 spec:
-    args: {}
+    args:
+        access_based_enumeration:
+            description: (Optional) The files and folders on this share will only be visible to users with read access. Default value is false.
+            optional: true
+            type: string
+        admin_user_list:
+            description: (Optional) A list of users in the Active Directory that have admin access to the file share. Only valid if authentication is set to ActiveDirectory.
+            optional: true
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the SMB File Share.
+            type: string
+        audit_destination_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the CloudWatch Log Group used for the audit logs.
+            optional: true
+            type: string
+        authentication:
+            description: '(Optional) The authentication method that users use to access the file share. Defaults to ActiveDirectory. Valid values: ActiveDirectory, GuestAccess.'
+            optional: true
+            type: string
+        bucket_region:
+            description: (Optional) The region of the S3 buck used by the file share. Required when specifying a vpc_endpoint_dns_name.
+            optional: true
+            type: string
+        cache_attributes:
+            description: (Optional) Refresh cache information. see Cache Attributes for more details.
+            optional: true
+            type: string
+        cache_stale_timeout_in_seconds:
+            description: |-
+                (Optional) Refreshes a file share's cache by using Time To Live (TTL).
+                TTL is the length of time since the last refresh after which access to the directory would cause the file gateway
+                to first refresh that directory's contents from the Amazon S3 bucket. Valid Values: 300 to 2,592,000 seconds (5 minutes to 30 days)In addition to all arguments above, the following attributes are exported:
+            optional: true
+            type: string
+        case_sensitivity:
+            description: (Optional) The case of an object name in an Amazon S3 bucket. For ClientSpecified, the client determines the case sensitivity. For CaseSensitive, the gateway determines the case sensitivity. The default value is ClientSpecified.
+            optional: true
+            type: string
+        create:
+            description: (Default 10m)
+            type: string
+        default_storage_class:
+            description: (Optional) The default storage class for objects put into an Amazon S3 bucket by the file gateway. Defaults to S3_STANDARD.
+            optional: true
+            type: string
+        file_share_name:
+            description: (Optional) The name of the file share. Must be set if an S3 prefix name is set in location_arn.
+            optional: true
+            type: string
+        fileshare_id:
+            description: ID of the SMB File Share.
+            type: string
+        gateway_arn:
+            description: (Required) Amazon Resource Name (ARN) of the file gateway.
+            type: string
+        guess_mime_type_enabled:
+            description: (Optional) Boolean value that enables guessing of the MIME type for uploaded objects based on file extensions. Defaults to true.
+            optional: true
+            type: string
+        id:
+            description: Amazon Resource Name (ARN) of the SMB File Share.
+            type: string
+        invalid_user_list:
+            description: (Optional) A list of users in the Active Directory that are not allowed to access the file share. Only valid if authentication is set to ActiveDirectory.
+            optional: true
+            type: string
+        kms_encrypted:
+            description: (Optional) Boolean value if true to use Amazon S3 server side encryption with your own AWS KMS key, or false to use a key managed by Amazon S3. Defaults to false.
+            optional: true
+            type: string
+        kms_key_arn:
+            description: (Optional) Amazon Resource Name (ARN) for KMS key used for Amazon S3 server side encryption. This value can only be set when kms_encrypted is true.
+            optional: true
+            type: string
+        location_arn:
+            description: (Required) The ARN of the backed storage used for storing file data.
+            type: string
+        notification_policy:
+            description: (Optional) The notification policy of the file share. For more information see the AWS Documentation. Default value is {}.
+            optional: true
+            type: string
+        object_acl:
+            description: (Optional) Access Control List permission for S3 objects. Defaults to private.
+            optional: true
+            type: string
+        oplocks_enabled:
+            description: (Optional) Boolean to indicate Opportunistic lock (oplock) status. Defaults to true.
+            optional: true
+            type: string
+        path:
+            description: File share path used by the NFS client to identify the mount point.
+            type: string
+        read_only:
+            description: (Optional) Boolean to indicate write status of file share. File share does not accept writes if true. Defaults to false.
+            optional: true
+            type: string
+        requester_pays:
+            description: (Optional) Boolean who pays the cost of the request and the data download from the Amazon S3 bucket. Set this value to true if you want the requester to pay instead of the bucket owner. Defaults to false.
+            optional: true
+            type: string
+        role_arn:
+            description: (Required) The ARN of the AWS Identity and Access Management (IAM) role that a file gateway assumes when it accesses the underlying storage.
+            type: string
+        smb_acl_enabled:
+            description: (Optional) Set this value to true to enable ACL (access control list) on the SMB fileshare. Set it to false to map file and directory permissions to the POSIX permissions. This setting applies only to ActiveDirectory authentication type.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.cache_attributes
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        update:
+            description: (Default 10m)
+            type: string
+        valid_user_list:
+            description: (Optional) A list of users in the Active Directory that are allowed to access the file share. If you need to specify an Active directory group, add '@' before the name of the group. It will be set on Allowed group in AWS console. Only valid if authentication is set to ActiveDirectory.
+            optional: true
+            type: string
+        vpc_endpoint_dns_name:
+            description: (Optional) The DNS name of the VPC endpoint for S3 private link.
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the SMB File Share.
@@ -31,12 +156,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

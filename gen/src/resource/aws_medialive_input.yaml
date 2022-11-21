@@ -6,108 +6,105 @@ spec:
     args:
         arn:
             description: ARN of the Input.
-            type: string
             optional: true
+            type: string
         attached_channels:
             description: Channels attached to Input.
-            type: string
             optional: true
+            type: string
         create:
             description: (Default 30m)
-            type: string
             optional: true
+            type: string
         delete:
             description: (Default 30m)
-            type: string
             optional: true
+            type: string
         destinations:
             description: (Optional) Destination settings for PUSH type inputs. See Destinations for more details.
-            type: string
             optional: true
+            type: string
         flow_arn:
             description: The ARN of the MediaConnect FlowSources
-            type: string
             optional: true
+            type: string
         id:
             description: The unique ID for the device.Media Connect Flows
-            type: string
             optional: true
+            type: string
         input_class:
             description: The input class.
-            type: string
             optional: true
+            type: string
         input_devices:
             description: (Optional) Settings for the devices. See Input Devices for more details.
-            type: string
             optional: true
+            type: string
         input_partner_ids:
             description: A list of IDs for all Inputs which are partners of this one.
-            type: string
             optional: true
+            type: string
         input_security_groups:
             description: (Required) List of input security groups.
             type: string
-            optional: true
         input_source_type:
             description: 'Source type of the input.TimeoutsConfiguration options:'
-            type: string
             optional: true
+            type: string
         media_connect_flows:
             description: (Optional) A list of the MediaConnect Flows. See Media Connect Flows for more details.
-            type: string
             optional: true
+            type: string
         name:
             description: (Required) Name of the input.
             type: string
-            optional: true
         password_param:
             description: The key used to extract the password from EC2 Parameter store.
-            type: string
             optional: true
+            type: string
         role_arn:
             description: (Optional) The ARN of the role this input assumes during and after creation.
-            type: string
             optional: true
+            type: string
         security_group_ids:
             description: 'A list of up to 5 EC2 VPC security group IDs to attach to the Input.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         sources:
             description: (Optional) The source URLs for a PULL-type input. See Sources for more details.
-            type: string
             optional: true
+            type: string
         stream_name:
             description: A unique name for the location the RTMP stream is being pushed to.Input Devices
-            type: string
             optional: true
+            type: string
         subnet_ids:
             description: A list of 2 VPC subnet IDs from the same VPC.
-            type: string
             optional: true
+            type: string
         tags:
             description: '- (Optional) A map of tags to assign to the Input. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.'
-            type: string
             optional: true
+            type: string
         type:
             description: (Required) The different types of inputs that AWS Elemental MediaLive supports.
             type: string
-            optional: true
         update:
             description: (Default 30m)
-            type: string
             optional: true
+            type: string
         url:
             description: The URL where the stream is pulled from.
-            type: string
             optional: true
+            type: string
         username:
             description: The username for the input source.VPC
-            type: string
             optional: true
+            type: string
         vpc:
             description: (Optional) Settings for a private VPC Input. See VPC for more details.Destinations
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the Input.
@@ -135,12 +132,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

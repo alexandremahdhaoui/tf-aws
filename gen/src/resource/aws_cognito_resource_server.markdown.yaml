@@ -1,0 +1,36 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cognito_resource_server.markdown
+spec:
+    args:
+        identifier:
+            description: (Required) An identifier for the resource server.
+            type: string
+        name:
+            description: (Required) A name for the resource server.
+            type: string
+        scope:
+            description: (Optional) A list of Authorization Scope.Authorization Scope
+            optional: true
+            type: string
+        scope_description:
+            description: '(Required) The scope description.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        scope_name:
+            description: (Required) The scope name.
+            type: string
+    attrs:
+        scope_identifiers:
+            description: A list of all scopes configured for this resource server in the format identifier/scope_name.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

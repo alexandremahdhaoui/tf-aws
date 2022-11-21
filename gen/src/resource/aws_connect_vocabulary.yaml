@@ -3,7 +3,51 @@ kind: TerraformResource
 metadata:
     name: aws_connect_vocabulary
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) of the vocabulary.
+            type: string
+        content:
+            description: (Required) The content of the custom vocabulary in plain-text format with a table of values. Each row in the table represents a word or a phrase, described with Phrase, IPA, SoundsLike, and DisplayAs fields. Separate the fields with TAB characters. For more information, see Create a custom vocabulary using a table. Minimum length of 1. Maximum length of 60000.
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        delete:
+            description: '(Default 100m)In addition to all arguments above, the following attributes are exported:'
+            type: string
+        failure_reason:
+            description: The reason why the custom vocabulary was not created.
+            type: string
+        id:
+            description: |-
+                The identifier of the hosting Amazon Connect Instance and identifier of the vocabulary
+                separated by a colon (:).
+            type: string
+        instance_id:
+            description: (Required) Specifies the identifier of the hosting Amazon Connect Instance.
+            type: string
+        language_code:
+            description: (Required) The language code of the vocabulary entries. For a list of languages and their corresponding language codes, see What is Amazon Transcribe?. Valid Values are ar-AE, de-CH, de-DE, en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fr-CA, fr-FR, hi-IN, it-IT, ja-JP, ko-KR, pt-BR, pt-PT, zh-CN.
+            type: string
+        last_modified_time:
+            description: The timestamp when the custom vocabulary was last modified.
+            type: string
+        name:
+            description: (Required) A unique name of the custom vocabulary. Must not be more than 140 characters.
+            type: string
+        state:
+            description: The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS.
+            type: string
+        tags:
+            description: |-
+                (Optional) Tags to apply to the vocabulary. If configured with a provider
+                default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) of the vocabulary.
@@ -12,7 +56,9 @@ spec:
             description: The reason why the custom vocabulary was not created.
             type: string
         id:
-            description: :).
+            description: |-
+                The identifier of the hosting Amazon Connect Instance and identifier of the vocabulary
+                separated by a colon (:).
             type: string
         last_modified_time:
             description: The timestamp when the custom vocabulary was last modified.
@@ -28,12 +74,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,24 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_traffic_mirror_filter
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the traffic mirror filter.
+            type: string
+        description:
+            description: (Optional, Forces new resource) A description of the filter.
+            type: string
+        id:
+            description: The name of the filter.
+            type: string
+        network_services:
+            description: '(Optional) List of amazon network services that should be mirrored. Valid values: amazon-dns.'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the traffic mirror filter.
@@ -16,12 +33,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

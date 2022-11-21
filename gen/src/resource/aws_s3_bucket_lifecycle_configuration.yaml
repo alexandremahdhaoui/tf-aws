@@ -3,19 +3,111 @@ kind: TerraformResource
 metadata:
     name: aws_s3_bucket_lifecycle_configuration
 spec:
-    args: {}
+    args:
+        abort_incomplete_multipart_upload:
+            description: (Optional) Configuration block that specifies the days since the initiation of an incomplete multipart upload that Amazon S3 will wait before permanently removing all parts of the upload documented below.
+            optional: true
+            type: string
+        and:
+            description: '- (Optional) Configuration block used to apply a logical AND to two or more predicates documented below. The Lifecycle Rule will apply to any object matching all the predicates configured inside the and block.'
+            optional: true
+            type: string
+        bucket:
+            description: (Required) The name of the source S3 bucket you want Amazon S3 to monitor.
+            type: string
+        date:
+            description: (Optional, Conflicts with days) The date objects are transitioned to the specified storage class. The date value must be in RFC3339 format and set to midnight UTC e.g. 2023-01-13T00:00:00Z.
+            type: string
+        days:
+            description: (Optional, Conflicts with date) The number of days after creation when objects are transitioned to the specified storage class. The value must be a positive integer. If both days and date are not specified, defaults to 0. Valid values depend on storage_class, see Transition objects using Amazon S3 Lifecycle for more details.
+            type: string
+        days_after_initiation:
+            description: 'The number of days after which Amazon S3 aborts an incomplete multipart upload.expirationThe expiration configuration block supports the following arguments:'
+            type: string
+        expected_bucket_owner:
+            description: (Optional) The account ID of the expected bucket owner. If the bucket is owned by a different account, the request will fail with an HTTP 403 (Access Denied) error.
+            optional: true
+            type: string
+        expiration:
+            description: (Optional) Configuration block that specifies the expiration for the lifecycle of the object in the form of date, days and, whether the object has a delete marker documented below.
+            optional: true
+            type: string
+        expired_object_delete_marker:
+            description: '(Optional, Conflicts with date and days) Indicates whether Amazon S3 will remove a delete marker with no noncurrent versions. If set to true, the delete marker will be expired; if set to false the policy takes no action.filter~> strongNOTE: The filter configuration block must either be specified as the empty configuration block (filter {}) or with exactly one of prefix, tag, and, object_size_greater_than or object_size_less_than specified.The filter configuration block supports the following arguments:'
+            type: string
+        filter:
+            description: (Optional) Configuration block used to identify objects that a Lifecycle Rule applies to documented below. If not specified, the rule will default to using prefix.
+            optional: true
+            type: string
+        id:
+            description: (Required) Unique identifier for the rule. The value cannot be longer than 255 characters.
+            type: string
+        key:
+            description: (Required) Name of the object key.
+            type: string
+        newer_noncurrent_versions:
+            description: (Optional) The number of noncurrent versions Amazon S3 will retain. Must be a non-zero positive integer.
+            optional: true
+            type: string
+        noncurrent_days:
+            description: (Optional) The number of days an object is noncurrent before Amazon S3 can perform the associated action.
+            optional: true
+            type: string
+        noncurrent_version_expiration:
+            description: (Optional) Configuration block that specifies when noncurrent object versions expire documented below.
+            optional: true
+            type: string
+        noncurrent_version_transition:
+            description: (Optional) Set of configuration blocks that specify the transition rule for the lifecycle rule that describes when noncurrent objects transition to a specific storage class documented below.
+            optional: true
+            type: string
+        object_size_greater_than:
+            description: (Optional) Minimum object size to which the rule applies. Value must be at least 0 if specified.
+            optional: true
+            type: string
+        object_size_less_than:
+            description: (Optional) Maximum object size to which the rule applies. Value must be at least 1 if specified.
+            optional: true
+            type: string
+        prefix:
+            description: (Optional) Prefix identifying one or more objects to which the rule applies.
+            optional: true
+            type: string
+        rule:
+            description: '(Required) List of configuration blocks describing the rules managing the replication documented below.rule~> strongNOTE: The filter argument, while Optional, is required if the rule configuration block does not contain a prefix strongand you intend to override the default behavior of setting the rule to filter objects with the empty string prefix (""prefix is deprecated by Amazon S3 and will be removed in the next major version of the Terraform AWS Provider, we recommend users either specify filter or leave both filter and prefix unspecified.~> strongNOTE: A rule cannot be updated from having a filter (via either the rule.filter parameter or when neither rule.filter and rule.prefix are specified) to only having a prefix via the rule.prefix parameter.~> strongNOTE Terraform cannot distinguish a difference between configurations that use rule.filter {} and configurations that neither use rule.filter nor rule.prefix, so a rule cannot be updated from applying to all objects in the bucket via rule.filter {} to applying to a subset of objects based on the key prefix "" and vice versa.The rule configuration block supports the following arguments:'
+            type: string
+        status:
+            description: '(Required) Whether the rule is currently being applied. Valid values: Enabled or Disabled.'
+            type: string
+        storage_class:
+            description: 'The class of storage used to store the object. Valid Values: GLACIER, STANDARD_IA, ONEZONE_IA, INTELLIGENT_TIERING, DEEP_ARCHIVE, GLACIER_IR.andThe and configuration block supports the following arguments:'
+            type: string
+        tag:
+            description: '(Optional) A configuration block for specifying a tag key and value documented below.noncurrent_version_expirationThe noncurrent_version_expiration configuration block supports the following arguments:'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Key-value map of resource tags. All of these tags must exist in the object''s tag set in order for the rule to apply.tagThe tag configuration block supports the following arguments:'
+            optional: true
+            type: string
+        transition:
+            description: '(Optional) Set of configuration blocks that specify when an Amazon S3 object transitions to a specified storage class documented below.abort_incomplete_multipart_uploadThe abort_incomplete_multipart_upload configuration block supports the following arguments:'
+            optional: true
+            type: string
+        value:
+            description: '(Required) Value of the tag.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         id:
             description: The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

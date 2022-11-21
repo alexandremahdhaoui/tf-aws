@@ -3,7 +3,31 @@ kind: TerraformDatasource
 metadata:
     name: aws_batch_compute_environment
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the compute environment.
+            type: string
+        compute_environment_name:
+            description: '(Required) Name of the Batch Compute EnvironmentIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        ecs_cluster_arn:
+            description: ARN of the underlying Amazon ECS cluster used by the compute environment.
+            type: string
+        service_role:
+            description: ARN of the IAM role that allows AWS Batch to make calls to other AWS services on your behalf.
+            type: string
+        state:
+            description: State of the compute environment (for example, ENABLED or DISABLED). If the state is ENABLED, then the compute environment accepts jobs from a queue and can scale out automatically based on queues.
+            type: string
+        status:
+            description: Current status of the compute environment (for example, CREATING or VALID).
+            type: string
+        status_reason:
+            description: Short, human-readable string to provide additional details about the current status of the compute environment.
+            type: string
+        type:
+            description: Type of the compute environment (for example, MANAGED or UNMANAGED).
+            type: string
     attrs:
         arn:
             description: ARN of the compute environment.
@@ -28,12 +52,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

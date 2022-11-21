@@ -3,7 +3,41 @@ kind: TerraformResource
 metadata:
     name: aws_api_gateway_deployment
 spec:
-    args: {}
+    args:
+        description:
+            description: (Optional) Description of the deployment
+            optional: true
+            type: string
+        execution_arn:
+            description: Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod
+            type: string
+        id:
+            description: ID of the deployment
+            type: string
+        invoke_url:
+            description: |-
+                URL to invoke the API pointing to the stage,
+                e.g., https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod
+            type: string
+        rest_api_id:
+            description: (Required) REST API identifier.
+            type: string
+        stage_description:
+            description: (Optional) Description to set on the stage managed by the stage_name argument.
+            optional: true
+            type: string
+        stage_name:
+            description: (Optional) Name of the stage to create with this deployment. If the specified stage already exists, it will be updated to point to the new deployment. We recommend using the aws_api_gateway_stage resource instead to manage stages.
+            optional: true
+            type: string
+        triggers:
+            description: (Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command.
+            optional: true
+            type: string
+        variables:
+            description: '(Optional) Map to set on the stage managed by the stage_name argument.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         execution_arn:
             description: Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod
@@ -18,12 +52,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

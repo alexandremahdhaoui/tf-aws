@@ -3,7 +3,41 @@ kind: TerraformResource
 metadata:
     name: aws_datasync_location_smb
 spec:
-    args: {}
+    args:
+        agent_arns:
+            description: (Required) A list of DataSync Agent ARNs with which this location will be associated.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the DataSync Location.
+            type: string
+        domain:
+            description: (Optional) The name of the Windows domain the SMB server belongs to.
+            optional: true
+            type: string
+        mount_options:
+            description: (Optional) Configuration block containing mount options used by DataSync to access the SMB Server. Can be AUTOMATIC, SMB2, or SMB3.
+            optional: true
+            type: string
+        password:
+            description: (Required) The password of the user who can mount the share and has file permissions in the SMB.
+            type: string
+        server_hostname:
+            description: (Required) Specifies the IP address or DNS name of the SMB server. The DataSync Agent(s) use this to mount the SMB share.
+            type: string
+        subdirectory:
+            description: (Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server.
+            type: string
+        tags:
+            description: (Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        user:
+            description: '(Required) The user who can mount the share and has file and folder permissions in the SMB share.mount_options Argument Referencemount_options configuration block:'
+            type: string
+        version:
+            description: '(Optional) The specific SMB version that you want DataSync to use for mounting your SMB share. Valid values: AUTOMATIC, SMB2, and SMB3. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the DataSync Location.
@@ -13,12 +47,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,68 @@ kind: TerraformResource
 metadata:
     name: aws_cloudformation_type
 spec:
-    args: {}
+    args:
+        arn:
+            description: (Optional) Amazon Resource Name (ARN) of the CloudFormation Type version. See also type_arn.
+            optional: true
+            type: string
+        default_version_id:
+            description: Identifier of the CloudFormation Type default version.
+            type: string
+        deprecated_status:
+            description: Deprecation status of the version.
+            type: string
+        description:
+            description: Description of the version.
+            type: string
+        documentation_url:
+            description: URL of the documentation for the CloudFormation Type.
+            type: string
+        execution_role_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the IAM Role for CloudFormation to assume when invoking the extension. If your extension calls AWS APIs in any of its handlers, you must create an IAM execution role that includes the necessary permissions to call those AWS APIs, and provision that execution role in your account. When CloudFormation needs to invoke the extension handler, CloudFormation assumes this execution role to create a temporary session token, which it then passes to the extension handler, thereby supplying your extension with the appropriate credentials.
+            optional: true
+            type: string
+        is_default_version:
+            description: Whether the CloudFormation Type version is the default version.
+            type: string
+        log_group_name:
+            description: (Required) Name of the CloudWatch Log Group where CloudFormation sends error logging information when invoking the type's handlers.
+            type: string
+        log_role_arn:
+            description: '(Required) Amazon Resource Name (ARN) of the IAM Role CloudFormation assumes when sending error logging information to CloudWatch Logs.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        logging_config:
+            description: (Optional) Configuration block containing logging configuration.
+            optional: true
+            type: string
+        provisioning_type:
+            description: Provisioning behavior of the CloudFormation Type.
+            type: string
+        schema:
+            description: JSON document of the CloudFormation Type schema.
+            type: string
+        schema_handler_package:
+            description: (Required) URL to the S3 bucket containing the extension project package that contains the necessary files for the extension you want to register. Must begin with s3:// or https://. For example, s3://example-bucket/example-object.
+            type: string
+        source_url:
+            description: URL of the source code for the CloudFormation Type.
+            type: string
+        type:
+            description: (Optional) CloudFormation Registry Type. For example, RESOURCE or MODULE.
+            optional: true
+            type: string
+        type_arn:
+            description: (Optional) Amazon Resource Name (ARN) of the CloudFormation Type. See also arn.
+            optional: true
+            type: string
+        type_name:
+            description: '(Optional) CloudFormation Type name. For example, ExampleCompany::ExampleService::ExampleResource.logging_configlogging_config configuration block:'
+            optional: true
+            type: string
+        version_id:
+            description: (Optional) Identifier of the CloudFormation Type version.
+            optional: true
+            type: string
     attrs:
         arn:
             description: (Optional) Amazon Resource Name (ARN) of the CloudFormation Type version. See also type_arn.
@@ -43,12 +104,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,112 @@ kind: TerraformResource
 metadata:
     name: aws_glue_partition
 spec:
-    args: {}
+    args:
+        bucket_columns:
+            description: (Optional) A list of reducer grouping columns, clustering columns, and bucketing columns in the table.
+            optional: true
+            type: string
+        catalog_id:
+            description: (Optional) ID of the Glue Catalog and database to create the table in. If omitted, this defaults to the AWS Account ID plus the database name.
+            optional: true
+            type: string
+        column:
+            description: (Required) The name of the column.
+            type: string
+        columns:
+            description: (Optional) A list of the Columns in the table.
+            optional: true
+            type: string
+        comment:
+            description: (Optional) Free-form text comment.ser_de_info
+            optional: true
+            type: string
+        compressed:
+            description: (Optional) True if the data in the table is compressed, or False if not.
+            optional: true
+            type: string
+        creation_time:
+            description: The time at which the partition was created.
+            type: string
+        database_name:
+            description: (Required) Name of the metadata database where the table metadata resides. For Hive compatibility, this must be all lowercase.
+            type: string
+        id:
+            description: partition id.
+            type: string
+        input_format:
+            description: '(Optional) The input format: SequenceFileInputFormat (binary), or TextInputFormat, or a custom format.'
+            optional: true
+            type: string
+        last_analyzed_time:
+            description: The last time at which column statistics were computed for this partition.
+            type: string
+        location:
+            description: (Optional) The physical location of the table. By default this takes the form of the warehouse location, followed by the database location in the warehouse, followed by the table name.
+            optional: true
+            type: string
+        name:
+            description: (Optional) Name of the SerDe.
+            optional: true
+            type: string
+        number_of_buckets:
+            description: (Optional) Must be specified if the table contains any dimension columns.
+            optional: true
+            type: string
+        output_format:
+            description: '(Optional) The output format: SequenceFileOutputFormat (binary), or IgnoreKeyTextOutputFormat, or a custom format.'
+            optional: true
+            type: string
+        parameters:
+            description: (Optional) A map of initialization parameters for the SerDe, in key-value form.
+            optional: true
+            type: string
+        partition_values:
+            description: (Required) The values that define the partition.
+            type: string
+        ser_de_info:
+            description: (Optional) Serialization/deserialization (SerDe) information.
+            optional: true
+            type: string
+        serialization_library:
+            description: '(Optional) Usually the class that implements the SerDe. An example is: org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe.sort_columns'
+            optional: true
+            type: string
+        skewed_column_names:
+            description: (Optional) A list of names of columns that contain skewed values.
+            optional: true
+            type: string
+        skewed_column_value_location_maps:
+            description: (Optional) A list of values that appear so frequently as to be considered skewed.
+            optional: true
+            type: string
+        skewed_column_values:
+            description: '(Optional) A map of skewed values to the columns that contain them.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        skewed_info:
+            description: (Optional) Information about values that appear very frequently in a column (skewed values).
+            optional: true
+            type: string
+        sort_columns:
+            description: (Optional) A list of Order objects specifying the sort order of each bucket in the table.
+            optional: true
+            type: string
+        sort_order:
+            description: (Required) Indicates that the column is sorted in ascending order (== 1), or in descending order (==0).skewed_info
+            type: string
+        storage_descriptor:
+            description: (Optional) A storage descriptor object containing information about the physical storage of this table. You can refer to the Glue Developer Guide for a full explanation of this object.
+            optional: true
+            type: string
+        stored_as_sub_directories:
+            description: (Optional) True if the table data is stored in subdirectories, or False if not.column
+            optional: true
+            type: string
+        type:
+            description: (Optional) The datatype of data in the Column.
+            optional: true
+            type: string
     attrs:
         creation_time:
             description: The time at which the partition was created.
@@ -19,12 +124,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

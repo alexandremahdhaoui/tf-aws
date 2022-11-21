@@ -3,7 +3,50 @@ kind: TerraformResource
 metadata:
     name: aws_networkmanager_transit_gateway_route_table_attachment
 spec:
-    args: {}
+    args:
+        arn:
+            description: Attachment Amazon Resource Name (ARN).
+            type: string
+        attachment_policy_rule_number:
+            description: The policy rule number associated with the attachment.
+            type: string
+        attachment_type:
+            description: The type of attachment.
+            type: string
+        core_network_arn:
+            description: The ARN of the core network.
+            type: string
+        core_network_id:
+            description: The ID of the core network.
+            type: string
+        edge_location:
+            description: The edge location for the peer.
+            type: string
+        id:
+            description: The ID of the attachment.
+            type: string
+        owner_account_id:
+            description: The ID of the attachment account owner.
+            type: string
+        peering_id:
+            description: (Required) The ID of the peer for the attachment.
+            type: string
+        resource_arn:
+            description: The attachment resource ARN.
+            type: string
+        segment_name:
+            description: The name of the segment attachment.
+            type: string
+        state:
+            description: The state of the attachment.
+            type: string
+        tags:
+            description: (Optional) Key-value tags for the attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        transit_gateway_route_table_arn:
+            description: '(Required) The ARN of the transit gateway route table for the attachment.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: Attachment Amazon Resource Name (ARN).
@@ -43,12 +86,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

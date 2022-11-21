@@ -3,7 +3,33 @@ kind: TerraformResource
 metadata:
     name: aws_nat_gateway
 spec:
-    args: {}
+    args:
+        allocation_id:
+            description: The Allocation ID of the Elastic IP address for the gateway.
+            type: string
+        connectivity_type:
+            description: (Optional) Connectivity type for the gateway. Valid values are private and public. Defaults to public.
+            optional: true
+            type: string
+        id:
+            description: The ID of the NAT Gateway.
+            type: string
+        network_interface_id:
+            description: The ENI ID of the network interface created by the NAT gateway.
+            type: string
+        private_ip:
+            description: The private IP address of the NAT Gateway.
+            type: string
+        public_ip:
+            description: The public IP address of the NAT Gateway.
+            type: string
+        subnet_id:
+            description: The Subnet ID of the subnet in which the NAT gateway is placed.
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         allocation_id:
             description: The Allocation ID of the Elastic IP address for the gateway.
@@ -28,12 +54,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

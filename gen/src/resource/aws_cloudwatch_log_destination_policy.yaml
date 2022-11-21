@@ -3,16 +3,21 @@ kind: TerraformResource
 metadata:
     name: aws_cloudwatch_log_destination_policy
 spec:
-    args: {}
+    args:
+        access_policy:
+            description: (Required) The policy document. This is a JSON formatted string.
+            type: string
+        destination_name:
+            description: (Required) A name for the subscription filter
+            type: string
     attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

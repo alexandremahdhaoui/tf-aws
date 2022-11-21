@@ -3,7 +3,30 @@ kind: TerraformResource
 metadata:
     name: aws_service_discovery_private_dns_namespace
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN that Amazon Route 53 assigns to the namespace when you create it.
+            type: string
+        description:
+            description: (Optional) The description that you specify for the namespace when you create it.
+            optional: true
+            type: string
+        hosted_zone:
+            description: The ID for the hosted zone that Amazon Route 53 creates when you create a namespace.
+            type: string
+        id:
+            description: The ID of a namespace.
+            type: string
+        name:
+            description: (Required) The name of the namespace.
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        vpc:
+            description: (Required) The ID of VPC that you want to associate the namespace with.
+            type: string
     attrs:
         arn:
             description: The ARN that Amazon Route 53 assigns to the namespace when you create it.
@@ -19,12 +42,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

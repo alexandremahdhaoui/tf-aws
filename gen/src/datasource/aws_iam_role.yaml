@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_iam_role
+spec:
+    args: {}
+    attrs:
+        arn:
+            description: ARN of the role.
+            type: string
+        assume_role_policy:
+            description: Policy document associated with the role.
+            type: string
+        create_date:
+            description: Creation date of the role in RFC 3339 format.
+            type: string
+        description:
+            description: Description for the role.
+            type: string
+        id:
+            description: Friendly IAM role name to match.
+            type: string
+        max_session_duration:
+            description: Maximum session duration.
+            type: string
+        path:
+            description: Path to the role.
+            type: string
+        permissions_boundary:
+            description: The ARN of the policy that is used to set the permissions boundary for the role.
+            type: string
+        unique_id:
+            description: Stable and unique string identifying the role.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

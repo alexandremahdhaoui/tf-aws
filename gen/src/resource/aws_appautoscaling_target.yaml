@@ -3,16 +3,31 @@ kind: TerraformResource
 metadata:
     name: aws_appautoscaling_target
 spec:
-    args: {}
+    args:
+        max_capacity:
+            description: (Required) Max capacity of the scalable target.
+            type: string
+        min_capacity:
+            description: (Required) Min capacity of the scalable target.
+            type: string
+        resource_id:
+            description: '(Required) Resource type and unique identifier string for the resource associated with the scaling policy. Documentation can be found in the ResourceId parameter at: AWS Application Auto Scaling API Reference'
+            type: string
+        role_arn:
+            description: (Optional) ARN of the IAM role that allows Application AutoScaling to modify your scalable target on your behalf. This defaults to an IAM Service-Linked Role for most services and custom IAM Roles are ignored by the API for those namespaces. See the AWS Application Auto Scaling documentation for more information about how this service interacts with IAM.
+            optional: true
+            type: string
+        scalable_dimension:
+            description: '(Required) Scalable dimension of the scalable target. Documentation can be found in the ScalableDimension parameter at: AWS Application Auto Scaling API Reference'
+            type: string
     attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

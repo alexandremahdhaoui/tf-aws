@@ -3,7 +3,73 @@ kind: TerraformResource
 metadata:
     name: aws_rum_app_monitor
 spec:
-    args: {}
+    args:
+        allow_cookies:
+            description: (Optional) If you set this to true, RUM web client sets two cookies, a session cookie  and a user cookie. The cookies allow the RUM web client to collect data relating to the number of users an application has and the behavior of the application across a sequence of events. Cookies are stored in the top-level domain of the current page.
+            optional: true
+            type: string
+        app_monitor_configuration:
+            description: (Optional) configuration data for the app monitor. See app_monitor_configuration below.
+            optional: true
+            type: string
+        app_monitor_id:
+            description: The unique ID of the app monitor. Useful for JS templates.
+            type: string
+        arn:
+            description: The Amazon Resource Name (ARN) specifying the app monitor.
+            type: string
+        cw_log_enabled:
+            description: (Optional) Data collected by RUM is kept by RUM for 30 days and then deleted. This parameter  specifies whether RUM sends a copy of this telemetry data to Amazon CloudWatch Logs in your account. This enables you to keep the telemetry data for more than 30 days, but it does incur Amazon CloudWatch Logs charges. Default value is false.
+            optional: true
+            type: string
+        cw_log_group:
+            description: The name of the log group where the copies are stored.
+            type: string
+        domain:
+            description: (Required) The top-level internet domain name for which your application has administrative authority.
+            type: string
+        enable_xray:
+            description: (Optional) If you set this to true, RUM enables X-Ray tracing for the user sessions  that RUM samples. RUM adds an X-Ray trace header to allowed HTTP requests. It also records an X-Ray segment for allowed HTTP requests.
+            optional: true
+            type: string
+        excluded_pages:
+            description: (Optional) A list of URLs in your website or application to exclude from RUM data collection.
+            optional: true
+            type: string
+        favorite_pages:
+            description: (Optional) A list of pages in the CloudWatch RUM console that are to be displayed with a "favorite" icon.
+            optional: true
+            type: string
+        guest_role_arn:
+            description: (Optional) The ARN of the guest IAM role that is attached to the Amazon Cognito identity pool that is used to authorize the sending of data to RUM.
+            optional: true
+            type: string
+        id:
+            description: The CloudWatch RUM name as it is the identifier of a RUM.
+            type: string
+        identity_pool_id:
+            description: (Optional) The ID of the Amazon Cognito identity pool that is used to authorize the sending of data to RUM.
+            optional: true
+            type: string
+        included_pages:
+            description: (Optional)  If this app monitor is to collect data from only certain pages in your application, this structure lists those pages.
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the log stream.
+            type: string
+        session_sample_rate:
+            description: (Optional) Specifies the percentage of user sessions to use for RUM data collection. Choosing a higher percentage gives you more data but also incurs more costs. The number you specify is the percentage of user sessions that will be used. Default value is 0.1.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.app_monitor_configuration
+            optional: true
+            type: string
+        telemetries:
+            description: '(Optional) An array that lists the types of telemetry data that this app monitor is to collect. Valid values are errors, performance, and http.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         app_monitor_id:
             description: The unique ID of the app monitor. Useful for JS templates.
@@ -22,12 +88,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

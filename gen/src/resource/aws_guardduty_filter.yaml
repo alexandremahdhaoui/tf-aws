@@ -3,7 +3,63 @@ kind: TerraformResource
 metadata:
     name: aws_guardduty_filter
 spec:
-    args: {}
+    args:
+        action:
+            description: (Required) Specifies the action that is to be applied to the findings that match the filter. Can be one of ARCHIVE or NOOP.
+            type: string
+        arn:
+            description: The ARN of the GuardDuty filter.
+            type: string
+        description:
+            description: (Optional) Description of the filter.
+            optional: true
+            type: string
+        detector_id:
+            description: (Required) ID of a GuardDuty detector, attached to your account.
+            type: string
+        equals:
+            description: (Optional) List of string values to be evaluated.
+            optional: true
+            type: string
+        field:
+            description: (Required) The name of the field to be evaluated. The full list of field names can be found in AWS documentation.
+            type: string
+        finding_criteria:
+            description: ' (Required) - Represents the criteria to be used in the filter for querying findings. Contains one or more criterion blocks, documented below.criterionThe criterion block suports the following:'
+            type: string
+        greater_than:
+            description: (Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format.
+            optional: true
+            type: string
+        greater_than_or_equal:
+            description: (Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format.
+            optional: true
+            type: string
+        id:
+            description: A compound field, consisting of the ID of the GuardDuty detector and the name of the filter.
+            type: string
+        less_than:
+            description: (Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format.
+            optional: true
+            type: string
+        less_than_or_equal:
+            description: '(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of your filter.
+            type: string
+        not_equals:
+            description: (Optional) List of string values to be evaluated.
+            optional: true
+            type: string
+        rank:
+            description: (Required) Specifies the position of the filter in the list of current filters. Also specifies the order in which this filter is applied to the findings.
+            type: string
+        tags:
+            description: ' (Optional) - The tags that you want to add to the Filter resource. A tag consists of a key and a value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the GuardDuty filter.
@@ -16,12 +72,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

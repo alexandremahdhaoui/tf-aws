@@ -3,7 +3,48 @@ kind: TerraformResource
 metadata:
     name: aws_macie2_custom_data_identifier
 spec:
-    args: {}
+    args:
+        created_at:
+            description: The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created.
+            type: string
+        deleted:
+            description: Specifies whether the custom data identifier was deleted. If you delete a custom data identifier, Amazon Macie doesn't delete it permanently. Instead, it soft deletes the identifier.
+            type: string
+        description:
+            description: (Optional) A custom description of the custom data identifier. The description can contain as many as 512 characters.
+            optional: true
+            type: string
+        id:
+            description: The unique identifier (ID) of the macie custom data identifier.
+            type: string
+        ignore_words:
+            description: (Optional) An array that lists specific character sequences (ignore words) to exclude from the results. If the text matched by the regular expression is the same as any string in this array, Amazon Macie ignores it. The array can contain as many as 10 ignore words. Each ignore word can contain 4 - 90 characters. Ignore words are case sensitive.
+            optional: true
+            type: string
+        keywords:
+            description: ' (Optional) An array that lists specific character sequences (keywords), one of which must be within proximity (maximum_match_distance) of the regular expression to match. The array can contain as many as 50 keywords. Each keyword can contain 3 - 90 characters. Keywords aren''t case sensitive.'
+            optional: true
+            type: string
+        maximum_match_distance:
+            description: (Optional) The maximum number of characters that can exist between text that matches the regex pattern and the character sequences specified by the keywords array. Macie includes or excludes a result based on the proximity of a keyword to text that matches the regex pattern. The distance can be 1 - 300 characters. The default value is 50.
+            optional: true
+            type: string
+        name:
+            description: (Optional) A custom name for the custom data identifier. The name can contain as many as 128 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix.
+            optional: true
+            type: string
+        name_prefix:
+            description: ' (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name.'
+            optional: true
+            type: string
+        regex:
+            description: (Optional) The regular expression (regex) that defines the pattern to match. The expression can contain as many as 512 characters.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) A map of key-value pairs that specifies the tags to associate with the custom data identifier.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) of the custom data identifier.
@@ -19,12 +60,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

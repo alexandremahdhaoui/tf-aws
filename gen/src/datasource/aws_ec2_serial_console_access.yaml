@@ -1,0 +1,23 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ec2_serial_console_access
+spec:
+    args: {}
+    attrs:
+        enabled:
+            description: Whether or not serial console access is enabled. Returns as true or false.
+            type: string
+        id:
+            description: 'Region of serial console access.TimeoutsConfiguration options:'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

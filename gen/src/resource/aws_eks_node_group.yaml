@@ -6,166 +6,159 @@ spec:
     args:
         ami_type:
             description: (Optional) Type of Amazon Machine Image (AMI) associated with the EKS Node Group. See the AWS documentation for valid values. Terraform will only perform drift detection if a configuration value is provided.
-            type: string
             optional: true
+            type: string
         arn:
             description: Amazon Resource Name (ARN) of the EKS Node Group.
-            type: string
             optional: true
+            type: string
         autoscaling_groups:
-            description: ""
-            type: string
+            description: |
+                List of objects containing information about AutoScaling Groups.
             optional: true
+            type: string
         capacity_type:
             description: '(Optional) Type of capacity associated with the EKS Node Group. Valid values: ON_DEMAND, SPOT. Terraform will only perform drift detection if a configuration value is provided.'
-            type: string
             optional: true
+            type: string
         cluster_name:
             description: ' – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\-_]+$).'
             type: string
-            optional: true
         create:
             description: (Default 60m)
-            type: string
             optional: true
+            type: string
         delete:
             description: (Default 60m)
-            type: string
             optional: true
+            type: string
         desired_size:
             description: (Required) Desired number of worker nodes.
             type: string
-            optional: true
         disk_size:
             description: (Optional) Disk size in GiB for worker nodes. Defaults to 20. Terraform will only perform drift detection if a configuration value is provided.
-            type: string
             optional: true
+            type: string
         ec2_ssh_key:
             description: (Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group. If you specify this configuration, but do not specify source_security_group_ids when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0).
-            type: string
             optional: true
+            type: string
         effect:
             description: '(Required) The effect of the taint. Valid values: NO_SCHEDULE, NO_EXECUTE, PREFER_NO_SCHEDULE.update_config Configuration BlockThe following arguments are mutually exclusive.'
             type: string
-            optional: true
         force_update_version:
             description: (Optional) Force version update if existing pods are unable to be drained due to a pod disruption budget issue.
-            type: string
             optional: true
+            type: string
         id:
             description: EKS Cluster name and EKS Node Group name separated by a colon (:).
-            type: string
             optional: true
+            type: string
         instance_types:
             description: (Optional) List of instance types associated with the EKS Node Group. Defaults to ["t3.medium"]. Terraform will only perform drift detection if a configuration value is provided.
-            type: string
             optional: true
+            type: string
         key:
             description: (Required) The key of the taint. Maximum length of 63.
             type: string
-            optional: true
         labels:
             description: (Optional) Key-value map of Kubernetes labels. Only labels that are applied with the EKS API are managed by this argument. Other Kubernetes labels applied to the EKS Node Group will not be managed.
-            type: string
             optional: true
+            type: string
         launch_template:
             description: (Optional) Configuration block with Launch Template settings. Detailed below.
-            type: string
             optional: true
+            type: string
         max_size:
             description: (Required) Maximum number of worker nodes.
             type: string
-            optional: true
         max_unavailable:
             description: (Optional) Desired max number of unavailable worker nodes during node group update.
-            type: string
             optional: true
+            type: string
         max_unavailable_percentage:
             description: '(Optional) Desired max percentage of unavailable worker nodes during node group update.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         min_size:
             description: (Required) Minimum number of worker nodes.taint Configuration Block
             type: string
-            optional: true
         name:
             description: Name of the AutoScaling Group.
-            type: string
             optional: true
+            type: string
         node_group_name:
             description: ' – (Optional) Name of the EKS Node Group. If omitted, Terraform will assign a random, unique name. Conflicts with node_group_name_prefix.'
-            type: string
             optional: true
+            type: string
         node_group_name_prefix:
             description: ' – (Optional) Creates a unique name beginning with the specified prefix. Conflicts with node_group_name.'
-            type: string
             optional: true
+            type: string
         node_role_arn:
             description: ' – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group.'
             type: string
-            optional: true
         release_version:
             description: ' – (Optional) AMI version of the EKS Node Group. Defaults to latest version for Kubernetes version.'
-            type: string
             optional: true
+            type: string
         remote_access:
             description: (Optional) Configuration block with remote access settings. Detailed below.
-            type: string
             optional: true
+            type: string
         remote_access_security_group_id:
             description: Identifier of the remote access EC2 Security Group.
-            type: string
             optional: true
+            type: string
         resources:
-            description: ""
-            type: string
+            description: |
+                List of objects containing information about underlying resources.
             optional: true
+            type: string
         scaling_config:
             description: (Required) Configuration block with scaling settings. Detailed below.
             type: string
-            optional: true
         source_security_group_ids:
             description: (Optional) Set of EC2 Security Group IDs to allow SSH access (port 22) from on the worker nodes. If you specify ec2_ssh_key, but do not specify this configuration when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0).scaling_config Configuration Block
-            type: string
             optional: true
+            type: string
         status:
             description: 'Status of the EKS Node Group.TimeoutsConfiguration options:'
-            type: string
             optional: true
+            type: string
         subnet_ids:
             description: ' – (Required) Identifiers of EC2 Subnets to associate with the EKS Node Group. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster).'
             type: string
-            optional: true
         tags:
             description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         taint:
             description: (Optional) The Kubernetes taints to be applied to the nodes in the node group. Maximum of 50 taints per node group. Detailed below.
-            type: string
             optional: true
+            type: string
         update:
             description: (Default 60m)
-            type: string
             optional: true
+            type: string
         value:
             description: (Optional) The value of the taint. Maximum length of 63.
-            type: string
             optional: true
+            type: string
         version:
             description: (Required) EC2 Launch Template version number. While the API accepts values like $Default and $Latest, the API will convert the value to the associated version number (e.g., 1) on read and Terraform will show a difference on next plan. Using the default_version or latest_version attribute of the aws_launch_template resource or data source is recommended for this argument.remote_access Configuration Block
             type: string
-            optional: true
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the EKS Node Group.
             type: string
         autoscaling_groups:
-            description: ""
+            description: |
+                List of objects containing information about AutoScaling Groups.
             type: string
         create:
             description: (Default 60m)
@@ -183,7 +176,8 @@ spec:
             description: Identifier of the remote access EC2 Security Group.
             type: string
         resources:
-            description: ""
+            description: |
+                List of objects containing information about underlying resources.
             type: string
         status:
             description: 'Status of the EKS Node Group.TimeoutsConfiguration options:'
@@ -196,12 +190,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

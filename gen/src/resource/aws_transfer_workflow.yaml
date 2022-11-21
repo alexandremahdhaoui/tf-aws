@@ -3,7 +3,97 @@ kind: TerraformResource
 metadata:
     name: aws_transfer_workflow
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Workflow ARN.
+            type: string
+        bucket:
+            description: (Optional) Specifies the S3 bucket for the customer input file.
+            optional: true
+            type: string
+        copy_step_details:
+            description: (Optional) Details for a step that performs a file copy. See Copy Step Details below.
+            optional: true
+            type: string
+        custom_step_details:
+            description: (Optional) Details for a step that invokes a lambda function.
+            optional: true
+            type: string
+        delete_step_details:
+            description: (Optional) Details for a step that deletes the file.
+            optional: true
+            type: string
+        description:
+            description: (Optional) A textual description for the workflow.
+            optional: true
+            type: string
+        destination_file_location:
+            description: (Optional) Specifies the location for the file being copied. Use ${Transfer:username} in this field to parametrize the destination prefix by username.
+            optional: true
+            type: string
+        efs_file_location:
+            description: (Optional) Specifies the details for the EFS file being copied.
+            optional: true
+            type: string
+        file_system_id:
+            description: (Optional) The ID of the file system, assigned by Amazon EFS.
+            optional: true
+            type: string
+        id:
+            description: The Workflow id.
+            type: string
+        key:
+            description: (Required) The name assigned to the tag that you create.
+            type: string
+        name:
+            description: (Optional) The name of the step, used as an identifier.
+            optional: true
+            type: string
+        on_exception_steps:
+            description: (Optional) Specifies the steps (actions) to take if errors are encountered during execution of the workflow. See Workflow Steps below.
+            optional: true
+            type: string
+        overwrite_existing:
+            description: (Optional) A flag that indicates whether or not to overwrite an existing file of the same name. The default is FALSE. Valid values are TRUE and FALSE.
+            optional: true
+            type: string
+        path:
+            description: (Optional) The pathname for the folder being used by a workflow.S3 File Location
+            optional: true
+            type: string
+        s3_file_location:
+            description: (Optional) Specifies the details for the S3 file being copied.EFS File Location
+            optional: true
+            type: string
+        source_file_location:
+            description: '(Optional) Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. Enter ${previous.file} to use the previous file as the input. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. Enter ${original.file} to use the originally-uploaded file location as input for this step.'
+            optional: true
+            type: string
+        steps:
+            description: (Required) Specifies the details for the steps that are in the specified workflow. See Workflow Steps below.
+            type: string
+        tag_step_details:
+            description: (Optional) Details for a step that creates one or more tags.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Array that contains from 1 to 10 key/value pairs. See S3 Tags below.Destination File Location
+            optional: true
+            type: string
+        target:
+            description: (Optional) The ARN for the lambda function that is being called.
+            optional: true
+            type: string
+        timeout_seconds:
+            description: (Optional) Timeout, in seconds, for the step.Delete Step Details
+            optional: true
+            type: string
+        type:
+            description: (Required) One of the following step types are supported. COPY, CUSTOM, DELETE, and TAG.Copy Step Details
+            type: string
+        value:
+            description: '(Required) The value that corresponds to the key.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: The Workflow ARN.
@@ -16,12 +106,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

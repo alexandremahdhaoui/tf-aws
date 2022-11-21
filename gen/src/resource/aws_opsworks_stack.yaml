@@ -3,7 +3,124 @@ kind: TerraformResource
 metadata:
     name: aws_opsworks_stack
 spec:
-    args: {}
+    args:
+        agent_version:
+            description: (Optional) If set to "LATEST", OpsWorks will automatically install the latest version.
+            optional: true
+            type: string
+        berkshelf_version:
+            description: (Optional) If manage_berkshelf is enabled, the version of Berkshelf to use.
+            optional: true
+            type: string
+        color:
+            description: (Optional) Color to paint next to the stack's resources in the OpsWorks console.
+            optional: true
+            type: string
+        configuration_manager_name:
+            description: (Optional) Name of the configuration manager to use. Defaults to "Chef".
+            optional: true
+            type: string
+        configuration_manager_version:
+            description: (Optional) Version of the configuration manager to use. Defaults to "11.4".
+            optional: true
+            type: string
+        custom_cookbooks_source:
+            description: (Optional) When use_custom_cookbooks is set, provide this sub-object as described below.
+            optional: true
+            type: string
+        custom_json:
+            description: '(Optional) Custom JSON attributes to apply to the entire stack.The custom_cookbooks_source block supports the following arguments:'
+            optional: true
+            type: string
+        default_availability_zone:
+            description: |-
+                (Optional) Name of the availability zone where instances will be created by default.
+                Cannot be set when vpc_id is set.
+            optional: true
+            type: string
+        default_instance_profile_arn:
+            description: (Required) The ARN of an IAM Instance Profile that created instances will have by default.
+            type: string
+        default_os:
+            description: (Optional) Name of OS that will be installed on instances by default.
+            optional: true
+            type: string
+        default_root_device_type:
+            description: (Optional) Name of the type of root device instances will have by default.
+            optional: true
+            type: string
+        default_ssh_key_name:
+            description: (Optional) Name of the SSH keypair that instances will have by default.
+            optional: true
+            type: string
+        default_subnet_id:
+            description: |-
+                (Optional) ID of the subnet in which instances will be created by default.
+                Required if vpc_id is set to a VPC other than the default VPC, and forbidden if it isn't.
+            optional: true
+            type: string
+        hostname_theme:
+            description: (Optional) Keyword representing the naming scheme that will be used for instance hostnames within this stack.
+            optional: true
+            type: string
+        id:
+            description: The id of the stack.
+            type: string
+        manage_berkshelf:
+            description: (Optional) Boolean value controlling whether Opsworks will run Berkshelf for this stack.
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the stack.
+            type: string
+        password:
+            description: (Optional) Password to use when authenticating to the source. Terraform cannot perform drift detection of this configuration.
+            optional: true
+            type: string
+        region:
+            description: (Required) The name of the region where the stack will exist.
+            type: string
+        revision:
+            description: '(Optional) For sources that are version-aware, the revision to use.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        service_role_arn:
+            description: (Required) The ARN of an IAM role that the OpsWorks service will act as.
+            type: string
+        ssh_key:
+            description: (Optional) SSH key to use when authenticating to the source. Terraform cannot perform drift detection of this configuration.
+            optional: true
+            type: string
+        tags:
+            description: |-
+                (Optional) A map of tags to assign to the resource.
+                If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        type:
+            description: (Required) The type of source to use. For example, "archive".
+            type: string
+        url:
+            description: (Required) The URL where the cookbooks resource can be found.
+            type: string
+        use_custom_cookbooks:
+            description: (Optional) Boolean value controlling whether the custom cookbook settings are enabled.
+            optional: true
+            type: string
+        use_opsworks_security_groups:
+            description: (Optional) Boolean value controlling whether the standard OpsWorks security groups apply to created instances.
+            optional: true
+            type: string
+        username:
+            description: (Optional) Username to use when authenticating to the source.
+            optional: true
+            type: string
+        vpc_id:
+            description: |-
+                (Optional) ID of the VPC that this stack belongs to.
+                Defaults to the region's default VPC.
+            optional: true
+            type: string
     attrs:
         id:
             description: The id of the stack.
@@ -13,12 +130,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

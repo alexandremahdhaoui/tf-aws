@@ -7,227 +7,204 @@ spec:
         actions:
             description: (Required) Set of IAM actions to grant or revoke permissions on. Max of 16 items.
             type: string
-            optional: true
         amazon_elasticsearch:
             description: (Optional) Parameters for connecting to Amazon Elasticsearch.
-            type: string
             optional: true
+            type: string
         arn:
             description: Amazon Resource Name (ARN) of the data source
-            type: string
             optional: true
+            type: string
         athena:
             description: (Optional) Parameters for connecting to Athena.
-            type: string
             optional: true
+            type: string
         aurora:
             description: (Optional) Parameters for connecting to Aurora MySQL.
-            type: string
             optional: true
+            type: string
         aurora_postgresql:
             description: (Optional) Parameters for connecting to Aurora Postgresql.
-            type: string
             optional: true
+            type: string
         aws_account_id:
             description: (Optional, Forces new resource) The ID for the AWS account that the data source is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account.
-            type: string
             optional: true
+            type: string
         aws_iot_analytics:
             description: (Optional) Parameters for connecting to AWS IOT Analytics.
-            type: string
             optional: true
+            type: string
         bucket:
             description: (Required) The name of the bucket that contains the manifest file.
             type: string
-            optional: true
         catalog:
             description: (Required) The catalog to which to connect.
             type: string
-            optional: true
         cluster_id:
             description: (Optional, Required if host and port are not provided) The ID of the cluster to which to connect.
-            type: string
             optional: true
+            type: string
         copy_source_arn:
             description: ' (Optional, Conflicts with credential_paircredential_pair from the data source in the ARN is used.'
-            type: string
             optional: true
+            type: string
         credential_pair:
             description: ' (Optional, Conflicts with copy_source_arn) - Credential pair. See Credential Pair below for more details.credential_pair Argument Reference'
-            type: string
             optional: true
+            type: string
         credentials:
             description: (Optional) The credentials Amazon QuickSight uses to connect to your underlying source. Currently, only credentials based on user name and password are supported. See Credentials below for more details.
-            type: string
             optional: true
+            type: string
         data_set_name:
             description: (Required) The name of the data set to which to connect.jira fArgument Reference
             type: string
-            optional: true
         data_source_id:
             description: (Required, Forces new resource) An identifier for the data source.
             type: string
-            optional: true
         database:
             description: (Required) The database to which to connect.
             type: string
-            optional: true
         disable_ssl:
             description: (Required) A Boolean option to control whether SSL should be disabled.vpc_connection_properties Argument Reference
             type: string
-            optional: true
         domain:
             description: (Required) The OpenSearch domain.athena Argument Reference
             type: string
-            optional: true
         host:
             description: (Required) The host to which to connect.
             type: string
-            optional: true
         instance_id:
             description: (Optional) The instance ID to which to connect.redshift Argument Reference
-            type: string
             optional: true
+            type: string
         jira:
             description: (Optional) Parameters for connecting to Jira.
-            type: string
             optional: true
+            type: string
         key:
             description: (Required) The key of the manifest file within the bucket.service_now Argument Reference
             type: string
-            optional: true
         manifest_file_location:
             description: (Required) An object containing the S3 location of the S3 manifest file.manifest_file_location Argument Reference
             type: string
-            optional: true
         maria_db:
             description: (Optional) Parameters for connecting to MariaDB.
-            type: string
             optional: true
+            type: string
         max_rows:
             description: (Required) The maximum number of rows to query.
             type: string
-            optional: true
         mysql:
             description: (Optional) Parameters for connecting to MySQL.
-            type: string
             optional: true
+            type: string
         name:
             description: (Required) A name for the data source, maximum of 128 characters.
             type: string
-            optional: true
         oracle:
             description: (Optional) Parameters for connecting to Oracle.
-            type: string
             optional: true
+            type: string
         parameters:
             description: (Required) The parameters used to connect to this data source (exactly one).
             type: string
-            optional: true
         password:
             description: (Required) Password, maximum length of 1024 characters.
             type: string
-            optional: true
         permission:
             description: (Optional) A set of resource permissions on the data source. Maximum of 64 items. See Permission below for more details.
-            type: string
             optional: true
+            type: string
         port:
             description: (Required) The warehouse to which to connect.twitter Argument Reference
             type: string
-            optional: true
         postgresql:
             description: (Optional) Parameters for connecting to Postgresql.
-            type: string
             optional: true
+            type: string
         presto:
             description: (Optional) Parameters for connecting to Presto.
-            type: string
             optional: true
+            type: string
         principal:
             description: (Required) The Amazon Resource Name (ARN) of the principal.ssl_properties Argument Reference
             type: string
-            optional: true
         query:
             description: '(Required) The Twitter query to retrieve the data.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         rds:
             description: (Optional) Parameters for connecting to RDS.
-            type: string
             optional: true
+            type: string
         redshift:
             description: (Optional) Parameters for connecting to Redshift.
-            type: string
             optional: true
+            type: string
         s3:
             description: (Optional) Parameters for connecting to S3.
-            type: string
             optional: true
+            type: string
         service_now:
             description: (Optional) Parameters for connecting to ServiceNow.
-            type: string
             optional: true
+            type: string
         site_base_url:
             description: (Required) The base URL of the Jira instance's site to which to connect.snowflake Argument Reference
             type: string
-            optional: true
         snowflake:
             description: (Optional) Parameters for connecting to Snowflake.
-            type: string
             optional: true
+            type: string
         spark:
             description: (Optional) Parameters for connecting to Spark.
-            type: string
             optional: true
+            type: string
         sql_server:
             description: (Optional) Parameters for connecting to SQL Server.
-            type: string
             optional: true
+            type: string
         ssl_properties:
             description: (Optional) Secure Socket Layer (SSL) properties that apply when Amazon QuickSight connects to your underlying source. See SSL Properties below for more details.
-            type: string
             optional: true
+            type: string
         tags:
             description: (Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         teradata:
             description: (Optional) Parameters for connecting to Teradata.
-            type: string
             optional: true
+            type: string
         twitter:
             description: (Optional) Parameters for connecting to Twitter.permission Argument Reference
-            type: string
             optional: true
+            type: string
         type:
             description: (Required) The type of the data source. See the AWS Documentation for the complete list of valid values.
             type: string
-            optional: true
         username:
             description: (Required) User name, maximum length of 64 characters.parameters Argument ReferenceTo specify data source connection parameters, exactly one of the following sub-objects must be provided.
             type: string
-            optional: true
         vpc_connection_arn:
             description: (Required) The Amazon Resource Name (ARN) for the VPC connection.amazon_elasticsearch Argument Reference
             type: string
-            optional: true
         vpc_connection_properties:
             description: '- (Optional) Use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source. See VPC Connection Properties below for more details.credentials Argument Reference'
-            type: string
             optional: true
+            type: string
         warehouse:
             description: (Required) The warehouse to which to connect.spark Argument Reference
             type: string
-            optional: true
         work_group:
             description: (Optional) The work-group to which to connect.aurora Argument Reference
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the data source
@@ -237,12 +214,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

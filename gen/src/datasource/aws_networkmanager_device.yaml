@@ -1,0 +1,59 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_networkmanager_device
+spec:
+    args: {}
+    attrs:
+        address:
+            description: Physical address.
+            type: string
+        arn:
+            description: ARN of the device.
+            type: string
+        aws_location:
+            description: AWS location of the device. Documented below.
+            type: string
+        description:
+            description: Description of the device.
+            type: string
+        latitude:
+            description: Latitude.
+            type: string
+        location:
+            description: Location of the device. Documented below.
+            type: string
+        model:
+            description: Model of device.
+            type: string
+        serial_number:
+            description: Serial number of the device.
+            type: string
+        site_id:
+            description: ID of the site.
+            type: string
+        subnet_arn:
+            description: ARN of the subnet that the device is located in.
+            type: string
+        tags:
+            description: Key-value tags for the device.
+            type: string
+        type:
+            description: Type of device.
+            type: string
+        vendor:
+            description: 'Vendor of the device.The aws_location object supports the following:'
+            type: string
+        zone:
+            description: 'Zone that the device is located in.The location object supports the following:'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

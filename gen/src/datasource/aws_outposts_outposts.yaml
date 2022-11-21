@@ -1,0 +1,39 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_outposts_outposts
+spec:
+    args:
+        arns:
+            description: Set of Amazon Resource Names (ARNs).
+            type: string
+        availability_zone:
+            description: (Optional) Availability Zone name.
+            optional: true
+            type: string
+        availability_zone_id:
+            description: (Optional) Availability Zone identifier.
+            optional: true
+            type: string
+        id:
+            description: AWS Region.
+            type: string
+        owner_id:
+            description: '(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        site_id:
+            description: (Optional) Site identifier.
+            optional: true
+            type: string
+    attrs: {}
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

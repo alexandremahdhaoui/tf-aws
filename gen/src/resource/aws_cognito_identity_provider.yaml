@@ -3,16 +3,32 @@ kind: TerraformResource
 metadata:
     name: aws_cognito_identity_provider
 spec:
-    args: {}
+    args:
+        attribute_mapping:
+            description: ' (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation'
+            optional: true
+            type: string
+        idp_identifiers:
+            description: ' (Optional) - The list of identity providers.'
+            optional: true
+            type: string
+        provider_name:
+            description: ' (Required) - The provider name'
+            type: string
+        provider_type:
+            description: ' (Required) - The provider type.  See AWS API for valid values'
+            type: string
+        user_pool_id:
+            description: ' (Required) - The user pool id'
+            type: string
     attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

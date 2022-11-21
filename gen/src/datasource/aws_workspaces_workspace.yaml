@@ -1,0 +1,91 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_workspaces_workspace
+spec:
+    args:
+        bundle_id:
+            description: (Optional) ID of the bundle for the WorkSpace.
+            optional: true
+            type: string
+        compute_type_name:
+            description: ' – (Optional) Compute type. For more information, see Amazon WorkSpaces Bundles. Valid values are VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO and GRAPHICSPRO.'
+            optional: true
+            type: string
+        computer_name:
+            description: Name of the WorkSpace, as seen by the operating system.
+            type: string
+        directory_id:
+            description: (Optional) ID of the directory for the WorkSpace. You have to specify user_name along with directory_id. You cannot combine this parameter with workspace_id.
+            optional: true
+            type: string
+        id:
+            description: Workspaces ID.
+            type: string
+        ip_address:
+            description: IP address of the WorkSpace.
+            type: string
+        root_volume_encryption_enabled:
+            description: (Optional) Indicates whether the data stored on the root volume is encrypted.
+            optional: true
+            type: string
+        root_volume_size_gib:
+            description: ' – (Optional) Size of the root volume.'
+            optional: true
+            type: string
+        running_mode:
+            description: ' – (Optional) Running mode. For more information, see Manage the WorkSpace Running Mode. Valid values are AUTO_STOP and ALWAYS_ON.'
+            optional: true
+            type: string
+        running_mode_auto_stop_timeout_in_minutes:
+            description: ' – (Optional) Time after a user logs off when WorkSpaces are automatically stopped. Configured in 60-minute intervals.'
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Tags for the WorkSpace.
+            optional: true
+            type: string
+        user_name:
+            description: ' – (Optional) User name of the user for the WorkSpace. This user name must exist in the directory for the WorkSpace. You cannot combine this parameter with workspace_id.'
+            optional: true
+            type: string
+        user_volume_encryption_enabled:
+            description: ' – (Optional) Indicates whether the data stored on the user volume is encrypted.'
+            optional: true
+            type: string
+        user_volume_size_gib:
+            description: ' – (Optional) Size of the user storage.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        volume_encryption_key:
+            description: ' – (Optional) Symmetric AWS KMS customer master key (CMK) used to encrypt data stored on your WorkSpace. Amazon WorkSpaces does not support asymmetric CMKs.'
+            optional: true
+            type: string
+        workspace_id:
+            description: (Optional) ID of the WorkSpace. You cannot combine this parameter with directory_id.
+            optional: true
+            type: string
+        workspace_properties:
+            description: ' – (Optional) WorkSpace properties.workspace_properties supports the following:'
+            optional: true
+            type: string
+    attrs:
+        computer_name:
+            description: Name of the WorkSpace, as seen by the operating system.
+            type: string
+        id:
+            description: Workspaces ID.
+            type: string
+        ip_address:
+            description: IP address of the WorkSpace.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

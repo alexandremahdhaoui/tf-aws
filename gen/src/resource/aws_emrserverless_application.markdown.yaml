@@ -1,0 +1,105 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_emrserverless_application.markdown
+spec:
+    args:
+        arn:
+            description: ARN of the cluster.
+            type: string
+        auto_start_configuration:
+            description: ' – (Optional) The configuration for an application to automatically start on job submission.'
+            optional: true
+            type: string
+        auto_stop_configuration:
+            description: ' – (Optional) The configuration for an application to automatically stop after a certain amount of time being idle.'
+            optional: true
+            type: string
+        cpu:
+            description: (Required) The CPU requirements for every worker instance of the worker type.
+            type: string
+        disk:
+            description: (Optional) The disk requirements for every worker instance of the worker type.
+            optional: true
+            type: string
+        enabled:
+            description: (Optional) Enables the application to automatically stop after a certain amount of time being idle. Defaults to true.
+            optional: true
+            type: string
+        id:
+            description: The ID of the cluster.
+            type: string
+        idle_timeout_minutes:
+            description: (Optional) The amount of idle time in minutes after which your application will automatically stop. Defaults to 15 minutes.initial_capacity Arguments
+            optional: true
+            type: string
+        initial_capacity:
+            description: ' – (Optional) The capacity to initialize when the application is created.'
+            optional: true
+            type: string
+        initial_capacity_config:
+            description: (Optional) The initial capacity configuration per worker.
+            optional: true
+            type: string
+        initial_capacity_type:
+            description: (Required) The worker type for an analytics framework. For Spark applications, the key can either be set to Driver or Executor. For Hive applications, it can be set to HiveDriver or TezTask.maximum_capacity Arguments
+            type: string
+        maximum_capacity:
+            description: ' – (Optional) The maximum capacity to allocate when the application is created. This is cumulative across all workers at any given point in time, not just when an application is created. No new resources will be created once any one of the defined limits is hit.'
+            optional: true
+            type: string
+        memory:
+            description: '(Required) The memory requirements for every worker instance of the worker type.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        name:
+            description: ' – (Required) The name of the application.'
+            type: string
+        network_configuration:
+            description: ' – (Optional) The network configuration for customer VPC connectivity.'
+            optional: true
+            type: string
+        release_label:
+            description: ' – (Required) The EMR release version associated with the application.'
+            type: string
+        security_group_ids:
+            description: (Optional) The array of security group Ids for customer VPC connectivity.
+            optional: true
+            type: string
+        subnet_ids:
+            description: (Optional) The array of subnet Ids for customer VPC connectivity.initial_capacity_config Arguments
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.auto_start_configuration Arguments
+            optional: true
+            type: string
+        type:
+            description: ' – (Required) The type of application you want to start, such as spark or hive.'
+            type: string
+        worker_configuration:
+            description: (Optional) The resource configuration of the initial capacity configuration.
+            optional: true
+            type: string
+        worker_count:
+            description: (Required) The number of workers in the initial capacity configuration.worker_configuration Arguments
+            type: string
+    attrs:
+        arn:
+            description: ARN of the cluster.
+            type: string
+        id:
+            description: The ID of the cluster.
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

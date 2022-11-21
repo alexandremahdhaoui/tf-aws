@@ -4,24 +4,14 @@ metadata:
     name: aws_redshift_partner
 spec:
     args: {}
-    attrs:
-        id:
-            description: The identifier of the Redshift partner, account_id, cluster_identifier, database_name, partner_name separated by a colon (:).
-            type: string
-        status:
-            description: (Optional) The partner integration status.
-            type: string
-        status_message:
-            description: (Optional) The status message provided by the partner.
-            type: string
+    attrs: {}
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

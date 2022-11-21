@@ -7,27 +7,21 @@ spec:
         auto_enable:
             description: (Required) Configuration block for auto enabling. See below.auto_enable
             type: string
-            optional: true
         create:
             description: (Default 5m)
             type: string
-            optional: true
         ec2:
             description: (Required) Whether Amazon EC2 scans are automatically enabled for new members of your Amazon Inspector organization.
             type: string
-            optional: true
         ecr:
             description: '(Required) Whether Amazon ECR scans are automatically enabled for new members of your Amazon Inspector organization.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         max_account_limit_reached:
             description: 'Whether your configuration reached the max account limit.TimeoutsConfiguration options:'
             type: string
-            optional: true
         update:
             description: (Default 5m)
             type: string
-            optional: true
     attrs:
         create:
             description: (Default 5m)
@@ -40,12 +34,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

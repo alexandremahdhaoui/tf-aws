@@ -3,19 +3,43 @@ kind: TerraformResource
 metadata:
     name: aws_chime_voice_connector_origination
 spec:
-    args: {}
+    args:
+        disabled:
+            description: '(Optional) When origination settings are disabled, inbound calls are not enabled for your Amazon Chime Voice Connector.routeOrigination routes define call distribution properties for your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector. Limit: Ten origination routes for each Amazon Chime Voice Connector.'
+            optional: true
+            type: string
+        host:
+            description: (Required) The FQDN or IP address to contact for origination traffic.
+            type: string
+        port:
+            description: (Required) The designated origination route port. Defaults to 5060.
+            type: string
+        priority:
+            description: (Required) The priority associated with the host, with 1 being the highest priority. Higher priority hosts are attempted first.
+            type: string
+        protocol:
+            description: (Required) The protocol to use for the origination route. Encryption-enabled Amazon Chime Voice Connectors use TCP protocol by default.
+            type: string
+        route:
+            description: (Required) Set of call distribution properties defined for your SIP hosts. See route below for more details. Minimum of 1. Maximum of 20.
+            type: string
+        voice_connector_id:
+            description: (Required) The Amazon Chime Voice Connector ID.
+            type: string
+        weight:
+            description: '(Required) The weight associated with the host. If hosts are equal in priority, calls are redistributed among them based on their relative weight.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         id:
             description: The Amazon Chime Voice Connector ID.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

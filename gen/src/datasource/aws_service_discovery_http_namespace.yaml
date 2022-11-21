@@ -1,0 +1,44 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_service_discovery_http_namespace
+spec:
+    args:
+        arn:
+            description: ARN that Amazon Route 53 assigns to the namespace when you create it.
+            type: string
+        description:
+            description: Description that you specify for the namespace when you create it.
+            type: string
+        http_name:
+            description: Name of an HTTP namespace.
+            type: string
+        id:
+            description: ID of a namespace.
+            type: string
+        name:
+            description: '(Required) Name of the http namespace.In addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs:
+        arn:
+            description: ARN that Amazon Route 53 assigns to the namespace when you create it.
+            type: string
+        description:
+            description: Description that you specify for the namespace when you create it.
+            type: string
+        http_name:
+            description: Name of an HTTP namespace.
+            type: string
+        id:
+            description: ID of a namespace.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

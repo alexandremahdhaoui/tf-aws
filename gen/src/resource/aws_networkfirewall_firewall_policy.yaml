@@ -3,7 +3,88 @@ kind: TerraformResource
 metadata:
     name: aws_networkfirewall_firewall_policy
 spec:
-    args: {}
+    args:
+        action:
+            description: '(Optional) The action that changes the rule group from DROP to ALERT . This only applies to managed rule groups.Stateless Custom ActionThe stateless_custom_action block supports the following arguments:'
+            optional: true
+            type: string
+        action_definition:
+            description: (Required) A configuration block describing the custom action associated with the action_name. See Action Definition below for details.
+            type: string
+        action_name:
+            description: '(Required, Forces new resource) A friendly name of the custom action.Stateless Rule Group ReferenceThe stateless_rule_group_reference block supports the following arguments:'
+            type: string
+        arn:
+            description: The Amazon Resource Name (ARN) that identifies the firewall policy.
+            type: string
+        description:
+            description: (Optional) A friendly description of the firewall policy.
+            optional: true
+            type: string
+        dimension:
+            description: '(Required) Set of configuration blocks describing dimension settings to use for Amazon CloudWatch custom metrics. See Dimension below for more details.DimensionThe dimension block supports the following argument:'
+            type: string
+        firewall_policy:
+            description: (Required) A configuration block describing the rule groups and policy actions to use in the firewall policy. See Firewall Policy below for details.
+            type: string
+        id:
+            description: The Amazon Resource Name (ARN) that identifies the firewall policy.
+            type: string
+        name:
+            description: (Required, Forces new resource) A friendly name of the firewall policy.
+            type: string
+        override:
+            description: (Optional) Configuration block for override valuesOverride
+            optional: true
+            type: string
+        priority:
+            description: (Required) An integer setting that indicates the order in which to run the stateless rule groups in a single policy. AWS Network Firewall applies each stateless rule group to a packet starting with the group that has the lowest priority setting.
+            type: string
+        publish_metric_action:
+            description: '(Required) A configuration block describing the stateless inspection criteria that publishes the specified metrics to Amazon CloudWatch for the matching packet. You can pair this custom action with any of the standard stateless rule actions. See Publish Metric Action below for details.Publish Metric ActionThe publish_metric_action block supports the following argument:'
+            type: string
+        resource_arn:
+            description: '(Required) The Amazon Resource Name (ARN) of the stateless rule group.Action DefinitionThe action_definition block supports the following argument:'
+            type: string
+        rule_order:
+            description: '(Required) Indicates how to manage the order of stateful rule evaluation for the policy. Default value: DEFAULT_ACTION_ORDER. Valid values: DEFAULT_ACTION_ORDER, STRICT_ORDER.Stateful Rule Group ReferenceThe stateful_rule_group_reference block supports the following arguments:'
+            type: string
+        stateful_default_actions:
+            description: (Optional) Set of actions to take on a packet if it does not match any stateful rules in the policy. This can only be specified if the policy has a stateful_engine_options block with a rule_order value of STRICT_ORDER. You can specify one of either or neither values of aws:drop_strict or aws:drop_established, as well as any combination of aws:alert_strict and aws:alert_established.
+            optional: true
+            type: string
+        stateful_engine_options:
+            description: (Optional) A configuration block that defines options on how the policy handles stateful rules. See Stateful Engine Options below for details.
+            optional: true
+            type: string
+        stateful_rule_group_reference:
+            description: (Optional) Set of configuration blocks containing references to the stateful rule groups that are used in the policy. See Stateful Rule Group Reference below for details.
+            optional: true
+            type: string
+        stateless_custom_action:
+            description: (Optional) Set of configuration blocks describing the custom action definitions that are available for use in the firewall policy's stateless_default_actions. See Stateless Custom Action below for details.
+            optional: true
+            type: string
+        stateless_default_actions:
+            description: '(Required) Set of actions to take on a packet if it does not match any of the stateless rules in the policy. You must specify one of the standard actions including: aws:drop, aws:pass, or aws:forward_to_sfeaws:forward_to_sfe.'
+            type: string
+        stateless_fragment_default_actions:
+            description: '(Required) Set of actions to take on a fragmented packet if it does not match any of the stateless rules in the policy. You must specify one of the standard actions including: aws:drop, aws:pass, or aws:forward_to_sfeaws:forward_to_sfe.'
+            type: string
+        stateless_rule_group_reference:
+            description: '(Optional) Set of configuration blocks containing references to the stateless rule groups that are used in the policy. See Stateless Rule Group Reference below for details.Stateful Engine OptionsThe stateful_engine_options block supports the following argument:~> strongNOTE: If the STRICT_ORDER rule order is specified, this firewall policy can only reference stateful rule groups that utilize STRICT_ORDER.'
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Firewall PolicyThe firewall_policy block supports the following arguments:'
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        value:
+            description: '(Required) The string value to use in the custom metric dimension.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) that identifies the firewall policy.
@@ -19,12 +100,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

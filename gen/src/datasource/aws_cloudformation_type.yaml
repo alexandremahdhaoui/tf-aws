@@ -3,7 +3,60 @@ kind: TerraformDatasource
 metadata:
     name: aws_cloudformation_type
 spec:
-    args: {}
+    args:
+        arn:
+            description: (Optional) ARN of the CloudFormation Type. For example, arn:aws:cloudformation:us-west-2::type/resource/AWS-EC2-VPC.
+            optional: true
+            type: string
+        default_version_id:
+            description: Identifier of the CloudFormation Type default version.
+            type: string
+        deprecated_status:
+            description: Deprecation status of the CloudFormation Type.
+            type: string
+        description:
+            description: Description of the CloudFormation Type.
+            type: string
+        documentation_url:
+            description: URL of the documentation for the CloudFormation Type.
+            type: string
+        execution_role_arn:
+            description: ARN of the IAM Role used to register the CloudFormation Type.
+            type: string
+        is_default_version:
+            description: Whether the CloudFormation Type version is the default version.
+            type: string
+        log_group_name:
+            description: Name of the CloudWatch Log Group where CloudFormation sends error logging information when invoking the type's handlers.
+            type: string
+        log_role_arn:
+            description: ARN of the IAM Role CloudFormation assumes when sending error logging information to CloudWatch Logs.
+            type: string
+        logging_config:
+            description: |
+                List of objects containing logging configuration.
+            type: string
+        provisioning_type:
+            description: Provisioning behavior of the CloudFormation Type.
+            type: string
+        schema:
+            description: JSON document of the CloudFormation Type schema.
+            type: string
+        source_url:
+            description: URL of the source code for the CloudFormation Type.
+            type: string
+        type:
+            description: (Optional) CloudFormation Registry Type. For example, RESOURCE.
+            optional: true
+            type: string
+        type_name:
+            description: (Optional) CloudFormation Type name. For example, AWS::EC2::VPC.
+            optional: true
+            type: string
+        version_id:
+            description: '(Optional) Identifier of the CloudFormation Type version.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         default_version_id:
             description: Identifier of the CloudFormation Type default version.
@@ -30,7 +83,8 @@ spec:
             description: ARN of the IAM Role CloudFormation assumes when sending error logging information to CloudWatch Logs.
             type: string
         logging_config:
-            description: ""
+            description: |
+                List of objects containing logging configuration.
             type: string
         provisioning_type:
             description: Provisioning behavior of the CloudFormation Type.
@@ -43,12 +97,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

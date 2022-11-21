@@ -3,7 +3,60 @@ kind: TerraformResource
 metadata:
     name: aws_connect_queue
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) of the Queue.
+            type: string
+        description:
+            description: (Optional) Specifies the description of the Queue.
+            optional: true
+            type: string
+        hours_of_operation_id:
+            description: (Required) Specifies the identifier of the Hours of Operation.
+            type: string
+        id:
+            description: The identifier of the hosting Amazon Connect Instance and identifier of the Queue separated by a colon (:).
+            type: string
+        instance_id:
+            description: (Required) Specifies the identifier of the hosting Amazon Connect Instance.
+            type: string
+        max_contacts:
+            description: (Optional) Specifies the maximum number of contacts that can be in the queue before it is considered full. Minimum value of 0.
+            optional: true
+            type: string
+        name:
+            description: (Required) Specifies the name of the Queue.
+            type: string
+        outbound_caller_config:
+            description: (Required) A block that defines the outbound caller ID name, number, and outbound whisper flow. The Outbound Caller Config block is documented below.
+            type: string
+        outbound_caller_id_name:
+            description: (Optional) Specifies the caller ID name.
+            optional: true
+            type: string
+        outbound_caller_id_number_id:
+            description: (Optional) Specifies the caller ID number.
+            optional: true
+            type: string
+        outbound_flow_id:
+            description: '(Optional) Specifies outbound whisper flow to be used during an outbound call.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        queue_id:
+            description: The identifier for the Queue.
+            type: string
+        quick_connect_ids:
+            description: (Optional) Specifies a list of quick connects ids that determine the quick connects available to agents who are working the queue.
+            optional: true
+            type: string
+        status:
+            description: (Optional) Specifies the description of the Queue. Valid values are ENABLED, DISABLED.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Tags to apply to the Queue. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A outbound_caller_config block supports the following arguments:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) of the Queue.
@@ -19,12 +72,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

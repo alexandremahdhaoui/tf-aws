@@ -37,7 +37,7 @@ func NewTokenizer() token.Tokenizer {
 			Code:                *regexp.MustCompile(`^code$`),
 			ModuleName:          *regexp.MustCompile(`^Resource\:.*|^Data\ Source\:.*|^Data\ source\:.*`),
 			ArgumentReference:   *regexp.MustCompile(`^Argument\ Reference`),
-			RequiredArgs:        *regexp.MustCompile(`^The\ following\ arguments\ are\ required\:`),
+			RequiredArgs:        *regexp.MustCompile(`^The\ following\ arguments\ are\ required\:|^The\ following\ arguments\ are\ supported`),
 			OptionalArgs:        *regexp.MustCompile(`^The\ following\ arguments\ are\ optional\:`),
 			AttributesReference: *regexp.MustCompile(`^Attributes\ Reference`),
 			Description:         *regexp.MustCompile(`^\ \-\ `),

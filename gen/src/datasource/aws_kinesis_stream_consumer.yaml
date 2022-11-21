@@ -1,0 +1,23 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_kinesis_stream_consumer
+spec:
+    args: {}
+    attrs:
+        creation_timestamp:
+            description: Approximate timestamp in RFC3339 format of when the stream consumer was created.
+            type: string
+        id:
+            description: ARN of the stream consumer.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

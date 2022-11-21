@@ -3,7 +3,51 @@ kind: TerraformResource
 metadata:
     name: aws_glue_catalog_database
 spec:
-    args: {}
+    args:
+        arn:
+            description: ARN of the Glue Catalog Database.
+            type: string
+        catalog_id:
+            description: (Required) ID of the Data Catalog in which the database resides.
+            type: string
+        create_table_default_permission:
+            description: (Optional) Creates a set of default permissions on the table for principals. See create_table_default_permission below.
+            optional: true
+            type: string
+        data_lake_principal_identifier:
+            description: '(Optional) An identifier for the Lake Formation principal.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        database_name:
+            description: (Required) Name of the catalog database.create_table_default_permission
+            type: string
+        description:
+            description: (Optional) Description of the database.
+            optional: true
+            type: string
+        location_uri:
+            description: (Optional) Location of the database (for example, an HDFS path).
+            optional: true
+            type: string
+        name:
+            description: (Required) Name of the database. The acceptable characters are lowercase letters, numbers, and the underscore character.
+            type: string
+        parameters:
+            description: (Optional) List of key-value pairs that define parameters and properties of the database.
+            optional: true
+            type: string
+        permissions:
+            description: (Optional) The permissions that are granted to the principal.
+            optional: true
+            type: string
+        principal:
+            description: (Optional) The principal who is granted permissions.. See principal below.principal
+            optional: true
+            type: string
+        target_database:
+            description: (Optional) Configuration block for a target database for resource linking. See target_database below.target_database
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the Glue Catalog Database.
@@ -13,12 +57,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

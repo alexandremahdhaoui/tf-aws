@@ -3,7 +3,86 @@ kind: TerraformResource
 metadata:
     name: aws_sagemaker_notebook_instance
 spec:
-    args: {}
+    args:
+        accelerator_types:
+            description: '(Optional) A list of Elastic Inference (EI) instance types to associate with this notebook instance. See Elastic Inference Accelerator for more details. Valid values: ml.eia1.medium, ml.eia1.large, ml.eia1.xlarge, ml.eia2.medium, ml.eia2.large, ml.eia2.xlarge.'
+            optional: true
+            type: string
+        additional_code_repositories:
+            description: |-
+                (Optional) An array of up to three Git repositories to associate with the notebook instance.
+                These can be either the names of Git repositories stored as resources in your account, or the URL of Git repositories in AWS CodeCommit or in any other Git repository. These repositories are cloned at the same level as the default repository of your notebook instance.
+            optional: true
+            type: string
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this notebook instance.
+            type: string
+        default_code_repository:
+            description: (Optional) The Git repository associated with the notebook instance as its default code repository. This can be either the name of a Git repository stored as a resource in your account, or the URL of a Git repository in AWS CodeCommit or in any other Git repository.
+            optional: true
+            type: string
+        direct_internet_access:
+            description: '(Optional) Set to Disabled to disable internet access to notebook. Requires security_groups and subnet_id to be set. Supported values: Enabled (Default) or Disabled. If set to Disabled, the notebook instance will be able to access resources only in your VPC, and will not be able to connect to Amazon SageMaker training and endpoint services unless your configure a NAT Gateway in your VPC.'
+            optional: true
+            type: string
+        id:
+            description: The name of the notebook instance.
+            type: string
+        instance_metadata_service_configuration:
+            description: (Optional) Information on the IMDS configuration of the notebook instance. Conflicts with instance_metadata_service_configuration. see details below.
+            optional: true
+            type: string
+        instance_type:
+            description: (Required) The name of ML compute instance type.
+            type: string
+        kms_key_id:
+            description: (Optional) The AWS Key Management Service (AWS KMS) key that Amazon SageMaker uses to encrypt the model artifacts at rest using Amazon S3 server-side encryption.
+            optional: true
+            type: string
+        lifecycle_config_name:
+            description: (Optional) The name of a lifecycle configuration to associate with the notebook instance.
+            optional: true
+            type: string
+        minimum_instance_metadata_service_version:
+            description: '(Optional) Indicates the minimum IMDS version that the notebook instance supports. When passed "1" is passed. This means that both IMDSv1 and IMDSv2 are supported. Valid values are 1 and 2.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the notebook instance (must be unique).
+            type: string
+        network_interface_id:
+            description: The network interface ID that Amazon SageMaker created at the time of creating the instance. Only available when setting subnet_id.
+            type: string
+        platform_identifier:
+            description: (Optional) The platform identifier of the notebook instance runtime environment. This value can be either notebook-al1-v1, notebook-al2-v1, or  notebook-al2-v2, depending on which version of Amazon Linux you require.
+            optional: true
+            type: string
+        role_arn:
+            description: (Required) The ARN of the IAM role to be used by the notebook instance which allows SageMaker to call other services on your behalf.
+            type: string
+        root_access:
+            description: (Optional) Whether root access is Enabled or Disabled for users of the notebook instance. The default value is Enabled.
+            optional: true
+            type: string
+        security_groups:
+            description: (Optional) The associated security groups.
+            optional: true
+            type: string
+        subnet_id:
+            description: (Optional) The VPC subnet ID.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.instance_metadata_service_configuration
+            optional: true
+            type: string
+        url:
+            description: The URL that you use to connect to the Jupyter notebook that is running in your notebook instance.
+            type: string
+        volume_size:
+            description: (Optional) The size, in GB, of the ML storage volume to attach to the notebook instance. The default value is 5 GB.
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) assigned by AWS to this notebook instance.
@@ -22,12 +101,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

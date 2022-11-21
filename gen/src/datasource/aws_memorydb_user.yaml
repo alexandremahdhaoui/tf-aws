@@ -1,0 +1,64 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_memorydb_user
+spec:
+    args:
+        access_string:
+            description: Access permissions string used for this user.
+            type: string
+        arn:
+            description: ARN of the user.
+            type: string
+        authentication_mode:
+            description: |
+                Denotes the user's authentication properties.
+            type: string
+        id:
+            description: Name of the user.
+            type: string
+        minimum_engine_version:
+            description: The minimum engine version supported for the user.
+            type: string
+        password_count:
+            description: The number of passwords belonging to the user.
+            type: string
+        type:
+            description: Whether the user requires a password to authenticate.
+            type: string
+        user_name:
+            description: '(Required) Name of the user.In addition, the following attributes are exported:'
+            type: string
+    attrs:
+        access_string:
+            description: Access permissions string used for this user.
+            type: string
+        arn:
+            description: ARN of the user.
+            type: string
+        authentication_mode:
+            description: |
+                Denotes the user's authentication properties.
+            type: string
+        id:
+            description: Name of the user.
+            type: string
+        minimum_engine_version:
+            description: The minimum engine version supported for the user.
+            type: string
+        password_count:
+            description: The number of passwords belonging to the user.
+            type: string
+        type:
+            description: Whether the user requires a password to authenticate.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

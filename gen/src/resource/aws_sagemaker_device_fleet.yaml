@@ -3,7 +3,41 @@ kind: TerraformResource
 metadata:
     name: aws_sagemaker_device_fleet
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) assigned by AWS to this Device Fleet.
+            type: string
+        description:
+            description: (Optional) A description of the fleet.
+            optional: true
+            type: string
+        device_fleet_name:
+            description: (Required) The name of the Device Fleet (must be unique).
+            type: string
+        enable_iot_role_alias:
+            description: '(Optional) Whether to create an AWS IoT Role Alias during device fleet creation. The name of the role alias generated will match this pattern: "SageMakerEdge-{DeviceFleetName}".'
+            optional: true
+            type: string
+        id:
+            description: The name of the Device Fleet.
+            type: string
+        kms_key_id:
+            description: '(Optional) The AWS Key Management Service (AWS KMS) key that Amazon SageMaker uses to encrypt data on the storage volume after compilation job. If you don''t provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role''s account.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        output_config:
+            description: (Required) Specifies details about the repository. see Output Config details below.
+            type: string
+        role_arn:
+            description: (Required) The Amazon Resource Name (ARN) that has access to AWS Internet of Things (IoT).
+            type: string
+        s3_output_location:
+            description: (Required) The Amazon Simple Storage (S3) bucker URI.
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Output Config
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) assigned by AWS to this Device Fleet.
@@ -16,12 +50,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

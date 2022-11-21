@@ -1,0 +1,34 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_eks_addon
+spec:
+    args: {}
+    attrs:
+        addon_version:
+            description: Version of EKS add-on.
+            type: string
+        arn:
+            description: ARN of the EKS add-on.
+            type: string
+        created_at:
+            description: Date and time in RFC3339 format that the EKS add-on was created.
+            type: string
+        id:
+            description: EKS Cluster name and EKS add-on name separated by a colon (:).
+            type: string
+        service_account_role_arn:
+            description: |-
+                ARN of IAM role used for EKS add-on. If value is empty -
+                then add-on uses the IAM role assigned to the EKS Cluster node.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

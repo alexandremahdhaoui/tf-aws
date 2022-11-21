@@ -3,19 +3,41 @@ kind: TerraformResource
 metadata:
     name: aws_config_configuration_recorder
 spec:
-    args: {}
+    args:
+        all_supported:
+            description: (Optional) Specifies whether AWS Config records configuration changes for every supported type of regional resource (which includes any new type that will become supported in the future). Conflicts with resource_types. Defaults to true.
+            optional: true
+            type: string
+        include_global_resource_types:
+            description: (Optional) Specifies whether AWS Config includes all supported types of emglobal resources with the resources that it records. Requires all_supported = true. Conflicts with resource_types.
+            optional: true
+            type: string
+        name:
+            description: (Optional) The name of the recorder. Defaults to default. Changing it recreates the resource.
+            optional: true
+            type: string
+        recording_group:
+            description: (Optional) Recording group - see below.recording_group
+            optional: true
+            type: string
+        resource_types:
+            description: '(Optional) A list that specifies the types of AWS resources for which AWS Config records configuration changes (for example, AWS::EC2::Instance or AWS::CloudTrail::Trail). See relevant part of AWS Docs for available types. In order to use this attribute, all_supported must be set to false.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        role_arn:
+            description: (Required) Amazon Resource Name (ARN) of the IAM role. Used to make read or write requests to the delivery channel and to describe the AWS resources associated with the account. See AWS Docs for more details.
+            type: string
     attrs:
         id:
             description: Name of the recorder
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

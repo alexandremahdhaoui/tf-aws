@@ -3,7 +3,215 @@ kind: TerraformResource
 metadata:
     name: aws_opsworks_custom_layer
 spec:
-    args: {}
+    args:
+        alarms:
+            description: (Optional) Custom Cloudwatch auto scaling alarms, to be used as thresholds. This parameter takes a list of up to five alarm names, which are case sensitive and must be in the same region as the stack.
+            optional: true
+            type: string
+        arn:
+            description: The Amazon Resource Name(ARN) of the layer.
+            type: string
+        auto_assign_elastic_ips:
+            description: (Optional) Whether to automatically assign an elastic IP address to the layer's instances.
+            optional: true
+            type: string
+        auto_assign_public_ips:
+            description: (Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances.
+            optional: true
+            type: string
+        auto_healing:
+            description: (Optional) Whether to enable auto-healing for the layer.
+            optional: true
+            type: string
+        batch_count:
+            description: (Optional) Specifies the max number of log events in a batch, up to 10000. The default value is 1000.
+            optional: true
+            type: string
+        batch_size:
+            description: (Optional) Specifies the maximum size of log events in a batch, in bytes, up to 1048576 bytes. The default value is 32768 bytes.
+            optional: true
+            type: string
+        buffer_duration:
+            description: (Optional) Specifies the time duration for the batching of log events. The minimum value is 5000 and default value is 5000.
+            optional: true
+            type: string
+        cloudwatch_configuration:
+            description: (Optional) Will create an EBS volume and connect it to the layer's instances. See Cloudwatch Configuration.
+            optional: true
+            type: string
+        cpu_threshold:
+            description: (Optional) The CPU utilization threshold, as a percent of the available CPU. A value of -1 disables the threshold.
+            optional: true
+            type: string
+        custom_configure_recipes:
+            description: ""
+            type: string
+        custom_deploy_recipes:
+            description: ""
+            type: string
+        custom_instance_profile_arn:
+            description: (Optional) The ARN of an IAM profile that will be used for the layer's instances.
+            optional: true
+            type: string
+        custom_json:
+            description: (Optional) Custom JSON attributes to apply to the layer.
+            optional: true
+            type: string
+        custom_security_group_ids:
+            description: (Optional) Ids for a set of security groups to apply to the layer's instances.
+            optional: true
+            type: string
+        custom_setup_recipes:
+            description: ""
+            type: string
+        custom_shutdown_recipes:
+            description: ""
+            type: string
+        custom_undeploy_recipes:
+            description: EBS Volume
+            type: string
+        datetime_format:
+            description: (Optional) Specifies how the timestamp is extracted from logs. For more information, see the CloudWatch Logs Agent Reference (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html).
+            optional: true
+            type: string
+        downscaling:
+            description: (Optional) The downscaling settings, as defined below, used for load-based autoscaling
+            optional: true
+            type: string
+        drain_elb_on_shutdown:
+            description: (Optional) Whether to enable Elastic Load Balancing connection draining.
+            optional: true
+            type: string
+        ebs_volume:
+            description: (Optional) Will create an EBS volume and connect it to the layer's instances. See EBS Volume.
+            optional: true
+            type: string
+        elastic_load_balancer:
+            description: (Optional) Name of an Elastic Load Balancer to attach to this layer
+            optional: true
+            type: string
+        enable:
+            description: (Optional) Whether load-based auto scaling is enabled for the layer.
+            optional: true
+            type: string
+        enabled:
+            description: (Optional)
+            optional: true
+            type: string
+        encoding:
+            description: (Optional) Specifies the encoding of the log file so that the file can be read correctly. The default is utf_8.
+            optional: true
+            type: string
+        encrypted:
+            description: (Optional) Encrypt the volume.Cloudwatch Configuration
+            optional: true
+            type: string
+        file:
+            description: (Required) Specifies log files that you want to push to CloudWatch Logs. File can point to a specific file or multiple files (by using wild card characters such as /var/log/system.log*).
+            type: string
+        file_fingerprint_lines:
+            description: (Optional) Specifies the range of lines for identifying a file. The valid values are one number, or two dash-delimited numbers, such as 1, 2-5. The default value is 1.
+            optional: true
+            type: string
+        id:
+            description: The id of the layer.
+            type: string
+        ignore_metrics_time:
+            description: (Optional) The amount of time (in minutes) after a scaling event occurs that AWS OpsWorks Stacks should ignore metrics and suppress additional scaling events.
+            optional: true
+            type: string
+        initial_position:
+            description: (Optional) Specifies where to start to read data (start_of_file or end_of_file). The default is start_of_file.
+            optional: true
+            type: string
+        install_updates_on_boot:
+            description: (Optional) Whether to install OS and package updates on each instance when it boots.
+            optional: true
+            type: string
+        instance_count:
+            description: (Optional) The number of instances to add or remove when the load exceeds a threshold.
+            optional: true
+            type: string
+        instance_shutdown_timeout:
+            description: (Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event.
+            optional: true
+            type: string
+        iops:
+            description: (Optional) For PIOPS volumes, the IOPS per disk.
+            optional: true
+            type: string
+        load_based_auto_scaling:
+            description: (Optional) Load-based auto scaling configuration. See Load Based AutoScaling
+            optional: true
+            type: string
+        load_threshold:
+            description: (Optional) The load threshold. A value of -1 disables the threshold.
+            optional: true
+            type: string
+        log_group_name:
+            description: (Required) Specifies the destination log group. A log group is created automatically if it doesn't already exist.
+            type: string
+        log_streams:
+            description: (Optional) A block the specifies how an opsworks logs look like. See Log Streams.Log Streams
+            optional: true
+            type: string
+        memory_threshold:
+            description: (Optional) The memory utilization threshold, as a percent of the available memory. A value of -1 disables the threshold.
+            optional: true
+            type: string
+        mount_point:
+            description: (Required) The path to mount the EBS volume on the layer's instances.
+            type: string
+        multiline_start_pattern:
+            description: (Optional) Specifies the pattern for identifying the start of a log message.
+            optional: true
+            type: string
+        name:
+            description: (Required) A human-readable name for the layer.
+            type: string
+        number_of_disks:
+            description: (Required) The number of disks to use for the EBS volume.
+            type: string
+        raid_level:
+            description: (Required) The RAID level to use for the volume.
+            type: string
+        short_name:
+            description: (Required) A short, machine-readable name for the layer, which will be used to identify it in the Chef node JSON.
+            type: string
+        size:
+            description: (Required) The size of the volume in gigabytes.
+            type: string
+        stack_id:
+            description: (Required) ID of the stack the layer will belong to.
+            type: string
+        system_packages:
+            description: (Optional) Names of a set of system packages to install on the layer's instances.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        thresholds_wait_time:
+            description: '(Optional) The amount of time, in minutes, that the load must exceed a threshold before more instances are added or removed.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        time_zone:
+            description: (Optional) Specifies the time zone of log event time stamps.Load Based Autoscaling
+            optional: true
+            type: string
+        type:
+            description: (Optional) The type of volume to create. This may be standard (the default), io1 or gp2.
+            optional: true
+            type: string
+        upscaling:
+            description: (Optional) The upscaling settings, as defined below, used for load-based autoscalingThe downscaling and upscaling blocks supports the following arguments:Though the three thresholds are optional, at least one threshold must be set when using load-based autoscaling.
+            optional: true
+            type: string
+        use_ebs_optimized_instances:
+            description: (Optional) Whether to use EBS-optimized instances.
+            optional: true
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name(ARN) of the layer.
@@ -16,12 +224,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

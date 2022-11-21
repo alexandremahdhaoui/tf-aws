@@ -3,7 +3,38 @@ kind: TerraformResource
 metadata:
     name: aws_ssm_activation
 spec:
-    args: {}
+    args:
+        activation_code:
+            description: The code the system generates when it processes the activation.
+            type: string
+        description:
+            description: The description of the resource that was registered.
+            type: string
+        expiration_date:
+            description: The date by which this activation request should expire. The default value is 24 hours.
+            type: string
+        expired:
+            description: If the current activation has expired.
+            type: string
+        iam_role:
+            description: The IAM Role attached to the managed instance.
+            type: string
+        id:
+            description: The activation ID.
+            type: string
+        name:
+            description: The default name of the registered managed instance.
+            type: string
+        registration_count:
+            description: The number of managed instances that are currently registered using this activation.
+            type: string
+        registration_limit:
+            description: The maximum number of managed instances you want to be registered. The default value is 1 instance.
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
     attrs:
         activation_code:
             description: The code the system generates when it processes the activation.
@@ -37,12 +68,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -7,31 +7,25 @@ spec:
         arn:
             description: ARN of the anomaly monitor.
             type: string
-            optional: true
         id:
             description: Unique ID of the anomaly monitor. Same as arn.
             type: string
-            optional: true
         monitor_dimension:
             description: '(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE.'
             type: string
-            optional: true
         monitor_specification:
             description: (Required, if monitor_type is CUSTOM) A valid JSON representation for the Expression object.
             type: string
-            optional: true
         monitor_type:
             description: '(Required) The possible type values. Valid values: DIMENSIONAL | CUSTOM.'
             type: string
-            optional: true
         name:
             description: (Required) The name of the monitor.
             type: string
-            optional: true
         tags:
             description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the anomaly monitor.
@@ -44,12 +38,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

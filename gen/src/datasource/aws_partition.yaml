@@ -1,0 +1,26 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_partition
+spec:
+    args: {}
+    attrs:
+        dns_suffix:
+            description: Base DNS domain name for the current partition (e.g., amazonaws.com in AWS Commercial, amazonaws.com.cn in AWS China).
+            type: string
+        id:
+            description: Identifier of the current partition (e.g., aws in AWS Commercial, aws-cn in AWS China).
+            type: string
+        partition:
+            description: Identifier of the current partition (e.g., aws in AWS Commercial, aws-cn in AWS China).
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

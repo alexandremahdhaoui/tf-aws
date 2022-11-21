@@ -3,7 +3,19 @@ kind: TerraformResource
 metadata:
     name: aws_ssoadmin_managed_policy_attachment
 spec:
-    args: {}
+    args:
+        id:
+            description: The Amazon Resource Names (ARNs) of the Managed Policy, Permission Set, and SSO Instance, separated by a comma (,).
+            type: string
+        instance_arn:
+            description: (Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed.
+            type: string
+        managed_policy_arn:
+            description: (Required, Forces new resource) The IAM managed policy Amazon Resource Name (ARN) to be attached to the Permission Set.
+            type: string
+        permission_set_arn:
+            description: '(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         id:
             description: The Amazon Resource Names (ARNs) of the Managed Policy, Permission Set, and SSO Instance, separated by a comma (,).
@@ -13,12 +25,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

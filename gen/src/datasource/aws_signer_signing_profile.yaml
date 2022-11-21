@@ -1,0 +1,68 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_signer_signing_profile
+spec:
+    args:
+        arn:
+            description: ARN for the signing profile.
+            type: string
+        name:
+            description: '(Required) Name of the target signing profile.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        platform_display_name:
+            description: A human-readable name for the signing platform associated with the signing profile.
+            type: string
+        platform_id:
+            description: ID of the platform that is used by the target signing profile.
+            type: string
+        revocation_record:
+            description: Revocation information for a signing profile.
+            type: string
+        signature_validity_period:
+            description: The validity period for a signing job.
+            type: string
+        status:
+            description: Status of the target signing profile.
+            type: string
+        tags:
+            description: List of tags associated with the signing profile.
+            type: string
+        version:
+            description: Current version of the signing profile.
+            type: string
+    attrs:
+        arn:
+            description: ARN for the signing profile.
+            type: string
+        platform_display_name:
+            description: A human-readable name for the signing platform associated with the signing profile.
+            type: string
+        platform_id:
+            description: ID of the platform that is used by the target signing profile.
+            type: string
+        revocation_record:
+            description: Revocation information for a signing profile.
+            type: string
+        signature_validity_period:
+            description: The validity period for a signing job.
+            type: string
+        status:
+            description: Status of the target signing profile.
+            type: string
+        tags:
+            description: List of tags associated with the signing profile.
+            type: string
+        version:
+            description: Current version of the signing profile.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

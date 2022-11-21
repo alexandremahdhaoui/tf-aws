@@ -6,144 +6,137 @@ spec:
     args:
         arn:
             description: The Amazon Resource Name (ARN) that identifies the task set.
-            type: string
             optional: true
+            type: string
         assign_public_ip:
             description: '(Optional) Whether to assign a public IP address to the ENI (FARGATE launch type only). Valid values are true or false. Default false.For more information, see Task Networking.scaleThe scale configuration block supports the following:'
-            type: string
             optional: true
+            type: string
         base:
             description: '(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined.load_balancerThe load_balancer configuration block supports the following:'
-            type: string
             optional: true
+            type: string
         capacity_provider:
             description: (Required) The short name or full Amazon Resource Name (ARN) of the capacity provider.
             type: string
-            optional: true
         capacity_provider_strategy:
             description: (Optional) The capacity provider strategy to use for the service. Can be one or more.  Defined below.
-            type: string
             optional: true
+            type: string
         cluster:
             description: (Required) The short name or ARN of the cluster that hosts the service to create the task set in.
             type: string
-            optional: true
         container_name:
             description: '(Optional) The container name value, already specified in the task definition, to be used for your service discovery service.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         container_port:
             description: (Optional) The port value, already specified in the task definition, to be used for your service discovery service.
-            type: string
             optional: true
+            type: string
         external_id:
             description: (Optional) The external ID associated with the task set.
-            type: string
             optional: true
+            type: string
         force_delete:
             description: (Optional) Whether to allow deleting the task set without waiting for scaling down to 0. You can force a task set to delete even if it's in the process of scaling a resource. Normally, Terraform drains all the tasks before deleting the task set. This bypasses that behavior and potentially leaves resources dangling.
-            type: string
             optional: true
+            type: string
         id:
             description: The task_set_id, service and cluster separated by commas (,).
-            type: string
             optional: true
+            type: string
         launch_type:
             description: (Optional) The launch type on which to run your service. The valid values are EC2, FARGATE, and EXTERNAL. Defaults to EC2.
-            type: string
             optional: true
+            type: string
         load_balancer:
             description: (Optional) Details on load balancers that are used with a task set. Detailed below.
-            type: string
             optional: true
+            type: string
         load_balancer_name:
             description: (Optional, Required for ELB Classic) The name of the ELB (Classic) to associate with the service.
-            type: string
             optional: true
+            type: string
         network_configuration:
             description: (Optional) The network configuration for the service. This parameter is required for task definitions that use the awsvpc network mode to receive their own Elastic Network Interface, and it is not supported for other network modes. Detailed below.
-            type: string
             optional: true
+            type: string
         platform_version:
             description: (Optional) The platform version on which to run your service. Only applicable for launch_type set to FARGATE. Defaults to LATEST. More information about Fargate platform versions can be found in the AWS ECS User Guide.
-            type: string
             optional: true
+            type: string
         port:
             description: (Optional) The port value used if your Service Discovery service specified an SRV record.
-            type: string
             optional: true
+            type: string
         registry_arn:
             description: (Required) The ARN of the Service Registry. The currently supported service registry is Amazon Route 53 Auto Naming Service(aws_service_discovery_service resource). For more information, see Service.
             type: string
-            optional: true
         scale:
             description: (Optional) A floating-point percentage of the desired number of tasks to place and keep running in the task set. Detailed below.
-            type: string
             optional: true
+            type: string
         security_groups:
             description: (Optional) The security groups associated with the task or service. If you do not specify a security group, the default security group for the VPC is used. Maximum of 5.
-            type: string
             optional: true
+            type: string
         service:
             description: (Required) The short name or ARN of the ECS service.
             type: string
-            optional: true
         service_registries:
             description: (Optional) The service discovery registries for the service. The maximum number of service_registries blocks is 1. Detailed below.
-            type: string
             optional: true
+            type: string
         stability_status:
             description: The stability status. This indicates whether the task set has reached a steady state.
-            type: string
             optional: true
+            type: string
         status:
             description: The status of the task set.
-            type: string
             optional: true
+            type: string
         subnets:
             description: (Required) The subnets associated with the task or service. Maximum of 16.
             type: string
-            optional: true
         tags:
             description: (Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level. If you have set copy_tags_to_backups to true, and you specify one or more tags, no existing file system tags are copied from the file system to the backup.
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
         target_group_arn:
             description: (Optional, Required for ALB/NLB) The ARN of the Load Balancer target group to associate with the service.
-            type: string
             optional: true
+            type: string
         task_definition:
             description: (Required) The family and revision (family:revision) or full ARN of the task definition that you want to run in your service.
             type: string
-            optional: true
         task_set_id:
             description: The ID of the task set.
-            type: string
             optional: true
+            type: string
         unit:
             description: '(Optional) The unit of measure for the scale value. Default: PERCENT.'
-            type: string
             optional: true
+            type: string
         value:
             description: '(Optional) The value, specified as a percent total of a service''s desiredCount, to scale the task set. Defaults to 0 if not specified. Accepted values are numbers between 0.0 and 100.0.service_registriesservice_registries support the following:'
-            type: string
             optional: true
+            type: string
         wait_until_stable:
             description: (Optional) Whether terraform should wait until the task set has reached STEADY_STATE.
-            type: string
             optional: true
+            type: string
         wait_until_stable_timeout:
             description: '(Optional) Wait timeout for task set to reach STEADY_STATE. Valid time units include ns, us (or µs), ms, s, m, and h. Default 10m.capacity_provider_strategyThe capacity_provider_strategy configuration block supports the following:'
-            type: string
             optional: true
+            type: string
         weight:
             description: (Required) The relative percentage of the total number of launched tasks that should use the specified capacity provider.
             type: string
-            optional: true
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) that identifies the task set.
@@ -165,12 +158,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

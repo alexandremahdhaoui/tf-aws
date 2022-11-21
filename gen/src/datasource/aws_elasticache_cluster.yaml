@@ -1,0 +1,138 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_elasticache_cluster
+spec:
+    args:
+        availability_zone:
+            description: Availability Zone for the cache cluster.
+            type: string
+        cache_nodes:
+            description: List of node objects including id, address, port and availability_zone${data.aws_elasticache_cluster.bar.cache_nodes.0.address}
+            type: string
+        cluster_address:
+            description: (Memcached only) DNS name of the cache cluster without the port appended.
+            type: string
+        cluster_id:
+            description: ' – (Required) Group identifier.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        configuration_endpoint:
+            description: (Memcached only) Configuration endpoint to allow host discovery.
+            type: string
+        engine:
+            description: ' – Name of the cache engine.'
+            type: string
+        engine_version:
+            description: ' – Version number of the cache engine.'
+            type: string
+        log_delivery_configuration:
+            description: Redis SLOWLOG or Redis Engine Log delivery settings.
+            type: string
+        maintenance_window:
+            description: ""
+            type: string
+        node_type:
+            description: ' – The cluster node type.'
+            type: string
+        notification_topic_arn:
+            description: ""
+            type: string
+        num_cache_nodes:
+            description: ' – The number of cache nodes that the cache cluster has.'
+            type: string
+        parameter_group_name:
+            description: ' – Name of the parameter group associated with this cache cluster.'
+            type: string
+        port:
+            description: ""
+            type: string
+        replication_group_id:
+            description: The replication group to which this cache cluster belongs.
+            type: string
+        security_group_ids:
+            description: ' – List VPC security groups associated with the cache cluster.'
+            type: string
+        security_group_names:
+            description: ' – List of security group names associated with this cache cluster.'
+            type: string
+        snapshot_retention_limit:
+            description: |-
+                The number of days for which ElastiCache will
+                retain automatic cache cluster snapshots before deleting them.
+            type: string
+        snapshot_window:
+            description: ""
+            type: string
+        subnet_group_name:
+            description: ' – Name of the subnet group associated to the cache cluster.'
+            type: string
+    attrs:
+        availability_zone:
+            description: Availability Zone for the cache cluster.
+            type: string
+        cache_nodes:
+            description: List of node objects including id, address, port and availability_zone${data.aws_elasticache_cluster.bar.cache_nodes.0.address}
+            type: string
+        cluster_address:
+            description: (Memcached only) DNS name of the cache cluster without the port appended.
+            type: string
+        configuration_endpoint:
+            description: (Memcached only) Configuration endpoint to allow host discovery.
+            type: string
+        engine:
+            description: ' – Name of the cache engine.'
+            type: string
+        engine_version:
+            description: ' – Version number of the cache engine.'
+            type: string
+        log_delivery_configuration:
+            description: Redis SLOWLOG or Redis Engine Log delivery settings.
+            type: string
+        maintenance_window:
+            description: ""
+            type: string
+        node_type:
+            description: ' – The cluster node type.'
+            type: string
+        notification_topic_arn:
+            description: ""
+            type: string
+        num_cache_nodes:
+            description: ' – The number of cache nodes that the cache cluster has.'
+            type: string
+        parameter_group_name:
+            description: ' – Name of the parameter group associated with this cache cluster.'
+            type: string
+        port:
+            description: ""
+            type: string
+        replication_group_id:
+            description: The replication group to which this cache cluster belongs.
+            type: string
+        security_group_ids:
+            description: ' – List VPC security groups associated with the cache cluster.'
+            type: string
+        security_group_names:
+            description: ' – List of security group names associated with this cache cluster.'
+            type: string
+        snapshot_retention_limit:
+            description: |-
+                The number of days for which ElastiCache will
+                retain automatic cache cluster snapshots before deleting them.
+            type: string
+        snapshot_window:
+            description: ""
+            type: string
+        subnet_group_name:
+            description: ' – Name of the subnet group associated to the cache cluster.'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

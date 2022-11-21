@@ -6,52 +6,50 @@ spec:
     args:
         arn:
             description: The ARN for this account.
-            type: string
             optional: true
+            type: string
         close_on_deletion:
             description: (Optional) If true, a deletion event will close the account. Otherwise, it will only remove from the organization. This is not supported for GovCloud accounts.
-            type: string
             optional: true
+            type: string
         create_govcloud:
             description: (Optional) Whether to also create a GovCloud account. The GovCloud account is tied to the main (commercial) account this resource creates. If true, the GovCloud account ID is available in the govcloud_id attribute. The only way to manage the GovCloud account with Terraform is to subsequently import the account using this resource.
-            type: string
             optional: true
+            type: string
         email:
             description: (Required) Email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account.
             type: string
-            optional: true
         govcloud_id:
             description: ID for a GovCloud account created with the account.
-            type: string
             optional: true
+            type: string
         iam_user_access_to_billing:
             description: (Optional) If set to ALLOW, the new account enables IAM users and roles to access account billing information if they have the required permissions. If set to DENY, then only the root user (and no roles) of the new account can access account billing information. If this is unset, the AWS API will default this to ALLOW. If the resource is created and this option is changed, it will try to recreate the account.
-            type: string
             optional: true
+            type: string
         id:
             description: The AWS account id
-            type: string
             optional: true
+            type: string
         name:
             description: (Required) Friendly name for the member account.
             type: string
-            optional: true
         parent_id:
             description: (Optional) Parent Organizational Unit ID or Root ID for the account. Defaults to the Organization default Root ID. A configuration must be present for this argument to perform drift detection.
-            type: string
             optional: true
+            type: string
         role_name:
             description: (Optional) The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the root account, allowing users in the root account to assume the role, as permitted by the root account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore_changes is used.
-            type: string
             optional: true
+            type: string
         tags:
             description: '(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: The ARN for this account.
@@ -67,12 +65,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

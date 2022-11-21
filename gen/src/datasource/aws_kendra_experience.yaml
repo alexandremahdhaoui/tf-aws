@@ -1,0 +1,131 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_kendra_experience
+spec:
+    args:
+        arn:
+            description: ARN of the Experience.
+            type: string
+        configuration:
+            description: Block that specifies the configuration information for your Amazon Kendra Experience. This includes content_source_configuration, which specifies the data source IDs and/or FAQ IDs, and user_identity_configuration, which specifies the user or group information to grant access to your Amazon Kendra Experience. Documented below.
+            type: string
+        content_source_configuration:
+            description: The identifiers of your data sources and FAQs. This is the content you want to use for your Amazon Kendra Experience. Documented below.
+            type: string
+        created_at:
+            description: Unix datetime that the Experience was created.
+            type: string
+        data_source_ids:
+            description: Identifiers of the data sources you want to use for your Amazon Kendra Experience.
+            type: string
+        description:
+            description: Description of the Experience.
+            type: string
+        direct_put_content:
+            description: Whether to use documents you indexed directly using the BatchPutDocument API.
+            type: string
+        endpoint:
+            description: Endpoint of your Amazon Kendra Experience.
+            type: string
+        endpoints:
+            description: Shows the endpoint URLs for your Amazon Kendra Experiences. The URLs are unique and fully hosted by AWS. Documented below.
+            type: string
+        error_message:
+            description: Reason your Amazon Kendra Experience could not properly process.
+            type: string
+        experience_id:
+            description: (Required) Identifier of the Experience.
+            type: string
+        faq_ids:
+            description: 'Identifier of the FAQs that you want to use for your Amazon Kendra Experience.The user_identity_configuration block supports the following attributes:'
+            type: string
+        id:
+            description: Unique identifiers of the Experience and index separated by a slash (/).
+            type: string
+        identity_attribute_name:
+            description: 'The AWS SSO field name that contains the identifiers of your users, such as their emails.The endpoints block supports the following attributes:'
+            type: string
+        index_id:
+            description: '(Required) Identifier of the index that contains the Experience.In addition to all of the arguments above, the following attributes are exported:'
+            type: string
+        name:
+            description: Name of the Experience.
+            type: string
+        role_arn:
+            description: Shows the ARN of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information.
+            type: string
+        status:
+            description: Current processing status of your Amazon Kendra Experience. When the status is ACTIVE, your Amazon Kendra Experience is ready to use. When the status is FAILED, the error_message field contains the reason that this failed.
+            type: string
+        updated_at:
+            description: 'Date and time that the Experience was last updated.The configuration block supports the following attributes:'
+            type: string
+        user_identity_configuration:
+            description: 'The AWS SSO field name that contains the identifiers of your users, such as their emails. Documented below.The content_source_configuration block supports the following attributes:'
+            type: string
+    attrs:
+        arn:
+            description: ARN of the Experience.
+            type: string
+        configuration:
+            description: Block that specifies the configuration information for your Amazon Kendra Experience. This includes content_source_configuration, which specifies the data source IDs and/or FAQ IDs, and user_identity_configuration, which specifies the user or group information to grant access to your Amazon Kendra Experience. Documented below.
+            type: string
+        content_source_configuration:
+            description: The identifiers of your data sources and FAQs. This is the content you want to use for your Amazon Kendra Experience. Documented below.
+            type: string
+        created_at:
+            description: Unix datetime that the Experience was created.
+            type: string
+        data_source_ids:
+            description: Identifiers of the data sources you want to use for your Amazon Kendra Experience.
+            type: string
+        description:
+            description: Description of the Experience.
+            type: string
+        direct_put_content:
+            description: Whether to use documents you indexed directly using the BatchPutDocument API.
+            type: string
+        endpoint:
+            description: Endpoint of your Amazon Kendra Experience.
+            type: string
+        endpoints:
+            description: Shows the endpoint URLs for your Amazon Kendra Experiences. The URLs are unique and fully hosted by AWS. Documented below.
+            type: string
+        error_message:
+            description: Reason your Amazon Kendra Experience could not properly process.
+            type: string
+        faq_ids:
+            description: 'Identifier of the FAQs that you want to use for your Amazon Kendra Experience.The user_identity_configuration block supports the following attributes:'
+            type: string
+        id:
+            description: Unique identifiers of the Experience and index separated by a slash (/).
+            type: string
+        identity_attribute_name:
+            description: 'The AWS SSO field name that contains the identifiers of your users, such as their emails.The endpoints block supports the following attributes:'
+            type: string
+        name:
+            description: Name of the Experience.
+            type: string
+        role_arn:
+            description: Shows the ARN of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information.
+            type: string
+        status:
+            description: Current processing status of your Amazon Kendra Experience. When the status is ACTIVE, your Amazon Kendra Experience is ready to use. When the status is FAILED, the error_message field contains the reason that this failed.
+            type: string
+        updated_at:
+            description: 'Date and time that the Experience was last updated.The configuration block supports the following attributes:'
+            type: string
+        user_identity_configuration:
+            description: 'The AWS SSO field name that contains the identifiers of your users, such as their emails. Documented below.The content_source_configuration block supports the following attributes:'
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

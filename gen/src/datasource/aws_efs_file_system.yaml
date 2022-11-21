@@ -1,0 +1,91 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_efs_file_system
+spec:
+    args:
+        arn:
+            description: Amazon Resource Name of the file system.
+            type: string
+        availability_zone_id:
+            description: The identifier of the Availability Zone in which the file system's One Zone storage classes exist.
+            type: string
+        availability_zone_name:
+            description: The Availability Zone name in which the file system's One Zone storage classes exist.
+            type: string
+        creation_token:
+            description: (Optional) Restricts the list to the file system with this creation token.
+            optional: true
+            type: string
+        dns_name:
+            description: DNS name for the filesystem per documented convention.
+            type: string
+        encrypted:
+            description: Whether EFS is encrypted.
+            type: string
+        file_system_id:
+            description: (Optional) ID that identifies the file system (e.g., fs-ccfc0d65).
+            optional: true
+            type: string
+        kms_key_id:
+            description: ARN for the KMS encryption key.
+            type: string
+        lifecycle_policy:
+            description: File system lifecycle policy object.
+            type: string
+        performance_mode:
+            description: File system performance mode.
+            type: string
+        provisioned_throughput_in_mibps:
+            description: The throughput, measured in MiB/s, that you want to provision for the file system.
+            type: string
+        tags:
+            description: ' -A map of tags to assign to the file system.'
+            type: string
+        throughput_mode:
+            description: Throughput mode for the file system.
+            type: string
+    attrs:
+        arn:
+            description: Amazon Resource Name of the file system.
+            type: string
+        availability_zone_id:
+            description: The identifier of the Availability Zone in which the file system's One Zone storage classes exist.
+            type: string
+        availability_zone_name:
+            description: The Availability Zone name in which the file system's One Zone storage classes exist.
+            type: string
+        dns_name:
+            description: DNS name for the filesystem per documented convention.
+            type: string
+        encrypted:
+            description: Whether EFS is encrypted.
+            type: string
+        kms_key_id:
+            description: ARN for the KMS encryption key.
+            type: string
+        lifecycle_policy:
+            description: File system lifecycle policy object.
+            type: string
+        performance_mode:
+            description: File system performance mode.
+            type: string
+        provisioned_throughput_in_mibps:
+            description: The throughput, measured in MiB/s, that you want to provision for the file system.
+            type: string
+        tags:
+            description: ' -A map of tags to assign to the file system.'
+            type: string
+        throughput_mode:
+            description: Throughput mode for the file system.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

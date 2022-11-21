@@ -1,0 +1,35 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_cloud9_environment_membership.markdown
+spec:
+    args:
+        environment_id:
+            description: (Required) The ID of the environment that contains the environment member you want to add.
+            type: string
+        id:
+            description: The ID of the environment membership.
+            type: string
+        permissions:
+            description: (Required) The type of environment member permissions you want to associate with this environment member. Allowed values are read-only and read-write .
+            type: string
+        user_arn:
+            description: '(Required) The Amazon Resource Name (ARN) of the environment member you want to add.In addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs:
+        id:
+            description: The ID of the environment membership.
+            type: string
+        user_id:
+            description: he user ID in AWS Identity and Access Management (AWS IAM) of the environment member.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

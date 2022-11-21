@@ -3,7 +3,39 @@ kind: TerraformResource
 metadata:
     name: aws_rolesanywhere_trust_anchor
 spec:
-    args: {}
+    args:
+        acm_pca_arn:
+            description: (Optional, required when source_type is AWS_ACM_PCA) The ARN of an ACM Private Certificate Authority.
+            type: string
+        arn:
+            description: Amazon Resource Name (ARN) of the Trust Anchor
+            type: string
+        enabled:
+            description: (Optional) Whether or not the Trust Anchor should be enabled.
+            optional: true
+            type: string
+        id:
+            description: The Trust Anchor ID.
+            type: string
+        name:
+            description: (Required) The name of the Trust Anchor.
+            type: string
+        source:
+            description: (Required) The source of trust, documented below
+            type: string
+        source_data:
+            description: (Required) The data denoting the source of trust, documented below
+            type: string
+        source_type:
+            description: (Required) The type of the source of trust. Must be either AWS_ACM_PCA or CERTIFICATE_BUNDLE.source_data
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blockssource
+            optional: true
+            type: string
+        x509_certificate_data:
+            description: '(Optional, required when source_type is CERTIFICATE_BUNDLE)In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of the Trust Anchor
@@ -16,12 +48,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

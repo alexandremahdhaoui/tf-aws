@@ -7,70 +7,63 @@ spec:
         abort_incomplete_multipart_upload:
             description: |
                 (Optional) Configuration block containing settings for abort incomplete multipart upload.
-            type: string
             optional: true
+            type: string
         bucket:
             description: (Required) Amazon Resource Name (ARN) of the bucket.
             type: string
-            optional: true
         date:
             description: (Optional) Date the object is to be deleted. Should be in YYYY-MM-DD date format, e.g., 2020-09-30.
-            type: string
             optional: true
+            type: string
         days:
             description: (Optional) Number of days before the object is to be deleted.
-            type: string
             optional: true
+            type: string
         days_after_initiation:
             description: (Required) Number of days after which Amazon S3 aborts an incomplete multipart upload.
             type: string
-            optional: true
         expiration:
             description: |
                 (Optional) Configuration block containing settings for expiration of objects.
-            type: string
             optional: true
+            type: string
         expired_object_delete_marker:
             description: (Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days.
-            type: string
             optional: true
+            type: string
         filter:
             description: ""
             type: string
-            optional: true
         id:
             description: (Required) Unique identifier for the rule.
             type: string
-            optional: true
         prefix:
             description: (Optional) Object prefix for rule filtering.
-            type: string
             optional: true
+            type: string
         rule:
-            description: |
-                (Required) Configuration block(s) containing lifecycle rules for the bucket.
+            description: ""
             type: string
-            optional: true
         status:
             description: '(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
         tags:
             description: (Optional) Key-value map of object tags for rule filtering.
-            type: string
             optional: true
+            type: string
     attrs:
         id:
             description: Amazon Resource Name (ARN) of the bucket.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

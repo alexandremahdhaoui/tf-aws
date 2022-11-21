@@ -3,7 +3,61 @@ kind: TerraformResource
 metadata:
     name: aws_worklink_fleet
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the created WorkLink Fleet.
+            type: string
+        audit_stream_arn:
+            description: (Optional) The ARN of the Amazon Kinesis data stream that receives the audit events. Kinesis data stream name must begin with "AmazonWorkLink-".
+            optional: true
+            type: string
+        company_code:
+            description: The identifier used by users to sign in to the Amazon WorkLink app.
+            type: string
+        created_time:
+            description: The time that the fleet was created.
+            type: string
+        device_ca_certificate:
+            description: (Optional) The certificate chain, including intermediate certificates and the root certificate authority certificate used to issue device certificates.
+            optional: true
+            type: string
+        display_name:
+            description: (Optional) The name of the fleet.
+            optional: true
+            type: string
+        id:
+            description: The ARN of the created WorkLink Fleet.
+            type: string
+        identity_provider:
+            description: (Optional) Provide this to allow manage the identity provider configuration for the fleet. Fields documented below.
+            optional: true
+            type: string
+        name:
+            description: (Required) A region-unique name for the AMI.
+            type: string
+        network:
+            description: (Optional) Provide this to allow manage the company network configuration for the fleet. Fields documented below.
+            optional: true
+            type: string
+        optimize_for_end_user_location:
+            description: '(Optional) The option to optimize for better performance by routing traffic through the closest AWS Region to users, which may be outside of your home Region. Defaults to true.strongnetwork requires the following:~> strongNOTE: network cannot be removed without force recreating by terraform taint.'
+            optional: true
+            type: string
+        saml_metadata:
+            description: '(Required) The SAML metadata document provided by the customer’s identity provider.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        security_group_ids:
+            description: '(Required) A list of security group IDs associated with access to the provided subnets.strongidentity_provider requires the following:~> strongNOTE: identity_provider cannot be removed without force recreating by terraform taint.'
+            type: string
+        subnet_ids:
+            description: (Required) A list of subnet IDs used for X-ENI connections from Amazon WorkLink rendering containers.
+            type: string
+        type:
+            description: (Required) The type of identity provider.
+            type: string
+        vpc_id:
+            description: (Required) The VPC ID with connectivity to associated websites.
+            type: string
     attrs:
         arn:
             description: The ARN of the created WorkLink Fleet.
@@ -22,12 +76,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

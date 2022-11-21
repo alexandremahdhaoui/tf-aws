@@ -3,7 +3,53 @@ kind: TerraformResource
 metadata:
     name: aws_ses_event_destination
 spec:
-    args: {}
+    args:
+        cloudwatch_destination:
+            description: (Optional) CloudWatch destination for the events
+            optional: true
+            type: string
+        configuration_set_name:
+            description: (Required) The name of the configuration set
+            type: string
+        default_value:
+            description: (Required) The default value for the event
+            type: string
+        dimension_name:
+            description: (Required) The name for the dimension
+            type: string
+        enabled:
+            description: (Optional) If true, the event destination will be enabled
+            optional: true
+            type: string
+        id:
+            description: The SES event destination name.
+            type: string
+        kinesis_destination:
+            description: (Optional) Send the events to a kinesis firehose destination
+            optional: true
+            type: string
+        matching_types:
+            description: (Required) A list of matching types. May be any of "send", "reject", "bounce", "complaint", "delivery", "open", "click", or "renderingFailure".
+            type: string
+        name:
+            description: (Required) The name of the event destination
+            type: string
+        role_arn:
+            description: (Required) The ARN of the role that has permissions to access the Kinesis Streamsns_destination Argument Reference
+            type: string
+        sns_destination:
+            description: '(Optional) Send the events to an SNS Topic destination~> strongNOTE: You can specify "cloudwatch_destination" or "kinesis_destination" but not bothcloudwatch_destination Argument Reference'
+            optional: true
+            type: string
+        stream_arn:
+            description: (Required) The ARN of the Kinesis Stream
+            type: string
+        topic_arn:
+            description: '(Required) The ARN of the SNS topicIn addition to all arguments above, the following attributes are exported:'
+            type: string
+        value_source:
+            description: (Required) The source for the value. May be any of "messageTag", "emailHeader" or "linkTag".kinesis_destination Argument Reference
+            type: string
     attrs:
         arn:
             description: The SES event destination ARN.
@@ -13,12 +59,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

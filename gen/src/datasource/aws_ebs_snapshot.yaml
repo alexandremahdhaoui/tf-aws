@@ -1,0 +1,130 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ebs_snapshot
+spec:
+    args:
+        arn:
+            description: ARN of the EBS Snapshot.
+            type: string
+        data_encryption_key_id:
+            description: The data encryption key identifier for the snapshot.
+            type: string
+        description:
+            description: Description for the snapshot
+            type: string
+        encrypted:
+            description: Whether the snapshot is encrypted.
+            type: string
+        filter:
+            description: |-
+                (Optional) One or more name/value pairs to filter off of. There are
+                several valid keys, for a full reference, check out
+                describe-snapshots in the AWS CLI reference.In addition to all arguments above, the following attributes are exported:
+            optional: true
+            type: string
+        id:
+            description: Snapshot ID (e.g., snap-59fcb34e).
+            type: string
+        kms_key_id:
+            description: ARN for the KMS encryption key.
+            type: string
+        most_recent:
+            description: (Optional) If more than one result is returned, use the most recent snapshot.
+            optional: true
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost on which the snapshot is stored.
+            type: string
+        owner_alias:
+            description: Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners.
+            type: string
+        owner_id:
+            description: AWS account ID of the EBS snapshot owner.
+            type: string
+        owners:
+            description: (Optional) Returns the snapshots owned by the specified owner id. Multiple owners can be specified.
+            optional: true
+            type: string
+        restorable_by_user_ids:
+            description: (Optional) One or more AWS accounts IDs that can create volumes from the snapshot.
+            optional: true
+            type: string
+        snapshot_id:
+            description: Snapshot ID (e.g., snap-59fcb34e).
+            type: string
+        snapshot_ids:
+            description: (Optional) Returns information on a specific snapshot_id.
+            optional: true
+            type: string
+        state:
+            description: Snapshot state.
+            type: string
+        storage_tier:
+            description: Storage tier in which the snapshot is stored.
+            type: string
+        tags:
+            description: 'Map of tags for the resource.TimeoutsConfiguration options:'
+            type: string
+        volume_id:
+            description: Volume ID (e.g., vol-59fcb34e).
+            type: string
+        volume_size:
+            description: Size of the drive in GiBs.
+            type: string
+    attrs:
+        arn:
+            description: ARN of the EBS Snapshot.
+            type: string
+        data_encryption_key_id:
+            description: The data encryption key identifier for the snapshot.
+            type: string
+        description:
+            description: Description for the snapshot
+            type: string
+        encrypted:
+            description: Whether the snapshot is encrypted.
+            type: string
+        id:
+            description: Snapshot ID (e.g., snap-59fcb34e).
+            type: string
+        kms_key_id:
+            description: ARN for the KMS encryption key.
+            type: string
+        outpost_arn:
+            description: ARN of the Outpost on which the snapshot is stored.
+            type: string
+        owner_alias:
+            description: Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners.
+            type: string
+        owner_id:
+            description: AWS account ID of the EBS snapshot owner.
+            type: string
+        snapshot_id:
+            description: Snapshot ID (e.g., snap-59fcb34e).
+            type: string
+        state:
+            description: Snapshot state.
+            type: string
+        storage_tier:
+            description: Storage tier in which the snapshot is stored.
+            type: string
+        tags:
+            description: 'Map of tags for the resource.TimeoutsConfiguration options:'
+            type: string
+        volume_id:
+            description: Volume ID (e.g., vol-59fcb34e).
+            type: string
+        volume_size:
+            description: Size of the drive in GiBs.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

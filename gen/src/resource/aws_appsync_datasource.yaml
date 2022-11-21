@@ -3,19 +3,113 @@ kind: TerraformResource
 metadata:
     name: aws_appsync_datasource
 spec:
-    args: {}
+    args:
+        api_id:
+            description: (Required) API ID for the GraphQL API for the data source.
+            type: string
+        authorization_config:
+            description: (Optional) Authorization configuration in case the HTTP endpoint requires authorization. See Authorization Config.authorization_config
+            optional: true
+            type: string
+        authorization_type:
+            description: (Optional) Authorization type that the HTTP endpoint requires. Default values is AWS_IAM.
+            optional: true
+            type: string
+        aws_iam_config:
+            description: (Optional) Identity and Access Management (IAM) settings. See AWS IAM Config.aws_iam_config
+            optional: true
+            type: string
+        aws_secret_store_arn:
+            description: (Required) AWS secret store ARN for database credentials.
+            type: string
+        database_name:
+            description: (Optional) Logical database name.
+            optional: true
+            type: string
+        db_cluster_identifier:
+            description: (Required) Amazon RDS cluster identifier.
+            type: string
+        description:
+            description: (Optional) Description of the data source.
+            optional: true
+            type: string
+        dynamodb_config:
+            description: (Optional) DynamoDB settings. See below
+            optional: true
+            type: string
+        elasticsearch_config:
+            description: (Optional) Amazon Elasticsearch settings. See below
+            optional: true
+            type: string
+        endpoint:
+            description: (Required) HTTP URL.
+            type: string
+        function_arn:
+            description: '(Required) ARN for the Lambda function.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        http_config:
+            description: (Optional) HTTP settings. See below
+            optional: true
+            type: string
+        http_endpoint_config:
+            description: (Required) Amazon RDS HTTP endpoint configuration. See HTTP Endpoint Config.
+            type: string
+        lambda_config:
+            description: (Optional) AWS Lambda settings. See below
+            optional: true
+            type: string
+        name:
+            description: (Required) User-supplied name for the data source.
+            type: string
+        region:
+            description: (Optional) AWS Region for RDS HTTP endpoint. Defaults to current region.
+            optional: true
+            type: string
+        relational_database_config:
+            description: ' (Optional) AWS RDS settings. See Relational Database Configdynamodb_config'
+            optional: true
+            type: string
+        schema:
+            description: (Optional) Logical schema name.lambda_config
+            optional: true
+            type: string
+        service_role_arn:
+            description: (Optional) IAM service role ARN for the data source.
+            optional: true
+            type: string
+        signing_region:
+            description: (Optional) Signing Amazon Web Services Region for IAM authorization.
+            optional: true
+            type: string
+        signing_service_name:
+            description: '- (Optional) Signing service name for IAM authorization.relational_database_config'
+            optional: true
+            type: string
+        source_type:
+            description: '(Optional) Source type for the relational database. Valid values: RDS_HTTP_ENDPOINT.http_endpoint_config'
+            optional: true
+            type: string
+        table_name:
+            description: (Required) Name of the DynamoDB table.
+            type: string
+        type:
+            description: '(Required) Type of the Data Source. Valid values: AWS_LAMBDA, AMAZON_DYNAMODB, AMAZON_ELASTICSEARCH, HTTP, NONE, RELATIONAL_DATABASE.'
+            type: string
+        use_caller_credentials:
+            description: (Optional) Set to true to use Amazon Cognito credentials with this data source.elasticsearch_config
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,58 @@ kind: TerraformResource
 metadata:
     name: aws_cloudformation_stack_set_instance
 spec:
-    args: {}
+    args:
+        account_id:
+            description: (Optional) Target AWS Account ID to create a Stack based on the StackSet. Defaults to current account.
+            optional: true
+            type: string
+        call_as:
+            description: '(Optional) Specifies whether you are acting as an account administrator in the organization''s management account or as a delegated administrator in a member account. Valid values: SELF (default), DELEGATED_ADMIN.'
+            optional: true
+            type: string
+        create:
+            description: (Default 30m)
+            type: string
+        deployment_targets:
+            description: (Optional) The AWS Organizations accounts to which StackSets deploys. StackSets doesn't deploy stack instances to the organization management account, even if the organization management account is in your organization or in an OU in your organization. Drift detection is not possible for this argument. See deployment_targets below.
+            optional: true
+            type: string
+        id:
+            description: StackSet name, target AWS account ID, and target AWS region separated by commas (,)
+            type: string
+        operation_preferences:
+            description: |-
+                (Optional) Preferences for how AWS CloudFormation performs a stack set operation.deployment_targets Argument ReferenceThe deployment_targets configuration block supports the following arguments:*organizational_unit_ids(Optional) The organization root ID or organizational unit (OU) IDs to which StackSets deploys.operation_preferences Argument ReferenceThe operation_preferences configuration block supports the following arguments:*failure_tolerance_count(Optional) The number of accounts, per Region, for which this operation can fail before AWS CloudFormation stops the operation in that Region.
+                *failure_tolerance_percentage(Optional) The percentage of accounts, per Region, for which this stack operation can fail before AWS CloudFormation stops the operation in that Region.
+                *max_concurrent_countmax_concurrent_percentage(Optional) The maximum percentage of accounts in which to perform this operation at one time.
+                *region_concurrency_type(Optional) The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.
+                *region_order(Optional) The order of the Regions in where you want to perform the stack operation.In addition to all arguments above, the following attributes are exported:
+            optional: true
+            type: string
+        organizational_unit_id:
+            description: The organization root ID or organizational unit (OU) IDs specified for deployment_targets.
+            type: string
+        parameter_overrides:
+            description: (Optional) Key-value map of input parameters to override from the StackSet for this Instance.
+            optional: true
+            type: string
+        region:
+            description: (Optional) Target AWS Region to create a Stack based on the StackSet. Defaults to current region.
+            optional: true
+            type: string
+        retain_stack:
+            description: (Optional) During Terraform resource destroy, remove Instance from StackSet while keeping the Stack and its associated resources. Must be enabled in Terraform state embefore destroy operation to take effect. You cannot reassociate a retained Stack or add an existing, saved Stack to a new StackSet. Defaults to false.
+            optional: true
+            type: string
+        stack_id:
+            description: 'Stack identifierTimeoutsConfiguration options:'
+            type: string
+        stack_set_name:
+            description: (Required) Name of the StackSet.
+            type: string
+        update:
+            description: (Default 30m)
+            type: string
     attrs:
         create:
             description: (Default 30m)
@@ -25,12 +76,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

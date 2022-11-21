@@ -6,412 +6,403 @@ spec:
     args:
         aws_account_id:
             description: (Optional) AWS account ID that a finding is generated in. See String_Filter below for more details.
-            type: string
             optional: true
+            type: string
         cidr:
             description: '(Required) A finding''s CIDR value.Keyword Filter Argument ReferenceThe keyword filter configuration block supports the following arguments:'
             type: string
-            optional: true
         company_name:
             description: (Optional) The name of the findings provider (company) that owns the solution (product) that generates findings. See String_Filter below for more details.
-            type: string
             optional: true
+            type: string
         comparison:
             description: '(Required) The condition to apply to a string value when querying for findings. Valid values include: EQUALS, PREFIX, NOT_EQUALS, PREFIX_NOT_EQUALS.'
             type: string
-            optional: true
         compliance_status:
             description: (Optional) Exclusive to findings that are generated as the result of a check run against a specific rule in a supported standard, such as CIS AWS Foundations. Contains security standard-related finding details. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         confidence:
             description: (Optional) A finding's confidence. Confidence is defined as the likelihood that a finding accurately identifies the behavior or issue that it was intended to identify. Confidence is scored on a 0-100 basis using a ratio scale, where 0 means zero percent confidence and 100 means 100 percent confidence. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         created_at:
             description: (Optional) An ISO8601-formatted timestamp that indicates when the security-findings provider captured the potential security issue that a finding captured. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         criticality:
             description: (Optional) The level of importance assigned to the resources associated with the finding. A score of 0 means that the underlying resources have no criticality, and a score of 100 is reserved for the most critical resources. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         date_range:
             description: (Optional) A configuration block of the date range for the date filter. See date_range below for more details.
-            type: string
             optional: true
+            type: string
         description:
             description: (Optional) A finding's description. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         end:
             description: (Optional) An end date for the date filter. Required with start if date_range is not specified.
-            type: string
             optional: true
+            type: string
         eq:
             description: (Optional) The equal-to condition to be applied to a single field when querying for findings, provided as a String.
-            type: string
             optional: true
+            type: string
         filters:
             description: (Required) A configuration block including one or more (up to 10 distinct) attributes used to filter the findings included in the insight. The insight only includes findings that match criteria defined in the filters. See filters below for more details.
             type: string
-            optional: true
         finding_provider_fields_confidence:
             description: (Optional) The finding provider value for the finding confidence. Confidence is defined as the likelihood that a finding accurately identifies the behavior or issue that it was intended to identify. Confidence is scored on a 0-100 basis using a ratio scale, where 0 means zero percent confidence and 100 means 100 percent confidence. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         finding_provider_fields_criticality:
             description: (Optional) The finding provider value for the level of importance assigned to the resources associated with the findings. A score of 0 means that the underlying resources have no criticality, and a score of 100 is reserved for the most critical resources. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         finding_provider_fields_related_findings_id:
             description: (Optional) The finding identifier of a related finding that is identified by the finding provider. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         finding_provider_fields_related_findings_product_arn:
             description: (Optional) The ARN of the solution that generated a related finding that is identified by the finding provider. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         finding_provider_fields_severity_label:
             description: (Optional) The finding provider value for the severity label. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         finding_provider_fields_severity_original:
             description: (Optional) The finding provider's original value for the severity. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         finding_provider_fields_types:
             description: '(Optional) One or more finding types that the finding provider assigned to the finding. Uses the format of namespace/category/classifier that classify a finding. Valid namespace values include: Software and Configuration Checks, TTPs, Effects, Unusual Behaviors, and Sensitive Data Identifications. See String Filter below for more details.'
-            type: string
             optional: true
+            type: string
         first_observed_at:
             description: (Optional) An ISO8601-formatted timestamp that indicates when the security-findings provider first observed the potential security issue that a finding captured. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         generator_id:
             description: (Optional) The identifier for the solution-specific component (a discrete unit of logic) that generated a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         group_by_attribute:
             description: (Required) The attribute used to group the findings for the insight e.g., if an insight is grouped by ResourceId, then the insight produces a list of resource identifiers.
             type: string
-            optional: true
         gte:
             description: (Optional) The greater-than-equal condition to be applied to a single field when querying for findings, provided as a String.
-            type: string
             optional: true
+            type: string
         id:
             description: ARN of the insight.
             type: string
-            optional: true
         key:
             description: (Required) The key of the map filter. For example, for ResourceTags, Key identifies the name of the tag. For UserDefinedFields, Key is the name of the field.
             type: string
-            optional: true
         keyword:
             description: (Optional) A keyword for a finding. See Keyword Filter below for more details.
-            type: string
             optional: true
+            type: string
         last_observed_at:
             description: (Optional) An ISO8601-formatted timestamp that indicates when the security-findings provider most recently observed the potential security issue that a finding captured. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         lte:
             description: '(Optional) The less-than-equal condition to be applied to a single field when querying for findings, provided as a String.String Filter Argument referenceThe string filter configuration block supports the following arguments:'
-            type: string
             optional: true
+            type: string
         malware_name:
             description: (Optional) The name of the malware that was observed. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         malware_path:
             description: (Optional) The filesystem path of the malware that was observed. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         malware_state:
             description: (Optional) The state of the malware that was observed. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         malware_type:
             description: (Optional) The type of the malware that was observed. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         name:
             description: '(Required) The name of the custom insight.filtersThe filters configuration block supports the following arguments:~> strongNOTE: For each argument below, up to 20 can be provided.'
             type: string
-            optional: true
         network_destination_domain:
             description: (Optional) The destination domain of network-related information about a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_destination_ipv4:
             description: (Optional) The destination IPv4 address of network-related information about a finding. See Ip Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_destination_ipv6:
             description: (Optional) The destination IPv6 address of network-related information about a finding. See Ip Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_destination_port:
             description: (Optional) The destination port of network-related information about a finding. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_direction:
             description: (Optional) Indicates the direction of network traffic associated with a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_protocol:
             description: (Optional) The protocol of network-related information about a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_source_domain:
             description: (Optional) The source domain of network-related information about a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_source_ipv4:
             description: (Optional) The source IPv4 address of network-related information about a finding. See Ip Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_source_ipv6:
             description: (Optional) The source IPv6 address of network-related information about a finding. See Ip Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_source_mac:
             description: (Optional) The source media access control (MAC) address of network-related information about a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         network_source_port:
             description: (Optional) The source port of network-related information about a finding. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         note_text:
             description: (Optional) The text of a note. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         note_updated_at:
             description: (Optional) The timestamp of when the note was updated. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         note_updated_by:
             description: (Optional) The principal that created a note. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         process_launched_at:
             description: (Optional) The date/time that the process was launched. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         process_name:
             description: (Optional) The name of the process. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         process_parent_pid:
             description: (Optional) The parent process ID. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         process_path:
             description: (Optional) The path to the process executable. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         process_pid:
             description: (Optional) The process ID. See Number Filter below for more details.
-            type: string
             optional: true
+            type: string
         process_terminated_at:
             description: (Optional) The date/time that the process was terminated. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         product_arn:
             description: (Optional) The ARN generated by Security Hub that uniquely identifies a third-party company (security findings provider) after this provider's product (solution that generates findings) is registered with Security Hub. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         product_fields:
             description: (Optional) A data type where security-findings providers can include additional solution-specific details that aren't part of the defined AwsSecurityFinding format. See Map Filter below for more details.
-            type: string
             optional: true
+            type: string
         product_name:
             description: (Optional) The name of the solution (product) that generates findings. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         recommendation_text:
             description: (Optional) The recommendation of what to do about the issue described in a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         record_state:
             description: (Optional) The updated record state for the finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         related_findings_id:
             description: (Optional) The solution-generated identifier for a related finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         related_findings_product_arn:
             description: (Optional) The ARN of the solution that generated a related finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_iam_instance_profile_arn:
             description: (Optional) The IAM profile ARN of the instance. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_image_id:
             description: (Optional) The Amazon Machine Image (AMI) ID of the instance. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_ipv4_addresses:
             description: (Optional) The IPv4 addresses associated with the instance. See Ip Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_ipv6_addresses:
             description: (Optional) The IPv6 addresses associated with the instance. See Ip Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_key_name:
             description: (Optional) The key name associated with the instance. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_launched_at:
             description: (Optional) The date and time the instance was launched. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_subnet_id:
             description: (Optional) The identifier of the subnet that the instance was launched in. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_type:
             description: (Optional) The instance type of the instance. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_ec2_instance_vpc_id:
             description: (Optional) The identifier of the VPC that the instance was launched in. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_iam_access_key_created_at:
             description: (Optional) The creation date/time of the IAM access key related to a finding. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_iam_access_key_status:
             description: (Optional) The status of the IAM access key related to a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_iam_access_key_user_name:
             description: (Optional) The user associated with the IAM access key related to a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_s3_bucket_owner_id:
             description: (Optional) The canonical user ID of the owner of the S3 bucket. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_aws_s3_bucket_owner_name:
             description: (Optional) The display name of the owner of the S3 bucket. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_container_image_id:
             description: (Optional) The identifier of the image related to a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_container_image_name:
             description: (Optional) The name of the image related to a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_container_launched_at:
             description: (Optional) The date/time that the container was started. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_container_name:
             description: (Optional) The name of the container related to a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_details_other:
             description: (Optional) The details of a resource that doesn't have a specific subfield for the resource type defined. See Map Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_id:
             description: (Optional) The canonical identifier for the given resource type. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_partition:
             description: (Optional) The canonical AWS partition name that the Region is assigned to. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_region:
             description: (Optional) The canonical AWS external Region name where this resource is located. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_tags:
             description: (Optional) A list of AWS tags associated with a resource at the time the finding was processed. See Map Filter below for more details.
-            type: string
             optional: true
+            type: string
         resource_type:
             description: (Optional) Specifies the type of the resource that details are provided for. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         severity_label:
             description: (Optional) The label of a finding's severity. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         source_url:
             description: (Optional) A URL that links to a page about the current finding in the security-findings provider's solution. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         start:
             description: '(Optional) A start date for the date filter. Required with end if date_range is not specified.date_range Argument referenceThe date_range configuration block supports the following arguments:'
-            type: string
             optional: true
+            type: string
         threat_intel_indicator_category:
             description: (Optional) The category of a threat intelligence indicator. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         threat_intel_indicator_last_observed_at:
             description: (Optional) The date/time of the last observation of a threat intelligence indicator. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         threat_intel_indicator_source:
             description: (Optional) The source of the threat intelligence. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         threat_intel_indicator_source_url:
             description: (Optional) The URL for more details from the source of the threat intelligence. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         threat_intel_indicator_type:
             description: (Optional) The type of a threat intelligence indicator. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         threat_intel_indicator_value:
             description: (Optional) The value of a threat intelligence indicator. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         title:
             description: (Optional) A finding's title. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         type:
             description: (Optional) A finding type in the format of namespace/category/classifier that classifies a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         unit:
             description: '(Required) A date range unit for the date filter. Valid values: DAYS.'
             type: string
-            optional: true
         updated_at:
             description: (Optional) An ISO8601-formatted timestamp that indicates when the security-findings provider last updated the finding record. See Date Filter below for more details.
-            type: string
             optional: true
+            type: string
         user_defined_values:
             description: (Optional) A list of name/value string pairs associated with the finding. These are custom, user-defined fields added to a finding. See Map Filter below for more details.
-            type: string
             optional: true
+            type: string
         value:
             description: '(Required) The string filter value. Valid values include: NEW, NOTIFIED, SUPPRESSED, and RESOLVED.In addition to all arguments above, the following attributes are exported:'
             type: string
-            optional: true
         verification_state:
             description: (Optional) The veracity of a finding. See String Filter below for more details.
-            type: string
             optional: true
+            type: string
         workflow_status:
             description: '(Optional) The status of the investigation into a finding. See Workflow Status Filter below for more details.Date Filter Argument referenceThe date filter configuration block supports the following arguments:'
-            type: string
             optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the insight.
@@ -421,12 +412,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,7 +3,23 @@ kind: TerraformResource
 metadata:
     name: aws_ec2_carrier_gateway
 spec:
-    args: {}
+    args:
+        arn:
+            description: The ARN of the carrier gateway.
+            type: string
+        id:
+            description: The ID of the carrier gateway.
+            type: string
+        owner_id:
+            description: The AWS account ID of the owner of the carrier gateway.
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        vpc_id:
+            description: '(Required) The ID of the VPC to associate with the carrier gateway.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: The ARN of the carrier gateway.
@@ -19,12 +35,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

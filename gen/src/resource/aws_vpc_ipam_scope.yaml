@@ -3,7 +3,23 @@ kind: TerraformResource
 metadata:
     name: aws_vpc_ipam_scope
 spec:
-    args: {}
+    args:
+        description:
+            description: '(Optional) A description for the scope you''re creating.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        id:
+            description: The ID of the IPAM Scope.
+            type: string
+        ipam_arn:
+            description: The ARN of the IPAM for which you're creating this scope.
+            type: string
+        ipam_id:
+            description: The ID of the IPAM for which you're creating this scope.
+            type: string
+        is_default:
+            description: Defines if the scope is the default scope or not.
+            type: string
     attrs:
         id:
             description: The ID of the IPAM Scope.
@@ -19,12 +35,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

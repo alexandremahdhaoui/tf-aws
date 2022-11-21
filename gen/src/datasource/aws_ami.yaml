@@ -66,9 +66,7 @@ spec:
             description: 0 if the EBS volume is not a provisioned IOPS image, otherwise the supported IOPS count.
             type: string
         kernel_id:
-            description: |-
-                Kernel associated with the image, if any. Only applicable
-                for machine images.
+            description: ""
             type: string
         name:
             description: Name of the AMI that was provided during image creation.
@@ -99,9 +97,7 @@ spec:
             description: true if the image has public launch permissions.
             type: string
         ramdisk_id:
-            description: |-
-                RAM disk associated with the image, if any. Only applicable
-                for machine images.
+            description: ""
             type: string
         root_device_name:
             description: Device name of the root device.
@@ -165,12 +161,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

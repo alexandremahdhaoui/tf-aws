@@ -3,7 +3,176 @@ kind: TerraformResource
 metadata:
     name: aws_appmesh_virtual_gateway
 spec:
-    args: {}
+    args:
+        access_log:
+            description: '(Optional) Access log configuration for a virtual gateway.The access_log object supports the following:'
+            optional: true
+            type: string
+        acm:
+            description: (Optional) An AWS Certificate Manager (ACM) certificate.
+            optional: true
+            type: string
+        arn:
+            description: ARN of the virtual gateway.
+            type: string
+        backend_defaults:
+            description: (Optional) Defaults for backends.
+            optional: true
+            type: string
+        certificate:
+            description: (Required) Listener's TLS certificate.
+            type: string
+        certificate_arn:
+            description: '(Required) ARN for the certificate.The file object supports the following:'
+            type: string
+        certificate_authority_arns:
+            description: '(Required) One or more ACM ARNs.The file object supports the following:'
+            type: string
+        certificate_chain:
+            description: '(Required) Certificate trust chain for a certificate stored on the file system of the mesh endpoint that the proxy is running on. Must be between 1 and 255 characters in length.The sds object supports the following:'
+            type: string
+        client_policy:
+            description: '(Optional) Default client policy for virtual gateway backends.The client_policy object supports the following:'
+            optional: true
+            type: string
+        connection_pool:
+            description: (Optional) Connection pool information for the listener.
+            optional: true
+            type: string
+        created_date:
+            description: Creation date of the virtual gateway.
+            type: string
+        enforce:
+            description: (Optional) Whether the policy is enforced. Default is true.
+            optional: true
+            type: string
+        exact:
+            description: '(Required) Values sent must match the specified values exactly.The trust object supports the following:'
+            type: string
+        file:
+            description: (Optional) TLS validation context trust for a local file certificate.
+            optional: true
+            type: string
+        grpc:
+            description: (Optional) Connection pool information for gRPC listeners.
+            optional: true
+            type: string
+        health_check:
+            description: (Optional) Health check information for the listener.
+            optional: true
+            type: string
+        healthy_threshold:
+            description: (Required) Number of consecutive successful health checks that must occur before declaring listener healthy.
+            type: string
+        http:
+            description: (Optional) Connection pool information for HTTP listeners.
+            optional: true
+            type: string
+        http2:
+            description: '(Optional) Connection pool information for HTTP2 listeners.The grpc connection pool object supports the following:'
+            optional: true
+            type: string
+        id:
+            description: ID of the virtual gateway.
+            type: string
+        interval_millis:
+            description: '- (Required) Time period in milliseconds between each health check execution.'
+            type: string
+        last_updated_date:
+            description: Last update date of the virtual gateway.
+            type: string
+        listener:
+            description: (Required) Listeners that the mesh endpoint is expected to receive inbound traffic from. You can specify one listener.
+            type: string
+        logging:
+            description: '(Optional) Inbound and outbound access logging information for the virtual gateway.The backend_defaults object supports the following:'
+            optional: true
+            type: string
+        match:
+            description: '(Required) Criteria for determining a SAN''s match.The match object supports the following:'
+            type: string
+        max_connections:
+            description: (Required) Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster. Minimum value of 1.
+            type: string
+        max_pending_requests:
+            description: '(Optional) Number of overflowing requests after max_connections Envoy will queue to upstream cluster. Minimum value of 1.The http2 connection pool object supports the following:'
+            optional: true
+            type: string
+        max_requests:
+            description: '(Required) Maximum number of inflight requests Envoy can concurrently support across hosts in upstream cluster. Minimum value of 1.The health_check object supports the following:'
+            type: string
+        mesh_name:
+            description: (Required) Name of the service mesh in which to create the virtual gateway. Must be between 1 and 255 characters in length.
+            type: string
+        mesh_owner:
+            description: (Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to.
+            optional: true
+            type: string
+        mode:
+            description: '- (Required) Listener''s TLS mode. Valid values: DISABLED, PERMISSIVE, STRICT.'
+            type: string
+        name:
+            description: (Required) Name to use for the virtual gateway. Must be between 1 and 255 characters in length.
+            type: string
+        path:
+            description: (Optional) Destination path for the health check request. This is only required if the specified protocol is http or http2.
+            optional: true
+            type: string
+        port:
+            description: '(Optional) Destination port for the health check request. This port must match the port defined in the port_mapping for the listener.The tls object supports the following:'
+            optional: true
+            type: string
+        port_mapping:
+            description: (Required) Port mapping information for the listener.
+            type: string
+        ports:
+            description: (Optional) One or more ports that the policy is enforced for.
+            optional: true
+            type: string
+        private_key:
+            description: '(Required) Private key for a certificate stored on the file system of the mesh endpoint that the proxy is running on. Must be between 1 and 255 characters in length.The sds object supports the following:'
+            type: string
+        protocol:
+            description: (Required) Protocol for the health check request. Valid values are http, http2, and grpc.
+            type: string
+        resource_owner:
+            description: Resource owner's AWS account ID.
+            type: string
+        sds:
+            description: '(Optional) TLS validation context trust for a Secret Discovery Service certificate.The file object supports the following:'
+            optional: true
+            type: string
+        secret_name:
+            description: '(Required) Name of the secret for a virtual gateway''s Transport Layer Security (TLS) Secret Discovery Service validation context trust.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        spec:
+            description: (Required) Virtual gateway specification to apply.
+            type: string
+        subject_alternative_names:
+            description: (Optional) SANs for a virtual gateway's listener's Transport Layer Security (TLS) validation context.
+            optional: true
+            type: string
+        tags:
+            description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:'
+            optional: true
+            type: string
+        timeout_millis:
+            description: (Required) Amount of time to wait when receiving a response from the health check, in milliseconds.
+            type: string
+        tls:
+            description: '(Optional) Transport Layer Security (TLS) properties for the listenerThe logging object supports the following:'
+            optional: true
+            type: string
+        trust:
+            description: '(Required) TLS validation context trust.The subject_alternative_names object supports the following:'
+            type: string
+        unhealthy_threshold:
+            description: (Required) Number of consecutive failed health checks that must occur before declaring a virtual gateway unhealthy.
+            type: string
+        validation:
+            description: '- (Optional) Listener''s Transport Layer Security (TLS) validation context.The certificate object supports the following:'
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN of the virtual gateway.
@@ -25,12 +194,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

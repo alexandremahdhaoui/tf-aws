@@ -6,64 +6,61 @@ spec:
     args:
         digest_algorithm_mnemonic:
             description: A string used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3.
-            type: string
             optional: true
+            type: string
         digest_algorithm_type:
             description: An integer used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3.
-            type: string
             optional: true
+            type: string
         digest_value:
             description: A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system.
-            type: string
             optional: true
+            type: string
         dnskey_record:
             description: A string that represents a DNSKEY record.
-            type: string
             optional: true
+            type: string
         ds_record:
             description: A string that represents a delegation signer (DS) record.
-            type: string
             optional: true
+            type: string
         flag:
             description: An integer that specifies how the key is used. For key-signing key (KSK), this value is always 257.
-            type: string
             optional: true
+            type: string
         hosted_zone_id:
             description: (Required) Identifier of the Route 53 Hosted Zone.
             type: string
-            optional: true
         id:
             description: Route 53 Hosted Zone identifier and KMS Key identifier, separated by a comma (,).
-            type: string
             optional: true
+            type: string
         key_management_service_arn:
             description: (Required) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key. This must be unique for each key-signing key (KSK) in a single hosted zone. This key must be in the us-east-1 Region and meet certain requirements, which are described in the Route 53 Developer Guide and Route 53 API Reference.
             type: string
-            optional: true
         key_tag:
             description: An integer used to identify the DNSSEC record for the domain name. The process used to calculate the value is described in RFC-4034 Appendix B.
-            type: string
             optional: true
+            type: string
         name:
             description: (Required) Name of the key-signing key (KSK). Must be unique for each key-singing key in the same hosted zone.
             type: string
-            optional: true
         public_key:
             description: The public key, represented as a Base64 encoding, as required by RFC-4034 Page 5.
-            type: string
             optional: true
+            type: string
         signing_algorithm_mnemonic:
             description: A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1.
-            type: string
             optional: true
+            type: string
         signing_algorithm_type:
             description: An integer used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1.
-            type: string
             optional: true
+            type: string
         status:
             description: '(Optional) Status of the key-signing key (KSK). Valid values: ACTIVE, INACTIVE. Defaults to ACTIVE.In addition to all arguments above, the following attributes are exported:'
-            type: string
             optional: true
+            type: string
     attrs:
         digest_algorithm_mnemonic:
             description: A string used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3.
@@ -100,12 +97,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

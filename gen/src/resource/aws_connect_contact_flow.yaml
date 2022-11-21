@@ -3,7 +3,45 @@ kind: TerraformResource
 metadata:
     name: aws_connect_contact_flow
 spec:
-    args: {}
+    args:
+        arn:
+            description: The Amazon Resource Name (ARN) of the Contact Flow.
+            type: string
+        contact_flow_id:
+            description: The identifier of the Contact Flow.
+            type: string
+        content:
+            description: (Optional) Specifies the content of the Contact Flow, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the filename argument cannot be used.
+            optional: true
+            type: string
+        content_hash:
+            description: (Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow source specified with filename. The usual way to set this is filebase64sha256("mycontact_flow.json") (Terraform 0.11.12 and later) or base64sha256(file("mycontact_flow.json")) (Terraform 0.11.11 and earlier), where "mycontact_flow.json" is the local filename of the Contact Flow source.
+            optional: true
+            type: string
+        description:
+            description: (Optional) Specifies the description of the Contact Flow.
+            optional: true
+            type: string
+        filename:
+            description: (Optional) The path to the Contact Flow source within the local filesystem. Conflicts with content.
+            optional: true
+            type: string
+        id:
+            description: The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow separated by a colon (:).
+            type: string
+        instance_id:
+            description: (Required) Specifies the identifier of the hosting Amazon Connect Instance.
+            type: string
+        name:
+            description: (Required) Specifies the name of the Contact Flow.
+            type: string
+        tags:
+            description: (Optional) Tags to apply to the Contact Flow. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        type:
+            description: '(Optional, Forces new resource) Specifies the type of the Contact Flow. Defaults to CONTACT_FLOW. Allowed Values are: CONTACT_FLOW, CUSTOMER_QUEUE, CUSTOMER_HOLD, CUSTOMER_WHISPER, AGENT_HOLD, AGENT_WHISPER, OUTBOUND_WHISPER, AGENT_TRANSFER, QUEUE_TRANSFER.In addition to all arguments above, the following attributes are exported:'
+            type: string
     attrs:
         arn:
             description: The Amazon Resource Name (ARN) of the Contact Flow.
@@ -19,12 +57,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

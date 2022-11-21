@@ -3,19 +3,31 @@ kind: TerraformResource
 metadata:
     name: aws_apigatewayv2_api_mapping
 spec:
-    args: {}
+    args:
+        api_id:
+            description: (Required) API identifier.
+            type: string
+        api_mapping_key:
+            description: '(Optional) The API mapping key.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        domain_name:
+            description: (Required) Domain name. Use the aws_apigatewayv2_domain_name resource to configure a domain name.
+            type: string
+        stage:
+            description: (Required) API stage. Use the aws_apigatewayv2_stage resource to configure an API stage.
+            type: string
     attrs:
         id:
             description: API mapping identifier.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

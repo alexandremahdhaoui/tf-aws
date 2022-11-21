@@ -3,7 +3,59 @@ kind: TerraformResource
 metadata:
     name: aws_transfer_user
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of Transfer User
+            type: string
+        entry:
+            description: (Required) Represents an entry and a target.
+            type: string
+        gid:
+            description: (Required) The POSIX group ID used for all EFS operations by this user.
+            type: string
+        home_directory:
+            description: (Optional) The landing directory (folder) for a user when they log in to the server using their SFTP client.  It should begin with a /.  The first item in the path is the name of the home bucket (accessible as ${Transfer:HomeBucket} in the policy) and the rest is the home directory (accessible as ${Transfer:HomeDirectory} in the policy). For example, /example-bucket-1234/username would set the home bucket to example-bucket-1234 and the home directory to username.
+            optional: true
+            type: string
+        home_directory_mappings:
+            description: (Optional) Logical directory mappings that specify what S3 paths and keys should be visible to your user and how you want to make them visible. See Home Directory Mappings below.
+            optional: true
+            type: string
+        home_directory_type:
+            description: (Optional) The type of landing directory (folder) you mapped for your users' home directory. Valid values are PATH and LOGICAL.
+            optional: true
+            type: string
+        policy:
+            description: (Optional) An IAM JSON policy document that scopes down user access to portions of their Amazon S3 bucket. IAM variables you can use inside this policy include ${Transfer:UserName}, ${Transfer:HomeDirectory}, and ${Transfer:HomeBucket}. Since the IAM variable syntax matches Terraform's interpolation syntax, they must be escaped inside Terraform configuration strings ($${Transfer:UserName}).  These are evaluated on-the-fly when navigating the bucket.
+            optional: true
+            type: string
+        posix_profile:
+            description: (Optional) Specifies the full POSIX identity, including user ID (Uid), group ID (Gid), and any secondary groups IDs (SecondaryGids), that controls your users' access to your Amazon EFS file systems. See Posix Profile below.
+            optional: true
+            type: string
+        role:
+            description: (Required) Amazon Resource Name (ARN) of an IAM role that allows the service to controls your user’s access to your Amazon S3 bucket.
+            type: string
+        secondary_gids:
+            description: '(Optional) The secondary POSIX group IDs used for all EFS operations by this user.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        server_id:
+            description: (Required) The Server ID of the Transfer Server (e.g., s-12345678)
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Home Directory Mappings
+            optional: true
+            type: string
+        target:
+            description: (Required) Represents the map target.The Restricted option is achieved using the following mapping:Posix Profile
+            type: string
+        uid:
+            description: (Required) The POSIX user ID used for all EFS operations by this user.
+            type: string
+        user_name:
+            description: (Required) The name used for log in to your SFTP server.
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of Transfer User
@@ -13,12 +65,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

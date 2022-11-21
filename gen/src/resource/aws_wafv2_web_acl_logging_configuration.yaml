@@ -3,19 +3,90 @@ kind: TerraformResource
 metadata:
     name: aws_wafv2_web_acl_logging_configuration
 spec:
-    args: {}
+    args:
+        action:
+            description: '(Required) The action setting that a log record must contain in order to meet the condition. Valid values: ALLOW, BLOCK, COUNT.Label Name ConditionThe label_name_condition block supports the following argument:'
+            type: string
+        action_condition:
+            description: (Optional) A single action condition. See Action Condition below for more details.
+            optional: true
+            type: string
+        all_query_arguments:
+            description: (Optional, strongDEPRECATED) Redact all query arguments.
+            type: string
+        behavior:
+            description: '(Required) How to handle logs that satisfy the filter''s conditions and requirement. Valid values: KEEP or DROP.'
+            type: string
+        body:
+            description: (Optional, strongDEPRECATED) Redact the request body, which immediately follows the request headers.
+            type: string
+        condition:
+            description: (Required) Match condition(s) for the filter. See Condition below for more details.
+            type: string
+        default_behavior:
+            description: '(Required) Default handling for logs that don''t match any of the specified filtering conditions. Valid values: KEEP or DROP.'
+            type: string
+        filter:
+            description: '(Required) Filter(s) that you want to apply to the logs. See Filter below for more details.FilterThe filter block supports the following arguments:'
+            type: string
+        label_name:
+            description: '(Required) The label name that a log record must contain in order to meet the condition. This must be a fully qualified label name. Fully qualified labels have a prefix, optional namespaces, and label name. The prefix identifies the rule group or web ACL context of the rule that added the label.Redacted FieldsThe redacted_fields block supports the following arguments:~> strongNOTE: Only one of method, query_string, single_header or uri_path can be specified.'
+            type: string
+        label_name_condition:
+            description: '(Optional) A single label name condition. See Label Name Condition below for more details.Action ConditionThe action_condition block supports the following argument:'
+            optional: true
+            type: string
+        log_destination_configs:
+            description: (Required) The Amazon Kinesis Data Firehose, Cloudwatch Log log group, or S3 bucket Amazon Resource Names (ARNs) that you want to associate with the web ACL.
+            type: string
+        logging_filter:
+            description: (Optional) A configuration block that specifies which web requests are kept in the logs and which are dropped. You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation. See Logging Filter below for more details.
+            optional: true
+            type: string
+        method:
+            description: (Optional) Redact the HTTP method. Must be specified as an empty configuration block {}. The method indicates the type of operation that the request is asking the origin to perform.
+            optional: true
+            type: string
+        name:
+            description: '(Optional) The name of the query header to redact. This setting must be provided as lower case characters.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        query_string:
+            description: (Optional) Redact the query string. Must be specified as an empty configuration block {}. This is the part of a URL that appears after a ? character, if any.
+            optional: true
+            type: string
+        redacted_fields:
+            description: (Optional) The parts of the request that you want to keep out of the logs. Up to 100 redacted_fields blocks are supported. See Redacted Fields below for more details.
+            optional: true
+            type: string
+        requirement:
+            description: '(Required) Logic to apply to the filtering conditions. You can specify that, in order to satisfy the filter, a log must match all conditions or must match at least one condition. Valid values: MEETS_ALL or MEETS_ANY.ConditionThe condition block supports the following arguments:~> strongNote: Either action_condition or label_name_condition must be specified.'
+            type: string
+        resource_arn:
+            description: '(Required) The Amazon Resource Name (ARN) of the web ACL that you want to associate with log_destination_configs.Logging FilterThe logging_filter block supports the following arguments:'
+            type: string
+        single_header:
+            description: (Optional) Redact a single header. See Single Header below for details.
+            optional: true
+            type: string
+        single_query_argument:
+            description: (Optional, strongDEPRECATED) Redact a single query argument. See Single Query Argument below for details.
+            type: string
+        uri_path:
+            description: '(Optional) Redact the request URI path. Must be specified as an empty configuration block {}. This is the part of a web request that identifies a resource, for example, /images/daily-ad.jpg.Single HeaderRedact a single header. Provide the name of the header to redact, for example, User-Agent or Referer (provided as lowercase strings).The single_header block supports the following arguments:'
+            optional: true
+            type: string
     attrs:
         id:
             description: The Amazon Resource Name (ARN) of the WAFv2 Web ACL.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

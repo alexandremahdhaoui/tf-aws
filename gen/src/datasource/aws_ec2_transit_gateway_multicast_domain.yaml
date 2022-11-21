@@ -1,0 +1,77 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_ec2_transit_gateway_multicast_domain
+spec:
+    args:
+        arn:
+            description: EC2 Transit Gateway Multicast Domain ARN.
+            type: string
+        associations:
+            description: |
+                EC2 Transit Gateway Multicast Domain Associations
+            type: string
+        auto_accept_shared_associations:
+            description: Whether to automatically accept cross-account subnet associations that are associated with the EC2 Transit Gateway Multicast Domain.
+            type: string
+        filter:
+            description: (Optional) One or more configuration blocks containing name-values filters. Detailed below.
+            optional: true
+            type: string
+        group_ip_address:
+            description: The IP address assigned to the transit gateway multicast group.
+            type: string
+        id:
+            description: EC2 Transit Gateway Multicast Domain identifier.
+            type: string
+        igmpv2_support:
+            description: Whether to enable Internet Group Management Protocol (IGMP) version 2 for the EC2 Transit Gateway Multicast Domain.
+            type: string
+        members:
+            description: ""
+            type: string
+        name:
+            description: (Required) Name of the field to filter by, as defined by the underlying AWS API.
+            type: string
+        network_interface_id:
+            description: The group members' network interface ID.
+            type: string
+        owner_id:
+            description: Identifier of the AWS account that owns the EC2 Transit Gateway Multicast Domain.
+            type: string
+        sources:
+            description: ""
+            type: string
+        static_sources_support:
+            description: Whether to enable support for statically configuring multicast group sources for the EC2 Transit Gateway Multicast Domain.
+            type: string
+        subnet_id:
+            description: The ID of the subnet associated with the transit gateway multicast domain.
+            type: string
+        tags:
+            description: Key-value tags for the EC2 Transit Gateway Multicast Domain.
+            type: string
+        transit_gateway_attachment_id:
+            description: The ID of the transit gateway attachment.
+            type: string
+        transit_gateway_id:
+            description: 'EC2 Transit Gateway identifier.TimeoutsConfiguration options:'
+            type: string
+        transit_gateway_multicast_domain_id:
+            description: (Optional) Identifier of the EC2 Transit Gateway Multicast Domain.filter Argument ReferenceThis block allows for complex filters. You can use one or more filter blocks.
+            optional: true
+            type: string
+        values:
+            description: '(Required) Set of values that are accepted for the given field. A multicast domain will be selected if any one of the given values matches.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:'
+            type: string
+    attrs: {}
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

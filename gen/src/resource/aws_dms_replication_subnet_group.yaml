@@ -3,7 +3,29 @@ kind: TerraformResource
 metadata:
     name: aws_dms_replication_subnet_group
 spec:
-    args: {}
+    args:
+        Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens.:
+            description: ""
+            type: string
+        Must not be "default".:
+            description: ""
+            type: string
+        replication_subnet_group_description:
+            description: (Required) The description for the subnet group.
+            type: string
+        replication_subnet_group_id:
+            description: (Required) The name for the replication subnet group. This value is stored as a lowercase string.
+            type: string
+        subnet_ids:
+            description: (Required) A list of the EC2 subnet IDs for the subnet group.
+            type: string
+        tags:
+            description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
     attrs:
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
@@ -13,12 +35,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

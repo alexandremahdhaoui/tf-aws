@@ -3,7 +3,69 @@ kind: TerraformResource
 metadata:
     name: aws_ebs_volume
 spec:
-    args: {}
+    args:
+        arn:
+            description: The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e).
+            type: string
+        availability_zone:
+            description: (Required) The AZ where the EBS volume will exist.
+            type: string
+        create:
+            description: (Default 5m)
+            type: string
+        encrypted:
+            description: (Optional) If true, the disk will be encrypted.
+            optional: true
+            type: string
+        final_snapshot:
+            description: (Optional) If true, snapshot will be created before volume deletion. Any tags on the volume will be migrated to the snapshot. By default set to false
+            optional: true
+            type: string
+        id:
+            description: The volume ID (e.g., vol-59fcb34e).
+            type: string
+        iops:
+            description: (Optional) The amount of IOPS to provision for the disk. Only valid for type of io1, io2 or gp3.
+            optional: true
+            type: string
+        kms_key_id:
+            description: '(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true. Note: Terraform must be running with credentials which have the GenerateDataKeyWithoutPlaintext permission on the specified KMS key as required by the EBS KMS CMK volume provisioning process to prevent a volume from being created and almost immediately deleted.'
+            optional: true
+            type: string
+        multi_attach_enabled:
+            description: (Optional) Specifies whether to enable Amazon EBS Multi-Attach. Multi-Attach is supported on io1 and io2 volumes.
+            optional: true
+            type: string
+        outpost_arn:
+            description: (Optional) The Amazon Resource Name (ARN) of the Outpost.
+            optional: true
+            type: string
+        size:
+            description: (Optional) The size of the drive in GiBs.
+            optional: true
+            type: string
+        snapshot_id:
+            description: ' (Optional) A snapshot to base the EBS volume off of.'
+            optional: true
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        tags_all:
+            description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:'
+            type: string
+        throughput:
+            description: '(Optional) The throughput that the volume supports, in MiB/s. Only valid for type of gp3.~> strongNOTE: When changing the size, iops or type of an instance, there are considerations to be aware of.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        type:
+            description: '(Optional) The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1 (Default: gp2).'
+            optional: true
+            type: string
+        update:
+            description: (Default 5m)
+            type: string
     attrs:
         arn:
             description: The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e).
@@ -25,12 +87,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

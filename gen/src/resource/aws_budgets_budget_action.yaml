@@ -3,7 +3,99 @@ kind: TerraformResource
 metadata:
     name: aws_budgets_budget_action
 spec:
-    args: {}
+    args:
+        account_id:
+            description: (Optional) The ID of the target account for budget. Will use current user's account_id by default if omitted.
+            optional: true
+            type: string
+        action_id:
+            description: The id of the budget action.
+            type: string
+        action_sub_type:
+            description: (Required) The action subType. Valid values are STOP_EC2_INSTANCES or STOP_RDS_INSTANCES.
+            type: string
+        action_threshold:
+            description: (Required) The trigger threshold of the action. See Action Threshold.
+            type: string
+        action_threshold_type:
+            description: (Required) The type of threshold for a notification. Valid values are PERCENTAGE or ABSOLUTE_VALUE.
+            type: string
+        action_threshold_value:
+            description: (Required) The threshold of a notification.Subscriber
+            type: string
+        action_type:
+            description: (Required) The type of action. This defines the type of tasks that can be carried out by this action. This field also determines the format for definition. Valid values are APPLY_IAM_POLICY, APPLY_SCP_POLICY, and RUN_SSM_DOCUMENTS.
+            type: string
+        address:
+            description: (Required) The address that AWS sends budget notifications to, either an SNS topic or an email.
+            type: string
+        approval_model:
+            description: (Required) This specifies if the action needs manual or automatic approval. Valid values are AUTOMATIC and MANUAL.
+            type: string
+        arn:
+            description: The ARN of the budget action.
+            type: string
+        budget_name:
+            description: (Required) The name of a budget.
+            type: string
+        definition:
+            description: (Required) Specifies all of the type-specific parameters. See Definition.
+            type: string
+        execution_role_arn:
+            description: (Required) The role passed for action execution and reversion. Roles and actions must be in the same account.
+            type: string
+        groups:
+            description: (Optional) A list of groups to be attached. There must be at least one group.
+            optional: true
+            type: string
+        iam_action_definition:
+            description: (Optional) The AWS Identity and Access Management (IAM) action definition details. See IAM Action Definition.
+            optional: true
+            type: string
+        id:
+            description: ID of resource.
+            type: string
+        instance_ids:
+            description: (Required) The EC2 and RDS instance IDs.
+            type: string
+        notification_type:
+            description: (Required) The type of a notification. Valid values are ACTUAL or FORECASTED.
+            type: string
+        policy_arn:
+            description: (Required) The Amazon Resource Name (ARN) of the policy to be attached.
+            type: string
+        policy_id:
+            description: (Required) The policy ID attached.
+            type: string
+        region:
+            description: '(Required) The Region to run the SSM document.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        roles:
+            description: (Optional) A list of roles to be attached. There must be at least one role.
+            optional: true
+            type: string
+        scp_action_definition:
+            description: (Optional) The service control policies (SCPs) action definition details. See SCP Action Definition.IAM Action Definition
+            optional: true
+            type: string
+        ssm_action_definition:
+            description: (Optional) The AWS Systems Manager (SSM) action definition details. See SSM Action Definition.
+            optional: true
+            type: string
+        subscriber:
+            description: (Required) A list of subscribers. See Subscriber.Action Threshold
+            type: string
+        subscription_type:
+            description: (Required) The type of notification that AWS sends to a subscriber. Valid values are SNS or EMAIL.Definition
+            type: string
+        target_ids:
+            description: (Optional) A list of target IDs.SSM Action Definition
+            optional: true
+            type: string
+        users:
+            description: (Optional) A list of users to be attached. There must be at least one user.SCP Action Definition
+            optional: true
+            type: string
     attrs:
         action_id:
             description: The id of the budget action.
@@ -19,12 +111,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

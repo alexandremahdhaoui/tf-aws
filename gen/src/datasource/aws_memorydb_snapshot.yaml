@@ -1,0 +1,133 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformDatasource
+metadata:
+    name: aws_memorydb_snapshot
+spec:
+    args:
+        arn:
+            description: ARN of the snapshot.
+            type: string
+        cluster_configuration:
+            description: |
+                The configuration of the cluster from which the snapshot was taken.
+            type: string
+        cluster_name:
+            description: Name of the MemoryDB cluster that this snapshot was taken from.
+            type: string
+        description:
+            description: Description for the cluster.
+            type: string
+        engine_version:
+            description: Version number of the Redis engine used by the cluster.
+            type: string
+        id:
+            description: Name of the snapshot.
+            type: string
+        kms_key_arn:
+            description: ARN of the KMS key used to encrypt the snapshot at rest.
+            type: string
+        maintenance_window:
+            description: The weekly time range during which maintenance on the cluster is performed.
+            type: string
+        name:
+            description: Name of the cluster.
+            type: string
+        node_type:
+            description: Compute and memory capacity of the nodes in the cluster.
+            type: string
+        num_shards:
+            description: Number of shards in the cluster.
+            type: string
+        parameter_group_name:
+            description: Name of the parameter group associated with the cluster.
+            type: string
+        port:
+            description: Port number on which the cluster accepts connections.
+            type: string
+        snapshot_retention_limit:
+            description: Number of days for which MemoryDB retains automatic snapshots before deleting them.
+            type: string
+        snapshot_window:
+            description: The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of the shard.
+            type: string
+        source:
+            description: Whether the snapshot is from an automatic backup (automated) or was created manually (manual).
+            type: string
+        subnet_group_name:
+            description: Name of the subnet group used by the cluster.
+            type: string
+        topic_arn:
+            description: ARN of the SNS topic to which cluster notifications are sent.
+            type: string
+        vpc_id:
+            description: The VPC in which the cluster exists.
+            type: string
+    attrs:
+        arn:
+            description: ARN of the snapshot.
+            type: string
+        cluster_configuration:
+            description: |
+                The configuration of the cluster from which the snapshot was taken.
+            type: string
+        cluster_name:
+            description: Name of the MemoryDB cluster that this snapshot was taken from.
+            type: string
+        description:
+            description: Description for the cluster.
+            type: string
+        engine_version:
+            description: Version number of the Redis engine used by the cluster.
+            type: string
+        id:
+            description: Name of the snapshot.
+            type: string
+        kms_key_arn:
+            description: ARN of the KMS key used to encrypt the snapshot at rest.
+            type: string
+        maintenance_window:
+            description: The weekly time range during which maintenance on the cluster is performed.
+            type: string
+        name:
+            description: Name of the cluster.
+            type: string
+        node_type:
+            description: Compute and memory capacity of the nodes in the cluster.
+            type: string
+        num_shards:
+            description: Number of shards in the cluster.
+            type: string
+        parameter_group_name:
+            description: Name of the parameter group associated with the cluster.
+            type: string
+        port:
+            description: Port number on which the cluster accepts connections.
+            type: string
+        snapshot_retention_limit:
+            description: Number of days for which MemoryDB retains automatic snapshots before deleting them.
+            type: string
+        snapshot_window:
+            description: The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of the shard.
+            type: string
+        source:
+            description: Whether the snapshot is from an automatic backup (automated) or was created manually (manual).
+            type: string
+        subnet_group_name:
+            description: Name of the subnet group used by the cluster.
+            type: string
+        topic_arn:
+            description: ARN of the SNS topic to which cluster notifications are sent.
+            type: string
+        vpc_id:
+            description: The VPC in which the cluster exists.
+            type: string
+    terraform:
+        backend: ""
+        version: 1.3.4
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

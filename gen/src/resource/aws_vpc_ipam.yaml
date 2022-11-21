@@ -3,7 +3,40 @@ kind: TerraformResource
 metadata:
     name: aws_vpc_ipam
 spec:
-    args: {}
+    args:
+        arn:
+            description: Amazon Resource Name (ARN) of IPAM
+            type: string
+        cascade:
+            description: (Optional) Enables you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.operating_regions
+            optional: true
+            type: string
+        description:
+            description: (Optional) A description for the IPAM.
+            optional: true
+            type: string
+        id:
+            description: The ID of the IPAM
+            type: string
+        operating_regions:
+            description: (Required) Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You strongmust set your provider block region as an operating_region.
+            type: string
+        private_default_scope_id:
+            description: 'The ID of the IPAM''s private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space.'
+            type: string
+        public_default_scope_id:
+            description: ""
+            type: string
+        region_name:
+            description: '(Required) The name of the Region you want to add to the IPAM.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        scope_count:
+            description: The number of scopes in the IPAM.
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
     attrs:
         arn:
             description: Amazon Resource Name (ARN) of IPAM
@@ -15,9 +48,7 @@ spec:
             description: 'The ID of the IPAM''s private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space.'
             type: string
         public_default_scope_id:
-            description: |-
-                The ID of the IPAM's public scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private
-                IP space. The public scope is intended for all internet-routable IP space.
+            description: ""
             type: string
         scope_count:
             description: The number of scopes in the IPAM.
@@ -27,12 +58,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

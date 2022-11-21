@@ -3,7 +3,142 @@ kind: TerraformResource
 metadata:
     name: aws_mwaa_environment
 spec:
-    args: {}
+    args:
+        airflow_configuration_options:
+            description: (Optional) The airflow_configuration_options parameter specifies airflow override options. Check the Official documentation for all possible configuration options.
+            optional: true
+            type: string
+        airflow_version:
+            description: (Optional) Airflow version of your environment, will be set by default to the latest version that MWAA supports.
+            optional: true
+            type: string
+        arn:
+            description: The ARN of the MWAA Environment
+            type: string
+        create:
+            description: (Default 120m)
+            type: string
+        created_at:
+            description: The Created At date of the MWAA Environment
+            type: string
+        dag_processing_logs:
+            description: (Optional) (Optional) Log configuration options for processing DAGs. See Module logging configuration for more information. Disabled by default.
+            optional: true
+            type: string
+        dag_s3_path:
+            description: (Required) The relative path to the DAG folder on your Amazon S3 storage bucket. For example, dags. For more information, see Importing DAGs on Amazon MWAA.
+            type: string
+        enabled:
+            description: (Required) Enabling or disabling the collection of logs
+            type: string
+        environment_class:
+            description: (Optional) Environment class for the cluster. Possible options are mw1.small, mw1.medium, mw1.large. Will be set by default to mw1.small. Please check the AWS Pricing for more information about the environment classes.
+            optional: true
+            type: string
+        execution_role_arn:
+            description: (Required) The Amazon Resource Name (ARN) of the task execution role that the Amazon MWAA and its environment can assume. Check the official AWS documentation for the detailed role specification.
+            type: string
+        kms_key:
+            description: (Optional) The Amazon Resource Name (ARN) of your KMS key that you want to use for encryption. Will be set to the ARN of the managed KMS key aws/airflow by default. Please check the Official Documentation for more information.
+            optional: true
+            type: string
+        log_level:
+            description: '(Optional) Logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG. Will be INFO by default.Network configurationThe network_configuration block supports the following arguments. More information about the required subnet and security group settings can be found in the official AWS documentation.'
+            optional: true
+            type: string
+        logging_configuration:
+            description: (Optional) The Apache Airflow logs you want to send to Amazon CloudWatch Logs.
+            optional: true
+            type: string
+        logging_configuration[0].<LOG_CONFIGURATION_TYPE>[0].cloud_watch_log_group_arn:
+            description: Provides the ARN for the CloudWatch group where the logs will be published
+            type: string
+        max_workers:
+            description: (Optional) The maximum number of workers that can be automatically scaled up. Value need to be between 1 and 25. Will be 10 by default.
+            optional: true
+            type: string
+        min_workers:
+            description: (Optional) The minimum number of workers that you want to run in your environment. Will be 1 by default.
+            optional: true
+            type: string
+        name:
+            description: (Required) The name of the Apache Airflow Environment
+            type: string
+        network_configuration:
+            description: (Required) Specifies the network configuration for your Apache Airflow Environment. This includes two private subnets as well as security groups for the Airflow environment. Each subnet requires internet connection, otherwise the deployment will fail. See Network configuration below for details.
+            type: string
+        plugins_s3_object_version:
+            description: (Optional) The plugins.zip file version you want to use.
+            optional: true
+            type: string
+        plugins_s3_path:
+            description: (Optional) The relative path to the plugins.zip file on your Amazon S3 storage bucket. For example, plugins.zip. If a relative path is provided in the request, then plugins_s3_object_version is required. For more information, see Importing DAGs on Amazon MWAA.
+            optional: true
+            type: string
+        requirements_s3_object_version:
+            description: (Optional) The requirements.txt file version you want to use.
+            optional: true
+            type: string
+        requirements_s3_path:
+            description: (Optional) The relative path to the requirements.txt file on your Amazon S3 storage bucket. For example, requirements.txt. If a relative path is provided in the request, then requirements_s3_object_version is required. For more information, see Importing DAGs on Amazon MWAA.
+            optional: true
+            type: string
+        scheduler_logs:
+            description: (Optional) Log configuration options for the schedulers. See Module logging configuration for more information. Disabled by default.
+            optional: true
+            type: string
+        schedulers:
+            description: (Optional) The number of schedulers that you want to run in your environment. v2.0.2 and above accepts 25, default 2. v1.10.12 accepts 1.
+            optional: true
+            type: string
+        security_group_ids:
+            description: (Required) Security groups IDs for the environment. At least one of the security group needs to allow MWAA resources to talk to each other, otherwise MWAA cannot be provisioned.
+            type: string
+        service_role_arn:
+            description: The Service Role ARN of the Amazon MWAA Environment
+            type: string
+        source_bucket_arn:
+            description: (Required) The Amazon Resource Name (ARN) of your Amazon S3 storage bucket. For example, arn:aws:s3:::airflow-mybucketname.
+            type: string
+        status:
+            description: The status of the Amazon MWAA Environment
+            type: string
+        subnet_ids:
+            description: '(Required)  The private subnet IDs in which the environment should be created. MWAA requires two subnets.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        tags:
+            description: (Optional) A map of resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Logging configurationsThe logging_configuration block supports the following arguments.
+            optional: true
+            type: string
+        tags_all:
+            description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        task_logs:
+            description: (Optional) Log configuration options for DAG tasks. See Module logging configuration for more information. Enabled by default with INFO log level.
+            optional: true
+            type: string
+        update:
+            description: (Default 90m)
+            type: string
+        webserver_access_mode:
+            description: '(Optional) Specifies whether the webserver should be accessible over the internet or via your specified VPC. Possible options: PRIVATE_ONLY (default) and PUBLIC_ONLY.'
+            optional: true
+            type: string
+        webserver_logs:
+            description: (Optional) Log configuration options for the webservers. See Module logging configuration for more information. Disabled by default.
+            optional: true
+            type: string
+        webserver_url:
+            description: 'The webserver URL of the MWAA EnvironmentTimeoutsConfiguration options:'
+            type: string
+        weekly_maintenance_window_start:
+            description: (Optional) Specifies the start date for the weekly maintenance window.
+            optional: true
+            type: string
+        worker_logs:
+            description: '(Optional) Log configuration options for the workers. See Module logging configuration for more information. Disabled by default.Module logging configurationA configuration block to use for logging with respect to the various Apache Airflow services: DagProcessingLogs, SchedulerLogs, TaskLogs, WebserverLogs, and WorkerLogs. It supports the following arguments.'
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the MWAA Environment
@@ -37,12 +172,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

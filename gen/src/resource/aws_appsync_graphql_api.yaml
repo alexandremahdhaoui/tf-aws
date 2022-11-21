@@ -3,7 +3,104 @@ kind: TerraformResource
 metadata:
     name: aws_appsync_graphql_api
 spec:
-    args: {}
+    args:
+        additional_authentication_provider:
+            description: (Optional) One or more additional authentication providers for the GraphqlApi. Defined below.
+            optional: true
+            type: string
+        app_id_client_regex:
+            description: (Optional) Regular expression for validating the incoming Amazon Cognito User Pool app client ID.
+            optional: true
+            type: string
+        arn:
+            description: ARN
+            type: string
+        auth_ttl:
+            description: (Optional) Number of milliseconds a token is valid after being authenticated.
+            optional: true
+            type: string
+        authentication_type:
+            description: '(Required) Authentication type. Valid values: API_KEY, AWS_IAM, AMAZON_COGNITO_USER_POOLS, OPENID_CONNECT, AWS_LAMBDA'
+            type: string
+        authorizer_result_ttl_in_seconds:
+            description: (Optional) Number of seconds a response should be cached for. The default is 5 minutes (300 seconds). The Lambda function can override this by returning a ttlOverride key in its response. A value of 0 disables caching of responses. Minimum value of 0. Maximum value of 3600.
+            optional: true
+            type: string
+        authorizer_uri:
+            description: '(Required) ARN of the Lambda function to be called for authorization. Note: This Lambda function must have a resource-based policy assigned to it, to allow lambda:InvokeFunction from service principal appsync.amazonaws.com.'
+            type: string
+        aws_region:
+            description: (Optional) AWS region in which the user pool was created.lambda_authorizer_config
+            optional: true
+            type: string
+        client_id:
+            description: (Optional) Client identifier of the Relying party at the OpenID identity provider. This identifier is typically obtained when the Relying party is registered with the OpenID identity provider. You can specify a regular expression so the AWS AppSync can validate against multiple client identifiers at a time.
+            optional: true
+            type: string
+        cloudwatch_logs_role_arn:
+            description: (Required) Amazon Resource Name of the service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account.
+            type: string
+        default_action:
+            description: '(Required only if Cognito is used as the default auth provider) Action that you want your GraphQL API to take when a request that uses Amazon Cognito User Pool authentication doesn''t match the Amazon Cognito User Pool configuration. Valid: ALLOW and DENY'
+            type: string
+        exclude_verbose_content:
+            description: '(Optional) Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging  level. Valid values: true, false. Default value: falseadditional_authentication_provider'
+            optional: true
+            type: string
+        field_log_level:
+            description: '(Required) Field logging level. Valid values: ALL, ERROR, NONE.'
+            type: string
+        iat_ttl:
+            description: (Optional) Number of milliseconds a token is valid after being issued to a user.user_pool_config
+            optional: true
+            type: string
+        id:
+            description: API ID
+            type: string
+        identity_validation_expression:
+            description: '(Optional) Regular expression for validation of tokens before the Lambda function is called.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        issuer:
+            description: (Required) Issuer for the OpenID Connect configuration. The issuer returned by discovery MUST exactly match the value of iss in the ID Token.
+            type: string
+        lambda_authorizer_config:
+            description: (Optional) Nested argument containing Lambda authorizer configuration. Defined below.
+            optional: true
+            type: string
+        log_config:
+            description: (Optional) Nested argument containing logging configuration. Defined below.
+            optional: true
+            type: string
+        name:
+            description: (Required) User-supplied name for the GraphqlApi.
+            type: string
+        openid_connect_config:
+            description: (Optional) Nested argument containing OpenID Connect configuration. Defined below.
+            optional: true
+            type: string
+        schema:
+            description: (Optional) Schema definition, in GraphQL schema language format. Terraform cannot perform drift detection of this configuration.
+            optional: true
+            type: string
+        tags:
+            description: (Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.
+            optional: true
+            type: string
+        tags_all:
+            description: Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.
+            type: string
+        user_pool_config:
+            description: (Optional) Amazon Cognito User Pool configuration. Defined below.openid_connect_config
+            optional: true
+            type: string
+        user_pool_id:
+            description: (Required) User pool ID.
+            type: string
+        xray_enabled:
+            description: (Optional) Whether tracing with X-ray is enabled. Defaults to false.log_config
+            optional: true
+            type: string
     attrs:
         arn:
             description: ARN
@@ -19,12 +116,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

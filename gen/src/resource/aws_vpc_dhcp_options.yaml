@@ -3,7 +3,51 @@ kind: TerraformResource
 metadata:
     name: aws_vpc_dhcp_options
 spec:
-    args: {}
+    args:
+        'If you delete a DHCP Options Set, all VPCs using it will be associated to AWS''s ':
+            description: default DHCP Option Set.
+            type: string
+        'In most cases unless you''re configuring your own DNS you''ll want to set ':
+            description: 'domain_name_servers to AmazonProvidedDNS.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        Notice that all arguments are optional but you have to specify at least one argument.:
+            description: ""
+            type: string
+        'To actually use the DHCP Options Set you need to associate it to a VPC using ':
+            description: aws_vpc_dhcp_options_association.
+            type: string
+        arn:
+            description: The ARN of the DHCP Options Set.
+            type: string
+        domain_name:
+            description: (Optional) the suffix domain name to use by default when resolving non Fully Qualified Domain Names. In other words, this is what ends up being the search value in the /etc/resolv.conf file.
+            optional: true
+            type: string
+        domain_name_servers:
+            description: ', netbios_name_servers, ntp_servers are limited by AWS to maximum four servers only.'
+            type: string
+        id:
+            description: The ID of the DHCP Options Set.
+            type: string
+        netbios_name_servers:
+            description: (Optional) List of NETBIOS name servers.
+            optional: true
+            type: string
+        netbios_node_type:
+            description: (Optional) The NetBIOS node type (1, 2, 4, or 8). AWS recommends to specify 2 since broadcast and multicast are not supported in their network. For more information about these node types, see RFC 2132.
+            optional: true
+            type: string
+        ntp_servers:
+            description: (Optional) List of NTP servers to configure.
+            optional: true
+            type: string
+        owner_id:
+            description: The ID of the AWS account that owns the DHCP options set.
+            type: string
+        tags:
+            description: (Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Remarks
+            optional: true
+            type: string
     attrs:
         arn:
             description: The ARN of the DHCP Options Set.
@@ -19,12 +63,11 @@ spec:
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

@@ -3,19 +3,120 @@ kind: TerraformResource
 metadata:
     name: aws_opsworks_application
 spec:
-    args: {}
+    args:
+        app_source:
+            description: (Optional) SCM configuration of the app as described below.
+            optional: true
+            type: string
+        auto_bundle_on_deploy:
+            description: (Optional) Run bundle install when deploying for application of type rails.
+            optional: true
+            type: string
+        aws_flow_ruby_settings:
+            description: '(Optional) Specify activity and workflow workers for your app using the aws-flow gem.An app_source block supports the following arguments (can only be defined once per resource):'
+            optional: true
+            type: string
+        certificate:
+            description: (Required) The contents of the certificate's domain.crt file.
+            type: string
+        chain:
+            description: '(Optional)  Can be used to specify an intermediate certificate authority key or client authentication.In addition to all arguments above, the following attributes are exported:'
+            optional: true
+            type: string
+        data_source_arn:
+            description: (Optional) The data source's ARN.
+            optional: true
+            type: string
+        data_source_database_name:
+            description: (Optional) The database name.
+            optional: true
+            type: string
+        data_source_type:
+            description: (Optional) The data source's type one of AutoSelectOpsworksMysqlInstance, OpsworksMysqlInstance, or RdsDbInstance.
+            optional: true
+            type: string
+        description:
+            description: (Optional) A description of the app.
+            optional: true
+            type: string
+        document_root:
+            description: (Optional) Subfolder for the document root for application of type rails.
+            optional: true
+            type: string
+        domains:
+            description: ' (Optional) A list of virtual host alias.'
+            optional: true
+            type: string
+        enable_ssl:
+            description: (Optional) Whether to enable SSL for the app. This must be set in order to let ssl_configuration.private_key, ssl_configuration.certificate and ssl_configuration.chain take effect.
+            optional: true
+            type: string
+        environment:
+            description: (Optional) Object to define environment variables.  Object is described below.
+            optional: true
+            type: string
+        key:
+            description: (Required) Variable name.
+            type: string
+        name:
+            description: (Required) A human-readable name for the application.
+            type: string
+        password:
+            description: (Optional) Password to use when authenticating to the source. Terraform cannot perform drift detection of this configuration.
+            optional: true
+            type: string
+        private_key:
+            description: (Required) The private key; the contents of the certificate's domain.key file.
+            type: string
+        rails_env:
+            description: (Required if type = rails) The name of the Rails environment for application of type rails.
+            type: string
+        revision:
+            description: '(Optional) For sources that are version-aware, the revision to use.An environment block supports the following arguments:'
+            optional: true
+            type: string
+        secure:
+            description: '(Optional) Set visibility of the variable value to true or false.A ssl_configuration block supports the following arguments (can only be defined once per resource):'
+            optional: true
+            type: string
+        short_name:
+            description: (Required) A short, machine-readable name for the application. This can only be defined on resource creation and ignored on resource update.
+            type: string
+        ssh_key:
+            description: (Optional) SSH key to use when authenticating to the source. Terraform cannot perform drift detection of this configuration.
+            optional: true
+            type: string
+        ssl_configuration:
+            description: (Optional) The SSL configuration of the app. Object is described below.
+            optional: true
+            type: string
+        stack_id:
+            description: (Required) ID of the stack the application will belong to.
+            type: string
+        type:
+            description: (Required) The type of source to use. For example, "archive".
+            type: string
+        url:
+            description: (Required) The URL where the app resource can be found.
+            type: string
+        username:
+            description: (Optional) Username to use when authenticating to the source.
+            optional: true
+            type: string
+        value:
+            description: (Required) Variable value.
+            type: string
     attrs:
         id:
             description: The id of the application.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true

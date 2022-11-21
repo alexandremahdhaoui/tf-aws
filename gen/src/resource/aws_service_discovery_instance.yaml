@@ -3,19 +3,27 @@ kind: TerraformResource
 metadata:
     name: aws_service_discovery_instance
 spec:
-    args: {}
+    args:
+        attributes:
+            description: '(Required) A map contains the attributes of the instance. Check the doc for the supported attributes and syntax.In addition to all arguments above, the following attributes are exported:'
+            type: string
+        instance_id:
+            description: (Required, ForceNew) The ID of the service instance.
+            type: string
+        service_id:
+            description: (Required, ForceNew) The ID of the service that you want to use to create the instance.
+            type: string
     attrs:
         id:
             description: The ID of the instance.
             type: string
     terraform:
         backend: ""
-        version: ""
+        version: 1.3.4
         provider:
             assume_role: false
             name: aws
-            region: ""
             source: hashicorp/aws
-            version: v4.40.0
+            version: 4.38.0
             default_tags:
                 enabled: true
