@@ -1,8 +1,8 @@
 resource "aws_elasticache_subnet_group" "aws_elasticache_subnet_group" {
-  description = var.description
   name        = var.name
   subnet_ids  = var.subnet_ids
   tags        = var.tags
+  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

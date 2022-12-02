@@ -1,17 +1,25 @@
 resource "aws_connect_contact_flow_module" "aws_connect_contact_flow_module" {
-  description            = var.description
-  tags                   = var.tags
-  contact_flow_module_id = var.contact_flow_module_id
   content_hash           = var.content_hash
+  description            = var.description
   filename               = var.filename
   id                     = var.id
   instance_id            = var.instance_id
   name                   = var.name
+  tags                   = var.tags
   arn                    = var.arn
   content                = var.content
+  contact_flow_module_id = var.contact_flow_module_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Specifies the name of the Contact Flow Module."
   type        = string
 }
 variable "tags" {
@@ -19,8 +27,8 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "contact_flow_module_id" {
-  description = "The identifier of the Contact Flow Module."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Contact Flow Module."
   type        = string
 }
 variable "content_hash" {
@@ -33,29 +41,21 @@ variable "description" {
   type        = string
   default     = ""
 }
+variable "filename" {
+  description = "(Optional) The path to the Contact Flow Module source within the local filesystem. Conflicts with content."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow Module separated by a colon (:)."
   type        = string
 }
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Specifies the name of the Contact Flow Module."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Contact Flow Module."
+variable "contact_flow_module_id" {
+  description = "The identifier of the Contact Flow Module."
   type        = string
 }
 variable "content" {
   description = "(Optional) Specifies the content of the Contact Flow Module, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the filename argument cannot be used."
-  type        = string
-  default     = ""
-}
-variable "filename" {
-  description = "(Optional) The path to the Contact Flow Module source within the local filesystem. Conflicts with content."
   type        = string
   default     = ""
 }
@@ -179,21 +179,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Specifies the name of the Contact Flow Module."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.name
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Contact Flow Module."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.arn
+output "contact_flow_module_id" {
+  description = "The identifier of the Contact Flow Module."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.contact_flow_module_id
 }
 output "content" {
   description = "(Optional) Specifies the content of the Contact Flow Module, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the filename argument cannot be used."
   value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.content
-}
-output "filename" {
-  description = "(Optional) The path to the Contact Flow Module source within the local filesystem. Conflicts with content."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.filename
 }
 output "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow Module separated by a colon (:)."
@@ -203,9 +195,17 @@ output "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.instance_id
 }
-output "contact_flow_module_id" {
-  description = "The identifier of the Contact Flow Module."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.contact_flow_module_id
+output "name" {
+  description = "(Required) Specifies the name of the Contact Flow Module."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.name
+}
+output "tags" {
+  description = "(Optional) Tags to apply to the Contact Flow Module. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Contact Flow Module."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.arn
 }
 output "content_hash" {
   description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow Module source specified with filename. The usual way to set this is filebase64sha256(\"contact_flow_module.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"contact_flow_module.json\")) (Terraform 0.11.11 and earlier), where \"contact_flow_module.json\" is the local filename of the Contact Flow Module source."
@@ -215,9 +215,13 @@ output "description" {
   description = "(Optional) Specifies the description of the Contact Flow Module."
   value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.description
 }
-output "tags" {
-  description = "(Optional) Tags to apply to the Contact Flow Module. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.tags
+output "filename" {
+  description = "(Optional) The path to the Contact Flow Module source within the local filesystem. Conflicts with content."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.filename
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.tags_all
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Contact Flow Module."
@@ -230,10 +234,6 @@ output "contact_flow_module_id" {
 output "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow Module separated by a colon (:)."
   value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

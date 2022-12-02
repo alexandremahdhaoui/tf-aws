@@ -1,4 +1,5 @@
 resource "aws_placement_group" "aws_placement_group" {
+  spread_level       = var.spread_level
   strategy           = var.strategy
   tags               = var.tags
   arn                = var.arn
@@ -6,7 +7,6 @@ resource "aws_placement_group" "aws_placement_group" {
   name               = var.name
   partition_count    = var.partition_count
   placement_group_id = var.placement_group_id
-  spread_level       = var.spread_level
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -166,6 +166,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "strategy" {
+  description = "(Required) The placement strategy. Can be \"cluster\", \"partition\" or \"spread\"."
+  value       = aws_placement_group.aws_placement_group.strategy
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_placement_group.aws_placement_group.tags
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the placement group."
+  value       = aws_placement_group.aws_placement_group.arn
+}
 output "id" {
   description = "The name of the placement group."
   value       = aws_placement_group.aws_placement_group.id
@@ -185,18 +197,6 @@ output "placement_group_id" {
 output "spread_level" {
   description = "(Optional) Determines how placement groups spread instances. Can only be used\nwhen the strategy is set to \"spread\". Can be \"host\" or \"rack\". \"host\" can only be used for Outpost placement groups."
   value       = aws_placement_group.aws_placement_group.spread_level
-}
-output "strategy" {
-  description = "(Required) The placement strategy. Can be \"cluster\", \"partition\" or \"spread\"."
-  value       = aws_placement_group.aws_placement_group.strategy
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_placement_group.aws_placement_group.tags
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the placement group."
-  value       = aws_placement_group.aws_placement_group.arn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the placement group."

@@ -1,21 +1,17 @@
 resource "aws_schemas_schema" "aws_schemas_schema" {
-  arn           = var.arn
   registry_name = var.registry_name
   tags          = var.tags
+  type          = var.type
   version       = var.version
+  arn           = var.arn
   content       = var.content
   description   = var.description
   last_modified = var.last_modified
   name          = var.name
   tags_all      = var.tags_all
-  type          = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the discoverer."
   type        = string
 }
 variable "registry_name" {
@@ -27,16 +23,24 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "type" {
+  description = "(Required) The type of the schema. Valid values: OpenApi3."
+  type        = string
+}
 variable "version" {
   description = "The version of the schema."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the schema. Maximum of 385 characters consisting of lower case letters, upper case letters, ., -, _, @."
   type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
-variable "type" {
-  description = "(Required) The type of the schema. Valid values: OpenApi3."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the discoverer."
   type        = string
 }
 variable "content" {
@@ -50,10 +54,6 @@ variable "description" {
 }
 variable "last_modified" {
   description = "The last modified date of the schema."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the schema. Maximum of 385 characters consisting of lower case letters, upper case letters, ., -, _, @."
   type        = string
 }
 variable "tag_instance_id" {
@@ -176,37 +176,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "registry_name" {
+  description = "(Required) The name of the registry in which this schema belongs."
+  value       = aws_schemas_schema.aws_schemas_schema.registry_name
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_schemas_schema.aws_schemas_schema.tags
+}
+output "type" {
+  description = "(Required) The type of the schema. Valid values: OpenApi3."
+  value       = aws_schemas_schema.aws_schemas_schema.type
 }
 output "version" {
   description = "The version of the schema."
   value       = aws_schemas_schema.aws_schemas_schema.version
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the discoverer."
-  value       = aws_schemas_schema.aws_schemas_schema.arn
-}
-output "registry_name" {
-  description = "(Required) The name of the registry in which this schema belongs."
-  value       = aws_schemas_schema.aws_schemas_schema.registry_name
-}
-output "last_modified" {
-  description = "The last modified date of the schema."
-  value       = aws_schemas_schema.aws_schemas_schema.last_modified
-}
-output "name" {
-  description = "(Required) The name of the schema. Maximum of 385 characters consisting of lower case letters, upper case letters, ., -, _, @."
-  value       = aws_schemas_schema.aws_schemas_schema.name
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_schemas_schema.aws_schemas_schema.tags_all
 }
-output "type" {
-  description = "(Required) The type of the schema. Valid values: OpenApi3."
-  value       = aws_schemas_schema.aws_schemas_schema.type
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the discoverer."
+  value       = aws_schemas_schema.aws_schemas_schema.arn
 }
 output "content" {
   description = "(Required) The schema specification. Must be a valid Open API 3.0 spec."
@@ -215,6 +207,14 @@ output "content" {
 output "description" {
   description = "(Optional) The description of the schema. Maximum of 256 characters."
   value       = aws_schemas_schema.aws_schemas_schema.description
+}
+output "last_modified" {
+  description = "The last modified date of the schema."
+  value       = aws_schemas_schema.aws_schemas_schema.last_modified
+}
+output "name" {
+  description = "(Required) The name of the schema. Maximum of 385 characters consisting of lower case letters, upper case letters, ., -, _, @."
+  value       = aws_schemas_schema.aws_schemas_schema.name
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."

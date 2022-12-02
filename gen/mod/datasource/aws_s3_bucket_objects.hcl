@@ -1,14 +1,14 @@
 datasource "aws_s3_bucket_objects" "aws_s3_bucket_objects" {
-  bucket          = var.bucket
-  common_prefixes = var.common_prefixes
-  id              = var.id
-  keys            = var.keys
-  prefix          = var.prefix
-  start_after     = var.start_after
   delimiter       = var.delimiter
   encoding_type   = var.encoding_type
+  id              = var.id
+  prefix          = var.prefix
+  bucket          = var.bucket
+  common_prefixes = var.common_prefixes
   fetch_owner     = var.fetch_owner
+  keys            = var.keys
   max_keys        = var.max_keys
+  start_after     = var.start_after
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -24,15 +24,9 @@ variable "encoding_type" {
   type        = string
   default     = ""
 }
-variable "fetch_owner" {
-  description = "(Optional) Boolean specifying whether to populate the owner list (Default: false)In addition to all arguments above, the following attributes are exported:"
+variable "id" {
+  description = "S3 Bucket."
   type        = string
-  default     = ""
-}
-variable "max_keys" {
-  description = "(Optional) Maximum object keys to return (Default: 1000)"
-  type        = string
-  default     = ""
 }
 variable "prefix" {
   description = "(Optional) Limits results to object keys with this prefix (Default: none)"
@@ -52,33 +46,19 @@ variable "common_prefixes" {
   description = "List of any keys between prefix and the next occurrence of delimiter (i.e., similar to subdirectories of the prefix \"directory\"); the list is only returned when you specify delimiter"
   type        = string
 }
-variable "id" {
-  description = "S3 Bucket."
+variable "fetch_owner" {
+  description = "(Optional) Boolean specifying whether to populate the owner list (Default: false)In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "keys" {
   description = "List of strings representing object keys"
   type        = string
 }
-output "delimiter" {
-  description = "(Optional) Character used to group keys (Default: none)"
-  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.delimiter
-}
-output "encoding_type" {
-  description = "(Optional) Encodes keys using this method (Default: none; besides none, only \"url\" can be used)"
-  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.encoding_type
-}
-output "fetch_owner" {
-  description = "(Optional) Boolean specifying whether to populate the owner list (Default: false)In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.fetch_owner
-}
-output "max_keys" {
+variable "max_keys" {
   description = "(Optional) Maximum object keys to return (Default: 1000)"
-  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.max_keys
-}
-output "start_after" {
-  description = "(Optional) Returns key names lexicographically after a specific object key in your bucket (Default: none; S3 lists object keys in UTF-8 character encoding in lexicographical order)"
-  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.start_after
+  type        = string
+  default     = ""
 }
 output "bucket" {
   description = "(Required) Lists object keys in this S3 bucket. Alternatively, an S3 access point ARN can be specified"
@@ -88,13 +68,33 @@ output "common_prefixes" {
   description = "List of any keys between prefix and the next occurrence of delimiter (i.e., similar to subdirectories of the prefix \"directory\"); the list is only returned when you specify delimiter"
   value       = aws_s3_bucket_objects.aws_s3_bucket_objects.common_prefixes
 }
-output "id" {
-  description = "S3 Bucket."
-  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.id
+output "fetch_owner" {
+  description = "(Optional) Boolean specifying whether to populate the owner list (Default: false)In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.fetch_owner
 }
 output "keys" {
   description = "List of strings representing object keys"
   value       = aws_s3_bucket_objects.aws_s3_bucket_objects.keys
+}
+output "max_keys" {
+  description = "(Optional) Maximum object keys to return (Default: 1000)"
+  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.max_keys
+}
+output "start_after" {
+  description = "(Optional) Returns key names lexicographically after a specific object key in your bucket (Default: none; S3 lists object keys in UTF-8 character encoding in lexicographical order)"
+  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.start_after
+}
+output "delimiter" {
+  description = "(Optional) Character used to group keys (Default: none)"
+  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.delimiter
+}
+output "encoding_type" {
+  description = "(Optional) Encodes keys using this method (Default: none; besides none, only \"url\" can be used)"
+  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.encoding_type
+}
+output "id" {
+  description = "S3 Bucket."
+  value       = aws_s3_bucket_objects.aws_s3_bucket_objects.id
 }
 output "prefix" {
   description = "(Optional) Limits results to object keys with this prefix (Default: none)"

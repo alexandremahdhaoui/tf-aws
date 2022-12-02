@@ -8,6 +8,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "workspace_id" {
+  description = "(Required) The workspace id."
+  type        = string
+}
 variable "group_ids" {
   description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
   type        = string
@@ -21,10 +25,6 @@ variable "user_ids" {
   description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
   type        = string
   default     = ""
-}
-variable "workspace_id" {
-  description = "(Required) The workspace id."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,14 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "user_ids" {
-  description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
-  value       = aws_grafana_role_association.aws_grafana_role_association.user_ids
-}
-output "workspace_id" {
-  description = "(Required) The workspace id."
-  value       = aws_grafana_role_association.aws_grafana_role_association.workspace_id
-}
 output "group_ids" {
   description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
   value       = aws_grafana_role_association.aws_grafana_role_association.group_ids
@@ -161,6 +153,14 @@ output "group_ids" {
 output "role" {
   description = "(Required) The grafana role. Valid values can be found here."
   value       = aws_grafana_role_association.aws_grafana_role_association.role
+}
+output "user_ids" {
+  description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
+  value       = aws_grafana_role_association.aws_grafana_role_association.user_ids
+}
+output "workspace_id" {
+  description = "(Required) The workspace id."
+  value       = aws_grafana_role_association.aws_grafana_role_association.workspace_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

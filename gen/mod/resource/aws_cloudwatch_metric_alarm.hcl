@@ -1,84 +1,45 @@
 resource "aws_cloudwatch_metric_alarm" "aws_cloudwatch_metric_alarm" {
-  actions_enabled                       = var.actions_enabled
+  period                                = var.period
+  threshold_metric_id                   = var.threshold_metric_id
+  statistic                             = var.statistic
   alarm_description                     = var.alarm_description
-  datapoints_to_alarm                   = var.datapoints_to_alarm
+  dimensions                            = var.dimensions
+  metric                                = var.metric
   namespace                             = var.namespace
-  return_data                           = var.return_data
-  threshold                             = var.threshold
-  alarm_name                            = var.alarm_name
-  expression                            = var.expression
-  tags                                  = var.tags
+  ok_actions                            = var.ok_actions
   comparison_operator                   = var.comparison_operator
   evaluate_low_sample_count_percentiles = var.evaluate_low_sample_count_percentiles
-  id                                    = var.id
   label                                 = var.label
-  period                                = var.period
-  account_id                            = var.account_id
-  metric_name                           = var.metric_name
-  stat                                  = var.stat
-  threshold_metric_id                   = var.threshold_metric_id
-  unit                                  = var.unit
-  alarm_actions                         = var.alarm_actions
-  extended_statistic                    = var.extended_statistic
-  metric_query                          = var.metric_query
-  statistic                             = var.statistic
+  tags                                  = var.tags
   arn                                   = var.arn
-  dimensions                            = var.dimensions
   evaluation_periods                    = var.evaluation_periods
-  insufficient_data_actions             = var.insufficient_data_actions
-  metric                                = var.metric
-  ok_actions                            = var.ok_actions
+  return_data                           = var.return_data
+  datapoints_to_alarm                   = var.datapoints_to_alarm
+  id                                    = var.id
+  stat                                  = var.stat
+  metric_name                           = var.metric_name
+  threshold                             = var.threshold
   treat_missing_data                    = var.treat_missing_data
+  actions_enabled                       = var.actions_enabled
+  alarm_actions                         = var.alarm_actions
+  alarm_name                            = var.alarm_name
+  expression                            = var.expression
+  extended_statistic                    = var.extended_statistic
+  unit                                  = var.unit
+  account_id                            = var.account_id
+  insufficient_data_actions             = var.insufficient_data_actions
+  metric_query                          = var.metric_query
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "alarm_description" {
-  description = "(Optional) The description for the alarm."
+variable "stat" {
+  description = "supported statistics."
   type        = string
-  default     = ""
 }
 variable "datapoints_to_alarm" {
   description = "(Optional) The number of datapoints that must be breaching to trigger the alarm."
-  type        = string
-  default     = ""
-}
-variable "namespace" {
-  description = "(Required) The namespace for this metric. See docs for the list of namespacessupported metrics."
-  type        = string
-}
-variable "return_data" {
-  description = " (Optional) Specify exactly one metric_query to be true to use that metric_query result as the alarm."
-  type        = string
-  default     = ""
-}
-variable "threshold" {
-  description = "(Optional) The value against which the specified statistic is compared. This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models."
-  type        = string
-  default     = ""
-}
-variable "actions_enabled" {
-  description = "(Optional) Indicates whether or not actions should be executed during any changes to the alarm's state. Defaults to true."
-  type        = string
-  default     = ""
-}
-variable "expression" {
-  description = "(Optional) The math expression to be performed on the returned data, if this object is performing a math expression. This expression can use the id of the other metrics to refer to those metrics, and can also use the id of other expressions to use the result of those expressions. For more information about metric math expressions, see Metric Math Syntax and Functions in the Amazon CloudWatch User Guide."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE:  If you specify at least one metric_query, you may not specify a metric_name, namespace, period or statistic. If you do not specify a metric_query, you must specify each of these (although you may use extended_statistic instead of statistic).Nested fieldsmetric_query"
-  type        = string
-  default     = ""
-}
-variable "alarm_name" {
-  description = "(Required) The descriptive name for the alarm. This name must be unique within the user's AWS account"
-  type        = string
-}
-variable "evaluate_low_sample_count_percentiles" {
-  description = "(Optional) Used only for alarms\nbased on percentiles. If you specify ignoreevaluateignore, and evaluate."
   type        = string
   default     = ""
 }
@@ -86,39 +47,12 @@ variable "id" {
   description = "The ID of the health check."
   type        = string
 }
-variable "label" {
-  description = "(Optional) A human-readable label for this metric or expression. This is especially useful if this is an expression, so that you know what the value represents."
-  type        = string
-  default     = ""
-}
-variable "period" {
-  description = "(Required) The period in seconds over which the specified stat is applied."
+variable "alarm_name" {
+  description = "(Required) The descriptive name for the alarm. This name must be unique within the user's AWS account"
   type        = string
 }
-variable "comparison_operator" {
-  description = "(Required) The arithmetic operation to use when comparing the specified Statistic and Threshold. The specified Statistic value is used as the first operand. Either of the following is supported: GreaterThanOrEqualToThreshold, GreaterThanThreshold, LessThanThreshold, LessThanOrEqualToThreshold. Additionally, the values  LessThanLowerOrGreaterThanUpperThreshold, LessThanLowerThreshold, and GreaterThanUpperThreshold are used only for alarms based on anomaly detection models."
-  type        = string
-}
-variable "metric_name" {
-  description = "supported metrics."
-  type        = string
-}
-variable "stat" {
-  description = "supported statistics."
-  type        = string
-}
-variable "threshold_metric_id" {
-  description = "(Optional) If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function."
-  type        = string
-  default     = ""
-}
-variable "unit" {
-  description = "(Optional) The unit for this metric.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "account_id" {
-  description = "(Optional) The ID of the account where the metrics are located, if this is a cross-account alarm."
+variable "expression" {
+  description = "(Optional) The math expression to be performed on the returned data, if this object is performing a math expression. This expression can use the id of the other metrics to refer to those metrics, and can also use the id of other expressions to use the result of those expressions. For more information about metric math expressions, see Metric Math Syntax and Functions in the Amazon CloudWatch User Guide."
   type        = string
   default     = ""
 }
@@ -127,8 +61,56 @@ variable "extended_statistic" {
   type        = string
   default     = ""
 }
+variable "metric_name" {
+  description = "supported metrics."
+  type        = string
+}
+variable "threshold" {
+  description = "(Optional) The value against which the specified statistic is compared. This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models."
+  type        = string
+  default     = ""
+}
+variable "treat_missing_data" {
+  description = "(Optional) Sets how this alarm is to handle missing data points. The following values are supported: missing, ignore, breaching and notBreaching. Defaults to missing."
+  type        = string
+  default     = ""
+}
+variable "actions_enabled" {
+  description = "(Optional) Indicates whether or not actions should be executed during any changes to the alarm's state. Defaults to true."
+  type        = string
+  default     = ""
+}
+variable "alarm_actions" {
+  description = "(Optional) The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+  type        = string
+  default     = ""
+}
+variable "unit" {
+  description = "(Optional) The unit for this metric.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "metric_query" {
   description = " (Optional) Enables you to create an alarm based on a metric math expression. You may specify at most 20."
+  type        = string
+  default     = ""
+}
+variable "account_id" {
+  description = "(Optional) The ID of the account where the metrics are located, if this is a cross-account alarm."
+  type        = string
+  default     = ""
+}
+variable "insufficient_data_actions" {
+  description = "(Optional) The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+  type        = string
+  default     = ""
+}
+variable "period" {
+  description = "(Required) The period in seconds over which the specified stat is applied."
+  type        = string
+}
+variable "threshold_metric_id" {
+  description = "(Optional) If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function."
   type        = string
   default     = ""
 }
@@ -136,8 +118,51 @@ variable "statistic" {
   description = "SampleCount, Average, Sum, Minimum, Maximum"
   type        = string
 }
-variable "alarm_actions" {
-  description = "(Optional) The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+variable "metric" {
+  description = " (Optional) The metric to be returned, along with statistics, period, and units. Use this parameter only if this object is retrieving a metric and not performing a math expression on returned data.~> strongNOTE:  You must specify either metric or expression. Not both.metric"
+  type        = string
+  default     = ""
+}
+variable "namespace" {
+  description = "(Required) The namespace for this metric. See docs for the list of namespacessupported metrics."
+  type        = string
+}
+variable "ok_actions" {
+  description = "(Optional) The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+  type        = string
+  default     = ""
+}
+variable "alarm_description" {
+  description = "(Optional) The description for the alarm."
+  type        = string
+  default     = ""
+}
+variable "dimensions" {
+  description = "(Optional) The dimensions for this metric.  For the list of available dimensions see the AWS documentation here."
+  type        = string
+  default     = ""
+}
+variable "label" {
+  description = "(Optional) A human-readable label for this metric or expression. This is especially useful if this is an expression, so that you know what the value represents."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE:  If you specify at least one metric_query, you may not specify a metric_name, namespace, period or statistic. If you do not specify a metric_query, you must specify each of these (although you may use extended_statistic instead of statistic).Nested fieldsmetric_query"
+  type        = string
+  default     = ""
+}
+variable "comparison_operator" {
+  description = "(Required) The arithmetic operation to use when comparing the specified Statistic and Threshold. The specified Statistic value is used as the first operand. Either of the following is supported: GreaterThanOrEqualToThreshold, GreaterThanThreshold, LessThanThreshold, LessThanOrEqualToThreshold. Additionally, the values  LessThanLowerOrGreaterThanUpperThreshold, LessThanLowerThreshold, and GreaterThanUpperThreshold are used only for alarms based on anomaly detection models."
+  type        = string
+}
+variable "evaluate_low_sample_count_percentiles" {
+  description = "(Optional) Used only for alarms\nbased on percentiles. If you specify ignoreevaluateignore, and evaluate."
+  type        = string
+  default     = ""
+}
+variable "return_data" {
+  description = " (Optional) Specify exactly one metric_query to be true to use that metric_query result as the alarm."
   type        = string
   default     = ""
 }
@@ -148,31 +173,6 @@ variable "arn" {
 variable "evaluation_periods" {
   description = "(Required) The number of periods over which data is compared to the specified threshold."
   type        = string
-}
-variable "insufficient_data_actions" {
-  description = "(Optional) The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
-  type        = string
-  default     = ""
-}
-variable "metric" {
-  description = " (Optional) The metric to be returned, along with statistics, period, and units. Use this parameter only if this object is retrieving a metric and not performing a math expression on returned data.~> strongNOTE:  You must specify either metric or expression. Not both.metric"
-  type        = string
-  default     = ""
-}
-variable "ok_actions" {
-  description = "(Optional) The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
-  type        = string
-  default     = ""
-}
-variable "treat_missing_data" {
-  description = "(Optional) Sets how this alarm is to handle missing data points. The following values are supported: missing, ignore, breaching and notBreaching. Defaults to missing."
-  type        = string
-  default     = ""
-}
-variable "dimensions" {
-  description = "(Optional) The dimensions for this metric.  For the list of available dimensions see the AWS documentation here."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -294,93 +294,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "account_id" {
-  description = "(Optional) The ID of the account where the metrics are located, if this is a cross-account alarm."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.account_id
+output "datapoints_to_alarm" {
+  description = "(Optional) The number of datapoints that must be breaching to trigger the alarm."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.datapoints_to_alarm
 }
-output "metric_name" {
-  description = "supported metrics."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.metric_name
+output "id" {
+  description = "The ID of the health check."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.id
 }
 output "stat" {
   description = "supported statistics."
   value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.stat
 }
-output "threshold_metric_id" {
-  description = "(Optional) If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.threshold_metric_id
-}
-output "unit" {
-  description = "(Optional) The unit for this metric.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.unit
-}
-output "alarm_actions" {
-  description = "(Optional) The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.alarm_actions
-}
-output "extended_statistic" {
-  description = "(Optional) The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.extended_statistic
-}
-output "metric_query" {
-  description = " (Optional) Enables you to create an alarm based on a metric math expression. You may specify at most 20."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.metric_query
-}
-output "statistic" {
-  description = "SampleCount, Average, Sum, Minimum, Maximum"
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.statistic
-}
-output "arn" {
-  description = "The ARN of the CloudWatch Metric Alarm."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.arn
-}
-output "treat_missing_data" {
-  description = "(Optional) Sets how this alarm is to handle missing data points. The following values are supported: missing, ignore, breaching and notBreaching. Defaults to missing."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.treat_missing_data
-}
-output "dimensions" {
-  description = "(Optional) The dimensions for this metric.  For the list of available dimensions see the AWS documentation here."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.dimensions
-}
-output "evaluation_periods" {
-  description = "(Required) The number of periods over which data is compared to the specified threshold."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.evaluation_periods
-}
-output "insufficient_data_actions" {
-  description = "(Optional) The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.insufficient_data_actions
-}
-output "metric" {
-  description = " (Optional) The metric to be returned, along with statistics, period, and units. Use this parameter only if this object is retrieving a metric and not performing a math expression on returned data.~> strongNOTE:  You must specify either metric or expression. Not both.metric"
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.metric
-}
-output "ok_actions" {
-  description = "(Optional) The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.ok_actions
-}
-output "threshold" {
-  description = "(Optional) The value against which the specified statistic is compared. This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.threshold
-}
 output "actions_enabled" {
   description = "(Optional) Indicates whether or not actions should be executed during any changes to the alarm's state. Defaults to true."
   value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.actions_enabled
 }
-output "alarm_description" {
-  description = "(Optional) The description for the alarm."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.alarm_description
-}
-output "datapoints_to_alarm" {
-  description = "(Optional) The number of datapoints that must be breaching to trigger the alarm."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.datapoints_to_alarm
-}
-output "namespace" {
-  description = "(Required) The namespace for this metric. See docs for the list of namespacessupported metrics."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.namespace
-}
-output "return_data" {
-  description = " (Optional) Specify exactly one metric_query to be true to use that metric_query result as the alarm."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.return_data
+output "alarm_actions" {
+  description = "(Optional) The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.alarm_actions
 }
 output "alarm_name" {
   description = "(Required) The descriptive name for the alarm. This name must be unique within the user's AWS account"
@@ -390,9 +322,69 @@ output "expression" {
   description = "(Optional) The math expression to be performed on the returned data, if this object is performing a math expression. This expression can use the id of the other metrics to refer to those metrics, and can also use the id of other expressions to use the result of those expressions. For more information about metric math expressions, see Metric Math Syntax and Functions in the Amazon CloudWatch User Guide."
   value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.expression
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE:  If you specify at least one metric_query, you may not specify a metric_name, namespace, period or statistic. If you do not specify a metric_query, you must specify each of these (although you may use extended_statistic instead of statistic).Nested fieldsmetric_query"
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.tags
+output "extended_statistic" {
+  description = "(Optional) The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.extended_statistic
+}
+output "metric_name" {
+  description = "supported metrics."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.metric_name
+}
+output "threshold" {
+  description = "(Optional) The value against which the specified statistic is compared. This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.threshold
+}
+output "treat_missing_data" {
+  description = "(Optional) Sets how this alarm is to handle missing data points. The following values are supported: missing, ignore, breaching and notBreaching. Defaults to missing."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.treat_missing_data
+}
+output "unit" {
+  description = "(Optional) The unit for this metric.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.unit
+}
+output "account_id" {
+  description = "(Optional) The ID of the account where the metrics are located, if this is a cross-account alarm."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.account_id
+}
+output "insufficient_data_actions" {
+  description = "(Optional) The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.insufficient_data_actions
+}
+output "metric_query" {
+  description = " (Optional) Enables you to create an alarm based on a metric math expression. You may specify at most 20."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.metric_query
+}
+output "period" {
+  description = "(Required) The period in seconds over which the specified stat is applied."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.period
+}
+output "threshold_metric_id" {
+  description = "(Optional) If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.threshold_metric_id
+}
+output "statistic" {
+  description = "SampleCount, Average, Sum, Minimum, Maximum"
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.statistic
+}
+output "alarm_description" {
+  description = "(Optional) The description for the alarm."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.alarm_description
+}
+output "dimensions" {
+  description = "(Optional) The dimensions for this metric.  For the list of available dimensions see the AWS documentation here."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.dimensions
+}
+output "metric" {
+  description = " (Optional) The metric to be returned, along with statistics, period, and units. Use this parameter only if this object is retrieving a metric and not performing a math expression on returned data.~> strongNOTE:  You must specify either metric or expression. Not both.metric"
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.metric
+}
+output "namespace" {
+  description = "(Required) The namespace for this metric. See docs for the list of namespacessupported metrics."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.namespace
+}
+output "ok_actions" {
+  description = "(Optional) The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.ok_actions
 }
 output "comparison_operator" {
   description = "(Required) The arithmetic operation to use when comparing the specified Statistic and Threshold. The specified Statistic value is used as the first operand. Either of the following is supported: GreaterThanOrEqualToThreshold, GreaterThanThreshold, LessThanThreshold, LessThanOrEqualToThreshold. Additionally, the values  LessThanLowerOrGreaterThanUpperThreshold, LessThanLowerThreshold, and GreaterThanUpperThreshold are used only for alarms based on anomaly detection models."
@@ -402,17 +394,25 @@ output "evaluate_low_sample_count_percentiles" {
   description = "(Optional) Used only for alarms\nbased on percentiles. If you specify ignoreevaluateignore, and evaluate."
   value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.evaluate_low_sample_count_percentiles
 }
-output "id" {
-  description = "The ID of the health check."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.id
-}
 output "label" {
   description = "(Optional) A human-readable label for this metric or expression. This is especially useful if this is an expression, so that you know what the value represents."
   value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.label
 }
-output "period" {
-  description = "(Required) The period in seconds over which the specified stat is applied."
-  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.period
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE:  If you specify at least one metric_query, you may not specify a metric_name, namespace, period or statistic. If you do not specify a metric_query, you must specify each of these (although you may use extended_statistic instead of statistic).Nested fieldsmetric_query"
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.tags
+}
+output "arn" {
+  description = "The ARN of the CloudWatch Metric Alarm."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.arn
+}
+output "evaluation_periods" {
+  description = "(Required) The number of periods over which data is compared to the specified threshold."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.evaluation_periods
+}
+output "return_data" {
+  description = " (Optional) Specify exactly one metric_query to be true to use that metric_query result as the alarm."
+  value       = aws_cloudwatch_metric_alarm.aws_cloudwatch_metric_alarm.return_data
 }
 output "arn" {
   description = "The ARN of the CloudWatch Metric Alarm."

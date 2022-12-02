@@ -1,14 +1,27 @@
 resource "aws_redshift_snapshot_schedule" "aws_redshift_snapshot_schedule" {
+  arn               = var.arn
+  definitions       = var.definitions
   description       = var.description
   force_destroy     = var.force_destroy
   identifier        = var.identifier
   identifier_prefix = var.identifier_prefix
   tags              = var.tags
-  arn               = var.arn
-  definitions       = var.definitions
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "force_destroy" {
+  description = "(Optional) Whether to destroy all associated clusters with this snapshot schedule on deletion. Must be enabled and applied before attempting deletion."
+  type        = string
+  default     = ""
+}
+variable "identifier" {
+  description = "(Optional, Forces new resource) The snapshot schedule identifier. If omitted, Terraform will assign a random, unique identifier."
+  type        = string
+}
+variable "identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique\nidentifier beginning with the specified prefix. Conflicts with identifier."
   type        = string
 }
 variable "tags" {
@@ -29,19 +42,6 @@ variable "description" {
   description = "(Optional) The description of the snapshot schedule."
   type        = string
   default     = ""
-}
-variable "force_destroy" {
-  description = "(Optional) Whether to destroy all associated clusters with this snapshot schedule on deletion. Must be enabled and applied before attempting deletion."
-  type        = string
-  default     = ""
-}
-variable "identifier" {
-  description = "(Optional, Forces new resource) The snapshot schedule identifier. If omitted, Terraform will assign a random, unique identifier."
-  type        = string
-}
-variable "identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique\nidentifier beginning with the specified prefix. Conflicts with identifier."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -163,14 +163,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Snapshot Schedule."
-  value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.arn
-}
-output "definitions" {
-  description = "(Optional) The definition of the snapshot schedule. The definition is made up of schedule expressions, for example cron(30 12 *) or rate(12 hours)."
-  value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.definitions
-}
 output "description" {
   description = "(Optional) The description of the snapshot schedule."
   value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.description
@@ -195,9 +187,17 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Snapshot Schedule."
   value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.arn
 }
+output "definitions" {
+  description = "(Optional) The definition of the snapshot schedule. The definition is made up of schedule expressions, for example cron(30 12 *) or rate(12 hours)."
+  value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.definitions
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Snapshot Schedule."
+  value       = aws_redshift_snapshot_schedule.aws_redshift_snapshot_schedule.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

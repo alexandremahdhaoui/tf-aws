@@ -1,16 +1,24 @@
 resource "aws_emrcontainers_virtual_cluster.markdown" "aws_emrcontainers_virtual_cluster.markdown" {
-  namespace          = var.namespace
-  type               = var.type
   arn                = var.arn
-  eks_info           = var.eks_info
+  container_provider = var.container_provider
   id                 = var.id
   info               = var.info
-  name               = var.name
-  container_provider = var.container_provider
   tags               = var.tags
+  eks_info           = var.eks_info
+  name               = var.name
+  namespace          = var.namespace
+  type               = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the cluster."
+  type        = string
+}
+variable "container_provider" {
+  description = "(Required) Configuration block for the container provider associated with your cluster."
   type        = string
 }
 variable "id" {
@@ -19,6 +27,15 @@ variable "id" {
 }
 variable "info" {
   description = "Nested list containing information about the configuration of the container provider\n"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.container_provider Arguments"
+  type        = string
+  default     = ""
+}
+variable "eks_info" {
+  description = "Nested list containing EKS-specific information about the cluster where the EMR Containers cluster is running\n"
   type        = string
 }
 variable "name" {
@@ -32,23 +49,6 @@ variable "namespace" {
 variable "type" {
   description = "The type of the container providerIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "arn" {
-  description = "ARN of the cluster."
-  type        = string
-}
-variable "eks_info" {
-  description = "Nested list containing EKS-specific information about the cluster where the EMR Containers cluster is running\n"
-  type        = string
-}
-variable "container_provider" {
-  description = "(Required) Configuration block for the container provider associated with your cluster."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.container_provider Arguments"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -170,21 +170,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "namespace" {
-  description = "The namespace where the EMR Containers cluster is running"
-  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.namespace
-}
-output "type" {
-  description = "The type of the container providerIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.type
-}
 output "arn" {
   description = "ARN of the cluster."
   value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.arn
 }
-output "eks_info" {
-  description = "Nested list containing EKS-specific information about the cluster where the EMR Containers cluster is running\n"
-  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.eks_info
+output "container_provider" {
+  description = "(Required) Configuration block for the container provider associated with your cluster."
+  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.container_provider
 }
 output "id" {
   description = "The ID of the cluster."
@@ -194,17 +186,25 @@ output "info" {
   description = "Nested list containing information about the configuration of the container provider\n"
   value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.info
 }
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.container_provider Arguments"
+  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.tags
+}
+output "eks_info" {
+  description = "Nested list containing EKS-specific information about the cluster where the EMR Containers cluster is running\n"
+  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.eks_info
+}
 output "name" {
   description = " – (Required) Name of the virtual cluster."
   value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.name
 }
-output "container_provider" {
-  description = "(Required) Configuration block for the container provider associated with your cluster."
-  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.container_provider
+output "namespace" {
+  description = "The namespace where the EMR Containers cluster is running"
+  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.namespace
 }
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.container_provider Arguments"
-  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.tags
+output "type" {
+  description = "The type of the container providerIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_emrcontainers_virtual_cluster.markdown.aws_emrcontainers_virtual_cluster.markdown.type
 }
 output "id" {
   description = "The ID of the cluster."

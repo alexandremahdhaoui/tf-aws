@@ -151,6 +151,10 @@ output "security_group_names" {
   description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_security_group.aws_elasticache_security_group.security_group_names
 }
+output "name" {
+  description = ""
+  value       = aws_elasticache_security_group.aws_elasticache_security_group.name
+}
 output "security_group_names" {
   description = ""
   value       = aws_elasticache_security_group.aws_elasticache_security_group.security_group_names
@@ -158,10 +162,6 @@ output "security_group_names" {
 output "description" {
   description = ""
   value       = aws_elasticache_security_group.aws_elasticache_security_group.description
-}
-output "name" {
-  description = ""
-  value       = aws_elasticache_security_group.aws_elasticache_security_group.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

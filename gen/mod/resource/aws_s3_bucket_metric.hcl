@@ -1,15 +1,11 @@
 resource "aws_s3_bucket_metric" "aws_s3_bucket_metric" {
-  bucket = var.bucket
   filter = var.filter
   name   = var.name
   prefix = var.prefix
+  bucket = var.bucket
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "bucket" {
-  description = "(Required) The name of the bucket to put metric configuration."
   type        = string
 }
 variable "filter" {
@@ -25,6 +21,10 @@ variable "prefix" {
   description = "(Optional) Object prefix for filtering (singular)."
   type        = string
   default     = ""
+}
+variable "bucket" {
+  description = "(Required) The name of the bucket to put metric configuration."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,10 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bucket" {
-  description = "(Required) The name of the bucket to put metric configuration."
-  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.bucket
-}
 output "filter" {
   description = "(Optional) Object filtering that accepts a prefix, tags, or a logical AND of prefix and tags (documented below).The filter metric configuration supports the following:~> strongNOTE: At least one of prefix or tags is required when specifying a filter"
   value       = aws_s3_bucket_metric.aws_s3_bucket_metric.filter
@@ -161,6 +157,10 @@ output "name" {
 output "prefix" {
   description = "(Optional) Object prefix for filtering (singular)."
   value       = aws_s3_bucket_metric.aws_s3_bucket_metric.prefix
+}
+output "bucket" {
+  description = "(Required) The name of the bucket to put metric configuration."
+  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.bucket
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

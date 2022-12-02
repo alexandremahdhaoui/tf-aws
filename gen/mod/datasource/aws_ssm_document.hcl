@@ -1,12 +1,16 @@
 datasource "aws_ssm_document" "aws_ssm_document" {
+  name             = var.name
+  arn              = var.arn
   content          = var.content
   document_format  = var.document_format
   document_version = var.document_version
-  name             = var.name
-  arn              = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the Systems Manager document."
   type        = string
 }
 variable "arn" {
@@ -26,10 +30,6 @@ variable "document_version" {
   description = "(Optional) Document version for which you want information.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "name" {
-  description = "(Required) Name of the Systems Manager document."
-  type        = string
 }
 output "content" {
   description = "Contents of the document."
@@ -51,13 +51,13 @@ output "arn" {
   description = "ARN of the document. If the document is an AWS managed document, this value will be set to the name of the document instead."
   value       = aws_ssm_document.aws_ssm_document.arn
 }
-output "arn" {
-  description = "ARN of the document. If the document is an AWS managed document, this value will be set to the name of the document instead."
-  value       = aws_ssm_document.aws_ssm_document.arn
-}
 output "content" {
   description = "Contents of the document."
   value       = aws_ssm_document.aws_ssm_document.content
+}
+output "arn" {
+  description = "ARN of the document. If the document is an AWS managed document, this value will be set to the name of the document instead."
+  value       = aws_ssm_document.aws_ssm_document.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

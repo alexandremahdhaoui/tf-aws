@@ -1,9 +1,9 @@
 resource "aws_route53recoverycontrolconfig_cluster" "aws_route53recoverycontrolconfig_cluster" {
+  arn               = var.arn
+  cluster_endpoints = var.cluster_endpoints
   endpoint          = var.endpoint
   name              = var.name
   status            = var.status
-  arn               = var.arn
-  cluster_endpoints = var.cluster_endpoints
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -169,6 +169,10 @@ output "status" {
   description = "Status of cluster. PENDING when it is being created, PENDING_DELETION when it is being deleted and DEPLOYED otherwise.cluster_endpoints"
   value       = aws_route53recoverycontrolconfig_cluster.aws_route53recoverycontrolconfig_cluster.status
 }
+output "endpoint" {
+  description = "Cluster endpoint."
+  value       = aws_route53recoverycontrolconfig_cluster.aws_route53recoverycontrolconfig_cluster.endpoint
+}
 output "region" {
   description = "Region of the endpoint."
   value       = aws_route53recoverycontrolconfig_cluster.aws_route53recoverycontrolconfig_cluster.region
@@ -184,10 +188,6 @@ output "arn" {
 output "cluster_endpoints" {
   description = "List of 5 endpoints in 5 regions that can be used to talk to the cluster. See below."
   value       = aws_route53recoverycontrolconfig_cluster.aws_route53recoverycontrolconfig_cluster.cluster_endpoints
-}
-output "endpoint" {
-  description = "Cluster endpoint."
-  value       = aws_route53recoverycontrolconfig_cluster.aws_route53recoverycontrolconfig_cluster.endpoint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

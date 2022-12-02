@@ -1,9 +1,9 @@
 resource "aws_appsync_domain_name" "aws_appsync_domain_name" {
-  appsync_domain_name = var.appsync_domain_name
   certificate_arn     = var.certificate_arn
   description         = var.description
   domain_name         = var.domain_name
   id                  = var.id
+  appsync_domain_name = var.appsync_domain_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,6 +150,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "Appsync Domain Name."
+  value       = aws_appsync_domain_name.aws_appsync_domain_name.id
+}
 output "appsync_domain_name" {
   description = "Domain name that AppSync provides."
   value       = aws_appsync_domain_name.aws_appsync_domain_name.appsync_domain_name
@@ -165,10 +169,6 @@ output "description" {
 output "domain_name" {
   description = "(Required) Domain name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appsync_domain_name.aws_appsync_domain_name.domain_name
-}
-output "id" {
-  description = "Appsync Domain Name."
-  value       = aws_appsync_domain_name.aws_appsync_domain_name.id
 }
 output "appsync_domain_name" {
   description = "Domain name that AppSync provides."

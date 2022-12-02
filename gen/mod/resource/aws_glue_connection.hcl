@@ -1,33 +1,24 @@
 resource "aws_glue_connection" "aws_glue_connection" {
   connection_type                  = var.connection_type
   description                      = var.description
-  match_criteria                   = var.match_criteria
   name                             = var.name
-  physical_connection_requirements = var.physical_connection_requirements
-  connection_properties            = var.connection_properties
-  availability_zone                = var.availability_zone
-  catalog_id                       = var.catalog_id
-  id                               = var.id
   security_group_id_list           = var.security_group_id_list
   subnet_id                        = var.subnet_id
   tags                             = var.tags
+  catalog_id                       = var.catalog_id
+  connection_properties            = var.connection_properties
+  id                               = var.id
+  match_criteria                   = var.match_criteria
+  physical_connection_requirements = var.physical_connection_requirements
   arn                              = var.arn
+  availability_zone                = var.availability_zone
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "match_criteria" {
-  description = " – (Optional) A list of criteria that can be used in selecting this connection."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = " – (Required) The name of the connection."
-  type        = string
-}
-variable "physical_connection_requirements" {
-  description = "(Optional) A map of physical connection requirements, such as VPC and SecurityGroup. Defined below."
+variable "catalog_id" {
+  description = " – (Optional) The ID of the Data Catalog in which to create the connection. If none is supplied, the AWS account ID is used by default."
   type        = string
   default     = ""
 }
@@ -46,8 +37,8 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "Catalog ID and name of the connection"
+variable "name" {
+  description = " – (Required) The name of the connection."
   type        = string
 }
 variable "security_group_id_list" {
@@ -74,8 +65,17 @@ variable "availability_zone" {
   type        = string
   default     = ""
 }
-variable "catalog_id" {
-  description = " – (Optional) The ID of the Data Catalog in which to create the connection. If none is supplied, the AWS account ID is used by default."
+variable "id" {
+  description = "Catalog ID and name of the connection"
+  type        = string
+}
+variable "match_criteria" {
+  description = " – (Optional) A list of criteria that can be used in selecting this connection."
+  type        = string
+  default     = ""
+}
+variable "physical_connection_requirements" {
+  description = "(Optional) A map of physical connection requirements, such as VPC and SecurityGroup. Defined below."
   type        = string
   default     = ""
 }
@@ -199,37 +199,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = " – (Optional) Description of the connection."
-  value       = aws_glue_connection.aws_glue_connection.description
-}
 output "match_criteria" {
   description = " – (Optional) A list of criteria that can be used in selecting this connection."
   value       = aws_glue_connection.aws_glue_connection.match_criteria
-}
-output "name" {
-  description = " – (Required) The name of the connection."
-  value       = aws_glue_connection.aws_glue_connection.name
 }
 output "physical_connection_requirements" {
   description = "(Optional) A map of physical connection requirements, such as VPC and SecurityGroup. Defined below."
   value       = aws_glue_connection.aws_glue_connection.physical_connection_requirements
 }
-output "connection_properties" {
-  description = " – (Optional) A map of key-value pairs used as parameters for this connection."
-  value       = aws_glue_connection.aws_glue_connection.connection_properties
+output "arn" {
+  description = "The ARN of the Glue Connection."
+  value       = aws_glue_connection.aws_glue_connection.arn
 }
-output "connection_type" {
-  description = " – (Optional) The type of the connection. Supported are: CUSTOM, JDBC, KAFKA, MARKETPLACE, MONGODB, and NETWORK. Defaults to JBDC."
-  value       = aws_glue_connection.aws_glue_connection.connection_type
-}
-output "catalog_id" {
-  description = " – (Optional) The ID of the Data Catalog in which to create the connection. If none is supplied, the AWS account ID is used by default."
-  value       = aws_glue_connection.aws_glue_connection.catalog_id
+output "availability_zone" {
+  description = "(Optional) The availability zone of the connection. This field is redundant and implied by subnet_id, but is currently an api requirement."
+  value       = aws_glue_connection.aws_glue_connection.availability_zone
 }
 output "id" {
   description = "Catalog ID and name of the connection"
   value       = aws_glue_connection.aws_glue_connection.id
+}
+output "description" {
+  description = " – (Optional) Description of the connection."
+  value       = aws_glue_connection.aws_glue_connection.description
+}
+output "name" {
+  description = " – (Required) The name of the connection."
+  value       = aws_glue_connection.aws_glue_connection.name
 }
 output "security_group_id_list" {
   description = "(Optional) The security group ID list used by the connection."
@@ -243,13 +239,17 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.physical_connection_requirements"
   value       = aws_glue_connection.aws_glue_connection.tags
 }
-output "arn" {
-  description = "The ARN of the Glue Connection."
-  value       = aws_glue_connection.aws_glue_connection.arn
+output "catalog_id" {
+  description = " – (Optional) The ID of the Data Catalog in which to create the connection. If none is supplied, the AWS account ID is used by default."
+  value       = aws_glue_connection.aws_glue_connection.catalog_id
 }
-output "availability_zone" {
-  description = "(Optional) The availability zone of the connection. This field is redundant and implied by subnet_id, but is currently an api requirement."
-  value       = aws_glue_connection.aws_glue_connection.availability_zone
+output "connection_properties" {
+  description = " – (Optional) A map of key-value pairs used as parameters for this connection."
+  value       = aws_glue_connection.aws_glue_connection.connection_properties
+}
+output "connection_type" {
+  description = " – (Optional) The type of the connection. Supported are: CUSTOM, JDBC, KAFKA, MARKETPLACE, MONGODB, and NETWORK. Defaults to JBDC."
+  value       = aws_glue_connection.aws_glue_connection.connection_type
 }
 output "arn" {
   description = "The ARN of the Glue Connection."

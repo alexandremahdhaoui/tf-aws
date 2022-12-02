@@ -1,16 +1,12 @@
 resource "aws_pinpoint_sms_channel.markdown" "aws_pinpoint_sms_channel.markdown" {
-  application_id                  = var.application_id
   enabled                         = var.enabled
   promotional_messages_per_second = var.promotional_messages_per_second
   sender_id                       = var.sender_id
   short_code                      = var.short_code
+  application_id                  = var.application_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "application_id" {
-  description = "(Required) The application ID."
   type        = string
 }
 variable "enabled" {
@@ -31,6 +27,10 @@ variable "short_code" {
   description = "(Optional) The Short Code registered with the phone provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "application_id" {
+  description = "(Required) The application ID."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -152,14 +152,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "sender_id" {
-  description = "(Optional) Sender identifier of your messages."
-  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.sender_id
-}
-output "short_code" {
-  description = "(Optional) The Short Code registered with the phone provider.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.short_code
-}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.application_id
@@ -171,6 +163,14 @@ output "enabled" {
 output "promotional_messages_per_second" {
   description = "Promotional messages per second that can be sent."
   value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.promotional_messages_per_second
+}
+output "sender_id" {
+  description = "(Optional) Sender identifier of your messages."
+  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.sender_id
+}
+output "short_code" {
+  description = "(Optional) The Short Code registered with the phone provider.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.short_code
 }
 output "promotional_messages_per_second" {
   description = "Promotional messages per second that can be sent."

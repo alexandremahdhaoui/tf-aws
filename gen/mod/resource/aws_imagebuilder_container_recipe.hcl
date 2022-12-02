@@ -1,173 +1,43 @@
 resource "aws_imagebuilder_container_recipe" "aws_imagebuilder_container_recipe" {
-  device_name              = var.device_name
-  iops                     = var.iops
-  value                    = var.value
-  platform                 = var.platform
-  target_repository        = var.target_repository
-  volume_type              = var.volume_type
-  working_directory        = var.working_directory
-  component_arn            = var.component_arn
-  container_type           = var.container_type
-  image                    = var.image
-  instance_configuration   = var.instance_configuration
-  owner                    = var.owner
-  parameter                = var.parameter
-  service                  = var.service
-  block_device_mapping     = var.block_device_mapping
-  date_created             = var.date_created
-  dockerfile_template_data = var.dockerfile_template_data
-  encrypted                = var.encrypted
-  version                  = var.version
-  virtual_name             = var.virtual_name
   arn                      = var.arn
-  dockerfile_template_uri  = var.dockerfile_template_uri
-  snapshot_id              = var.snapshot_id
-  tags                     = var.tags
   component                = var.component
-  throughput               = var.throughput
+  image                    = var.image
+  parent_image             = var.parent_image
+  value                    = var.value
+  volume_size              = var.volume_size
   description              = var.description
   name                     = var.name
-  volume_size              = var.volume_size
-  parent_image             = var.parent_image
-  repository_name          = var.repository_name
-  tags_all                 = var.tags_all
-  delete_on_termination    = var.delete_on_termination
-  ebs                      = var.ebs
-  kms_key_id               = var.kms_key_id
+  service                  = var.service
+  virtual_name             = var.virtual_name
+  block_device_mapping     = var.block_device_mapping
+  dockerfile_template_uri  = var.dockerfile_template_uri
+  parameter                = var.parameter
+  container_type           = var.container_type
+  device_name              = var.device_name
+  dockerfile_template_data = var.dockerfile_template_data
+  instance_configuration   = var.instance_configuration
   no_device                = var.no_device
+  working_directory        = var.working_directory
+  date_created             = var.date_created
+  iops                     = var.iops
+  kms_key_id               = var.kms_key_id
+  owner                    = var.owner
+  snapshot_id              = var.snapshot_id
+  target_repository        = var.target_repository
+  version                  = var.version
+  delete_on_termination    = var.delete_on_termination
+  platform                 = var.platform
+  tags_all                 = var.tags_all
+  component_arn            = var.component_arn
+  ebs                      = var.ebs
+  encrypted                = var.encrypted
+  repository_name          = var.repository_name
+  tags                     = var.tags
+  throughput               = var.throughput
+  volume_type              = var.volume_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "platform" {
-  description = "Platform of the container recipe."
-  type        = string
-  default     = ""
-}
-variable "target_repository" {
-  description = " (Required) The destination repository for the container image. Detailed below."
-  type        = string
-}
-variable "volume_type" {
-  description = "(Optional) Type of the volume. For example, gp2 or io2.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "working_directory" {
-  description = "(Optional) The working directory to be used during build and test workflows.componentThe component block supports the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "component_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
-  type        = string
-}
-variable "container_type" {
-  description = "(Required) The type of the container to create. Valid values: DOCKER."
-  type        = string
-}
-variable "image" {
-  description = "(Optional) The AMI ID to use as the base image for a container build and test instance. If not specified, Image Builder will use the appropriate ECS-optimized AMI as a base image.block_device_mapping"
-  type        = string
-  default     = ""
-}
-variable "instance_configuration" {
-  description = "(Optional) Configuration block used to configure an instance for building and testing container images. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "owner" {
-  description = "Owner of the container recipe."
-  type        = string
-  default     = ""
-}
-variable "parameter" {
-  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
-  type        = string
-  default     = ""
-}
-variable "service" {
-  description = "(Required) The service in which this image is registered. Valid values: ECR.instance_configuration"
-  type        = string
-}
-variable "block_device_mapping" {
-  description = "(Optional) Configuration block(s) with block device mappings for the the container recipe. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "date_created" {
-  description = "Date the container recipe was created."
-  type        = string
-  default     = ""
-}
-variable "dockerfile_template_data" {
-  description = "(Optional) The Dockerfile template used to build the image as an inline data blob."
-  type        = string
-  default     = ""
-}
-variable "encrypted" {
-  description = "A flag that indicates if the target container is encrypted."
-  type        = string
-  default     = ""
-}
-variable "version" {
-  description = " (Required) Version of the container recipe.The following attributes are optional:"
-  type        = string
-}
-variable "virtual_name" {
-  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the container recipe."
-  type        = string
-}
-variable "dockerfile_template_uri" {
-  description = "(Optional) The Amazon S3 URI for the Dockerfile that will be used to build the container image."
-  type        = string
-  default     = ""
-}
-variable "snapshot_id" {
-  description = "(Optional) Identifier of the EC2 Volume Snapshot."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags for the container recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "component" {
-  description = "(Required) Ordered configuration block(s) with components for the container recipe. Detailed below."
-  type        = string
-}
-variable "throughput" {
-  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) The description of the container recipe."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) The name of the component parameter."
-  type        = string
-}
-variable "volume_size" {
-  description = "(Optional) Size of the volume, in GiB."
-  type        = string
-  default     = ""
-}
-variable "parent_image" {
-  description = " (Required) The base image for the container recipe."
-  type        = string
-}
-variable "repository_name" {
-  description = "(Required) The name of the container repository where the output container image is stored. This name is prefixed by the repository location."
   type        = string
 }
 variable "tags_all" {
@@ -180,13 +50,110 @@ variable "delete_on_termination" {
   type        = string
   default     = ""
 }
+variable "platform" {
+  description = "Platform of the container recipe."
+  type        = string
+  default     = ""
+}
+variable "component_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
+  type        = string
+}
+variable "repository_name" {
+  description = "(Required) The name of the container repository where the output container image is stored. This name is prefixed by the repository location."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags for the container recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "throughput" {
+  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
+  type        = string
+  default     = ""
+}
+variable "volume_type" {
+  description = "(Optional) Type of the volume. For example, gp2 or io2.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "ebs" {
   description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
   type        = string
   default     = ""
 }
-variable "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
+variable "encrypted" {
+  description = "A flag that indicates if the target container is encrypted."
+  type        = string
+  default     = ""
+}
+variable "image" {
+  description = "(Optional) The AMI ID to use as the base image for a container build and test instance. If not specified, Image Builder will use the appropriate ECS-optimized AMI as a base image.block_device_mapping"
+  type        = string
+  default     = ""
+}
+variable "parent_image" {
+  description = " (Required) The base image for the container recipe."
+  type        = string
+}
+variable "value" {
+  description = "(Required) The value for the named component parameter.target_repository"
+  type        = string
+}
+variable "volume_size" {
+  description = "(Optional) Size of the volume, in GiB."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the container recipe."
+  type        = string
+}
+variable "component" {
+  description = "(Required) Ordered configuration block(s) with components for the container recipe. Detailed below."
+  type        = string
+}
+variable "service" {
+  description = "(Required) The service in which this image is registered. Valid values: ECR.instance_configuration"
+  type        = string
+}
+variable "virtual_name" {
+  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The description of the container recipe."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the component parameter."
+  type        = string
+}
+variable "parameter" {
+  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
+  type        = string
+  default     = ""
+}
+variable "block_device_mapping" {
+  description = "(Optional) Configuration block(s) with block device mappings for the the container recipe. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "dockerfile_template_uri" {
+  description = "(Optional) The Amazon S3 URI for the Dockerfile that will be used to build the container image."
+  type        = string
+  default     = ""
+}
+variable "dockerfile_template_data" {
+  description = "(Optional) The Dockerfile template used to build the image as an inline data blob."
+  type        = string
+  default     = ""
+}
+variable "instance_configuration" {
+  description = "(Optional) Configuration block used to configure an instance for building and testing container images. Detailed below."
   type        = string
   default     = ""
 }
@@ -195,8 +162,45 @@ variable "no_device" {
   type        = string
   default     = ""
 }
+variable "working_directory" {
+  description = "(Optional) The working directory to be used during build and test workflows.componentThe component block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "container_type" {
+  description = "(Required) The type of the container to create. Valid values: DOCKER."
+  type        = string
+}
 variable "device_name" {
   description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
+  type        = string
+  default     = ""
+}
+variable "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
+  type        = string
+  default     = ""
+}
+variable "owner" {
+  description = "Owner of the container recipe."
+  type        = string
+  default     = ""
+}
+variable "snapshot_id" {
+  description = "(Optional) Identifier of the EC2 Volume Snapshot."
+  type        = string
+  default     = ""
+}
+variable "target_repository" {
+  description = " (Required) The destination repository for the container image. Detailed below."
+  type        = string
+}
+variable "version" {
+  description = " (Required) Version of the container recipe.The following attributes are optional:"
+  type        = string
+}
+variable "date_created" {
+  description = "Date the container recipe was created."
   type        = string
   default     = ""
 }
@@ -204,10 +208,6 @@ variable "iops" {
   description = "(Optional) Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume."
   type        = string
   default     = ""
-}
-variable "value" {
-  description = "(Required) The value for the named component parameter.target_repository"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -329,6 +329,90 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name of the component parameter."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.name
+}
+output "service" {
+  description = "(Required) The service in which this image is registered. Valid values: ECR.instance_configuration"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.service
+}
+output "virtual_name" {
+  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.virtual_name
+}
+output "description" {
+  description = "(Optional) The description of the container recipe."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.description
+}
+output "dockerfile_template_uri" {
+  description = "(Optional) The Amazon S3 URI for the Dockerfile that will be used to build the container image."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.dockerfile_template_uri
+}
+output "parameter" {
+  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.parameter
+}
+output "block_device_mapping" {
+  description = "(Optional) Configuration block(s) with block device mappings for the the container recipe. Detailed below."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.block_device_mapping
+}
+output "device_name" {
+  description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.device_name
+}
+output "dockerfile_template_data" {
+  description = "(Optional) The Dockerfile template used to build the image as an inline data blob."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.dockerfile_template_data
+}
+output "instance_configuration" {
+  description = "(Optional) Configuration block used to configure an instance for building and testing container images. Detailed below."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.instance_configuration
+}
+output "no_device" {
+  description = "(Optional) Set to true to remove a mapping from the parent image."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.no_device
+}
+output "working_directory" {
+  description = "(Optional) The working directory to be used during build and test workflows.componentThe component block supports the following arguments:"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.working_directory
+}
+output "container_type" {
+  description = "(Required) The type of the container to create. Valid values: DOCKER."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.container_type
+}
+output "iops" {
+  description = "(Optional) Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.iops
+}
+output "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.kms_key_id
+}
+output "owner" {
+  description = "Owner of the container recipe."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.owner
+}
+output "snapshot_id" {
+  description = "(Optional) Identifier of the EC2 Volume Snapshot."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.snapshot_id
+}
+output "target_repository" {
+  description = " (Required) The destination repository for the container image. Detailed below."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.target_repository
+}
+output "version" {
+  description = " (Required) Version of the container recipe.The following attributes are optional:"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.version
+}
+output "date_created" {
+  description = "Date the container recipe was created."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.date_created
+}
+output "platform" {
+  description = "Platform of the container recipe."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.platform
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.tags_all
@@ -337,141 +421,57 @@ output "delete_on_termination" {
   description = "(Optional) Whether to delete the volume on termination. Defaults to unset, which is the value inherited from the parent image."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.delete_on_termination
 }
-output "ebs" {
-  description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.ebs
-}
-output "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.kms_key_id
-}
-output "no_device" {
-  description = "(Optional) Set to true to remove a mapping from the parent image."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.no_device
-}
-output "parent_image" {
-  description = " (Required) The base image for the container recipe."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.parent_image
-}
-output "repository_name" {
-  description = "(Required) The name of the container repository where the output container image is stored. This name is prefixed by the repository location."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.repository_name
-}
-output "device_name" {
-  description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.device_name
-}
-output "iops" {
-  description = "(Optional) Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.iops
-}
-output "value" {
-  description = "(Required) The value for the named component parameter.target_repository"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.value
-}
-output "platform" {
-  description = "Platform of the container recipe."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.platform
-}
-output "target_repository" {
-  description = " (Required) The destination repository for the container image. Detailed below."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.target_repository
-}
 output "component_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.component_arn
-}
-output "container_type" {
-  description = "(Required) The type of the container to create. Valid values: DOCKER."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.container_type
-}
-output "image" {
-  description = "(Optional) The AMI ID to use as the base image for a container build and test instance. If not specified, Image Builder will use the appropriate ECS-optimized AMI as a base image.block_device_mapping"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.image
-}
-output "instance_configuration" {
-  description = "(Optional) Configuration block used to configure an instance for building and testing container images. Detailed below."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.instance_configuration
-}
-output "volume_type" {
-  description = "(Optional) Type of the volume. For example, gp2 or io2.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.volume_type
-}
-output "working_directory" {
-  description = "(Optional) The working directory to be used during build and test workflows.componentThe component block supports the following arguments:"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.working_directory
-}
-output "service" {
-  description = "(Required) The service in which this image is registered. Valid values: ECR.instance_configuration"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.service
-}
-output "block_device_mapping" {
-  description = "(Optional) Configuration block(s) with block device mappings for the the container recipe. Detailed below."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.block_device_mapping
-}
-output "date_created" {
-  description = "Date the container recipe was created."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.date_created
-}
-output "dockerfile_template_data" {
-  description = "(Optional) The Dockerfile template used to build the image as an inline data blob."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.dockerfile_template_data
 }
 output "encrypted" {
   description = "A flag that indicates if the target container is encrypted."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.encrypted
 }
-output "owner" {
-  description = "Owner of the container recipe."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.owner
-}
-output "parameter" {
-  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.parameter
-}
-output "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the container recipe."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.arn
-}
-output "dockerfile_template_uri" {
-  description = "(Optional) The Amazon S3 URI for the Dockerfile that will be used to build the container image."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.dockerfile_template_uri
-}
-output "snapshot_id" {
-  description = "(Optional) Identifier of the EC2 Volume Snapshot."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.snapshot_id
+output "repository_name" {
+  description = "(Required) The name of the container repository where the output container image is stored. This name is prefixed by the repository location."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.repository_name
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags for the container recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.tags
 }
-output "version" {
-  description = " (Required) Version of the container recipe.The following attributes are optional:"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.version
+output "throughput" {
+  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.throughput
 }
-output "virtual_name" {
-  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.virtual_name
+output "volume_type" {
+  description = "(Optional) Type of the volume. For example, gp2 or io2.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.volume_type
+}
+output "ebs" {
+  description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.ebs
 }
 output "component" {
   description = "(Required) Ordered configuration block(s) with components for the container recipe. Detailed below."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.component
 }
-output "throughput" {
-  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.throughput
+output "image" {
+  description = "(Optional) The AMI ID to use as the base image for a container build and test instance. If not specified, Image Builder will use the appropriate ECS-optimized AMI as a base image.block_device_mapping"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.image
 }
-output "description" {
-  description = "(Optional) The description of the container recipe."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.description
+output "parent_image" {
+  description = " (Required) The base image for the container recipe."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.parent_image
 }
-output "name" {
-  description = "(Required) The name of the component parameter."
-  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.name
+output "value" {
+  description = "(Required) The value for the named component parameter.target_repository"
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.value
 }
 output "volume_size" {
   description = "(Optional) Size of the volume, in GiB."
   value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.volume_size
+}
+output "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the container recipe."
+  value       = aws_imagebuilder_container_recipe.aws_imagebuilder_container_recipe.arn
 }
 output "arn" {
   description = "(Required) Amazon Resource Name (ARN) of the container recipe."

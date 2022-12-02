@@ -1,13 +1,17 @@
 resource "aws_redshiftserverless_usage_limit" "aws_redshiftserverless_usage_limit" {
-  usage_type    = var.usage_type
   amount        = var.amount
   arn           = var.arn
   breach_action = var.breach_action
   period        = var.period
   resource_arn  = var.resource_arn
+  usage_type    = var.usage_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
   type        = string
 }
 variable "breach_action" {
@@ -30,10 +34,6 @@ variable "usage_type" {
 }
 variable "amount" {
   description = "(Required) The limit amount. If time-based, this amount is in Redshift Processing Units (RPU) consumed per hour. If data-based, this amount is in terabytes (TB) of data transferred between Regions in cross-account sharing. The value must be a positive number."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
   type        = string
 }
 variable "tag_instance_id" {

@@ -1,45 +1,73 @@
 resource "aws_default_network_acl" "aws_default_network_acl" {
-  cidr_block             = var.cidr_block
-  default_network_acl_id = var.default_network_acl_id
+  to_port                = var.to_port
+  vpc_id                 = var.vpc_id
+  from_port              = var.from_port
+  icmp_type              = var.icmp_type
   owner_id               = var.owner_id
   subnet_ids             = var.subnet_ids
-  tags                   = var.tags
-  vpc_id                 = var.vpc_id
+  cidr_block             = var.cidr_block
+  ingress                = var.ingress
+  protocol               = var.protocol
   action                 = var.action
-  from_port              = var.from_port
   icmp_code              = var.icmp_code
+  tags                   = var.tags
+  tags_all               = var.tags_all
   ipv6_cidr_block        = var.ipv6_cidr_block
+  rule_no                = var.rule_no
+  arn                    = var.arn
+  default_network_acl_id = var.default_network_acl_id
   egress                 = var.egress
   id                     = var.id
-  ingress                = var.ingress
-  arn                    = var.arn
-  icmp_type              = var.icmp_type
-  protocol               = var.protocol
-  rule_no                = var.rule_no
-  tags_all               = var.tags_all
-  to_port                = var.to_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "ipv6_cidr_block" {
-  description = "(Optional) The IPv6 CIDR block.-> For more information on ICMP types and codes, see Internet Control Message Protocol (ICMP) Parameters.In addition to all arguments above, the following attributes are exported:"
+variable "cidr_block" {
+  description = "(Optional) The CIDR block to match. This must be a valid network mask."
   type        = string
   default     = ""
 }
-variable "action" {
-  description = "(Required) The action to take."
+variable "ingress" {
+  description = "(Optional) Configuration block for an ingress rule. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "protocol" {
+  description = "(Required) The protocol to match. If using the -1 'all' protocol, you must specify a from and to port of 0."
   type        = string
 }
-variable "from_port" {
-  description = "(Required) The from port to match."
+variable "action" {
+  description = "(Required) The action to take."
   type        = string
 }
 variable "icmp_code" {
   description = "(Optional) The ICMP type code to be used. Default 0."
   type        = string
   default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth the egress and ingress configuration blocks have the same arguments."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "rule_no" {
+  description = "(Required) The rule number. Used for ordering."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the Default Network ACL"
+  type        = string
+  default     = ""
+}
+variable "default_network_acl_id" {
+  description = "(Required) Network ACL ID to manage. This attribute is exported from aws_vpc, or manually found via the AWS Console."
+  type        = string
 }
 variable "egress" {
   description = "(Optional) Configuration block for an egress rule. Detailed below."
@@ -51,45 +79,8 @@ variable "id" {
   type        = string
   default     = ""
 }
-variable "ingress" {
-  description = "(Optional) Configuration block for an ingress rule. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "rule_no" {
-  description = "(Required) The rule number. Used for ordering."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "to_port" {
-  description = "(Required) The to port to match."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the Default Network ACL"
-  type        = string
-  default     = ""
-}
-variable "icmp_type" {
-  description = "(Optional) The ICMP type to be used. Default 0."
-  type        = string
-  default     = ""
-}
-variable "protocol" {
-  description = "(Required) The protocol to match. If using the -1 'all' protocol, you must specify a from and to port of 0."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Optional) List of Subnet IDs to apply the ACL to. See the notes above on Managing Subnets in the Default Network ACL"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth the egress and ingress configuration blocks have the same arguments."
+variable "ipv6_cidr_block" {
+  description = "(Optional) The IPv6 CIDR block.-> For more information on ICMP types and codes, see Internet Control Message Protocol (ICMP) Parameters.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -98,19 +89,28 @@ variable "vpc_id" {
   type        = string
   default     = ""
 }
-variable "cidr_block" {
-  description = "(Optional) The CIDR block to match. This must be a valid network mask."
+variable "from_port" {
+  description = "(Required) The from port to match."
+  type        = string
+}
+variable "icmp_type" {
+  description = "(Optional) The ICMP type to be used. Default 0."
   type        = string
   default     = ""
-}
-variable "default_network_acl_id" {
-  description = "(Required) Network ACL ID to manage. This attribute is exported from aws_vpc, or manually found via the AWS Console."
-  type        = string
 }
 variable "owner_id" {
   description = "ID of the AWS account that owns the Default Network ACL"
   type        = string
   default     = ""
+}
+variable "subnet_ids" {
+  description = "(Optional) List of Subnet IDs to apply the ACL to. See the notes above on Managing Subnets in the Default Network ACL"
+  type        = string
+  default     = ""
+}
+variable "to_port" {
+  description = "(Required) The to port to match."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -232,53 +232,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "egress" {
-  description = "(Optional) Configuration block for an egress rule. Detailed below."
-  value       = aws_default_network_acl.aws_default_network_acl.egress
-}
-output "id" {
-  description = "ID of the Default Network ACL"
-  value       = aws_default_network_acl.aws_default_network_acl.id
-}
-output "ingress" {
-  description = "(Optional) Configuration block for an ingress rule. Detailed below."
-  value       = aws_default_network_acl.aws_default_network_acl.ingress
-}
-output "to_port" {
-  description = "(Required) The to port to match."
-  value       = aws_default_network_acl.aws_default_network_acl.to_port
-}
-output "arn" {
-  description = "ARN of the Default Network ACL"
-  value       = aws_default_network_acl.aws_default_network_acl.arn
-}
 output "icmp_type" {
   description = "(Optional) The ICMP type to be used. Default 0."
   value       = aws_default_network_acl.aws_default_network_acl.icmp_type
-}
-output "protocol" {
-  description = "(Required) The protocol to match. If using the -1 'all' protocol, you must specify a from and to port of 0."
-  value       = aws_default_network_acl.aws_default_network_acl.protocol
-}
-output "rule_no" {
-  description = "(Required) The rule number. Used for ordering."
-  value       = aws_default_network_acl.aws_default_network_acl.rule_no
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_default_network_acl.aws_default_network_acl.tags_all
-}
-output "vpc_id" {
-  description = " ID of the associated VPC"
-  value       = aws_default_network_acl.aws_default_network_acl.vpc_id
-}
-output "cidr_block" {
-  description = "(Optional) The CIDR block to match. This must be a valid network mask."
-  value       = aws_default_network_acl.aws_default_network_acl.cidr_block
-}
-output "default_network_acl_id" {
-  description = "(Required) Network ACL ID to manage. This attribute is exported from aws_vpc, or manually found via the AWS Console."
-  value       = aws_default_network_acl.aws_default_network_acl.default_network_acl_id
 }
 output "owner_id" {
   description = "ID of the AWS account that owns the Default Network ACL"
@@ -288,25 +244,77 @@ output "subnet_ids" {
   description = "(Optional) List of Subnet IDs to apply the ACL to. See the notes above on Managing Subnets in the Default Network ACL"
   value       = aws_default_network_acl.aws_default_network_acl.subnet_ids
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth the egress and ingress configuration blocks have the same arguments."
-  value       = aws_default_network_acl.aws_default_network_acl.tags
+output "to_port" {
+  description = "(Required) The to port to match."
+  value       = aws_default_network_acl.aws_default_network_acl.to_port
 }
-output "action" {
-  description = "(Required) The action to take."
-  value       = aws_default_network_acl.aws_default_network_acl.action
+output "vpc_id" {
+  description = " ID of the associated VPC"
+  value       = aws_default_network_acl.aws_default_network_acl.vpc_id
 }
 output "from_port" {
   description = "(Required) The from port to match."
   value       = aws_default_network_acl.aws_default_network_acl.from_port
 }
+output "ingress" {
+  description = "(Optional) Configuration block for an ingress rule. Detailed below."
+  value       = aws_default_network_acl.aws_default_network_acl.ingress
+}
+output "protocol" {
+  description = "(Required) The protocol to match. If using the -1 'all' protocol, you must specify a from and to port of 0."
+  value       = aws_default_network_acl.aws_default_network_acl.protocol
+}
+output "cidr_block" {
+  description = "(Optional) The CIDR block to match. This must be a valid network mask."
+  value       = aws_default_network_acl.aws_default_network_acl.cidr_block
+}
 output "icmp_code" {
   description = "(Optional) The ICMP type code to be used. Default 0."
   value       = aws_default_network_acl.aws_default_network_acl.icmp_code
 }
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth the egress and ingress configuration blocks have the same arguments."
+  value       = aws_default_network_acl.aws_default_network_acl.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_default_network_acl.aws_default_network_acl.tags_all
+}
+output "action" {
+  description = "(Required) The action to take."
+  value       = aws_default_network_acl.aws_default_network_acl.action
+}
+output "default_network_acl_id" {
+  description = "(Required) Network ACL ID to manage. This attribute is exported from aws_vpc, or manually found via the AWS Console."
+  value       = aws_default_network_acl.aws_default_network_acl.default_network_acl_id
+}
+output "egress" {
+  description = "(Optional) Configuration block for an egress rule. Detailed below."
+  value       = aws_default_network_acl.aws_default_network_acl.egress
+}
+output "id" {
+  description = "ID of the Default Network ACL"
+  value       = aws_default_network_acl.aws_default_network_acl.id
+}
 output "ipv6_cidr_block" {
   description = "(Optional) The IPv6 CIDR block.-> For more information on ICMP types and codes, see Internet Control Message Protocol (ICMP) Parameters.In addition to all arguments above, the following attributes are exported:"
   value       = aws_default_network_acl.aws_default_network_acl.ipv6_cidr_block
+}
+output "rule_no" {
+  description = "(Required) The rule number. Used for ordering."
+  value       = aws_default_network_acl.aws_default_network_acl.rule_no
+}
+output "arn" {
+  description = "ARN of the Default Network ACL"
+  value       = aws_default_network_acl.aws_default_network_acl.arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_default_network_acl.aws_default_network_acl.tags_all
+}
+output "vpc_id" {
+  description = " ID of the associated VPC"
+  value       = aws_default_network_acl.aws_default_network_acl.vpc_id
 }
 output "arn" {
   description = "ARN of the Default Network ACL"
@@ -319,14 +327,6 @@ output "id" {
 output "owner_id" {
   description = "ID of the AWS account that owns the Default Network ACL"
   value       = aws_default_network_acl.aws_default_network_acl.owner_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_default_network_acl.aws_default_network_acl.tags_all
-}
-output "vpc_id" {
-  description = " ID of the associated VPC"
-  value       = aws_default_network_acl.aws_default_network_acl.vpc_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

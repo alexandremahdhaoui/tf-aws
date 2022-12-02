@@ -1,7 +1,7 @@
 resource "aws_vpn_gateway_route_propagation" "aws_vpn_gateway_route_propagation" {
+  create         = var.create
   route_table_id = var.route_table_id
   vpn_gateway_id = var.vpn_gateway_id
-  create         = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

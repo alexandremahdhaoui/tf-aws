@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "upload_date" {
-  description = " is the date when the server certificate was uploaded"
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.upload_date
-}
 output "arn" {
   description = " is set to the ARN of the IAM Server Certificate"
   value       = aws_iam_server_certificate.aws_iam_server_certificate.arn
@@ -31,6 +27,10 @@ output "id" {
 output "path" {
   description = " is set to the path of the IAM Server Certificate"
   value       = aws_iam_server_certificate.aws_iam_server_certificate.path
+}
+output "upload_date" {
+  description = " is the date when the server certificate was uploaded"
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.upload_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

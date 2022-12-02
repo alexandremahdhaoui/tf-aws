@@ -1,8 +1,8 @@
 resource "aws_amplify_webhook" "aws_amplify_webhook" {
-  app_id      = var.app_id
   arn         = var.arn
   branch_name = var.branch_name
   description = var.description
+  app_id      = var.app_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "branch_name" {
+  description = "(Required) Name for a branch that is part of the Amplify app."
+  value       = aws_amplify_webhook.aws_amplify_webhook.branch_name
+}
 output "description" {
   description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
   value       = aws_amplify_webhook.aws_amplify_webhook.description
@@ -156,10 +160,6 @@ output "app_id" {
 output "arn" {
   description = "ARN for the webhook."
   value       = aws_amplify_webhook.aws_amplify_webhook.arn
-}
-output "branch_name" {
-  description = "(Required) Name for a branch that is part of the Amplify app."
-  value       = aws_amplify_webhook.aws_amplify_webhook.branch_name
 }
 output "arn" {
   description = "ARN for the webhook."

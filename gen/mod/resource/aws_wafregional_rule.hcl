@@ -1,13 +1,13 @@
 resource "aws_wafregional_rule" "aws_wafregional_rule" {
-  arn         = var.arn
-  metric_name = var.metric_name
-  name        = var.name
-  tags        = var.tags
+  type        = var.type
   data_id     = var.data_id
   id          = var.id
+  metric_name = var.metric_name
+  name        = var.name
   negated     = var.negated
+  tags        = var.tags
+  arn         = var.arn
   predicate   = var.predicate
-  type        = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -17,6 +17,11 @@ variable "arn" {
   description = "The ARN of the WAF Regional Rule."
   type        = string
 }
+variable "predicate" {
+  description = "(Optional) The objects to include in a rule (documented below)."
+  type        = string
+  default     = ""
+}
 variable "metric_name" {
   description = "(Required) The name or description for the Amazon CloudWatch metric of this rule."
   type        = string
@@ -25,10 +30,18 @@ variable "name" {
   description = "(Required) The name or description of the rule."
   type        = string
 }
+variable "negated" {
+  description = "(Required) Whether to use the settings or the negated settings that you specified in the objects.RemarksIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested FieldspredicateSee the WAF Documentation for more information.Arguments"
   type        = string
   default     = ""
+}
+variable "type" {
+  description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch"
+  type        = string
 }
 variable "data_id" {
   description = "(Required) The unique identifier of a predicate, such as the ID of a ByteMatchSet or IPSet."
@@ -36,19 +49,6 @@ variable "data_id" {
 }
 variable "id" {
   description = "The ID of the WAF Regional Rule."
-  type        = string
-}
-variable "negated" {
-  description = "(Required) Whether to use the settings or the negated settings that you specified in the objects.RemarksIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "predicate" {
-  description = "(Optional) The objects to include in a rule (documented below)."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch"
   type        = string
 }
 variable "tag_instance_id" {
@@ -171,17 +171,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "data_id" {
-  description = "(Required) The unique identifier of a predicate, such as the ID of a ByteMatchSet or IPSet."
-  value       = aws_wafregional_rule.aws_wafregional_rule.data_id
-}
-output "id" {
-  description = "The ID of the WAF Regional Rule."
-  value       = aws_wafregional_rule.aws_wafregional_rule.id
-}
-output "negated" {
-  description = "(Required) Whether to use the settings or the negated settings that you specified in the objects.RemarksIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_wafregional_rule.aws_wafregional_rule.negated
+output "arn" {
+  description = "The ARN of the WAF Regional Rule."
+  value       = aws_wafregional_rule.aws_wafregional_rule.arn
 }
 output "predicate" {
   description = "(Optional) The objects to include in a rule (documented below)."
@@ -191,9 +183,13 @@ output "type" {
   description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch"
   value       = aws_wafregional_rule.aws_wafregional_rule.type
 }
-output "arn" {
-  description = "The ARN of the WAF Regional Rule."
-  value       = aws_wafregional_rule.aws_wafregional_rule.arn
+output "data_id" {
+  description = "(Required) The unique identifier of a predicate, such as the ID of a ByteMatchSet or IPSet."
+  value       = aws_wafregional_rule.aws_wafregional_rule.data_id
+}
+output "id" {
+  description = "The ID of the WAF Regional Rule."
+  value       = aws_wafregional_rule.aws_wafregional_rule.id
 }
 output "metric_name" {
   description = "(Required) The name or description for the Amazon CloudWatch metric of this rule."
@@ -203,9 +199,17 @@ output "name" {
   description = "(Required) The name or description of the rule."
   value       = aws_wafregional_rule.aws_wafregional_rule.name
 }
+output "negated" {
+  description = "(Required) Whether to use the settings or the negated settings that you specified in the objects.RemarksIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_wafregional_rule.aws_wafregional_rule.negated
+}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested FieldspredicateSee the WAF Documentation for more information.Arguments"
   value       = aws_wafregional_rule.aws_wafregional_rule.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_wafregional_rule.aws_wafregional_rule.tags_all
 }
 output "arn" {
   description = "The ARN of the WAF Regional Rule."
@@ -214,10 +218,6 @@ output "arn" {
 output "id" {
   description = "The ID of the WAF Regional Rule."
   value       = aws_wafregional_rule.aws_wafregional_rule.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_wafregional_rule.aws_wafregional_rule.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

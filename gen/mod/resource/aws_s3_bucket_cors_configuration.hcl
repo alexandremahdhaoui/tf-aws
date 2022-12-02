@@ -1,25 +1,42 @@
 resource "aws_s3_bucket_cors_configuration" "aws_s3_bucket_cors_configuration" {
-  allowed_methods       = var.allowed_methods
   expected_bucket_owner = var.expected_bucket_owner
-  expose_headers        = var.expose_headers
-  allowed_headers       = var.allowed_headers
+  max_age_seconds       = var.max_age_seconds
   allowed_origins       = var.allowed_origins
+  allowed_methods       = var.allowed_methods
   bucket                = var.bucket
   cors_rule             = var.cors_rule
+  expose_headers        = var.expose_headers
   id                    = var.id
-  max_age_seconds       = var.max_age_seconds
+  allowed_headers       = var.allowed_headers
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "(Optional) Unique identifier for the rule. The value cannot be longer than 255 characters."
+variable "allowed_origins" {
+  description = "(Required) Set of origins you want customers to be able to access the bucket from."
   type        = string
-  default     = ""
+}
+variable "expected_bucket_owner" {
+  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
+  type        = string
 }
 variable "max_age_seconds" {
   description = "(Optional) The time in seconds that your browser is to cache the preflight response for the specified resource.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "cors_rule" {
+  description = "(Required) Set of origins and methods (cross-origin access that you want to allow) documented below. You can configure up to 100 rules.cors_ruleThe cors_rule configuration block supports the following arguments:"
+  type        = string
+}
+variable "expose_headers" {
+  description = "(Optional) Set of headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object)."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "(Optional) Unique identifier for the rule. The value cannot be longer than 255 characters."
   type        = string
   default     = ""
 }
@@ -28,30 +45,13 @@ variable "allowed_headers" {
   type        = string
   default     = ""
 }
-variable "allowed_origins" {
-  description = "(Required) Set of origins you want customers to be able to access the bucket from."
+variable "allowed_methods" {
+  description = "(Required) Set of HTTP methods that you allow the origin to execute. Valid values are GET, PUT, HEAD, POST, and DELETE."
   type        = string
 }
 variable "bucket" {
   description = "(Required, Forces new resource) The name of the bucket."
   type        = string
-}
-variable "cors_rule" {
-  description = "(Required) Set of origins and methods (cross-origin access that you want to allow) documented below. You can configure up to 100 rules.cors_ruleThe cors_rule configuration block supports the following arguments:"
-  type        = string
-}
-variable "allowed_methods" {
-  description = "(Required) Set of HTTP methods that you allow the origin to execute. Valid values are GET, PUT, HEAD, POST, and DELETE."
-  type        = string
-}
-variable "expected_bucket_owner" {
-  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  type        = string
-}
-variable "expose_headers" {
-  description = "(Optional) Set of headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object)."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -173,25 +173,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allowed_methods" {
-  description = "(Required) Set of HTTP methods that you allow the origin to execute. Valid values are GET, PUT, HEAD, POST, and DELETE."
-  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.allowed_methods
-}
-output "expected_bucket_owner" {
-  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.expected_bucket_owner
-}
-output "expose_headers" {
-  description = "(Optional) Set of headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object)."
-  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.expose_headers
-}
 output "allowed_headers" {
   description = "(Optional) Set of Headers that are specified in the Access-Control-Request-Headers header."
   value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.allowed_headers
 }
-output "allowed_origins" {
-  description = "(Required) Set of origins you want customers to be able to access the bucket from."
-  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.allowed_origins
+output "allowed_methods" {
+  description = "(Required) Set of HTTP methods that you allow the origin to execute. Valid values are GET, PUT, HEAD, POST, and DELETE."
+  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.allowed_methods
 }
 output "bucket" {
   description = "(Required, Forces new resource) The name of the bucket."
@@ -201,9 +189,21 @@ output "cors_rule" {
   description = "(Required) Set of origins and methods (cross-origin access that you want to allow) documented below. You can configure up to 100 rules.cors_ruleThe cors_rule configuration block supports the following arguments:"
   value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.cors_rule
 }
+output "expose_headers" {
+  description = "(Optional) Set of headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object)."
+  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.expose_headers
+}
 output "id" {
   description = "(Optional) Unique identifier for the rule. The value cannot be longer than 255 characters."
   value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.id
+}
+output "allowed_origins" {
+  description = "(Required) Set of origins you want customers to be able to access the bucket from."
+  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.allowed_origins
+}
+output "expected_bucket_owner" {
+  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
+  value       = aws_s3_bucket_cors_configuration.aws_s3_bucket_cors_configuration.expected_bucket_owner
 }
 output "max_age_seconds" {
   description = "(Optional) The time in seconds that your browser is to cache the preflight response for the specified resource.In addition to all arguments above, the following attributes are exported:"

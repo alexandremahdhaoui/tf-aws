@@ -1,28 +1,14 @@
 resource "aws_vpn_gateway" "aws_vpn_gateway" {
-  availability_zone = var.availability_zone
-  id                = var.id
-  tags              = var.tags
   vpc_id            = var.vpc_id
   amazon_side_asn   = var.amazon_side_asn
   arn               = var.arn
+  availability_zone = var.availability_zone
+  id                = var.id
+  tags              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "id" {
-  description = "The ID of the VPN Gateway."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "vpc_id" {
-  description = "(Optional) The VPC ID to create in."
-  type        = string
-  default     = ""
 }
 variable "amazon_side_asn" {
   description = "(Optional) The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.In addition to all arguments above, the following attributes are exported:"
@@ -35,6 +21,20 @@ variable "arn" {
 }
 variable "availability_zone" {
   description = "(Optional) The Availability Zone for the virtual private gateway."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ID of the VPN Gateway."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "vpc_id" {
+  description = "(Optional) The VPC ID to create in."
   type        = string
   default     = ""
 }
@@ -158,10 +158,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_vpn_gateway.aws_vpn_gateway.tags
-}
 output "vpc_id" {
   description = "(Optional) The VPC ID to create in."
   value       = aws_vpn_gateway.aws_vpn_gateway.vpc_id
@@ -182,9 +178,9 @@ output "id" {
   description = "The ID of the VPN Gateway."
   value       = aws_vpn_gateway.aws_vpn_gateway.id
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the VPN Gateway."
-  value       = aws_vpn_gateway.aws_vpn_gateway.arn
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_vpn_gateway.aws_vpn_gateway.tags
 }
 output "id" {
   description = "The ID of the VPN Gateway."
@@ -193,6 +189,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_vpn_gateway.aws_vpn_gateway.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the VPN Gateway."
+  value       = aws_vpn_gateway.aws_vpn_gateway.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

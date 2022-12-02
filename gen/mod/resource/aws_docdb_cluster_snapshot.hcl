@@ -1,19 +1,23 @@
 resource "aws_docdb_cluster_snapshot" "aws_docdb_cluster_snapshot" {
-  kms_key_id                            = var.kms_key_id
-  port                                  = var.port
-  vpc_id                                = var.vpc_id
-  availability_zones                    = var.availability_zones
-  db_cluster_identifier                 = var.db_cluster_identifier
   db_cluster_snapshot_arn               = var.db_cluster_snapshot_arn
   db_cluster_snapshot_identifier        = var.db_cluster_snapshot_identifier
-  engine                                = var.engine
-  engine_version                        = var.engine_version
+  kms_key_id                            = var.kms_key_id
   source_db_cluster_snapshot_identifier = var.source_db_cluster_snapshot_identifier
   status                                = var.status
   storage_encrypted                     = var.storage_encrypted
+  availability_zones                    = var.availability_zones
+  db_cluster_identifier                 = var.db_cluster_identifier
+  engine                                = var.engine
+  engine_version                        = var.engine_version
+  port                                  = var.port
+  vpc_id                                = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "storage_encrypted" {
+  description = "Specifies whether the DocDB cluster snapshot is encrypted."
   type        = string
 }
 variable "availability_zones" {
@@ -24,20 +28,16 @@ variable "db_cluster_identifier" {
   description = "(Required) The DocDB Cluster Identifier from which to take the snapshot."
   type        = string
 }
-variable "db_cluster_snapshot_arn" {
-  description = "The Amazon Resource Name (ARN) for the DocDB Cluster Snapshot."
-  type        = string
-}
-variable "db_cluster_snapshot_identifier" {
-  description = "(Required) The Identifier for the snapshot.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "engine" {
   description = "Specifies the name of the database engine."
   type        = string
 }
 variable "engine_version" {
   description = "Version of the database engine for this DocDB cluster snapshot."
+  type        = string
+}
+variable "port" {
+  description = "Port that the DocDB cluster was listening on at the time of the snapshot."
   type        = string
 }
 variable "source_db_cluster_snapshot_identifier" {
@@ -48,20 +48,20 @@ variable "status" {
   description = "The status of this DocDB Cluster Snapshot."
   type        = string
 }
-variable "storage_encrypted" {
-  description = "Specifies whether the DocDB cluster snapshot is encrypted."
+variable "vpc_id" {
+  description = "The VPC ID associated with the DocDB cluster snapshot.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "db_cluster_snapshot_arn" {
+  description = "The Amazon Resource Name (ARN) for the DocDB Cluster Snapshot."
+  type        = string
+}
+variable "db_cluster_snapshot_identifier" {
+  description = "(Required) The Identifier for the snapshot.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "kms_key_id" {
   description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocDB cluster snapshot."
-  type        = string
-}
-variable "port" {
-  description = "Port that the DocDB cluster was listening on at the time of the snapshot."
-  type        = string
-}
-variable "vpc_id" {
-  description = "The VPC ID associated with the DocDB cluster snapshot.TimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -184,21 +184,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_id" {
-  description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocDB cluster snapshot."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.kms_key_id
+output "engine_version" {
+  description = "Version of the database engine for this DocDB cluster snapshot."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine_version
 }
 output "port" {
   description = "Port that the DocDB cluster was listening on at the time of the snapshot."
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.port
 }
-output "vpc_id" {
-  description = "The VPC ID associated with the DocDB cluster snapshot.TimeoutsConfiguration options:"
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.vpc_id
+output "source_db_cluster_snapshot_identifier" {
+  description = "The DocDB Cluster Snapshot Arn that the DocDB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.source_db_cluster_snapshot_identifier
 }
 output "status" {
   description = "The status of this DocDB Cluster Snapshot."
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.status
+}
+output "storage_encrypted" {
+  description = "Specifies whether the DocDB cluster snapshot is encrypted."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.storage_encrypted
 }
 output "availability_zones" {
   description = "List of EC2 Availability Zones that instances in the DocDB cluster snapshot can be restored in."
@@ -208,6 +212,14 @@ output "db_cluster_identifier" {
   description = "(Required) The DocDB Cluster Identifier from which to take the snapshot."
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.db_cluster_identifier
 }
+output "engine" {
+  description = "Specifies the name of the database engine."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine
+}
+output "vpc_id" {
+  description = "The VPC ID associated with the DocDB cluster snapshot.TimeoutsConfiguration options:"
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.vpc_id
+}
 output "db_cluster_snapshot_arn" {
   description = "The Amazon Resource Name (ARN) for the DocDB Cluster Snapshot."
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.db_cluster_snapshot_arn
@@ -216,45 +228,13 @@ output "db_cluster_snapshot_identifier" {
   description = "(Required) The Identifier for the snapshot.In addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.db_cluster_snapshot_identifier
 }
-output "engine" {
-  description = "Specifies the name of the database engine."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine
-}
-output "engine_version" {
-  description = "Version of the database engine for this DocDB cluster snapshot."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine_version
-}
-output "source_db_cluster_snapshot_identifier" {
-  description = "The DocDB Cluster Snapshot Arn that the DocDB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.source_db_cluster_snapshot_identifier
-}
-output "storage_encrypted" {
-  description = "Specifies whether the DocDB cluster snapshot is encrypted."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.storage_encrypted
-}
-output "engine" {
-  description = "Specifies the name of the database engine."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine
-}
-output "status" {
-  description = "The status of this DocDB Cluster Snapshot."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.status
-}
-output "availability_zones" {
-  description = "List of EC2 Availability Zones that instances in the DocDB cluster snapshot can be restored in."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.availability_zones
+output "kms_key_id" {
+  description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocDB cluster snapshot."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.kms_key_id
 }
 output "create" {
   description = "(Default 20m)"
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.create
-}
-output "db_cluster_snapshot_arn" {
-  description = "The Amazon Resource Name (ARN) for the DocDB Cluster Snapshot."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.db_cluster_snapshot_arn
-}
-output "engine_version" {
-  description = "Version of the database engine for this DocDB cluster snapshot."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine_version
 }
 output "kms_key_id" {
   description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DocDB cluster snapshot."
@@ -268,13 +248,33 @@ output "source_db_cluster_snapshot_identifier" {
   description = "The DocDB Cluster Snapshot Arn that the DocDB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.source_db_cluster_snapshot_identifier
 }
-output "storage_encrypted" {
-  description = "Specifies whether the DocDB cluster snapshot is encrypted."
-  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.storage_encrypted
+output "status" {
+  description = "The status of this DocDB Cluster Snapshot."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.status
 }
 output "vpc_id" {
   description = "The VPC ID associated with the DocDB cluster snapshot.TimeoutsConfiguration options:"
   value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.vpc_id
+}
+output "availability_zones" {
+  description = "List of EC2 Availability Zones that instances in the DocDB cluster snapshot can be restored in."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.availability_zones
+}
+output "db_cluster_snapshot_arn" {
+  description = "The Amazon Resource Name (ARN) for the DocDB Cluster Snapshot."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.db_cluster_snapshot_arn
+}
+output "engine" {
+  description = "Specifies the name of the database engine."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine
+}
+output "engine_version" {
+  description = "Version of the database engine for this DocDB cluster snapshot."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.engine_version
+}
+output "storage_encrypted" {
+  description = "Specifies whether the DocDB cluster snapshot is encrypted."
+  value       = aws_docdb_cluster_snapshot.aws_docdb_cluster_snapshot.storage_encrypted
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

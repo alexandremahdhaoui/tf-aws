@@ -1,41 +1,82 @@
 resource "aws_fsx_data_repository_association" "aws_fsx_data_repository_association" {
-  batch_import_meta_data_on_create = var.batch_import_meta_data_on_create
-  data_repository_path             = var.data_repository_path
-  file_system_path                 = var.file_system_path
-  arn                              = var.arn
-  auto_import_policy               = var.auto_import_policy
-  events                           = var.events
-  id                               = var.id
-  s3                               = var.s3
-  tags                             = var.tags
-  update                           = var.update
-  auto_export_policy               = var.auto_export_policy
   create                           = var.create
-  delete_data_in_filesystem        = var.delete_data_in_filesystem
+  data_repository_path             = var.data_repository_path
   file_system_id                   = var.file_system_id
   imported_file_chunk_size         = var.imported_file_chunk_size
+  tags                             = var.tags
+  update                           = var.update
+  batch_import_meta_data_on_create = var.batch_import_meta_data_on_create
+  delete_data_in_filesystem        = var.delete_data_in_filesystem
+  file_system_path                 = var.file_system_path
+  id                               = var.id
+  s3                               = var.s3
+  arn                              = var.arn
+  auto_export_policy               = var.auto_export_policy
+  auto_import_policy               = var.auto_import_policy
+  events                           = var.events
   tags_all                         = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "batch_import_meta_data_on_create" {
-  description = "(Optional) Set to true to run an import data repository task to import metadata from the data repository to the file system after the data repository association is created. Defaults to false."
+variable "update" {
+  description = "(Default 10m)"
   type        = string
-  default     = ""
 }
 variable "data_repository_path" {
   description = "(Required) The path to the Amazon S3 data repository that will be linked to the file system. The path must be an S3 bucket s3://myBucket/myPrefix/. This path specifies where in the S3 data repository files will be imported from or exported to. The same S3 bucket cannot be linked more than once to the same file system."
   type        = string
 }
+variable "file_system_id" {
+  description = "(Required) The ID of the Amazon FSx file system to on which to create a data repository association."
+  type        = string
+}
+variable "imported_file_chunk_size" {
+  description = "(Optional) For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the data repository association. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.S3 arguments"
+  type        = string
+  default     = ""
+}
+variable "s3" {
+  description = "(Optional) See the s3 configuration"
+  type        = string
+  default     = ""
+}
+variable "batch_import_meta_data_on_create" {
+  description = "(Optional) Set to true to run an import data repository task to import metadata from the data repository to the file system after the data repository association is created. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "delete_data_in_filesystem" {
+  description = "(Optional) Set to true to delete files from the file system upon deleting this data repository association. Defaults to false."
+  type        = string
+  default     = ""
+}
 variable "file_system_path" {
   description = "(Required) A path on the file system that points to a high-level directory (such as /ns1/) or subdirectory (such as /ns1/subdir/) that will be mapped 1-1 with data_repository_path. The leading forward slash in the name is required. Two data repository associations cannot have overlapping file system paths. For example, if a data repository is associated with file system path /ns1/, then you cannot link another data repository with file system path /ns1/ns2. This path specifies where in your file system files will be exported from or imported to. This file system directory can be linked to only one Amazon S3 bucket, and no other S3 bucket can be linked to the directory."
+  type        = string
+}
+variable "id" {
+  description = "Identifier of the data repository association, e.g., dra-12345678"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
 variable "arn" {
   description = "Amazon Resource Name of the file system."
   type        = string
+}
+variable "auto_export_policy" {
+  description = "(Optional) Specifies the type of updated objects that will be automatically exported from your file system to the linked S3 bucket. See the events configuration block."
+  type        = string
+  default     = ""
 }
 variable "auto_import_policy" {
   description = "(Optional) Specifies the type of updated objects that will be automatically imported from the linked S3 bucket to your file system. See the events configuration block.Events arguments"
@@ -47,49 +88,8 @@ variable "events" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "Identifier of the data repository association, e.g., dra-12345678"
-  type        = string
-}
-variable "s3" {
-  description = "(Optional) See the s3 configuration"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the data repository association. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.S3 arguments"
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "auto_export_policy" {
-  description = "(Optional) Specifies the type of updated objects that will be automatically exported from your file system to the linked S3 bucket. See the events configuration block."
-  type        = string
-  default     = ""
-}
 variable "create" {
   description = "(Default 10m)"
-  type        = string
-}
-variable "delete_data_in_filesystem" {
-  description = "(Optional) Set to true to delete files from the file system upon deleting this data repository association. Defaults to false."
-  type        = string
-  default     = ""
-}
-variable "file_system_id" {
-  description = "(Required) The ID of the Amazon FSx file system to on which to create a data repository association."
-  type        = string
-}
-variable "imported_file_chunk_size" {
-  description = "(Optional) For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -216,25 +216,13 @@ output "batch_import_meta_data_on_create" {
   description = "(Optional) Set to true to run an import data repository task to import metadata from the data repository to the file system after the data repository association is created. Defaults to false."
   value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.batch_import_meta_data_on_create
 }
-output "data_repository_path" {
-  description = "(Required) The path to the Amazon S3 data repository that will be linked to the file system. The path must be an S3 bucket s3://myBucket/myPrefix/. This path specifies where in the S3 data repository files will be imported from or exported to. The same S3 bucket cannot be linked more than once to the same file system."
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.data_repository_path
+output "delete_data_in_filesystem" {
+  description = "(Optional) Set to true to delete files from the file system upon deleting this data repository association. Defaults to false."
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.delete_data_in_filesystem
 }
 output "file_system_path" {
   description = "(Required) A path on the file system that points to a high-level directory (such as /ns1/) or subdirectory (such as /ns1/subdir/) that will be mapped 1-1 with data_repository_path. The leading forward slash in the name is required. Two data repository associations cannot have overlapping file system paths. For example, if a data repository is associated with file system path /ns1/, then you cannot link another data repository with file system path /ns1/ns2. This path specifies where in your file system files will be exported from or imported to. This file system directory can be linked to only one Amazon S3 bucket, and no other S3 bucket can be linked to the directory."
   value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.file_system_path
-}
-output "arn" {
-  description = "Amazon Resource Name of the file system."
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.arn
-}
-output "auto_import_policy" {
-  description = "(Optional) Specifies the type of updated objects that will be automatically imported from the linked S3 bucket to your file system. See the events configuration block.Events arguments"
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.auto_import_policy
-}
-output "events" {
-  description = "(Optional) A list of file event types to automatically export to your linked S3 bucket or import from the linked S3 bucket. Valid values are NEW, CHANGED, DELETED. Max of 3.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.events
 }
 output "id" {
   description = "Identifier of the data repository association, e.g., dra-12345678"
@@ -244,6 +232,42 @@ output "s3" {
   description = "(Optional) See the s3 configuration"
   value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.s3
 }
+output "arn" {
+  description = "Amazon Resource Name of the file system."
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.arn
+}
+output "auto_export_policy" {
+  description = "(Optional) Specifies the type of updated objects that will be automatically exported from your file system to the linked S3 bucket. See the events configuration block."
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.auto_export_policy
+}
+output "auto_import_policy" {
+  description = "(Optional) Specifies the type of updated objects that will be automatically imported from the linked S3 bucket to your file system. See the events configuration block.Events arguments"
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.auto_import_policy
+}
+output "events" {
+  description = "(Optional) A list of file event types to automatically export to your linked S3 bucket or import from the linked S3 bucket. Valid values are NEW, CHANGED, DELETED. Max of 3.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.events
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.tags_all
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.create
+}
+output "data_repository_path" {
+  description = "(Required) The path to the Amazon S3 data repository that will be linked to the file system. The path must be an S3 bucket s3://myBucket/myPrefix/. This path specifies where in the S3 data repository files will be imported from or exported to. The same S3 bucket cannot be linked more than once to the same file system."
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.data_repository_path
+}
+output "file_system_id" {
+  description = "(Required) The ID of the Amazon FSx file system to on which to create a data repository association."
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.file_system_id
+}
+output "imported_file_chunk_size" {
+  description = "(Optional) For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system."
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.imported_file_chunk_size
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the data repository association. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.S3 arguments"
   value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.tags
@@ -251,34 +275,6 @@ output "tags" {
 output "update" {
   description = "(Default 10m)"
   value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.update
-}
-output "imported_file_chunk_size" {
-  description = "(Optional) For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system."
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.imported_file_chunk_size
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.tags_all
-}
-output "auto_export_policy" {
-  description = "(Optional) Specifies the type of updated objects that will be automatically exported from your file system to the linked S3 bucket. See the events configuration block."
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.auto_export_policy
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.create
-}
-output "delete_data_in_filesystem" {
-  description = "(Optional) Set to true to delete files from the file system upon deleting this data repository association. Defaults to false."
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.delete_data_in_filesystem
-}
-output "file_system_id" {
-  description = "(Required) The ID of the Amazon FSx file system to on which to create a data repository association."
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.file_system_id
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.delete
 }
 output "id" {
   description = "Identifier of the data repository association, e.g., dra-12345678"
@@ -299,6 +295,10 @@ output "arn" {
 output "create" {
   description = "(Default 10m)"
   value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_fsx_data_repository_association.aws_fsx_data_repository_association.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

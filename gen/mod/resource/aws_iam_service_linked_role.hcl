@@ -1,29 +1,29 @@
 resource "aws_iam_service_linked_role" "aws_iam_service_linked_role" {
+  path             = var.path
+  tags             = var.tags
   arn              = var.arn
   aws_service_name = var.aws_service_name
   custom_suffix    = var.custom_suffix
   description      = var.description
   id               = var.id
   name             = var.name
-  path             = var.path
   create_date      = var.create_date
-  tags             = var.tags
   unique_id        = var.unique_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags" {
-  description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "create_date" {
+  description = "The creation date of the IAM role."
   type        = string
 }
 variable "unique_id" {
   description = "The stable and unique string identifying the role."
   type        = string
 }
-variable "create_date" {
-  description = "The creation date of the IAM role."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the role."
   type        = string
 }
 variable "aws_service_name" {
@@ -51,8 +51,8 @@ variable "path" {
   description = "The path of the role."
   type        = string
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the role."
+variable "tags" {
+  description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -175,6 +175,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "aws_service_name" {
+  description = "(Required, Forces new resource) The AWS service to which this role is attached. You use a string similar to a URL but without the http:// in front. For example: elasticbeanstalk.amazonaws.com. To find the full list of services that support service-linked roles, check the docs."
+  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.aws_service_name
+}
 output "custom_suffix" {
   description = "(Optional, forces new resource) Additional string appended to the role name. Not all AWS services support custom suffixes."
   value       = aws_iam_service_linked_role.aws_iam_service_linked_role.custom_suffix
@@ -195,13 +199,13 @@ output "path" {
   description = "The path of the role."
   value       = aws_iam_service_linked_role.aws_iam_service_linked_role.path
 }
+output "tags" {
+  description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.tags
+}
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the role."
   value       = aws_iam_service_linked_role.aws_iam_service_linked_role.arn
-}
-output "aws_service_name" {
-  description = "(Required, Forces new resource) The AWS service to which this role is attached. You use a string similar to a URL but without the http:// in front. For example: elasticbeanstalk.amazonaws.com. To find the full list of services that support service-linked roles, check the docs."
-  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.aws_service_name
 }
 output "unique_id" {
   description = "The stable and unique string identifying the role."
@@ -210,18 +214,6 @@ output "unique_id" {
 output "create_date" {
   description = "The creation date of the IAM role."
   value       = aws_iam_service_linked_role.aws_iam_service_linked_role.create_date
-}
-output "tags" {
-  description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.tags
-}
-output "unique_id" {
-  description = "The stable and unique string identifying the role."
-  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.unique_id
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the role."
-  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.arn
 }
 output "create_date" {
   description = "The creation date of the IAM role."
@@ -242,6 +234,14 @@ output "path" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_iam_service_linked_role.aws_iam_service_linked_role.tags_all
+}
+output "unique_id" {
+  description = "The stable and unique string identifying the role."
+  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.unique_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the role."
+  value       = aws_iam_service_linked_role.aws_iam_service_linked_role.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

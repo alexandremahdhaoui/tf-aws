@@ -1,13 +1,17 @@
 resource "aws_wafregional_sql_injection_match_set" "aws_wafregional_sql_injection_match_set" {
+  text_transformation       = var.text_transformation
+  type                      = var.type
   data                      = var.data
   field_to_match            = var.field_to_match
   name                      = var.name
   sql_injection_match_tuple = var.sql_injection_match_tuple
-  text_transformation       = var.text_transformation
-  type                      = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name or description of the SizeConstraintSet."
   type        = string
 }
 variable "sql_injection_match_tuple" {
@@ -30,10 +34,6 @@ variable "data" {
 }
 variable "field_to_match" {
   description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name or description of the SizeConstraintSet."
   type        = string
 }
 variable "tag_instance_id" {
@@ -156,6 +156,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.data
+}
+output "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
+  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.field_to_match
+}
 output "name" {
   description = "(Required) The name or description of the SizeConstraintSet."
   value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.name
@@ -171,14 +179,6 @@ output "text_transformation" {
 output "type" {
   description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.type
-}
-output "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.data
-}
-output "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
-  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.field_to_match
 }
 output "id" {
   description = "The ID of the WAF SqlInjectionMatchSet."

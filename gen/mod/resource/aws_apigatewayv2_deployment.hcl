@@ -1,12 +1,17 @@
 resource "aws_apigatewayv2_deployment" "aws_apigatewayv2_deployment" {
-  api_id      = var.api_id
   description = var.description
   id          = var.id
   triggers    = var.triggers
+  api_id      = var.api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "triggers" {
+  description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "api_id" {
   description = "(Required) API identifier."
@@ -20,11 +25,6 @@ variable "description" {
 variable "id" {
   description = "Deployment identifier."
   type        = string
-}
-variable "triggers" {
-  description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,10 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Deployment identifier."
-  value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.id
-}
 output "triggers" {
   description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command.In addition to all arguments above, the following attributes are exported:"
   value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.triggers
@@ -162,13 +158,17 @@ output "description" {
   description = "(Optional) Description for the deployment resource. Must be less than or equal to 1024 characters in length."
   value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.description
 }
-output "auto_deployed" {
-  description = "Whether the deployment was automatically released."
-  value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.auto_deployed
+output "id" {
+  description = "Deployment identifier."
+  value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.id
 }
 output "id" {
   description = "Deployment identifier."
   value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.id
+}
+output "auto_deployed" {
+  description = "Whether the deployment was automatically released."
+  value       = aws_apigatewayv2_deployment.aws_apigatewayv2_deployment.auto_deployed
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

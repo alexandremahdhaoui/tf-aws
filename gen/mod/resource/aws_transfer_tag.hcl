@@ -1,14 +1,10 @@
 resource "aws_transfer_tag" "aws_transfer_tag" {
-  value        = var.value
   key          = var.key
   resource_arn = var.resource_arn
+  value        = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "resource_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Transfer Family resource to tag."
   type        = string
 }
 variable "value" {
@@ -17,6 +13,10 @@ variable "value" {
 }
 variable "key" {
   description = "(Required) Tag name."
+  type        = string
+}
+variable "resource_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Transfer Family resource to tag."
   type        = string
 }
 variable "tag_instance_id" {

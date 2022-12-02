@@ -154,14 +154,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "delivery_status_success_sampling_rate" {
-  description = "(Optional) The percentage of successful SMS deliveries for which Amazon SNS will write logs in CloudWatch Logs. The value must be between 0 and 100."
-  value       = aws_sns_sms_preferences.aws_sns_sms_preferences.delivery_status_success_sampling_rate
-}
-output "monthly_spend_limit" {
-  description = "(Optional) The maximum amount in USD that you are willing to spend each month to send SMS messages."
-  value       = aws_sns_sms_preferences.aws_sns_sms_preferences.monthly_spend_limit
-}
 output "default_sender_id" {
   description = "(Optional) A string, such as your business brand, that is displayed as the sender on the receiving device."
   value       = aws_sns_sms_preferences.aws_sns_sms_preferences.default_sender_id
@@ -173,6 +165,14 @@ output "default_sms_type" {
 output "delivery_status_iam_role_arn" {
   description = "(Optional) The ARN of the IAM role that allows Amazon SNS to write logs about SMS deliveries in CloudWatch Logs."
   value       = aws_sns_sms_preferences.aws_sns_sms_preferences.delivery_status_iam_role_arn
+}
+output "delivery_status_success_sampling_rate" {
+  description = "(Optional) The percentage of successful SMS deliveries for which Amazon SNS will write logs in CloudWatch Logs. The value must be between 0 and 100."
+  value       = aws_sns_sms_preferences.aws_sns_sms_preferences.delivery_status_success_sampling_rate
+}
+output "monthly_spend_limit" {
+  description = "(Optional) The maximum amount in USD that you are willing to spend each month to send SMS messages."
+  value       = aws_sns_sms_preferences.aws_sns_sms_preferences.monthly_spend_limit
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

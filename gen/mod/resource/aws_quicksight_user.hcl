@@ -1,5 +1,4 @@
 resource "aws_quicksight_user" "aws_quicksight_user" {
-  session_name   = var.session_name
   user_name      = var.user_name
   user_role      = var.user_role
   aws_account_id = var.aws_account_id
@@ -7,13 +6,10 @@ resource "aws_quicksight_user" "aws_quicksight_user" {
   iam_arn        = var.iam_arn
   identity_type  = var.identity_type
   namespace      = var.namespace
+  session_name   = var.session_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "identity_type" {
-  description = "(Required) Amazon QuickSight supports several ways of managing the identity of users. This parameter accepts either  IAM or QUICKSIGHT. If IAM is specified, the iam_arn must also be specified."
   type        = string
 }
 variable "namespace" {
@@ -48,6 +44,10 @@ variable "iam_arn" {
   description = "(Optional) The ARN of the IAM user or role that you are registering with Amazon QuickSight."
   type        = string
   default     = ""
+}
+variable "identity_type" {
+  description = "(Required) Amazon QuickSight supports several ways of managing the identity of users. This parameter accepts either  IAM or QUICKSIGHT. If IAM is specified, the iam_arn must also be specified."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,6 +169,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "identity_type" {
+  description = "(Required) Amazon QuickSight supports several ways of managing the identity of users. This parameter accepts either  IAM or QUICKSIGHT. If IAM is specified, the iam_arn must also be specified."
+  value       = aws_quicksight_user.aws_quicksight_user.identity_type
+}
+output "namespace" {
+  description = "  - (Optional) The Amazon Quicksight namespace to create the user in. Defaults to default."
+  value       = aws_quicksight_user.aws_quicksight_user.namespace
+}
+output "session_name" {
+  description = "(Optional) The name of the IAM session to use when assuming roles that can embed QuickSight dashboards. Only valid for registering users using an assumed IAM role. Additionally, if registering multiple users using the same IAM role, each user needs to have a unique session name.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_quicksight_user.aws_quicksight_user.session_name
+}
 output "user_name" {
   description = "(Optional) The Amazon QuickSight user name that you want to create for the user you are registering. Only valid for registering a user with identity_type set to QUICKSIGHT."
   value       = aws_quicksight_user.aws_quicksight_user.user_name
@@ -188,18 +200,6 @@ output "email" {
 output "iam_arn" {
   description = "(Optional) The ARN of the IAM user or role that you are registering with Amazon QuickSight."
   value       = aws_quicksight_user.aws_quicksight_user.iam_arn
-}
-output "identity_type" {
-  description = "(Required) Amazon QuickSight supports several ways of managing the identity of users. This parameter accepts either  IAM or QUICKSIGHT. If IAM is specified, the iam_arn must also be specified."
-  value       = aws_quicksight_user.aws_quicksight_user.identity_type
-}
-output "namespace" {
-  description = "  - (Optional) The Amazon Quicksight namespace to create the user in. Defaults to default."
-  value       = aws_quicksight_user.aws_quicksight_user.namespace
-}
-output "session_name" {
-  description = "(Optional) The name of the IAM session to use when assuming roles that can embed QuickSight dashboards. Only valid for registering users using an assumed IAM role. Additionally, if registering multiple users using the same IAM role, each user needs to have a unique session name.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_quicksight_user.aws_quicksight_user.session_name
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the user"

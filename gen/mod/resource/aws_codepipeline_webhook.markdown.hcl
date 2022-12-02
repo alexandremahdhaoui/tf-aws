@@ -1,21 +1,25 @@
 resource "aws_codepipeline_webhook.markdown" "aws_codepipeline_webhook.markdown" {
-  authentication_configuration = var.authentication_configuration
-  json_path                    = var.json_path
+  match_equals                 = var.match_equals
   name                         = var.name
+  target_action                = var.target_action
+  filter                       = var.filter
+  secret_token                 = var.secret_token
+  tags_all                     = var.tags_all
+  allowed_ip_range             = var.allowed_ip_range
+  arn                          = var.arn
+  target_pipeline              = var.target_pipeline
+  json_path                    = var.json_path
   tags                         = var.tags
   authentication               = var.authentication
-  filter                       = var.filter
+  authentication_configuration = var.authentication_configuration
   id                           = var.id
-  target_action                = var.target_action
-  allowed_ip_range             = var.allowed_ip_range
-  target_pipeline              = var.target_pipeline
-  secret_token                 = var.secret_token
-  match_equals                 = var.match_equals
-  tags_all                     = var.tags_all
-  arn                          = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "filter" {
+  description = " (Required) One or more filter blocks. Filter blocks are documented below."
   type        = string
 }
 variable "secret_token" {
@@ -23,20 +27,21 @@ variable "secret_token" {
   type        = string
   default     = ""
 }
-variable "target_pipeline" {
-  description = "(Required) The name of the pipeline."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+}
+variable "allowed_ip_range" {
+  description = "(Optional) A valid CIDR block for IP filtering. Required for IP.A filter block supports the following arguments:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The CodePipeline webhook's ARN."
   type        = string
 }
-variable "match_equals" {
-  description = "(Required) The value to match on (e.g., refs/heads/{Branch}). See AWS docs for details.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "target_pipeline" {
+  description = "(Required) The name of the pipeline."
   type        = string
 }
 variable "authentication" {
@@ -48,12 +53,12 @@ variable "authentication_configuration" {
   type        = string
   default     = ""
 }
-variable "json_path" {
-  description = "(Required) The JSON path to filter on."
+variable "id" {
+  description = "The CodePipeline webhook's ARN."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the webhook."
+variable "json_path" {
+  description = "(Required) The JSON path to filter on."
   type        = string
 }
 variable "tags" {
@@ -61,17 +66,12 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "allowed_ip_range" {
-  description = "(Optional) A valid CIDR block for IP filtering. Required for IP.A filter block supports the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "filter" {
-  description = " (Required) One or more filter blocks. Filter blocks are documented below."
+variable "match_equals" {
+  description = "(Required) The value to match on (e.g., refs/heads/{Branch}). See AWS docs for details.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "id" {
-  description = "The CodePipeline webhook's ARN."
+variable "name" {
+  description = "(Required) The name of the webhook."
   type        = string
 }
 variable "target_action" {
@@ -198,21 +198,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The CodePipeline webhook's ARN."
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.arn
+output "filter" {
+  description = " (Required) One or more filter blocks. Filter blocks are documented below."
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.filter
 }
-output "match_equals" {
-  description = "(Required) The value to match on (e.g., refs/heads/{Branch}). See AWS docs for details.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.match_equals
+output "secret_token" {
+  description = "(Optional) The shared secret for the GitHub repository webhook. Set this as secret in your github_repository_webhook's configuration block. Required for GITHUB_HMAC."
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.secret_token
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.tags_all
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An authentication_configuration block supports the following arguments:"
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.tags
+output "allowed_ip_range" {
+  description = "(Optional) A valid CIDR block for IP filtering. Required for IP.A filter block supports the following arguments:"
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.allowed_ip_range
+}
+output "arn" {
+  description = "The CodePipeline webhook's ARN."
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.arn
+}
+output "target_pipeline" {
+  description = "(Required) The name of the pipeline."
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.target_pipeline
 }
 output "authentication" {
   description = "(Required) The type of authentication  to use. One of IP, GITHUB_HMAC, or UNAUTHENTICATED."
@@ -222,37 +230,29 @@ output "authentication_configuration" {
   description = "(Optional) An auth block. Required for IP and GITHUB_HMAC. Auth blocks are documented below."
   value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.authentication_configuration
 }
+output "id" {
+  description = "The CodePipeline webhook's ARN."
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.id
+}
 output "json_path" {
   description = "(Required) The JSON path to filter on."
   value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.json_path
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An authentication_configuration block supports the following arguments:"
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.tags
+}
+output "match_equals" {
+  description = "(Required) The value to match on (e.g., refs/heads/{Branch}). See AWS docs for details.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.match_equals
 }
 output "name" {
   description = "(Required) The name of the webhook."
   value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.name
 }
-output "allowed_ip_range" {
-  description = "(Optional) A valid CIDR block for IP filtering. Required for IP.A filter block supports the following arguments:"
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.allowed_ip_range
-}
-output "filter" {
-  description = " (Required) One or more filter blocks. Filter blocks are documented below."
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.filter
-}
-output "id" {
-  description = "The CodePipeline webhook's ARN."
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.id
-}
 output "target_action" {
   description = "(Required) The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline."
   value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.target_action
-}
-output "secret_token" {
-  description = "(Optional) The shared secret for the GitHub repository webhook. Set this as secret in your github_repository_webhook's configuration block. Required for GITHUB_HMAC."
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.secret_token
-}
-output "target_pipeline" {
-  description = "(Required) The name of the pipeline."
-  value       = aws_codepipeline_webhook.markdown.aws_codepipeline_webhook.markdown.target_pipeline
 }
 output "arn" {
   description = "The CodePipeline webhook's ARN."

@@ -1,14 +1,23 @@
 resource "aws_elasticache_user_group" "aws_elasticache_user_group" {
+  tags          = var.tags
+  tags_all      = var.tags_all
+  user_group_id = var.user_group_id
   user_ids      = var.user_ids
   arn           = var.arn
   engine        = var.engine
   id            = var.id
-  tags          = var.tags
-  tags_all      = var.tags_all
-  user_group_id = var.user_group_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN that identifies the user group."
+  type        = string
+  default     = ""
+}
+variable "engine" {
+  description = "(Required) The current supported value is REDIS."
   type        = string
 }
 variable "id" {
@@ -34,15 +43,6 @@ variable "user_ids" {
   description = "(Optional) The list of user IDs that belong to the user group."
   type        = string
   default     = ""
-}
-variable "arn" {
-  description = "The ARN that identifies the user group."
-  type        = string
-  default     = ""
-}
-variable "engine" {
-  description = "(Required) The current supported value is REDIS."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,14 +164,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN that identifies the user group."
-  value       = aws_elasticache_user_group.aws_elasticache_user_group.arn
-}
-output "engine" {
-  description = "(Required) The current supported value is REDIS."
-  value       = aws_elasticache_user_group.aws_elasticache_user_group.engine
-}
 output "id" {
   description = "The user group identifier."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.id
@@ -192,6 +184,18 @@ output "user_ids" {
   description = "(Optional) The list of user IDs that belong to the user group."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.user_ids
 }
+output "arn" {
+  description = "The ARN that identifies the user group."
+  value       = aws_elasticache_user_group.aws_elasticache_user_group.arn
+}
+output "engine" {
+  description = "(Required) The current supported value is REDIS."
+  value       = aws_elasticache_user_group.aws_elasticache_user_group.engine
+}
+output "arn" {
+  description = "The ARN that identifies the user group."
+  value       = aws_elasticache_user_group.aws_elasticache_user_group.arn
+}
 output "id" {
   description = "The user group identifier."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.id
@@ -199,10 +203,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.tags_all
-}
-output "arn" {
-  description = "The ARN that identifies the user group."
-  value       = aws_elasticache_user_group.aws_elasticache_user_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

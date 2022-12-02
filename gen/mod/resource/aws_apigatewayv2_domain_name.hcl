@@ -1,32 +1,33 @@
 resource "aws_apigatewayv2_domain_name" "aws_apigatewayv2_domain_name" {
-  domain_name_configuration              = var.domain_name_configuration
-  target_domain_name                     = var.target_domain_name
-  arn                                    = var.arn
-  hosted_zone_id                         = var.hosted_zone_id
-  id                                     = var.id
-  tags                                   = var.tags
-  api_mapping_selection_expression       = var.api_mapping_selection_expression
-  certificate_arn                        = var.certificate_arn
-  security_policy                        = var.security_policy
-  truststore_uri                         = var.truststore_uri
-  truststore_version                     = var.truststore_version
-  create                                 = var.create
-  domain_name                            = var.domain_name
   endpoint_type                          = var.endpoint_type
   mutual_tls_authentication              = var.mutual_tls_authentication
-  ownership_verification_certificate_arn = var.ownership_verification_certificate_arn
+  tags                                   = var.tags
   tags_all                               = var.tags_all
+  api_mapping_selection_expression       = var.api_mapping_selection_expression
+  id                                     = var.id
+  target_domain_name                     = var.target_domain_name
+  arn                                    = var.arn
+  domain_name                            = var.domain_name
+  hosted_zone_id                         = var.hosted_zone_id
+  ownership_verification_certificate_arn = var.ownership_verification_certificate_arn
+  truststore_version                     = var.truststore_version
+  certificate_arn                        = var.certificate_arn
+  create                                 = var.create
+  domain_name_configuration              = var.domain_name_configuration
+  security_policy                        = var.security_policy
+  truststore_uri                         = var.truststore_uri
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "create" {
-  description = "(Default 10m)"
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the domain name. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.domain_name_configuration"
   type        = string
+  default     = ""
 }
-variable "domain_name" {
-  description = "(Required) Domain name. Must be between 1 and 512 characters in length."
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
 variable "endpoint_type" {
@@ -38,46 +39,42 @@ variable "mutual_tls_authentication" {
   type        = string
   default     = ""
 }
-variable "ownership_verification_certificate_arn" {
-  description = "(Optional) ARN of the AWS-issued certificate used to validate custom domain ownership (when certificate_arn is issued via an ACM Private CA or mutual_tls_authentication is configured with an ACM-imported certificate.)"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "domain_name_configuration" {
-  description = "(Required) Domain name configuration. See below."
-  type        = string
-}
 variable "target_domain_name" {
   description = "(Computed) Target domain name.mutual_tls_authentication"
   type        = string
 }
-variable "arn" {
-  description = "ARN of the domain name."
-  type        = string
-}
-variable "hosted_zone_id" {
-  description = "(Computed) Amazon Route 53 Hosted Zone ID of the endpoint."
+variable "api_mapping_selection_expression" {
+  description = "API mapping selection expression for the domain name."
   type        = string
 }
 variable "id" {
   description = "Domain name identifier."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the domain name. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.domain_name_configuration"
+variable "hosted_zone_id" {
+  description = "(Computed) Amazon Route 53 Hosted Zone ID of the endpoint."
+  type        = string
+}
+variable "ownership_verification_certificate_arn" {
+  description = "(Optional) ARN of the AWS-issued certificate used to validate custom domain ownership (when certificate_arn is issued via an ACM Private CA or mutual_tls_authentication is configured with an ACM-imported certificate.)"
   type        = string
   default     = ""
 }
-variable "api_mapping_selection_expression" {
-  description = "API mapping selection expression for the domain name."
+variable "truststore_version" {
+  description = "(Optional) Version of the S3 object that contains the truststore. To specify a version, you must have versioning enabled for the S3 bucket.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the domain name."
   type        = string
 }
-variable "certificate_arn" {
-  description = "(Required) ARN of an AWS-managed certificate that will be used by the endpoint for the domain name. AWS Certificate Manager is the only supported source. Use the aws_acm_certificate resource to configure an ACM certificate."
+variable "domain_name" {
+  description = "(Required) Domain name. Must be between 1 and 512 characters in length."
+  type        = string
+}
+variable "domain_name_configuration" {
+  description = "(Required) Domain name configuration. See below."
   type        = string
 }
 variable "security_policy" {
@@ -88,10 +85,13 @@ variable "truststore_uri" {
   description = "(Required) Amazon S3 URL that specifies the truststore for mutual TLS authentication, for example, s3://bucket-name/key-name. The truststore can contain certificates from public or private certificate authorities. To update the truststore, upload a new version to S3, and then update your custom domain name to use the new version."
   type        = string
 }
-variable "truststore_version" {
-  description = "(Optional) Version of the S3 object that contains the truststore. To specify a version, you must have versioning enabled for the S3 bucket.In addition to all arguments above, the following attributes are exported:"
+variable "certificate_arn" {
+  description = "(Required) ARN of an AWS-managed certificate that will be used by the endpoint for the domain name. AWS Certificate Manager is the only supported source. Use the aws_acm_certificate resource to configure an ACM certificate."
   type        = string
-  default     = ""
+}
+variable "create" {
+  description = "(Default 10m)"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -213,37 +213,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "domain_name_configuration" {
-  description = "(Required) Domain name configuration. See below."
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.domain_name_configuration
-}
-output "target_domain_name" {
-  description = "(Computed) Target domain name.mutual_tls_authentication"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.target_domain_name
-}
 output "arn" {
   description = "ARN of the domain name."
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.arn
+}
+output "domain_name" {
+  description = "(Required) Domain name. Must be between 1 and 512 characters in length."
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.domain_name
 }
 output "hosted_zone_id" {
   description = "(Computed) Amazon Route 53 Hosted Zone ID of the endpoint."
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.hosted_zone_id
 }
-output "id" {
-  description = "Domain name identifier."
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.id
+output "ownership_verification_certificate_arn" {
+  description = "(Optional) ARN of the AWS-issued certificate used to validate custom domain ownership (when certificate_arn is issued via an ACM Private CA or mutual_tls_authentication is configured with an ACM-imported certificate.)"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.ownership_verification_certificate_arn
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the domain name. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.domain_name_configuration"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.tags
-}
-output "api_mapping_selection_expression" {
-  description = "API mapping selection expression for the domain name."
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.api_mapping_selection_expression
+output "truststore_version" {
+  description = "(Optional) Version of the S3 object that contains the truststore. To specify a version, you must have versioning enabled for the S3 bucket.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.truststore_version
 }
 output "certificate_arn" {
   description = "(Required) ARN of an AWS-managed certificate that will be used by the endpoint for the domain name. AWS Certificate Manager is the only supported source. Use the aws_acm_certificate resource to configure an ACM certificate."
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.certificate_arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.create
+}
+output "domain_name_configuration" {
+  description = "(Required) Domain name configuration. See below."
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.domain_name_configuration
 }
 output "security_policy" {
   description = "(Required) Transport Layer Security (TLS) version of the security policy for the domain name. Valid values: TLS_1_2."
@@ -253,22 +253,6 @@ output "truststore_uri" {
   description = "(Required) Amazon S3 URL that specifies the truststore for mutual TLS authentication, for example, s3://bucket-name/key-name. The truststore can contain certificates from public or private certificate authorities. To update the truststore, upload a new version to S3, and then update your custom domain name to use the new version."
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.truststore_uri
 }
-output "truststore_version" {
-  description = "(Optional) Version of the S3 object that contains the truststore. To specify a version, you must have versioning enabled for the S3 bucket.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.truststore_version
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.tags_all
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.create
-}
-output "domain_name" {
-  description = "(Required) Domain name. Must be between 1 and 512 characters in length."
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.domain_name
-}
 output "endpoint_type" {
   description = "(Required) Endpoint type. Valid values: REGIONAL."
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.endpoint_type
@@ -277,9 +261,29 @@ output "mutual_tls_authentication" {
   description = "(Optional) Mutual TLS authentication configuration for the domain name."
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.mutual_tls_authentication
 }
-output "ownership_verification_certificate_arn" {
-  description = "(Optional) ARN of the AWS-issued certificate used to validate custom domain ownership (when certificate_arn is issued via an ACM Private CA or mutual_tls_authentication is configured with an ACM-imported certificate.)"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.ownership_verification_certificate_arn
+output "tags" {
+  description = "(Optional) Map of tags to assign to the domain name. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.domain_name_configuration"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.tags
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.tags_all
+}
+output "api_mapping_selection_expression" {
+  description = "API mapping selection expression for the domain name."
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.api_mapping_selection_expression
+}
+output "id" {
+  description = "Domain name identifier."
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.id
+}
+output "target_domain_name" {
+  description = "(Computed) Target domain name.mutual_tls_authentication"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.target_domain_name
+}
+output "update" {
+  description = "(Default 60m)"
+  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.update
 }
 output "api_mapping_selection_expression" {
   description = "API mapping selection expression for the domain name."
@@ -300,10 +304,6 @@ output "id" {
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.tags_all
-}
-output "update" {
-  description = "(Default 60m)"
-  value       = aws_apigatewayv2_domain_name.aws_apigatewayv2_domain_name.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

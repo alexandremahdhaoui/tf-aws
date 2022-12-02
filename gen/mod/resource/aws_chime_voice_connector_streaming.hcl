@@ -1,15 +1,11 @@
 resource "aws_chime_voice_connector_streaming" "aws_chime_voice_connector_streaming" {
-  data_retention                 = var.data_retention
   disabled                       = var.disabled
   streaming_notification_targets = var.streaming_notification_targets
   voice_connector_id             = var.voice_connector_id
+  data_retention                 = var.data_retention
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "voice_connector_id" {
-  description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "data_retention" {
@@ -25,6 +21,10 @@ variable "streaming_notification_targets" {
   description = "(Optional) The streaming notification targets. Valid Values: EventBridge | SNS | SQSIn addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "voice_connector_id" {
+  description = "(Required) The Amazon Chime Voice Connector ID."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,6 +146,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "streaming_notification_targets" {
+  description = "(Optional) The streaming notification targets. Valid Values: EventBridge | SNS | SQSIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.streaming_notification_targets
+}
 output "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.voice_connector_id
@@ -157,10 +161,6 @@ output "data_retention" {
 output "disabled" {
   description = "(Optional) When true, media streaming to Amazon Kinesis is turned off. Default: false"
   value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.disabled
-}
-output "streaming_notification_targets" {
-  description = "(Optional) The streaming notification targets. Valid Values: EventBridge | SNS | SQSIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.streaming_notification_targets
 }
 output "id" {
   description = "The Amazon Chime Voice Connector ID."

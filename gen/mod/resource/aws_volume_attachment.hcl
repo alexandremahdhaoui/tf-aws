@@ -1,10 +1,10 @@
 resource "aws_volume_attachment" "aws_volume_attachment" {
-  skip_destroy                   = var.skip_destroy
-  stop_instance_before_detaching = var.stop_instance_before_detaching
-  volume_id                      = var.volume_id
   device_name                    = var.device_name
   force_detach                   = var.force_detach
   instance_id                    = var.instance_id
+  skip_destroy                   = var.skip_destroy
+  stop_instance_before_detaching = var.stop_instance_before_detaching
+  volume_id                      = var.volume_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -154,6 +154,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "device_name" {
+  description = "The device name exposed to the instance"
+  value       = aws_volume_attachment.aws_volume_attachment.device_name
+}
+output "force_detach" {
+  description = "(Optional, Boolean) Set to truestrongdata lossDetaching an Amazon EBS Volume from an Instance for more information."
+  value       = aws_volume_attachment.aws_volume_attachment.force_detach
+}
 output "instance_id" {
   description = "ID of the Instance"
   value       = aws_volume_attachment.aws_volume_attachment.instance_id
@@ -169,14 +177,6 @@ output "stop_instance_before_detaching" {
 output "volume_id" {
   description = "(Required) ID of the Volume to be attached"
   value       = aws_volume_attachment.aws_volume_attachment.volume_id
-}
-output "device_name" {
-  description = "The device name exposed to the instance"
-  value       = aws_volume_attachment.aws_volume_attachment.device_name
-}
-output "force_detach" {
-  description = "(Optional, Boolean) Set to truestrongdata lossDetaching an Amazon EBS Volume from an Instance for more information."
-  value       = aws_volume_attachment.aws_volume_attachment.force_detach
 }
 output "device_name" {
   description = "The device name exposed to the instance"

@@ -1,12 +1,20 @@
 resource "aws_apigatewayv2_route_response" "aws_apigatewayv2_route_response" {
+  response_models            = var.response_models
+  route_id                   = var.route_id
   route_response_key         = var.route_response_key
   api_id                     = var.api_id
   model_selection_expression = var.model_selection_expression
-  response_models            = var.response_models
-  route_id                   = var.route_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "route_id" {
+  description = "(Required) Identifier of the aws_apigatewayv2_route."
+  type        = string
+}
+variable "route_response_key" {
+  description = "(Required) Route response key."
   type        = string
 }
 variable "api_id" {
@@ -22,14 +30,6 @@ variable "response_models" {
   description = "(Optional) Response models for the route response.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "route_id" {
-  description = "(Required) Identifier of the aws_apigatewayv2_route."
-  type        = string
-}
-variable "route_response_key" {
-  description = "(Required) Route response key."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

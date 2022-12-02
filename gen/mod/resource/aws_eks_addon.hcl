@@ -1,32 +1,75 @@
 resource "aws_eks_addon" "aws_eks_addon" {
-  cluster_name             = var.cluster_name
-  id                       = var.id
-  preserve                 = var.preserve
-  status                   = var.status
-  modified_at              = var.modified_at
-  resolve_conflicts        = var.resolve_conflicts
   addon_version            = var.addon_version
+  modified_at              = var.modified_at
+  addon_name               = var.addon_name
+  cluster_name             = var.cluster_name
+  create                   = var.create
   created_at               = var.created_at
+  preserve                 = var.preserve
+  service_account_role_arn = var.service_account_role_arn
+  delete                   = var.delete
+  id                       = var.id
+  resolve_conflicts        = var.resolve_conflicts
+  status                   = var.status
+  arn                      = var.arn
   tags                     = var.tags
   tags_all                 = var.tags_all
-  service_account_role_arn = var.service_account_role_arn
   update                   = var.update
-  addon_name               = var.addon_name
-  arn                      = var.arn
-  create                   = var.create
-  delete                   = var.delete
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "addon_version" {
+variable "addon_name" {
   description = "describe-addon-versions."
+  type        = string
+}
+variable "cluster_name" {
+  description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
+  type        = string
+}
+variable "create" {
+  description = "(Default 20m)"
   type        = string
   default     = ""
 }
 variable "created_at" {
   description = "Date and time in RFC3339 format that the EKS add-on was created."
+  type        = string
+  default     = ""
+}
+variable "preserve" {
+  description = "(Optional) Indicates if you want to preserve the created resources when deleting the EKS add-on."
+  type        = string
+  default     = ""
+}
+variable "service_account_role_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of an\nexisting IAM role to bind to the add-on's service account. The role must be\nassigned the IAM permissions required by the add-on. If you don't specify\nan existing IAM role, then the add-on uses the permissions assigned to the node\nIAM role. For more information, see Amazon EKS node IAM role~> strongNote:In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 40m)"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "EKS Cluster name and EKS Addon name separated by a colon (:)."
+  type        = string
+  default     = ""
+}
+variable "resolve_conflicts" {
+  description = "NONE, OVERWRITE and PRESERVE. For more details check UpdateAddon API Docs."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "Status of the EKS add-on."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS add-on."
   type        = string
   default     = ""
 }
@@ -40,61 +83,18 @@ variable "tags_all" {
   type        = string
   default     = ""
 }
-variable "addon_name" {
-  description = "describe-addon-versions."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS add-on."
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 20m)"
-  type        = string
-  default     = ""
-}
-variable "delete" {
-  description = "(Default 40m)"
-  type        = string
-  default     = ""
-}
-variable "service_account_role_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of an\nexisting IAM role to bind to the add-on's service account. The role must be\nassigned the IAM permissions required by the add-on. If you don't specify\nan existing IAM role, then the add-on uses the permissions assigned to the node\nIAM role. For more information, see Amazon EKS node IAM role~> strongNote:In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "update" {
   description = "(Default 20m)"
   type        = string
   default     = ""
 }
-variable "cluster_name" {
-  description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
-  type        = string
-}
-variable "id" {
-  description = "EKS Cluster name and EKS Addon name separated by a colon (:)."
-  type        = string
-  default     = ""
-}
-variable "preserve" {
-  description = "(Optional) Indicates if you want to preserve the created resources when deleting the EKS add-on."
-  type        = string
-  default     = ""
-}
-variable "status" {
-  description = "Status of the EKS add-on."
+variable "addon_version" {
+  description = "describe-addon-versions."
   type        = string
   default     = ""
 }
 variable "modified_at" {
   description = "Date and time in RFC3339 format that the EKS add-on was updated."
-  type        = string
-  default     = ""
-}
-variable "resolve_conflicts" {
-  description = "NONE, OVERWRITE and PRESERVE. For more details check UpdateAddon API Docs."
   type        = string
   default     = ""
 }
@@ -218,13 +218,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "addon_version" {
+output "service_account_role_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of an\nexisting IAM role to bind to the add-on's service account. The role must be\nassigned the IAM permissions required by the add-on. If you don't specify\nan existing IAM role, then the add-on uses the permissions assigned to the node\nIAM role. For more information, see Amazon EKS node IAM role~> strongNote:In addition to all arguments above, the following attributes are exported:"
+  value       = aws_eks_addon.aws_eks_addon.service_account_role_arn
+}
+output "addon_name" {
   description = "describe-addon-versions."
-  value       = aws_eks_addon.aws_eks_addon.addon_version
+  value       = aws_eks_addon.aws_eks_addon.addon_name
+}
+output "cluster_name" {
+  description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
+  value       = aws_eks_addon.aws_eks_addon.cluster_name
+}
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_eks_addon.aws_eks_addon.create
 }
 output "created_at" {
   description = "Date and time in RFC3339 format that the EKS add-on was created."
   value       = aws_eks_addon.aws_eks_addon.created_at
+}
+output "preserve" {
+  description = "(Optional) Indicates if you want to preserve the created resources when deleting the EKS add-on."
+  value       = aws_eks_addon.aws_eks_addon.preserve
+}
+output "delete" {
+  description = "(Default 40m)"
+  value       = aws_eks_addon.aws_eks_addon.delete
+}
+output "id" {
+  description = "EKS Cluster name and EKS Addon name separated by a colon (:)."
+  value       = aws_eks_addon.aws_eks_addon.id
+}
+output "resolve_conflicts" {
+  description = "NONE, OVERWRITE and PRESERVE. For more details check UpdateAddon API Docs."
+  value       = aws_eks_addon.aws_eks_addon.resolve_conflicts
+}
+output "status" {
+  description = "Status of the EKS add-on."
+  value       = aws_eks_addon.aws_eks_addon.status
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS add-on."
+  value       = aws_eks_addon.aws_eks_addon.arn
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
@@ -234,61 +270,13 @@ output "tags_all" {
   description = "(Optional) Key-value map of resource tags, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_eks_addon.aws_eks_addon.tags_all
 }
-output "service_account_role_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of an\nexisting IAM role to bind to the add-on's service account. The role must be\nassigned the IAM permissions required by the add-on. If you don't specify\nan existing IAM role, then the add-on uses the permissions assigned to the node\nIAM role. For more information, see Amazon EKS node IAM role~> strongNote:In addition to all arguments above, the following attributes are exported:"
-  value       = aws_eks_addon.aws_eks_addon.service_account_role_arn
-}
 output "update" {
   description = "(Default 20m)"
   value       = aws_eks_addon.aws_eks_addon.update
 }
-output "addon_name" {
+output "addon_version" {
   description = "describe-addon-versions."
-  value       = aws_eks_addon.aws_eks_addon.addon_name
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS add-on."
-  value       = aws_eks_addon.aws_eks_addon.arn
-}
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_eks_addon.aws_eks_addon.create
-}
-output "delete" {
-  description = "(Default 40m)"
-  value       = aws_eks_addon.aws_eks_addon.delete
-}
-output "cluster_name" {
-  description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
-  value       = aws_eks_addon.aws_eks_addon.cluster_name
-}
-output "id" {
-  description = "EKS Cluster name and EKS Addon name separated by a colon (:)."
-  value       = aws_eks_addon.aws_eks_addon.id
-}
-output "preserve" {
-  description = "(Optional) Indicates if you want to preserve the created resources when deleting the EKS add-on."
-  value       = aws_eks_addon.aws_eks_addon.preserve
-}
-output "status" {
-  description = "Status of the EKS add-on."
-  value       = aws_eks_addon.aws_eks_addon.status
-}
-output "modified_at" {
-  description = "Date and time in RFC3339 format that the EKS add-on was updated."
-  value       = aws_eks_addon.aws_eks_addon.modified_at
-}
-output "resolve_conflicts" {
-  description = "NONE, OVERWRITE and PRESERVE. For more details check UpdateAddon API Docs."
-  value       = aws_eks_addon.aws_eks_addon.resolve_conflicts
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS add-on."
-  value       = aws_eks_addon.aws_eks_addon.arn
-}
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_eks_addon.aws_eks_addon.create
+  value       = aws_eks_addon.aws_eks_addon.addon_version
 }
 output "modified_at" {
   description = "Date and time in RFC3339 format that the EKS add-on was updated."
@@ -298,13 +286,13 @@ output "tags_all" {
   description = "(Optional) Key-value map of resource tags, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_eks_addon.aws_eks_addon.tags_all
 }
-output "update" {
-  description = "(Default 20m)"
-  value       = aws_eks_addon.aws_eks_addon.update
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS add-on."
+  value       = aws_eks_addon.aws_eks_addon.arn
 }
-output "created_at" {
-  description = "Date and time in RFC3339 format that the EKS add-on was created."
-  value       = aws_eks_addon.aws_eks_addon.created_at
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_eks_addon.aws_eks_addon.create
 }
 output "delete" {
   description = "(Default 40m)"
@@ -317,6 +305,18 @@ output "id" {
 output "status" {
   description = "Status of the EKS add-on."
   value       = aws_eks_addon.aws_eks_addon.status
+}
+output "created_at" {
+  description = "Date and time in RFC3339 format that the EKS add-on was created."
+  value       = aws_eks_addon.aws_eks_addon.created_at
+}
+output "modified_at" {
+  description = "Date and time in RFC3339 format that the EKS add-on was updated."
+  value       = aws_eks_addon.aws_eks_addon.modified_at
+}
+output "update" {
+  description = "(Default 20m)"
+  value       = aws_eks_addon.aws_eks_addon.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

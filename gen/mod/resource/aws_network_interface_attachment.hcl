@@ -1,8 +1,8 @@
 resource "aws_network_interface_attachment" "aws_network_interface_attachment" {
+  attachment_id        = var.attachment_id
   device_index         = var.device_index
   instance_id          = var.instance_id
   network_interface_id = var.network_interface_id
-  attachment_id        = var.attachment_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,18 +1,36 @@
 resource "aws_transcribe_language_model" "aws_transcribe_language_model" {
-  arn                  = var.arn
   create               = var.create
   data_access_role_arn = var.data_access_role_arn
-  input_data_config    = var.input_data_config
-  tags                 = var.tags
-  base_model_name      = var.base_model_name
-  id                   = var.id
   language_code        = var.language_code
   model_name           = var.model_name
   s3_uri               = var.s3_uri
+  tags                 = var.tags
   tuning_data_s3_uri   = var.tuning_data_s3_uri
+  arn                  = var.arn
+  base_model_name      = var.base_model_name
+  id                   = var.id
+  input_data_config    = var.input_data_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "base_model_name" {
+  description = "(Required) Name of reference base model."
+  type        = string
+}
+variable "id" {
+  description = "LanguageModel name."
+  type        = string
+  default     = ""
+}
+variable "input_data_config" {
+  description = "(Required) The input data config for the LanguageModel. See Input Data Config for more details."
   type        = string
 }
 variable "create" {
@@ -23,25 +41,6 @@ variable "create" {
 variable "data_access_role_arn" {
   description = "(Required) IAM role with access to S3 bucket."
   type        = string
-}
-variable "input_data_config" {
-  description = "(Required) The input data config for the LanguageModel. See Input Data Config for more details."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "LanguageModel name."
-  type        = string
-  default     = ""
 }
 variable "language_code" {
   description = "(Required) The language code you selected for your language model. Refer to the supported languages page for accepted codes."
@@ -55,14 +54,15 @@ variable "s3_uri" {
   description = "(Required) S3 URI where training data is located."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "tuning_data_s3_uri" {
   description = "(Optional) S3 URI where tuning data is located."
   type        = string
   default     = ""
-}
-variable "base_model_name" {
-  description = "(Required) Name of reference base model."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -184,9 +184,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tuning_data_s3_uri" {
-  description = "(Optional) S3 URI where tuning data is located."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.tuning_data_s3_uri
+output "arn" {
+  description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.arn
 }
 output "base_model_name" {
   description = "(Required) Name of reference base model."
@@ -195,6 +195,26 @@ output "base_model_name" {
 output "id" {
   description = "LanguageModel name."
   value       = aws_transcribe_language_model.aws_transcribe_language_model.id
+}
+output "input_data_config" {
+  description = "(Required) The input data config for the LanguageModel. See Input Data Config for more details."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.input_data_config
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.tags
+}
+output "tuning_data_s3_uri" {
+  description = "(Optional) S3 URI where tuning data is located."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.tuning_data_s3_uri
+}
+output "create" {
+  description = "(Default 600m)"
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.create
+}
+output "data_access_role_arn" {
+  description = "(Required) IAM role with access to S3 bucket."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.data_access_role_arn
 }
 output "language_code" {
   description = "(Required) The language code you selected for your language model. Refer to the supported languages page for accepted codes."
@@ -207,26 +227,6 @@ output "model_name" {
 output "s3_uri" {
   description = "(Required) S3 URI where training data is located."
   value       = aws_transcribe_language_model.aws_transcribe_language_model.s3_uri
-}
-output "arn" {
-  description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.arn
-}
-output "create" {
-  description = "(Default 600m)"
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.create
-}
-output "data_access_role_arn" {
-  description = "(Required) IAM role with access to S3 bucket."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.data_access_role_arn
-}
-output "input_data_config" {
-  description = "(Required) The input data config for the LanguageModel. See Input Data Config for more details."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.input_data_config
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.tags
 }
 output "arn" {
   description = "ARN of the LanguageModel.TimeoutsConfiguration options:"

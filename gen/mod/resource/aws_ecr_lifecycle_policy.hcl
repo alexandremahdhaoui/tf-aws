@@ -134,21 +134,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "repository" {
+  description = "The name of the repository."
+  value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
+}
 output "policy" {
   description = "(Required) The policy document. This is a JSON formatted string. See more details about Policy Parameters in the official AWS docs.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.policy
 }
-output "repository" {
-  description = "The name of the repository."
-  value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
-}
-output "repository" {
-  description = "The name of the repository."
-  value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
-}
 output "registry_id" {
   description = "The registry ID where the repository was created."
   value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.registry_id
+}
+output "repository" {
+  description = "The name of the repository."
+  value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

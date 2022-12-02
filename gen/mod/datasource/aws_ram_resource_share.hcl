@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "arn" {
-  description = "ARN of the resource share."
-  value       = aws_ram_resource_share.aws_ram_resource_share.arn
-}
 output "id" {
   description = "ARN of the resource share."
   value       = aws_ram_resource_share.aws_ram_resource_share.id
@@ -19,6 +15,10 @@ output "owning_account_id" {
 output "status" {
   description = "Status of the RAM share."
   value       = aws_ram_resource_share.aws_ram_resource_share.status
+}
+output "arn" {
+  description = "ARN of the resource share."
+  value       = aws_ram_resource_share.aws_ram_resource_share.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

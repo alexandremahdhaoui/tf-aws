@@ -1,15 +1,20 @@
 resource "aws_wafregional_regex_match_set" "aws_wafregional_regex_match_set" {
-  name                 = var.name
   regex_match_tuple    = var.regex_match_tuple
   regex_pattern_set_id = var.regex_pattern_set_id
   text_transformation  = var.text_transformation
   type                 = var.type
   data                 = var.data
   field_to_match       = var.field_to_match
+  name                 = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  type        = string
+  default     = ""
 }
 variable "field_to_match" {
   description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
@@ -34,11 +39,6 @@ variable "text_transformation" {
 variable "type" {
   description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

@@ -1,7 +1,7 @@
 resource "aws_location_tracker_association" "aws_location_tracker_association" {
+  consumer_arn = var.consumer_arn
   create       = var.create
   tracker_name = var.tracker_name
-  consumer_arn = var.consumer_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

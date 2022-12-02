@@ -1,73 +1,62 @@
 resource "aws_identitystore_user" "aws_identitystore_user" {
-  country            = var.country
-  locality           = var.locality
-  profile_url        = var.profile_url
-  region             = var.region
-  title              = var.title
-  user_name          = var.user_name
-  addresses          = var.addresses
-  postal_code        = var.postal_code
-  formatted          = var.formatted
-  given_name         = var.given_name
-  honorific_prefix   = var.honorific_prefix
   honorific_suffix   = var.honorific_suffix
-  id                 = var.id
+  user_type          = var.user_type
   street_address     = var.street_address
-  timezone           = var.timezone
-  emails             = var.emails
-  external_ids       = var.external_ids
-  identity_store_id  = var.identity_store_id
   display_name       = var.display_name
-  locale             = var.locale
-  value              = var.value
-  family_name        = var.family_name
-  name               = var.name
+  external_ids       = var.external_ids
+  nickname           = var.nickname
+  formatted          = var.formatted
+  identity_store_id  = var.identity_store_id
   phone_numbers      = var.phone_numbers
+  issuer             = var.issuer
   preferred_language = var.preferred_language
-  primary            = var.primary
   type               = var.type
   user_id            = var.user_id
-  issuer             = var.issuer
+  value              = var.value
+  given_name         = var.given_name
+  profile_url        = var.profile_url
+  title              = var.title
+  postal_code        = var.postal_code
+  user_name          = var.user_name
+  emails             = var.emails
+  family_name        = var.family_name
+  id                 = var.id
+  timezone           = var.timezone
+  honorific_prefix   = var.honorific_prefix
   middle_name        = var.middle_name
-  nickname           = var.nickname
-  user_type          = var.user_type
+  name               = var.name
+  locality           = var.locality
+  primary            = var.primary
+  region             = var.region
+  addresses          = var.addresses
+  country            = var.country
+  locale             = var.locale
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "honorific_prefix" {
-  description = "(Optional) The honorific prefix of the user."
-  type        = string
-  default     = ""
-}
-variable "honorific_suffix" {
-  description = "(Optional) The honorific suffix of the user."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The identifier issued to this resource by an external identity provider."
-  type        = string
-  default     = ""
 }
 variable "street_address" {
   description = "(Optional) The street of the address."
   type        = string
   default     = ""
 }
-variable "timezone" {
-  description = "(Optional) The user's time zone."
+variable "display_name" {
+  description = "(Required) The name that is typically displayed when the user is referenced."
   type        = string
-  default     = ""
-}
-variable "emails" {
-  description = "(Optional) Details about the user's email. At most 1 email is allowed. Detailed below."
-  type        = string
-  default     = ""
 }
 variable "external_ids" {
   description = ""
+  type        = string
+  default     = ""
+}
+variable "nickname" {
+  description = "(Optional) An alternate name for the user."
+  type        = string
+  default     = ""
+}
+variable "formatted" {
+  description = "(Optional) The name that is typically displayed when the name is shown for display."
   type        = string
   default     = ""
 }
@@ -75,35 +64,18 @@ variable "identity_store_id" {
   description = "(Required, Forces new resource) The globally unique identifier for the identity store that this user is in."
   type        = string
 }
-variable "display_name" {
-  description = "(Required) The name that is typically displayed when the user is referenced."
-  type        = string
-}
-variable "locale" {
-  description = "(Optional) The user's geographical region or location."
-  type        = string
-  default     = ""
-}
-variable "family_name" {
-  description = "(Required) The family name of the user."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Details about the user's full name. Detailed below."
-  type        = string
-}
 variable "phone_numbers" {
   description = "(Optional) Details about the user's phone number. At most 1 phone number is allowed. Detailed below."
   type        = string
   default     = ""
 }
-variable "preferred_language" {
-  description = "(Optional) The preferred language of the user."
+variable "issuer" {
+  description = "The issuer for an external identifier."
   type        = string
   default     = ""
 }
-variable "primary" {
-  description = "(Optional) When true, this is the primary phone number associated with the user."
+variable "preferred_language" {
+  description = "(Optional) The preferred language of the user."
   type        = string
   default     = ""
 }
@@ -122,43 +94,12 @@ variable "value" {
   type        = string
   default     = ""
 }
-variable "issuer" {
-  description = "The issuer for an external identifier."
+variable "given_name" {
+  description = "(Required) The given name of the user."
   type        = string
-  default     = ""
-}
-variable "middle_name" {
-  description = "(Optional) The middle name of the user.phone_numbers Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "nickname" {
-  description = "(Optional) An alternate name for the user."
-  type        = string
-  default     = ""
-}
-variable "user_type" {
-  description = "(Optional) The user type.addresses Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "country" {
-  description = "(Optional) The country that this address is in."
-  type        = string
-  default     = ""
-}
-variable "locality" {
-  description = "(Optional) The address locality."
-  type        = string
-  default     = ""
 }
 variable "profile_url" {
   description = "(Optional) An URL that may be associated with the user."
-  type        = string
-  default     = ""
-}
-variable "region" {
-  description = "(Optional) The region of the address."
   type        = string
   default     = ""
 }
@@ -167,28 +108,87 @@ variable "title" {
   type        = string
   default     = ""
 }
+variable "postal_code" {
+  description = "(Optional) The postal code of the address."
+  type        = string
+  default     = ""
+}
 variable "user_name" {
   description = "(Required, Forces new resource) A unique string used to identify the user. This value can consist of letters, accented characters, symbols, numbers, and punctuation. This value is specified at the time the user is created and stored as an attribute of the user object in the identity store. The limit is 128 characters."
   type        = string
+}
+variable "emails" {
+  description = "(Optional) Details about the user's email. At most 1 email is allowed. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "family_name" {
+  description = "(Required) The family name of the user."
+  type        = string
+}
+variable "id" {
+  description = "The identifier issued to this resource by an external identity provider."
+  type        = string
+  default     = ""
+}
+variable "timezone" {
+  description = "(Optional) The user's time zone."
+  type        = string
+  default     = ""
+}
+variable "honorific_prefix" {
+  description = "(Optional) The honorific prefix of the user."
+  type        = string
+  default     = ""
+}
+variable "middle_name" {
+  description = "(Optional) The middle name of the user.phone_numbers Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Details about the user's full name. Detailed below."
+  type        = string
+}
+variable "locality" {
+  description = "(Optional) The address locality."
+  type        = string
+  default     = ""
+}
+variable "primary" {
+  description = "(Optional) When true, this is the primary phone number associated with the user."
+  type        = string
+  default     = ""
+}
+variable "region" {
+  description = "(Optional) The region of the address."
+  type        = string
+  default     = ""
 }
 variable "addresses" {
   description = "(Optional) Details about the user's address. At most 1 address is allowed. Detailed below."
   type        = string
   default     = ""
 }
-variable "postal_code" {
-  description = "(Optional) The postal code of the address."
+variable "country" {
+  description = "(Optional) The country that this address is in."
   type        = string
   default     = ""
 }
-variable "formatted" {
-  description = "(Optional) The name that is typically displayed when the name is shown for display."
+variable "locale" {
+  description = "(Optional) The user's geographical region or location."
   type        = string
   default     = ""
 }
-variable "given_name" {
-  description = "(Required) The given name of the user."
+variable "honorific_suffix" {
+  description = "(Optional) The honorific suffix of the user."
   type        = string
+  default     = ""
+}
+variable "user_type" {
+  description = "(Optional) The user type.addresses Configuration Block"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -310,29 +310,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "emails" {
-  description = "(Optional) Details about the user's email. At most 1 email is allowed. Detailed below."
-  value       = aws_identitystore_user.aws_identitystore_user.emails
+output "locale" {
+  description = "(Optional) The user's geographical region or location."
+  value       = aws_identitystore_user.aws_identitystore_user.locale
 }
-output "external_ids" {
-  description = ""
-  value       = aws_identitystore_user.aws_identitystore_user.external_ids
+output "locality" {
+  description = "(Optional) The address locality."
+  value       = aws_identitystore_user.aws_identitystore_user.locality
 }
-output "identity_store_id" {
-  description = "(Required, Forces new resource) The globally unique identifier for the identity store that this user is in."
-  value       = aws_identitystore_user.aws_identitystore_user.identity_store_id
+output "primary" {
+  description = "(Optional) When true, this is the primary phone number associated with the user."
+  value       = aws_identitystore_user.aws_identitystore_user.primary
+}
+output "region" {
+  description = "(Optional) The region of the address."
+  value       = aws_identitystore_user.aws_identitystore_user.region
+}
+output "addresses" {
+  description = "(Optional) Details about the user's address. At most 1 address is allowed. Detailed below."
+  value       = aws_identitystore_user.aws_identitystore_user.addresses
+}
+output "country" {
+  description = "(Optional) The country that this address is in."
+  value       = aws_identitystore_user.aws_identitystore_user.country
+}
+output "honorific_suffix" {
+  description = "(Optional) The honorific suffix of the user."
+  value       = aws_identitystore_user.aws_identitystore_user.honorific_suffix
+}
+output "user_type" {
+  description = "(Optional) The user type.addresses Configuration Block"
+  value       = aws_identitystore_user.aws_identitystore_user.user_type
+}
+output "nickname" {
+  description = "(Optional) An alternate name for the user."
+  value       = aws_identitystore_user.aws_identitystore_user.nickname
+}
+output "street_address" {
+  description = "(Optional) The street of the address."
+  value       = aws_identitystore_user.aws_identitystore_user.street_address
 }
 output "display_name" {
   description = "(Required) The name that is typically displayed when the user is referenced."
   value       = aws_identitystore_user.aws_identitystore_user.display_name
 }
-output "locale" {
-  description = "(Optional) The user's geographical region or location."
-  value       = aws_identitystore_user.aws_identitystore_user.locale
+output "external_ids" {
+  description = ""
+  value       = aws_identitystore_user.aws_identitystore_user.external_ids
+}
+output "phone_numbers" {
+  description = "(Optional) Details about the user's phone number. At most 1 phone number is allowed. Detailed below."
+  value       = aws_identitystore_user.aws_identitystore_user.phone_numbers
+}
+output "formatted" {
+  description = "(Optional) The name that is typically displayed when the name is shown for display."
+  value       = aws_identitystore_user.aws_identitystore_user.formatted
+}
+output "identity_store_id" {
+  description = "(Required, Forces new resource) The globally unique identifier for the identity store that this user is in."
+  value       = aws_identitystore_user.aws_identitystore_user.identity_store_id
 }
 output "type" {
   description = "(Optional) The type of phone number."
   value       = aws_identitystore_user.aws_identitystore_user.type
+}
+output "issuer" {
+  description = "The issuer for an external identifier."
+  value       = aws_identitystore_user.aws_identitystore_user.issuer
+}
+output "preferred_language" {
+  description = "(Optional) The preferred language of the user."
+  value       = aws_identitystore_user.aws_identitystore_user.preferred_language
+}
+output "title" {
+  description = "(Optional) The user's title."
+  value       = aws_identitystore_user.aws_identitystore_user.title
 }
 output "user_id" {
   description = "The identifier for this user in the identity store."
@@ -342,6 +394,30 @@ output "value" {
   description = "(Optional) The user's phone number.In addition to all arguments above, the following attributes are exported:"
   value       = aws_identitystore_user.aws_identitystore_user.value
 }
+output "given_name" {
+  description = "(Required) The given name of the user."
+  value       = aws_identitystore_user.aws_identitystore_user.given_name
+}
+output "profile_url" {
+  description = "(Optional) An URL that may be associated with the user."
+  value       = aws_identitystore_user.aws_identitystore_user.profile_url
+}
+output "id" {
+  description = "The identifier issued to this resource by an external identity provider."
+  value       = aws_identitystore_user.aws_identitystore_user.id
+}
+output "postal_code" {
+  description = "(Optional) The postal code of the address."
+  value       = aws_identitystore_user.aws_identitystore_user.postal_code
+}
+output "user_name" {
+  description = "(Required, Forces new resource) A unique string used to identify the user. This value can consist of letters, accented characters, symbols, numbers, and punctuation. This value is specified at the time the user is created and stored as an attribute of the user object in the identity store. The limit is 128 characters."
+  value       = aws_identitystore_user.aws_identitystore_user.user_name
+}
+output "emails" {
+  description = "(Optional) Details about the user's email. At most 1 email is allowed. Detailed below."
+  value       = aws_identitystore_user.aws_identitystore_user.emails
+}
 output "family_name" {
   description = "(Required) The family name of the user."
   value       = aws_identitystore_user.aws_identitystore_user.family_name
@@ -350,93 +426,17 @@ output "name" {
   description = "(Required) Details about the user's full name. Detailed below."
   value       = aws_identitystore_user.aws_identitystore_user.name
 }
-output "phone_numbers" {
-  description = "(Optional) Details about the user's phone number. At most 1 phone number is allowed. Detailed below."
-  value       = aws_identitystore_user.aws_identitystore_user.phone_numbers
-}
-output "preferred_language" {
-  description = "(Optional) The preferred language of the user."
-  value       = aws_identitystore_user.aws_identitystore_user.preferred_language
-}
-output "primary" {
-  description = "(Optional) When true, this is the primary phone number associated with the user."
-  value       = aws_identitystore_user.aws_identitystore_user.primary
-}
-output "issuer" {
-  description = "The issuer for an external identifier."
-  value       = aws_identitystore_user.aws_identitystore_user.issuer
-}
-output "middle_name" {
-  description = "(Optional) The middle name of the user.phone_numbers Configuration Block"
-  value       = aws_identitystore_user.aws_identitystore_user.middle_name
-}
-output "nickname" {
-  description = "(Optional) An alternate name for the user."
-  value       = aws_identitystore_user.aws_identitystore_user.nickname
-}
-output "user_type" {
-  description = "(Optional) The user type.addresses Configuration Block"
-  value       = aws_identitystore_user.aws_identitystore_user.user_type
-}
-output "user_name" {
-  description = "(Required, Forces new resource) A unique string used to identify the user. This value can consist of letters, accented characters, symbols, numbers, and punctuation. This value is specified at the time the user is created and stored as an attribute of the user object in the identity store. The limit is 128 characters."
-  value       = aws_identitystore_user.aws_identitystore_user.user_name
-}
-output "country" {
-  description = "(Optional) The country that this address is in."
-  value       = aws_identitystore_user.aws_identitystore_user.country
-}
-output "locality" {
-  description = "(Optional) The address locality."
-  value       = aws_identitystore_user.aws_identitystore_user.locality
-}
-output "profile_url" {
-  description = "(Optional) An URL that may be associated with the user."
-  value       = aws_identitystore_user.aws_identitystore_user.profile_url
-}
-output "region" {
-  description = "(Optional) The region of the address."
-  value       = aws_identitystore_user.aws_identitystore_user.region
-}
-output "title" {
-  description = "(Optional) The user's title."
-  value       = aws_identitystore_user.aws_identitystore_user.title
-}
-output "addresses" {
-  description = "(Optional) Details about the user's address. At most 1 address is allowed. Detailed below."
-  value       = aws_identitystore_user.aws_identitystore_user.addresses
-}
-output "postal_code" {
-  description = "(Optional) The postal code of the address."
-  value       = aws_identitystore_user.aws_identitystore_user.postal_code
-}
-output "formatted" {
-  description = "(Optional) The name that is typically displayed when the name is shown for display."
-  value       = aws_identitystore_user.aws_identitystore_user.formatted
-}
-output "given_name" {
-  description = "(Required) The given name of the user."
-  value       = aws_identitystore_user.aws_identitystore_user.given_name
+output "timezone" {
+  description = "(Optional) The user's time zone."
+  value       = aws_identitystore_user.aws_identitystore_user.timezone
 }
 output "honorific_prefix" {
   description = "(Optional) The honorific prefix of the user."
   value       = aws_identitystore_user.aws_identitystore_user.honorific_prefix
 }
-output "honorific_suffix" {
-  description = "(Optional) The honorific suffix of the user."
-  value       = aws_identitystore_user.aws_identitystore_user.honorific_suffix
-}
-output "id" {
-  description = "The identifier issued to this resource by an external identity provider."
-  value       = aws_identitystore_user.aws_identitystore_user.id
-}
-output "street_address" {
-  description = "(Optional) The street of the address."
-  value       = aws_identitystore_user.aws_identitystore_user.street_address
-}
-output "timezone" {
-  description = "(Optional) The user's time zone."
-  value       = aws_identitystore_user.aws_identitystore_user.timezone
+output "middle_name" {
+  description = "(Optional) The middle name of the user.phone_numbers Configuration Block"
+  value       = aws_identitystore_user.aws_identitystore_user.middle_name
 }
 output "external_ids" {
   description = ""

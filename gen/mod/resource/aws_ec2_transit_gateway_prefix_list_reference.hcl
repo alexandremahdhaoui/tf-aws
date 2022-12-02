@@ -9,11 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "transit_gateway_attachment_id" {
-  description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "transit_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Transit Gateway Route Table."
   type        = string
@@ -31,6 +26,11 @@ variable "id" {
 variable "prefix_list_id" {
   description = "(Required) Identifier of EC2 Prefix List."
   type        = string
+}
+variable "transit_gateway_attachment_id" {
+  description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

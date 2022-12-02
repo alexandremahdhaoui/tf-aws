@@ -1,16 +1,11 @@
 resource "aws_route_table_association" "aws_route_table_association" {
-  gateway_id     = var.gateway_id
   route_table_id = var.route_table_id
   subnet_id      = var.subnet_id
+  gateway_id     = var.gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "gateway_id" {
-  description = "(Optional) The gateway ID to create an association. Conflicts with subnet_id."
-  type        = string
-  default     = ""
 }
 variable "route_table_id" {
   description = "(Required) The ID of the routing table to associate with.In addition to all arguments above, the following attributes are exported:"
@@ -18,6 +13,11 @@ variable "route_table_id" {
 }
 variable "subnet_id" {
   description = "(Optional) The subnet ID to create an association. Conflicts with gateway_id."
+  type        = string
+  default     = ""
+}
+variable "gateway_id" {
+  description = "(Optional) The gateway ID to create an association. Conflicts with subnet_id."
   type        = string
   default     = ""
 }

@@ -1,18 +1,14 @@
 resource "aws_prometheus_workspace" "aws_prometheus_workspace" {
+  alias                 = var.alias
   arn                   = var.arn
   id                    = var.id
   log_group_arn         = var.log_group_arn
   logging_configuration = var.logging_configuration
   prometheus_endpoint   = var.prometheus_endpoint
   tags                  = var.tags
-  alias                 = var.alias
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "log_group_arn" {
-  description = "(Required) The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "logging_configuration" {
@@ -40,6 +36,10 @@ variable "arn" {
 }
 variable "id" {
   description = "Identifier of the workspace"
+  type        = string
+}
+variable "log_group_arn" {
+  description = "(Required) The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -162,14 +162,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "log_group_arn" {
-  description = "(Required) The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_prometheus_workspace.aws_prometheus_workspace.log_group_arn
-}
-output "logging_configuration" {
-  description = "(Optional) Logging configuration for the workspace. See Logging Configuration below for details."
-  value       = aws_prometheus_workspace.aws_prometheus_workspace.logging_configuration
-}
 output "prometheus_endpoint" {
   description = "Prometheus endpoint available for this workspace."
   value       = aws_prometheus_workspace.aws_prometheus_workspace.prometheus_endpoint
@@ -190,13 +182,13 @@ output "id" {
   description = "Identifier of the workspace"
   value       = aws_prometheus_workspace.aws_prometheus_workspace.id
 }
-output "prometheus_endpoint" {
-  description = "Prometheus endpoint available for this workspace."
-  value       = aws_prometheus_workspace.aws_prometheus_workspace.prometheus_endpoint
+output "log_group_arn" {
+  description = "(Required) The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_prometheus_workspace.aws_prometheus_workspace.log_group_arn
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_prometheus_workspace.aws_prometheus_workspace.tags_all
+output "logging_configuration" {
+  description = "(Optional) Logging configuration for the workspace. See Logging Configuration below for details."
+  value       = aws_prometheus_workspace.aws_prometheus_workspace.logging_configuration
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the workspace."
@@ -205,6 +197,14 @@ output "arn" {
 output "id" {
   description = "Identifier of the workspace"
   value       = aws_prometheus_workspace.aws_prometheus_workspace.id
+}
+output "prometheus_endpoint" {
+  description = "Prometheus endpoint available for this workspace."
+  value       = aws_prometheus_workspace.aws_prometheus_workspace.prometheus_endpoint
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_prometheus_workspace.aws_prometheus_workspace.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

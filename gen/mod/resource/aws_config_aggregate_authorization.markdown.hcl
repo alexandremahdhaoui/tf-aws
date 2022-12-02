@@ -1,15 +1,11 @@
 resource "aws_config_aggregate_authorization.markdown" "aws_config_aggregate_authorization.markdown" {
-  region     = var.region
-  tags       = var.tags
   account_id = var.account_id
   arn        = var.arn
+  region     = var.region
+  tags       = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "region" {
-  description = "(Required) Region"
   type        = string
 }
 variable "tags" {
@@ -23,6 +19,10 @@ variable "account_id" {
 }
 variable "arn" {
   description = "The ARN of the authorization"
+  type        = string
+}
+variable "region" {
+  description = "(Required) Region"
   type        = string
 }
 variable "tag_instance_id" {

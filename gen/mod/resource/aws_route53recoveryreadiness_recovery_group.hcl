@@ -9,6 +9,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "ARN of the recovery group"
+  type        = string
+}
 variable "cells" {
   description = "(Optional) List of cell arns to add as nested fault domains within this recovery group"
   type        = string
@@ -25,10 +29,6 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the recovery group"
   type        = string
 }
 variable "tag_instance_id" {
@@ -171,10 +171,6 @@ output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.tags_all
 }
-output "arn" {
-  description = "ARN of the recovery group"
-  value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.arn
-}
 output "delete" {
   description = "(Default 5m)"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.delete
@@ -182,6 +178,10 @@ output "delete" {
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.tags_all
+}
+output "arn" {
+  description = "ARN of the recovery group"
+  value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

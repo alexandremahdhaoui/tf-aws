@@ -1,32 +1,33 @@
 resource "aws_glue_schema" "aws_glue_schema" {
-  data_format           = var.data_format
+  compatibility         = var.compatibility
+  next_schema_version   = var.next_schema_version
+  registry_arn          = var.registry_arn
   registry_name         = var.registry_name
   schema_checkpoint     = var.schema_checkpoint
   arn                   = var.arn
   description           = var.description
   id                    = var.id
   latest_schema_version = var.latest_schema_version
-  next_schema_version   = var.next_schema_version
-  registry_arn          = var.registry_arn
   schema_definition     = var.schema_definition
   schema_name           = var.schema_name
-  compatibility         = var.compatibility
   tags                  = var.tags
+  data_format           = var.data_format
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "schema_definition" {
-  description = "(Required) The schema definition using the data_format setting for schema_name."
   type        = string
 }
 variable "schema_name" {
   description = " – (Required) The Name of the schema."
   type        = string
 }
-variable "compatibility" {
-  description = "(Required) The compatibility mode of the schema. Values values are: NONE, DISABLED, BACKWARD, BACKWARD_ALL, FORWARD, FORWARD_ALL, FULL, and FULL_ALL."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "data_format" {
+  description = "(Required) The data format of the schema definition. Valid values are AVRO, JSON and PROTOBUF."
   type        = string
 }
 variable "description" {
@@ -42,6 +43,22 @@ variable "latest_schema_version" {
   description = "The latest version of the schema associated with the returned schema definition."
   type        = string
 }
+variable "schema_definition" {
+  description = "(Required) The schema definition using the data_format setting for schema_name."
+  type        = string
+}
+variable "schema_checkpoint" {
+  description = "The version number of the checkpoint (the last time the compatibility mode was changed)."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the schema."
+  type        = string
+}
+variable "compatibility" {
+  description = "(Required) The compatibility mode of the schema. Values values are: NONE, DISABLED, BACKWARD, BACKWARD_ALL, FORWARD, FORWARD_ALL, FULL, and FULL_ALL."
+  type        = string
+}
 variable "next_schema_version" {
   description = "The next version of the schema associated with the returned schema definition."
   type        = string
@@ -50,25 +67,8 @@ variable "registry_arn" {
   description = "(Required) The ARN of the Glue Registry to create the schema in."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the schema."
-  type        = string
-}
-variable "data_format" {
-  description = "(Required) The data format of the schema definition. Valid values are AVRO, JSON and PROTOBUF."
-  type        = string
-}
 variable "registry_name" {
   description = "The name of the Glue Registry."
-  type        = string
-}
-variable "schema_checkpoint" {
-  description = "The version number of the checkpoint (the last time the compatibility mode was changed)."
   type        = string
 }
 variable "tag_instance_id" {
@@ -191,29 +191,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "compatibility" {
-  description = "(Required) The compatibility mode of the schema. Values values are: NONE, DISABLED, BACKWARD, BACKWARD_ALL, FORWARD, FORWARD_ALL, FULL, and FULL_ALL."
-  value       = aws_glue_schema.aws_glue_schema.compatibility
-}
-output "description" {
-  description = " – (Optional) A description of the schema."
-  value       = aws_glue_schema.aws_glue_schema.description
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the schema."
-  value       = aws_glue_schema.aws_glue_schema.id
-}
 output "latest_schema_version" {
   description = "The latest version of the schema associated with the returned schema definition."
   value       = aws_glue_schema.aws_glue_schema.latest_schema_version
-}
-output "next_schema_version" {
-  description = "The next version of the schema associated with the returned schema definition."
-  value       = aws_glue_schema.aws_glue_schema.next_schema_version
-}
-output "registry_arn" {
-  description = "(Required) The ARN of the Glue Registry to create the schema in."
-  value       = aws_glue_schema.aws_glue_schema.registry_arn
 }
 output "schema_definition" {
   description = "(Required) The schema definition using the data_format setting for schema_name."
@@ -227,13 +207,21 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glue_schema.aws_glue_schema.tags
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the schema."
-  value       = aws_glue_schema.aws_glue_schema.arn
-}
 output "data_format" {
   description = "(Required) The data format of the schema definition. Valid values are AVRO, JSON and PROTOBUF."
   value       = aws_glue_schema.aws_glue_schema.data_format
+}
+output "description" {
+  description = " – (Optional) A description of the schema."
+  value       = aws_glue_schema.aws_glue_schema.description
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the schema."
+  value       = aws_glue_schema.aws_glue_schema.id
+}
+output "registry_arn" {
+  description = "(Required) The ARN of the Glue Registry to create the schema in."
+  value       = aws_glue_schema.aws_glue_schema.registry_arn
 }
 output "registry_name" {
   description = "The name of the Glue Registry."
@@ -242,6 +230,18 @@ output "registry_name" {
 output "schema_checkpoint" {
   description = "The version number of the checkpoint (the last time the compatibility mode was changed)."
   value       = aws_glue_schema.aws_glue_schema.schema_checkpoint
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the schema."
+  value       = aws_glue_schema.aws_glue_schema.arn
+}
+output "compatibility" {
+  description = "(Required) The compatibility mode of the schema. Values values are: NONE, DISABLED, BACKWARD, BACKWARD_ALL, FORWARD, FORWARD_ALL, FULL, and FULL_ALL."
+  value       = aws_glue_schema.aws_glue_schema.compatibility
+}
+output "next_schema_version" {
+  description = "The next version of the schema associated with the returned schema definition."
+  value       = aws_glue_schema.aws_glue_schema.next_schema_version
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the schema."

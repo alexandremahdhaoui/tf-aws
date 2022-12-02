@@ -1,24 +1,24 @@
 resource "aws_lightsail_container_service_deployment_version" "aws_lightsail_container_service_deployment_version" {
   container           = var.container
   container_port      = var.container_port
-  created_at          = var.created_at
-  environment         = var.environment
-  health_check        = var.health_check
-  image               = var.image
+  healthy_threshold   = var.healthy_threshold
   interval_seconds    = var.interval_seconds
-  service_name        = var.service_name
+  path                = var.path
   state               = var.state
   command             = var.command
-  container_name      = var.container_name
-  id                  = var.id
+  health_check        = var.health_check
+  image               = var.image
   timeout_seconds     = var.timeout_seconds
-  unhealthy_threshold = var.unhealthy_threshold
-  path                = var.path
-  ports               = var.ports
+  container_name      = var.container_name
+  created_at          = var.created_at
+  environment         = var.environment
+  public_endpoint     = var.public_endpoint
+  service_name        = var.service_name
   success_codes       = var.success_codes
   version             = var.version
-  healthy_threshold   = var.healthy_threshold
-  public_endpoint     = var.public_endpoint
+  id                  = var.id
+  ports               = var.ports
+  unhealthy_threshold = var.unhealthy_threshold
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -29,10 +29,19 @@ variable "healthy_threshold" {
   type        = string
   default     = ""
 }
-variable "public_endpoint" {
-  description = "(Optional) A configuration block that describes the settings of the public endpoint for the container service. Detailed below.containerThe container configuration block supports the following arguments:"
+variable "interval_seconds" {
+  description = "(Optional) The approximate interval, in seconds, between health checks of an individual container. You can specify between 5 and 300 seconds. Defaults to 5."
   type        = string
   default     = ""
+}
+variable "path" {
+  description = "(Optional) The path on the container on which to perform the health check. Defaults to \"/\"."
+  type        = string
+  default     = ""
+}
+variable "state" {
+  description = "The current state of the container service."
+  type        = string
 }
 variable "container" {
   description = "(Required) A set of configuration blocks that describe the settings of the containers that will be launched on the container service. Maximum of 53. Detailed below."
@@ -42,47 +51,8 @@ variable "container_port" {
   description = "(Required) The port of the container to which traffic is forwarded to."
   type        = string
 }
-variable "created_at" {
-  description = "The timestamp when the deployment was created."
-  type        = string
-}
-variable "environment" {
-  description = "(Optional) A key-value map of the environment variables of the container."
-  type        = string
-  default     = ""
-}
-variable "health_check" {
-  description = "(Required) A configuration block that describes the health check configuration of the container. Detailed below.health_checkThe health_check configuration block supports the following arguments:"
-  type        = string
-}
 variable "image" {
   description = "(Required) The name of the image used for the container. Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon (:). For example, :container-service-1.mystaticwebsite.1. Container images sourced from a public registry like Docker Hub don't start with a colon. For example, nginx:latest or nginx."
-  type        = string
-}
-variable "interval_seconds" {
-  description = "(Optional) The approximate interval, in seconds, between health checks of an individual container. You can specify between 5 and 300 seconds. Defaults to 5."
-  type        = string
-  default     = ""
-}
-variable "service_name" {
-  description = "(Required) The name for the container service."
-  type        = string
-}
-variable "state" {
-  description = "The current state of the container service."
-  type        = string
-}
-variable "command" {
-  description = "(Optional) The launch command for the container. A list of string."
-  type        = string
-  default     = ""
-}
-variable "container_name" {
-  description = "(Required) The name of the container for the endpoint."
-  type        = string
-}
-variable "id" {
-  description = "The service_name and version separation by a slash (/)."
   type        = string
 }
 variable "timeout_seconds" {
@@ -90,20 +60,28 @@ variable "timeout_seconds" {
   type        = string
   default     = ""
 }
-variable "unhealthy_threshold" {
-  description = "(Optional) The number of consecutive health checks failures required before moving the container to the Unhealthy state. Defaults to 2."
+variable "command" {
+  description = "(Optional) The launch command for the container. A list of string."
   type        = string
   default     = ""
 }
-variable "path" {
-  description = "(Optional) The path on the container on which to perform the health check. Defaults to \"/\"."
+variable "health_check" {
+  description = "(Required) A configuration block that describes the health check configuration of the container. Detailed below.health_checkThe health_check configuration block supports the following arguments:"
+  type        = string
+}
+variable "environment" {
+  description = "(Optional) A key-value map of the environment variables of the container."
   type        = string
   default     = ""
 }
-variable "ports" {
-  description = "(Optional) A key-value map of the open firewall ports of the container. Valid values: HTTP, HTTPS, TCP, UDP.public_endpointThe public_endpoint configuration block supports the following arguments:"
+variable "public_endpoint" {
+  description = "(Optional) A configuration block that describes the settings of the public endpoint for the container service. Detailed below.containerThe container configuration block supports the following arguments:"
   type        = string
   default     = ""
+}
+variable "service_name" {
+  description = "(Required) The name for the container service."
+  type        = string
 }
 variable "success_codes" {
   description = "(Optional) The HTTP codes to use when checking for a successful response from a container. You can specify values between 200 and 499. Defaults to \"200-499\".In addition to all arguments above, the following attributes are exported:"
@@ -113,6 +91,28 @@ variable "success_codes" {
 variable "version" {
   description = "The version number of the deployment.TimeoutsConfiguration options:"
   type        = string
+}
+variable "container_name" {
+  description = "(Required) The name of the container for the endpoint."
+  type        = string
+}
+variable "created_at" {
+  description = "The timestamp when the deployment was created."
+  type        = string
+}
+variable "unhealthy_threshold" {
+  description = "(Optional) The number of consecutive health checks failures required before moving the container to the Unhealthy state. Defaults to 2."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The service_name and version separation by a slash (/)."
+  type        = string
+}
+variable "ports" {
+  description = "(Optional) A key-value map of the open firewall ports of the container. Valid values: HTTP, HTTPS, TCP, UDP.public_endpointThe public_endpoint configuration block supports the following arguments:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -234,69 +234,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "timeout_seconds" {
-  description = "(Optional) The amount of time, in seconds, during which no response means a failed health check. You can specify between 2 and 60 seconds. Defaults to 2."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.timeout_seconds
-}
-output "unhealthy_threshold" {
-  description = "(Optional) The number of consecutive health checks failures required before moving the container to the Unhealthy state. Defaults to 2."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.unhealthy_threshold
-}
-output "command" {
-  description = "(Optional) The launch command for the container. A list of string."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.command
-}
-output "container_name" {
-  description = "(Required) The name of the container for the endpoint."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.container_name
-}
-output "id" {
-  description = "The service_name and version separation by a slash (/)."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.id
+output "success_codes" {
+  description = "(Optional) The HTTP codes to use when checking for a successful response from a container. You can specify values between 200 and 499. Defaults to \"200-499\".In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.success_codes
 }
 output "version" {
   description = "The version number of the deployment.TimeoutsConfiguration options:"
   value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.version
 }
-output "path" {
-  description = "(Optional) The path on the container on which to perform the health check. Defaults to \"/\"."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.path
+output "container_name" {
+  description = "(Required) The name of the container for the endpoint."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.container_name
 }
-output "ports" {
-  description = "(Optional) A key-value map of the open firewall ports of the container. Valid values: HTTP, HTTPS, TCP, UDP.public_endpointThe public_endpoint configuration block supports the following arguments:"
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.ports
-}
-output "success_codes" {
-  description = "(Optional) The HTTP codes to use when checking for a successful response from a container. You can specify values between 200 and 499. Defaults to \"200-499\".In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.success_codes
-}
-output "healthy_threshold" {
-  description = "(Optional) The number of consecutive health checks successes required before moving the container to the Healthy state. Defaults to 2."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.healthy_threshold
-}
-output "public_endpoint" {
-  description = "(Optional) A configuration block that describes the settings of the public endpoint for the container service. Detailed below.containerThe container configuration block supports the following arguments:"
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.public_endpoint
+output "created_at" {
+  description = "The timestamp when the deployment was created."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.created_at
 }
 output "environment" {
   description = "(Optional) A key-value map of the environment variables of the container."
   value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.environment
 }
-output "health_check" {
-  description = "(Required) A configuration block that describes the health check configuration of the container. Detailed below.health_checkThe health_check configuration block supports the following arguments:"
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.health_check
-}
-output "image" {
-  description = "(Required) The name of the image used for the container. Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon (:). For example, :container-service-1.mystaticwebsite.1. Container images sourced from a public registry like Docker Hub don't start with a colon. For example, nginx:latest or nginx."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.image
-}
-output "interval_seconds" {
-  description = "(Optional) The approximate interval, in seconds, between health checks of an individual container. You can specify between 5 and 300 seconds. Defaults to 5."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.interval_seconds
+output "public_endpoint" {
+  description = "(Optional) A configuration block that describes the settings of the public endpoint for the container service. Detailed below.containerThe container configuration block supports the following arguments:"
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.public_endpoint
 }
 output "service_name" {
   description = "(Required) The name for the container service."
   value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.service_name
+}
+output "id" {
+  description = "The service_name and version separation by a slash (/)."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.id
+}
+output "ports" {
+  description = "(Optional) A key-value map of the open firewall ports of the container. Valid values: HTTP, HTTPS, TCP, UDP.public_endpointThe public_endpoint configuration block supports the following arguments:"
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.ports
+}
+output "unhealthy_threshold" {
+  description = "(Optional) The number of consecutive health checks failures required before moving the container to the Unhealthy state. Defaults to 2."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.unhealthy_threshold
+}
+output "state" {
+  description = "The current state of the container service."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.state
 }
 output "container" {
   description = "(Required) A set of configuration blocks that describe the settings of the containers that will be launched on the container service. Maximum of 53. Detailed below."
@@ -306,13 +286,37 @@ output "container_port" {
   description = "(Required) The port of the container to which traffic is forwarded to."
   value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.container_port
 }
-output "created_at" {
-  description = "The timestamp when the deployment was created."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.created_at
+output "healthy_threshold" {
+  description = "(Optional) The number of consecutive health checks successes required before moving the container to the Healthy state. Defaults to 2."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.healthy_threshold
 }
-output "state" {
-  description = "The current state of the container service."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.state
+output "interval_seconds" {
+  description = "(Optional) The approximate interval, in seconds, between health checks of an individual container. You can specify between 5 and 300 seconds. Defaults to 5."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.interval_seconds
+}
+output "path" {
+  description = "(Optional) The path on the container on which to perform the health check. Defaults to \"/\"."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.path
+}
+output "command" {
+  description = "(Optional) The launch command for the container. A list of string."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.command
+}
+output "health_check" {
+  description = "(Required) A configuration block that describes the health check configuration of the container. Detailed below.health_checkThe health_check configuration block supports the following arguments:"
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.health_check
+}
+output "image" {
+  description = "(Required) The name of the image used for the container. Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon (:). For example, :container-service-1.mystaticwebsite.1. Container images sourced from a public registry like Docker Hub don't start with a colon. For example, nginx:latest or nginx."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.image
+}
+output "timeout_seconds" {
+  description = "(Optional) The amount of time, in seconds, during which no response means a failed health check. You can specify between 2 and 60 seconds. Defaults to 2."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.timeout_seconds
+}
+output "id" {
+  description = "The service_name and version separation by a slash (/)."
+  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.id
 }
 output "state" {
   description = "The current state of the container service."
@@ -329,10 +333,6 @@ output "create" {
 output "created_at" {
   description = "The timestamp when the deployment was created."
   value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.created_at
-}
-output "id" {
-  description = "The service_name and version separation by a slash (/)."
-  value       = aws_lightsail_container_service_deployment_version.aws_lightsail_container_service_deployment_version.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

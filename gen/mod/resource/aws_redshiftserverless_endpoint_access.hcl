@@ -1,50 +1,46 @@
 resource "aws_redshiftserverless_endpoint_access" "aws_redshiftserverless_endpoint_access" {
-  address                = var.address
-  network_interface_id   = var.network_interface_id
-  vpc_endpoint           = var.vpc_endpoint
-  vpc_security_group_ids = var.vpc_security_group_ids
-  private_ip_address     = var.private_ip_address
-  subnet_ids             = var.subnet_ids
+  id                     = var.id
   workgroup_name         = var.workgroup_name
-  availability_zone      = var.availability_zone
-  endpoint_name          = var.endpoint_name
-  network_interface      = var.network_interface
-  port                   = var.port
+  address                = var.address
+  vpc_endpoint           = var.vpc_endpoint
   vpc_endpoint_id        = var.vpc_endpoint_id
   vpc_id                 = var.vpc_id
+  vpc_security_group_ids = var.vpc_security_group_ids
   arn                    = var.arn
-  id                     = var.id
+  endpoint_name          = var.endpoint_name
+  network_interface      = var.network_interface
+  subnet_ids             = var.subnet_ids
+  availability_zone      = var.availability_zone
+  network_interface_id   = var.network_interface_id
+  port                   = var.port
+  private_ip_address     = var.private_ip_address
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Required) An array of VPC subnet IDs to associate with the endpoint."
+variable "id" {
+  description = "The Redshift Endpoint Access Name."
   type        = string
 }
 variable "workgroup_name" {
   description = "(Required) The name of the workgroup.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
+variable "address" {
+  description = "The DNS address of the VPC endpoint."
+  type        = string
+}
+variable "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
   type        = string
 }
 variable "vpc_endpoint_id" {
   description = "The DNS address of the VPC endpoint."
   type        = string
 }
-variable "vpc_id" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  type        = string
-}
-variable "availability_zone" {
-  description = "The availability Zone."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
   type        = string
 }
 variable "endpoint_name" {
@@ -55,12 +51,12 @@ variable "network_interface" {
   description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
+variable "subnet_ids" {
+  description = "(Required) An array of VPC subnet IDs to associate with the endpoint."
   type        = string
 }
-variable "id" {
-  description = "The Redshift Endpoint Access Name."
+variable "vpc_id" {
+  description = "The port that Amazon Redshift Serverless listens on."
   type        = string
 }
 variable "vpc_security_group_ids" {
@@ -68,16 +64,20 @@ variable "vpc_security_group_ids" {
   type        = string
   default     = ""
 }
-variable "address" {
-  description = "The DNS address of the VPC endpoint."
+variable "availability_zone" {
+  description = "The availability Zone."
   type        = string
 }
 variable "network_interface_id" {
   description = "The unique identifier of the network interface."
   type        = string
 }
-variable "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+variable "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  type        = string
+}
+variable "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
   type        = string
 }
 variable "tag_instance_id" {
@@ -200,37 +200,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.arn
-}
-output "id" {
-  description = "The Redshift Endpoint Access Name."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
-}
-output "address" {
-  description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
-}
-output "network_interface_id" {
-  description = "The unique identifier of the network interface."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
-}
-output "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
-}
-output "vpc_security_group_ids" {
-  description = "(Optional) An array of security group IDs to associate with the workgroup."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_security_group_ids
+output "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
 }
 output "private_ip_address" {
   description = "The IPv4 address of the network interface within the subnet."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.private_ip_address
 }
-output "subnet_ids" {
-  description = "(Required) An array of VPC subnet IDs to associate with the endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.subnet_ids
+output "availability_zone" {
+  description = "The availability Zone."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.availability_zone
+}
+output "network_interface_id" {
+  description = "The unique identifier of the network interface."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
+}
+output "id" {
+  description = "The Redshift Endpoint Access Name."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
 }
 output "workgroup_name" {
   description = "(Required) The name of the workgroup.In addition to all arguments above, the following attributes are exported:"
@@ -240,45 +228,49 @@ output "vpc_endpoint_id" {
   description = "The DNS address of the VPC endpoint."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint_id
 }
-output "vpc_id" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_id
+output "address" {
+  description = "The DNS address of the VPC endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
 }
-output "availability_zone" {
-  description = "The availability Zone."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.availability_zone
-}
-output "endpoint_name" {
-  description = "(Required) The name of the endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.endpoint_name
+output "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
 }
 output "network_interface" {
   description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface
 }
+output "subnet_ids" {
+  description = "(Required) An array of VPC subnet IDs to associate with the endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.subnet_ids
+}
+output "vpc_id" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_id
+}
+output "vpc_security_group_ids" {
+  description = "(Optional) An array of security group IDs to associate with the workgroup."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_security_group_ids
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.arn
+}
+output "endpoint_name" {
+  description = "(Required) The name of the endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.endpoint_name
+}
 output "port" {
   description = "The port that Amazon Redshift Serverless listens on."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
-}
-output "address" {
-  description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
-}
-output "network_interface_id" {
-  description = "The unique identifier of the network interface."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
-}
-output "vpc_endpoint_id" {
-  description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint_id
 }
 output "subnet_id" {
   description = "The unique identifier of the subnet."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.subnet_id
 }
-output "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
+output "address" {
+  description = "The DNS address of the VPC endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
@@ -288,21 +280,29 @@ output "availability_zone" {
   description = "The availability Zone."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.availability_zone
 }
-output "id" {
-  description = "The Redshift Endpoint Access Name."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
-}
 output "network_interface" {
   description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface
 }
-output "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
+output "network_interface_id" {
+  description = "The unique identifier of the network interface."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
+}
+output "id" {
+  description = "The Redshift Endpoint Access Name."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
 }
 output "private_ip_address" {
   description = "The IPv4 address of the network interface within the subnet."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.private_ip_address
+}
+output "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
+}
+output "vpc_endpoint_id" {
+  description = "The DNS address of the VPC endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint_id
 }
 output "vpc_id" {
   description = "The port that Amazon Redshift Serverless listens on."

@@ -7,11 +7,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Optional) A name for the association that you're creating between a resolver rule and a VPC.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "resolver_rule_id" {
   description = "(Required) The ID of the resolver rule that you want to associate with the VPC."
   type        = string
@@ -19,6 +14,11 @@ variable "resolver_rule_id" {
 variable "vpc_id" {
   description = "(Required) The ID of the VPC that you want to associate the resolver rule with."
   type        = string
+}
+variable "name" {
+  description = "(Optional) A name for the association that you're creating between a resolver rule and a VPC.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

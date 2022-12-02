@@ -1,32 +1,19 @@
 datasource "aws_availability_zones" "aws_availability_zones" {
-  name                   = var.name
+  all_availability_zones = var.all_availability_zones
+  exclude_names          = var.exclude_names
   names                  = var.names
   state                  = var.state
-  zone_ids               = var.zone_ids
-  all_availability_zones = var.all_availability_zones
+  values                 = var.values
   exclude_zone_ids       = var.exclude_zone_ids
   filter                 = var.filter
-  id                     = var.id
-  exclude_names          = var.exclude_names
   group_names            = var.group_names
-  values                 = var.values
+  id                     = var.id
+  name                   = var.name
+  zone_ids               = var.zone_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "state" {
-  description = "\"available\", \"information\", \"impaired\"\"unavailable\"filter Configuration Blockfilter configuration block:"
-  type        = string
-}
-variable "zone_ids" {
-  description = "List of the Availability Zone IDs available to the account.Note that the indexes of Availability Zone names and IDs correspond.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "all_availability_zones" {
-  description = "(Optional) Set to true to include all Availability Zones and Local Zones regardless of your opt in status."
-  type        = string
-  default     = ""
 }
 variable "exclude_zone_ids" {
   description = "(Optional) List of Availability Zone IDs to exclude."
@@ -38,6 +25,10 @@ variable "filter" {
   type        = string
   default     = ""
 }
+variable "group_names" {
+  description = " A set of the Availability Zone Group names. For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1."
+  type        = string
+}
 variable "id" {
   description = "Region of the Availability Zones."
   type        = string
@@ -46,34 +37,51 @@ variable "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the EC2 DescribeAvailabilityZones API Reference."
   type        = string
 }
-variable "names" {
-  description = "List of the Availability Zone names available to the account."
+variable "zone_ids" {
+  description = "List of the Availability Zone IDs available to the account.Note that the indexes of Availability Zone names and IDs correspond.TimeoutsConfiguration options:"
   type        = string
+}
+variable "all_availability_zones" {
+  description = "(Optional) Set to true to include all Availability Zones and Local Zones regardless of your opt in status."
+  type        = string
+  default     = ""
 }
 variable "exclude_names" {
   description = "(Optional) List of Availability Zone names to exclude."
   type        = string
   default     = ""
 }
-variable "group_names" {
-  description = " A set of the Availability Zone Group names. For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1."
+variable "names" {
+  description = "List of the Availability Zone names available to the account."
+  type        = string
+}
+variable "state" {
+  description = "\"available\", \"information\", \"impaired\"\"unavailable\"filter Configuration Blockfilter configuration block:"
   type        = string
 }
 variable "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+output "all_availability_zones" {
+  description = "(Optional) Set to true to include all Availability Zones and Local Zones regardless of your opt in status."
+  value       = aws_availability_zones.aws_availability_zones.all_availability_zones
+}
+output "exclude_names" {
+  description = "(Optional) List of Availability Zone names to exclude."
+  value       = aws_availability_zones.aws_availability_zones.exclude_names
+}
+output "names" {
+  description = "List of the Availability Zone names available to the account."
+  value       = aws_availability_zones.aws_availability_zones.names
+}
 output "state" {
   description = "\"available\", \"information\", \"impaired\"\"unavailable\"filter Configuration Blockfilter configuration block:"
   value       = aws_availability_zones.aws_availability_zones.state
 }
-output "zone_ids" {
-  description = "List of the Availability Zone IDs available to the account.Note that the indexes of Availability Zone names and IDs correspond.TimeoutsConfiguration options:"
-  value       = aws_availability_zones.aws_availability_zones.zone_ids
-}
-output "all_availability_zones" {
-  description = "(Optional) Set to true to include all Availability Zones and Local Zones regardless of your opt in status."
-  value       = aws_availability_zones.aws_availability_zones.all_availability_zones
+output "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_availability_zones.aws_availability_zones.values
 }
 output "exclude_zone_ids" {
   description = "(Optional) List of Availability Zone IDs to exclude."
@@ -83,6 +91,10 @@ output "filter" {
   description = "(Optional) Configuration block(s) for filtering. Detailed below."
   value       = aws_availability_zones.aws_availability_zones.filter
 }
+output "group_names" {
+  description = " A set of the Availability Zone Group names. For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1."
+  value       = aws_availability_zones.aws_availability_zones.group_names
+}
 output "id" {
   description = "Region of the Availability Zones."
   value       = aws_availability_zones.aws_availability_zones.id
@@ -91,21 +103,9 @@ output "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the EC2 DescribeAvailabilityZones API Reference."
   value       = aws_availability_zones.aws_availability_zones.name
 }
-output "names" {
-  description = "List of the Availability Zone names available to the account."
-  value       = aws_availability_zones.aws_availability_zones.names
-}
-output "exclude_names" {
-  description = "(Optional) List of Availability Zone names to exclude."
-  value       = aws_availability_zones.aws_availability_zones.exclude_names
-}
-output "group_names" {
-  description = " A set of the Availability Zone Group names. For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1."
-  value       = aws_availability_zones.aws_availability_zones.group_names
-}
-output "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_availability_zones.aws_availability_zones.values
+output "zone_ids" {
+  description = "List of the Availability Zone IDs available to the account.Note that the indexes of Availability Zone names and IDs correspond.TimeoutsConfiguration options:"
+  value       = aws_availability_zones.aws_availability_zones.zone_ids
 }
 output "group_names" {
   description = " A set of the Availability Zone Group names. For Availability Zones, this is the same value as the Region name. For Local Zones, the name of the associated group, for example us-west-2-lax-1."

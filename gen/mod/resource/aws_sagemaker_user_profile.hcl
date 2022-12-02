@@ -1,59 +1,44 @@
 resource "aws_sagemaker_user_profile" "aws_sagemaker_user_profile" {
-  custom_image                     = var.custom_image
-  domain_id                        = var.domain_id
-  lifecycle_config_arns            = var.lifecycle_config_arns
-  sharing_settings                 = var.sharing_settings
-  tensor_board_app_settings        = var.tensor_board_app_settings
-  canvas_app_settings              = var.canvas_app_settings
   id                               = var.id
-  image_version_number             = var.image_version_number
-  s3_kms_key_id                    = var.s3_kms_key_id
-  security_groups                  = var.security_groups
-  image_name                       = var.image_name
-  instance_type                    = var.instance_type
-  user_settings                    = var.user_settings
-  jupyter_server_app_settings      = var.jupyter_server_app_settings
-  kernel_gateway_app_settings      = var.kernel_gateway_app_settings
-  sagemaker_image_arn              = var.sagemaker_image_arn
-  sagemaker_image_version_arn      = var.sagemaker_image_version_arn
-  single_sign_on_user_value        = var.single_sign_on_user_value
-  arn                              = var.arn
-  single_sign_on_user_identifier   = var.single_sign_on_user_identifier
-  default_resource_spec            = var.default_resource_spec
-  notebook_output_option           = var.notebook_output_option
-  time_series_forecasting_settings = var.time_series_forecasting_settings
-  user_profile_name                = var.user_profile_name
-  app_image_config_name            = var.app_image_config_name
-  home_efs_file_system_uid         = var.home_efs_file_system_uid
   lifecycle_config_arn             = var.lifecycle_config_arn
-  s3_output_path                   = var.s3_output_path
+  time_series_forecasting_settings = var.time_series_forecasting_settings
+  lifecycle_config_arns            = var.lifecycle_config_arns
+  kernel_gateway_app_settings      = var.kernel_gateway_app_settings
+  sagemaker_image_version_arn      = var.sagemaker_image_version_arn
+  user_settings                    = var.user_settings
+  sharing_settings                 = var.sharing_settings
+  single_sign_on_user_value        = var.single_sign_on_user_value
   status                           = var.status
+  instance_type                    = var.instance_type
+  notebook_output_option           = var.notebook_output_option
+  s3_kms_key_id                    = var.s3_kms_key_id
+  app_image_config_name            = var.app_image_config_name
+  custom_image                     = var.custom_image
+  default_resource_spec            = var.default_resource_spec
+  home_efs_file_system_uid         = var.home_efs_file_system_uid
+  image_version_number             = var.image_version_number
+  security_groups                  = var.security_groups
+  arn                              = var.arn
+  jupyter_server_app_settings      = var.jupyter_server_app_settings
   tags                             = var.tags
+  tensor_board_app_settings        = var.tensor_board_app_settings
+  sagemaker_image_arn              = var.sagemaker_image_arn
+  single_sign_on_user_identifier   = var.single_sign_on_user_identifier
   amazon_forecast_role_arn         = var.amazon_forecast_role_arn
+  domain_id                        = var.domain_id
   execution_role                   = var.execution_role
   r_session_app_settings           = var.r_session_app_settings
+  s3_output_path                   = var.s3_output_path
+  canvas_app_settings              = var.canvas_app_settings
+  image_name                       = var.image_name
+  user_profile_name                = var.user_profile_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "jupyter_server_app_settings" {
-  description = "(Optional) The Jupyter server's app settings. See Jupyter Server App Settings below."
-  type        = string
-  default     = ""
-}
-variable "kernel_gateway_app_settings" {
-  description = "(Optional) The kernel gateway app settings. See Kernel Gateway App Settings below."
-  type        = string
-  default     = ""
-}
-variable "sagemaker_image_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the SageMaker image created on the instance."
-  type        = string
-  default     = ""
-}
-variable "sagemaker_image_version_arn" {
-  description = "(Optional) The ARN of the image version created on the instance.Custom Image"
+variable "sharing_settings" {
+  description = "(Optional) The sharing settings. See Sharing Settings below."
   type        = string
   default     = ""
 }
@@ -61,17 +46,8 @@ variable "single_sign_on_user_value" {
   description = "(Required) The username of the associated AWS Single Sign-On User for this User Profile. If the Domain's AuthMode is SSO, this field is required, and must match a valid username of a user in your directory. If the Domain's AuthMode is not SSO, this field cannot be specified."
   type        = string
 }
-variable "arn" {
-  description = "The user profile Amazon Resource Name (ARN)."
-  type        = string
-}
-variable "single_sign_on_user_identifier" {
-  description = "(Optional) A specifier for the type of value specified in single_sign_on_user_value. Currently, the only supported value is UserName. If the Domain's AuthMode is SSO, this field is required. If the Domain's AuthMode is not SSO, this field cannot be specified."
-  type        = string
-  default     = ""
-}
-variable "default_resource_spec" {
-  description = "(Optional) The default instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance. see Default Resource Spec below."
+variable "status" {
+  description = "(Optional) Describes whether time series forecasting is enabled or disabled in the Canvas app. Valid values are ENABLED and DISABLED.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -80,8 +56,8 @@ variable "notebook_output_option" {
   type        = string
   default     = ""
 }
-variable "time_series_forecasting_settings" {
-  description = "(Optional) Time series forecast settings for the Canvas app. see Time Series Forecasting Settings below.Sharing Settings"
+variable "s3_kms_key_id" {
+  description = "(Optional) When notebook_output_option is Allowed, the AWS Key Management Service (KMS) encryption key ID used to encrypt the notebook cell output in the Amazon S3 bucket."
   type        = string
   default     = ""
 }
@@ -89,22 +65,41 @@ variable "app_image_config_name" {
   description = "(Required) The name of the App Image Config."
   type        = string
 }
+variable "custom_image" {
+  description = "(Optional) A list of custom SageMaker images that are configured to run as a KernelGateway app. see Custom Image below.Default Resource Spec"
+  type        = string
+  default     = ""
+}
+variable "default_resource_spec" {
+  description = "(Optional) The default instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance. see Default Resource Spec below."
+  type        = string
+  default     = ""
+}
 variable "home_efs_file_system_uid" {
   description = "The ID of the user's profile in the Amazon Elastic File System (EFS) volume."
   type        = string
 }
-variable "lifecycle_config_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
+variable "image_version_number" {
+  description = "(Optional) The version number of the Custom Image.Time Series Forecasting Settings"
   type        = string
   default     = ""
 }
-variable "s3_output_path" {
-  description = "(Optional) When notebook_output_option is Allowed, the Amazon S3 bucket used to save the notebook cell output.TensorBoard App Settings"
+variable "instance_type" {
+  description = "(Optional) The instance type."
   type        = string
   default     = ""
 }
-variable "status" {
-  description = "(Optional) Describes whether time series forecasting is enabled or disabled in the Canvas app. Valid values are ENABLED and DISABLED.In addition to all arguments above, the following attributes are exported:"
+variable "security_groups" {
+  description = "(Optional) The security groups."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The user profile Amazon Resource Name (ARN)."
+  type        = string
+}
+variable "jupyter_server_app_settings" {
+  description = "(Optional) The Jupyter server's app settings. See Jupyter Server App Settings below."
   type        = string
   default     = ""
 }
@@ -113,14 +108,24 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "user_profile_name" {
-  description = "(Required) The name for the User Profile."
+variable "tensor_board_app_settings" {
+  description = "(Optional) The TensorBoard app settings. See TensorBoard App Settings below."
   type        = string
+  default     = ""
+}
+variable "single_sign_on_user_identifier" {
+  description = "(Optional) A specifier for the type of value specified in single_sign_on_user_value. Currently, the only supported value is UserName. If the Domain's AuthMode is SSO, this field is required. If the Domain's AuthMode is not SSO, this field cannot be specified."
+  type        = string
+  default     = ""
 }
 variable "amazon_forecast_role_arn" {
   description = "(Optional)  The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the UserProfile that launches the Canvas app. If an execution role is not specified in the UserProfile, Canvas uses the execution role specified in the Domain that owns the UserProfile. To allow time series forecasting, this IAM role should have the AmazonSageMakerCanvasForecastAccess policy attached and forecast.amazonaws.com added in the trust relationship as a service principal."
   type        = string
   default     = ""
+}
+variable "domain_id" {
+  description = "(Required) The ID of the associated Domain."
+  type        = string
 }
 variable "execution_role" {
   description = "(Required) The execution role ARN for the user."
@@ -131,27 +136,13 @@ variable "r_session_app_settings" {
   type        = string
   default     = ""
 }
-variable "custom_image" {
-  description = "(Optional) A list of custom SageMaker images that are configured to run as a KernelGateway app. see Custom Image below.Default Resource Spec"
+variable "s3_output_path" {
+  description = "(Optional) When notebook_output_option is Allowed, the Amazon S3 bucket used to save the notebook cell output.TensorBoard App Settings"
   type        = string
   default     = ""
 }
-variable "domain_id" {
-  description = "(Required) The ID of the associated Domain."
-  type        = string
-}
-variable "lifecycle_config_arns" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configurations.RSession App Settings"
-  type        = string
-  default     = ""
-}
-variable "sharing_settings" {
-  description = "(Optional) The sharing settings. See Sharing Settings below."
-  type        = string
-  default     = ""
-}
-variable "tensor_board_app_settings" {
-  description = "(Optional) The TensorBoard app settings. See TensorBoard App Settings below."
+variable "sagemaker_image_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the SageMaker image created on the instance."
   type        = string
   default     = ""
 }
@@ -160,31 +151,40 @@ variable "canvas_app_settings" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The user profile Amazon Resource Name (ARN)."
-  type        = string
-}
-variable "image_version_number" {
-  description = "(Optional) The version number of the Custom Image.Time Series Forecasting Settings"
-  type        = string
-  default     = ""
-}
-variable "s3_kms_key_id" {
-  description = "(Optional) When notebook_output_option is Allowed, the AWS Key Management Service (KMS) encryption key ID used to encrypt the notebook cell output in the Amazon S3 bucket."
-  type        = string
-  default     = ""
-}
-variable "security_groups" {
-  description = "(Optional) The security groups."
-  type        = string
-  default     = ""
-}
 variable "image_name" {
   description = "(Required) The name of the Custom Image."
   type        = string
 }
-variable "instance_type" {
-  description = "(Optional) The instance type."
+variable "user_profile_name" {
+  description = "(Required) The name for the User Profile."
+  type        = string
+}
+variable "id" {
+  description = "The user profile Amazon Resource Name (ARN)."
+  type        = string
+}
+variable "lifecycle_config_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
+  type        = string
+  default     = ""
+}
+variable "time_series_forecasting_settings" {
+  description = "(Optional) Time series forecast settings for the Canvas app. see Time Series Forecasting Settings below.Sharing Settings"
+  type        = string
+  default     = ""
+}
+variable "lifecycle_config_arns" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configurations.RSession App Settings"
+  type        = string
+  default     = ""
+}
+variable "kernel_gateway_app_settings" {
+  description = "(Optional) The kernel gateway app settings. See Kernel Gateway App Settings below."
+  type        = string
+  default     = ""
+}
+variable "sagemaker_image_version_arn" {
+  description = "(Optional) The ARN of the image version created on the instance.Custom Image"
   type        = string
   default     = ""
 }
@@ -312,137 +312,137 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "image_name" {
-  description = "(Required) The name of the Custom Image."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.image_name
-}
-output "instance_type" {
-  description = "(Optional) The instance type."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.instance_type
-}
-output "user_settings" {
-  description = "(Required) The user settings. See User Settings below."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.user_settings
-}
-output "jupyter_server_app_settings" {
-  description = "(Optional) The Jupyter server's app settings. See Jupyter Server App Settings below."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.jupyter_server_app_settings
-}
-output "kernel_gateway_app_settings" {
-  description = "(Optional) The kernel gateway app settings. See Kernel Gateway App Settings below."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.kernel_gateway_app_settings
-}
-output "sagemaker_image_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the SageMaker image created on the instance."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.sagemaker_image_arn
-}
-output "sagemaker_image_version_arn" {
-  description = "(Optional) The ARN of the image version created on the instance.Custom Image"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.sagemaker_image_version_arn
-}
-output "single_sign_on_user_value" {
-  description = "(Required) The username of the associated AWS Single Sign-On User for this User Profile. If the Domain's AuthMode is SSO, this field is required, and must match a valid username of a user in your directory. If the Domain's AuthMode is not SSO, this field cannot be specified."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.single_sign_on_user_value
-}
-output "arn" {
+output "id" {
   description = "The user profile Amazon Resource Name (ARN)."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.arn
-}
-output "single_sign_on_user_identifier" {
-  description = "(Optional) A specifier for the type of value specified in single_sign_on_user_value. Currently, the only supported value is UserName. If the Domain's AuthMode is SSO, this field is required. If the Domain's AuthMode is not SSO, this field cannot be specified."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.single_sign_on_user_identifier
-}
-output "default_resource_spec" {
-  description = "(Optional) The default instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance. see Default Resource Spec below."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.default_resource_spec
-}
-output "notebook_output_option" {
-  description = "(Optional) Whether to include the notebook cell output when sharing the notebook. The default is Disabled. Valid values are Allowed and Disabled."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.notebook_output_option
-}
-output "time_series_forecasting_settings" {
-  description = "(Optional) Time series forecast settings for the Canvas app. see Time Series Forecasting Settings below.Sharing Settings"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.time_series_forecasting_settings
-}
-output "app_image_config_name" {
-  description = "(Required) The name of the App Image Config."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.app_image_config_name
-}
-output "home_efs_file_system_uid" {
-  description = "The ID of the user's profile in the Amazon Elastic File System (EFS) volume."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.home_efs_file_system_uid
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.id
 }
 output "lifecycle_config_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
   value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.lifecycle_config_arn
 }
-output "s3_output_path" {
-  description = "(Optional) When notebook_output_option is Allowed, the Amazon S3 bucket used to save the notebook cell output.TensorBoard App Settings"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.s3_output_path
-}
-output "status" {
-  description = "(Optional) Describes whether time series forecasting is enabled or disabled in the Canvas app. Valid values are ENABLED and DISABLED.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.status
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.User Settings"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.tags
-}
-output "user_profile_name" {
-  description = "(Required) The name for the User Profile."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.user_profile_name
-}
-output "amazon_forecast_role_arn" {
-  description = "(Optional)  The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the UserProfile that launches the Canvas app. If an execution role is not specified in the UserProfile, Canvas uses the execution role specified in the Domain that owns the UserProfile. To allow time series forecasting, this IAM role should have the AmazonSageMakerCanvasForecastAccess policy attached and forecast.amazonaws.com added in the trust relationship as a service principal."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.amazon_forecast_role_arn
-}
-output "execution_role" {
-  description = "(Required) The execution role ARN for the user."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.execution_role
-}
-output "r_session_app_settings" {
-  description = "(Optional) The RSession app settings. See RSession App Settings below."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.r_session_app_settings
-}
-output "custom_image" {
-  description = "(Optional) A list of custom SageMaker images that are configured to run as a KernelGateway app. see Custom Image below.Default Resource Spec"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.custom_image
-}
-output "domain_id" {
-  description = "(Required) The ID of the associated Domain."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.domain_id
+output "time_series_forecasting_settings" {
+  description = "(Optional) Time series forecast settings for the Canvas app. see Time Series Forecasting Settings below.Sharing Settings"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.time_series_forecasting_settings
 }
 output "lifecycle_config_arns" {
   description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configurations.RSession App Settings"
   value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.lifecycle_config_arns
 }
+output "kernel_gateway_app_settings" {
+  description = "(Optional) The kernel gateway app settings. See Kernel Gateway App Settings below."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.kernel_gateway_app_settings
+}
+output "sagemaker_image_version_arn" {
+  description = "(Optional) The ARN of the image version created on the instance.Custom Image"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.sagemaker_image_version_arn
+}
+output "user_settings" {
+  description = "(Required) The user settings. See User Settings below."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.user_settings
+}
 output "sharing_settings" {
   description = "(Optional) The sharing settings. See Sharing Settings below."
   value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.sharing_settings
 }
-output "tensor_board_app_settings" {
-  description = "(Optional) The TensorBoard app settings. See TensorBoard App Settings below."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.tensor_board_app_settings
+output "single_sign_on_user_value" {
+  description = "(Required) The username of the associated AWS Single Sign-On User for this User Profile. If the Domain's AuthMode is SSO, this field is required, and must match a valid username of a user in your directory. If the Domain's AuthMode is not SSO, this field cannot be specified."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.single_sign_on_user_value
 }
-output "canvas_app_settings" {
-  description = "(Optional) The Canvas app settings. See Canvas App Settings below.Canvas App Settings"
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.canvas_app_settings
+output "status" {
+  description = "(Optional) Describes whether time series forecasting is enabled or disabled in the Canvas app. Valid values are ENABLED and DISABLED.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.status
 }
-output "id" {
-  description = "The user profile Amazon Resource Name (ARN)."
-  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.id
+output "home_efs_file_system_uid" {
+  description = "The ID of the user's profile in the Amazon Elastic File System (EFS) volume."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.home_efs_file_system_uid
 }
 output "image_version_number" {
   description = "(Optional) The version number of the Custom Image.Time Series Forecasting Settings"
   value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.image_version_number
 }
+output "instance_type" {
+  description = "(Optional) The instance type."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.instance_type
+}
+output "notebook_output_option" {
+  description = "(Optional) Whether to include the notebook cell output when sharing the notebook. The default is Disabled. Valid values are Allowed and Disabled."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.notebook_output_option
+}
 output "s3_kms_key_id" {
   description = "(Optional) When notebook_output_option is Allowed, the AWS Key Management Service (KMS) encryption key ID used to encrypt the notebook cell output in the Amazon S3 bucket."
   value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.s3_kms_key_id
 }
+output "app_image_config_name" {
+  description = "(Required) The name of the App Image Config."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.app_image_config_name
+}
+output "custom_image" {
+  description = "(Optional) A list of custom SageMaker images that are configured to run as a KernelGateway app. see Custom Image below.Default Resource Spec"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.custom_image
+}
+output "default_resource_spec" {
+  description = "(Optional) The default instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance. see Default Resource Spec below."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.default_resource_spec
+}
 output "security_groups" {
   description = "(Optional) The security groups."
   value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.security_groups
+}
+output "tensor_board_app_settings" {
+  description = "(Optional) The TensorBoard app settings. See TensorBoard App Settings below."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.tensor_board_app_settings
+}
+output "arn" {
+  description = "The user profile Amazon Resource Name (ARN)."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.arn
+}
+output "jupyter_server_app_settings" {
+  description = "(Optional) The Jupyter server's app settings. See Jupyter Server App Settings below."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.jupyter_server_app_settings
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.User Settings"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.tags
+}
+output "r_session_app_settings" {
+  description = "(Optional) The RSession app settings. See RSession App Settings below."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.r_session_app_settings
+}
+output "s3_output_path" {
+  description = "(Optional) When notebook_output_option is Allowed, the Amazon S3 bucket used to save the notebook cell output.TensorBoard App Settings"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.s3_output_path
+}
+output "sagemaker_image_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the SageMaker image created on the instance."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.sagemaker_image_arn
+}
+output "single_sign_on_user_identifier" {
+  description = "(Optional) A specifier for the type of value specified in single_sign_on_user_value. Currently, the only supported value is UserName. If the Domain's AuthMode is SSO, this field is required. If the Domain's AuthMode is not SSO, this field cannot be specified."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.single_sign_on_user_identifier
+}
+output "amazon_forecast_role_arn" {
+  description = "(Optional)  The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the UserProfile that launches the Canvas app. If an execution role is not specified in the UserProfile, Canvas uses the execution role specified in the Domain that owns the UserProfile. To allow time series forecasting, this IAM role should have the AmazonSageMakerCanvasForecastAccess policy attached and forecast.amazonaws.com added in the trust relationship as a service principal."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.amazon_forecast_role_arn
+}
+output "domain_id" {
+  description = "(Required) The ID of the associated Domain."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.domain_id
+}
+output "execution_role" {
+  description = "(Required) The execution role ARN for the user."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.execution_role
+}
+output "canvas_app_settings" {
+  description = "(Optional) The Canvas app settings. See Canvas App Settings below.Canvas App Settings"
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.canvas_app_settings
+}
+output "image_name" {
+  description = "(Required) The name of the Custom Image."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.image_name
+}
+output "user_profile_name" {
+  description = "(Required) The name for the User Profile."
+  value       = aws_sagemaker_user_profile.aws_sagemaker_user_profile.user_profile_name
 }
 output "arn" {
   description = "The user profile Amazon Resource Name (ARN)."

@@ -124,18 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_dynamodb_table.aws_dynamodb_table.create
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_dynamodb_table.aws_dynamodb_table.delete
-}
-output "id" {
-  description = "Name of the table"
-  value       = aws_dynamodb_table.aws_dynamodb_table.id
-}
 output "stream_arn" {
   description = "ARN of the Table Stream. Only available when stream_enabled = true"
   value       = aws_dynamodb_table.aws_dynamodb_table.stream_arn
@@ -155,6 +143,18 @@ output "update" {
 output "arn" {
   description = "ARN of the table"
   value       = aws_dynamodb_table.aws_dynamodb_table.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_dynamodb_table.aws_dynamodb_table.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_dynamodb_table.aws_dynamodb_table.delete
+}
+output "id" {
+  description = "Name of the table"
+  value       = aws_dynamodb_table.aws_dynamodb_table.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

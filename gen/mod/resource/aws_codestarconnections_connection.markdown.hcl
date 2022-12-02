@@ -1,25 +1,15 @@
 resource "aws_codestarconnections_connection.markdown" "aws_codestarconnections_connection.markdown" {
-  id                = var.id
-  name              = var.name
-  provider_type     = var.provider_type
   tags              = var.tags
   arn               = var.arn
   connection_status = var.connection_status
   host_arn          = var.host_arn
+  id                = var.id
+  name              = var.name
+  provider_type     = var.provider_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "provider_type" {
-  description = "(Optional) The name of the external provider where your third-party code repository is configured. Valid values are Bitbucket, GitHub or GitHubEnterpriseServer. Changing provider_type will create a new resource. Conflicts with host_arn"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Map of key-value resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The codestar connection ARN."
@@ -41,6 +31,16 @@ variable "id" {
 variable "name" {
   description = "(Required) The name of the connection to be created. The name must be unique in the calling AWS account. Changing name will create a new resource."
   type        = string
+}
+variable "provider_type" {
+  description = "(Optional) The name of the external provider where your third-party code repository is configured. Valid values are Bitbucket, GitHub or GitHubEnterpriseServer. Changing provider_type will create a new resource. Conflicts with host_arn"
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of key-value resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -162,10 +162,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The codestar connection ARN."
-  value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.arn
-}
 output "connection_status" {
   description = "The codestar connection status. Possible values are PENDING, AVAILABLE and ERROR."
   value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.connection_status
@@ -190,9 +186,9 @@ output "tags" {
   description = "(Optional) Map of key-value resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.tags_all
+output "arn" {
+  description = "The codestar connection ARN."
+  value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.arn
 }
 output "arn" {
   description = "The codestar connection ARN."
@@ -205,6 +201,10 @@ output "connection_status" {
 output "id" {
   description = "The codestar connection ARN."
   value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_codestarconnections_connection.markdown.aws_codestarconnections_connection.markdown.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -134,10 +134,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "SES receipt rule set ARN."
-  value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.arn
-}
 output "rule_set_name" {
   description = "(Required) Name of the rule set.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.rule_set_name
@@ -149,6 +145,10 @@ output "arn" {
 output "id" {
   description = "SES receipt rule set name."
   value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.id
+}
+output "arn" {
+  description = "SES receipt rule set ARN."
+  value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

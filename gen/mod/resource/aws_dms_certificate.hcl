@@ -1,27 +1,13 @@
 resource "aws_dms_certificate" "aws_dms_certificate" {
+  certificate_arn                                                 = var.certificate_arn
   certificate_id                                                  = var.certificate_id
   certificate_pem                                                 = var.certificate_pem
   certificate_wallet                                              = var.certificate_wallet
   tags                                                            = var.tags
   Must contain from 1 to 255 alphanumeric characters and hyphens. = var.Must contain from 1 to 255 alphanumeric characters and hyphens.
-  certificate_arn                                                 = var.certificate_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "certificate_wallet" {
-  description = "(Optional) The contents of the Oracle Wallet certificate for use with SSL, provided as a base64-encoded String. Either certificate_pem or certificate_wallet must be set."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "Must contain from 1 to 255 alphanumeric characters and hyphens." {
-  description = ""
   type        = string
 }
 variable "certificate_arn" {
@@ -36,6 +22,20 @@ variable "certificate_pem" {
   description = "(Optional) The contents of the .pem X.509 certificate file for the certificate. Either certificate_pem or certificate_wallet must be set."
   type        = string
   default     = ""
+}
+variable "certificate_wallet" {
+  description = "(Optional) The contents of the Oracle Wallet certificate for use with SSL, provided as a base64-encoded String. Either certificate_pem or certificate_wallet must be set."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "Must contain from 1 to 255 alphanumeric characters and hyphens." {
+  description = ""
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -181,13 +181,13 @@ output "certificate_wallet" {
   description = "(Optional) The contents of the Oracle Wallet certificate for use with SSL, provided as a base64-encoded String. Either certificate_pem or certificate_wallet must be set."
   value       = aws_dms_certificate.aws_dms_certificate.certificate_wallet
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_dms_certificate.aws_dms_certificate.tags_all
-}
 output "certificate_arn" {
   description = "The Amazon Resource Name (ARN) for the certificate."
   value       = aws_dms_certificate.aws_dms_certificate.certificate_arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_dms_certificate.aws_dms_certificate.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

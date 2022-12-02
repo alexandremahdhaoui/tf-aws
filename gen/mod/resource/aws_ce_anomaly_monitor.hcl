@@ -1,14 +1,22 @@
 resource "aws_ce_anomaly_monitor" "aws_ce_anomaly_monitor" {
+  name                  = var.name
+  tags                  = var.tags
   arn                   = var.arn
   id                    = var.id
   monitor_dimension     = var.monitor_dimension
   monitor_specification = var.monitor_specification
   monitor_type          = var.monitor_type
-  name                  = var.name
-  tags                  = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "Unique ID of the anomaly monitor. Same as arn."
+  type        = string
+}
+variable "monitor_dimension" {
+  description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
   type        = string
 }
 variable "monitor_specification" {
@@ -30,14 +38,6 @@ variable "tags" {
 }
 variable "arn" {
   description = "ARN of the anomaly monitor."
-  type        = string
-}
-variable "id" {
-  description = "Unique ID of the anomaly monitor. Same as arn."
-  type        = string
-}
-variable "monitor_dimension" {
-  description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
   type        = string
 }
 variable "tag_instance_id" {
@@ -160,18 +160,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Unique ID of the anomaly monitor. Same as arn."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.id
-}
-output "monitor_dimension" {
-  description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_dimension
-}
-output "monitor_specification" {
-  description = "(Required, if monitor_type is CUSTOM) A valid JSON representation for the Expression object."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_specification
-}
 output "monitor_type" {
   description = "(Required) The possible type values. Valid values: DIMENSIONAL | CUSTOM."
   value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_type
@@ -187,6 +175,18 @@ output "tags" {
 output "arn" {
   description = "ARN of the anomaly monitor."
   value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.arn
+}
+output "id" {
+  description = "Unique ID of the anomaly monitor. Same as arn."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.id
+}
+output "monitor_dimension" {
+  description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_dimension
+}
+output "monitor_specification" {
+  description = "(Required, if monitor_type is CUSTOM) A valid JSON representation for the Expression object."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_specification
 }
 output "arn" {
   description = "ARN of the anomaly monitor."

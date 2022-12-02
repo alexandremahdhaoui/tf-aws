@@ -1,4 +1,5 @@
 resource "aws_guardduty_ipset" "aws_guardduty_ipset" {
+  id          = var.id
   location    = var.location
   name        = var.name
   tags        = var.tags
@@ -6,10 +7,13 @@ resource "aws_guardduty_ipset" "aws_guardduty_ipset" {
   arn         = var.arn
   detector_id = var.detector_id
   format      = var.format
-  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "location" {
+  description = "(Required) The URI of the file that contains the IPSet."
   type        = string
 }
 variable "name" {
@@ -39,10 +43,6 @@ variable "format" {
 }
 variable "id" {
   description = "The ID of the GuardDuty IPSet."
-  type        = string
-}
-variable "location" {
-  description = "(Required) The URI of the file that contains the IPSet."
   type        = string
 }
 variable "tag_instance_id" {
@@ -165,6 +165,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "detector_id" {
+  description = "(Required) The detector ID of the GuardDuty."
+  value       = aws_guardduty_ipset.aws_guardduty_ipset.detector_id
+}
+output "format" {
+  description = "(Required) The format of the file that contains the IPSet. Valid values: TXT | STIX | OTX_CSV | ALIEN_VAULT | PROOF_POINT | FIRE_EYE"
+  value       = aws_guardduty_ipset.aws_guardduty_ipset.format
+}
+output "id" {
+  description = "The ID of the GuardDuty IPSet."
+  value       = aws_guardduty_ipset.aws_guardduty_ipset.id
+}
 output "location" {
   description = "(Required) The URI of the file that contains the IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.location
@@ -184,18 +196,6 @@ output "activate" {
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.arn
-}
-output "detector_id" {
-  description = "(Required) The detector ID of the GuardDuty."
-  value       = aws_guardduty_ipset.aws_guardduty_ipset.detector_id
-}
-output "format" {
-  description = "(Required) The format of the file that contains the IPSet. Valid values: TXT | STIX | OTX_CSV | ALIEN_VAULT | PROOF_POINT | FIRE_EYE"
-  value       = aws_guardduty_ipset.aws_guardduty_ipset.format
-}
-output "id" {
-  description = "The ID of the GuardDuty IPSet."
-  value       = aws_guardduty_ipset.aws_guardduty_ipset.id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty IPSet."

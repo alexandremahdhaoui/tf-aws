@@ -1,17 +1,12 @@
 resource "aws_quicksight_group" "aws_quicksight_group" {
-  aws_account_id = var.aws_account_id
   description    = var.description
   group_name     = var.group_name
   namespace      = var.namespace
+  aws_account_id = var.aws_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "aws_account_id" {
-  description = "(Optional) The ID for the AWS account that the group is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account."
-  type        = string
-  default     = ""
 }
 variable "description" {
   description = "(Optional) A description for the group."
@@ -24,6 +19,11 @@ variable "group_name" {
 }
 variable "namespace" {
   description = "(Optional) The namespace. Currently, you should set this to default.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "aws_account_id" {
+  description = "(Optional) The ID for the AWS account that the group is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account."
   type        = string
   default     = ""
 }

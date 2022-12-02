@@ -1,21 +1,16 @@
 resource "aws_guardduty_threatintelset" "aws_guardduty_threatintelset" {
-  name        = var.name
-  tags        = var.tags
   activate    = var.activate
   arn         = var.arn
   detector_id = var.detector_id
   format      = var.format
   id          = var.id
   location    = var.location
+  name        = var.name
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "activate" {
   description = "(Required) Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet."
@@ -44,6 +39,11 @@ variable "location" {
 variable "name" {
   description = "(Required) The friendly name to identify the ThreatIntelSet."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -165,6 +165,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "activate" {
+  description = "(Required) Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet."
+  value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.activate
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the GuardDuty ThreatIntelSet."
+  value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.arn
+}
 output "detector_id" {
   description = "(Required) The detector ID of the GuardDuty."
   value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.detector_id
@@ -189,13 +197,9 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.tags
 }
-output "activate" {
-  description = "(Required) Specifies whether GuardDuty is to start using the uploaded ThreatIntelSet."
-  value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.activate
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the GuardDuty ThreatIntelSet."
-  value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.arn
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty ThreatIntelSet."
@@ -204,10 +208,6 @@ output "arn" {
 output "id" {
   description = "The ID of the GuardDuty ThreatIntelSet and the detector ID. Format: <DetectorID>:<ThreatIntelSetID>"
   value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_guardduty_threatintelset.aws_guardduty_threatintelset.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

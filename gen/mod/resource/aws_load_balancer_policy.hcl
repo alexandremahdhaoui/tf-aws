@@ -1,12 +1,16 @@
 resource "aws_load_balancer_policy" "aws_load_balancer_policy" {
-  policy_type_name   = var.policy_type_name
   id                 = var.id
   load_balancer_name = var.load_balancer_name
   policy_attribute   = var.policy_attribute
   policy_name        = var.policy_name
+  policy_type_name   = var.policy_type_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "policy_type_name" {
+  description = "The policy type of the policy."
   type        = string
 }
 variable "id" {
@@ -24,10 +28,6 @@ variable "policy_attribute" {
 }
 variable "policy_name" {
   description = "The name of the stickiness policy."
-  type        = string
-}
-variable "policy_type_name" {
-  description = "The policy type of the policy."
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,6 +150,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "policy_attribute" {
+  description = "(Optional) Policy attribute to apply to the policy.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_attribute
+}
 output "policy_name" {
   description = "The name of the stickiness policy."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_name
@@ -166,14 +170,6 @@ output "load_balancer_name" {
   description = "(Required) The load balancer on which the policy is defined."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.load_balancer_name
 }
-output "policy_attribute" {
-  description = "(Optional) Policy attribute to apply to the policy.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_attribute
-}
-output "policy_name" {
-  description = "The name of the stickiness policy."
-  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_name
-}
 output "policy_type_name" {
   description = "The policy type of the policy."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_type_name
@@ -181,6 +177,10 @@ output "policy_type_name" {
 output "id" {
   description = "The ID of the policy."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.id
+}
+output "policy_name" {
+  description = "The name of the stickiness policy."
+  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

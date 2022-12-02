@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the Thing Group."
-  value       = aws_iot_thing_group.aws_iot_thing_group.arn
-}
 output "id" {
   description = "The Thing Group ID."
   value       = aws_iot_thing_group.aws_iot_thing_group.id
@@ -135,6 +131,10 @@ output "id" {
 output "version" {
   description = "The current version of the Thing Group record in the registry."
   value       = aws_iot_thing_group.aws_iot_thing_group.version
+}
+output "arn" {
+  description = "The ARN of the Thing Group."
+  value       = aws_iot_thing_group.aws_iot_thing_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,19 +1,32 @@
 resource "aws_apigatewayv2_authorizer" "aws_apigatewayv2_authorizer" {
+  jwt_configuration                 = var.jwt_configuration
+  name                              = var.name
+  api_id                            = var.api_id
   audience                          = var.audience
   authorizer_credentials_arn        = var.authorizer_credentials_arn
-  authorizer_payload_format_version = var.authorizer_payload_format_version
+  authorizer_uri                    = var.authorizer_uri
   enable_simple_responses           = var.enable_simple_responses
+  authorizer_payload_format_version = var.authorizer_payload_format_version
+  authorizer_result_ttl_in_seconds  = var.authorizer_result_ttl_in_seconds
+  authorizer_type                   = var.authorizer_type
   identity_sources                  = var.identity_sources
   issuer                            = var.issuer
-  jwt_configuration                 = var.jwt_configuration
-  api_id                            = var.api_id
-  authorizer_type                   = var.authorizer_type
-  authorizer_uri                    = var.authorizer_uri
-  name                              = var.name
-  authorizer_result_ttl_in_seconds  = var.authorizer_result_ttl_in_seconds
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "identity_sources" {
+  description = "REQUESTJWT authorizers the single entry specifies where to extract the JSON Web Token (JWT) from inbound requests."
+  type        = string
+}
+variable "issuer" {
+  description = "(Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the endpoint attribute of the aws_cognito_user_pool resource.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "authorizer_payload_format_version" {
+  description = "1.0, 2.0."
   type        = string
 }
 variable "authorizer_result_ttl_in_seconds" {
@@ -26,6 +39,16 @@ variable "authorizer_type" {
 }
 variable "authorizer_uri" {
   description = "(Optional) Authorizer's Uniform Resource Identifier (URI).\nFor REQUEST authorizers this must be a well-formed Lambda function URI, such as the invoke_arn attribute of the aws_lambda_functionREQUEST authorizers. Must be between 1 and 2048 characters in length."
+  type        = string
+  default     = ""
+}
+variable "enable_simple_responses" {
+  description = "(Optional) Whether a Lambda authorizer returns a response in a simple format. If enabled, the Lambda authorizer can return a boolean value instead of an IAM policy.\nSupported only for HTTP APIs."
+  type        = string
+  default     = ""
+}
+variable "jwt_configuration" {
+  description = "(Optional) Configuration of a JWT authorizer. Required for the JWTThe jwt_configuration object supports the following:"
   type        = string
   default     = ""
 }
@@ -44,29 +67,6 @@ variable "audience" {
 }
 variable "authorizer_credentials_arn" {
   description = "(Optional) Required credentials as an IAM role for API Gateway to invoke the authorizer.\nSupported only for REQUEST authorizers."
-  type        = string
-  default     = ""
-}
-variable "authorizer_payload_format_version" {
-  description = "1.0, 2.0."
-  type        = string
-}
-variable "enable_simple_responses" {
-  description = "(Optional) Whether a Lambda authorizer returns a response in a simple format. If enabled, the Lambda authorizer can return a boolean value instead of an IAM policy.\nSupported only for HTTP APIs."
-  type        = string
-  default     = ""
-}
-variable "identity_sources" {
-  description = "REQUESTJWT authorizers the single entry specifies where to extract the JSON Web Token (JWT) from inbound requests."
-  type        = string
-}
-variable "issuer" {
-  description = "(Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the endpoint attribute of the aws_cognito_user_pool resource.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "jwt_configuration" {
-  description = "(Optional) Configuration of a JWT authorizer. Required for the JWTThe jwt_configuration object supports the following:"
   type        = string
   default     = ""
 }
@@ -190,41 +190,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the authorizer. Must be between 1 and 128 characters in length."
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.name
-}
-output "authorizer_result_ttl_in_seconds" {
-  description = "300"
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_result_ttl_in_seconds
-}
-output "authorizer_type" {
-  description = "(Required) Authorizer type. Valid values: JWT, REQUESTREQUESTJWT to use JSON Web Tokens."
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_type
+output "authorizer_credentials_arn" {
+  description = "(Optional) Required credentials as an IAM role for API Gateway to invoke the authorizer.\nSupported only for REQUEST authorizers."
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_credentials_arn
 }
 output "authorizer_uri" {
   description = "(Optional) Authorizer's Uniform Resource Identifier (URI).\nFor REQUEST authorizers this must be a well-formed Lambda function URI, such as the invoke_arn attribute of the aws_lambda_functionREQUEST authorizers. Must be between 1 and 2048 characters in length."
   value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_uri
 }
-output "authorizer_payload_format_version" {
-  description = "1.0, 2.0."
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_payload_format_version
-}
 output "enable_simple_responses" {
   description = "(Optional) Whether a Lambda authorizer returns a response in a simple format. If enabled, the Lambda authorizer can return a boolean value instead of an IAM policy.\nSupported only for HTTP APIs."
   value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.enable_simple_responses
 }
-output "identity_sources" {
-  description = "REQUESTJWT authorizers the single entry specifies where to extract the JSON Web Token (JWT) from inbound requests."
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.identity_sources
-}
-output "issuer" {
-  description = "(Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the endpoint attribute of the aws_cognito_user_pool resource.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.issuer
-}
 output "jwt_configuration" {
   description = "(Optional) Configuration of a JWT authorizer. Required for the JWTThe jwt_configuration object supports the following:"
   value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.jwt_configuration
+}
+output "name" {
+  description = "(Required) Name of the authorizer. Must be between 1 and 128 characters in length."
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.name
 }
 output "api_id" {
   description = "(Required) API identifier."
@@ -234,9 +218,25 @@ output "audience" {
   description = "(Optional) List of the intended recipients of the JWT. A valid JWT must provide an aud that matches at least one entry in this list."
   value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.audience
 }
-output "authorizer_credentials_arn" {
-  description = "(Optional) Required credentials as an IAM role for API Gateway to invoke the authorizer.\nSupported only for REQUEST authorizers."
-  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_credentials_arn
+output "authorizer_type" {
+  description = "(Required) Authorizer type. Valid values: JWT, REQUESTREQUESTJWT to use JSON Web Tokens."
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_type
+}
+output "identity_sources" {
+  description = "REQUESTJWT authorizers the single entry specifies where to extract the JSON Web Token (JWT) from inbound requests."
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.identity_sources
+}
+output "issuer" {
+  description = "(Optional) Base domain of the identity provider that issues JSON Web Tokens, such as the endpoint attribute of the aws_cognito_user_pool resource.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.issuer
+}
+output "authorizer_payload_format_version" {
+  description = "1.0, 2.0."
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_payload_format_version
+}
+output "authorizer_result_ttl_in_seconds" {
+  description = "300"
+  value       = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer.authorizer_result_ttl_in_seconds
 }
 output "id" {
   description = "Authorizer identifier."

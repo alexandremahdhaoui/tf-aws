@@ -1,19 +1,15 @@
 resource "aws_wafv2_regex_pattern_set" "aws_wafv2_regex_pattern_set" {
-  arn                = var.arn
-  description        = var.description
-  id                 = var.id
   name               = var.name
   regex_string       = var.regex_string
   regular_expression = var.regular_expression
   scope              = var.scope
   tags               = var.tags
+  arn                = var.arn
+  description        = var.description
+  id                 = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) A friendly name of the regular expression pattern set."
   type        = string
 }
 variable "regex_string" {
@@ -45,6 +41,10 @@ variable "description" {
 }
 variable "id" {
   description = "A unique identifier for the set."
+  type        = string
+}
+variable "name" {
+  description = "(Required) A friendly name of the regular expression pattern set."
   type        = string
 }
 variable "tag_instance_id" {
@@ -167,14 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) An array of key:value pairs to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Regular Expression"
-  value       = aws_wafv2_regex_pattern_set.aws_wafv2_regex_pattern_set.tags
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) that identifies the cluster."
-  value       = aws_wafv2_regex_pattern_set.aws_wafv2_regex_pattern_set.arn
-}
 output "description" {
   description = "(Optional) A friendly description of the regular expression pattern set."
   value       = aws_wafv2_regex_pattern_set.aws_wafv2_regex_pattern_set.description
@@ -198,6 +190,14 @@ output "regular_expression" {
 output "scope" {
   description = "(Required) Specifies whether this is for an AWS CloudFront distribution or for a regional application. Valid values are CLOUDFRONT or REGIONAL. To work with CloudFront, you must also specify the region us-east-1 (N. Virginia) on the AWS provider."
   value       = aws_wafv2_regex_pattern_set.aws_wafv2_regex_pattern_set.scope
+}
+output "tags" {
+  description = "(Optional) An array of key:value pairs to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Regular Expression"
+  value       = aws_wafv2_regex_pattern_set.aws_wafv2_regex_pattern_set.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) that identifies the cluster."
+  value       = aws_wafv2_regex_pattern_set.aws_wafv2_regex_pattern_set.arn
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) that identifies the cluster."

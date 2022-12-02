@@ -1,44 +1,61 @@
 resource "aws_config_remediation_configuration" "aws_config_remediation_configuration" {
-  config_rule_name                     = var.config_rule_name
-  error_percentage                     = var.error_percentage
   maximum_automatic_attempts           = var.maximum_automatic_attempts
   retry_attempt_seconds                = var.retry_attempt_seconds
   ssm_controls                         = var.ssm_controls
-  name                                 = var.name
-  resource_value                       = var.resource_value
-  static_value                         = var.static_value
   target_version                       = var.target_version
   arn                                  = var.arn
-  automatic                            = var.automatic
   concurrent_execution_rate_percentage = var.concurrent_execution_rate_percentage
-  execution_controls                   = var.execution_controls
-  resource_type                        = var.resource_type
-  target_type                          = var.target_type
+  name                                 = var.name
   parameter                            = var.parameter
-  static_values                        = var.static_values
   target_id                            = var.target_id
+  target_type                          = var.target_type
+  automatic                            = var.automatic
+  config_rule_name                     = var.config_rule_name
+  execution_controls                   = var.execution_controls
+  resource_value                       = var.resource_value
+  static_value                         = var.static_value
+  error_percentage                     = var.error_percentage
+  resource_type                        = var.resource_type
+  static_values                        = var.static_values
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "arn" {
-  description = "ARN of the Config Remediation Configuration."
-  type        = string
-  default     = ""
 }
 variable "automatic" {
   description = "(Optional) Remediation is triggered automatically if true."
   type        = string
   default     = ""
 }
-variable "concurrent_execution_rate_percentage" {
-  description = "(Optional) Maximum percentage of remediation actions allowed to run in parallel on the non-compliant resources for that specific rule. The default value is 10%."
+variable "config_rule_name" {
+  description = "(Required) Name of the AWS Config rule."
   type        = string
-  default     = ""
 }
 variable "execution_controls" {
   description = "(Optional) Configuration block for execution controls. See below."
+  type        = string
+  default     = ""
+}
+variable "resource_value" {
+  description = "(Optional) Value is dynamic and changes at run-time."
+  type        = string
+  default     = ""
+}
+variable "static_value" {
+  description = "(Optional) Value is static and does not change at run-time."
+  type        = string
+  default     = ""
+}
+variable "target_id" {
+  description = "(Required) Target ID is the name of the public document."
+  type        = string
+}
+variable "target_type" {
+  description = "(Required) Type of the target. Target executes remediation. For example, SSM document."
+  type        = string
+}
+variable "error_percentage" {
+  description = "(Optional) Percentage of errors that are allowed before SSM stops running automations on non-compliant resources for that specific rule. The default is 50%.parameterThe value is either a dynamic (resource) value or a static value. You must select either a dynamic value or a static value."
   type        = string
   default     = ""
 }
@@ -47,30 +64,8 @@ variable "resource_type" {
   type        = string
   default     = ""
 }
-variable "target_type" {
-  description = "(Required) Type of the target. Target executes remediation. For example, SSM document."
-  type        = string
-}
-variable "parameter" {
-  description = "(Optional) Can be specified multiple times for each parameter. Each parameter block supports arguments below."
-  type        = string
-  default     = ""
-}
 variable "static_values" {
   description = "(Optional) List of static values.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "target_id" {
-  description = "(Required) Target ID is the name of the public document."
-  type        = string
-}
-variable "config_rule_name" {
-  description = "(Required) Name of the AWS Config rule."
-  type        = string
-}
-variable "error_percentage" {
-  description = "(Optional) Percentage of errors that are allowed before SSM stops running automations on non-compliant resources for that specific rule. The default is 50%.parameterThe value is either a dynamic (resource) value or a static value. You must select either a dynamic value or a static value."
   type        = string
   default     = ""
 }
@@ -88,22 +83,27 @@ variable "ssm_controls" {
   description = "(Required) Configuration block for SSM controls. See below.ssm_controlsOne or both of these values are required."
   type        = string
 }
+variable "target_version" {
+  description = "(Optional) Version of the target. For example, version of the SSM documentexecution_controls"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the Config Remediation Configuration."
+  type        = string
+  default     = ""
+}
+variable "concurrent_execution_rate_percentage" {
+  description = "(Optional) Maximum percentage of remediation actions allowed to run in parallel on the non-compliant resources for that specific rule. The default value is 10%."
+  type        = string
+  default     = ""
+}
 variable "name" {
   description = "(Required) Name of the attribute."
   type        = string
 }
-variable "resource_value" {
-  description = "(Optional) Value is dynamic and changes at run-time."
-  type        = string
-  default     = ""
-}
-variable "static_value" {
-  description = "(Optional) Value is static and does not change at run-time."
-  type        = string
-  default     = ""
-}
-variable "target_version" {
-  description = "(Optional) Version of the target. For example, version of the SSM documentexecution_controls"
+variable "parameter" {
+  description = "(Optional) Can be specified multiple times for each parameter. Each parameter block supports arguments below."
   type        = string
   default     = ""
 }
@@ -227,53 +227,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "error_percentage" {
+  description = "(Optional) Percentage of errors that are allowed before SSM stops running automations on non-compliant resources for that specific rule. The default is 50%.parameterThe value is either a dynamic (resource) value or a static value. You must select either a dynamic value or a static value."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.error_percentage
+}
 output "resource_type" {
   description = "(Optional) Type of resource."
   value       = aws_config_remediation_configuration.aws_config_remediation_configuration.resource_type
 }
-output "target_type" {
-  description = "(Required) Type of the target. Target executes remediation. For example, SSM document."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.target_type
-}
-output "arn" {
-  description = "ARN of the Config Remediation Configuration."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.arn
-}
-output "automatic" {
-  description = "(Optional) Remediation is triggered automatically if true."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.automatic
-}
-output "concurrent_execution_rate_percentage" {
-  description = "(Optional) Maximum percentage of remediation actions allowed to run in parallel on the non-compliant resources for that specific rule. The default value is 10%."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.concurrent_execution_rate_percentage
-}
-output "execution_controls" {
-  description = "(Optional) Configuration block for execution controls. See below."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.execution_controls
-}
-output "parameter" {
-  description = "(Optional) Can be specified multiple times for each parameter. Each parameter block supports arguments below."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.parameter
-}
 output "static_values" {
   description = "(Optional) List of static values.In addition to all arguments above, the following attributes are exported:"
   value       = aws_config_remediation_configuration.aws_config_remediation_configuration.static_values
-}
-output "target_id" {
-  description = "(Required) Target ID is the name of the public document."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.target_id
-}
-output "ssm_controls" {
-  description = "(Required) Configuration block for SSM controls. See below.ssm_controlsOne or both of these values are required."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.ssm_controls
-}
-output "config_rule_name" {
-  description = "(Required) Name of the AWS Config rule."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.config_rule_name
-}
-output "error_percentage" {
-  description = "(Optional) Percentage of errors that are allowed before SSM stops running automations on non-compliant resources for that specific rule. The default is 50%.parameterThe value is either a dynamic (resource) value or a static value. You must select either a dynamic value or a static value."
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.error_percentage
 }
 output "maximum_automatic_attempts" {
   description = "(Optional) Maximum number of failed attempts for auto-remediation. If you do not select a number, the default is 5."
@@ -283,9 +247,45 @@ output "retry_attempt_seconds" {
   description = "(Optional) Maximum time in seconds that AWS Config runs auto-remediation. If you do not select a number, the default is 60 seconds."
   value       = aws_config_remediation_configuration.aws_config_remediation_configuration.retry_attempt_seconds
 }
+output "ssm_controls" {
+  description = "(Required) Configuration block for SSM controls. See below.ssm_controlsOne or both of these values are required."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.ssm_controls
+}
+output "target_version" {
+  description = "(Optional) Version of the target. For example, version of the SSM documentexecution_controls"
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.target_version
+}
+output "arn" {
+  description = "ARN of the Config Remediation Configuration."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.arn
+}
+output "concurrent_execution_rate_percentage" {
+  description = "(Optional) Maximum percentage of remediation actions allowed to run in parallel on the non-compliant resources for that specific rule. The default value is 10%."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.concurrent_execution_rate_percentage
+}
 output "name" {
   description = "(Required) Name of the attribute."
   value       = aws_config_remediation_configuration.aws_config_remediation_configuration.name
+}
+output "parameter" {
+  description = "(Optional) Can be specified multiple times for each parameter. Each parameter block supports arguments below."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.parameter
+}
+output "target_type" {
+  description = "(Required) Type of the target. Target executes remediation. For example, SSM document."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.target_type
+}
+output "automatic" {
+  description = "(Optional) Remediation is triggered automatically if true."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.automatic
+}
+output "config_rule_name" {
+  description = "(Required) Name of the AWS Config rule."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.config_rule_name
+}
+output "execution_controls" {
+  description = "(Optional) Configuration block for execution controls. See below."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.execution_controls
 }
 output "resource_value" {
   description = "(Optional) Value is dynamic and changes at run-time."
@@ -295,9 +295,9 @@ output "static_value" {
   description = "(Optional) Value is static and does not change at run-time."
   value       = aws_config_remediation_configuration.aws_config_remediation_configuration.static_value
 }
-output "target_version" {
-  description = "(Optional) Version of the target. For example, version of the SSM documentexecution_controls"
-  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.target_version
+output "target_id" {
+  description = "(Required) Target ID is the name of the public document."
+  value       = aws_config_remediation_configuration.aws_config_remediation_configuration.target_id
 }
 output "arn" {
   description = "ARN of the Config Remediation Configuration."

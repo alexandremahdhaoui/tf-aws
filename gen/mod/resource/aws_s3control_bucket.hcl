@@ -1,18 +1,14 @@
 resource "aws_s3control_bucket" "aws_s3control_bucket" {
+  bucket                      = var.bucket
+  creation_date               = var.creation_date
+  id                          = var.id
   outpost_id                  = var.outpost_id
   public_access_block_enabled = var.public_access_block_enabled
   tags                        = var.tags
   arn                         = var.arn
-  bucket                      = var.bucket
-  creation_date               = var.creation_date
-  id                          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "outpost_id" {
-  description = "(Required) Identifier of the Outpost to contain this bucket."
   type        = string
 }
 variable "public_access_block_enabled" {
@@ -38,6 +34,10 @@ variable "creation_date" {
 }
 variable "id" {
   description = "Amazon Resource Name (ARN) of the bucket."
+  type        = string
+}
+variable "outpost_id" {
+  description = "(Required) Identifier of the Outpost to contain this bucket."
   type        = string
 }
 variable "tag_instance_id" {
@@ -160,6 +160,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "bucket" {
+  description = "(Required) Name of the bucket."
+  value       = aws_s3control_bucket.aws_s3control_bucket.bucket
+}
+output "creation_date" {
+  description = "UTC creation date in RFC3339 format."
+  value       = aws_s3control_bucket.aws_s3control_bucket.creation_date
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the bucket."
+  value       = aws_s3control_bucket.aws_s3control_bucket.id
+}
 output "outpost_id" {
   description = "(Required) Identifier of the Outpost to contain this bucket."
   value       = aws_s3control_bucket.aws_s3control_bucket.outpost_id
@@ -176,17 +188,13 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of the bucket."
   value       = aws_s3control_bucket.aws_s3control_bucket.arn
 }
-output "bucket" {
-  description = "(Required) Name of the bucket."
-  value       = aws_s3control_bucket.aws_s3control_bucket.bucket
+output "public_access_block_enabled" {
+  description = "Boolean whether Public Access Block is enabled."
+  value       = aws_s3control_bucket.aws_s3control_bucket.public_access_block_enabled
 }
-output "creation_date" {
-  description = "UTC creation date in RFC3339 format."
-  value       = aws_s3control_bucket.aws_s3control_bucket.creation_date
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the bucket."
-  value       = aws_s3control_bucket.aws_s3control_bucket.id
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_s3control_bucket.aws_s3control_bucket.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the bucket."
@@ -199,14 +207,6 @@ output "creation_date" {
 output "id" {
   description = "Amazon Resource Name (ARN) of the bucket."
   value       = aws_s3control_bucket.aws_s3control_bucket.id
-}
-output "public_access_block_enabled" {
-  description = "Boolean whether Public Access Block is enabled."
-  value       = aws_s3control_bucket.aws_s3control_bucket.public_access_block_enabled
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_s3control_bucket.aws_s3control_bucket.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

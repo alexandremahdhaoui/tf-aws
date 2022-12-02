@@ -1,15 +1,20 @@
 resource "aws_keyspaces_keyspace" "aws_keyspaces_keyspace" {
+  arn      = var.arn
+  create   = var.create
   delete   = var.delete
   id       = var.id
   name     = var.name
   tags     = var.tags
   tags_all = var.tags_all
-  arn      = var.arn
-  create   = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "create" {
+  description = "(Default 1m)"
+  type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 1m)"
@@ -37,11 +42,6 @@ variable "tags_all" {
 }
 variable "arn" {
   description = "The ARN of the keyspace."
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 1m)"
   type        = string
   default     = ""
 }
@@ -165,22 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the keyspace."
-  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.arn
-}
-output "create" {
-  description = "(Default 1m)"
-  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.create
-}
-output "delete" {
-  description = "(Default 1m)"
-  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.delete
-}
-output "id" {
-  description = "The name of the keyspace."
-  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.id
-}
 output "name" {
   description = "(Required, Forces new resource) The name of the keyspace to be created."
   value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.name
@@ -209,9 +193,25 @@ output "id" {
   description = "The name of the keyspace."
   value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.id
 }
+output "delete" {
+  description = "(Default 1m)"
+  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.delete
+}
+output "id" {
+  description = "The name of the keyspace."
+  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.id
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.tags_all
+}
+output "arn" {
+  description = "The ARN of the keyspace."
+  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.arn
+}
+output "create" {
+  description = "(Default 1m)"
+  value       = aws_keyspaces_keyspace.aws_keyspaces_keyspace.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -4,14 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "etag" {
-  description = "E2QWRUHAPOMQZL."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.etag
-}
-output "id" {
-  description = "Identifier for the distribution. For example: EDFDVBD632BHDS5."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.id
-}
 output "in_progress_validation_batches" {
   description = "The number of invalidation batches\ncurrently in progress."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.in_progress_validation_batches
@@ -35,6 +27,14 @@ output "arn" {
 output "domain_name" {
   description = "Domain name corresponding to the distribution. For\nexample: d604721fxaaqy9.cloudfront.net."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.domain_name
+}
+output "etag" {
+  description = "E2QWRUHAPOMQZL."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.etag
+}
+output "id" {
+  description = "Identifier for the distribution. For example: EDFDVBD632BHDS5."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

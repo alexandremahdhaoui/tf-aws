@@ -12,6 +12,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "text_transformation" {
+  description = "CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
+  type        = string
+}
+variable "type" {
+  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   type        = string
@@ -35,14 +43,6 @@ variable "regex_match_tuple" {
 }
 variable "regex_pattern_set_id" {
   description = "(Required) The ID of a Regex Pattern Set."
-  type        = string
-}
-variable "text_transformation" {
-  description = "CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
-  type        = string
-}
-variable "type" {
-  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -165,14 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "text_transformation" {
-  description = "CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
-  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.text_transformation
-}
-output "type" {
-  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.type
-}
 output "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.data
@@ -196,6 +188,14 @@ output "regex_match_tuple" {
 output "regex_pattern_set_id" {
   description = "(Required) The ID of a Regex Pattern Set."
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.regex_pattern_set_id
+}
+output "text_transformation" {
+  description = "CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
+  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.text_transformation
+}
+output "type" {
+  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.type
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"

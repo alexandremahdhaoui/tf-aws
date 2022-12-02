@@ -157,6 +157,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "roles" {
+  description = "   (Optional) - The role(s) the policy should be applied to"
+  value       = aws_iam_policy_attachment.aws_iam_policy_attachment.roles
+}
+output "users" {
+  description = "   (Optional) - The user(s) the policy should be applied to"
+  value       = aws_iam_policy_attachment.aws_iam_policy_attachment.users
+}
 output "groups" {
   description = "  (Optional) - The group(s) the policy should be applied to"
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.groups
@@ -172,14 +180,6 @@ output "name" {
 output "policy_arn" {
   description = "  (Required) - The ARN of the policy you want to applyIn addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.policy_arn
-}
-output "roles" {
-  description = "   (Optional) - The role(s) the policy should be applied to"
-  value       = aws_iam_policy_attachment.aws_iam_policy_attachment.roles
-}
-output "users" {
-  description = "   (Optional) - The user(s) the policy should be applied to"
-  value       = aws_iam_policy_attachment.aws_iam_policy_attachment.users
 }
 output "id" {
   description = "The policy's ID."

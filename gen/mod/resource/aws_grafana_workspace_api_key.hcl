@@ -8,20 +8,20 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "key_name" {
-  description = "(Required) Specifies the name of the API key. Key names must be unique to the workspace."
-  type        = string
-}
-variable "key_role" {
-  description = "(Required) Specifies the permission level of the API key. Valid values are VIEWER, EDITOR, or ADMIN."
-  type        = string
-}
 variable "seconds_to_live" {
   description = "(Required) Specifies the time in seconds until the API key expires. Keys can be valid for up to 30 days."
   type        = string
 }
 variable "workspace_id" {
   description = "(Required) The ID of the workspace that the API key is valid for.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "key_name" {
+  description = "(Required) Specifies the name of the API key. Key names must be unique to the workspace."
+  type        = string
+}
+variable "key_role" {
+  description = "(Required) Specifies the permission level of the API key. Valid values are VIEWER, EDITOR, or ADMIN."
   type        = string
 }
 variable "tag_instance_id" {

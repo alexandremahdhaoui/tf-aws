@@ -8,20 +8,20 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The ID of the policy."
-  type        = string
-}
-variable "instance_port" {
-  description = "(Required) The instance port to apply the policy to.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "load_balancer_name" {
   description = "The load balancer on which the policy is defined."
   type        = string
 }
 variable "policy_names" {
   description = "(Required) List of Policy Names to apply to the backend server."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the policy."
+  type        = string
+}
+variable "instance_port" {
+  description = "(Required) The instance port to apply the policy to.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

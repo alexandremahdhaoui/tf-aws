@@ -1,19 +1,19 @@
 resource "aws_cloudwatch_event_bus_policy" "aws_cloudwatch_event_bus_policy" {
-  policy         = var.policy
   event_bus_name = var.event_bus_name
+  policy         = var.policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "policy" {
+  description = "(Required) The text of the policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
   type        = string
 }
 variable "event_bus_name" {
   description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "policy" {
-  description = "(Required) The text of the policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

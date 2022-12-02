@@ -1,12 +1,16 @@
 resource "aws_cognito_identity_provider" "aws_cognito_identity_provider" {
-  attribute_mapping = var.attribute_mapping
   idp_identifiers   = var.idp_identifiers
   provider_name     = var.provider_name
   provider_type     = var.provider_type
   user_pool_id      = var.user_pool_id
+  attribute_mapping = var.attribute_mapping
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "user_pool_id" {
+  description = " (Required) - The user pool id"
   type        = string
 }
 variable "attribute_mapping" {
@@ -25,10 +29,6 @@ variable "provider_name" {
 }
 variable "provider_type" {
   description = " (Required) - The provider type.  See AWS API for valid values"
-  type        = string
-}
-variable "user_pool_id" {
-  description = " (Required) - The user pool id"
   type        = string
 }
 variable "tag_instance_id" {
@@ -151,6 +151,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "provider_type" {
+  description = " (Required) - The provider type.  See AWS API for valid values"
+  value       = aws_cognito_identity_provider.aws_cognito_identity_provider.provider_type
+}
+output "user_pool_id" {
+  description = " (Required) - The user pool id"
+  value       = aws_cognito_identity_provider.aws_cognito_identity_provider.user_pool_id
+}
 output "attribute_mapping" {
   description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
   value       = aws_cognito_identity_provider.aws_cognito_identity_provider.attribute_mapping
@@ -162,14 +170,6 @@ output "idp_identifiers" {
 output "provider_name" {
   description = " (Required) - The provider name"
   value       = aws_cognito_identity_provider.aws_cognito_identity_provider.provider_name
-}
-output "provider_type" {
-  description = " (Required) - The provider type.  See AWS API for valid values"
-  value       = aws_cognito_identity_provider.aws_cognito_identity_provider.provider_type
-}
-output "user_pool_id" {
-  description = " (Required) - The user pool id"
-  value       = aws_cognito_identity_provider.aws_cognito_identity_provider.user_pool_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

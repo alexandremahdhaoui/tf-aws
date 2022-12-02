@@ -1,36 +1,32 @@
 resource "aws_networkmanager_device" "aws_networkmanager_device" {
-  arn               = var.arn
-  serial_number     = var.serial_number
-  type              = var.type
-  address           = var.address
-  location          = var.location
-  longitude         = var.longitude
+  aws_location      = var.aws_location
+  latitude          = var.latitude
   tags              = var.tags
-  vendor            = var.vendor
-  zone              = var.zone
   description       = var.description
+  location          = var.location
+  serial_number     = var.serial_number
+  site_id           = var.site_id
+  vendor            = var.vendor
+  global_network_id = var.global_network_id
+  type              = var.type
+  zone              = var.zone
+  address           = var.address
+  arn               = var.arn
+  longitude         = var.longitude
   model             = var.model
   subnet_arn        = var.subnet_arn
-  site_id           = var.site_id
-  aws_location      = var.aws_location
-  global_network_id = var.global_network_id
-  latitude          = var.latitude
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the device."
-  type        = string
-}
-variable "serial_number" {
-  description = "(Optional) The serial number of the device."
+variable "subnet_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the subnet that the device is located in."
   type        = string
   default     = ""
 }
-variable "type" {
-  description = "(Optional) The type of device."
+variable "zone" {
+  description = "(Optional) The Zone that the device is located in. Specify the ID of an Availability Zone, Local Zone, Wavelength Zone, or an Outpost.The location object supports the following:"
   type        = string
   default     = ""
 }
@@ -39,18 +35,12 @@ variable "address" {
   type        = string
   default     = ""
 }
-variable "location" {
-  description = "(Optional) The location of the device. Documented below."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the device."
   type        = string
-  default     = ""
 }
 variable "longitude" {
   description = "(Optional) The longitude.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) A description of the device."
   type        = string
   default     = ""
 }
@@ -59,8 +49,13 @@ variable "model" {
   type        = string
   default     = ""
 }
-variable "subnet_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the subnet that the device is located in."
+variable "aws_location" {
+  description = "(Optional) The AWS location of the device. Documented below."
+  type        = string
+  default     = ""
+}
+variable "latitude" {
+  description = "(Optional) The latitude."
   type        = string
   default     = ""
 }
@@ -74,13 +69,23 @@ variable "vendor" {
   type        = string
   default     = ""
 }
-variable "zone" {
-  description = "(Optional) The Zone that the device is located in. Specify the ID of an Availability Zone, Local Zone, Wavelength Zone, or an Outpost.The location object supports the following:"
+variable "description" {
+  description = "(Optional) A description of the device."
   type        = string
   default     = ""
 }
-variable "aws_location" {
-  description = "(Optional) The AWS location of the device. Documented below."
+variable "location" {
+  description = "(Optional) The location of the device. Documented below."
+  type        = string
+  default     = ""
+}
+variable "serial_number" {
+  description = "(Optional) The serial number of the device."
+  type        = string
+  default     = ""
+}
+variable "site_id" {
+  description = "(Optional) The ID of the site."
   type        = string
   default     = ""
 }
@@ -88,13 +93,8 @@ variable "global_network_id" {
   description = "(Required) The ID of the global network."
   type        = string
 }
-variable "latitude" {
-  description = "(Optional) The latitude."
-  type        = string
-  default     = ""
-}
-variable "site_id" {
-  description = "(Optional) The ID of the site."
+variable "type" {
+  description = "(Optional) The type of device."
   type        = string
   default     = ""
 }
@@ -218,53 +218,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "zone" {
-  description = "(Optional) The Zone that the device is located in. Specify the ID of an Availability Zone, Local Zone, Wavelength Zone, or an Outpost.The location object supports the following:"
-  value       = aws_networkmanager_device.aws_networkmanager_device.zone
-}
-output "description" {
-  description = "(Optional) A description of the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.description
-}
-output "model" {
-  description = "(Optional) The model of device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.model
-}
-output "subnet_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the subnet that the device is located in."
-  value       = aws_networkmanager_device.aws_networkmanager_device.subnet_arn
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the device. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_networkmanager_device.aws_networkmanager_device.tags
-}
-output "vendor" {
-  description = "(Optional) The vendor of the device.The aws_location object supports the following:"
-  value       = aws_networkmanager_device.aws_networkmanager_device.vendor
-}
 output "aws_location" {
   description = "(Optional) The AWS location of the device. Documented below."
   value       = aws_networkmanager_device.aws_networkmanager_device.aws_location
-}
-output "global_network_id" {
-  description = "(Required) The ID of the global network."
-  value       = aws_networkmanager_device.aws_networkmanager_device.global_network_id
 }
 output "latitude" {
   description = "(Optional) The latitude."
   value       = aws_networkmanager_device.aws_networkmanager_device.latitude
 }
-output "site_id" {
-  description = "(Optional) The ID of the site."
-  value       = aws_networkmanager_device.aws_networkmanager_device.site_id
+output "tags" {
+  description = "(Optional) Key-value tags for the device. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_networkmanager_device.aws_networkmanager_device.tags
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.arn
+output "description" {
+  description = "(Optional) A description of the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.description
+}
+output "location" {
+  description = "(Optional) The location of the device. Documented below."
+  value       = aws_networkmanager_device.aws_networkmanager_device.location
 }
 output "serial_number" {
   description = "(Optional) The serial number of the device."
   value       = aws_networkmanager_device.aws_networkmanager_device.serial_number
+}
+output "site_id" {
+  description = "(Optional) The ID of the site."
+  value       = aws_networkmanager_device.aws_networkmanager_device.site_id
+}
+output "vendor" {
+  description = "(Optional) The vendor of the device.The aws_location object supports the following:"
+  value       = aws_networkmanager_device.aws_networkmanager_device.vendor
+}
+output "global_network_id" {
+  description = "(Required) The ID of the global network."
+  value       = aws_networkmanager_device.aws_networkmanager_device.global_network_id
 }
 output "type" {
   description = "(Optional) The type of device."
@@ -274,13 +262,25 @@ output "address" {
   description = "(Optional) The physical address."
   value       = aws_networkmanager_device.aws_networkmanager_device.address
 }
-output "location" {
-  description = "(Optional) The location of the device. Documented below."
-  value       = aws_networkmanager_device.aws_networkmanager_device.location
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.arn
 }
 output "longitude" {
   description = "(Optional) The longitude.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_device.aws_networkmanager_device.longitude
+}
+output "model" {
+  description = "(Optional) The model of device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.model
+}
+output "subnet_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the subnet that the device is located in."
+  value       = aws_networkmanager_device.aws_networkmanager_device.subnet_arn
+}
+output "zone" {
+  description = "(Optional) The Zone that the device is located in. Specify the ID of an Availability Zone, Local Zone, Wavelength Zone, or an Outpost.The location object supports the following:"
+  value       = aws_networkmanager_device.aws_networkmanager_device.zone
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."

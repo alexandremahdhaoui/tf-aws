@@ -1,17 +1,13 @@
 resource "aws_vpc_ipv6_cidr_block_association" "aws_vpc_ipv6_cidr_block_association" {
-  ipv6_ipam_pool_id   = var.ipv6_ipam_pool_id
-  ipv6_netmask_length = var.ipv6_netmask_length
-  vpc_id              = var.vpc_id
   create              = var.create
   delete              = var.delete
   ipv6_cidr_block     = var.ipv6_cidr_block
+  ipv6_ipam_pool_id   = var.ipv6_ipam_pool_id
+  ipv6_netmask_length = var.ipv6_netmask_length
+  vpc_id              = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "delete" {
-  description = "(Default 10m)In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "ipv6_cidr_block" {
@@ -34,6 +30,10 @@ variable "vpc_id" {
 }
 variable "create" {
   description = "(Default 10m)"
+  type        = string
+}
+variable "delete" {
+  description = "(Default 10m)In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -156,18 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.create
-}
-output "delete" {
-  description = "(Default 10m)In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.delete
-}
-output "ipv6_cidr_block" {
-  description = "(Optional) The IPv6 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using ipv6_netmask_length. This parameter is required if ipv6_netmask_length is not set and he IPAM pool does not have allocation_default_netmask set."
-  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.ipv6_cidr_block
-}
 output "ipv6_ipam_pool_id" {
   description = "(Required) The ID of an IPv6 IPAM pool you want to use for allocating this VPC's CIDR. IPAM is a VPC feature that you can use to automate your IP address management workflows including assigning, tracking, troubleshooting, and auditing IP addresses across AWS Regions and accounts."
   value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.ipv6_ipam_pool_id
@@ -179,6 +167,18 @@ output "ipv6_netmask_length" {
 output "vpc_id" {
   description = "(Required) The ID of the VPC to make the association with.TimeoutsConfiguration options:"
   value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.vpc_id
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.create
+}
+output "delete" {
+  description = "(Default 10m)In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.delete
+}
+output "ipv6_cidr_block" {
+  description = "(Optional) The IPv6 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using ipv6_netmask_length. This parameter is required if ipv6_netmask_length is not set and he IPAM pool does not have allocation_default_netmask set."
+  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.ipv6_cidr_block
 }
 output "id" {
   description = "The ID of the VPC CIDR association"

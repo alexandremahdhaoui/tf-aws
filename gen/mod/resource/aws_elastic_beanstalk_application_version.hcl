@@ -1,12 +1,12 @@
 resource "aws_elastic_beanstalk_application_version" "aws_elastic_beanstalk_application_version" {
-  arn          = var.arn
-  bucket       = var.bucket
-  description  = var.description
-  force_delete = var.force_delete
   key          = var.key
   name         = var.name
   tags         = var.tags
   application  = var.application
+  arn          = var.arn
+  bucket       = var.bucket
+  description  = var.description
+  force_delete = var.force_delete
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -168,6 +168,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application Version. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.tags
+}
+output "application" {
+  description = "(Required) Name of the Beanstalk Application the version is associated with."
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.application
+}
 output "arn" {
   description = "ARN assigned by AWS for this Elastic Beanstalk Application."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.arn
@@ -191,14 +199,6 @@ output "key" {
 output "name" {
   description = "(Required) Unique name for the this Application Version."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.name
-}
-output "tags" {
-  description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application Version. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.tags
-}
-output "application" {
-  description = "(Required) Name of the Beanstalk Application the version is associated with."
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.application
 }
 output "arn" {
   description = "ARN assigned by AWS for this Elastic Beanstalk Application."

@@ -1,7 +1,7 @@
 resource "aws_cloudsearch_domain_service_access_policy" "aws_cloudsearch_domain_service_access_policy" {
-  update        = var.update
   access_policy = var.access_policy
   domain_name   = var.domain_name
+  update        = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -151,13 +151,13 @@ output "update" {
   description = "(Default 20m)"
   value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.update
 }
-output "update" {
-  description = "(Default 20m)"
-  value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.update
-}
 output "delete" {
   description = "(Default 20m)"
   value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.delete
+}
+output "update" {
+  description = "(Default 20m)"
+  value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

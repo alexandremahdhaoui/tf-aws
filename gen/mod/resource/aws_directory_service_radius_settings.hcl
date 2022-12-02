@@ -3,24 +3,24 @@ resource "aws_directory_service_radius_settings" "aws_directory_service_radius_s
   shared_secret           = var.shared_secret
   use_same_username       = var.use_same_username
   authentication_protocol = var.authentication_protocol
-  directory_id            = var.directory_id
-  display_label           = var.display_label
-  radius_retries          = var.radius_retries
-  create                  = var.create
   id                      = var.id
   radius_port             = var.radius_port
+  radius_retries          = var.radius_retries
+  create                  = var.create
+  directory_id            = var.directory_id
+  display_label           = var.display_label
   radius_timeout          = var.radius_timeout
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
+variable "directory_id" {
+  description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
   type        = string
 }
-variable "radius_port" {
-  description = "(Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers."
+variable "display_label" {
+  description = "(Required) Display label."
   type        = string
 }
 variable "radius_timeout" {
@@ -31,12 +31,12 @@ variable "create" {
   description = "(Default 30 minutes) Used for RADIUS settings creation"
   type        = string
 }
-variable "directory_id" {
-  description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
+variable "id" {
+  description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
   type        = string
 }
-variable "display_label" {
-  description = "(Required) Display label."
+variable "radius_port" {
+  description = "(Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers."
   type        = string
 }
 variable "radius_retries" {
@@ -181,6 +181,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 30 minutes) Used for RADIUS settings creation"
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.create
+}
 output "directory_id" {
   description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.directory_id
@@ -188,6 +192,22 @@ output "directory_id" {
 output "display_label" {
   description = "(Required) Display label."
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.display_label
+}
+output "radius_timeout" {
+  description = "(Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_timeout
+}
+output "authentication_protocol" {
+  description = "(Optional) The protocol specified for your RADIUS endpoints. Valid values: PAP, CHAP, MS-CHAPv1, MS-CHAPv2."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.authentication_protocol
+}
+output "id" {
+  description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.id
+}
+output "radius_port" {
+  description = "(Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_port
 }
 output "radius_retries" {
   description = "(Required) The maximum number of times that communication with the RADIUS server is attempted. Minimum value of 0. Maximum value of 10."
@@ -204,26 +224,6 @@ output "shared_secret" {
 output "use_same_username" {
   description = "(Optional) Not currently used.In addition to all arguments above, the following attributes are exported:"
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.use_same_username
-}
-output "authentication_protocol" {
-  description = "(Optional) The protocol specified for your RADIUS endpoints. Valid values: PAP, CHAP, MS-CHAPv1, MS-CHAPv2."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.authentication_protocol
-}
-output "id" {
-  description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.id
-}
-output "radius_port" {
-  description = "(Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_port
-}
-output "radius_timeout" {
-  description = "(Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_timeout
-}
-output "create" {
-  description = "(Default 30 minutes) Used for RADIUS settings creation"
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.create
 }
 output "create" {
   description = "(Default 30 minutes) Used for RADIUS settings creation"

@@ -1,16 +1,12 @@
 resource "aws_appstream_user_stack_association" "aws_appstream_user_stack_association" {
-  id                      = var.id
   send_email_notification = var.send_email_notification
   stack_name              = var.stack_name
   user_name               = var.user_name
   authentication_type     = var.authentication_type
+  id                      = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "authentication_type" {
-  description = "(Required) Authentication type for the user."
   type        = string
 }
 variable "id" {
@@ -29,6 +25,10 @@ variable "stack_name" {
 }
 variable "user_name" {
   description = " (Required) Email address of the user who is associated with the stack."
+  type        = string
+}
+variable "authentication_type" {
+  description = "(Required) Authentication type for the user."
   type        = string
 }
 variable "tag_instance_id" {

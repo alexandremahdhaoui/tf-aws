@@ -1,5 +1,4 @@
 resource "aws_pinpoint_apns_sandbox_channel.markdown" "aws_pinpoint_apns_sandbox_channel.markdown" {
-  bundle_id                     = var.bundle_id
   certificate                   = var.certificate
   default_authentication_method = var.default_authentication_method
   enabled                       = var.enabled
@@ -7,24 +6,11 @@ resource "aws_pinpoint_apns_sandbox_channel.markdown" "aws_pinpoint_apns_sandbox
   team_id                       = var.team_id
   token_key                     = var.token_key
   application_id                = var.application_id
+  bundle_id                     = var.bundle_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "certificate" {
-  description = "(Required) The pem encoded TLS Certificate from Apple."
-  type        = string
-}
-variable "default_authentication_method" {
-  description = "(Optional) The default authentication method used for APNs Sandbox.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
-  type        = string
-  default     = ""
-}
-variable "enabled" {
-  description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
-  type        = string
-  default     = ""
 }
 variable "private_key" {
   description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
@@ -45,6 +31,20 @@ variable "application_id" {
 variable "bundle_id" {
   description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
   type        = string
+}
+variable "certificate" {
+  description = "(Required) The pem encoded TLS Certificate from Apple."
+  type        = string
+}
+variable "default_authentication_method" {
+  description = "(Optional) The default authentication method used for APNs Sandbox.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
+  type        = string
+  default     = ""
+}
+variable "enabled" {
+  description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,6 +166,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "team_id" {
+  description = "(Required) The ID assigned to your Apple developer account team. This value is provided on the Membership page."
+  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.team_id
+}
+output "token_key" {
+  description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
+  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.token_key
+}
+output "application_id" {
+  description = "(Required) The application ID."
+  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.application_id
+}
 output "bundle_id" {
   description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
   value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.bundle_id
@@ -185,18 +197,6 @@ output "enabled" {
 output "private_key" {
   description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
   value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.private_key
-}
-output "team_id" {
-  description = "(Required) The ID assigned to your Apple developer account team. This value is provided on the Membership page."
-  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.team_id
-}
-output "token_key" {
-  description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
-  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.token_key
-}
-output "application_id" {
-  description = "(Required) The application ID."
-  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.application_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

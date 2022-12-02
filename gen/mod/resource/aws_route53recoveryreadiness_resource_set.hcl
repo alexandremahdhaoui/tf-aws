@@ -1,28 +1,28 @@
 resource "aws_route53recoveryreadiness_resource_set" "aws_route53recoveryreadiness_resource_set" {
-  dns_target_resource      = var.dns_target_resource
-  resources                = var.resources
-  tags_all                 = var.tags_all
-  target_resource          = var.target_resource
-  arn                      = var.arn
-  hosted_zone_arn          = var.hosted_zone_arn
-  resource_arn             = var.resource_arn
-  resources.#.component_id = var.resources.#.component_id
-  tags                     = var.tags
-  domain_name              = var.domain_name
-  r53_resource             = var.r53_resource
-  readiness_scopes         = var.readiness_scopes
-  record_type              = var.record_type
-  resource_set_name        = var.resource_set_name
-  resource_set_type        = var.resource_set_type
-  nlb_resource             = var.nlb_resource
   record_set_id            = var.record_set_id
+  resource_arn             = var.resource_arn
+  resources                = var.resources
+  resources.#.component_id = var.resources.#.component_id
+  r53_resource             = var.r53_resource
+  resource_set_name        = var.resource_set_name
+  target_resource          = var.target_resource
+  dns_target_resource      = var.dns_target_resource
+  hosted_zone_arn          = var.hosted_zone_arn
+  record_type              = var.record_type
+  tags                     = var.tags
+  tags_all                 = var.tags_all
+  arn                      = var.arn
+  domain_name              = var.domain_name
+  nlb_resource             = var.nlb_resource
+  readiness_scopes         = var.readiness_scopes
+  resource_set_type        = var.resource_set_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "hosted_zone_arn" {
-  description = "(Optional) Hosted Zone ARN that contains the DNS record with the provided name of target resource."
+variable "record_set_id" {
+  description = "(Optional) Resource record set ID that is targeted.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -31,18 +31,12 @@ variable "resource_arn" {
   type        = string
   default     = ""
 }
+variable "resources" {
+  description = "(Required) List of resources to add to this resource set. See below."
+  type        = string
+}
 variable "resources.#.component_id" {
   description = "Unique identified for DNS Target Resources, use for readiness checks."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.resources"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the resource set"
   type        = string
   default     = ""
 }
@@ -51,47 +45,9 @@ variable "r53_resource" {
   type        = string
   default     = ""
 }
-variable "readiness_scopes" {
-  description = "(Optional) Recovery group ARN or cell ARN that contains this resource set."
-  type        = string
-  default     = ""
-}
-variable "record_type" {
-  description = "(Optional) Type of DNS Record of target resource."
-  type        = string
-  default     = ""
-}
 variable "resource_set_name" {
   description = "(Required) Unique name describing the resource set."
   type        = string
-}
-variable "resource_set_type" {
-  description = "(Required) Type of the resources in the resource set."
-  type        = string
-}
-variable "domain_name" {
-  description = "(Optional) Domain name that is targeted."
-  type        = string
-  default     = ""
-}
-variable "record_set_id" {
-  description = "(Optional) Resource record set ID that is targeted.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "nlb_resource" {
-  description = "(Optional) NLB resource a DNS Target Resource points to. Required if r53_resource is not set."
-  type        = string
-  default     = ""
-}
-variable "resources" {
-  description = "(Required) List of resources to add to this resource set. See below."
-  type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness resource set name can be imported via the resource set name, e.g.,TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
 }
 variable "target_resource" {
   description = "(Optional) Target resource the R53 record specified with the above params points to.target_resource"
@@ -102,6 +58,50 @@ variable "dns_target_resource" {
   description = "(Required if resource_arn is not set) Component for DNS/Routing Control Readiness Checks."
   type        = string
   default     = ""
+}
+variable "hosted_zone_arn" {
+  description = "(Optional) Hosted Zone ARN that contains the DNS record with the provided name of target resource."
+  type        = string
+  default     = ""
+}
+variable "record_type" {
+  description = "(Optional) Type of DNS Record of target resource."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.resources"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness resource set name can be imported via the resource set name, e.g.,TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the resource set"
+  type        = string
+  default     = ""
+}
+variable "domain_name" {
+  description = "(Optional) Domain name that is targeted."
+  type        = string
+  default     = ""
+}
+variable "nlb_resource" {
+  description = "(Optional) NLB resource a DNS Target Resource points to. Required if r53_resource is not set."
+  type        = string
+  default     = ""
+}
+variable "readiness_scopes" {
+  description = "(Optional) Recovery group ARN or cell ARN that contains this resource set."
+  type        = string
+  default     = ""
+}
+variable "resource_set_type" {
+  description = "(Required) Type of the resources in the resource set."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -223,73 +223,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "target_resource" {
-  description = "(Optional) Target resource the R53 record specified with the above params points to.target_resource"
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.target_resource
-}
-output "dns_target_resource" {
-  description = "(Required if resource_arn is not set) Component for DNS/Routing Control Readiness Checks."
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.dns_target_resource
-}
-output "resources" {
-  description = "(Required) List of resources to add to this resource set. See below."
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resources
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness resource set name can be imported via the resource set name, e.g.,TimeoutsConfiguration options:"
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.tags_all
-}
-output "resources.#.component_id" {
-  description = "Unique identified for DNS Target Resources, use for readiness checks."
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resources.#.component_id
-}
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.resources"
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.tags
-}
-output "arn" {
-  description = "ARN of the resource set"
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.arn
-}
-output "hosted_zone_arn" {
-  description = "(Optional) Hosted Zone ARN that contains the DNS record with the provided name of target resource."
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.hosted_zone_arn
-}
-output "resource_arn" {
-  description = "(Required if dns_target_resource is not set) ARN of the resource.dns_target_resource"
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resource_arn
-}
-output "record_type" {
-  description = "(Optional) Type of DNS Record of target resource."
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.record_type
+output "r53_resource" {
+  description = "(Optional) Route53 resource a DNS Target Resource record points to.nlb_resource"
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.r53_resource
 }
 output "resource_set_name" {
   description = "(Required) Unique name describing the resource set."
   value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resource_set_name
 }
+output "target_resource" {
+  description = "(Optional) Target resource the R53 record specified with the above params points to.target_resource"
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.target_resource
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness resource set name can be imported via the resource set name, e.g.,TimeoutsConfiguration options:"
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.tags_all
+}
+output "dns_target_resource" {
+  description = "(Required if resource_arn is not set) Component for DNS/Routing Control Readiness Checks."
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.dns_target_resource
+}
+output "hosted_zone_arn" {
+  description = "(Optional) Hosted Zone ARN that contains the DNS record with the provided name of target resource."
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.hosted_zone_arn
+}
+output "record_type" {
+  description = "(Optional) Type of DNS Record of target resource."
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.record_type
+}
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.resources"
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.tags
+}
 output "resource_set_type" {
   description = "(Required) Type of the resources in the resource set."
   value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resource_set_type
+}
+output "arn" {
+  description = "ARN of the resource set"
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.arn
 }
 output "domain_name" {
   description = "(Optional) Domain name that is targeted."
   value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.domain_name
 }
-output "r53_resource" {
-  description = "(Optional) Route53 resource a DNS Target Resource record points to.nlb_resource"
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.r53_resource
+output "nlb_resource" {
+  description = "(Optional) NLB resource a DNS Target Resource points to. Required if r53_resource is not set."
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.nlb_resource
 }
 output "readiness_scopes" {
   description = "(Optional) Recovery group ARN or cell ARN that contains this resource set."
   value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.readiness_scopes
 }
-output "nlb_resource" {
-  description = "(Optional) NLB resource a DNS Target Resource points to. Required if r53_resource is not set."
-  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.nlb_resource
-}
 output "record_set_id" {
   description = "(Optional) Resource record set ID that is targeted.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.record_set_id
+}
+output "resource_arn" {
+  description = "(Required if dns_target_resource is not set) ARN of the resource.dns_target_resource"
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resource_arn
+}
+output "resources" {
+  description = "(Required) List of resources to add to this resource set. See below."
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resources
+}
+output "resources.#.component_id" {
+  description = "Unique identified for DNS Target Resources, use for readiness checks."
+  value       = aws_route53recoveryreadiness_resource_set.aws_route53recoveryreadiness_resource_set.resources.#.component_id
 }
 output "arn" {
   description = "ARN of the resource set"

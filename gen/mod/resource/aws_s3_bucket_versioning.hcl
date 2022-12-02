@@ -1,14 +1,23 @@
 resource "aws_s3_bucket_versioning" "aws_s3_bucket_versioning" {
-  status                   = var.status
-  versioning_configuration = var.versioning_configuration
   bucket                   = var.bucket
   expected_bucket_owner    = var.expected_bucket_owner
   mfa                      = var.mfa
   mfa_delete               = var.mfa_delete
+  status                   = var.status
+  versioning_configuration = var.versioning_configuration
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "mfa" {
+  description = "(Optional, Required if versioning_configuration mfa_delete is enabled) The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device.versioning_configuration~> strongNote: While the versioning_configuration.status parameter supports Disabled, this value is only intended for emcreating or emimportingEnabled or Suspended to Disabled will result in errors as the AWS S3 API does not support returning buckets to an unversioned state.The versioning_configuration configuration block supports the following arguments:"
+  type        = string
+}
+variable "mfa_delete" {
+  description = "(Optional) Specifies whether MFA delete is enabled in the bucket versioning configuration. Valid values: Enabled or Disabled.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "status" {
   description = "(Required) The versioning state of the bucket. Valid values: Enabled, Suspended, or Disabled. Disabled should only be used when creating or importing resources that correspond to unversioned S3 buckets."
@@ -25,15 +34,6 @@ variable "bucket" {
 variable "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   type        = string
-}
-variable "mfa" {
-  description = "(Optional, Required if versioning_configuration mfa_delete is enabled) The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device.versioning_configuration~> strongNote: While the versioning_configuration.status parameter supports Disabled, this value is only intended for emcreating or emimportingEnabled or Suspended to Disabled will result in errors as the AWS S3 API does not support returning buckets to an unversioned state.The versioning_configuration configuration block supports the following arguments:"
-  type        = string
-}
-variable "mfa_delete" {
-  description = "(Optional) Specifies whether MFA delete is enabled in the bucket versioning configuration. Valid values: Enabled or Disabled.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -155,6 +155,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "bucket" {
+  description = "(Required, Forces new resource) The name of the S3 bucket."
+  value       = aws_s3_bucket_versioning.aws_s3_bucket_versioning.bucket
+}
+output "expected_bucket_owner" {
+  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
+  value       = aws_s3_bucket_versioning.aws_s3_bucket_versioning.expected_bucket_owner
+}
 output "mfa" {
   description = "(Optional, Required if versioning_configuration mfa_delete is enabled) The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device.versioning_configuration~> strongNote: While the versioning_configuration.status parameter supports Disabled, this value is only intended for emcreating or emimportingEnabled or Suspended to Disabled will result in errors as the AWS S3 API does not support returning buckets to an unversioned state.The versioning_configuration configuration block supports the following arguments:"
   value       = aws_s3_bucket_versioning.aws_s3_bucket_versioning.mfa
@@ -170,14 +178,6 @@ output "status" {
 output "versioning_configuration" {
   description = "(Required) Configuration block for the versioning parameters detailed below."
   value       = aws_s3_bucket_versioning.aws_s3_bucket_versioning.versioning_configuration
-}
-output "bucket" {
-  description = "(Required, Forces new resource) The name of the S3 bucket."
-  value       = aws_s3_bucket_versioning.aws_s3_bucket_versioning.bucket
-}
-output "expected_bucket_owner" {
-  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  value       = aws_s3_bucket_versioning.aws_s3_bucket_versioning.expected_bucket_owner
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."

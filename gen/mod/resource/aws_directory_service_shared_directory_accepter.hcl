@@ -1,18 +1,14 @@
 resource "aws_directory_service_shared_directory_accepter" "aws_directory_service_shared_directory_accepter" {
+  method              = var.method
+  notes               = var.notes
   owner_account_id    = var.owner_account_id
   owner_directory_id  = var.owner_directory_id
   shared_directory_id = var.shared_directory_id
   create              = var.create
   id                  = var.id
-  method              = var.method
-  notes               = var.notes
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "shared_directory_id" {
-  description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create" {
@@ -37,6 +33,10 @@ variable "owner_account_id" {
 }
 variable "owner_directory_id" {
   description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
+  type        = string
+}
+variable "shared_directory_id" {
+  description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,14 +159,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "owner_directory_id" {
-  description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_directory_id
-}
-output "shared_directory_id" {
-  description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.shared_directory_id
-}
 output "create" {
   description = "(Default 60 minutes) Used for directory creation"
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.create
@@ -186,6 +178,18 @@ output "notes" {
 output "owner_account_id" {
   description = "Account identifier of the directory owner."
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_account_id
+}
+output "owner_directory_id" {
+  description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_directory_id
+}
+output "shared_directory_id" {
+  description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.shared_directory_id
+}
+output "owner_directory_id" {
+  description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_directory_id
 }
 output "create" {
   description = "(Default 60 minutes) Used for directory creation"
@@ -210,10 +214,6 @@ output "notes" {
 output "owner_account_id" {
   description = "Account identifier of the directory owner."
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_account_id
-}
-output "owner_directory_id" {
-  description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_directory_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

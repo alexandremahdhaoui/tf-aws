@@ -1,9 +1,9 @@
 resource "aws_rds_cluster_activity_stream" "aws_rds_cluster_activity_stream" {
-  engine_native_audit_fields_included = var.engine_native_audit_fields_included
   id                                  = var.id
   kms_key_id                          = var.kms_key_id
   mode                                = var.mode
   resource_arn                        = var.resource_arn
+  engine_native_audit_fields_included = var.engine_native_audit_fields_included
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -149,6 +149,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "engine_native_audit_fields_included" {
+  description = "(Optional, Forces new resources) Specifies whether the database activity stream includes engine-native audit fields. This option only applies to an Oracle DB instance. By default, no engine-native audit fields are included. Defaults false.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.engine_native_audit_fields_included
+}
 output "id" {
   description = "The Amazon Resource Name (ARN) of the DB cluster."
   value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.id
@@ -164,10 +168,6 @@ output "mode" {
 output "resource_arn" {
   description = "(Required, Forces new resources) The Amazon Resource Name (ARN) of the DB cluster."
   value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.resource_arn
-}
-output "engine_native_audit_fields_included" {
-  description = "(Optional, Forces new resources) Specifies whether the database activity stream includes engine-native audit fields. This option only applies to an Oracle DB instance. By default, no engine-native audit fields are included. Defaults false.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.engine_native_audit_fields_included
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the DB cluster."

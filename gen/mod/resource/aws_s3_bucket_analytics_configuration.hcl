@@ -1,34 +1,51 @@
 resource "aws_s3_bucket_analytics_configuration" "aws_s3_bucket_analytics_configuration" {
+  name                   = var.name
+  tags                   = var.tags
+  bucket_account_id      = var.bucket_account_id
+  destination            = var.destination
+  data_export            = var.data_export
   filter                 = var.filter
   format                 = var.format
-  name                   = var.name
   output_schema_version  = var.output_schema_version
   prefix                 = var.prefix
-  bucket                 = var.bucket
-  bucket_account_id      = var.bucket_account_id
-  data_export            = var.data_export
   s3_bucket_destination  = var.s3_bucket_destination
-  storage_class_analysis = var.storage_class_analysis
+  bucket                 = var.bucket
   bucket_arn             = var.bucket_arn
-  destination            = var.destination
-  tags                   = var.tags
+  storage_class_analysis = var.storage_class_analysis
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "bucket_arn" {
-  description = "(Required) The ARN of the destination bucket."
+variable "bucket_account_id" {
+  description = "(Optional) The account ID that owns the destination bucket."
   type        = string
+  default     = ""
 }
 variable "destination" {
   description = "(Required) Specifies the destination for the exported analytics data (documented below).The destination configuration supports the following:"
+  type        = string
+}
+variable "name" {
+  description = "(Required) Unique identifier of the analytics configuration for the bucket."
   type        = string
 }
 variable "tags" {
   description = "(Optional) Set of object tags for filtering.The storage_class_analysis configuration supports the following:"
   type        = string
   default     = ""
+}
+variable "bucket" {
+  description = "(Required) The name of the bucket this analytics configuration is associated with."
+  type        = string
+}
+variable "bucket_arn" {
+  description = "(Required) The ARN of the destination bucket."
+  type        = string
+}
+variable "data_export" {
+  description = "(Required) Data export configuration (documented below).The data_export configuration supports the following:"
+  type        = string
 }
 variable "filter" {
   description = "(Optional) Object filtering that accepts a prefix, tags, or a logical AND of prefix and tags (documented below)."
@@ -40,10 +57,6 @@ variable "format" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Unique identifier of the analytics configuration for the bucket."
-  type        = string
-}
 variable "output_schema_version" {
   description = "(Optional) The schema version of exported analytics data. Allowed values: V_1. Default value: V_1."
   type        = string
@@ -53,19 +66,6 @@ variable "prefix" {
   description = "(Optional) Object prefix for filtering."
   type        = string
   default     = ""
-}
-variable "bucket" {
-  description = "(Required) The name of the bucket this analytics configuration is associated with."
-  type        = string
-}
-variable "bucket_account_id" {
-  description = "(Optional) The account ID that owns the destination bucket."
-  type        = string
-  default     = ""
-}
-variable "data_export" {
-  description = "(Required) Data export configuration (documented below).The data_export configuration supports the following:"
-  type        = string
 }
 variable "s3_bucket_destination" {
   description = "(Required) Analytics data export currently only supports an S3 bucket destination (documented below).The s3_bucket_destination configuration supports the following:"
@@ -196,37 +196,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bucket_arn" {
-  description = "(Required) The ARN of the destination bucket."
-  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.bucket_arn
-}
 output "destination" {
   description = "(Required) Specifies the destination for the exported analytics data (documented below).The destination configuration supports the following:"
   value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.destination
-}
-output "tags" {
-  description = "(Optional) Set of object tags for filtering.The storage_class_analysis configuration supports the following:"
-  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.tags
 }
 output "name" {
   description = "(Required) Unique identifier of the analytics configuration for the bucket."
   value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.name
 }
-output "output_schema_version" {
-  description = "(Optional) The schema version of exported analytics data. Allowed values: V_1. Default value: V_1."
-  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.output_schema_version
-}
-output "prefix" {
-  description = "(Optional) Object prefix for filtering."
-  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.prefix
-}
-output "bucket" {
-  description = "(Required) The name of the bucket this analytics configuration is associated with."
-  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.bucket
+output "tags" {
+  description = "(Optional) Set of object tags for filtering.The storage_class_analysis configuration supports the following:"
+  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.tags
 }
 output "bucket_account_id" {
   description = "(Optional) The account ID that owns the destination bucket."
   value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.bucket_account_id
+}
+output "bucket_arn" {
+  description = "(Required) The ARN of the destination bucket."
+  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.bucket_arn
 }
 output "data_export" {
   description = "(Required) Data export configuration (documented below).The data_export configuration supports the following:"
@@ -240,9 +228,21 @@ output "format" {
   description = "(Optional) The output format of exported analytics data. Allowed values: CSV. Default value: CSV."
   value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.format
 }
+output "output_schema_version" {
+  description = "(Optional) The schema version of exported analytics data. Allowed values: V_1. Default value: V_1."
+  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.output_schema_version
+}
+output "prefix" {
+  description = "(Optional) Object prefix for filtering."
+  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.prefix
+}
 output "s3_bucket_destination" {
   description = "(Required) Analytics data export currently only supports an S3 bucket destination (documented below).The s3_bucket_destination configuration supports the following:"
   value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.s3_bucket_destination
+}
+output "bucket" {
+  description = "(Required) The name of the bucket this analytics configuration is associated with."
+  value       = aws_s3_bucket_analytics_configuration.aws_s3_bucket_analytics_configuration.bucket
 }
 output "storage_class_analysis" {
   description = "(Optional) Configuration for the analytics data export (documented below).The filter configuration supports the following:"

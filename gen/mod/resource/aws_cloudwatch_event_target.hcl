@@ -1,163 +1,72 @@
 resource "aws_cloudwatch_event_target" "aws_cloudwatch_event_target" {
-  propagate_tags                                        = var.propagate_tags
-  task_definition_arn                                   = var.task_definition_arn
-  dead_letter_config                                    = var.dead_letter_config
-  header_parameters                                     = var.header_parameters
-  input_transformer                                     = var.input_transformer
-  job_definition                                        = var.job_definition
-  batch_target                                          = var.batch_target
-  launch_type                                           = var.launch_type
   event_bus_name                                        = var.event_bus_name
-  maximum_retry_attempts                                = var.maximum_retry_attempts
-  rule                                                  = var.rule
-  sql                                                   = var.sql
+  expression                                            = var.expression
+  job_definition                                        = var.job_definition
+  ecs_target                                            = var.ecs_target
+  capacity_provider_strategy                            = var.capacity_provider_strategy
+  dead_letter_config                                    = var.dead_letter_config
   The keys can't start with "AWS".                      = var.The keys can't start with "AWS".
-  You can have as many as 100 key-value pairs.          = var.You can have as many as 100 key-value pairs.
-  network_configuration                                 = var.network_configuration
-  path_parameter_values                                 = var.path_parameter_values
-  group                                                 = var.group
-  key                                                   = var.key
-  task_count                                            = var.task_count
-  redshift_target                                       = var.redshift_target
-  role_arn                                              = var.role_arn
-  run_command_targets                                   = var.run_command_targets
-  statement_name                                        = var.statement_name
   partition_key_path                                    = var.partition_key_path
-  retry_policy                                          = var.retry_policy
-  secrets_manager_arn                                   = var.secrets_manager_arn
+  tags                                                  = var.tags
   type                                                  = var.type
   You must use JSON dot notation, not bracket notation. = var.You must use JSON dot notation, not bracket notation.
-  arn                                                   = var.arn
-  enable_ecs_managed_tags                               = var.enable_ecs_managed_tags
-  maximum_event_age_in_seconds                          = var.maximum_event_age_in_seconds
-  values                                                = var.values
-  database                                              = var.database
-  job_name                                              = var.job_name
-  message_group_id                                      = var.message_group_id
-  target_id                                             = var.target_id
-  subnets                                               = var.subnets
-  http_target                                           = var.http_target
-  input_path                                            = var.input_path
-  kinesis_target                                        = var.kinesis_target
-  platform_version                                      = var.platform_version
-  sqs_target                                            = var.sqs_target
-  tags                                                  = var.tags
-  assign_public_ip                                      = var.assign_public_ip
-  capacity_provider                                     = var.capacity_provider
-  expression                                            = var.expression
-  placement_constraint                                  = var.placement_constraint
-  input_paths                                           = var.input_paths
-  input_template                                        = var.input_template
-  job_attempts                                          = var.job_attempts
-  security_groups                                       = var.security_groups
-  capacity_provider_strategy                            = var.capacity_provider_strategy
-  ecs_target                                            = var.ecs_target
-  enable_execute_command                                = var.enable_execute_command
-  input                                                 = var.input
-  weight                                                = var.weight
   db_user                                               = var.db_user
-  with_event                                            = var.with_event
-  array_size                                            = var.array_size
-  base                                                  = var.base
+  arn                                                   = var.arn
+  input                                                 = var.input
+  input_template                                        = var.input_template
+  maximum_event_age_in_seconds                          = var.maximum_event_age_in_seconds
+  rule                                                  = var.rule
+  run_command_targets                                   = var.run_command_targets
+  You can have as many as 100 key-value pairs.          = var.You can have as many as 100 key-value pairs.
+  path_parameter_values                                 = var.path_parameter_values
   query_string_parameters                               = var.query_string_parameters
+  weight                                                = var.weight
+  database                                              = var.database
+  network_configuration                                 = var.network_configuration
+  input_paths                                           = var.input_paths
+  key                                                   = var.key
+  kinesis_target                                        = var.kinesis_target
+  secrets_manager_arn                                   = var.secrets_manager_arn
+  subnets                                               = var.subnets
+  task_count                                            = var.task_count
+  group                                                 = var.group
+  job_attempts                                          = var.job_attempts
+  assign_public_ip                                      = var.assign_public_ip
+  job_name                                              = var.job_name
+  launch_type                                           = var.launch_type
+  maximum_retry_attempts                                = var.maximum_retry_attempts
+  propagate_tags                                        = var.propagate_tags
+  security_groups                                       = var.security_groups
+  values                                                = var.values
+  array_size                                            = var.array_size
+  platform_version                                      = var.platform_version
+  redshift_target                                       = var.redshift_target
+  enable_ecs_managed_tags                               = var.enable_ecs_managed_tags
+  enable_execute_command                                = var.enable_execute_command
+  input_path                                            = var.input_path
+  input_transformer                                     = var.input_transformer
+  sql                                                   = var.sql
+  capacity_provider                                     = var.capacity_provider
+  placement_constraint                                  = var.placement_constraint
+  retry_policy                                          = var.retry_policy
+  sqs_target                                            = var.sqs_target
+  with_event                                            = var.with_event
+  header_parameters                                     = var.header_parameters
+  target_id                                             = var.target_id
+  role_arn                                              = var.role_arn
+  statement_name                                        = var.statement_name
+  http_target                                           = var.http_target
+  batch_target                                          = var.batch_target
+  message_group_id                                      = var.message_group_id
+  task_definition_arn                                   = var.task_definition_arn
+  base                                                  = var.base
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "input" {
-  description = "(Optional) Valid JSON text passed to the target. Conflicts with input_path and input_transformer."
-  type        = string
-  default     = ""
-}
-variable "input_paths" {
-  description = "(Optional) Key value pairs specified in the form of JSONPath (for example, time = $.time)"
-  type        = string
-  default     = ""
-}
-variable "input_template" {
-  description = "(Required) Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes. Values must be escaped for both JSON and Terraform, e.g., \"\\\"Your string goes here.\\\\nA new line.\\\"\"retry_policy"
-  type        = string
-}
-variable "job_attempts" {
-  description = "(Optional) The number of times to attempt to retry, if the job fails. Valid values are 1 to 10.kinesis_target"
-  type        = string
-  default     = ""
-}
-variable "security_groups" {
-  description = "(Optional) The security groups associated with the task or service. If you do not specify a security group, the default security group for the VPC is used."
-  type        = string
-  default     = ""
-}
-variable "capacity_provider_strategy" {
-  description = "(Optional) The capacity provider strategy to use for the task. If a capacity_provider_strategy specified, the launch_type parameter must be omitted. If no capacity_provider_strategy or launch_type is specified, the default capacity provider strategy for the cluster is used. Can be one or more. See below."
-  type        = string
-  default     = ""
-}
-variable "ecs_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke Amazon ECS Task. Documented below. A maximum of 1 are allowed."
-  type        = string
-  default     = ""
-}
-variable "enable_execute_command" {
-  description = "(Optional) Whether or not to enable the execute command functionality for the containers in this task. If true, this enables execute command functionality on all containers in the task."
-  type        = string
-  default     = ""
-}
-variable "weight" {
-  description = "(Required) The weight value designates the relative percentage of the total number of tasks launched that should use the specified capacity provider. The weight value is taken into consideration after the base value, if defined, is satisfied.network_configuration"
-  type        = string
-}
-variable "db_user" {
-  description = "(Optional) The database user name."
-  type        = string
-  default     = ""
-}
-variable "with_event" {
-  description = "(Optional) Indicates whether to send an event back to EventBridge after the SQL statement runs.sqs_target"
-  type        = string
-  default     = ""
-}
-variable "array_size" {
-  description = "(Optional) The size of the array, if this is an array batch job. Valid values are integers between 2 and 10,000."
-  type        = string
-  default     = ""
-}
 variable "base" {
   description = "(Optional) The base value designates how many tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. If no value is specified, the default value of 0 is used."
-  type        = string
-  default     = ""
-}
-variable "query_string_parameters" {
-  description = "(Optional) Represents keys/values of query string parameters that are appended to the invoked endpoint."
-  type        = string
-  default     = ""
-}
-variable "job_definition" {
-  description = "(Required) The ARN or name of the job definition to use if the event target is an AWS Batch job. This job definition must already exist."
-  type        = string
-}
-variable "propagate_tags" {
-  description = "(Optional) Specifies whether to propagate the tags from the task definition to the task. If no value is specified, the tags are not propagated. Tags can only be propagated to the task during task creation."
-  type        = string
-  default     = ""
-}
-variable "task_definition_arn" {
-  description = "(Required) The ARN of the task definition to use if the event target is an Amazon ECS cluster."
-  type        = string
-}
-variable "dead_letter_config" {
-  description = "(Optional)  Parameters used when you are providing a dead letter config. Documented below. A maximum of 1 are allowed.run_command_targets"
-  type        = string
-  default     = ""
-}
-variable "header_parameters" {
-  description = "(Optional) Enables you to specify HTTP headers to add to the request.input_transformer"
-  type        = string
-  default     = ""
-}
-variable "input_transformer" {
-  description = "(Optional) Parameters used when you are providing a custom input to a target based on certain event data. Conflicts with input and input_path."
   type        = string
   default     = ""
 }
@@ -166,13 +75,17 @@ variable "batch_target" {
   type        = string
   default     = ""
 }
-variable "launch_type" {
-  description = "(Optional) Specifies the launch type on which your task is running. The launch type that you specify here must match one of the launch type (compatibilities) of the target task. Valid values include: EC2, EXTERNAL, or FARGATE."
+variable "message_group_id" {
+  description = "(Optional) The FIFO message group ID to use as the target.http_targetsupport the following:"
   type        = string
   default     = ""
 }
-variable "sql" {
-  description = "(Optional) The SQL statement text to run."
+variable "task_definition_arn" {
+  description = "(Required) The ARN of the task definition to use if the event target is an Amazon ECS cluster."
+  type        = string
+}
+variable "ecs_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke Amazon ECS Task. Documented below. A maximum of 1 are allowed."
   type        = string
   default     = ""
 }
@@ -181,157 +94,35 @@ variable "event_bus_name" {
   type        = string
   default     = ""
 }
-variable "maximum_retry_attempts" {
-  description = "(Optional) maximum number of retry attempts to make before the request failsdead_letter_config"
+variable "expression" {
+  description = " (Optional) Cluster Query Language expression to apply to the constraint. Does not need to be specified for the distinctInstance type. For more information, see Cluster Query Language in the Amazon EC2 Container Service Developer Guide.batch_target"
   type        = string
   default     = ""
 }
-variable "rule" {
-  description = "(Required) The name of the rule you want to add targets to."
+variable "job_definition" {
+  description = "(Required) The ARN or name of the job definition to use if the event target is an AWS Batch job. This job definition must already exist."
   type        = string
-}
-variable "path_parameter_values" {
-  description = "(Optional) The list of values that correspond sequentially to any path variables in your endpoint ARN (for example arn:aws:execute-api:us-east-1:123456:myapi/*/POST/pets/*)."
-  type        = string
-  default     = ""
 }
 variable "The keys can't start with \"AWS\"." {
   description = ""
   type        = string
 }
-variable "You can have as many as 100 key-value pairs." {
-  description = ""
-  type        = string
-}
-variable "network_configuration" {
-  description = "(Optional) Use this if the ECS task uses the awsvpc network mode. This specifies the VPC subnets and security groups associated with the task, and whether a public IP address is to be used. Required if launch_type is FARGATE because the awsvpc mode is required for Fargate tasks."
+variable "capacity_provider_strategy" {
+  description = "(Optional) The capacity provider strategy to use for the task. If a capacity_provider_strategy specified, the launch_type parameter must be omitted. If no capacity_provider_strategy or launch_type is specified, the default capacity provider strategy for the cluster is used. Can be one or more. See below."
   type        = string
   default     = ""
 }
-variable "group" {
-  description = "(Optional) Specifies an ECS task group for the task. The maximum length is 255 characters."
+variable "dead_letter_config" {
+  description = "(Optional)  Parameters used when you are providing a dead letter config. Documented below. A maximum of 1 are allowed.run_command_targets"
   type        = string
   default     = ""
-}
-variable "key" {
-  description = "(Required) Can be either tag:tag-key or InstanceIds."
-  type        = string
-}
-variable "task_count" {
-  description = "(Optional) The number of tasks to create based on the TaskDefinition. The default is 1."
-  type        = string
-  default     = ""
-}
-variable "statement_name" {
-  description = "(Optional) The name of the SQL statement."
-  type        = string
-  default     = ""
-}
-variable "redshift_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Redshift Statement. Documented below. A maximum of 1 are allowed."
-  type        = string
-  default     = ""
-}
-variable "role_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule is triggered. Required if ecs_target is used or target in arn is EC2 instance, Kinesis data stream, Step Functions state machine, or Event Bus in different account or region."
-  type        = string
-  default     = ""
-}
-variable "run_command_targets" {
-  description = "(Optional) Parameters used when you are using the rule to invoke Amazon EC2 Run Command. Documented below. A maximum of 5 are allowed."
-  type        = string
-  default     = ""
-}
-variable "maximum_event_age_in_seconds" {
-  description = "(Optional) The age in seconds to continue to make retry attempts."
-  type        = string
-  default     = ""
-}
-variable "partition_key_path" {
-  description = "(Optional) The JSON path to be extracted from the event and used as the partition key.redshift_target"
-  type        = string
-  default     = ""
-}
-variable "retry_policy" {
-  description = "(Optional)  Parameters used when you are providing retry policies. Documented below. A maximum of 1 are allowed."
-  type        = string
-  default     = ""
-}
-variable "secrets_manager_arn" {
-  description = "(Optional) The name or ARN of the secret that enables access to the database."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required) Type of constraint. The only valid values at this time are memberOf and distinctInstance."
-  type        = string
 }
 variable "You must use JSON dot notation, not bracket notation." {
   description = ""
   type        = string
 }
-variable "arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the target."
-  type        = string
-}
-variable "enable_ecs_managed_tags" {
-  description = "(Optional) Specifies whether to enable Amazon ECS managed tags for the task.capacity_provider_strategyThe capacity_provider_strategy configuration block supports the following:"
-  type        = string
-  default     = ""
-}
-variable "target_id" {
-  description = "(Optional) The unique target assignment ID.  If missing, will generate a random, unique id."
-  type        = string
-  default     = ""
-}
-variable "values" {
-  description = "(Required) If Key is tag:tag-key, Values is a list of tag values. If Key is InstanceIds, Values is a list of Amazon EC2 instance IDs.ecs_target"
-  type        = string
-}
-variable "database" {
-  description = "(Required) The name of the database."
-  type        = string
-}
-variable "job_name" {
-  description = "(Required) The name to use for this execution of the job, if the target is an AWS Batch job."
-  type        = string
-}
-variable "message_group_id" {
-  description = "(Optional) The FIFO message group ID to use as the target.http_targetsupport the following:"
-  type        = string
-  default     = ""
-}
-variable "platform_version" {
-  description = "(Optional) Specifies the platform version for the task. Specify only the numeric portion of the platform version, such as 1.1.0. This is used only if LaunchType is FARGATE. For more information about valid platform versions, see AWS Fargate Platform Versions."
-  type        = string
-  default     = ""
-}
-variable "subnets" {
-  description = "(Required) The subnets associated with the task or service."
-  type        = string
-}
-variable "http_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an API Gateway REST endpoint. Documented below. A maximum of 1 is allowed."
-  type        = string
-  default     = ""
-}
-variable "input_path" {
-  description = "(Optional) The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. Conflicts with input and input_transformer."
-  type        = string
-  default     = ""
-}
-variable "kinesis_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Kinesis Stream. Documented below. A maximum of 1 are allowed."
-  type        = string
-  default     = ""
-}
-variable "placement_constraint" {
-  description = "(Optional) An array of placement constraint objects to use for the task. You can specify up to 10 constraints per task (including constraints in the task definition and those specified at runtime). See Below."
-  type        = string
-  default     = ""
-}
-variable "sqs_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon SQS Queue. Documented below. A maximum of 1 are allowed."
+variable "partition_key_path" {
+  description = "(Optional) The JSON path to be extracted from the event and used as the partition key.redshift_target"
   type        = string
   default     = ""
 }
@@ -340,8 +131,157 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "type" {
+  description = "(Required) Type of constraint. The only valid values at this time are memberOf and distinctInstance."
+  type        = string
+}
+variable "arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the target."
+  type        = string
+}
+variable "db_user" {
+  description = "(Optional) The database user name."
+  type        = string
+  default     = ""
+}
+variable "You can have as many as 100 key-value pairs." {
+  description = ""
+  type        = string
+}
+variable "input" {
+  description = "(Optional) Valid JSON text passed to the target. Conflicts with input_path and input_transformer."
+  type        = string
+  default     = ""
+}
+variable "input_template" {
+  description = "(Required) Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes. Values must be escaped for both JSON and Terraform, e.g., \"\\\"Your string goes here.\\\\nA new line.\\\"\"retry_policy"
+  type        = string
+}
+variable "maximum_event_age_in_seconds" {
+  description = "(Optional) The age in seconds to continue to make retry attempts."
+  type        = string
+  default     = ""
+}
+variable "rule" {
+  description = "(Required) The name of the rule you want to add targets to."
+  type        = string
+}
+variable "run_command_targets" {
+  description = "(Optional) Parameters used when you are using the rule to invoke Amazon EC2 Run Command. Documented below. A maximum of 5 are allowed."
+  type        = string
+  default     = ""
+}
+variable "database" {
+  description = "(Required) The name of the database."
+  type        = string
+}
+variable "path_parameter_values" {
+  description = "(Optional) The list of values that correspond sequentially to any path variables in your endpoint ARN (for example arn:aws:execute-api:us-east-1:123456:myapi/*/POST/pets/*)."
+  type        = string
+  default     = ""
+}
+variable "query_string_parameters" {
+  description = "(Optional) Represents keys/values of query string parameters that are appended to the invoked endpoint."
+  type        = string
+  default     = ""
+}
+variable "weight" {
+  description = "(Required) The weight value designates the relative percentage of the total number of tasks launched that should use the specified capacity provider. The weight value is taken into consideration after the base value, if defined, is satisfied.network_configuration"
+  type        = string
+}
+variable "network_configuration" {
+  description = "(Optional) Use this if the ECS task uses the awsvpc network mode. This specifies the VPC subnets and security groups associated with the task, and whether a public IP address is to be used. Required if launch_type is FARGATE because the awsvpc mode is required for Fargate tasks."
+  type        = string
+  default     = ""
+}
+variable "task_count" {
+  description = "(Optional) The number of tasks to create based on the TaskDefinition. The default is 1."
+  type        = string
+  default     = ""
+}
+variable "group" {
+  description = "(Optional) Specifies an ECS task group for the task. The maximum length is 255 characters."
+  type        = string
+  default     = ""
+}
+variable "input_paths" {
+  description = "(Optional) Key value pairs specified in the form of JSONPath (for example, time = $.time)"
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Required) Can be either tag:tag-key or InstanceIds."
+  type        = string
+}
+variable "kinesis_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Kinesis Stream. Documented below. A maximum of 1 are allowed."
+  type        = string
+  default     = ""
+}
+variable "secrets_manager_arn" {
+  description = "(Optional) The name or ARN of the secret that enables access to the database."
+  type        = string
+  default     = ""
+}
+variable "subnets" {
+  description = "(Required) The subnets associated with the task or service."
+  type        = string
+}
 variable "assign_public_ip" {
   description = "(Optional) Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false. Default false.For more information, see Task Networkingplacement_constraint"
+  type        = string
+  default     = ""
+}
+variable "job_attempts" {
+  description = "(Optional) The number of times to attempt to retry, if the job fails. Valid values are 1 to 10.kinesis_target"
+  type        = string
+  default     = ""
+}
+variable "values" {
+  description = "(Required) If Key is tag:tag-key, Values is a list of tag values. If Key is InstanceIds, Values is a list of Amazon EC2 instance IDs.ecs_target"
+  type        = string
+}
+variable "array_size" {
+  description = "(Optional) The size of the array, if this is an array batch job. Valid values are integers between 2 and 10,000."
+  type        = string
+  default     = ""
+}
+variable "job_name" {
+  description = "(Required) The name to use for this execution of the job, if the target is an AWS Batch job."
+  type        = string
+}
+variable "launch_type" {
+  description = "(Optional) Specifies the launch type on which your task is running. The launch type that you specify here must match one of the launch type (compatibilities) of the target task. Valid values include: EC2, EXTERNAL, or FARGATE."
+  type        = string
+  default     = ""
+}
+variable "maximum_retry_attempts" {
+  description = "(Optional) maximum number of retry attempts to make before the request failsdead_letter_config"
+  type        = string
+  default     = ""
+}
+variable "propagate_tags" {
+  description = "(Optional) Specifies whether to propagate the tags from the task definition to the task. If no value is specified, the tags are not propagated. Tags can only be propagated to the task during task creation."
+  type        = string
+  default     = ""
+}
+variable "security_groups" {
+  description = "(Optional) The security groups associated with the task or service. If you do not specify a security group, the default security group for the VPC is used."
+  type        = string
+  default     = ""
+}
+variable "enable_ecs_managed_tags" {
+  description = "(Optional) Specifies whether to enable Amazon ECS managed tags for the task.capacity_provider_strategyThe capacity_provider_strategy configuration block supports the following:"
+  type        = string
+  default     = ""
+}
+variable "platform_version" {
+  description = "(Optional) Specifies the platform version for the task. Specify only the numeric portion of the platform version, such as 1.1.0. This is used only if LaunchType is FARGATE. For more information about valid platform versions, see AWS Fargate Platform Versions."
+  type        = string
+  default     = ""
+}
+variable "redshift_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Redshift Statement. Documented below. A maximum of 1 are allowed."
   type        = string
   default     = ""
 }
@@ -349,8 +289,68 @@ variable "capacity_provider" {
   description = "(Required) Short name of the capacity provider."
   type        = string
 }
-variable "expression" {
-  description = " (Optional) Cluster Query Language expression to apply to the constraint. Does not need to be specified for the distinctInstance type. For more information, see Cluster Query Language in the Amazon EC2 Container Service Developer Guide.batch_target"
+variable "enable_execute_command" {
+  description = "(Optional) Whether or not to enable the execute command functionality for the containers in this task. If true, this enables execute command functionality on all containers in the task."
+  type        = string
+  default     = ""
+}
+variable "input_path" {
+  description = "(Optional) The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. Conflicts with input and input_transformer."
+  type        = string
+  default     = ""
+}
+variable "input_transformer" {
+  description = "(Optional) Parameters used when you are providing a custom input to a target based on certain event data. Conflicts with input and input_path."
+  type        = string
+  default     = ""
+}
+variable "sql" {
+  description = "(Optional) The SQL statement text to run."
+  type        = string
+  default     = ""
+}
+variable "header_parameters" {
+  description = "(Optional) Enables you to specify HTTP headers to add to the request.input_transformer"
+  type        = string
+  default     = ""
+}
+variable "placement_constraint" {
+  description = "(Optional) An array of placement constraint objects to use for the task. You can specify up to 10 constraints per task (including constraints in the task definition and those specified at runtime). See Below."
+  type        = string
+  default     = ""
+}
+variable "retry_policy" {
+  description = "(Optional)  Parameters used when you are providing retry policies. Documented below. A maximum of 1 are allowed."
+  type        = string
+  default     = ""
+}
+variable "sqs_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon SQS Queue. Documented below. A maximum of 1 are allowed."
+  type        = string
+  default     = ""
+}
+variable "with_event" {
+  description = "(Optional) Indicates whether to send an event back to EventBridge after the SQL statement runs.sqs_target"
+  type        = string
+  default     = ""
+}
+variable "role_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule is triggered. Required if ecs_target is used or target in arn is EC2 instance, Kinesis data stream, Step Functions state machine, or Event Bus in different account or region."
+  type        = string
+  default     = ""
+}
+variable "target_id" {
+  description = "(Optional) The unique target assignment ID.  If missing, will generate a random, unique id."
+  type        = string
+  default     = ""
+}
+variable "http_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an API Gateway REST endpoint. Documented below. A maximum of 1 is allowed."
+  type        = string
+  default     = ""
+}
+variable "statement_name" {
+  description = "(Optional) The name of the SQL statement."
   type        = string
   default     = ""
 }
@@ -474,85 +474,113 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "batch_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Batch Job. Documented below. A maximum of 1 are allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.batch_target
+output "enable_execute_command" {
+  description = "(Optional) Whether or not to enable the execute command functionality for the containers in this task. If true, this enables execute command functionality on all containers in the task."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.enable_execute_command
 }
-output "launch_type" {
-  description = "(Optional) Specifies the launch type on which your task is running. The launch type that you specify here must match one of the launch type (compatibilities) of the target task. Valid values include: EC2, EXTERNAL, or FARGATE."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.launch_type
+output "input_path" {
+  description = "(Optional) The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. Conflicts with input and input_transformer."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_path
 }
-output "event_bus_name" {
-  description = "(Optional) The event bus to associate with the rule. If you omit this, the default event bus is used."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.event_bus_name
-}
-output "maximum_retry_attempts" {
-  description = "(Optional) maximum number of retry attempts to make before the request failsdead_letter_config"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.maximum_retry_attempts
-}
-output "rule" {
-  description = "(Required) The name of the rule you want to add targets to."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.rule
+output "input_transformer" {
+  description = "(Optional) Parameters used when you are providing a custom input to a target based on certain event data. Conflicts with input and input_path."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_transformer
 }
 output "sql" {
   description = "(Optional) The SQL statement text to run."
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.sql
 }
-output "The keys can't start with \"AWS\"." {
-  description = ""
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.The keys can't start with "AWS".
+output "capacity_provider" {
+  description = "(Required) Short name of the capacity provider."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.capacity_provider
 }
-output "You can have as many as 100 key-value pairs." {
-  description = ""
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.You can have as many as 100 key-value pairs.
-}
-output "network_configuration" {
-  description = "(Optional) Use this if the ECS task uses the awsvpc network mode. This specifies the VPC subnets and security groups associated with the task, and whether a public IP address is to be used. Required if launch_type is FARGATE because the awsvpc mode is required for Fargate tasks."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.network_configuration
-}
-output "path_parameter_values" {
-  description = "(Optional) The list of values that correspond sequentially to any path variables in your endpoint ARN (for example arn:aws:execute-api:us-east-1:123456:myapi/*/POST/pets/*)."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.path_parameter_values
-}
-output "group" {
-  description = "(Optional) Specifies an ECS task group for the task. The maximum length is 255 characters."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.group
-}
-output "key" {
-  description = "(Required) Can be either tag:tag-key or InstanceIds."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.key
-}
-output "task_count" {
-  description = "(Optional) The number of tasks to create based on the TaskDefinition. The default is 1."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.task_count
-}
-output "redshift_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Redshift Statement. Documented below. A maximum of 1 are allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.redshift_target
-}
-output "role_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule is triggered. Required if ecs_target is used or target in arn is EC2 instance, Kinesis data stream, Step Functions state machine, or Event Bus in different account or region."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.role_arn
-}
-output "run_command_targets" {
-  description = "(Optional) Parameters used when you are using the rule to invoke Amazon EC2 Run Command. Documented below. A maximum of 5 are allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.run_command_targets
-}
-output "statement_name" {
-  description = "(Optional) The name of the SQL statement."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.statement_name
-}
-output "partition_key_path" {
-  description = "(Optional) The JSON path to be extracted from the event and used as the partition key.redshift_target"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.partition_key_path
+output "placement_constraint" {
+  description = "(Optional) An array of placement constraint objects to use for the task. You can specify up to 10 constraints per task (including constraints in the task definition and those specified at runtime). See Below."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.placement_constraint
 }
 output "retry_policy" {
   description = "(Optional)  Parameters used when you are providing retry policies. Documented below. A maximum of 1 are allowed."
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.retry_policy
 }
-output "secrets_manager_arn" {
-  description = "(Optional) The name or ARN of the secret that enables access to the database."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.secrets_manager_arn
+output "sqs_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon SQS Queue. Documented below. A maximum of 1 are allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.sqs_target
+}
+output "with_event" {
+  description = "(Optional) Indicates whether to send an event back to EventBridge after the SQL statement runs.sqs_target"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.with_event
+}
+output "header_parameters" {
+  description = "(Optional) Enables you to specify HTTP headers to add to the request.input_transformer"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.header_parameters
+}
+output "target_id" {
+  description = "(Optional) The unique target assignment ID.  If missing, will generate a random, unique id."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.target_id
+}
+output "role_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule is triggered. Required if ecs_target is used or target in arn is EC2 instance, Kinesis data stream, Step Functions state machine, or Event Bus in different account or region."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.role_arn
+}
+output "statement_name" {
+  description = "(Optional) The name of the SQL statement."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.statement_name
+}
+output "http_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an API Gateway REST endpoint. Documented below. A maximum of 1 is allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.http_target
+}
+output "batch_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Batch Job. Documented below. A maximum of 1 are allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.batch_target
+}
+output "message_group_id" {
+  description = "(Optional) The FIFO message group ID to use as the target.http_targetsupport the following:"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.message_group_id
+}
+output "task_definition_arn" {
+  description = "(Required) The ARN of the task definition to use if the event target is an Amazon ECS cluster."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.task_definition_arn
+}
+output "base" {
+  description = "(Optional) The base value designates how many tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. If no value is specified, the default value of 0 is used."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.base
+}
+output "event_bus_name" {
+  description = "(Optional) The event bus to associate with the rule. If you omit this, the default event bus is used."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.event_bus_name
+}
+output "expression" {
+  description = " (Optional) Cluster Query Language expression to apply to the constraint. Does not need to be specified for the distinctInstance type. For more information, see Cluster Query Language in the Amazon EC2 Container Service Developer Guide.batch_target"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.expression
+}
+output "job_definition" {
+  description = "(Required) The ARN or name of the job definition to use if the event target is an AWS Batch job. This job definition must already exist."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.job_definition
+}
+output "ecs_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke Amazon ECS Task. Documented below. A maximum of 1 are allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.ecs_target
+}
+output "capacity_provider_strategy" {
+  description = "(Optional) The capacity provider strategy to use for the task. If a capacity_provider_strategy specified, the launch_type parameter must be omitted. If no capacity_provider_strategy or launch_type is specified, the default capacity provider strategy for the cluster is used. Can be one or more. See below."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.capacity_provider_strategy
+}
+output "dead_letter_config" {
+  description = "(Optional)  Parameters used when you are providing a dead letter config. Documented below. A maximum of 1 are allowed.run_command_targets"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.dead_letter_config
+}
+output "The keys can't start with \"AWS\"." {
+  description = ""
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.The keys can't start with "AWS".
+}
+output "partition_key_path" {
+  description = "(Optional) The JSON path to be extracted from the event and used as the partition key.redshift_target"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.partition_key_path
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to ecs resources."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.tags
 }
 output "type" {
   description = "(Required) Type of constraint. The only valid values at this time are memberOf and distinctInstance."
@@ -562,161 +590,133 @@ output "You must use JSON dot notation, not bracket notation." {
   description = ""
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.You must use JSON dot notation, not bracket notation.
 }
+output "db_user" {
+  description = "(Optional) The database user name."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.db_user
+}
 output "arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the target."
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.arn
-}
-output "enable_ecs_managed_tags" {
-  description = "(Optional) Specifies whether to enable Amazon ECS managed tags for the task.capacity_provider_strategyThe capacity_provider_strategy configuration block supports the following:"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.enable_ecs_managed_tags
-}
-output "maximum_event_age_in_seconds" {
-  description = "(Optional) The age in seconds to continue to make retry attempts."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.maximum_event_age_in_seconds
-}
-output "values" {
-  description = "(Required) If Key is tag:tag-key, Values is a list of tag values. If Key is InstanceIds, Values is a list of Amazon EC2 instance IDs.ecs_target"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.values
-}
-output "database" {
-  description = "(Required) The name of the database."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.database
-}
-output "job_name" {
-  description = "(Required) The name to use for this execution of the job, if the target is an AWS Batch job."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.job_name
-}
-output "message_group_id" {
-  description = "(Optional) The FIFO message group ID to use as the target.http_targetsupport the following:"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.message_group_id
-}
-output "target_id" {
-  description = "(Optional) The unique target assignment ID.  If missing, will generate a random, unique id."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.target_id
-}
-output "subnets" {
-  description = "(Required) The subnets associated with the task or service."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.subnets
-}
-output "http_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an API Gateway REST endpoint. Documented below. A maximum of 1 is allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.http_target
-}
-output "input_path" {
-  description = "(Optional) The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. Conflicts with input and input_transformer."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_path
-}
-output "kinesis_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Kinesis Stream. Documented below. A maximum of 1 are allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.kinesis_target
-}
-output "platform_version" {
-  description = "(Optional) Specifies the platform version for the task. Specify only the numeric portion of the platform version, such as 1.1.0. This is used only if LaunchType is FARGATE. For more information about valid platform versions, see AWS Fargate Platform Versions."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.platform_version
-}
-output "sqs_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon SQS Queue. Documented below. A maximum of 1 are allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.sqs_target
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to ecs resources."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.tags
-}
-output "assign_public_ip" {
-  description = "(Optional) Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false. Default false.For more information, see Task Networkingplacement_constraint"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.assign_public_ip
-}
-output "capacity_provider" {
-  description = "(Required) Short name of the capacity provider."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.capacity_provider
-}
-output "expression" {
-  description = " (Optional) Cluster Query Language expression to apply to the constraint. Does not need to be specified for the distinctInstance type. For more information, see Cluster Query Language in the Amazon EC2 Container Service Developer Guide.batch_target"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.expression
-}
-output "placement_constraint" {
-  description = "(Optional) An array of placement constraint objects to use for the task. You can specify up to 10 constraints per task (including constraints in the task definition and those specified at runtime). See Below."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.placement_constraint
-}
-output "input_paths" {
-  description = "(Optional) Key value pairs specified in the form of JSONPath (for example, time = $.time)"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_paths
-}
-output "input_template" {
-  description = "(Required) Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes. Values must be escaped for both JSON and Terraform, e.g., \"\\\"Your string goes here.\\\\nA new line.\\\"\"retry_policy"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_template
-}
-output "job_attempts" {
-  description = "(Optional) The number of times to attempt to retry, if the job fails. Valid values are 1 to 10.kinesis_target"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.job_attempts
-}
-output "security_groups" {
-  description = "(Optional) The security groups associated with the task or service. If you do not specify a security group, the default security group for the VPC is used."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.security_groups
-}
-output "capacity_provider_strategy" {
-  description = "(Optional) The capacity provider strategy to use for the task. If a capacity_provider_strategy specified, the launch_type parameter must be omitted. If no capacity_provider_strategy or launch_type is specified, the default capacity provider strategy for the cluster is used. Can be one or more. See below."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.capacity_provider_strategy
-}
-output "ecs_target" {
-  description = "(Optional) Parameters used when you are using the rule to invoke Amazon ECS Task. Documented below. A maximum of 1 are allowed."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.ecs_target
-}
-output "enable_execute_command" {
-  description = "(Optional) Whether or not to enable the execute command functionality for the containers in this task. If true, this enables execute command functionality on all containers in the task."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.enable_execute_command
 }
 output "input" {
   description = "(Optional) Valid JSON text passed to the target. Conflicts with input_path and input_transformer."
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input
 }
-output "weight" {
-  description = "(Required) The weight value designates the relative percentage of the total number of tasks launched that should use the specified capacity provider. The weight value is taken into consideration after the base value, if defined, is satisfied.network_configuration"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.weight
+output "input_template" {
+  description = "(Required) Template to customize data sent to the target. Must be valid JSON. To send a string value, the string value must include double quotes. Values must be escaped for both JSON and Terraform, e.g., \"\\\"Your string goes here.\\\\nA new line.\\\"\"retry_policy"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_template
 }
-output "db_user" {
-  description = "(Optional) The database user name."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.db_user
+output "maximum_event_age_in_seconds" {
+  description = "(Optional) The age in seconds to continue to make retry attempts."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.maximum_event_age_in_seconds
 }
-output "with_event" {
-  description = "(Optional) Indicates whether to send an event back to EventBridge after the SQL statement runs.sqs_target"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.with_event
+output "rule" {
+  description = "(Required) The name of the rule you want to add targets to."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.rule
 }
-output "array_size" {
-  description = "(Optional) The size of the array, if this is an array batch job. Valid values are integers between 2 and 10,000."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.array_size
+output "run_command_targets" {
+  description = "(Optional) Parameters used when you are using the rule to invoke Amazon EC2 Run Command. Documented below. A maximum of 5 are allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.run_command_targets
 }
-output "base" {
-  description = "(Optional) The base value designates how many tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. If no value is specified, the default value of 0 is used."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.base
+output "You can have as many as 100 key-value pairs." {
+  description = ""
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.You can have as many as 100 key-value pairs.
+}
+output "path_parameter_values" {
+  description = "(Optional) The list of values that correspond sequentially to any path variables in your endpoint ARN (for example arn:aws:execute-api:us-east-1:123456:myapi/*/POST/pets/*)."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.path_parameter_values
 }
 output "query_string_parameters" {
   description = "(Optional) Represents keys/values of query string parameters that are appended to the invoked endpoint."
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.query_string_parameters
 }
+output "weight" {
+  description = "(Required) The weight value designates the relative percentage of the total number of tasks launched that should use the specified capacity provider. The weight value is taken into consideration after the base value, if defined, is satisfied.network_configuration"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.weight
+}
+output "database" {
+  description = "(Required) The name of the database."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.database
+}
+output "network_configuration" {
+  description = "(Optional) Use this if the ECS task uses the awsvpc network mode. This specifies the VPC subnets and security groups associated with the task, and whether a public IP address is to be used. Required if launch_type is FARGATE because the awsvpc mode is required for Fargate tasks."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.network_configuration
+}
+output "input_paths" {
+  description = "(Optional) Key value pairs specified in the form of JSONPath (for example, time = $.time)"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_paths
+}
+output "key" {
+  description = "(Required) Can be either tag:tag-key or InstanceIds."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.key
+}
+output "kinesis_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Kinesis Stream. Documented below. A maximum of 1 are allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.kinesis_target
+}
+output "secrets_manager_arn" {
+  description = "(Optional) The name or ARN of the secret that enables access to the database."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.secrets_manager_arn
+}
+output "subnets" {
+  description = "(Required) The subnets associated with the task or service."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.subnets
+}
+output "task_count" {
+  description = "(Optional) The number of tasks to create based on the TaskDefinition. The default is 1."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.task_count
+}
+output "group" {
+  description = "(Optional) Specifies an ECS task group for the task. The maximum length is 255 characters."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.group
+}
+output "job_attempts" {
+  description = "(Optional) The number of times to attempt to retry, if the job fails. Valid values are 1 to 10.kinesis_target"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.job_attempts
+}
+output "assign_public_ip" {
+  description = "(Optional) Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false. Default false.For more information, see Task Networkingplacement_constraint"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.assign_public_ip
+}
+output "job_name" {
+  description = "(Required) The name to use for this execution of the job, if the target is an AWS Batch job."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.job_name
+}
+output "launch_type" {
+  description = "(Optional) Specifies the launch type on which your task is running. The launch type that you specify here must match one of the launch type (compatibilities) of the target task. Valid values include: EC2, EXTERNAL, or FARGATE."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.launch_type
+}
+output "maximum_retry_attempts" {
+  description = "(Optional) maximum number of retry attempts to make before the request failsdead_letter_config"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.maximum_retry_attempts
+}
 output "propagate_tags" {
   description = "(Optional) Specifies whether to propagate the tags from the task definition to the task. If no value is specified, the tags are not propagated. Tags can only be propagated to the task during task creation."
   value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.propagate_tags
 }
-output "task_definition_arn" {
-  description = "(Required) The ARN of the task definition to use if the event target is an Amazon ECS cluster."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.task_definition_arn
+output "security_groups" {
+  description = "(Optional) The security groups associated with the task or service. If you do not specify a security group, the default security group for the VPC is used."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.security_groups
 }
-output "dead_letter_config" {
-  description = "(Optional)  Parameters used when you are providing a dead letter config. Documented below. A maximum of 1 are allowed.run_command_targets"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.dead_letter_config
+output "values" {
+  description = "(Required) If Key is tag:tag-key, Values is a list of tag values. If Key is InstanceIds, Values is a list of Amazon EC2 instance IDs.ecs_target"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.values
 }
-output "header_parameters" {
-  description = "(Optional) Enables you to specify HTTP headers to add to the request.input_transformer"
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.header_parameters
+output "array_size" {
+  description = "(Optional) The size of the array, if this is an array batch job. Valid values are integers between 2 and 10,000."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.array_size
 }
-output "input_transformer" {
-  description = "(Optional) Parameters used when you are providing a custom input to a target based on certain event data. Conflicts with input and input_path."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.input_transformer
+output "platform_version" {
+  description = "(Optional) Specifies the platform version for the task. Specify only the numeric portion of the platform version, such as 1.1.0. This is used only if LaunchType is FARGATE. For more information about valid platform versions, see AWS Fargate Platform Versions."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.platform_version
 }
-output "job_definition" {
-  description = "(Required) The ARN or name of the job definition to use if the event target is an AWS Batch job. This job definition must already exist."
-  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.job_definition
+output "redshift_target" {
+  description = "(Optional) Parameters used when you are using the rule to invoke an Amazon Redshift Statement. Documented below. A maximum of 1 are allowed."
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.redshift_target
+}
+output "enable_ecs_managed_tags" {
+  description = "(Optional) Specifies whether to enable Amazon ECS managed tags for the task.capacity_provider_strategyThe capacity_provider_strategy configuration block supports the following:"
+  value       = aws_cloudwatch_event_target.aws_cloudwatch_event_target.enable_ecs_managed_tags
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

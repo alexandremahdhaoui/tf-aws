@@ -145,14 +145,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "vpc_region" {
-  description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_zone_association.aws_route53_zone_association.vpc_region
-}
-output "zone_id" {
-  description = "(Required) The private hosted zone to associate."
-  value       = aws_route53_zone_association.aws_route53_zone_association.zone_id
-}
 output "id" {
   description = "The calculated unique identifier for the association."
   value       = aws_route53_zone_association.aws_route53_zone_association.id
@@ -160,6 +152,14 @@ output "id" {
 output "vpc_id" {
   description = "(Required) The VPC to associate with the private hosted zone."
   value       = aws_route53_zone_association.aws_route53_zone_association.vpc_id
+}
+output "vpc_region" {
+  description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_zone_association.aws_route53_zone_association.vpc_region
+}
+output "zone_id" {
+  description = "(Required) The private hosted zone to associate."
+  value       = aws_route53_zone_association.aws_route53_zone_association.zone_id
 }
 output "id" {
   description = "The calculated unique identifier for the association."

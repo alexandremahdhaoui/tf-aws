@@ -169,10 +169,6 @@ output "create" {
   description = "(Default 10m)"
   value       = aws_dx_gateway.aws_dx_gateway.create
 }
-output "owner_account_id" {
-  description = "AWS Account ID of the gateway.TimeoutsConfiguration options:"
-  value       = aws_dx_gateway.aws_dx_gateway.owner_account_id
-}
 output "create" {
   description = "(Default 10m)"
   value       = aws_dx_gateway.aws_dx_gateway.create
@@ -184,6 +180,10 @@ output "delete" {
 output "id" {
   description = "The ID of the gateway."
   value       = aws_dx_gateway.aws_dx_gateway.id
+}
+output "owner_account_id" {
+  description = "AWS Account ID of the gateway.TimeoutsConfiguration options:"
+  value       = aws_dx_gateway.aws_dx_gateway.owner_account_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

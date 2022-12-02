@@ -1,8 +1,8 @@
 resource "aws_ecr_registry_scanning_configuration" "aws_ecr_registry_scanning_configuration" {
-  scan_frequency    = var.scan_frequency
-  scan_type         = var.scan_type
   repository_filter = var.repository_filter
   rule              = var.rule
+  scan_frequency    = var.scan_frequency
+  scan_type         = var.scan_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "repository_filter" {
+  description = "(Required) One or more repository filter blocks, containing a filter (required string filtering repositories, see pattern regex here) and a filter_type (required string, currently only WILDCARD is supported)."
+  value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.repository_filter
+}
 output "rule" {
   description = "(Optional) One or multiple blocks specifying scanning rules to determine which repository filters are used and at what frequency scanning will occur. See below for schema.rule"
   value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.rule
@@ -156,10 +160,6 @@ output "scan_frequency" {
 output "scan_type" {
   description = "(Required) the scanning type to set for the registry. Can be either ENHANCED or BASIC."
   value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.scan_type
-}
-output "repository_filter" {
-  description = "(Required) One or more repository filter blocks, containing a filter (required string filtering repositories, see pattern regex here) and a filter_type (required string, currently only WILDCARD is supported)."
-  value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.repository_filter
 }
 output "registry_id" {
   description = "The registry ID the scanning configuration applies to."

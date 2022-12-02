@@ -1,67 +1,42 @@
 resource "aws_sns_topic" "aws_sns_topic" {
-  delivery_policy                          = var.delivery_policy
-  lambda_failure_feedback_role_arn         = var.lambda_failure_feedback_role_arn
-  policy                                   = var.policy
-  application_failure_feedback_role_arn    = var.application_failure_feedback_role_arn
-  http_success_feedback_sample_rate        = var.http_success_feedback_sample_rate
-  id                                       = var.id
-  lambda_success_feedback_role_arn         = var.lambda_success_feedback_role_arn
-  application_success_feedback_role_arn    = var.application_success_feedback_role_arn
-  display_name                             = var.display_name
-  firehose_failure_feedback_role_arn       = var.firehose_failure_feedback_role_arn
   http_success_feedback_role_arn           = var.http_success_feedback_role_arn
-  name                                     = var.name
-  application_success_feedback_sample_rate = var.application_success_feedback_sample_rate
-  arn                                      = var.arn
-  content_based_deduplication              = var.content_based_deduplication
-  kms_master_key_id                        = var.kms_master_key_id
-  owner                                    = var.owner
-  sqs_success_feedback_sample_rate         = var.sqs_success_feedback_sample_rate
+  display_name                             = var.display_name
   fifo_topic                               = var.fifo_topic
   http_failure_feedback_role_arn           = var.http_failure_feedback_role_arn
-  lambda_success_feedback_sample_rate      = var.lambda_success_feedback_sample_rate
-  firehose_success_feedback_role_arn       = var.firehose_success_feedback_role_arn
-  firehose_success_feedback_sample_rate    = var.firehose_success_feedback_sample_rate
-  name_prefix                              = var.name_prefix
-  sqs_success_feedback_role_arn            = var.sqs_success_feedback_role_arn
+  http_success_feedback_sample_rate        = var.http_success_feedback_sample_rate
+  owner                                    = var.owner
+  id                                       = var.id
+  kms_master_key_id                        = var.kms_master_key_id
+  sqs_success_feedback_sample_rate         = var.sqs_success_feedback_sample_rate
   sqs_failure_feedback_role_arn            = var.sqs_failure_feedback_role_arn
+  application_success_feedback_sample_rate = var.application_success_feedback_sample_rate
+  firehose_success_feedback_role_arn       = var.firehose_success_feedback_role_arn
+  lambda_failure_feedback_role_arn         = var.lambda_failure_feedback_role_arn
+  lambda_success_feedback_sample_rate      = var.lambda_success_feedback_sample_rate
+  policy                                   = var.policy
+  application_failure_feedback_role_arn    = var.application_failure_feedback_role_arn
+  application_success_feedback_role_arn    = var.application_success_feedback_role_arn
+  delivery_policy                          = var.delivery_policy
+  name                                     = var.name
   tags                                     = var.tags
+  arn                                      = var.arn
+  content_based_deduplication              = var.content_based_deduplication
+  firehose_failure_feedback_role_arn       = var.firehose_failure_feedback_role_arn
+  name_prefix                              = var.name_prefix
+  firehose_success_feedback_sample_rate    = var.firehose_success_feedback_sample_rate
+  lambda_success_feedback_role_arn         = var.lambda_success_feedback_role_arn
+  sqs_success_feedback_role_arn            = var.sqs_success_feedback_role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "sqs_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+variable "kms_master_key_id" {
+  description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK. For more information, see Key Terms"
   type        = string
   default     = ""
 }
-variable "sqs_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "delivery_policy" {
-  description = "(Optional) The SNS delivery policy. More on AWS documentation"
-  type        = string
-  default     = ""
-}
-variable "lambda_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  type        = string
-  default     = ""
-}
-variable "application_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  type        = string
-  default     = ""
-}
-variable "http_success_feedback_sample_rate" {
+variable "sqs_success_feedback_sample_rate" {
   description = "(Optional) Percentage of success to sample"
   type        = string
   default     = ""
@@ -70,8 +45,28 @@ variable "id" {
   description = "The ARN of the SNS topic"
   type        = string
 }
-variable "lambda_success_feedback_role_arn" {
+variable "firehose_success_feedback_role_arn" {
   description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  type        = string
+  default     = ""
+}
+variable "lambda_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
+  type        = string
+  default     = ""
+}
+variable "lambda_success_feedback_sample_rate" {
+  description = "(Optional) Percentage of success to sample"
+  type        = string
+  default     = ""
+}
+variable "sqs_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
+  type        = string
+  default     = ""
+}
+variable "application_success_feedback_sample_rate" {
+  description = "(Optional) Percentage of success to sample"
   type        = string
   default     = ""
 }
@@ -85,18 +80,8 @@ variable "application_success_feedback_role_arn" {
   type        = string
   default     = ""
 }
-variable "display_name" {
-  description = "(Optional) The display name for the topic"
-  type        = string
-  default     = ""
-}
-variable "firehose_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  type        = string
-  default     = ""
-}
-variable "http_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+variable "delivery_policy" {
+  description = "(Optional) The SNS delivery policy. More on AWS documentation"
   type        = string
   default     = ""
 }
@@ -105,8 +90,23 @@ variable "name" {
   type        = string
   default     = ""
 }
-variable "application_success_feedback_sample_rate" {
-  description = "(Optional) Percentage of success to sample"
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "application_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
+  type        = string
+  default     = ""
+}
+variable "content_based_deduplication" {
+  description = "(Optional) Enables content-based deduplication for FIFO topics. For more information, see the related documentation"
+  type        = string
+  default     = ""
+}
+variable "firehose_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
   type        = string
   default     = ""
 }
@@ -114,22 +114,28 @@ variable "arn" {
   description = "The ARN of the SNS topic, as a more obvious property (clone of id)"
   type        = string
 }
-variable "content_based_deduplication" {
-  description = "(Optional) Enables content-based deduplication for FIFO topics. For more information, see the related documentation"
-  type        = string
-  default     = ""
-}
-variable "kms_master_key_id" {
-  description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK. For more information, see Key Terms"
-  type        = string
-  default     = ""
-}
-variable "owner" {
-  description = "The AWS Account ID of the SNS topic owner"
-  type        = string
-}
-variable "sqs_success_feedback_sample_rate" {
+variable "firehose_success_feedback_sample_rate" {
   description = "(Optional) Percentage of success to sample"
+  type        = string
+  default     = ""
+}
+variable "lambda_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  type        = string
+  default     = ""
+}
+variable "name_prefix" {
+  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name"
+  type        = string
+  default     = ""
+}
+variable "sqs_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  type        = string
+  default     = ""
+}
+variable "http_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
   type        = string
   default     = ""
 }
@@ -143,23 +149,17 @@ variable "http_failure_feedback_role_arn" {
   type        = string
   default     = ""
 }
-variable "lambda_success_feedback_sample_rate" {
+variable "http_success_feedback_sample_rate" {
   description = "(Optional) Percentage of success to sample"
   type        = string
   default     = ""
 }
-variable "firehose_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+variable "owner" {
+  description = "The AWS Account ID of the SNS topic owner"
   type        = string
-  default     = ""
 }
-variable "firehose_success_feedback_sample_rate" {
-  description = "(Optional) Percentage of success to sample"
-  type        = string
-  default     = ""
-}
-variable "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name"
+variable "display_name" {
+  description = "(Optional) The display name for the topic"
   type        = string
   default     = ""
 }
@@ -283,49 +283,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "http_success_feedback_role_arn" {
+output "firehose_success_feedback_role_arn" {
   description = "(Optional) The IAM role permitted to receive success feedback for this topic"
-  value       = aws_sns_topic.aws_sns_topic.http_success_feedback_role_arn
+  value       = aws_sns_topic.aws_sns_topic.firehose_success_feedback_role_arn
 }
-output "name" {
-  description = "(Optional) The name of the topic. Topic names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 256 characters long. For a FIFO (first-in-first-out) topic, the name must end with the .fifo suffix. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix"
-  value       = aws_sns_topic.aws_sns_topic.name
-}
-output "application_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
-  value       = aws_sns_topic.aws_sns_topic.application_success_feedback_role_arn
-}
-output "display_name" {
-  description = "(Optional) The display name for the topic"
-  value       = aws_sns_topic.aws_sns_topic.display_name
-}
-output "firehose_failure_feedback_role_arn" {
+output "lambda_failure_feedback_role_arn" {
   description = "(Optional) IAM role for failure feedback"
-  value       = aws_sns_topic.aws_sns_topic.firehose_failure_feedback_role_arn
+  value       = aws_sns_topic.aws_sns_topic.lambda_failure_feedback_role_arn
 }
-output "kms_master_key_id" {
-  description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK. For more information, see Key Terms"
-  value       = aws_sns_topic.aws_sns_topic.kms_master_key_id
-}
-output "owner" {
-  description = "The AWS Account ID of the SNS topic owner"
-  value       = aws_sns_topic.aws_sns_topic.owner
-}
-output "sqs_success_feedback_sample_rate" {
+output "lambda_success_feedback_sample_rate" {
   description = "(Optional) Percentage of success to sample"
-  value       = aws_sns_topic.aws_sns_topic.sqs_success_feedback_sample_rate
+  value       = aws_sns_topic.aws_sns_topic.lambda_success_feedback_sample_rate
+}
+output "sqs_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
+  value       = aws_sns_topic.aws_sns_topic.sqs_failure_feedback_role_arn
 }
 output "application_success_feedback_sample_rate" {
   description = "(Optional) Percentage of success to sample"
   value       = aws_sns_topic.aws_sns_topic.application_success_feedback_sample_rate
 }
-output "arn" {
-  description = "The ARN of the SNS topic, as a more obvious property (clone of id)"
-  value       = aws_sns_topic.aws_sns_topic.arn
+output "policy" {
+  description = "(Optional) The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
+  value       = aws_sns_topic.aws_sns_topic.policy
+}
+output "application_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  value       = aws_sns_topic.aws_sns_topic.application_success_feedback_role_arn
+}
+output "delivery_policy" {
+  description = "(Optional) The SNS delivery policy. More on AWS documentation"
+  value       = aws_sns_topic.aws_sns_topic.delivery_policy
+}
+output "name" {
+  description = "(Optional) The name of the topic. Topic names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 256 characters long. For a FIFO (first-in-first-out) topic, the name must end with the .fifo suffix. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix"
+  value       = aws_sns_topic.aws_sns_topic.name
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sns_topic.aws_sns_topic.tags
+}
+output "application_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
+  value       = aws_sns_topic.aws_sns_topic.application_failure_feedback_role_arn
 }
 output "content_based_deduplication" {
   description = "(Optional) Enables content-based deduplication for FIFO topics. For more information, see the related documentation"
   value       = aws_sns_topic.aws_sns_topic.content_based_deduplication
+}
+output "firehose_failure_feedback_role_arn" {
+  description = "(Optional) IAM role for failure feedback"
+  value       = aws_sns_topic.aws_sns_topic.firehose_failure_feedback_role_arn
+}
+output "arn" {
+  description = "The ARN of the SNS topic, as a more obvious property (clone of id)"
+  value       = aws_sns_topic.aws_sns_topic.arn
+}
+output "firehose_success_feedback_sample_rate" {
+  description = "(Optional) Percentage of success to sample"
+  value       = aws_sns_topic.aws_sns_topic.firehose_success_feedback_sample_rate
+}
+output "lambda_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  value       = aws_sns_topic.aws_sns_topic.lambda_success_feedback_role_arn
+}
+output "name_prefix" {
+  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name"
+  value       = aws_sns_topic.aws_sns_topic.name_prefix
+}
+output "sqs_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  value       = aws_sns_topic.aws_sns_topic.sqs_success_feedback_role_arn
+}
+output "http_success_feedback_role_arn" {
+  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
+  value       = aws_sns_topic.aws_sns_topic.http_success_feedback_role_arn
 }
 output "fifo_topic" {
   description = "(Optional) Boolean indicating whether or not to create a FIFO (first-in-first-out) topic (default is false)."
@@ -335,61 +367,29 @@ output "http_failure_feedback_role_arn" {
   description = "(Optional) IAM role for failure feedback"
   value       = aws_sns_topic.aws_sns_topic.http_failure_feedback_role_arn
 }
-output "lambda_success_feedback_sample_rate" {
-  description = "(Optional) Percentage of success to sample"
-  value       = aws_sns_topic.aws_sns_topic.lambda_success_feedback_sample_rate
-}
-output "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name"
-  value       = aws_sns_topic.aws_sns_topic.name_prefix
-}
-output "firehose_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
-  value       = aws_sns_topic.aws_sns_topic.firehose_success_feedback_role_arn
-}
-output "firehose_success_feedback_sample_rate" {
-  description = "(Optional) Percentage of success to sample"
-  value       = aws_sns_topic.aws_sns_topic.firehose_success_feedback_sample_rate
-}
-output "sqs_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
-  value       = aws_sns_topic.aws_sns_topic.sqs_success_feedback_role_arn
-}
-output "sqs_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  value       = aws_sns_topic.aws_sns_topic.sqs_failure_feedback_role_arn
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sns_topic.aws_sns_topic.tags
-}
-output "delivery_policy" {
-  description = "(Optional) The SNS delivery policy. More on AWS documentation"
-  value       = aws_sns_topic.aws_sns_topic.delivery_policy
-}
-output "lambda_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  value       = aws_sns_topic.aws_sns_topic.lambda_failure_feedback_role_arn
-}
 output "http_success_feedback_sample_rate" {
   description = "(Optional) Percentage of success to sample"
   value       = aws_sns_topic.aws_sns_topic.http_success_feedback_sample_rate
 }
+output "owner" {
+  description = "The AWS Account ID of the SNS topic owner"
+  value       = aws_sns_topic.aws_sns_topic.owner
+}
+output "display_name" {
+  description = "(Optional) The display name for the topic"
+  value       = aws_sns_topic.aws_sns_topic.display_name
+}
+output "kms_master_key_id" {
+  description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK. For more information, see Key Terms"
+  value       = aws_sns_topic.aws_sns_topic.kms_master_key_id
+}
+output "sqs_success_feedback_sample_rate" {
+  description = "(Optional) Percentage of success to sample"
+  value       = aws_sns_topic.aws_sns_topic.sqs_success_feedback_sample_rate
+}
 output "id" {
   description = "The ARN of the SNS topic"
   value       = aws_sns_topic.aws_sns_topic.id
-}
-output "lambda_success_feedback_role_arn" {
-  description = "(Optional) The IAM role permitted to receive success feedback for this topic"
-  value       = aws_sns_topic.aws_sns_topic.lambda_success_feedback_role_arn
-}
-output "policy" {
-  description = "(Optional) The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
-  value       = aws_sns_topic.aws_sns_topic.policy
-}
-output "application_failure_feedback_role_arn" {
-  description = "(Optional) IAM role for failure feedback"
-  value       = aws_sns_topic.aws_sns_topic.application_failure_feedback_role_arn
 }
 output "arn" {
   description = "The ARN of the SNS topic, as a more obvious property (clone of id)"

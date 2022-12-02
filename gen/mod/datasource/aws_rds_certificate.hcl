@@ -1,5 +1,4 @@
 datasource "aws_rds_certificate" "aws_rds_certificate" {
-  arn                          = var.arn
   certificate_type             = var.certificate_type
   customer_override            = var.customer_override
   customer_override_valid_till = var.customer_override_valid_till
@@ -7,9 +6,18 @@ datasource "aws_rds_certificate" "aws_rds_certificate" {
   latest_valid_till            = var.latest_valid_till
   thumbprint                   = var.thumbprint
   valid_from                   = var.valid_from
+  arn                          = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "certificate_type" {
+  description = "Type of certificate. For example, CA."
+  type        = string
+}
+variable "customer_override" {
+  description = "Boolean whether there is an override for the default certificate identifier."
   type        = string
 }
 variable "customer_override_valid_till" {
@@ -36,14 +44,6 @@ variable "valid_from" {
 }
 variable "arn" {
   description = "ARN of the certificate."
-  type        = string
-}
-variable "certificate_type" {
-  description = "Type of certificate. For example, CA."
-  type        = string
-}
-variable "customer_override" {
-  description = "Boolean whether there is an override for the default certificate identifier."
   type        = string
 }
 output "id" {

@@ -1,11 +1,15 @@
 resource "aws_opsworks_user_profile" "aws_opsworks_user_profile" {
-  ssh_public_key        = var.ssh_public_key
   ssh_username          = var.ssh_username
   user_arn              = var.user_arn
   allow_self_management = var.allow_self_management
+  ssh_public_key        = var.ssh_public_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "user_arn" {
+  description = "(Required) The user's IAM ARN"
   type        = string
 }
 variable "allow_self_management" {
@@ -20,10 +24,6 @@ variable "ssh_public_key" {
 }
 variable "ssh_username" {
   description = "(Required) The ssh username, with witch this user wants to log in"
-  type        = string
-}
-variable "user_arn" {
-  description = "(Required) The user's IAM ARN"
   type        = string
 }
 variable "tag_instance_id" {
@@ -146,10 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "user_arn" {
-  description = "(Required) The user's IAM ARN"
-  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.user_arn
-}
 output "allow_self_management" {
   description = "(Optional) Whether users can specify their own SSH public key through the My Settings page"
   value       = aws_opsworks_user_profile.aws_opsworks_user_profile.allow_self_management
@@ -161,6 +157,10 @@ output "ssh_public_key" {
 output "ssh_username" {
   description = "(Required) The ssh username, with witch this user wants to log in"
   value       = aws_opsworks_user_profile.aws_opsworks_user_profile.ssh_username
+}
+output "user_arn" {
+  description = "(Required) The user's IAM ARN"
+  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.user_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

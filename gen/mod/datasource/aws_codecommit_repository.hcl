@@ -1,15 +1,11 @@
 datasource "aws_codecommit_repository" "aws_codecommit_repository" {
+  clone_url_http  = var.clone_url_http
   repository_id   = var.repository_id
   repository_name = var.repository_name
   arn             = var.arn
-  clone_url_http  = var.clone_url_http
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "repository_name" {
-  description = "(Required) Name for the repository. This needs to be less than 100 characters.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -24,6 +20,14 @@ variable "repository_id" {
   description = "ID of the repository"
   type        = string
 }
+variable "repository_name" {
+  description = "(Required) Name for the repository. This needs to be less than 100 characters.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+output "repository_name" {
+  description = "(Required) Name for the repository. This needs to be less than 100 characters.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codecommit_repository.aws_codecommit_repository.repository_name
+}
 output "arn" {
   description = "ARN of the repository"
   value       = aws_codecommit_repository.aws_codecommit_repository.arn
@@ -35,10 +39,6 @@ output "clone_url_http" {
 output "repository_id" {
   description = "ID of the repository"
   value       = aws_codecommit_repository.aws_codecommit_repository.repository_id
-}
-output "repository_name" {
-  description = "(Required) Name for the repository. This needs to be less than 100 characters.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codecommit_repository.aws_codecommit_repository.repository_name
 }
 output "arn" {
   description = "ARN of the repository"

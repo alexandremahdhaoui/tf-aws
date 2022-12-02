@@ -160,6 +160,14 @@ output "path" {
   description = "The path of the group in IAM."
   value       = aws_iam_group.aws_iam_group.path
 }
+output "unique_id" {
+  description = "The unique ID assigned by AWS."
+  value       = aws_iam_group.aws_iam_group.unique_id
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this group."
+  value       = aws_iam_group.aws_iam_group.arn
+}
 output "id" {
   description = "The group's ID."
   value       = aws_iam_group.aws_iam_group.id
@@ -171,14 +179,6 @@ output "name" {
 output "path" {
   description = "The path of the group in IAM."
   value       = aws_iam_group.aws_iam_group.path
-}
-output "unique_id" {
-  description = "The unique ID assigned by AWS."
-  value       = aws_iam_group.aws_iam_group.unique_id
-}
-output "arn" {
-  description = "The ARN assigned by AWS for this group."
-  value       = aws_iam_group.aws_iam_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

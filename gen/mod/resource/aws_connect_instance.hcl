@@ -1,39 +1,22 @@
 resource "aws_connect_instance" "aws_connect_instance" {
-  arn                              = var.arn
-  auto_resolve_best_voices_enabled = var.auto_resolve_best_voices_enabled
-  contact_flow_logs_enabled        = var.contact_flow_logs_enabled
   outbound_calls_enabled           = var.outbound_calls_enabled
-  contact_lens_enabled             = var.contact_lens_enabled
-  create                           = var.create
-  early_media_enabled              = var.early_media_enabled
-  inbound_calls_enabled            = var.inbound_calls_enabled
-  created_time                     = var.created_time
+  arn                              = var.arn
   id                               = var.id
+  identity_management_type         = var.identity_management_type
+  directory_id                     = var.directory_id
+  inbound_calls_enabled            = var.inbound_calls_enabled
   instance_alias                   = var.instance_alias
   service_role                     = var.service_role
-  directory_id                     = var.directory_id
-  identity_management_type         = var.identity_management_type
+  contact_lens_enabled             = var.contact_lens_enabled
+  create                           = var.create
+  created_time                     = var.created_time
   status                           = var.status
+  auto_resolve_best_voices_enabled = var.auto_resolve_best_voices_enabled
+  contact_flow_logs_enabled        = var.contact_flow_logs_enabled
+  early_media_enabled              = var.early_media_enabled
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "directory_id" {
-  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
-  type        = string
-  default     = ""
-}
-variable "identity_management_type" {
-  description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
-  type        = string
-}
-variable "status" {
-  description = "The state of the instance.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the instance."
   type        = string
 }
 variable "auto_resolve_best_voices_enabled" {
@@ -46,9 +29,44 @@ variable "contact_flow_logs_enabled" {
   type        = string
   default     = ""
 }
+variable "early_media_enabled" {
+  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "The state of the instance.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the instance."
+  type        = string
+}
+variable "id" {
+  description = "The identifier of the instance."
+  type        = string
+}
+variable "identity_management_type" {
+  description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
+  type        = string
+}
 variable "outbound_calls_enabled" {
   description = "(Required) Specifies whether outbound calls are enabled. raw HTML omitted In addition to all arguments above, the following attributes are exported:"
   type        = string
+}
+variable "directory_id" {
+  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
+  type        = string
+  default     = ""
+}
+variable "inbound_calls_enabled" {
+  description = "(Required) Specifies whether inbound calls are enabled."
+  type        = string
+}
+variable "instance_alias" {
+  description = "(Optional) Specifies the name of the instance. Required if directory_id not specified."
+  type        = string
+  default     = ""
 }
 variable "contact_lens_enabled" {
   description = "(Optional) Specifies whether contact lens is enabled. Defaults to true."
@@ -59,27 +77,9 @@ variable "create" {
   description = "(Default 5m)"
   type        = string
 }
-variable "early_media_enabled" {
-  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
-  type        = string
-  default     = ""
-}
-variable "inbound_calls_enabled" {
-  description = "(Required) Specifies whether inbound calls are enabled."
-  type        = string
-}
 variable "created_time" {
   description = "When the instance was created."
   type        = string
-}
-variable "id" {
-  description = "The identifier of the instance."
-  type        = string
-}
-variable "instance_alias" {
-  description = "(Optional) Specifies the name of the instance. Required if directory_id not specified."
-  type        = string
-  default     = ""
 }
 variable "service_role" {
   description = "The service role of the instance."
@@ -205,42 +205,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "service_role" {
-  description = "The service role of the instance."
-  value       = aws_connect_instance.aws_connect_instance.service_role
-}
-output "created_time" {
-  description = "When the instance was created."
-  value       = aws_connect_instance.aws_connect_instance.created_time
-}
-output "id" {
-  description = "The identifier of the instance."
-  value       = aws_connect_instance.aws_connect_instance.id
-}
-output "instance_alias" {
-  description = "(Optional) Specifies the name of the instance. Required if directory_id not specified."
-  value       = aws_connect_instance.aws_connect_instance.instance_alias
-}
-output "directory_id" {
-  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
-  value       = aws_connect_instance.aws_connect_instance.directory_id
-}
-output "identity_management_type" {
-  description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
-  value       = aws_connect_instance.aws_connect_instance.identity_management_type
-}
-output "status" {
-  description = "The state of the instance.TimeoutsConfiguration options:"
-  value       = aws_connect_instance.aws_connect_instance.status
-}
-output "outbound_calls_enabled" {
-  description = "(Required) Specifies whether outbound calls are enabled. raw HTML omitted In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_instance.aws_connect_instance.outbound_calls_enabled
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the instance."
-  value       = aws_connect_instance.aws_connect_instance.arn
-}
 output "auto_resolve_best_voices_enabled" {
   description = "(Optional) Specifies whether auto resolve best voices is enabled. Defaults to true."
   value       = aws_connect_instance.aws_connect_instance.auto_resolve_best_voices_enabled
@@ -249,9 +213,41 @@ output "contact_flow_logs_enabled" {
   description = "(Optional) Specifies whether contact flow logs are enabled. Defaults to false."
   value       = aws_connect_instance.aws_connect_instance.contact_flow_logs_enabled
 }
+output "early_media_enabled" {
+  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
+  value       = aws_connect_instance.aws_connect_instance.early_media_enabled
+}
+output "status" {
+  description = "The state of the instance.TimeoutsConfiguration options:"
+  value       = aws_connect_instance.aws_connect_instance.status
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the instance."
+  value       = aws_connect_instance.aws_connect_instance.arn
+}
+output "id" {
+  description = "The identifier of the instance."
+  value       = aws_connect_instance.aws_connect_instance.id
+}
+output "identity_management_type" {
+  description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
+  value       = aws_connect_instance.aws_connect_instance.identity_management_type
+}
+output "outbound_calls_enabled" {
+  description = "(Required) Specifies whether outbound calls are enabled. raw HTML omitted In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_instance.aws_connect_instance.outbound_calls_enabled
+}
+output "directory_id" {
+  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
+  value       = aws_connect_instance.aws_connect_instance.directory_id
+}
 output "inbound_calls_enabled" {
   description = "(Required) Specifies whether inbound calls are enabled."
   value       = aws_connect_instance.aws_connect_instance.inbound_calls_enabled
+}
+output "instance_alias" {
+  description = "(Optional) Specifies the name of the instance. Required if directory_id not specified."
+  value       = aws_connect_instance.aws_connect_instance.instance_alias
 }
 output "contact_lens_enabled" {
   description = "(Optional) Specifies whether contact lens is enabled. Defaults to true."
@@ -261,9 +257,17 @@ output "create" {
   description = "(Default 5m)"
   value       = aws_connect_instance.aws_connect_instance.create
 }
-output "early_media_enabled" {
-  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
-  value       = aws_connect_instance.aws_connect_instance.early_media_enabled
+output "created_time" {
+  description = "When the instance was created."
+  value       = aws_connect_instance.aws_connect_instance.created_time
+}
+output "service_role" {
+  description = "The service role of the instance."
+  value       = aws_connect_instance.aws_connect_instance.service_role
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the instance."
+  value       = aws_connect_instance.aws_connect_instance.arn
 }
 output "create" {
   description = "(Default 5m)"
@@ -288,10 +292,6 @@ output "service_role" {
 output "status" {
   description = "The state of the instance.TimeoutsConfiguration options:"
   value       = aws_connect_instance.aws_connect_instance.status
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the instance."
-  value       = aws_connect_instance.aws_connect_instance.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

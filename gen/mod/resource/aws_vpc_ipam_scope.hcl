@@ -1,12 +1,20 @@
 resource "aws_vpc_ipam_scope" "aws_vpc_ipam_scope" {
-  description = var.description
   id          = var.id
   ipam_arn    = var.ipam_arn
   ipam_id     = var.ipam_id
   is_default  = var.is_default
+  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "ipam_id" {
+  description = "The ID of the IPAM for which you're creating this scope."
+  type        = string
+}
+variable "is_default" {
+  description = "Defines if the scope is the default scope or not."
   type        = string
 }
 variable "description" {
@@ -20,14 +28,6 @@ variable "id" {
 }
 variable "ipam_arn" {
   description = "The ARN of the IPAM for which you're creating this scope."
-  type        = string
-}
-variable "ipam_id" {
-  description = "The ID of the IPAM for which you're creating this scope."
-  type        = string
-}
-variable "is_default" {
-  description = "Defines if the scope is the default scope or not."
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,6 +150,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The ID of the IPAM Scope."
+  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
+}
+output "ipam_arn" {
+  description = "The ARN of the IPAM for which you're creating this scope."
+  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_arn
+}
 output "ipam_id" {
   description = "The ID of the IPAM for which you're creating this scope."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_id
@@ -162,18 +170,6 @@ output "description" {
   description = "(Optional) A description for the scope you're creating.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.description
 }
-output "id" {
-  description = "The ID of the IPAM Scope."
-  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
-}
-output "ipam_arn" {
-  description = "The ARN of the IPAM for which you're creating this scope."
-  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_arn
-}
-output "id" {
-  description = "The ID of the IPAM Scope."
-  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
-}
 output "ipam_arn" {
   description = "The ARN of the IPAM for which you're creating this scope."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_arn
@@ -185,6 +181,10 @@ output "is_default" {
 output "pool_count" {
   description = "Count of pools under this scope"
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.pool_count
+}
+output "id" {
+  description = "The ID of the IPAM Scope."
+  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

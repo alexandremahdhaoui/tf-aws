@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "certificate_validation_records" {
-  description = "A set of certificate CNAME records used for this domain name. See Certificate Validation Records below for more details."
-  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.certificate_validation_records
-}
 output "dns_target" {
   description = "App Runner subdomain of the App Runner service. The custom domain name is mapped to this target name. Attribute only available if resource created (not imported) with Terraform.Certificate Validation RecordsThe configuration block consists of the following arguments:"
   value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.dns_target
@@ -151,6 +147,10 @@ output "type" {
 output "value" {
   description = "Certificate CNAME record value."
   value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.value
+}
+output "certificate_validation_records" {
+  description = "A set of certificate CNAME records used for this domain name. See Certificate Validation Records below for more details."
+  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.certificate_validation_records
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -4,14 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "path" {
-  description = "Path to the policy."
-  value       = aws_iam_policy.aws_iam_policy.path
-}
-output "policy" {
-  description = "Policy document of the policy."
-  value       = aws_iam_policy.aws_iam_policy.policy
-}
 output "policy_id" {
   description = "Policy's ID."
   value       = aws_iam_policy.aws_iam_policy.policy_id
@@ -23,6 +15,14 @@ output "arn" {
 output "description" {
   description = "Description of the policy."
   value       = aws_iam_policy.aws_iam_policy.description
+}
+output "path" {
+  description = "Path to the policy."
+  value       = aws_iam_policy.aws_iam_policy.path
+}
+output "policy" {
+  description = "Policy document of the policy."
+  value       = aws_iam_policy.aws_iam_policy.policy
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

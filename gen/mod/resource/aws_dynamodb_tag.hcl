@@ -1,7 +1,7 @@
 resource "aws_dynamodb_tag" "aws_dynamodb_tag" {
-  value        = var.value
   key          = var.key
   resource_arn = var.resource_arn
+  value        = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

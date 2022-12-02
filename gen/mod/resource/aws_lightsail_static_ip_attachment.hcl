@@ -1,6 +1,6 @@
 resource "aws_lightsail_static_ip_attachment" "aws_lightsail_static_ip_attachment" {
-  static_ip_name = var.static_ip_name
   instance_name  = var.instance_name
+  static_ip_name = var.static_ip_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

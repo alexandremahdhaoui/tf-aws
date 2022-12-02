@@ -1,12 +1,20 @@
 resource "aws_ssoadmin_customer_managed_policy_attachment" "aws_ssoadmin_customer_managed_policy_attachment" {
+  permission_set_arn                = var.permission_set_arn
   customer_managed_policy_reference = var.customer_managed_policy_reference
   instance_arn                      = var.instance_arn
   name                              = var.name
   path                              = var.path
-  permission_set_arn                = var.permission_set_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "path" {
+  description = "(Optional, Forces new resource) The path to the IAM policy to be attached. The default is /. See IAM Identifiers for more information.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "permission_set_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set."
   type        = string
 }
 variable "customer_managed_policy_reference" {
@@ -19,14 +27,6 @@ variable "instance_arn" {
 }
 variable "name" {
   description = "(Required, Forces new resource) Name of the customer managed IAM Policy to be attached."
-  type        = string
-}
-variable "path" {
-  description = "(Optional, Forces new resource) The path to the IAM policy to be attached. The default is /. See IAM Identifiers for more information.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "permission_set_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set."
   type        = string
 }
 variable "tag_instance_id" {

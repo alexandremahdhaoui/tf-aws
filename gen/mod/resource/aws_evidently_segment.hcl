@@ -1,38 +1,29 @@
 resource "aws_evidently_segment" "aws_evidently_segment" {
-  id                = var.id
-  launch_count      = var.launch_count
-  name              = var.name
-  experiment_count  = var.experiment_count
-  last_updated_time = var.last_updated_time
+  created_time      = var.created_time
   pattern           = var.pattern
   tags              = var.tags
+  last_updated_time = var.last_updated_time
+  launch_count      = var.launch_count
+  name              = var.name
   arn               = var.arn
-  created_time      = var.created_time
   description       = var.description
+  experiment_count  = var.experiment_count
+  id                = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "last_updated_time" {
-  description = "The date and time that this segment was most recently updated."
+variable "launch_count" {
+  description = "The number of launches that this segment is used in. This count includes all current launches, not just those that are currently running."
   type        = string
 }
-variable "pattern" {
-  description = "(Required, Forces new resource) The pattern to use for the segment. For more information about pattern syntax, see Segment rule pattern syntax."
+variable "name" {
+  description = "(Required, Forces new resource) A name for the segment."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the segment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The ARN of the segment."
-  type        = string
-}
-variable "created_time" {
-  description = "The date and time that the segment is created."
   type        = string
 }
 variable "description" {
@@ -47,13 +38,22 @@ variable "id" {
   description = "The ID has the same value as the name of the segment."
   type        = string
 }
-variable "launch_count" {
-  description = "The number of launches that this segment is used in. This count includes all current launches, not just those that are currently running."
+variable "last_updated_time" {
+  description = "The date and time that this segment was most recently updated."
   type        = string
 }
-variable "name" {
-  description = "(Required, Forces new resource) A name for the segment."
+variable "created_time" {
+  description = "The date and time that the segment is created."
   type        = string
+}
+variable "pattern" {
+  description = "(Required, Forces new resource) The pattern to use for the segment. For more information about pattern syntax, see Segment rule pattern syntax."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the segment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -175,37 +175,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "pattern" {
-  description = "(Required, Forces new resource) The pattern to use for the segment. For more information about pattern syntax, see Segment rule pattern syntax."
-  value       = aws_evidently_segment.aws_evidently_segment.pattern
-}
-output "tags" {
-  description = "(Optional) Tags to apply to the segment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_evidently_segment.aws_evidently_segment.tags
-}
-output "arn" {
-  description = "The ARN of the segment."
-  value       = aws_evidently_segment.aws_evidently_segment.arn
-}
-output "created_time" {
-  description = "The date and time that the segment is created."
-  value       = aws_evidently_segment.aws_evidently_segment.created_time
-}
-output "description" {
-  description = "(Optional, Forces new resource) Specifies the description of the segment."
-  value       = aws_evidently_segment.aws_evidently_segment.description
-}
-output "experiment_count" {
-  description = "The number of experiments that this segment is used in. This count includes all current experiments, not just those that are currently running."
-  value       = aws_evidently_segment.aws_evidently_segment.experiment_count
-}
 output "last_updated_time" {
   description = "The date and time that this segment was most recently updated."
   value       = aws_evidently_segment.aws_evidently_segment.last_updated_time
-}
-output "id" {
-  description = "The ID has the same value as the name of the segment."
-  value       = aws_evidently_segment.aws_evidently_segment.id
 }
 output "launch_count" {
   description = "The number of launches that this segment is used in. This count includes all current launches, not just those that are currently running."
@@ -219,9 +191,9 @@ output "arn" {
   description = "The ARN of the segment."
   value       = aws_evidently_segment.aws_evidently_segment.arn
 }
-output "created_time" {
-  description = "The date and time that the segment is created."
-  value       = aws_evidently_segment.aws_evidently_segment.created_time
+output "description" {
+  description = "(Optional, Forces new resource) Specifies the description of the segment."
+  value       = aws_evidently_segment.aws_evidently_segment.description
 }
 output "experiment_count" {
   description = "The number of experiments that this segment is used in. This count includes all current experiments, not just those that are currently running."
@@ -230,6 +202,18 @@ output "experiment_count" {
 output "id" {
   description = "The ID has the same value as the name of the segment."
   value       = aws_evidently_segment.aws_evidently_segment.id
+}
+output "created_time" {
+  description = "The date and time that the segment is created."
+  value       = aws_evidently_segment.aws_evidently_segment.created_time
+}
+output "pattern" {
+  description = "(Required, Forces new resource) The pattern to use for the segment. For more information about pattern syntax, see Segment rule pattern syntax."
+  value       = aws_evidently_segment.aws_evidently_segment.pattern
+}
+output "tags" {
+  description = "(Optional) Tags to apply to the segment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_evidently_segment.aws_evidently_segment.tags
 }
 output "last_updated_time" {
   description = "The date and time that this segment was most recently updated."
@@ -242,6 +226,22 @@ output "launch_count" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_evidently_segment.aws_evidently_segment.tags_all
+}
+output "arn" {
+  description = "The ARN of the segment."
+  value       = aws_evidently_segment.aws_evidently_segment.arn
+}
+output "created_time" {
+  description = "The date and time that the segment is created."
+  value       = aws_evidently_segment.aws_evidently_segment.created_time
+}
+output "experiment_count" {
+  description = "The number of experiments that this segment is used in. This count includes all current experiments, not just those that are currently running."
+  value       = aws_evidently_segment.aws_evidently_segment.experiment_count
+}
+output "id" {
+  description = "The ID has the same value as the name of the segment."
+  value       = aws_evidently_segment.aws_evidently_segment.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

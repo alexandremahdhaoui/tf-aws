@@ -1,16 +1,12 @@
 datasource "aws_service_discovery_http_namespace" "aws_service_discovery_http_namespace" {
+  arn         = var.arn
   description = var.description
   http_name   = var.http_name
   id          = var.id
   name        = var.name
-  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the http namespace.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -27,6 +23,10 @@ variable "http_name" {
 }
 variable "id" {
   description = "ID of a namespace."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the http namespace.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 output "arn" {
@@ -49,6 +49,10 @@ output "name" {
   description = "(Required) Name of the http namespace.In addition to all arguments above, the following attributes are exported:"
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.name
 }
+output "id" {
+  description = "ID of a namespace."
+  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.id
+}
 output "arn" {
   description = "ARN that Amazon Route 53 assigns to the namespace when you create it."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.arn
@@ -60,10 +64,6 @@ output "description" {
 output "http_name" {
   description = "Name of an HTTP namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.http_name
-}
-output "id" {
-  description = "ID of a namespace."
-  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,5 +1,4 @@
 resource "aws_lightsail_certificate" "aws_lightsail_certificate" {
-  created_at                = var.created_at
   domain_name               = var.domain_name
   domain_validation_options = var.domain_validation_options
   id                        = var.id
@@ -7,13 +6,10 @@ resource "aws_lightsail_certificate" "aws_lightsail_certificate" {
   subject_alternative_names = var.subject_alternative_names
   tags                      = var.tags
   arn                       = var.arn
+  created_at                = var.created_at
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "domain_name" {
-  description = "(Required) A domain name for which the certificate should be issued."
   type        = string
 }
 variable "domain_validation_options" {
@@ -44,6 +40,10 @@ variable "arn" {
 }
 variable "created_at" {
   description = "The timestamp when the instance was created."
+  type        = string
+}
+variable "domain_name" {
+  description = "(Required) A domain name for which the certificate should be issued."
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,18 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the lightsail certificate."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
-}
-output "created_at" {
-  description = "The timestamp when the instance was created."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
-}
-output "domain_name" {
-  description = "(Required) A domain name for which the certificate should be issued."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_name
-}
 output "domain_validation_options" {
   description = "Set of domain validation objects which can be used to complete certificate validation. Can have more than one element, e.g., if SANs are defined."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_validation_options
@@ -198,6 +186,22 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_certificate.aws_lightsail_certificate.tags
 }
+output "arn" {
+  description = "The ARN of the lightsail certificate."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
+}
+output "created_at" {
+  description = "The timestamp when the instance was created."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
+}
+output "domain_name" {
+  description = "(Required) A domain name for which the certificate should be issued."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_name
+}
+output "arn" {
+  description = "The ARN of the lightsail certificate."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
+}
 output "created_at" {
   description = "The timestamp when the instance was created."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
@@ -213,10 +217,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.tags_all
-}
-output "arn" {
-  description = "The ARN of the lightsail certificate."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

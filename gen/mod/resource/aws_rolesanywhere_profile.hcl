@@ -1,14 +1,14 @@
 resource "aws_rolesanywhere_profile" "aws_rolesanywhere_profile" {
-  name                        = var.name
-  require_instance_properties = var.require_instance_properties
-  enabled                     = var.enabled
-  managed_policy_arns         = var.managed_policy_arns
-  id                          = var.id
-  role_arns                   = var.role_arns
   session_policy              = var.session_policy
-  tags                        = var.tags
   arn                         = var.arn
   duration_seconds            = var.duration_seconds
+  id                          = var.id
+  role_arns                   = var.role_arns
+  tags                        = var.tags
+  enabled                     = var.enabled
+  managed_policy_arns         = var.managed_policy_arns
+  name                        = var.name
+  require_instance_properties = var.require_instance_properties
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -36,11 +36,6 @@ variable "session_policy" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "enabled" {
   description = "(Optional) Whether or not the Profile is enabled."
   type        = string
@@ -57,6 +52,11 @@ variable "name" {
 }
 variable "require_instance_properties" {
   description = "(Optional) Specifies whether instance properties are required in CreateSession requests with this profile."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -180,14 +180,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "enabled" {
-  description = "(Optional) Whether or not the Profile is enabled."
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.enabled
-}
-output "managed_policy_arns" {
-  description = "(Optional) A list of managed policy ARNs that apply to the vended session credentials."
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.managed_policy_arns
-}
 output "name" {
   description = "(Required) The name of the Profile."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.name
@@ -196,13 +188,17 @@ output "require_instance_properties" {
   description = "(Optional) Specifies whether instance properties are required in CreateSession requests with this profile."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.require_instance_properties
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Profile"
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.arn
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.tags
 }
-output "duration_seconds" {
-  description = "(Optional) The number of seconds the vended session credentials are valid for. Defaults to 3600."
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.duration_seconds
+output "enabled" {
+  description = "(Optional) Whether or not the Profile is enabled."
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.enabled
+}
+output "managed_policy_arns" {
+  description = "(Optional) A list of managed policy ARNs that apply to the vended session credentials."
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.managed_policy_arns
 }
 output "id" {
   description = "The Profile ID."
@@ -216,9 +212,13 @@ output "session_policy" {
   description = "(Optional) A session policy that applies to the trust boundary of the vended session credentials."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.session_policy
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.tags
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Profile"
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.arn
+}
+output "duration_seconds" {
+  description = "(Optional) The number of seconds the vended session credentials are valid for. Defaults to 3600."
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.duration_seconds
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Profile"

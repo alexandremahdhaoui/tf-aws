@@ -1,9 +1,9 @@
 resource "aws_servicecatalog_budget_resource_association" "aws_servicecatalog_budget_resource_association" {
-  budget_name = var.budget_name
-  create      = var.create
   id          = var.id
   read        = var.read
   resource_id = var.resource_id
+  budget_name = var.budget_name
+  create      = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -149,10 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resource_id" {
-  description = "(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.resource_id
-}
 output "budget_name" {
   description = "(Required) Budget name."
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.budget_name
@@ -169,9 +165,9 @@ output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
 }
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
+output "resource_id" {
+  description = "(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.resource_id
 }
 output "create" {
   description = "(Default 3m)"
@@ -184,6 +180,10 @@ output "delete" {
 output "id" {
   description = "Identifier of the association.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

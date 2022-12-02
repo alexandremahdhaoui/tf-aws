@@ -1,28 +1,15 @@
 resource "aws_accessanalyzer_archive_rule" "aws_accessanalyzer_archive_rule" {
-  criteria      = var.criteria
-  eq            = var.eq
-  exists        = var.exists
-  filter        = var.filter
   neq           = var.neq
   rule_name     = var.rule_name
   analyzer_name = var.analyzer_name
   contains      = var.contains
+  criteria      = var.criteria
+  eq            = var.eq
+  exists        = var.exists
+  filter        = var.filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "analyzer_name" {
-  description = "(Required) Analyzer name."
-  type        = string
-}
-variable "contains" {
-  description = "(Optional) Contains comparator."
-  type        = string
-  default     = ""
-}
-variable "criteria" {
-  description = "(Required) Filter criteria."
   type        = string
 }
 variable "eq" {
@@ -46,6 +33,19 @@ variable "neq" {
 }
 variable "rule_name" {
   description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
+  type        = string
+}
+variable "analyzer_name" {
+  description = "(Required) Analyzer name."
+  type        = string
+}
+variable "contains" {
+  description = "(Optional) Contains comparator."
+  type        = string
+  default     = ""
+}
+variable "criteria" {
+  description = "(Required) Filter criteria."
   type        = string
 }
 variable "tag_instance_id" {
@@ -168,22 +168,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "rule_name" {
-  description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.rule_name
-}
-output "analyzer_name" {
-  description = "(Required) Analyzer name."
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.analyzer_name
-}
-output "contains" {
-  description = "(Optional) Contains comparator."
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.contains
-}
-output "criteria" {
-  description = "(Required) Filter criteria."
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.criteria
-}
 output "eq" {
   description = "(Optional) Equals comparator."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.eq
@@ -199,6 +183,22 @@ output "filter" {
 output "neq" {
   description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.neq
+}
+output "rule_name" {
+  description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.rule_name
+}
+output "analyzer_name" {
+  description = "(Required) Analyzer name."
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.analyzer_name
+}
+output "contains" {
+  description = "(Optional) Contains comparator."
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.contains
+}
+output "criteria" {
+  description = "(Required) Filter criteria."
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.criteria
 }
 output "id" {
   description = "Resource ID in the format: analyzer_name/rule_name."

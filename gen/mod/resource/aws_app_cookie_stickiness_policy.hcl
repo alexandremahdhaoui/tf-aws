@@ -9,6 +9,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "id" {
+  description = "ID of the policy."
+  type        = string
+}
+variable "lb_port" {
+  description = "Load balancer port to which the policy is applied."
+  type        = string
+}
 variable "load_balancer" {
   description = "Name of load balancer to which the policy is attached."
   type        = string
@@ -19,14 +27,6 @@ variable "name" {
 }
 variable "cookie_name" {
   description = "(Required) Application cookie whose lifetime the ELB's cookie should follow.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "ID of the policy."
-  type        = string
-}
-variable "lb_port" {
-  description = "Load balancer port to which the policy is applied."
   type        = string
 }
 variable "tag_instance_id" {

@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of this auto scaling configuration version."
-  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.arn
-}
 output "auto_scaling_configuration_revision" {
   description = "The revision of this auto scaling configuration."
   value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.auto_scaling_configuration_revision
@@ -143,6 +139,10 @@ output "status" {
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.tags_all
+}
+output "arn" {
+  description = "ARN of this auto scaling configuration version."
+  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,22 +1,14 @@
 resource "aws_organizations_organizational_unit" "aws_organizations_organizational_unit" {
+  arn       = var.arn
   email     = var.email
   id        = var.id
   name      = var.name
   parent_id = var.parent_id
   tags      = var.tags
   accounts  = var.accounts
-  arn       = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "accounts" {
-  description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the organizational unit"
   type        = string
 }
 variable "email" {
@@ -39,6 +31,14 @@ variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "accounts" {
+  description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the organizational unit"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -160,18 +160,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Identifier of the organization unit"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.id
-}
-output "name" {
-  description = "Name of the account"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.name
-}
-output "parent_id" {
-  description = "ID of the parent organizational unit, which may be the root"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.parent_id
-}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.tags
@@ -196,9 +184,9 @@ output "name" {
   description = "Name of the account"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.name
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.tags_all
+output "parent_id" {
+  description = "ID of the parent organizational unit, which may be the root"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.parent_id
 }
 output "accounts" {
   description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
@@ -211,6 +199,18 @@ output "arn" {
 output "email" {
   description = "Email of the account"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.email
+}
+output "id" {
+  description = "Identifier of the organization unit"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.id
+}
+output "name" {
+  description = "Name of the account"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.name
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,12 +1,16 @@
 resource "aws_waf_ipset" "aws_waf_ipset" {
-  value              = var.value
   id                 = var.id
   ip_set_descriptors = var.ip_set_descriptors
   name               = var.name
   type               = var.type
+  value              = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "value" {
+  description = "(Required) An IPv4 or IPv6 address specified via CIDR notationE.g., 192.0.2.44/32 or 1111:0000:0000:0000:0000:0000:0000:0000/64In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "id" {
@@ -24,10 +28,6 @@ variable "name" {
 }
 variable "type" {
   description = "(Required) Type of the IP address - IPV4 or IPV6."
-  type        = string
-}
-variable "value" {
-  description = "(Required) An IPv4 or IPv6 address specified via CIDR notationE.g., 192.0.2.44/32 or 1111:0000:0000:0000:0000:0000:0000:0000/64In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

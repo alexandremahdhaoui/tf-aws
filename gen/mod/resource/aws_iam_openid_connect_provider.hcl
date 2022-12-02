@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "thumbprint_list" {
-  description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
-  type        = string
-}
-variable "url" {
-  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
-  type        = string
-}
 variable "arn" {
   description = "The ARN assigned by AWS for this provider."
   type        = string
@@ -29,6 +21,14 @@ variable "tags" {
   description = "(Optional) Map of resource tags for the IAM OIDC provider. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "thumbprint_list" {
+  description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
+  type        = string
+}
+variable "url" {
+  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -150,6 +150,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "thumbprint_list" {
+  description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
+  value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.thumbprint_list
+}
+output "url" {
+  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
+  value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.url
+}
 output "arn" {
   description = "The ARN assigned by AWS for this provider."
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.arn
@@ -161,14 +169,6 @@ output "client_id_list" {
 output "tags" {
   description = "(Optional) Map of resource tags for the IAM OIDC provider. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.tags
-}
-output "thumbprint_list" {
-  description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
-  value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.thumbprint_list
-}
-output "url" {
-  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
-  value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.url
 }
 output "arn" {
   description = "The ARN assigned by AWS for this provider."

@@ -1,17 +1,13 @@
 resource "aws_dx_hosted_public_virtual_interface_accepter" "aws_dx_hosted_public_virtual_interface_accepter" {
-  arn                  = var.arn
-  create               = var.create
-  id                   = var.id
   tags                 = var.tags
   tags_all             = var.tags_all
   virtual_interface_id = var.virtual_interface_id
+  arn                  = var.arn
+  create               = var.create
+  id                   = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "virtual_interface_id" {
-  description = "(Required) The ID of the Direct Connect virtual interface to accept."
   type        = string
 }
 variable "arn" {
@@ -33,6 +29,10 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "virtual_interface_id" {
+  description = "(Required) The ID of the Direct Connect virtual interface to accept."
   type        = string
 }
 variable "tag_instance_id" {
@@ -155,6 +155,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The ARN of the virtual interface."
+  value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.create
+}
 output "id" {
   description = "The ID of the virtual interface."
   value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.id
@@ -170,10 +178,6 @@ output "tags_all" {
 output "virtual_interface_id" {
   description = "(Required) The ID of the Direct Connect virtual interface to accept."
   value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.virtual_interface_id
-}
-output "arn" {
-  description = "The ARN of the virtual interface."
-  value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.arn
 }
 output "create" {
   description = "(Default 10m)"
@@ -194,10 +198,6 @@ output "tags_all" {
 output "arn" {
   description = "The ARN of the virtual interface."
   value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.arn
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_public_virtual_interface_accepter.aws_dx_hosted_public_virtual_interface_accepter.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

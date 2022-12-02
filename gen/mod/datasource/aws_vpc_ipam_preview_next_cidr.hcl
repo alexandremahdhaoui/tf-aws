@@ -1,9 +1,9 @@
 datasource "aws_vpc_ipam_preview_next_cidr" "aws_vpc_ipam_preview_next_cidr" {
-  cidr             = var.cidr
-  disallowed_cidrs = var.disallowed_cidrs
   id               = var.id
   ipam_pool_id     = var.ipam_pool_id
   netmask_length   = var.netmask_length
+  cidr             = var.cidr
+  disallowed_cidrs = var.disallowed_cidrs
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -51,13 +51,13 @@ output "netmask_length" {
   description = "(Optional) Netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.netmask_length
 }
-output "cidr" {
-  description = "Previewed CIDR from the pool."
-  value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.cidr
-}
 output "id" {
   description = "ID of the preview.TimeoutsConfiguration options:"
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.id
+}
+output "cidr" {
+  description = "Previewed CIDR from the pool."
+  value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.cidr
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

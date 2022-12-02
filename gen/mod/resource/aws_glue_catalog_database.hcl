@@ -1,38 +1,20 @@
 resource "aws_glue_catalog_database" "aws_glue_catalog_database" {
-  parameters                      = var.parameters
-  data_lake_principal_identifier  = var.data_lake_principal_identifier
-  database_name                   = var.database_name
   location_uri                    = var.location_uri
-  name                            = var.name
-  permissions                     = var.permissions
+  parameters                      = var.parameters
+  arn                             = var.arn
+  create_table_default_permission = var.create_table_default_permission
+  data_lake_principal_identifier  = var.data_lake_principal_identifier
+  description                     = var.description
   principal                       = var.principal
   target_database                 = var.target_database
-  arn                             = var.arn
   catalog_id                      = var.catalog_id
-  create_table_default_permission = var.create_table_default_permission
-  description                     = var.description
+  database_name                   = var.database_name
+  name                            = var.name
+  permissions                     = var.permissions
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "arn" {
-  description = "ARN of the Glue Catalog Database."
-  type        = string
-}
-variable "catalog_id" {
-  description = "(Required) ID of the Data Catalog in which the database resides."
-  type        = string
-}
-variable "create_table_default_permission" {
-  description = "(Optional) Creates a set of default permissions on the table for principals. See create_table_default_permission below."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Description of the database."
-  type        = string
-  default     = ""
 }
 variable "permissions" {
   description = "(Optional) The permissions that are granted to the principal."
@@ -49,26 +31,44 @@ variable "target_database" {
   type        = string
   default     = ""
 }
-variable "data_lake_principal_identifier" {
-  description = "(Optional) An identifier for the Lake Formation principal.In addition to all arguments above, the following attributes are exported:"
+variable "catalog_id" {
+  description = "(Required) ID of the Data Catalog in which the database resides."
   type        = string
-  default     = ""
 }
 variable "database_name" {
   description = "(Required) Name of the catalog database.create_table_default_permission"
   type        = string
+}
+variable "name" {
+  description = "(Required) Name of the database. The acceptable characters are lowercase letters, numbers, and the underscore character."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the database."
+  type        = string
+  default     = ""
 }
 variable "location_uri" {
   description = "(Optional) Location of the database (for example, an HDFS path)."
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Name of the database. The acceptable characters are lowercase letters, numbers, and the underscore character."
-  type        = string
-}
 variable "parameters" {
   description = "(Optional) List of key-value pairs that define parameters and properties of the database."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the Glue Catalog Database."
+  type        = string
+}
+variable "create_table_default_permission" {
+  description = "(Optional) Creates a set of default permissions on the table for principals. See create_table_default_permission below."
+  type        = string
+  default     = ""
+}
+variable "data_lake_principal_identifier" {
+  description = "(Optional) An identifier for the Lake Formation principal.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -192,17 +192,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "catalog_id" {
-  description = "(Required) ID of the Data Catalog in which the database resides."
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.catalog_id
+output "data_lake_principal_identifier" {
+  description = "(Optional) An identifier for the Lake Formation principal.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.data_lake_principal_identifier
+}
+output "description" {
+  description = "(Optional) Description of the database."
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.description
+}
+output "location_uri" {
+  description = "(Optional) Location of the database (for example, an HDFS path)."
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.location_uri
+}
+output "parameters" {
+  description = "(Optional) List of key-value pairs that define parameters and properties of the database."
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.parameters
+}
+output "arn" {
+  description = "ARN of the Glue Catalog Database."
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.arn
 }
 output "create_table_default_permission" {
   description = "(Optional) Creates a set of default permissions on the table for principals. See create_table_default_permission below."
   value       = aws_glue_catalog_database.aws_glue_catalog_database.create_table_default_permission
 }
-output "description" {
-  description = "(Optional) Description of the database."
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.description
+output "name" {
+  description = "(Required) Name of the database. The acceptable characters are lowercase letters, numbers, and the underscore character."
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.name
 }
 output "permissions" {
   description = "(Optional) The permissions that are granted to the principal."
@@ -216,29 +232,13 @@ output "target_database" {
   description = "(Optional) Configuration block for a target database for resource linking. See target_database below.target_database"
   value       = aws_glue_catalog_database.aws_glue_catalog_database.target_database
 }
-output "arn" {
-  description = "ARN of the Glue Catalog Database."
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.arn
+output "catalog_id" {
+  description = "(Required) ID of the Data Catalog in which the database resides."
+  value       = aws_glue_catalog_database.aws_glue_catalog_database.catalog_id
 }
 output "database_name" {
   description = "(Required) Name of the catalog database.create_table_default_permission"
   value       = aws_glue_catalog_database.aws_glue_catalog_database.database_name
-}
-output "location_uri" {
-  description = "(Optional) Location of the database (for example, an HDFS path)."
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.location_uri
-}
-output "name" {
-  description = "(Required) Name of the database. The acceptable characters are lowercase letters, numbers, and the underscore character."
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.name
-}
-output "parameters" {
-  description = "(Optional) List of key-value pairs that define parameters and properties of the database."
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.parameters
-}
-output "data_lake_principal_identifier" {
-  description = "(Optional) An identifier for the Lake Formation principal.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_catalog_database.aws_glue_catalog_database.data_lake_principal_identifier
 }
 output "arn" {
   description = "ARN of the Glue Catalog Database."

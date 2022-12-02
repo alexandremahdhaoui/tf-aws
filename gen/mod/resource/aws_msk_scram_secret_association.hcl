@@ -1,6 +1,6 @@
 resource "aws_msk_scram_secret_association" "aws_msk_scram_secret_association" {
-  cluster_arn     = var.cluster_arn
   secret_arn_list = var.secret_arn_list
+  cluster_arn     = var.cluster_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cluster_arn" {
-  description = "(Required, Forces new resource) Amazon Resource Name (ARN) of the MSK cluster."
-  value       = aws_msk_scram_secret_association.aws_msk_scram_secret_association.cluster_arn
-}
 output "secret_arn_list" {
   description = "(Required) List of AWS Secrets Manager secret ARNs.In addition to all arguments above, the following attributes are exported:"
   value       = aws_msk_scram_secret_association.aws_msk_scram_secret_association.secret_arn_list
+}
+output "cluster_arn" {
+  description = "(Required, Forces new resource) Amazon Resource Name (ARN) of the MSK cluster."
+  value       = aws_msk_scram_secret_association.aws_msk_scram_secret_association.cluster_arn
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the MSK cluster."

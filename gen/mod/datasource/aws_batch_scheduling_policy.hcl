@@ -1,23 +1,15 @@
 datasource "aws_batch_scheduling_policy" "aws_batch_scheduling_policy" {
-  share_identifier    = var.share_identifier
-  tags                = var.tags
-  arn                 = var.arn
-  compute_reservation = var.compute_reservation
   fairshare_policy    = var.fairshare_policy
   name                = var.name
   share_delay_seconds = var.share_delay_seconds
   share_distribution  = var.share_distribution
+  share_identifier    = var.share_identifier
+  tags                = var.tags
+  arn                 = var.arn
+  compute_reservation = var.compute_reservation
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "compute_reservation" {
-  description = "Value used to reserve some of the available maximum vCPU for fair share identifiers that have not yet been used. For more information, see FairsharePolicy."
-  type        = string
-}
-variable "fairshare_policy" {
-  description = "Fairshare policy block specifies the compute_reservation, share_delay_seconds, and share_distribution of the scheduling policy. The fairshare_policy block is documented below."
   type        = string
 }
 variable "name" {
@@ -42,6 +34,14 @@ variable "tags" {
 }
 variable "arn" {
   description = "(Required) ARN of the scheduling policy.In addition to all the arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "compute_reservation" {
+  description = "Value used to reserve some of the available maximum vCPU for fair share identifiers that have not yet been used. For more information, see FairsharePolicy."
+  type        = string
+}
+variable "fairshare_policy" {
+  description = "Fairshare policy block specifies the compute_reservation, share_delay_seconds, and share_distribution of the scheduling policy. The fairshare_policy block is documented below."
   type        = string
 }
 output "name" {
@@ -76,10 +76,6 @@ output "fairshare_policy" {
   description = "Fairshare policy block specifies the compute_reservation, share_delay_seconds, and share_distribution of the scheduling policy. The fairshare_policy block is documented below."
   value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.fairshare_policy
 }
-output "compute_reservation" {
-  description = "Value used to reserve some of the available maximum vCPU for fair share identifiers that have not yet been used. For more information, see FairsharePolicy."
-  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.compute_reservation
-}
 output "fairshare_policy" {
   description = "Fairshare policy block specifies the compute_reservation, share_delay_seconds, and share_distribution of the scheduling policy. The fairshare_policy block is documented below."
   value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.fairshare_policy
@@ -103,6 +99,10 @@ output "share_identifier" {
 output "tags" {
   description = "Key-value map of resource tagsA fairshare_policy block supports the following arguments:"
   value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.tags
+}
+output "compute_reservation" {
+  description = "Value used to reserve some of the available maximum vCPU for fair share identifiers that have not yet been used. For more information, see FairsharePolicy."
+  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.compute_reservation
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

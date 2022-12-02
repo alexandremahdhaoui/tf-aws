@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "the ARN of the custom plugin."
-  type        = string
-}
 variable "description" {
   description = "a summary description of the custom plugin."
   type        = string
@@ -22,6 +18,10 @@ variable "latest_revision" {
 }
 variable "name" {
   description = "(Required) Name of the custom plugin.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "arn" {
+  description = "the ARN of the custom plugin."
   type        = string
 }
 output "arn" {

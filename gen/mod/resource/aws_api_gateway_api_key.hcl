@@ -1,17 +1,43 @@
 resource "aws_api_gateway_api_key" "aws_api_gateway_api_key" {
-  arn               = var.arn
-  name              = var.name
   id                = var.id
   last_updated_date = var.last_updated_date
-  tags              = var.tags
-  value             = var.value
-  created_date      = var.created_date
   description       = var.description
   enabled           = var.enabled
+  name              = var.name
+  tags              = var.tags
+  value             = var.value
+  arn               = var.arn
+  created_date      = var.created_date
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "value" {
+  description = "Value of the API key"
+  type        = string
+}
+variable "arn" {
+  description = "ARN"
+  type        = string
+}
+variable "created_date" {
+  description = "Creation date of the API key"
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the API key"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) API key description. Defaults to \"Managed by Terraform\"."
+  type        = string
+  default     = ""
 }
 variable "enabled" {
   description = "(Optional) Whether the API key can be used by callers. Defaults to true."
@@ -24,32 +50,6 @@ variable "id" {
 }
 variable "last_updated_date" {
   description = "Last update date of the API key"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "value" {
-  description = "Value of the API key"
-  type        = string
-}
-variable "created_date" {
-  description = "Creation date of the API key"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) API key description. Defaults to \"Managed by Terraform\"."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN"
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the API key"
   type        = string
 }
 variable "tag_instance_id" {
@@ -172,18 +172,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.tags
-}
-output "value" {
-  description = "Value of the API key"
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.value
-}
-output "created_date" {
-  description = "Creation date of the API key"
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.created_date
-}
 output "description" {
   description = "(Optional) API key description. Defaults to \"Managed by Terraform\"."
   value       = aws_api_gateway_api_key.aws_api_gateway_api_key.description
@@ -204,21 +192,21 @@ output "arn" {
   description = "ARN"
   value       = aws_api_gateway_api_key.aws_api_gateway_api_key.arn
 }
-output "name" {
-  description = "(Required) Name of the API key"
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.name
-}
 output "created_date" {
   description = "Creation date of the API key"
   value       = aws_api_gateway_api_key.aws_api_gateway_api_key.created_date
 }
-output "id" {
-  description = "ID of the API key"
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.id
+output "name" {
+  description = "(Required) Name of the API key"
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.name
 }
-output "last_updated_date" {
-  description = "Last update date of the API key"
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.last_updated_date
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.tags
+}
+output "value" {
+  description = "Value of the API key"
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.value
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -231,6 +219,18 @@ output "value" {
 output "arn" {
   description = "ARN"
   value       = aws_api_gateway_api_key.aws_api_gateway_api_key.arn
+}
+output "created_date" {
+  description = "Creation date of the API key"
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.created_date
+}
+output "id" {
+  description = "ID of the API key"
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.id
+}
+output "last_updated_date" {
+  description = "Last update date of the API key"
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.last_updated_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

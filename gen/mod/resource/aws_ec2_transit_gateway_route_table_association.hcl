@@ -1,19 +1,11 @@
 resource "aws_ec2_transit_gateway_route_table_association" "aws_ec2_transit_gateway_route_table_association" {
+  transit_gateway_route_table_id = var.transit_gateway_route_table_id
   id                             = var.id
   resource_id                    = var.resource_id
   transit_gateway_attachment_id  = var.transit_gateway_attachment_id
-  transit_gateway_route_table_id = var.transit_gateway_route_table_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "transit_gateway_attachment_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Attachment."
-  type        = string
-}
-variable "transit_gateway_route_table_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "id" {
@@ -22,6 +14,14 @@ variable "id" {
 }
 variable "resource_id" {
   description = "Identifier of the resource"
+  type        = string
+}
+variable "transit_gateway_attachment_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Attachment."
+  type        = string
+}
+variable "transit_gateway_route_table_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

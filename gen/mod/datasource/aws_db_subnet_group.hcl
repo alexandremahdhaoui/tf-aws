@@ -10,6 +10,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "description" {
+  description = "Provides the description of the DB subnet group."
+  type        = string
+}
 variable "name" {
   description = "(Required) Name of the RDS database subnet group.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -28,10 +32,6 @@ variable "supported_network_types" {
 }
 variable "arn" {
   description = "ARN for the DB subnet group."
-  type        = string
-}
-variable "description" {
-  description = "Provides the description of the DB subnet group."
   type        = string
 }
 output "arn" {
@@ -58,6 +58,10 @@ output "supported_network_types" {
   description = "The network type of the DB subnet group."
   value       = aws_db_subnet_group.aws_db_subnet_group.supported_network_types
 }
+output "arn" {
+  description = "ARN for the DB subnet group."
+  value       = aws_db_subnet_group.aws_db_subnet_group.arn
+}
 output "description" {
   description = "Provides the description of the DB subnet group."
   value       = aws_db_subnet_group.aws_db_subnet_group.description
@@ -73,10 +77,6 @@ output "subnet_ids" {
 output "supported_network_types" {
   description = "The network type of the DB subnet group."
   value       = aws_db_subnet_group.aws_db_subnet_group.supported_network_types
-}
-output "arn" {
-  description = "ARN for the DB subnet group."
-  value       = aws_db_subnet_group.aws_db_subnet_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,15 +1,28 @@
 resource "aws_lightsail_lb_certificate" "aws_lightsail_lb_certificate" {
+  arn                       = var.arn
+  created_at                = var.created_at
   domain_name               = var.domain_name
   id                        = var.id
   lb_name                   = var.lb_name
   name                      = var.name
   subject_alternative_names = var.subject_alternative_names
-  arn                       = var.arn
-  created_at                = var.created_at
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "lb_name" {
+  description = "(Required) The load balancer name where you want to create the SSL/TLS certificate."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The SSL/TLS certificate name."
+  type        = string
+}
+variable "subject_alternative_names" {
+  description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the lightsail certificate."
@@ -26,19 +39,6 @@ variable "domain_name" {
 variable "id" {
   description = "A combination of attributes to create a unique id: lb_name,name"
   type        = string
-}
-variable "lb_name" {
-  description = "(Required) The load balancer name where you want to create the SSL/TLS certificate."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The SSL/TLS certificate name."
-  type        = string
-}
-variable "subject_alternative_names" {
-  description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -160,6 +160,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "subject_alternative_names" {
+  description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.subject_alternative_names
+}
+output "arn" {
+  description = "The ARN of the lightsail certificate."
+  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.arn
+}
 output "created_at" {
   description = "The timestamp when the instance was created."
   value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.created_at
@@ -180,13 +188,13 @@ output "name" {
   description = "(Required) The SSL/TLS certificate name."
   value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.name
 }
-output "subject_alternative_names" {
-  description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.subject_alternative_names
+output "domain_validation_options" {
+  description = "Set of domain validation objects which can be used to complete certificate validation. Can have more than one element, e.g., if SANs are defined."
+  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.domain_validation_options
 }
-output "arn" {
-  description = "The ARN of the lightsail certificate."
-  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.arn
+output "id" {
+  description = "A combination of attributes to create a unique id: lb_name,name"
+  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.id
 }
 output "arn" {
   description = "The ARN of the lightsail certificate."
@@ -195,14 +203,6 @@ output "arn" {
 output "created_at" {
   description = "The timestamp when the instance was created."
   value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.created_at
-}
-output "domain_validation_options" {
-  description = "Set of domain validation objects which can be used to complete certificate validation. Can have more than one element, e.g., if SANs are defined."
-  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.domain_validation_options
-}
-output "id" {
-  description = "A combination of attributes to create a unique id: lb_name,name"
-  value       = aws_lightsail_lb_certificate.aws_lightsail_lb_certificate.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

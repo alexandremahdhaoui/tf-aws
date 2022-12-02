@@ -8,6 +8,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "value" {
+  description = "(Required) The value for the parameter.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "description" {
   description = "(Optional, ForceNew) A description of the parameter group."
   type        = string
@@ -20,10 +24,6 @@ variable "parameters" {
   description = " – (Optional) The parameters of the parameter group.parametersparameters supports the following:"
   type        = string
   default     = ""
-}
-variable "value" {
-  description = "(Required) The value for the parameter.In addition to all arguments above, the following attributes are exported:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

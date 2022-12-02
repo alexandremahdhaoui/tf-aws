@@ -1,37 +1,17 @@
 resource "aws_iam_account_password_policy" "aws_iam_account_password_policy" {
-  require_lowercase_characters   = var.require_lowercase_characters
-  require_numbers                = var.require_numbers
-  require_symbols                = var.require_symbols
   max_password_age               = var.max_password_age
   minimum_password_length        = var.minimum_password_length
-  password_reuse_prevention      = var.password_reuse_prevention
+  require_lowercase_characters   = var.require_lowercase_characters
   require_uppercase_characters   = var.require_uppercase_characters
   allow_users_to_change_password = var.allow_users_to_change_password
   hard_expiry                    = var.hard_expiry
+  password_reuse_prevention      = var.password_reuse_prevention
+  require_numbers                = var.require_numbers
+  require_symbols                = var.require_symbols
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "allow_users_to_change_password" {
-  description = "(Optional) Whether to allow users to change their own password"
-  type        = string
-  default     = ""
-}
-variable "hard_expiry" {
-  description = "(Optional) Whether users are prevented from setting a new password after their password has expired (i.e., require administrator reset)"
-  type        = string
-  default     = ""
-}
-variable "password_reuse_prevention" {
-  description = "(Optional) The number of previous passwords that users are prevented from reusing."
-  type        = string
-  default     = ""
-}
-variable "require_uppercase_characters" {
-  description = "(Optional) Whether to require uppercase characters for user passwords.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "max_password_age" {
   description = "(Optional) The number of days that an user password is valid."
@@ -45,6 +25,26 @@ variable "minimum_password_length" {
 }
 variable "require_lowercase_characters" {
   description = "(Optional) Whether to require lowercase characters for user passwords."
+  type        = string
+  default     = ""
+}
+variable "require_uppercase_characters" {
+  description = "(Optional) Whether to require uppercase characters for user passwords.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "allow_users_to_change_password" {
+  description = "(Optional) Whether to allow users to change their own password"
+  type        = string
+  default     = ""
+}
+variable "hard_expiry" {
+  description = "(Optional) Whether users are prevented from setting a new password after their password has expired (i.e., require administrator reset)"
+  type        = string
+  default     = ""
+}
+variable "password_reuse_prevention" {
+  description = "(Optional) The number of previous passwords that users are prevented from reusing."
   type        = string
   default     = ""
 }
@@ -178,6 +178,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "allow_users_to_change_password" {
+  description = "(Optional) Whether to allow users to change their own password"
+  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.allow_users_to_change_password
+}
+output "hard_expiry" {
+  description = "(Optional) Whether users are prevented from setting a new password after their password has expired (i.e., require administrator reset)"
+  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.hard_expiry
+}
+output "password_reuse_prevention" {
+  description = "(Optional) The number of previous passwords that users are prevented from reusing."
+  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.password_reuse_prevention
+}
 output "require_numbers" {
   description = "(Optional) Whether to require numbers for user passwords."
   value       = aws_iam_account_password_policy.aws_iam_account_password_policy.require_numbers
@@ -185,6 +197,10 @@ output "require_numbers" {
 output "require_symbols" {
   description = "(Optional) Whether to require symbols for user passwords."
   value       = aws_iam_account_password_policy.aws_iam_account_password_policy.require_symbols
+}
+output "require_uppercase_characters" {
+  description = "(Optional) Whether to require uppercase characters for user passwords.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.require_uppercase_characters
 }
 output "max_password_age" {
   description = "(Optional) The number of days that an user password is valid."
@@ -197,22 +213,6 @@ output "minimum_password_length" {
 output "require_lowercase_characters" {
   description = "(Optional) Whether to require lowercase characters for user passwords."
   value       = aws_iam_account_password_policy.aws_iam_account_password_policy.require_lowercase_characters
-}
-output "require_uppercase_characters" {
-  description = "(Optional) Whether to require uppercase characters for user passwords.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.require_uppercase_characters
-}
-output "allow_users_to_change_password" {
-  description = "(Optional) Whether to allow users to change their own password"
-  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.allow_users_to_change_password
-}
-output "hard_expiry" {
-  description = "(Optional) Whether users are prevented from setting a new password after their password has expired (i.e., require administrator reset)"
-  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.hard_expiry
-}
-output "password_reuse_prevention" {
-  description = "(Optional) The number of previous passwords that users are prevented from reusing."
-  value       = aws_iam_account_password_policy.aws_iam_account_password_policy.password_reuse_prevention
 }
 output "expire_passwords" {
   description = "Indicates whether passwords in the account expire. Returns true if max_password_age contains a value greater than 0. Returns false if it is 0 or emnot present."

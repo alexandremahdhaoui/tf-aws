@@ -1,8 +1,8 @@
 resource "aws_chime_voice_connector_termination_credentials" "aws_chime_voice_connector_termination_credentials" {
+  voice_connector_id = var.voice_connector_id
   credentials        = var.credentials
   password           = var.password
   username           = var.username
-  voice_connector_id = var.voice_connector_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -144,10 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "voice_connector_id" {
-  description = "(Required) Amazon Chime Voice Connector ID."
-  value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.voice_connector_id
-}
 output "credentials" {
   description = "(Required) List of termination SIP credentials.credentialsThe SIP credentials used to authenticate requests to your Amazon Chime Voice Connector."
   value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.credentials
@@ -159,6 +155,10 @@ output "password" {
 output "username" {
   description = "(Required) RFC2617 compliant username associated with the SIP credentials."
   value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.username
+}
+output "voice_connector_id" {
+  description = "(Required) Amazon Chime Voice Connector ID."
+  value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.voice_connector_id
 }
 output "id" {
   description = "Amazon Chime Voice Connector ID."

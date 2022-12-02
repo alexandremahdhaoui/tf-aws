@@ -1,63 +1,31 @@
 resource "aws_s3_bucket_website_configuration" "aws_s3_bucket_website_configuration" {
-  protocol                        = var.protocol
-  replace_key_with                = var.replace_key_with
-  suffix                          = var.suffix
-  bucket                          = var.bucket
-  host_name                       = var.host_name
-  http_redirect_code              = var.http_redirect_code
-  key                             = var.key
   routing_rules                   = var.routing_rules
   condition                       = var.condition
-  expected_bucket_owner           = var.expected_bucket_owner
-  redirect                        = var.redirect
-  routing_rule                    = var.routing_rule
-  id                              = var.id
-  redirect_all_requests_to        = var.redirect_all_requests_to
-  replace_key_prefix_with         = var.replace_key_prefix_with
-  website_domain                  = var.website_domain
-  error_document                  = var.error_document
-  http_error_code_returned_equals = var.http_error_code_returned_equals
-  index_document                  = var.index_document
   key_prefix_equals               = var.key_prefix_equals
+  redirect_all_requests_to        = var.redirect_all_requests_to
+  http_error_code_returned_equals = var.http_error_code_returned_equals
+  id                              = var.id
+  protocol                        = var.protocol
+  redirect                        = var.redirect
+  suffix                          = var.suffix
+  bucket                          = var.bucket
+  expected_bucket_owner           = var.expected_bucket_owner
+  host_name                       = var.host_name
+  key                             = var.key
+  routing_rule                    = var.routing_rule
+  website_domain                  = var.website_domain
+  replace_key_prefix_with         = var.replace_key_prefix_with
+  replace_key_with                = var.replace_key_with
+  error_document                  = var.error_document
+  http_redirect_code              = var.http_redirect_code
+  index_document                  = var.index_document
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
-  type        = string
-}
-variable "redirect_all_requests_to" {
-  description = "(Optional, Required if index_document is not specified) The redirect behavior for every request to this bucket's website endpoint detailed below. Conflicts with error_document, index_document, and routing_rule."
-  type        = string
-}
-variable "replace_key_prefix_with" {
-  description = "(Optional, Conflicts with replace_key_with) The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with key_prefix_equals set to docs/ and in the redirect set replace_key_prefix_with to /documents."
-  type        = string
-}
-variable "error_document" {
-  description = "(Optional, Conflicts with redirect_all_requests_to) The name of the error document for the website detailed below."
-  type        = string
-}
-variable "http_error_code_returned_equals" {
-  description = "(Optional, Required if key_prefix_equals is not specified) The HTTP error code when the redirect is applied. If specified with key_prefix_equals, then both must be true for the redirect to be applied."
-  type        = string
-}
-variable "index_document" {
-  description = "(Optional, Required if redirect_all_requests_to is not specified) The name of the index document for the website detailed below."
-  type        = string
-}
-variable "key_prefix_equals" {
-  description = "(Optional, Required if http_error_code_returned_equals is not specified) The object key name prefix when the redirect is applied. If specified with http_error_code_returned_equals, then both must be true for the redirect to be applied.redirectThe redirect configuration block supports the following arguments:"
-  type        = string
-}
-variable "website_domain" {
-  description = "The domain of the website endpoint. This is used to create Route 53 alias records."
-  type        = string
-}
-variable "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
+variable "expected_bucket_owner" {
+  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   type        = string
 }
 variable "host_name" {
@@ -65,13 +33,12 @@ variable "host_name" {
   type        = string
   default     = ""
 }
-variable "http_redirect_code" {
-  description = "(Optional) The HTTP redirect code to use on the response."
+variable "http_error_code_returned_equals" {
+  description = "(Optional, Required if key_prefix_equals is not specified) The HTTP error code when the redirect is applied. If specified with key_prefix_equals, then both must be true for the redirect to be applied."
   type        = string
-  default     = ""
 }
-variable "key" {
-  description = "(Required) The object key name to use when a 4XX class error occurs.index_documentThe index_document configuration block supports the following arguments:"
+variable "id" {
+  description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
   type        = string
 }
 variable "protocol" {
@@ -79,34 +46,67 @@ variable "protocol" {
   type        = string
   default     = ""
 }
-variable "replace_key_with" {
-  description = "(Optional, Conflicts with replace_key_prefix_with) The specific object key to use in the redirect request. For example, redirect request to error.html.In addition to all arguments above, the following attributes are exported:"
+variable "redirect" {
+  description = "(Required) A configuration block for redirect information detailed below.conditionThe condition configuration block supports the following arguments:"
   type        = string
 }
 variable "suffix" {
   description = "index.html and you make a request to samplebucket/images/, the data that is returned will be for the object with the key name images/index.htmlredirect_all_requests_toThe redirect_all_requests_to configuration block supports the following arguments:"
   type        = string
 }
-variable "condition" {
-  description = "(Optional) A configuration block for describing a condition that must be met for the specified redirect to apply detailed below."
-  type        = string
-  default     = ""
-}
-variable "expected_bucket_owner" {
-  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  type        = string
-}
-variable "redirect" {
-  description = "(Required) A configuration block for redirect information detailed below.conditionThe condition configuration block supports the following arguments:"
+variable "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
   type        = string
 }
 variable "routing_rule" {
   description = "(Optional, Conflicts with redirect_all_requests_to and routing_rules) List of rules that define when a redirect is applied and the redirect behavior detailed below."
   type        = string
 }
+variable "website_domain" {
+  description = "The domain of the website endpoint. This is used to create Route 53 alias records."
+  type        = string
+}
+variable "key" {
+  description = "(Required) The object key name to use when a 4XX class error occurs.index_documentThe index_document configuration block supports the following arguments:"
+  type        = string
+}
+variable "http_redirect_code" {
+  description = "(Optional) The HTTP redirect code to use on the response."
+  type        = string
+  default     = ""
+}
+variable "index_document" {
+  description = "(Optional, Required if redirect_all_requests_to is not specified) The name of the index document for the website detailed below."
+  type        = string
+}
+variable "replace_key_prefix_with" {
+  description = "(Optional, Conflicts with replace_key_with) The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with key_prefix_equals set to docs/ and in the redirect set replace_key_prefix_with to /documents."
+  type        = string
+}
+variable "replace_key_with" {
+  description = "(Optional, Conflicts with replace_key_prefix_with) The specific object key to use in the redirect request. For example, redirect request to error.html.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "error_document" {
+  description = "(Optional, Conflicts with redirect_all_requests_to) The name of the error document for the website detailed below."
+  type        = string
+}
+variable "key_prefix_equals" {
+  description = "(Optional, Required if http_error_code_returned_equals is not specified) The object key name prefix when the redirect is applied. If specified with http_error_code_returned_equals, then both must be true for the redirect to be applied.redirectThe redirect configuration block supports the following arguments:"
+  type        = string
+}
+variable "redirect_all_requests_to" {
+  description = "(Optional, Required if index_document is not specified) The redirect behavior for every request to this bucket's website endpoint detailed below. Conflicts with error_document, index_document, and routing_rule."
+  type        = string
+}
 variable "routing_rules" {
   description = "(Optional, Conflicts with routing_rule and redirect_all_requests_to) A json array containing routing rules\"\") as seen in the example above.error_documentThe error_document configuration block supports the following arguments:"
   type        = string
+}
+variable "condition" {
+  description = "(Optional) A configuration block for describing a condition that must be met for the specified redirect to apply detailed below."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -228,65 +228,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.id
-}
-output "redirect_all_requests_to" {
-  description = "(Optional, Required if index_document is not specified) The redirect behavior for every request to this bucket's website endpoint detailed below. Conflicts with error_document, index_document, and routing_rule."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.redirect_all_requests_to
-}
-output "replace_key_prefix_with" {
-  description = "(Optional, Conflicts with replace_key_with) The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with key_prefix_equals set to docs/ and in the redirect set replace_key_prefix_with to /documents."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.replace_key_prefix_with
-}
-output "website_domain" {
-  description = "The domain of the website endpoint. This is used to create Route 53 alias records."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.website_domain
-}
-output "error_document" {
-  description = "(Optional, Conflicts with redirect_all_requests_to) The name of the error document for the website detailed below."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.error_document
-}
-output "http_error_code_returned_equals" {
-  description = "(Optional, Required if key_prefix_equals is not specified) The HTTP error code when the redirect is applied. If specified with key_prefix_equals, then both must be true for the redirect to be applied."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.http_error_code_returned_equals
+output "http_redirect_code" {
+  description = "(Optional) The HTTP redirect code to use on the response."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.http_redirect_code
 }
 output "index_document" {
   description = "(Optional, Required if redirect_all_requests_to is not specified) The name of the index document for the website detailed below."
   value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.index_document
 }
-output "key_prefix_equals" {
-  description = "(Optional, Required if http_error_code_returned_equals is not specified) The object key name prefix when the redirect is applied. If specified with http_error_code_returned_equals, then both must be true for the redirect to be applied.redirectThe redirect configuration block supports the following arguments:"
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.key_prefix_equals
-}
-output "protocol" {
-  description = "(Optional) Protocol to use when redirecting requests. The default is the protocol that is used in the original request. Valid values: http, https."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.protocol
+output "replace_key_prefix_with" {
+  description = "(Optional, Conflicts with replace_key_with) The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with key_prefix_equals set to docs/ and in the redirect set replace_key_prefix_with to /documents."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.replace_key_prefix_with
 }
 output "replace_key_with" {
   description = "(Optional, Conflicts with replace_key_prefix_with) The specific object key to use in the redirect request. For example, redirect request to error.html.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.replace_key_with
 }
-output "suffix" {
-  description = "index.html and you make a request to samplebucket/images/, the data that is returned will be for the object with the key name images/index.htmlredirect_all_requests_toThe redirect_all_requests_to configuration block supports the following arguments:"
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.suffix
+output "error_document" {
+  description = "(Optional, Conflicts with redirect_all_requests_to) The name of the error document for the website detailed below."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.error_document
 }
-output "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.bucket
+output "key_prefix_equals" {
+  description = "(Optional, Required if http_error_code_returned_equals is not specified) The object key name prefix when the redirect is applied. If specified with http_error_code_returned_equals, then both must be true for the redirect to be applied.redirectThe redirect configuration block supports the following arguments:"
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.key_prefix_equals
 }
-output "host_name" {
-  description = "(Optional) The host name to use in the redirect request."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.host_name
-}
-output "http_redirect_code" {
-  description = "(Optional) The HTTP redirect code to use on the response."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.http_redirect_code
-}
-output "key" {
-  description = "(Required) The object key name to use when a 4XX class error occurs.index_documentThe index_document configuration block supports the following arguments:"
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.key
+output "redirect_all_requests_to" {
+  description = "(Optional, Required if index_document is not specified) The redirect behavior for every request to this bucket's website endpoint detailed below. Conflicts with error_document, index_document, and routing_rule."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.redirect_all_requests_to
 }
 output "routing_rules" {
   description = "(Optional, Conflicts with routing_rule and redirect_all_requests_to) A json array containing routing rules\"\") as seen in the example above.error_documentThe error_document configuration block supports the following arguments:"
@@ -300,13 +268,49 @@ output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.expected_bucket_owner
 }
+output "host_name" {
+  description = "(Optional) The host name to use in the redirect request."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.host_name
+}
+output "http_error_code_returned_equals" {
+  description = "(Optional, Required if key_prefix_equals is not specified) The HTTP error code when the redirect is applied. If specified with key_prefix_equals, then both must be true for the redirect to be applied."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.http_error_code_returned_equals
+}
+output "id" {
+  description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.id
+}
+output "protocol" {
+  description = "(Optional) Protocol to use when redirecting requests. The default is the protocol that is used in the original request. Valid values: http, https."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.protocol
+}
 output "redirect" {
   description = "(Required) A configuration block for redirect information detailed below.conditionThe condition configuration block supports the following arguments:"
   value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.redirect
 }
+output "suffix" {
+  description = "index.html and you make a request to samplebucket/images/, the data that is returned will be for the object with the key name images/index.htmlredirect_all_requests_toThe redirect_all_requests_to configuration block supports the following arguments:"
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.suffix
+}
+output "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.bucket
+}
 output "routing_rule" {
   description = "(Optional, Conflicts with redirect_all_requests_to and routing_rules) List of rules that define when a redirect is applied and the redirect behavior detailed below."
   value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.routing_rule
+}
+output "website_domain" {
+  description = "The domain of the website endpoint. This is used to create Route 53 alias records."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.website_domain
+}
+output "key" {
+  description = "(Required) The object key name to use when a 4XX class error occurs.index_documentThe index_document configuration block supports the following arguments:"
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.key
+}
+output "website_endpoint" {
+  description = "The website endpoint."
+  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.website_endpoint
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
@@ -315,10 +319,6 @@ output "id" {
 output "website_domain" {
   description = "The domain of the website endpoint. This is used to create Route 53 alias records."
   value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.website_domain
-}
-output "website_endpoint" {
-  description = "The website endpoint."
-  value       = aws_s3_bucket_website_configuration.aws_s3_bucket_website_configuration.website_endpoint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

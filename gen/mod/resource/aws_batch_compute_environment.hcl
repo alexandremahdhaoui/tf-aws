@@ -124,6 +124,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "status" {
+  description = "The current status of the compute environment (for example, CREATING or VALID)."
+  value       = aws_batch_compute_environment.aws_batch_compute_environment.status
+}
 output "status_reason" {
   description = "A short, human-readable string to provide additional details about the current status of the compute environment."
   value       = aws_batch_compute_environment.aws_batch_compute_environment.status_reason
@@ -139,10 +143,6 @@ output "arn" {
 output "ecs_cluster_arn" {
   description = "The Amazon Resource Name (ARN) of the underlying Amazon ECS cluster used by the compute environment."
   value       = aws_batch_compute_environment.aws_batch_compute_environment.ecs_cluster_arn
-}
-output "status" {
-  description = "The current status of the compute environment (for example, CREATING or VALID)."
-  value       = aws_batch_compute_environment.aws_batch_compute_environment.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,26 +1,21 @@
 resource "aws_neptune_cluster_endpoint" "aws_neptune_cluster_endpoint" {
-  endpoint                    = var.endpoint
-  endpoint_type               = var.endpoint_type
+  arn                         = var.arn
   cluster_endpoint_identifier = var.cluster_endpoint_identifier
   cluster_identifier          = var.cluster_identifier
+  endpoint_type               = var.endpoint_type
   excluded_members            = var.excluded_members
+  endpoint                    = var.endpoint
   id                          = var.id
   static_members              = var.static_members
   tags                        = var.tags
-  arn                         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "cluster_identifier" {
-  description = "(Required, Forces new resources) The DB cluster identifier of the DB cluster associated with the endpoint."
+variable "endpoint" {
+  description = "The DNS address of the endpoint."
   type        = string
-}
-variable "excluded_members" {
-  description = "(Optional) List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty."
-  type        = string
-  default     = ""
 }
 variable "id" {
   description = "The Neptune Cluster Endpoint Identifier."
@@ -40,17 +35,22 @@ variable "arn" {
   description = "The Neptune Cluster Endpoint Amazon Resource Name (ARN)."
   type        = string
 }
-variable "endpoint" {
-  description = "The DNS address of the endpoint."
+variable "cluster_endpoint_identifier" {
+  description = "(Required, Forces new resources) The identifier of the endpoint."
+  type        = string
+}
+variable "cluster_identifier" {
+  description = "(Required, Forces new resources) The DB cluster identifier of the DB cluster associated with the endpoint."
   type        = string
 }
 variable "endpoint_type" {
   description = "(Required) The type of the endpoint. One of: READER, WRITER, ANY."
   type        = string
 }
-variable "cluster_endpoint_identifier" {
-  description = "(Required, Forces new resources) The identifier of the endpoint."
+variable "excluded_members" {
+  description = "(Optional) List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -172,33 +172,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cluster_endpoint_identifier" {
-  description = "(Required, Forces new resources) The identifier of the endpoint."
-  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.cluster_endpoint_identifier
-}
-output "endpoint" {
-  description = "The DNS address of the endpoint."
-  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.endpoint
+output "cluster_identifier" {
+  description = "(Required, Forces new resources) The DB cluster identifier of the DB cluster associated with the endpoint."
+  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.cluster_identifier
 }
 output "endpoint_type" {
   description = "(Required) The type of the endpoint. One of: READER, WRITER, ANY."
   value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.endpoint_type
 }
-output "arn" {
-  description = "The Neptune Cluster Endpoint Amazon Resource Name (ARN)."
-  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.arn
-}
-output "cluster_identifier" {
-  description = "(Required, Forces new resources) The DB cluster identifier of the DB cluster associated with the endpoint."
-  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.cluster_identifier
-}
 output "excluded_members" {
   description = "(Optional) List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty."
   value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.excluded_members
 }
-output "id" {
-  description = "The Neptune Cluster Endpoint Identifier."
-  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.id
+output "arn" {
+  description = "The Neptune Cluster Endpoint Amazon Resource Name (ARN)."
+  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.arn
+}
+output "cluster_endpoint_identifier" {
+  description = "(Required, Forces new resources) The identifier of the endpoint."
+  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.cluster_endpoint_identifier
 }
 output "static_members" {
   description = "(Optional) List of DB instance identifiers that are part of the custom endpoint group."
@@ -208,9 +200,13 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the Neptune cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.tags_all
+output "endpoint" {
+  description = "The DNS address of the endpoint."
+  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.endpoint
+}
+output "id" {
+  description = "The Neptune Cluster Endpoint Identifier."
+  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.id
 }
 output "arn" {
   description = "The Neptune Cluster Endpoint Amazon Resource Name (ARN)."
@@ -223,6 +219,10 @@ output "endpoint" {
 output "id" {
   description = "The Neptune Cluster Endpoint Identifier."
   value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_neptune_cluster_endpoint.aws_neptune_cluster_endpoint.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,8 +1,8 @@
 resource "aws_redshift_hsm_client_certificate" "aws_redshift_hsm_client_certificate" {
-  hsm_client_certificate_public_key = var.hsm_client_certificate_public_key
-  tags                              = var.tags
   arn                               = var.arn
   hsm_client_certificate_identifier = var.hsm_client_certificate_identifier
+  hsm_client_certificate_public_key = var.hsm_client_certificate_public_key
+  tags                              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.tags
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
   value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.arn
@@ -157,9 +161,9 @@ output "hsm_client_certificate_public_key" {
   description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
   value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.hsm_client_certificate_public_key
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.tags
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
@@ -168,10 +172,6 @@ output "arn" {
 output "hsm_client_certificate_public_key" {
   description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
   value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.hsm_client_certificate_public_key
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_redshift_hsm_client_certificate.aws_redshift_hsm_client_certificate.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

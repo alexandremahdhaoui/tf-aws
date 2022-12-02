@@ -124,14 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the table replica."
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.arn
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.create
-}
 output "delete" {
   description = "(Default 20m)"
   value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.delete
@@ -147,6 +139,14 @@ output "tags_all" {
 output "update" {
   description = "(Default 30m)"
   value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.update
+}
+output "arn" {
+  description = "ARN of the table replica."
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

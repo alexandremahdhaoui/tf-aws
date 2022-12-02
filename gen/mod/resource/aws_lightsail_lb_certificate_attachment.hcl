@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "lb_name" {
-  description = "(Required) The name of the load balancer to which you want to associate the SSL/TLS certificate."
-  type        = string
-}
 variable "certificate_name" {
   description = "(Required) The name of your SSL/TLS certificate.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "lb_name" {
+  description = "(Required) The name of the load balancer to which you want to associate the SSL/TLS certificate."
   type        = string
 }
 variable "tag_instance_id" {

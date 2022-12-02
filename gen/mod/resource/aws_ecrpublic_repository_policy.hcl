@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "repository_name" {
-  description = "(Required) Name of the repository to apply the policy."
-  value       = aws_ecrpublic_repository_policy.aws_ecrpublic_repository_policy.repository_name
-}
 output "policy" {
   description = "(Required) The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the AWS IAM Policy Document GuideIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ecrpublic_repository_policy.aws_ecrpublic_repository_policy.policy
+}
+output "repository_name" {
+  description = "(Required) Name of the repository to apply the policy."
+  value       = aws_ecrpublic_repository_policy.aws_ecrpublic_repository_policy.repository_name
 }
 output "registry_id" {
   description = "The registry ID where the repository was created."

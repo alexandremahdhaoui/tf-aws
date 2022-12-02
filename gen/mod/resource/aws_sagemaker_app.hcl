@@ -1,28 +1,38 @@
 resource "aws_sagemaker_app" "aws_sagemaker_app" {
-  app_name                    = var.app_name
-  arn                         = var.arn
-  sagemaker_image_version_arn = var.sagemaker_image_version_arn
-  user_profile_name           = var.user_profile_name
-  resource_spec               = var.resource_spec
+  lifecycle_config_arn        = var.lifecycle_config_arn
   sagemaker_image_arn         = var.sagemaker_image_arn
-  tags                        = var.tags
+  sagemaker_image_version_arn = var.sagemaker_image_version_arn
   app_type                    = var.app_type
-  domain_id                   = var.domain_id
+  arn                         = var.arn
   id                          = var.id
   instance_type               = var.instance_type
-  lifecycle_config_arn        = var.lifecycle_config_arn
+  resource_spec               = var.resource_spec
+  tags                        = var.tags
+  user_profile_name           = var.user_profile_name
+  app_name                    = var.app_name
+  domain_id                   = var.domain_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "app_name" {
-  description = "(Required) The name of the app."
+variable "app_type" {
+  description = "(Required) The type of app. Valid values are JupyterServer, KernelGateway and TensorBoard."
   type        = string
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the app."
   type        = string
+}
+variable "lifecycle_config_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
+  type        = string
+  default     = ""
+}
+variable "sagemaker_image_arn" {
+  description = "(Optional) The ARN of the SageMaker image that the image version belongs to."
+  type        = string
+  default     = ""
 }
 variable "sagemaker_image_version_arn" {
   description = "(Optional) The ARN of the image version created on the instance.In addition to all arguments above, the following attributes are exported:"
@@ -33,13 +43,8 @@ variable "user_profile_name" {
   description = "(Required) The user profile name."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Resource Spec"
-  type        = string
-  default     = ""
-}
-variable "app_type" {
-  description = "(Required) The type of app. Valid values are JupyterServer, KernelGateway and TensorBoard."
+variable "app_name" {
+  description = "(Required) The name of the app."
   type        = string
 }
 variable "domain_id" {
@@ -55,18 +60,13 @@ variable "instance_type" {
   type        = string
   default     = ""
 }
-variable "lifecycle_config_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
-  type        = string
-  default     = ""
-}
 variable "resource_spec" {
   description = "(Optional) The instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance.See Resource Spec below."
   type        = string
   default     = ""
 }
-variable "sagemaker_image_arn" {
-  description = "(Optional) The ARN of the SageMaker image that the image version belongs to."
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Resource Spec"
   type        = string
   default     = ""
 }
@@ -190,41 +190,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "app_name" {
-  description = "(Required) The name of the app."
-  value       = aws_sagemaker_app.aws_sagemaker_app.app_name
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the app."
-  value       = aws_sagemaker_app.aws_sagemaker_app.arn
-}
-output "sagemaker_image_version_arn" {
-  description = "(Optional) The ARN of the image version created on the instance.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_app.aws_sagemaker_app.sagemaker_image_version_arn
-}
 output "user_profile_name" {
   description = "(Required) The user profile name."
   value       = aws_sagemaker_app.aws_sagemaker_app.user_profile_name
 }
-output "lifecycle_config_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
-  value       = aws_sagemaker_app.aws_sagemaker_app.lifecycle_config_arn
-}
-output "resource_spec" {
-  description = "(Optional) The instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance.See Resource Spec below."
-  value       = aws_sagemaker_app.aws_sagemaker_app.resource_spec
-}
-output "sagemaker_image_arn" {
-  description = "(Optional) The ARN of the SageMaker image that the image version belongs to."
-  value       = aws_sagemaker_app.aws_sagemaker_app.sagemaker_image_arn
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Resource Spec"
-  value       = aws_sagemaker_app.aws_sagemaker_app.tags
-}
-output "app_type" {
-  description = "(Required) The type of app. Valid values are JupyterServer, KernelGateway and TensorBoard."
-  value       = aws_sagemaker_app.aws_sagemaker_app.app_type
+output "app_name" {
+  description = "(Required) The name of the app."
+  value       = aws_sagemaker_app.aws_sagemaker_app.app_name
 }
 output "domain_id" {
   description = "(Required) The domain ID."
@@ -237,6 +209,34 @@ output "id" {
 output "instance_type" {
   description = "(Optional) The instance type that the image version runs on. For valid values see SageMaker Instance Types."
   value       = aws_sagemaker_app.aws_sagemaker_app.instance_type
+}
+output "resource_spec" {
+  description = "(Optional) The instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance.See Resource Spec below."
+  value       = aws_sagemaker_app.aws_sagemaker_app.resource_spec
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Resource Spec"
+  value       = aws_sagemaker_app.aws_sagemaker_app.tags
+}
+output "app_type" {
+  description = "(Required) The type of app. Valid values are JupyterServer, KernelGateway and TensorBoard."
+  value       = aws_sagemaker_app.aws_sagemaker_app.app_type
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the app."
+  value       = aws_sagemaker_app.aws_sagemaker_app.arn
+}
+output "lifecycle_config_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource."
+  value       = aws_sagemaker_app.aws_sagemaker_app.lifecycle_config_arn
+}
+output "sagemaker_image_arn" {
+  description = "(Optional) The ARN of the SageMaker image that the image version belongs to."
+  value       = aws_sagemaker_app.aws_sagemaker_app.sagemaker_image_arn
+}
+output "sagemaker_image_version_arn" {
+  description = "(Optional) The ARN of the image version created on the instance.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_app.aws_sagemaker_app.sagemaker_image_version_arn
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the app."

@@ -1,27 +1,15 @@
 datasource "aws_memorydb_user" "aws_memorydb_user" {
-  authentication_mode    = var.authentication_mode
-  id                     = var.id
-  minimum_engine_version = var.minimum_engine_version
-  password_count         = var.password_count
   type                   = var.type
   user_name              = var.user_name
   access_string          = var.access_string
   arn                    = var.arn
+  authentication_mode    = var.authentication_mode
+  id                     = var.id
+  minimum_engine_version = var.minimum_engine_version
+  password_count         = var.password_count
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the user."
-  type        = string
-}
-variable "authentication_mode" {
-  description = "Denotes the user's authentication properties.\n"
-  type        = string
-}
-variable "id" {
-  description = "Name of the user."
   type        = string
 }
 variable "minimum_engine_version" {
@@ -44,25 +32,17 @@ variable "access_string" {
   description = "Access permissions string used for this user."
   type        = string
 }
-output "authentication_mode" {
+variable "arn" {
+  description = "ARN of the user."
+  type        = string
+}
+variable "authentication_mode" {
   description = "Denotes the user's authentication properties.\n"
-  value       = aws_memorydb_user.aws_memorydb_user.authentication_mode
+  type        = string
 }
-output "id" {
+variable "id" {
   description = "Name of the user."
-  value       = aws_memorydb_user.aws_memorydb_user.id
-}
-output "minimum_engine_version" {
-  description = "The minimum engine version supported for the user."
-  value       = aws_memorydb_user.aws_memorydb_user.minimum_engine_version
-}
-output "password_count" {
-  description = "The number of passwords belonging to the user."
-  value       = aws_memorydb_user.aws_memorydb_user.password_count
-}
-output "type" {
-  description = "Whether the user requires a password to authenticate."
-  value       = aws_memorydb_user.aws_memorydb_user.type
+  type        = string
 }
 output "user_name" {
   description = "(Required) Name of the user.In addition, the following attributes are exported:"
@@ -76,6 +56,30 @@ output "arn" {
   description = "ARN of the user."
   value       = aws_memorydb_user.aws_memorydb_user.arn
 }
+output "authentication_mode" {
+  description = "Denotes the user's authentication properties.\n"
+  value       = aws_memorydb_user.aws_memorydb_user.authentication_mode
+}
+output "id" {
+  description = "Name of the user."
+  value       = aws_memorydb_user.aws_memorydb_user.id
+}
+output "minimum_engine_version" {
+  description = "The minimum engine version supported for the user."
+  value       = aws_memorydb_user.aws_memorydb_user.minimum_engine_version
+}
+output "password_count" {
+  description = "The number of passwords belonging to the user."
+  value       = aws_memorydb_user.aws_memorydb_user.password_count
+}
+output "type" {
+  description = "Whether the user requires a password to authenticate."
+  value       = aws_memorydb_user.aws_memorydb_user.type
+}
+output "password_count" {
+  description = "The number of passwords belonging to the user."
+  value       = aws_memorydb_user.aws_memorydb_user.password_count
+}
 output "type" {
   description = "Whether the user requires a password to authenticate."
   value       = aws_memorydb_user.aws_memorydb_user.type
@@ -99,10 +103,6 @@ output "id" {
 output "minimum_engine_version" {
   description = "The minimum engine version supported for the user."
   value       = aws_memorydb_user.aws_memorydb_user.minimum_engine_version
-}
-output "password_count" {
-  description = "The number of passwords belonging to the user."
-  value       = aws_memorydb_user.aws_memorydb_user.password_count
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

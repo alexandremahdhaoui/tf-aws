@@ -1,19 +1,11 @@
 resource "aws_backup_vault_notifications" "aws_backup_vault_notifications" {
+  sns_topic_arn       = var.sns_topic_arn
   backup_vault_events = var.backup_vault_events
   backup_vault_name   = var.backup_vault_name
   id                  = var.id
-  sns_topic_arn       = var.sns_topic_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "sns_topic_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events"
-  type        = string
-}
-variable "backup_vault_events" {
-  description = "(Required) An array of events that indicate the status of jobs to back up resources to the backup vault.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "backup_vault_name" {
@@ -22,6 +14,14 @@ variable "backup_vault_name" {
 }
 variable "id" {
   description = "The name of the vault."
+  type        = string
+}
+variable "sns_topic_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events"
+  type        = string
+}
+variable "backup_vault_events" {
+  description = "(Required) An array of events that indicate the status of jobs to back up resources to the backup vault.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

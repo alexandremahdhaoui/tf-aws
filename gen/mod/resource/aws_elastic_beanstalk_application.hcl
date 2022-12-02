@@ -1,4 +1,5 @@
 resource "aws_elastic_beanstalk_application" "aws_elastic_beanstalk_application" {
+  arn                   = var.arn
   delete_source_from_s3 = var.delete_source_from_s3
   description           = var.description
   max_age_in_days       = var.max_age_in_days
@@ -6,24 +7,10 @@ resource "aws_elastic_beanstalk_application" "aws_elastic_beanstalk_application"
   name                  = var.name
   service_role          = var.service_role
   tags                  = var.tags
-  arn                   = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "name" {
-  description = "(Required) The name of the application, must be unique within your account"
-  type        = string
-}
-variable "service_role" {
-  description = "(Required) The ARN of an IAM service role under which the application version is deleted.  Elastic Beanstalk must have permission to assume this role."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Application version lifecycle (appversion_lifecycle) supports the following settings.  Only one of either max_count or max_age_in_days can be provided:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The ARN assigned by AWS for this Elastic Beanstalk Application."
@@ -46,6 +33,19 @@ variable "max_age_in_days" {
 }
 variable "max_count" {
   description = "(Optional) The maximum number of application versions to retain ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the application, must be unique within your account"
+  type        = string
+}
+variable "service_role" {
+  description = "(Required) The ARN of an IAM service role under which the application version is deleted.  Elastic Beanstalk must have permission to assume this role."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Application version lifecycle (appversion_lifecycle) supports the following settings.  Only one of either max_count or max_age_in_days can be provided:"
   type        = string
   default     = ""
 }
@@ -169,6 +169,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "max_age_in_days" {
+  description = "(Optional) The number of days to retain an application version ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
+  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.max_age_in_days
+}
+output "max_count" {
+  description = "(Optional) The maximum number of application versions to retain ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
+  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.max_count
+}
 output "name" {
   description = "(Required) The name of the application, must be unique within your account"
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.name
@@ -193,21 +201,13 @@ output "description" {
   description = "(Optional) Short description of the application"
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.description
 }
-output "max_age_in_days" {
-  description = "(Optional) The number of days to retain an application version ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
-  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.max_age_in_days
-}
-output "max_count" {
-  description = "(Optional) The maximum number of application versions to retain ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
-  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.max_count
+output "arn" {
+  description = "The ARN assigned by AWS for this Elastic Beanstalk Application."
+  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.arn
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.tags_all
-}
-output "arn" {
-  description = "The ARN assigned by AWS for this Elastic Beanstalk Application."
-  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

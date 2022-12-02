@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "dns_ips" {
-  description = "(Required) A list of forwarder IP addresses."
-  type        = string
-}
 variable "directory_id" {
   description = "(Required) ID of directory."
+  type        = string
+}
+variable "dns_ips" {
+  description = "(Required) A list of forwarder IP addresses."
   type        = string
 }
 variable "tag_instance_id" {

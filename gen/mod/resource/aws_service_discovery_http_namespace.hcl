@@ -1,19 +1,14 @@
 resource "aws_service_discovery_http_namespace" "aws_service_discovery_http_namespace" {
-  id          = var.id
-  name        = var.name
   tags        = var.tags
   arn         = var.arn
   description = var.description
   http_name   = var.http_name
+  id          = var.id
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "description" {
-  description = "(Optional) The description that you specify for the namespace when you create it."
-  type        = string
-  default     = ""
 }
 variable "http_name" {
   description = "The name of an HTTP namespace."
@@ -35,6 +30,11 @@ variable "tags" {
 variable "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   type        = string
+}
+variable "description" {
+  description = "(Optional) The description that you specify for the namespace when you create it."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

@@ -1,12 +1,12 @@
 resource "aws_servicecatalog_principal_portfolio_association" "aws_servicecatalog_principal_portfolio_association" {
+  create          = var.create
+  delete          = var.delete
   id              = var.id
   portfolio_id    = var.portfolio_id
   principal_arn   = var.principal_arn
   principal_type  = var.principal_type
   read            = var.read
   accept_language = var.accept_language
-  create          = var.create
-  delete          = var.delete
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -170,14 +170,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Identifier of the association.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
-}
-output "portfolio_id" {
-  description = "(Required) Portfolio identifier."
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.portfolio_id
-}
 output "principal_arn" {
   description = "(Required) Principal ARN."
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.principal_arn
@@ -202,6 +194,18 @@ output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
 }
+output "id" {
+  description = "Identifier of the association.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
+}
+output "portfolio_id" {
+  description = "(Required) Portfolio identifier."
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.portfolio_id
+}
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
+}
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
@@ -213,10 +217,6 @@ output "id" {
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.read
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

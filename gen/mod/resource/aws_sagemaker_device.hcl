@@ -10,19 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "iot_thing_name" {
-  description = "(Optional) Amazon Web Services Internet of Things (IoT) object name.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Required) A description for the device."
-  type        = string
-}
-variable "device" {
-  description = "(Required) The device to register with SageMaker Edge Manager. See Device details below.Device"
-  type        = string
-}
 variable "device_fleet_name" {
   description = "(Required) The name of the Device Fleet."
   type        = string
@@ -34,6 +21,19 @@ variable "device_name" {
 }
 variable "id" {
   description = "The id is constructed from device-fleet-name/device-name."
+  type        = string
+}
+variable "iot_thing_name" {
+  description = "(Optional) Amazon Web Services Internet of Things (IoT) object name.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Required) A description for the device."
+  type        = string
+}
+variable "device" {
+  description = "(Required) The device to register with SageMaker Edge Manager. See Device details below.Device"
   type        = string
 }
 variable "tag_instance_id" {
@@ -156,10 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Required) A description for the device."
-  value       = aws_sagemaker_device.aws_sagemaker_device.description
-}
 output "device" {
   description = "(Required) The device to register with SageMaker Edge Manager. See Device details below.Device"
   value       = aws_sagemaker_device.aws_sagemaker_device.device
@@ -179,6 +175,10 @@ output "id" {
 output "iot_thing_name" {
   description = "(Optional) Amazon Web Services Internet of Things (IoT) object name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_device.aws_sagemaker_device.iot_thing_name
+}
+output "description" {
+  description = "(Required) A description for the device."
+  value       = aws_sagemaker_device.aws_sagemaker_device.description
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Device."

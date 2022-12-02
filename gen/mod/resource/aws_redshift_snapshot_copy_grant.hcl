@@ -1,11 +1,19 @@
 resource "aws_redshift_snapshot_copy_grant" "aws_redshift_snapshot_copy_grant" {
+  kms_key_id               = var.kms_key_id
   snapshot_copy_grant_name = var.snapshot_copy_grant_name
   tags                     = var.tags
   arn                      = var.arn
-  kms_key_id               = var.kms_key_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of snapshot copy grant"
+  type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional, Forces new resource) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN. If not specified, the default key is used."
   type        = string
 }
 variable "snapshot_copy_grant_name" {
@@ -16,14 +24,6 @@ variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of snapshot copy grant"
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional, Forces new resource) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN. If not specified, the default key is used."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -145,14 +145,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "snapshot_copy_grant_name" {
-  description = "(Required, Forces new resource) A friendly name for identifying the grant."
-  value       = aws_redshift_snapshot_copy_grant.aws_redshift_snapshot_copy_grant.snapshot_copy_grant_name
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_snapshot_copy_grant.aws_redshift_snapshot_copy_grant.tags
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of snapshot copy grant"
   value       = aws_redshift_snapshot_copy_grant.aws_redshift_snapshot_copy_grant.arn
@@ -160,6 +152,14 @@ output "arn" {
 output "kms_key_id" {
   description = "(Optional, Forces new resource) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN. If not specified, the default key is used."
   value       = aws_redshift_snapshot_copy_grant.aws_redshift_snapshot_copy_grant.kms_key_id
+}
+output "snapshot_copy_grant_name" {
+  description = "(Required, Forces new resource) A friendly name for identifying the grant."
+  value       = aws_redshift_snapshot_copy_grant.aws_redshift_snapshot_copy_grant.snapshot_copy_grant_name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_snapshot_copy_grant.aws_redshift_snapshot_copy_grant.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of snapshot copy grant"

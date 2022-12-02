@@ -1,24 +1,15 @@
 resource "aws_organizations_policy" "aws_organizations_policy" {
-  id          = var.id
-  name        = var.name
-  tags        = var.tags
   type        = var.type
   arn         = var.arn
   content     = var.content
   description = var.description
+  id          = var.id
+  name        = var.name
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "name" {
-  description = "(Required) The friendly name to assign to the policy."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "type" {
   description = "(Optional) The type of policy to create. Valid values are AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY (SCP), and TAG_POLICY. Defaults to SERVICE_CONTROL_POLICY."
@@ -41,6 +32,15 @@ variable "description" {
 variable "id" {
   description = "The unique identifier (ID) of the policy."
   type        = string
+}
+variable "name" {
+  description = "(Required) The friendly name to assign to the policy."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -162,6 +162,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_organizations_policy.aws_organizations_policy.tags
+}
+output "type" {
+  description = "(Optional) The type of policy to create. Valid values are AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY (SCP), and TAG_POLICY. Defaults to SERVICE_CONTROL_POLICY."
+  value       = aws_organizations_policy.aws_organizations_policy.type
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the policy."
   value       = aws_organizations_policy.aws_organizations_policy.arn
@@ -182,18 +190,6 @@ output "name" {
   description = "(Required) The friendly name to assign to the policy."
   value       = aws_organizations_policy.aws_organizations_policy.name
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_organizations_policy.aws_organizations_policy.tags
-}
-output "type" {
-  description = "(Optional) The type of policy to create. Valid values are AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY (SCP), and TAG_POLICY. Defaults to SERVICE_CONTROL_POLICY."
-  value       = aws_organizations_policy.aws_organizations_policy.type
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the policy."
-  value       = aws_organizations_policy.aws_organizations_policy.arn
-}
 output "id" {
   description = "The unique identifier (ID) of the policy."
   value       = aws_organizations_policy.aws_organizations_policy.id
@@ -201,6 +197,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_organizations_policy.aws_organizations_policy.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the policy."
+  value       = aws_organizations_policy.aws_organizations_policy.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

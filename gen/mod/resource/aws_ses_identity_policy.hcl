@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "identity" {
-  description = "(Required) Name or Amazon Resource Name (ARN) of the SES Identity."
-  type        = string
-}
 variable "name" {
   description = "(Required) Name of the policy."
+  type        = string
+}
+variable "identity" {
+  description = "(Required) Name or Amazon Resource Name (ARN) of the SES Identity."
   type        = string
 }
 variable "tag_instance_id" {
@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the policy."
-  value       = aws_ses_identity_policy.aws_ses_identity_policy.name
-}
 output "identity" {
   description = "(Required) Name or Amazon Resource Name (ARN) of the SES Identity."
   value       = aws_ses_identity_policy.aws_ses_identity_policy.identity
+}
+output "name" {
+  description = "(Required) Name of the policy."
+  value       = aws_ses_identity_policy.aws_ses_identity_policy.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

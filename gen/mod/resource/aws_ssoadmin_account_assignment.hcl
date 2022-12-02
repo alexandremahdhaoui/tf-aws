@@ -1,10 +1,10 @@
 resource "aws_ssoadmin_account_assignment" "aws_ssoadmin_account_assignment" {
-  instance_arn       = var.instance_arn
-  permission_set_arn = var.permission_set_arn
   principal_id       = var.principal_id
   principal_type     = var.principal_type
   target_id          = var.target_id
   target_type        = var.target_type
+  instance_arn       = var.instance_arn
+  permission_set_arn = var.permission_set_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -154,18 +154,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "permission_set_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set that the admin wants to grant the principal access to."
-  value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.permission_set_arn
-}
-output "principal_id" {
-  description = "(Required, Forces new resource) An identifier for an object in SSO, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6)."
-  value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.principal_id
-}
-output "principal_type" {
-  description = "(Required, Forces new resource) The entity type for which the assignment will be created. Valid values: USER, GROUP."
-  value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.principal_type
-}
 output "target_id" {
   description = "(Required, Forces new resource) An AWS account identifier, typically a 10-12 digit string."
   value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.target_id
@@ -177,6 +165,18 @@ output "target_type" {
 output "instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance."
   value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.instance_arn
+}
+output "permission_set_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set that the admin wants to grant the principal access to."
+  value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.permission_set_arn
+}
+output "principal_id" {
+  description = "(Required, Forces new resource) An identifier for an object in SSO, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6)."
+  value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.principal_id
+}
+output "principal_type" {
+  description = "(Required, Forces new resource) The entity type for which the assignment will be created. Valid values: USER, GROUP."
+  value       = aws_ssoadmin_account_assignment.aws_ssoadmin_account_assignment.principal_type
 }
 output "id" {
   description = "The identifier of the Account Assignment i.e., principal_id, principal_type, target_id, target_type, permission_set_arn, instance_arn separated by commas (,)."

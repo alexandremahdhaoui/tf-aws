@@ -1,15 +1,29 @@
 resource "aws_batch_job_queue" "aws_batch_job_queue" {
-  compute_environments  = var.compute_environments
   name                  = var.name
   priority              = var.priority
   scheduling_policy_arn = var.scheduling_policy_arn
   state                 = var.state
   tags                  = var.tags
   arn                   = var.arn
+  compute_environments  = var.compute_environments
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "scheduling_policy_arn" {
+  description = "(Optional) The ARN of the fair share scheduling policy. If this parameter is specified, the job queue uses a fair share scheduling policy. If this parameter isn't specified, the job queue uses a first in, first out (FIFO) scheduling policy. After a job queue is created, you can replace but can't remove the fair share scheduling policy."
+  type        = string
+  default     = ""
+}
+variable "state" {
+  description = "(Required) The state of the job queue. Must be one of: ENABLED or DISABLED"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name of the job queue."
@@ -26,20 +40,6 @@ variable "name" {
 variable "priority" {
   description = ""
   type        = string
-}
-variable "scheduling_policy_arn" {
-  description = "(Optional) The ARN of the fair share scheduling policy. If this parameter is specified, the job queue uses a fair share scheduling policy. If this parameter isn't specified, the job queue uses a first in, first out (FIFO) scheduling policy. After a job queue is created, you can replace but can't remove the fair share scheduling policy."
-  type        = string
-  default     = ""
-}
-variable "state" {
-  description = "(Required) The state of the job queue. Must be one of: ENABLED or DISABLED"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -161,6 +161,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "priority" {
+  description = ""
+  value       = aws_batch_job_queue.aws_batch_job_queue.priority
+}
+output "scheduling_policy_arn" {
+  description = "(Optional) The ARN of the fair share scheduling policy. If this parameter is specified, the job queue uses a fair share scheduling policy. If this parameter isn't specified, the job queue uses a first in, first out (FIFO) scheduling policy. After a job queue is created, you can replace but can't remove the fair share scheduling policy."
+  value       = aws_batch_job_queue.aws_batch_job_queue.scheduling_policy_arn
+}
+output "state" {
+  description = "(Required) The state of the job queue. Must be one of: ENABLED or DISABLED"
+  value       = aws_batch_job_queue.aws_batch_job_queue.state
+}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_batch_job_queue.aws_batch_job_queue.tags
@@ -176,18 +188,6 @@ output "compute_environments" {
 output "name" {
   description = "(Required) Specifies the name of the job queue."
   value       = aws_batch_job_queue.aws_batch_job_queue.name
-}
-output "priority" {
-  description = ""
-  value       = aws_batch_job_queue.aws_batch_job_queue.priority
-}
-output "scheduling_policy_arn" {
-  description = "(Optional) The ARN of the fair share scheduling policy. If this parameter is specified, the job queue uses a fair share scheduling policy. If this parameter isn't specified, the job queue uses a first in, first out (FIFO) scheduling policy. After a job queue is created, you can replace but can't remove the fair share scheduling policy."
-  value       = aws_batch_job_queue.aws_batch_job_queue.scheduling_policy_arn
-}
-output "state" {
-  description = "(Required) The state of the job queue. Must be one of: ENABLED or DISABLED"
-  value       = aws_batch_job_queue.aws_batch_job_queue.state
 }
 output "arn" {
   description = "The Amazon Resource Name of the job queue."

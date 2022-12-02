@@ -9,6 +9,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "provisioned_concurrent_executions" {
+  description = "(Required) Amount of capacity to allocate. Must be greater than or equal to 1."
+  type        = string
+}
+variable "qualifier" {
+  description = "(Required) Lambda Function version or Lambda Alias name.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "create" {
   description = "(Default 15m)"
   type        = string
@@ -19,14 +27,6 @@ variable "function_name" {
 }
 variable "id" {
   description = "Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:"
-  type        = string
-}
-variable "provisioned_concurrent_executions" {
-  description = "(Required) Amount of capacity to allocate. Must be greater than or equal to 1."
-  type        = string
-}
-variable "qualifier" {
-  description = "(Required) Lambda Function version or Lambda Alias name.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,14 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "function_name" {
-  description = "(Required) Name or Amazon Resource Name (ARN) of the Lambda Function."
-  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.function_name
-}
-output "id" {
-  description = "Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:"
-  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.id
-}
 output "provisioned_concurrent_executions" {
   description = "(Required) Amount of capacity to allocate. Must be greater than or equal to 1."
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.provisioned_concurrent_executions
@@ -168,6 +160,14 @@ output "qualifier" {
 output "create" {
   description = "(Default 15m)"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
+}
+output "function_name" {
+  description = "(Required) Name or Amazon Resource Name (ARN) of the Lambda Function."
+  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.function_name
+}
+output "id" {
+  description = "Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:"
+  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.id
 }
 output "create" {
   description = "(Default 15m)"

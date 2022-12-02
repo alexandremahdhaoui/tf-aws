@@ -156,6 +156,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "allow_vpc_to_remote_classic_link" {
+  description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection. This option is not supported for inter-region VPC peering.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.allow_vpc_to_remote_classic_link
+}
 output "requester" {
   description = "Accepter and Requester Arguments-> strongNote:enable_dns_hostnamesaws_vpc"
   value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.requester
@@ -175,10 +179,6 @@ output "allow_classic_link_to_remote_vpc" {
 output "allow_remote_vpc_dns_resolution" {
   description = "(Optional) Allow a local VPC to resolve public DNS hostnames to\nprivate IP addresses when queried from instances in the peer VPC."
   value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.allow_remote_vpc_dns_resolution
-}
-output "allow_vpc_to_remote_classic_link" {
-  description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection. This option is not supported for inter-region VPC peering.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.allow_vpc_to_remote_classic_link
 }
 output "id" {
   description = "The ID of the VPC Peering Connection Options."

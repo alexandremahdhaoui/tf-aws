@@ -1,60 +1,33 @@
 resource "aws_amplify_branch" "aws_amplify_branch" {
-  custom_domains                = var.custom_domains
-  environment_variables         = var.environment_variables
-  ttl                           = var.ttl
-  arn                           = var.arn
-  destination_branch            = var.destination_branch
-  display_name                  = var.display_name
   enable_performance_mode       = var.enable_performance_mode
+  stage                         = var.stage
+  tags                          = var.tags
+  associated_resources          = var.associated_resources
+  custom_domains                = var.custom_domains
+  enable_basic_auth             = var.enable_basic_auth
+  enable_pull_request_preview   = var.enable_pull_request_preview
+  backend_environment_arn       = var.backend_environment_arn
+  basic_auth_credentials        = var.basic_auth_credentials
+  display_name                  = var.display_name
+  enable_notification           = var.enable_notification
+  environment_variables         = var.environment_variables
   pull_request_environment_name = var.pull_request_environment_name
   source_branch                 = var.source_branch
   app_id                        = var.app_id
-  backend_environment_arn       = var.backend_environment_arn
-  branch_name                   = var.branch_name
   description                   = var.description
-  enable_basic_auth             = var.enable_basic_auth
-  enable_pull_request_preview   = var.enable_pull_request_preview
-  framework                     = var.framework
-  tags                          = var.tags
-  associated_resources          = var.associated_resources
-  basic_auth_credentials        = var.basic_auth_credentials
+  destination_branch            = var.destination_branch
   enable_auto_build             = var.enable_auto_build
-  enable_notification           = var.enable_notification
-  stage                         = var.stage
+  framework                     = var.framework
+  ttl                           = var.ttl
+  arn                           = var.arn
+  branch_name                   = var.branch_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "custom_domains" {
-  description = "Custom domains for the branch."
-  type        = string
-}
 variable "environment_variables" {
   description = "(Optional) Environment variables for the branch."
-  type        = string
-  default     = ""
-}
-variable "ttl" {
-  description = "(Optional) Content Time To Live (TTL) for the website in seconds.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN for the branch."
-  type        = string
-}
-variable "destination_branch" {
-  description = "Destination branch if the branch is a pull request branch."
-  type        = string
-}
-variable "display_name" {
-  description = "(Optional) Display name for a branch. This is used as the default domain prefix."
-  type        = string
-  default     = ""
-}
-variable "enable_performance_mode" {
-  description = "(Optional) Enables performance mode for the branch."
   type        = string
   default     = ""
 }
@@ -71,32 +44,45 @@ variable "app_id" {
   description = "(Required) Unique ID for an Amplify app."
   type        = string
 }
-variable "backend_environment_arn" {
-  description = "(Optional) ARN for a backend environment that is part of an Amplify app."
-  type        = string
-  default     = ""
-}
-variable "branch_name" {
-  description = "(Required) Name for the branch."
-  type        = string
-}
 variable "description" {
   description = "(Optional) Description for the branch."
   type        = string
   default     = ""
 }
-variable "enable_basic_auth" {
-  description = "(Optional) Enables basic authorization for the branch."
+variable "display_name" {
+  description = "(Optional) Display name for a branch. This is used as the default domain prefix."
   type        = string
   default     = ""
 }
-variable "enable_pull_request_preview" {
-  description = "(Optional) Enables pull request previews for this branch."
+variable "enable_notification" {
+  description = "(Optional) Enables notifications for the branch."
   type        = string
   default     = ""
 }
 variable "framework" {
   description = "(Optional) Framework for the branch."
+  type        = string
+  default     = ""
+}
+variable "ttl" {
+  description = "(Optional) Content Time To Live (TTL) for the website in seconds.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN for the branch."
+  type        = string
+}
+variable "branch_name" {
+  description = "(Required) Name for the branch."
+  type        = string
+}
+variable "destination_branch" {
+  description = "Destination branch if the branch is a pull request branch."
+  type        = string
+}
+variable "enable_auto_build" {
+  description = "(Optional) Enables auto building for the branch."
   type        = string
   default     = ""
 }
@@ -109,23 +95,37 @@ variable "associated_resources" {
   description = "A list of custom resources that are linked to this branch."
   type        = string
 }
-variable "basic_auth_credentials" {
-  description = "(Optional) Basic authorization credentials for the branch."
+variable "custom_domains" {
+  description = "Custom domains for the branch."
   type        = string
-  default     = ""
 }
-variable "enable_auto_build" {
-  description = "(Optional) Enables auto building for the branch."
-  type        = string
-  default     = ""
-}
-variable "enable_notification" {
-  description = "(Optional) Enables notifications for the branch."
+variable "enable_performance_mode" {
+  description = "(Optional) Enables performance mode for the branch."
   type        = string
   default     = ""
 }
 variable "stage" {
   description = "(Optional) Describes the current stage for the branch. Valid values: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST."
+  type        = string
+  default     = ""
+}
+variable "backend_environment_arn" {
+  description = "(Optional) ARN for a backend environment that is part of an Amplify app."
+  type        = string
+  default     = ""
+}
+variable "basic_auth_credentials" {
+  description = "(Optional) Basic authorization credentials for the branch."
+  type        = string
+  default     = ""
+}
+variable "enable_basic_auth" {
+  description = "(Optional) Enables basic authorization for the branch."
+  type        = string
+  default     = ""
+}
+variable "enable_pull_request_preview" {
+  description = "(Optional) Enables pull request previews for this branch."
   type        = string
   default     = ""
 }
@@ -249,85 +249,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "associated_resources" {
-  description = "A list of custom resources that are linked to this branch."
-  value       = aws_amplify_branch.aws_amplify_branch.associated_resources
-}
-output "basic_auth_credentials" {
-  description = "(Optional) Basic authorization credentials for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.basic_auth_credentials
-}
-output "enable_auto_build" {
-  description = "(Optional) Enables auto building for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.enable_auto_build
-}
-output "enable_notification" {
-  description = "(Optional) Enables notifications for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.enable_notification
-}
-output "stage" {
-  description = "(Optional) Describes the current stage for the branch. Valid values: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST."
-  value       = aws_amplify_branch.aws_amplify_branch.stage
-}
-output "custom_domains" {
-  description = "Custom domains for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.custom_domains
-}
-output "environment_variables" {
-  description = "(Optional) Environment variables for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.environment_variables
-}
-output "ttl" {
-  description = "(Optional) Content Time To Live (TTL) for the website in seconds.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_amplify_branch.aws_amplify_branch.ttl
-}
-output "arn" {
-  description = "ARN for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.arn
-}
-output "destination_branch" {
-  description = "Destination branch if the branch is a pull request branch."
-  value       = aws_amplify_branch.aws_amplify_branch.destination_branch
-}
-output "display_name" {
-  description = "(Optional) Display name for a branch. This is used as the default domain prefix."
-  value       = aws_amplify_branch.aws_amplify_branch.display_name
-}
-output "enable_performance_mode" {
-  description = "(Optional) Enables performance mode for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.enable_performance_mode
-}
-output "pull_request_environment_name" {
-  description = "(Optional) Amplify environment name for the pull request."
-  value       = aws_amplify_branch.aws_amplify_branch.pull_request_environment_name
-}
-output "source_branch" {
-  description = "Source branch if the branch is a pull request branch."
-  value       = aws_amplify_branch.aws_amplify_branch.source_branch
-}
-output "framework" {
-  description = "(Optional) Framework for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.framework
-}
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_amplify_branch.aws_amplify_branch.tags
-}
-output "app_id" {
-  description = "(Required) Unique ID for an Amplify app."
-  value       = aws_amplify_branch.aws_amplify_branch.app_id
-}
 output "backend_environment_arn" {
   description = "(Optional) ARN for a backend environment that is part of an Amplify app."
   value       = aws_amplify_branch.aws_amplify_branch.backend_environment_arn
 }
-output "branch_name" {
-  description = "(Required) Name for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.branch_name
-}
-output "description" {
-  description = "(Optional) Description for the branch."
-  value       = aws_amplify_branch.aws_amplify_branch.description
+output "basic_auth_credentials" {
+  description = "(Optional) Basic authorization credentials for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.basic_auth_credentials
 }
 output "enable_basic_auth" {
   description = "(Optional) Enables basic authorization for the branch."
@@ -336,6 +264,78 @@ output "enable_basic_auth" {
 output "enable_pull_request_preview" {
   description = "(Optional) Enables pull request previews for this branch."
   value       = aws_amplify_branch.aws_amplify_branch.enable_pull_request_preview
+}
+output "source_branch" {
+  description = "Source branch if the branch is a pull request branch."
+  value       = aws_amplify_branch.aws_amplify_branch.source_branch
+}
+output "app_id" {
+  description = "(Required) Unique ID for an Amplify app."
+  value       = aws_amplify_branch.aws_amplify_branch.app_id
+}
+output "description" {
+  description = "(Optional) Description for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.description
+}
+output "display_name" {
+  description = "(Optional) Display name for a branch. This is used as the default domain prefix."
+  value       = aws_amplify_branch.aws_amplify_branch.display_name
+}
+output "enable_notification" {
+  description = "(Optional) Enables notifications for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.enable_notification
+}
+output "environment_variables" {
+  description = "(Optional) Environment variables for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.environment_variables
+}
+output "pull_request_environment_name" {
+  description = "(Optional) Amplify environment name for the pull request."
+  value       = aws_amplify_branch.aws_amplify_branch.pull_request_environment_name
+}
+output "arn" {
+  description = "ARN for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.arn
+}
+output "branch_name" {
+  description = "(Required) Name for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.branch_name
+}
+output "destination_branch" {
+  description = "Destination branch if the branch is a pull request branch."
+  value       = aws_amplify_branch.aws_amplify_branch.destination_branch
+}
+output "enable_auto_build" {
+  description = "(Optional) Enables auto building for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.enable_auto_build
+}
+output "framework" {
+  description = "(Optional) Framework for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.framework
+}
+output "ttl" {
+  description = "(Optional) Content Time To Live (TTL) for the website in seconds.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_amplify_branch.aws_amplify_branch.ttl
+}
+output "associated_resources" {
+  description = "A list of custom resources that are linked to this branch."
+  value       = aws_amplify_branch.aws_amplify_branch.associated_resources
+}
+output "custom_domains" {
+  description = "Custom domains for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.custom_domains
+}
+output "enable_performance_mode" {
+  description = "(Optional) Enables performance mode for the branch."
+  value       = aws_amplify_branch.aws_amplify_branch.enable_performance_mode
+}
+output "stage" {
+  description = "(Optional) Describes the current stage for the branch. Valid values: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST."
+  value       = aws_amplify_branch.aws_amplify_branch.stage
+}
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_amplify_branch.aws_amplify_branch.tags
 }
 output "arn" {
   description = "ARN for the branch."

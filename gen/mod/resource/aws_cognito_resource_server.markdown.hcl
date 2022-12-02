@@ -1,9 +1,9 @@
 resource "aws_cognito_resource_server.markdown" "aws_cognito_resource_server.markdown" {
+  identifier        = var.identifier
   name              = var.name
   scope             = var.scope
   scope_description = var.scope_description
   scope_name        = var.scope_name
-  identifier        = var.identifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,14 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "scope_description" {
-  description = "(Required) The scope description.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope_description
-}
-output "scope_name" {
-  description = "(Required) The scope name."
-  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope_name
-}
 output "identifier" {
   description = "(Required) An identifier for the resource server."
   value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.identifier
@@ -169,6 +161,14 @@ output "name" {
 output "scope" {
   description = "(Optional) A list of Authorization Scope.Authorization Scope"
   value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope
+}
+output "scope_description" {
+  description = "(Required) The scope description.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope_description
+}
+output "scope_name" {
+  description = "(Required) The scope name."
+  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope_name
 }
 output "scope_identifiers" {
   description = "A list of all scopes configured for this resource server in the format identifier/scope_name."

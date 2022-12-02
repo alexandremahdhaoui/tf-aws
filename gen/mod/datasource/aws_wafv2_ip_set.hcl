@@ -1,10 +1,10 @@
 datasource "aws_wafv2_ip_set" "aws_wafv2_ip_set" {
-  id          = var.id
-  name        = var.name
   scope       = var.scope
   addresses   = var.addresses
   arn         = var.arn
   description = var.description
+  id          = var.id
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -58,10 +58,6 @@ output "scope" {
   description = "(Required) Specifies whether this is for an AWS CloudFront distribution or for a regional application. Valid values are CLOUDFRONT or REGIONAL. To work with CloudFront, you must also specify the region us-east-1 (N. Virginia) on the AWS provider.In addition to all arguments above, the following attributes are exported:"
   value       = aws_wafv2_ip_set.aws_wafv2_ip_set.scope
 }
-output "addresses" {
-  description = "An array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation."
-  value       = aws_wafv2_ip_set.aws_wafv2_ip_set.addresses
-}
 output "arn" {
   description = "ARN of the entity."
   value       = aws_wafv2_ip_set.aws_wafv2_ip_set.arn
@@ -73,6 +69,10 @@ output "description" {
 output "id" {
   description = "Unique identifier for the set."
   value       = aws_wafv2_ip_set.aws_wafv2_ip_set.id
+}
+output "addresses" {
+  description = "An array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation."
+  value       = aws_wafv2_ip_set.aws_wafv2_ip_set.addresses
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

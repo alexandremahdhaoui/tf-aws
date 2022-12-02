@@ -1,11 +1,11 @@
 resource "aws_qldb_ledger" "aws_qldb_ledger" {
-  arn                 = var.arn
   deletion_protection = var.deletion_protection
   id                  = var.id
   kms_key             = var.kms_key
   name                = var.name
   permissions_mode    = var.permissions_mode
   tags                = var.tags
+  arn                 = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -163,18 +163,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_qldb_ledger.aws_qldb_ledger.tags
-}
-output "arn" {
-  description = "The ARN of the QLDB Ledger"
-  value       = aws_qldb_ledger.aws_qldb_ledger.arn
-}
-output "deletion_protection" {
-  description = "(Optional) The deletion protection for the QLDB Ledger instance. By default it is true. To delete this resource via Terraform, this value must be configured to false and applied first before attempting deletion."
-  value       = aws_qldb_ledger.aws_qldb_ledger.deletion_protection
-}
 output "id" {
   description = "The Name of the QLDB Ledger"
   value       = aws_qldb_ledger.aws_qldb_ledger.id
@@ -191,9 +179,17 @@ output "permissions_mode" {
   description = "(Required) The permissions mode for the QLDB ledger instance. Specify either ALLOW_ALL or STANDARD."
   value       = aws_qldb_ledger.aws_qldb_ledger.permissions_mode
 }
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_qldb_ledger.aws_qldb_ledger.tags
+}
 output "arn" {
   description = "The ARN of the QLDB Ledger"
   value       = aws_qldb_ledger.aws_qldb_ledger.arn
+}
+output "deletion_protection" {
+  description = "(Optional) The deletion protection for the QLDB Ledger instance. By default it is true. To delete this resource via Terraform, this value must be configured to false and applied first before attempting deletion."
+  value       = aws_qldb_ledger.aws_qldb_ledger.deletion_protection
 }
 output "id" {
   description = "The Name of the QLDB Ledger"
@@ -202,6 +198,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_qldb_ledger.aws_qldb_ledger.tags_all
+}
+output "arn" {
+  description = "The ARN of the QLDB Ledger"
+  value       = aws_qldb_ledger.aws_qldb_ledger.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

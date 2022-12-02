@@ -10,15 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "transit_encryption_enabled" {
-  description = "(Optional) Transit encryption flag when connecting to cache. You cannot update this setting after creation.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "ttl" {
-  description = "(Required) TTL in seconds for cache entries."
-  type        = string
-}
 variable "type" {
   description = "(Required) Cache instance type. Valid values are SMALL, MEDIUM, LARGE, XLARGE, LARGE_2X, LARGE_4X, LARGE_8X, LARGE_12X, T2_SMALL, T2_MEDIUM, R4_LARGE, R4_XLARGE, R4_2XLARGE, R4_4XLARGE, R4_8XLARGE."
   type        = string
@@ -35,6 +26,15 @@ variable "at_rest_encryption_enabled" {
   description = "(Optional) At-rest encryption flag for cache. You cannot update this setting after creation."
   type        = string
   default     = ""
+}
+variable "transit_encryption_enabled" {
+  description = "(Optional) Transit encryption flag when connecting to cache. You cannot update this setting after creation.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "ttl" {
+  description = "(Required) TTL in seconds for cache entries."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,14 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "api_caching_behavior" {
-  description = "(Required) Caching behavior. Valid values are FULL_REQUEST_CACHING and PER_RESOLVER_CACHING."
-  value       = aws_appsync_api_cache.aws_appsync_api_cache.api_caching_behavior
-}
-output "api_id" {
-  description = "(Required) GraphQL API ID."
-  value       = aws_appsync_api_cache.aws_appsync_api_cache.api_id
-}
 output "at_rest_encryption_enabled" {
   description = "(Optional) At-rest encryption flag for cache. You cannot update this setting after creation."
   value       = aws_appsync_api_cache.aws_appsync_api_cache.at_rest_encryption_enabled
@@ -179,6 +171,14 @@ output "ttl" {
 output "type" {
   description = "(Required) Cache instance type. Valid values are SMALL, MEDIUM, LARGE, XLARGE, LARGE_2X, LARGE_4X, LARGE_8X, LARGE_12X, T2_SMALL, T2_MEDIUM, R4_LARGE, R4_XLARGE, R4_2XLARGE, R4_4XLARGE, R4_8XLARGE."
   value       = aws_appsync_api_cache.aws_appsync_api_cache.type
+}
+output "api_caching_behavior" {
+  description = "(Required) Caching behavior. Valid values are FULL_REQUEST_CACHING and PER_RESOLVER_CACHING."
+  value       = aws_appsync_api_cache.aws_appsync_api_cache.api_caching_behavior
+}
+output "api_id" {
+  description = "(Required) GraphQL API ID."
+  value       = aws_appsync_api_cache.aws_appsync_api_cache.api_id
 }
 output "id" {
   description = "AppSync API ID."

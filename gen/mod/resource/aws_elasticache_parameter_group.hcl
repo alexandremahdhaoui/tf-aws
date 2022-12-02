@@ -1,4 +1,5 @@
 resource "aws_elasticache_parameter_group" "aws_elasticache_parameter_group" {
+  arn         = var.arn
   description = var.description
   family      = var.family
   id          = var.id
@@ -6,10 +7,17 @@ resource "aws_elasticache_parameter_group" "aws_elasticache_parameter_group" {
   parameter   = var.parameter
   tags        = var.tags
   value       = var.value
-  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "The ElastiCache parameter group name."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the ElastiCache parameter."
   type        = string
 }
 variable "parameter" {
@@ -37,14 +45,6 @@ variable "description" {
 }
 variable "family" {
   description = "(Required) The family of the ElastiCache parameter group."
-  type        = string
-}
-variable "id" {
-  description = "The ElastiCache parameter group name."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the ElastiCache parameter."
   type        = string
 }
 variable "tag_instance_id" {
@@ -167,6 +167,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The AWS ARN associated with the parameter group."
+  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.arn
+}
+output "description" {
+  description = "(Optional) The description of the ElastiCache parameter group. Defaults to \"Managed by Terraform\"."
+  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.description
+}
+output "family" {
+  description = "(Required) The family of the ElastiCache parameter group."
+  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.family
+}
 output "id" {
   description = "The ElastiCache parameter group name."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.id
@@ -186,18 +198,6 @@ output "tags" {
 output "value" {
   description = "(Required) The value of the ElastiCache parameter.In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.value
-}
-output "arn" {
-  description = "The AWS ARN associated with the parameter group."
-  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.arn
-}
-output "description" {
-  description = "(Optional) The description of the ElastiCache parameter group. Defaults to \"Managed by Terraform\"."
-  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.description
-}
-output "family" {
-  description = "(Required) The family of the ElastiCache parameter group."
-  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.family
 }
 output "arn" {
   description = "The AWS ARN associated with the parameter group."

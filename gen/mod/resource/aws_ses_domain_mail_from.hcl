@@ -146,6 +146,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "behavior_on_mx_failure" {
+  description = "(Optional) The action that you want Amazon SES to take if it cannot successfully read the required MX record when you send an email. Defaults to UseDefaultValue. See the SES API documentation for more information.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ses_domain_mail_from.aws_ses_domain_mail_from.behavior_on_mx_failure
+}
 output "domain" {
   description = "(Required) Verified domain name or email identity to generate DKIM tokens for."
   value       = aws_ses_domain_mail_from.aws_ses_domain_mail_from.domain
@@ -157,10 +161,6 @@ output "id" {
 output "mail_from_domain" {
   description = "(Required) Subdomain (of above domain) which is to be used as MAIL FROM address (Required for DMARC validation)"
   value       = aws_ses_domain_mail_from.aws_ses_domain_mail_from.mail_from_domain
-}
-output "behavior_on_mx_failure" {
-  description = "(Optional) The action that you want Amazon SES to take if it cannot successfully read the required MX record when you send an email. Defaults to UseDefaultValue. See the SES API documentation for more information.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ses_domain_mail_from.aws_ses_domain_mail_from.behavior_on_mx_failure
 }
 output "id" {
   description = "The domain name."

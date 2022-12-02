@@ -1,93 +1,38 @@
 resource "aws_fsx_ontap_file_system" "aws_fsx_ontap_file_system" {
-  kms_key_id                        = var.kms_key_id
-  subnet_ids                        = var.subnet_ids
-  throughput_capacity               = var.throughput_capacity
-  update                            = var.update
-  vpc_id                            = var.vpc_id
-  ip_addresses                      = var.ip_addresses
-  storage_type                      = var.storage_type
-  weekly_maintenance_start_time     = var.weekly_maintenance_start_time
-  automatic_backup_retention_days   = var.automatic_backup_retention_days
   create                            = var.create
+  daily_automatic_backup_start_time = var.daily_automatic_backup_start_time
   dns_name                          = var.dns_name
   endpoint_ip_address_range         = var.endpoint_ip_address_range
-  preferred_subnet_id               = var.preferred_subnet_id
-  route_table_ids                   = var.route_table_ids
-  management                        = var.management
-  network_interface_ids             = var.network_interface_ids
-  disk_iops_configuration           = var.disk_iops_configuration
   endpoints                         = var.endpoints
-  id                                = var.id
-  iops                              = var.iops
-  daily_automatic_backup_start_time = var.daily_automatic_backup_start_time
-  mode                              = var.mode
-  owner_id                          = var.owner_id
-  storage_capacity                  = var.storage_capacity
-  fsx_admin_password                = var.fsx_admin_password
+  subnet_ids                        = var.subnet_ids
+  weekly_maintenance_start_time     = var.weekly_maintenance_start_time
+  automatic_backup_retention_days   = var.automatic_backup_retention_days
   intercluster                      = var.intercluster
+  network_interface_ids             = var.network_interface_ids
+  iops                              = var.iops
+  owner_id                          = var.owner_id
+  preferred_subnet_id               = var.preferred_subnet_id
+  ip_addresses                      = var.ip_addresses
+  route_table_ids                   = var.route_table_ids
+  security_group_ids                = var.security_group_ids
   tags                              = var.tags
   arn                               = var.arn
-  deployment_type                   = var.deployment_type
-  security_group_ids                = var.security_group_ids
+  disk_iops_configuration           = var.disk_iops_configuration
+  id                                = var.id
+  kms_key_id                        = var.kms_key_id
+  management                        = var.management
+  mode                              = var.mode
+  storage_capacity                  = var.storage_capacity
+  storage_type                      = var.storage_type
   tags_all                          = var.tags_all
+  vpc_id                            = var.vpc_id
+  deployment_type                   = var.deployment_type
+  fsx_admin_password                = var.fsx_admin_password
+  throughput_capacity               = var.throughput_capacity
+  update                            = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "disk_iops_configuration" {
-  description = "(Optional) The SSD IOPS configuration for the Amazon FSx for NetApp ONTAP file system. See Disk Iops Configuration Below."
-  type        = string
-  default     = ""
-}
-variable "endpoints" {
-  description = "The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below."
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the file system, e.g., fs-12345678"
-  type        = string
-}
-variable "iops" {
-  description = "(Optional) - The total number of SSD IOPS provisioned for the file system."
-  type        = string
-  default     = ""
-}
-variable "daily_automatic_backup_start_time" {
-  description = "(Optional) A recurring daily time, in the format HH:MM. HH is the zero-padded hour of the day (0-23), and MM is the zero-padded minute of the hour. For example, 05:00 specifies 5 AM daily. Requires automatic_backup_retention_days to be set."
-  type        = string
-  default     = ""
-}
-variable "mode" {
-  description = "(Optional) - Specifies whether the number of IOPS for the file system is using the system. Valid values are AUTOMATIC and USER_PROVISIONED. Default value is AUTOMATIC.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "owner_id" {
-  description = "AWS account identifier that created the file system."
-  type        = string
-}
-variable "storage_capacity" {
-  description = "(Optional) The storage capacity (GiB) of the file system. Valid values between 1024 and 196608."
-  type        = string
-  default     = ""
-}
-variable "fsx_admin_password" {
-  description = "(Optional) The ONTAP administrative password for the fsxadmin user that you can use to administer your file system using the ONTAP CLI and REST API."
-  type        = string
-  default     = ""
-}
-variable "intercluster" {
-  description = "An endpoint for managing your file system by setting up NetApp SnapMirror with other ONTAP systems. See Endpoint."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name of the file system."
   type        = string
 }
 variable "deployment_type" {
@@ -95,23 +40,10 @@ variable "deployment_type" {
   type        = string
   default     = ""
 }
-variable "security_group_ids" {
-  description = "(Optional) A list of IDs for the security groups that apply to the specified network interfaces created for file system access. These security groups will apply to all network interfaces."
+variable "fsx_admin_password" {
+  description = "(Optional) The ONTAP administrative password for the fsxadmin user that you can use to administer your file system using the ONTAP CLI and REST API."
   type        = string
   default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) ARN for the KMS Key to encrypt the file system at rest, Defaults to an AWS managed KMS Key."
-  type        = string
-  default     = ""
-}
-variable "subnet_ids" {
-  description = "(Required) A list of IDs for the subnets that the file system will be accessible from. Upto 2 subnets can be provided."
-  type        = string
 }
 variable "throughput_capacity" {
   description = "(Required) Sets the throughput capacity (in MBps) for the file system that you're creating. Valid values are 128, 256, 512, 1024, and 2048.Disk Iops Configuration"
@@ -121,37 +53,14 @@ variable "update" {
   description = "(Default 60m)"
   type        = string
 }
-variable "vpc_id" {
-  description = "Identifier of the Virtual Private Cloud for the file system.Endpoints"
-  type        = string
-}
-variable "ip_addresses" {
-  description = "IP addresses of the file system endpoint.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "storage_type" {
-  description = "(Optional) - The filesystem storage type. defaults to SSD."
-  type        = string
-  default     = ""
-}
-variable "weekly_maintenance_start_time" {
-  description = "(Optional) The preferred start time (in d:HH:MM format) to perform weekly maintenance, in the UTC time zone."
-  type        = string
-  default     = ""
-}
-variable "route_table_ids" {
-  description = "(Optional) Specifies the VPC route tables in which your file system's endpoints will be created. You should specify all VPC route tables associated with the subnets in which your clients are located. By default, Amazon FSx selects your VPC's default route table."
-  type        = string
-  default     = ""
-}
-variable "automatic_backup_retention_days" {
-  description = "(Optional) The number of days to retain automatic backups. Setting this to 0 disables automatic backups. You can retain automatic backups for a maximum of 90 days."
-  type        = string
-  default     = ""
-}
 variable "create" {
   description = "(Default 60m)"
   type        = string
+}
+variable "daily_automatic_backup_start_time" {
+  description = "(Optional) A recurring daily time, in the format HH:MM. HH is the zero-padded hour of the day (0-23), and MM is the zero-padded minute of the hour. For example, 05:00 specifies 5 AM daily. Requires automatic_backup_retention_days to be set."
+  type        = string
+  default     = ""
 }
 variable "dns_name" {
   description = "The Domain Name Service (DNS) name for the file system. You can mount your file system using its DNS name."
@@ -162,16 +71,107 @@ variable "endpoint_ip_address_range" {
   type        = string
   default     = ""
 }
+variable "endpoints" {
+  description = "The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below."
+  type        = string
+}
+variable "subnet_ids" {
+  description = "(Required) A list of IDs for the subnets that the file system will be accessible from. Upto 2 subnets can be provided."
+  type        = string
+}
+variable "weekly_maintenance_start_time" {
+  description = "(Optional) The preferred start time (in d:HH:MM format) to perform weekly maintenance, in the UTC time zone."
+  type        = string
+  default     = ""
+}
+variable "automatic_backup_retention_days" {
+  description = "(Optional) The number of days to retain automatic backups. Setting this to 0 disables automatic backups. You can retain automatic backups for a maximum of 90 days."
+  type        = string
+  default     = ""
+}
+variable "intercluster" {
+  description = "An endpoint for managing your file system by setting up NetApp SnapMirror with other ONTAP systems. See Endpoint."
+  type        = string
+}
+variable "network_interface_ids" {
+  description = "Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface."
+  type        = string
+}
+variable "iops" {
+  description = "(Optional) - The total number of SSD IOPS provisioned for the file system."
+  type        = string
+  default     = ""
+}
+variable "owner_id" {
+  description = "AWS account identifier that created the file system."
+  type        = string
+}
 variable "preferred_subnet_id" {
   description = "(Required) The ID for a subnet. A subnet is a range of IP addresses in your virtual private cloud (VPC)."
   type        = string
+}
+variable "ip_addresses" {
+  description = "IP addresses of the file system endpoint.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "route_table_ids" {
+  description = "(Optional) Specifies the VPC route tables in which your file system's endpoints will be created. You should specify all VPC route tables associated with the subnets in which your clients are located. By default, Amazon FSx selects your VPC's default route table."
+  type        = string
+  default     = ""
+}
+variable "security_group_ids" {
+  description = "(Optional) A list of IDs for the security groups that apply to the specified network interfaces created for file system access. These security groups will apply to all network interfaces."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "storage_type" {
+  description = "(Optional) - The filesystem storage type. defaults to SSD."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name of the file system."
+  type        = string
+}
+variable "disk_iops_configuration" {
+  description = "(Optional) The SSD IOPS configuration for the Amazon FSx for NetApp ONTAP file system. See Disk Iops Configuration Below."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Identifier of the file system, e.g., fs-12345678"
+  type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional) ARN for the KMS Key to encrypt the file system at rest, Defaults to an AWS managed KMS Key."
+  type        = string
+  default     = ""
 }
 variable "management" {
   description = "An endpoint for managing your file system using the NetApp ONTAP CLI and NetApp ONTAP API. See Endpoint.Endpoint"
   type        = string
 }
-variable "network_interface_ids" {
-  description = "Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface."
+variable "mode" {
+  description = "(Optional) - Specifies whether the number of IOPS for the file system is using the system. Valid values are AUTOMATIC and USER_PROVISIONED. Default value is AUTOMATIC.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "storage_capacity" {
+  description = "(Optional) The storage capacity (GiB) of the file system. Valid values between 1024 and 196608."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "vpc_id" {
+  description = "Identifier of the Virtual Private Cloud for the file system.Endpoints"
   type        = string
 }
 variable "tag_instance_id" {
@@ -294,61 +294,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "fsx_admin_password" {
-  description = "(Optional) The ONTAP administrative password for the fsxadmin user that you can use to administer your file system using the ONTAP CLI and REST API."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.fsx_admin_password
+output "dns_name" {
+  description = "The Domain Name Service (DNS) name for the file system. You can mount your file system using its DNS name."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.dns_name
 }
-output "intercluster" {
-  description = "An endpoint for managing your file system by setting up NetApp SnapMirror with other ONTAP systems. See Endpoint."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.intercluster
+output "endpoint_ip_address_range" {
+  description = "(Optional) Specifies the IP address range in which the endpoints to access your file system will be created. By default, Amazon FSx selects an unused IP address range for you from the 198.19.* range."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.endpoint_ip_address_range
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.tags
-}
-output "arn" {
-  description = "Amazon Resource Name of the file system."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.arn
-}
-output "deployment_type" {
-  description = "(Optional) - The filesystem deployment type. Supports MULTI_AZ_1 and SINGLE_AZ_1."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.deployment_type
-}
-output "security_group_ids" {
-  description = "(Optional) A list of IDs for the security groups that apply to the specified network interfaces created for file system access. These security groups will apply to all network interfaces."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.security_group_ids
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.tags_all
-}
-output "kms_key_id" {
-  description = "(Optional) ARN for the KMS Key to encrypt the file system at rest, Defaults to an AWS managed KMS Key."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.kms_key_id
+output "endpoints" {
+  description = "The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.endpoints
 }
 output "subnet_ids" {
   description = "(Required) A list of IDs for the subnets that the file system will be accessible from. Upto 2 subnets can be provided."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.subnet_ids
-}
-output "throughput_capacity" {
-  description = "(Required) Sets the throughput capacity (in MBps) for the file system that you're creating. Valid values are 128, 256, 512, 1024, and 2048.Disk Iops Configuration"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.throughput_capacity
-}
-output "update" {
-  description = "(Default 60m)"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.update
-}
-output "vpc_id" {
-  description = "Identifier of the Virtual Private Cloud for the file system.Endpoints"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.vpc_id
-}
-output "ip_addresses" {
-  description = "IP addresses of the file system endpoint.TimeoutsConfiguration options:"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.ip_addresses
-}
-output "storage_type" {
-  description = "(Optional) - The filesystem storage type. defaults to SSD."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.storage_type
 }
 output "weekly_maintenance_start_time" {
   description = "(Optional) The preferred start time (in d:HH:MM format) to perform weekly maintenance, in the UTC time zone."
@@ -358,97 +318,73 @@ output "automatic_backup_retention_days" {
   description = "(Optional) The number of days to retain automatic backups. Setting this to 0 disables automatic backups. You can retain automatic backups for a maximum of 90 days."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.automatic_backup_retention_days
 }
-output "create" {
-  description = "(Default 60m)"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.create
-}
-output "dns_name" {
-  description = "The Domain Name Service (DNS) name for the file system. You can mount your file system using its DNS name."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.dns_name
-}
-output "endpoint_ip_address_range" {
-  description = "(Optional) Specifies the IP address range in which the endpoints to access your file system will be created. By default, Amazon FSx selects an unused IP address range for you from the 198.19.* range."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.endpoint_ip_address_range
-}
-output "preferred_subnet_id" {
-  description = "(Required) The ID for a subnet. A subnet is a range of IP addresses in your virtual private cloud (VPC)."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.preferred_subnet_id
-}
-output "route_table_ids" {
-  description = "(Optional) Specifies the VPC route tables in which your file system's endpoints will be created. You should specify all VPC route tables associated with the subnets in which your clients are located. By default, Amazon FSx selects your VPC's default route table."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.route_table_ids
-}
-output "management" {
-  description = "An endpoint for managing your file system using the NetApp ONTAP CLI and NetApp ONTAP API. See Endpoint.Endpoint"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.management
+output "intercluster" {
+  description = "An endpoint for managing your file system by setting up NetApp SnapMirror with other ONTAP systems. See Endpoint."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.intercluster
 }
 output "network_interface_ids" {
   description = "Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.network_interface_ids
-}
-output "disk_iops_configuration" {
-  description = "(Optional) The SSD IOPS configuration for the Amazon FSx for NetApp ONTAP file system. See Disk Iops Configuration Below."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.disk_iops_configuration
-}
-output "endpoints" {
-  description = "The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.endpoints
-}
-output "id" {
-  description = "Identifier of the file system, e.g., fs-12345678"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.id
 }
 output "iops" {
   description = "(Optional) - The total number of SSD IOPS provisioned for the file system."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.iops
 }
-output "daily_automatic_backup_start_time" {
-  description = "(Optional) A recurring daily time, in the format HH:MM. HH is the zero-padded hour of the day (0-23), and MM is the zero-padded minute of the hour. For example, 05:00 specifies 5 AM daily. Requires automatic_backup_retention_days to be set."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.daily_automatic_backup_start_time
-}
-output "mode" {
-  description = "(Optional) - Specifies whether the number of IOPS for the file system is using the system. Valid values are AUTOMATIC and USER_PROVISIONED. Default value is AUTOMATIC.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.mode
-}
 output "owner_id" {
   description = "AWS account identifier that created the file system."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.owner_id
 }
-output "storage_capacity" {
-  description = "(Optional) The storage capacity (GiB) of the file system. Valid values between 1024 and 196608."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.storage_capacity
+output "preferred_subnet_id" {
+  description = "(Required) The ID for a subnet. A subnet is a range of IP addresses in your virtual private cloud (VPC)."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.preferred_subnet_id
+}
+output "ip_addresses" {
+  description = "IP addresses of the file system endpoint.TimeoutsConfiguration options:"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.ip_addresses
+}
+output "route_table_ids" {
+  description = "(Optional) Specifies the VPC route tables in which your file system's endpoints will be created. You should specify all VPC route tables associated with the subnets in which your clients are located. By default, Amazon FSx selects your VPC's default route table."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.route_table_ids
+}
+output "security_group_ids" {
+  description = "(Optional) A list of IDs for the security groups that apply to the specified network interfaces created for file system access. These security groups will apply to all network interfaces."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.security_group_ids
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.tags
+}
+output "storage_type" {
+  description = "(Optional) - The filesystem storage type. defaults to SSD."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.storage_type
 }
 output "arn" {
   description = "Amazon Resource Name of the file system."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.arn
 }
-output "endpoints" {
-  description = "The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.endpoints
-}
-output "update" {
-  description = "(Default 60m)"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.update
-}
-output "delete" {
-  description = "(Default 60m)"
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.delete
+output "disk_iops_configuration" {
+  description = "(Optional) The SSD IOPS configuration for the Amazon FSx for NetApp ONTAP file system. See Disk Iops Configuration Below."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.disk_iops_configuration
 }
 output "id" {
   description = "Identifier of the file system, e.g., fs-12345678"
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.id
 }
+output "kms_key_id" {
+  description = "(Optional) ARN for the KMS Key to encrypt the file system at rest, Defaults to an AWS managed KMS Key."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.kms_key_id
+}
 output "management" {
   description = "An endpoint for managing your file system using the NetApp ONTAP CLI and NetApp ONTAP API. See Endpoint.Endpoint"
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.management
 }
-output "network_interface_ids" {
-  description = "Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.network_interface_ids
+output "mode" {
+  description = "(Optional) - Specifies whether the number of IOPS for the file system is using the system. Valid values are AUTOMATIC and USER_PROVISIONED. Default value is AUTOMATIC.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.mode
 }
-output "owner_id" {
-  description = "AWS account identifier that created the file system."
-  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.owner_id
+output "storage_capacity" {
+  description = "(Optional) The storage capacity (GiB) of the file system. Valid values between 1024 and 196608."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.storage_capacity
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -458,6 +394,34 @@ output "vpc_id" {
   description = "Identifier of the Virtual Private Cloud for the file system.Endpoints"
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.vpc_id
 }
+output "deployment_type" {
+  description = "(Optional) - The filesystem deployment type. Supports MULTI_AZ_1 and SINGLE_AZ_1."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.deployment_type
+}
+output "fsx_admin_password" {
+  description = "(Optional) The ONTAP administrative password for the fsxadmin user that you can use to administer your file system using the ONTAP CLI and REST API."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.fsx_admin_password
+}
+output "throughput_capacity" {
+  description = "(Required) Sets the throughput capacity (in MBps) for the file system that you're creating. Valid values are 128, 256, 512, 1024, and 2048.Disk Iops Configuration"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.throughput_capacity
+}
+output "update" {
+  description = "(Default 60m)"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.update
+}
+output "create" {
+  description = "(Default 60m)"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.create
+}
+output "daily_automatic_backup_start_time" {
+  description = "(Optional) A recurring daily time, in the format HH:MM. HH is the zero-padded hour of the day (0-23), and MM is the zero-padded minute of the hour. For example, 05:00 specifies 5 AM daily. Requires automatic_backup_retention_days to be set."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.daily_automatic_backup_start_time
+}
+output "owner_id" {
+  description = "AWS account identifier that created the file system."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.owner_id
+}
 output "create" {
   description = "(Default 60m)"
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.create
@@ -466,13 +430,49 @@ output "dns_name" {
   description = "The Domain Name Service (DNS) name for the file system. You can mount your file system using its DNS name."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.dns_name
 }
+output "endpoints" {
+  description = "The endpoints that are used to access data or to manage the file system using the NetApp ONTAP CLI, REST API, or NetApp SnapMirror. See Endpoints below."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.endpoints
+}
+output "network_interface_ids" {
+  description = "Set of Elastic Network Interface identifiers from which the file system is accessible The first network interface returned is the primary network interface."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.network_interface_ids
+}
+output "arn" {
+  description = "Amazon Resource Name of the file system."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.arn
+}
+output "delete" {
+  description = "(Default 60m)"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.delete
+}
+output "id" {
+  description = "Identifier of the file system, e.g., fs-12345678"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.id
+}
 output "intercluster" {
   description = "An endpoint for managing your file system by setting up NetApp SnapMirror with other ONTAP systems. See Endpoint."
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.intercluster
 }
+output "vpc_id" {
+  description = "Identifier of the Virtual Private Cloud for the file system.Endpoints"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.vpc_id
+}
 output "ip_addresses" {
   description = "IP addresses of the file system endpoint.TimeoutsConfiguration options:"
   value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.ip_addresses
+}
+output "management" {
+  description = "An endpoint for managing your file system using the NetApp ONTAP CLI and NetApp ONTAP API. See Endpoint.Endpoint"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.management
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.tags_all
+}
+output "update" {
+  description = "(Default 60m)"
+  value       = aws_fsx_ontap_file_system.aws_fsx_ontap_file_system.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

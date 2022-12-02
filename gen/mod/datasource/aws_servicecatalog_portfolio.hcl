@@ -1,20 +1,15 @@
 datasource "aws_servicecatalog_portfolio" "aws_servicecatalog_portfolio" {
+  arn             = var.arn
   created_time    = var.created_time
   description     = var.description
   id              = var.id
   name            = var.name
   provider_name   = var.provider_name
   accept_language = var.accept_language
-  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "name" {
-  description = "Portfolio name."
-  type        = string
-  default     = ""
 }
 variable "provider_name" {
   description = "Name of the person or organization who owns the portfolio."
@@ -45,6 +40,19 @@ variable "id" {
   description = "(Required) Portfolio identifier."
   type        = string
 }
+variable "name" {
+  description = "Portfolio name."
+  type        = string
+  default     = ""
+}
+output "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.accept_language
+}
+output "arn" {
+  description = "Portfolio ARN."
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.arn
+}
 output "created_time" {
   description = "Time the portfolio was created."
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.created_time
@@ -65,18 +73,6 @@ output "provider_name" {
   description = "Name of the person or organization who owns the portfolio."
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.provider_name
 }
-output "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.accept_language
-}
-output "arn" {
-  description = "Portfolio ARN."
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.arn
-}
-output "created_time" {
-  description = "Time the portfolio was created."
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.created_time
-}
 output "description" {
   description = "Description of the portfolio"
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.description
@@ -92,6 +88,10 @@ output "provider_name" {
 output "arn" {
   description = "Portfolio ARN."
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.arn
+}
+output "created_time" {
+  description = "Time the portfolio was created."
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.created_time
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

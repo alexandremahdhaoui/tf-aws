@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "key" {
-  description = "(Required) The tag name."
-  type        = string
-}
 variable "resource_id" {
   description = "(Required) The ID of the EC2 resource to manage the tag for."
   type        = string
 }
 variable "value" {
   description = "(Required) The value of the tag.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "key" {
+  description = "(Required) The tag name."
   type        = string
 }
 variable "tag_instance_id" {

@@ -1,13 +1,17 @@
 resource "aws_wafregional_xss_match_set" "aws_wafregional_xss_match_set" {
-  type                = var.type
-  xss_match_tuple     = var.xss_match_tuple
   data                = var.data
   field_to_match      = var.field_to_match
   name                = var.name
   text_transformation = var.text_transformation
+  type                = var.type
+  xss_match_tuple     = var.xss_match_tuple
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
   type        = string
 }
 variable "name" {
@@ -31,10 +35,6 @@ variable "data" {
   description = "(Optional) When the value of type is HEADER, enter the name of the header that you want the WAF to search, for example, User-Agent or Referer. If the value of type is any other value, omit data."
   type        = string
   default     = ""
-}
-variable "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,18 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "data" {
-  description = "(Optional) When the value of type is HEADER, enter the name of the header that you want the WAF to search, for example, User-Agent or Referer. If the value of type is any other value, omit data."
-  value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.data
-}
-output "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
-  value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.field_to_match
-}
-output "name" {
-  description = "(Required) The name of the set"
-  value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.name
-}
 output "text_transformation" {
   description = "(Required) Which text transformation, if any, to perform on the web request before inspecting the request for cross-site scripting attacks.field_to_match"
   value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.text_transformation
@@ -179,6 +167,18 @@ output "type" {
 output "xss_match_tuple" {
   description = "(Optional) The parts of web requests that you want to inspect for cross-site scripting attacks.Nested fieldsxss_match_tuple"
   value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.xss_match_tuple
+}
+output "data" {
+  description = "(Optional) When the value of type is HEADER, enter the name of the header that you want the WAF to search, for example, User-Agent or Referer. If the value of type is any other value, omit data."
+  value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.data
+}
+output "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
+  value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.field_to_match
+}
+output "name" {
+  description = "(Required) The name of the set"
+  value       = aws_wafregional_xss_match_set.aws_wafregional_xss_match_set.name
 }
 output "id" {
   description = "The ID of the Regional WAF XSS Match Set."

@@ -1,12 +1,17 @@
 resource "aws_schemas_registry" "aws_schemas_registry" {
+  arn         = var.arn
   description = var.description
   name        = var.name
   tags        = var.tags
-  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."
@@ -20,11 +25,6 @@ variable "description" {
 variable "name" {
   description = "(Required) The name of the custom event schema registry. Maximum of 64 characters consisting of lower case letters, upper case letters, 0-9, ., -, _."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,14 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the discoverer."
-  value       = aws_schemas_registry.aws_schemas_registry.arn
-}
-output "description" {
-  description = "(Optional) The description of the discoverer. Maximum of 256 characters."
-  value       = aws_schemas_registry.aws_schemas_registry.description
-}
 output "name" {
   description = "(Required) The name of the custom event schema registry. Maximum of 64 characters consisting of lower case letters, upper case letters, 0-9, ., -, _."
   value       = aws_schemas_registry.aws_schemas_registry.name
@@ -161,6 +153,14 @@ output "name" {
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_schemas_registry.aws_schemas_registry.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the discoverer."
+  value       = aws_schemas_registry.aws_schemas_registry.arn
+}
+output "description" {
+  description = "(Optional) The description of the discoverer. Maximum of 256 characters."
+  value       = aws_schemas_registry.aws_schemas_registry.description
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."

@@ -1,7 +1,7 @@
 resource "aws_storagegateway_upload_buffer" "aws_storagegateway_upload_buffer" {
-  disk_id     = var.disk_id
   disk_path   = var.disk_path
   gateway_arn = var.gateway_arn
+  disk_id     = var.disk_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

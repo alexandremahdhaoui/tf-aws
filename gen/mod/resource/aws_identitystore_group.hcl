@@ -1,31 +1,40 @@
 resource "aws_identitystore_group" "aws_identitystore_group" {
-  create            = var.create
+  display_name      = var.display_name
+  external_ids      = var.external_ids
   group_id          = var.group_id
-  id                = var.id
-  identity_store_id = var.identity_store_id
   issuer            = var.issuer
   delete            = var.delete
   description       = var.description
-  display_name      = var.display_name
-  external_ids      = var.external_ids
+  id                = var.id
+  identity_store_id = var.identity_store_id
   update            = var.update
+  create            = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "create" {
-  description = "(Default 60m)"
-  type        = string
-  default     = ""
-}
-variable "delete" {
-  description = "(Default 90m)"
-  type        = string
-  default     = ""
-}
 variable "description" {
   description = "(Optional) A string containing the description of the group.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The identifier issued to this resource by an external identity provider."
+  type        = string
+  default     = ""
+}
+variable "identity_store_id" {
+  description = "(Required) The globally unique identifier for the identity store."
+  type        = string
+}
+variable "update" {
+  description = "(Default 180m)"
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 60m)"
   type        = string
   default     = ""
 }
@@ -44,22 +53,13 @@ variable "group_id" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The identifier issued to this resource by an external identity provider."
-  type        = string
-  default     = ""
-}
-variable "identity_store_id" {
-  description = "(Required) The globally unique identifier for the identity store."
-  type        = string
-}
 variable "issuer" {
   description = "The issuer for an external identifier.TimeoutsConfiguration options:"
   type        = string
   default     = ""
 }
-variable "update" {
-  description = "(Default 180m)"
+variable "delete" {
+  description = "(Default 90m)"
   type        = string
   default     = ""
 }
@@ -183,17 +183,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "issuer" {
-  description = "The issuer for an external identifier.TimeoutsConfiguration options:"
-  value       = aws_identitystore_group.aws_identitystore_group.issuer
-}
 output "delete" {
   description = "(Default 90m)"
   value       = aws_identitystore_group.aws_identitystore_group.delete
-}
-output "description" {
-  description = "(Optional) A string containing the description of the group.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_identitystore_group.aws_identitystore_group.description
 }
 output "display_name" {
   description = "(Optional) A string containing the name of the group. This value is commonly displayed when the group is referenced."
@@ -207,6 +199,18 @@ output "group_id" {
   description = "The identifier of the newly created group in the identity store."
   value       = aws_identitystore_group.aws_identitystore_group.group_id
 }
+output "issuer" {
+  description = "The issuer for an external identifier.TimeoutsConfiguration options:"
+  value       = aws_identitystore_group.aws_identitystore_group.issuer
+}
+output "create" {
+  description = "(Default 60m)"
+  value       = aws_identitystore_group.aws_identitystore_group.create
+}
+output "description" {
+  description = "(Optional) A string containing the description of the group.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_identitystore_group.aws_identitystore_group.description
+}
 output "id" {
   description = "The identifier issued to this resource by an external identity provider."
   value       = aws_identitystore_group.aws_identitystore_group.id
@@ -218,18 +222,6 @@ output "identity_store_id" {
 output "update" {
   description = "(Default 180m)"
   value       = aws_identitystore_group.aws_identitystore_group.update
-}
-output "create" {
-  description = "(Default 60m)"
-  value       = aws_identitystore_group.aws_identitystore_group.create
-}
-output "update" {
-  description = "(Default 180m)"
-  value       = aws_identitystore_group.aws_identitystore_group.update
-}
-output "create" {
-  description = "(Default 60m)"
-  value       = aws_identitystore_group.aws_identitystore_group.create
 }
 output "delete" {
   description = "(Default 90m)"
@@ -250,6 +242,14 @@ output "id" {
 output "issuer" {
   description = "The issuer for an external identifier.TimeoutsConfiguration options:"
   value       = aws_identitystore_group.aws_identitystore_group.issuer
+}
+output "update" {
+  description = "(Default 180m)"
+  value       = aws_identitystore_group.aws_identitystore_group.update
+}
+output "create" {
+  description = "(Default 60m)"
+  value       = aws_identitystore_group.aws_identitystore_group.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

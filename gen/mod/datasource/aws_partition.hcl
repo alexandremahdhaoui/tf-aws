@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "partition" {
+  description = "Identifier of the current partition (e.g., aws in AWS Commercial, aws-cn in AWS China)."
+  value       = aws_partition.aws_partition.partition
+}
 output "dns_suffix" {
   description = "Base DNS domain name for the current partition (e.g., amazonaws.com in AWS Commercial, amazonaws.com.cn in AWS China)."
   value       = aws_partition.aws_partition.dns_suffix
@@ -11,10 +15,6 @@ output "dns_suffix" {
 output "id" {
   description = "Identifier of the current partition (e.g., aws in AWS Commercial, aws-cn in AWS China)."
   value       = aws_partition.aws_partition.id
-}
-output "partition" {
-  description = "Identifier of the current partition (e.g., aws in AWS Commercial, aws-cn in AWS China)."
-  value       = aws_partition.aws_partition.partition
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

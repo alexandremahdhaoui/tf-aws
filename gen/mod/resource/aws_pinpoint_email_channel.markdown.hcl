@@ -157,10 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "role_arn" {
-  description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.role_arn
-}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.application_id
@@ -180,6 +176,10 @@ output "from_address" {
 output "identity" {
   description = "(Required) The ARN of an identity verified with SES."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.identity
+}
+output "role_arn" {
+  description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.role_arn
 }
 output "messages_per_second" {
   description = "Messages per second that can be sent."

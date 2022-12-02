@@ -156,10 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "EC2 Transit Gateway Attachment identifier"
-  value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.id
-}
 output "peer_account_id" {
   description = "(Optional) Account ID of EC2 Transit Gateway to peer with. Defaults to the account ID the AWS provider is currently connected to."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.peer_account_id
@@ -187,6 +183,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.tags_all
+}
+output "id" {
+  description = "EC2 Transit Gateway Attachment identifier"
+  value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

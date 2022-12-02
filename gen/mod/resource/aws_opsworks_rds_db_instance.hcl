@@ -1,11 +1,15 @@
 resource "aws_opsworks_rds_db_instance" "aws_opsworks_rds_db_instance" {
+  rds_db_instance_arn = var.rds_db_instance_arn
   stack_id            = var.stack_id
   db_password         = var.db_password
   db_user             = var.db_user
-  rds_db_instance_arn = var.rds_db_instance_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "stack_id" {
+  description = "(Required) The stack to register a db instance for. Changing this will force a new resource."
   type        = string
 }
 variable "db_password" {
@@ -18,10 +22,6 @@ variable "db_user" {
 }
 variable "rds_db_instance_arn" {
   description = "(Required) The db instance to register for this stack. Changing this will force a new resource."
-  type        = string
-}
-variable "stack_id" {
-  description = "(Required) The stack to register a db instance for. Changing this will force a new resource."
   type        = string
 }
 variable "tag_instance_id" {

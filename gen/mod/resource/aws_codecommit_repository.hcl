@@ -1,12 +1,12 @@
 resource "aws_codecommit_repository" "aws_codecommit_repository" {
-  default_branch  = var.default_branch
-  description     = var.description
   repository_id   = var.repository_id
   repository_name = var.repository_name
   tags            = var.tags
   arn             = var.arn
   clone_url_http  = var.clone_url_http
   clone_url_ssh   = var.clone_url_ssh
+  default_branch  = var.default_branch
+  description     = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -167,6 +167,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = "(Optional) The description of the repository. This needs to be less than 1000 characters"
+  value       = aws_codecommit_repository.aws_codecommit_repository.description
+}
+output "repository_id" {
+  description = "The ID of the repository"
+  value       = aws_codecommit_repository.aws_codecommit_repository.repository_id
+}
+output "repository_name" {
+  description = "(Required) The name for the repository. This needs to be less than 100 characters."
+  value       = aws_codecommit_repository.aws_codecommit_repository.repository_name
+}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codecommit_repository.aws_codecommit_repository.tags
@@ -187,17 +199,9 @@ output "default_branch" {
   description = "(Optional) The default branch of the repository. The branch specified here needs to exist."
   value       = aws_codecommit_repository.aws_codecommit_repository.default_branch
 }
-output "description" {
-  description = "(Optional) The description of the repository. This needs to be less than 1000 characters"
-  value       = aws_codecommit_repository.aws_codecommit_repository.description
-}
-output "repository_id" {
-  description = "The ID of the repository"
-  value       = aws_codecommit_repository.aws_codecommit_repository.repository_id
-}
-output "repository_name" {
-  description = "(Required) The name for the repository. This needs to be less than 100 characters."
-  value       = aws_codecommit_repository.aws_codecommit_repository.repository_name
+output "arn" {
+  description = "The ARN of the repository"
+  value       = aws_codecommit_repository.aws_codecommit_repository.arn
 }
 output "clone_url_http" {
   description = "The URL to use for cloning the repository over HTTPS."
@@ -214,10 +218,6 @@ output "repository_id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_codecommit_repository.aws_codecommit_repository.tags_all
-}
-output "arn" {
-  description = "The ARN of the repository"
-  value       = aws_codecommit_repository.aws_codecommit_repository.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

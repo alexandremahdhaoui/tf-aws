@@ -1,17 +1,17 @@
 resource "aws_prometheus_rule_group_namespace" "aws_prometheus_rule_group_namespace" {
-  name         = var.name
   workspace_id = var.workspace_id
+  name         = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the rule group namespace"
-  type        = string
-}
 variable "workspace_id" {
   description = "(Required) ID of the prometheus workspace the rule group namespace should be linked to"
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the rule group namespace"
   type        = string
 }
 variable "tag_instance_id" {

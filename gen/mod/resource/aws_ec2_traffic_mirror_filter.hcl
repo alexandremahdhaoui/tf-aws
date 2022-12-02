@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional, Forces new resource) A description of the filter."
-  type        = string
-}
 variable "id" {
   description = "The name of the filter."
   type        = string
@@ -29,6 +25,10 @@ variable "tags" {
 }
 variable "arn" {
   description = "The ARN of the traffic mirror filter."
+  type        = string
+}
+variable "description" {
+  description = "(Optional, Forces new resource) A description of the filter."
   type        = string
 }
 variable "tag_instance_id" {
@@ -151,14 +151,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "network_services" {
-  description = "(Optional) List of amazon network services that should be mirrored. Valid values: amazon-dns."
-  value       = aws_ec2_traffic_mirror_filter.aws_ec2_traffic_mirror_filter.network_services
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_traffic_mirror_filter.aws_ec2_traffic_mirror_filter.tags
-}
 output "arn" {
   description = "The ARN of the traffic mirror filter."
   value       = aws_ec2_traffic_mirror_filter.aws_ec2_traffic_mirror_filter.arn
@@ -170,6 +162,14 @@ output "description" {
 output "id" {
   description = "The name of the filter."
   value       = aws_ec2_traffic_mirror_filter.aws_ec2_traffic_mirror_filter.id
+}
+output "network_services" {
+  description = "(Optional) List of amazon network services that should be mirrored. Valid values: amazon-dns."
+  value       = aws_ec2_traffic_mirror_filter.aws_ec2_traffic_mirror_filter.network_services
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_traffic_mirror_filter.aws_ec2_traffic_mirror_filter.tags
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."

@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_stream" "aws_cloudwatch_log_stream" {
-  name           = var.name
   log_group_name = var.log_group_name
+  name           = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

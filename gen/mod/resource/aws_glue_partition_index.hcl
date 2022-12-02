@@ -1,27 +1,15 @@
 resource "aws_glue_partition_index" "aws_glue_partition_index" {
-  keys            = var.keys
-  partition_index = var.partition_index
-  table_name      = var.table_name
-  catalog_id      = var.catalog_id
   create          = var.create
   database_name   = var.database_name
   id              = var.id
   index_name      = var.index_name
+  keys            = var.keys
+  partition_index = var.partition_index
+  table_name      = var.table_name
+  catalog_id      = var.catalog_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "keys" {
-  description = "(Required) Keys for the partition index.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "partition_index" {
-  description = "(Required) Configuration block for a partition index. See partition_index below."
-  type        = string
-}
-variable "table_name" {
-  description = "(Required) Name of the table. For Hive compatibility, this must be entirely lowercase."
   type        = string
 }
 variable "catalog_id" {
@@ -43,6 +31,18 @@ variable "id" {
 }
 variable "index_name" {
   description = "(Required) Name of the partition index."
+  type        = string
+}
+variable "keys" {
+  description = "(Required) Keys for the partition index.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "partition_index" {
+  description = "(Required) Configuration block for a partition index. See partition_index below."
+  type        = string
+}
+variable "table_name" {
+  description = "(Required) Name of the table. For Hive compatibility, this must be entirely lowercase."
   type        = string
 }
 variable "tag_instance_id" {

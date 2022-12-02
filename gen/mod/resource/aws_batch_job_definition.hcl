@@ -1,56 +1,29 @@
 resource "aws_batch_job_definition" "aws_batch_job_definition" {
-  action                   = var.action
-  tags                     = var.tags
-  arn                      = var.arn
-  evaluate_on_exit         = var.evaluate_on_exit
-  revision                 = var.revision
-  attempt_duration_seconds = var.attempt_duration_seconds
-  on_exit_code             = var.on_exit_code
-  parameters               = var.parameters
-  platform_capabilities    = var.platform_capabilities
-  propagate_tags           = var.propagate_tags
-  timeout                  = var.timeout
-  type                     = var.type
   attempts                 = var.attempts
   container_properties     = var.container_properties
-  name                     = var.name
+  evaluate_on_exit         = var.evaluate_on_exit
+  on_exit_code             = var.on_exit_code
   on_reason                = var.on_reason
   on_status_reason         = var.on_status_reason
+  parameters               = var.parameters
+  arn                      = var.arn
+  timeout                  = var.timeout
+  platform_capabilities    = var.platform_capabilities
+  type                     = var.type
+  action                   = var.action
+  name                     = var.name
   retry_strategy           = var.retry_strategy
+  revision                 = var.revision
+  attempt_duration_seconds = var.attempt_duration_seconds
+  tags                     = var.tags
+  propagate_tags           = var.propagate_tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "action" {
-  description = "(Required) Specifies the action to take if all of the specified conditions are met. The values are not case sensitive. Valid values: RETRY, EXIT."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name of the job definition."
-  type        = string
-}
-variable "evaluate_on_exit" {
-  description = "(Optional) The evaluate on exit conditions under which the job should be retried or failed. If this parameter is specified, then the attempts parameter must also be specified. You may specify up to 5 configuration blocks.timeouttimeout supports the following:"
-  type        = string
-  default     = ""
-}
-variable "revision" {
-  description = "The revision of the job definition."
-  type        = string
-}
-variable "attempt_duration_seconds" {
-  description = "(Optional) The time duration in seconds after which AWS Batch terminates your jobs if they have not finished. The minimum value for the timeout is 60 seconds.evaluate_on_exit"
-  type        = string
-  default     = ""
-}
-variable "on_exit_code" {
-  description = "(Optional) A glob pattern to match against the decimal representation of the exit code returned for a job."
+variable "on_status_reason" {
+  description = "(Optional) A glob pattern to match against the status reason returned for a job.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -59,23 +32,8 @@ variable "parameters" {
   type        = string
   default     = ""
 }
-variable "platform_capabilities" {
-  description = "(Optional) The platform capabilities required by the job definition. If no value is specified, it defaults to EC2. To run the job on Fargate resources, specify FARGATE."
-  type        = string
-  default     = ""
-}
-variable "propagate_tags" {
-  description = "(Optional) Specifies whether to propagate the tags from the job definition to the corresponding Amazon ECS task. Default is false."
-  type        = string
-  default     = ""
-}
-variable "timeout" {
-  description = "(Optional) Specifies the timeout for jobs so that if a job runs longer, AWS Batch terminates the job. Maximum number of timeout is 1. Defined below."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required) The type of job definition.  Must be container.retry_strategyretry_strategy supports the following:"
+variable "arn" {
+  description = "The Amazon Resource Name of the job definition."
   type        = string
 }
 variable "attempts" {
@@ -88,23 +46,65 @@ variable "container_properties" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Specifies the name of the job definition."
+variable "evaluate_on_exit" {
+  description = "(Optional) The evaluate on exit conditions under which the job should be retried or failed. If this parameter is specified, then the attempts parameter must also be specified. You may specify up to 5 configuration blocks.timeouttimeout supports the following:"
   type        = string
+  default     = ""
+}
+variable "on_exit_code" {
+  description = "(Optional) A glob pattern to match against the decimal representation of the exit code returned for a job."
+  type        = string
+  default     = ""
 }
 variable "on_reason" {
   description = "(Optional) A glob pattern to match against the reason returned for a job."
   type        = string
   default     = ""
 }
-variable "on_status_reason" {
-  description = "(Optional) A glob pattern to match against the status reason returned for a job.In addition to all arguments above, the following attributes are exported:"
+variable "platform_capabilities" {
+  description = "(Optional) The platform capabilities required by the job definition. If no value is specified, it defaults to EC2. To run the job on Fargate resources, specify FARGATE."
   type        = string
   default     = ""
+}
+variable "timeout" {
+  description = "(Optional) Specifies the timeout for jobs so that if a job runs longer, AWS Batch terminates the job. Maximum number of timeout is 1. Defined below."
+  type        = string
+  default     = ""
+}
+variable "action" {
+  description = "(Required) Specifies the action to take if all of the specified conditions are met. The values are not case sensitive. Valid values: RETRY, EXIT."
+  type        = string
+}
+variable "type" {
+  description = "(Required) The type of job definition.  Must be container.retry_strategyretry_strategy supports the following:"
+  type        = string
+}
+variable "attempt_duration_seconds" {
+  description = "(Optional) The time duration in seconds after which AWS Batch terminates your jobs if they have not finished. The minimum value for the timeout is 60 seconds.evaluate_on_exit"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Specifies the name of the job definition."
+  type        = string
 }
 variable "retry_strategy" {
   description = "retry_strategy is 1.  Defined below."
   type        = string
+}
+variable "revision" {
+  description = "The revision of the job definition."
+  type        = string
+}
+variable "propagate_tags" {
+  description = "(Optional) Specifies whether to propagate the tags from the job definition to the corresponding Amazon ECS task. Default is false."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -226,17 +226,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "attempts" {
-  description = "(Optional) The number of times to move a job to the RUNNABLE status. You may specify between 1 and 10 attempts."
-  value       = aws_batch_job_definition.aws_batch_job_definition.attempts
+output "propagate_tags" {
+  description = "(Optional) Specifies whether to propagate the tags from the job definition to the corresponding Amazon ECS task. Default is false."
+  value       = aws_batch_job_definition.aws_batch_job_definition.propagate_tags
 }
-output "container_properties" {
-  description = "(Optional) A valid container propertiestype parameter is container."
-  value       = aws_batch_job_definition.aws_batch_job_definition.container_properties
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_batch_job_definition.aws_batch_job_definition.tags
 }
-output "name" {
-  description = "(Required) Specifies the name of the job definition."
-  value       = aws_batch_job_definition.aws_batch_job_definition.name
+output "on_exit_code" {
+  description = "(Optional) A glob pattern to match against the decimal representation of the exit code returned for a job."
+  value       = aws_batch_job_definition.aws_batch_job_definition.on_exit_code
 }
 output "on_reason" {
   description = "(Optional) A glob pattern to match against the reason returned for a job."
@@ -246,29 +246,37 @@ output "on_status_reason" {
   description = "(Optional) A glob pattern to match against the status reason returned for a job.In addition to all arguments above, the following attributes are exported:"
   value       = aws_batch_job_definition.aws_batch_job_definition.on_status_reason
 }
-output "retry_strategy" {
-  description = "retry_strategy is 1.  Defined below."
-  value       = aws_batch_job_definition.aws_batch_job_definition.retry_strategy
-}
-output "action" {
-  description = "(Required) Specifies the action to take if all of the specified conditions are met. The values are not case sensitive. Valid values: RETRY, EXIT."
-  value       = aws_batch_job_definition.aws_batch_job_definition.action
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_batch_job_definition.aws_batch_job_definition.tags
+output "parameters" {
+  description = "(Optional) Specifies the parameter substitution placeholders to set in the job definition."
+  value       = aws_batch_job_definition.aws_batch_job_definition.parameters
 }
 output "arn" {
   description = "The Amazon Resource Name of the job definition."
   value       = aws_batch_job_definition.aws_batch_job_definition.arn
 }
+output "attempts" {
+  description = "(Optional) The number of times to move a job to the RUNNABLE status. You may specify between 1 and 10 attempts."
+  value       = aws_batch_job_definition.aws_batch_job_definition.attempts
+}
+output "container_properties" {
+  description = "(Optional) A valid container propertiestype parameter is container."
+  value       = aws_batch_job_definition.aws_batch_job_definition.container_properties
+}
 output "evaluate_on_exit" {
   description = "(Optional) The evaluate on exit conditions under which the job should be retried or failed. If this parameter is specified, then the attempts parameter must also be specified. You may specify up to 5 configuration blocks.timeouttimeout supports the following:"
   value       = aws_batch_job_definition.aws_batch_job_definition.evaluate_on_exit
 }
-output "revision" {
-  description = "The revision of the job definition."
-  value       = aws_batch_job_definition.aws_batch_job_definition.revision
+output "platform_capabilities" {
+  description = "(Optional) The platform capabilities required by the job definition. If no value is specified, it defaults to EC2. To run the job on Fargate resources, specify FARGATE."
+  value       = aws_batch_job_definition.aws_batch_job_definition.platform_capabilities
+}
+output "timeout" {
+  description = "(Optional) Specifies the timeout for jobs so that if a job runs longer, AWS Batch terminates the job. Maximum number of timeout is 1. Defined below."
+  value       = aws_batch_job_definition.aws_batch_job_definition.timeout
+}
+output "action" {
+  description = "(Required) Specifies the action to take if all of the specified conditions are met. The values are not case sensitive. Valid values: RETRY, EXIT."
+  value       = aws_batch_job_definition.aws_batch_job_definition.action
 }
 output "type" {
   description = "(Required) The type of job definition.  Must be container.retry_strategyretry_strategy supports the following:"
@@ -278,25 +286,17 @@ output "attempt_duration_seconds" {
   description = "(Optional) The time duration in seconds after which AWS Batch terminates your jobs if they have not finished. The minimum value for the timeout is 60 seconds.evaluate_on_exit"
   value       = aws_batch_job_definition.aws_batch_job_definition.attempt_duration_seconds
 }
-output "on_exit_code" {
-  description = "(Optional) A glob pattern to match against the decimal representation of the exit code returned for a job."
-  value       = aws_batch_job_definition.aws_batch_job_definition.on_exit_code
+output "name" {
+  description = "(Required) Specifies the name of the job definition."
+  value       = aws_batch_job_definition.aws_batch_job_definition.name
 }
-output "parameters" {
-  description = "(Optional) Specifies the parameter substitution placeholders to set in the job definition."
-  value       = aws_batch_job_definition.aws_batch_job_definition.parameters
+output "retry_strategy" {
+  description = "retry_strategy is 1.  Defined below."
+  value       = aws_batch_job_definition.aws_batch_job_definition.retry_strategy
 }
-output "platform_capabilities" {
-  description = "(Optional) The platform capabilities required by the job definition. If no value is specified, it defaults to EC2. To run the job on Fargate resources, specify FARGATE."
-  value       = aws_batch_job_definition.aws_batch_job_definition.platform_capabilities
-}
-output "propagate_tags" {
-  description = "(Optional) Specifies whether to propagate the tags from the job definition to the corresponding Amazon ECS task. Default is false."
-  value       = aws_batch_job_definition.aws_batch_job_definition.propagate_tags
-}
-output "timeout" {
-  description = "(Optional) Specifies the timeout for jobs so that if a job runs longer, AWS Batch terminates the job. Maximum number of timeout is 1. Defined below."
-  value       = aws_batch_job_definition.aws_batch_job_definition.timeout
+output "revision" {
+  description = "The revision of the job definition."
+  value       = aws_batch_job_definition.aws_batch_job_definition.revision
 }
 output "arn" {
   description = "The Amazon Resource Name of the job definition."

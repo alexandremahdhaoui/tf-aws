@@ -124,6 +124,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "url_id" {
+  description = "A generated ID for the endpoint."
+  value       = aws_lambda_function_url.aws_lambda_function_url.url_id
+}
 output "function_arn" {
   description = "The Amazon Resource Name (ARN) of the function."
   value       = aws_lambda_function_url.aws_lambda_function_url.function_arn
@@ -131,10 +135,6 @@ output "function_arn" {
 output "function_url" {
   description = "The HTTP URL endpoint for the function in the format https://<url_id>.lambda-url.<region>.on.aws."
   value       = aws_lambda_function_url.aws_lambda_function_url.function_url
-}
-output "url_id" {
-  description = "A generated ID for the endpoint."
-  value       = aws_lambda_function_url.aws_lambda_function_url.url_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

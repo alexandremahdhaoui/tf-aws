@@ -1,37 +1,41 @@
 resource "aws_opsworks_memcached_layer" "aws_opsworks_memcached_layer" {
-  custom_json                 = var.custom_json
   ebs_volume                  = var.ebs_volume
+  mount_point                 = var.mount_point
   tags                        = var.tags
-  custom_deploy_recipes       = var.custom_deploy_recipes
-  elastic_load_balancer       = var.elastic_load_balancer
-  number_of_disks             = var.number_of_disks
-  auto_assign_elastic_ips     = var.auto_assign_elastic_ips
-  auto_healing                = var.auto_healing
-  drain_elb_on_shutdown       = var.drain_elb_on_shutdown
+  custom_setup_recipes        = var.custom_setup_recipes
+  custom_shutdown_recipes     = var.custom_shutdown_recipes
+  name                        = var.name
+  system_packages             = var.system_packages
+  custom_security_group_ids   = var.custom_security_group_ids
   instance_shutdown_timeout   = var.instance_shutdown_timeout
   size                        = var.size
-  type                        = var.type
-  stack_id                    = var.stack_id
-  system_packages             = var.system_packages
-  arn                         = var.arn
-  custom_security_group_ids   = var.custom_security_group_ids
-  name                        = var.name
-  custom_configure_recipes    = var.custom_configure_recipes
-  custom_instance_profile_arn = var.custom_instance_profile_arn
   iops                        = var.iops
-  custom_shutdown_recipes     = var.custom_shutdown_recipes
+  number_of_disks             = var.number_of_disks
   use_ebs_optimized_instances = var.use_ebs_optimized_instances
-  custom_undeploy_recipes     = var.custom_undeploy_recipes
-  id                          = var.id
-  install_updates_on_boot     = var.install_updates_on_boot
-  mount_point                 = var.mount_point
-  raid_level                  = var.raid_level
-  allocated_memory            = var.allocated_memory
+  arn                         = var.arn
   auto_assign_public_ips      = var.auto_assign_public_ips
-  custom_setup_recipes        = var.custom_setup_recipes
+  custom_configure_recipes    = var.custom_configure_recipes
+  install_updates_on_boot     = var.install_updates_on_boot
+  raid_level                  = var.raid_level
+  custom_deploy_recipes       = var.custom_deploy_recipes
+  custom_json                 = var.custom_json
+  drain_elb_on_shutdown       = var.drain_elb_on_shutdown
+  custom_instance_profile_arn = var.custom_instance_profile_arn
+  stack_id                    = var.stack_id
+  type                        = var.type
+  allocated_memory            = var.allocated_memory
+  auto_assign_elastic_ips     = var.auto_assign_elastic_ips
+  auto_healing                = var.auto_healing
+  custom_undeploy_recipes     = var.custom_undeploy_recipes
+  elastic_load_balancer       = var.elastic_load_balancer
+  id                          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "custom_deploy_recipes" {
+  description = ""
   type        = string
 }
 variable "custom_json" {
@@ -39,22 +43,22 @@ variable "custom_json" {
   type        = string
   default     = ""
 }
-variable "ebs_volume" {
-  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+variable "drain_elb_on_shutdown" {
+  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+variable "install_updates_on_boot" {
+  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
   type        = string
   default     = ""
 }
-variable "custom_deploy_recipes" {
-  description = ""
+variable "raid_level" {
+  description = "(Required) The RAID level to use for the volume."
   type        = string
 }
-variable "elastic_load_balancer" {
-  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+variable "allocated_memory" {
+  description = "(Optional) Amount of memory to allocate for the cache on each instance, in megabytes. Defaults to 512MB."
   type        = string
   default     = ""
 }
@@ -68,14 +72,69 @@ variable "auto_healing" {
   type        = string
   default     = ""
 }
-variable "drain_elb_on_shutdown" {
-  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
+variable "custom_instance_profile_arn" {
+  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
   type        = string
   default     = ""
 }
-variable "number_of_disks" {
-  description = "(Required) The number of disks to use for the EBS volume."
+variable "stack_id" {
+  description = "(Required) ID of the stack the layer will belong to."
   type        = string
+}
+variable "type" {
+  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
+  type        = string
+  default     = ""
+}
+variable "custom_undeploy_recipes" {
+  description = "An ebs_volume block supports the following arguments:"
+  type        = string
+}
+variable "elastic_load_balancer" {
+  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The id of the layer."
+  type        = string
+}
+variable "ebs_volume" {
+  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "mount_point" {
+  description = "(Required) The path to mount the EBS volume on the layer's instances."
+  type        = string
+}
+variable "custom_setup_recipes" {
+  description = ""
+  type        = string
+}
+variable "custom_shutdown_recipes" {
+  description = ""
+  type        = string
+}
+variable "name" {
+  description = "(Optional) A human-readable name for the layer."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "system_packages" {
+  description = "(Optional) Names of a set of system packages to install on the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "custom_security_group_ids" {
+  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
+  type        = string
+  default     = ""
 }
 variable "instance_shutdown_timeout" {
   description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
@@ -86,31 +145,12 @@ variable "size" {
   description = "(Required) The size of the volume in gigabytes."
   type        = string
 }
-variable "type" {
-  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
-  type        = string
-  default     = ""
-}
 variable "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."
   type        = string
 }
-variable "custom_security_group_ids" {
-  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Optional) A human-readable name for the layer."
-  type        = string
-  default     = ""
-}
-variable "stack_id" {
-  description = "(Required) ID of the stack the layer will belong to."
-  type        = string
-}
-variable "system_packages" {
-  description = "(Optional) Names of a set of system packages to install on the layer's instances."
+variable "auto_assign_public_ips" {
+  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
   type        = string
   default     = ""
 }
@@ -118,59 +158,19 @@ variable "custom_configure_recipes" {
   description = ""
   type        = string
 }
-variable "custom_instance_profile_arn" {
-  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
-  type        = string
-  default     = ""
-}
 variable "iops" {
   description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
-variable "custom_shutdown_recipes" {
-  description = ""
+variable "number_of_disks" {
+  description = "(Required) The number of disks to use for the EBS volume."
   type        = string
 }
 variable "use_ebs_optimized_instances" {
   description = "(Optional) Whether to use EBS-optimized instances."
   type        = string
   default     = ""
-}
-variable "install_updates_on_boot" {
-  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
-  type        = string
-  default     = ""
-}
-variable "mount_point" {
-  description = "(Required) The path to mount the EBS volume on the layer's instances."
-  type        = string
-}
-variable "raid_level" {
-  description = "(Required) The RAID level to use for the volume."
-  type        = string
-}
-variable "allocated_memory" {
-  description = "(Optional) Amount of memory to allocate for the cache on each instance, in megabytes. Defaults to 512MB."
-  type        = string
-  default     = ""
-}
-variable "auto_assign_public_ips" {
-  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
-  type        = string
-  default     = ""
-}
-variable "custom_setup_recipes" {
-  description = ""
-  type        = string
-}
-variable "custom_undeploy_recipes" {
-  description = "An ebs_volume block supports the following arguments:"
-  type        = string
-}
-variable "id" {
-  description = "The id of the layer."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -292,73 +292,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The id of the layer."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.id
-}
-output "install_updates_on_boot" {
-  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.install_updates_on_boot
-}
-output "mount_point" {
-  description = "(Required) The path to mount the EBS volume on the layer's instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.mount_point
-}
-output "raid_level" {
-  description = "(Required) The RAID level to use for the volume."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.raid_level
-}
-output "allocated_memory" {
-  description = "(Optional) Amount of memory to allocate for the cache on each instance, in megabytes. Defaults to 512MB."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.allocated_memory
-}
-output "auto_assign_public_ips" {
-  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.auto_assign_public_ips
-}
-output "custom_setup_recipes" {
-  description = ""
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_setup_recipes
-}
-output "custom_undeploy_recipes" {
-  description = "An ebs_volume block supports the following arguments:"
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_undeploy_recipes
-}
-output "custom_json" {
-  description = "(Optional) Custom JSON attributes to apply to the layer."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_json
-}
-output "ebs_volume" {
-  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.ebs_volume
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.tags
-}
-output "custom_deploy_recipes" {
-  description = ""
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_deploy_recipes
-}
-output "elastic_load_balancer" {
-  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.elastic_load_balancer
-}
-output "auto_assign_elastic_ips" {
-  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.auto_assign_elastic_ips
-}
-output "auto_healing" {
-  description = "(Optional) Whether to enable auto-healing for the layer."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.auto_healing
-}
-output "drain_elb_on_shutdown" {
-  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.drain_elb_on_shutdown
-}
-output "number_of_disks" {
-  description = "(Required) The number of disks to use for the EBS volume."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.number_of_disks
+output "custom_security_group_ids" {
+  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_security_group_ids
 }
 output "instance_shutdown_timeout" {
   description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
@@ -368,49 +304,113 @@ output "size" {
   description = "(Required) The size of the volume in gigabytes."
   value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.size
 }
-output "type" {
-  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.type
-}
-output "system_packages" {
-  description = "(Optional) Names of a set of system packages to install on the layer's instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.system_packages
-}
 output "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."
   value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.arn
 }
-output "custom_security_group_ids" {
-  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_security_group_ids
-}
-output "name" {
-  description = "(Optional) A human-readable name for the layer."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.name
-}
-output "stack_id" {
-  description = "(Required) ID of the stack the layer will belong to."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.stack_id
+output "auto_assign_public_ips" {
+  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.auto_assign_public_ips
 }
 output "custom_configure_recipes" {
   description = ""
   value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_configure_recipes
 }
+output "iops" {
+  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.iops
+}
+output "number_of_disks" {
+  description = "(Required) The number of disks to use for the EBS volume."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.number_of_disks
+}
+output "use_ebs_optimized_instances" {
+  description = "(Optional) Whether to use EBS-optimized instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.use_ebs_optimized_instances
+}
+output "custom_deploy_recipes" {
+  description = ""
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_deploy_recipes
+}
+output "custom_json" {
+  description = "(Optional) Custom JSON attributes to apply to the layer."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_json
+}
+output "drain_elb_on_shutdown" {
+  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.drain_elb_on_shutdown
+}
+output "install_updates_on_boot" {
+  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.install_updates_on_boot
+}
+output "raid_level" {
+  description = "(Required) The RAID level to use for the volume."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.raid_level
+}
+output "allocated_memory" {
+  description = "(Optional) Amount of memory to allocate for the cache on each instance, in megabytes. Defaults to 512MB."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.allocated_memory
+}
+output "auto_assign_elastic_ips" {
+  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.auto_assign_elastic_ips
+}
+output "auto_healing" {
+  description = "(Optional) Whether to enable auto-healing for the layer."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.auto_healing
+}
 output "custom_instance_profile_arn" {
   description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
   value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_instance_profile_arn
 }
-output "iops" {
-  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.iops
+output "stack_id" {
+  description = "(Required) ID of the stack the layer will belong to."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.stack_id
+}
+output "type" {
+  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.type
+}
+output "custom_undeploy_recipes" {
+  description = "An ebs_volume block supports the following arguments:"
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_undeploy_recipes
+}
+output "elastic_load_balancer" {
+  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.elastic_load_balancer
+}
+output "id" {
+  description = "The id of the layer."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.id
+}
+output "ebs_volume" {
+  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.ebs_volume
+}
+output "mount_point" {
+  description = "(Required) The path to mount the EBS volume on the layer's instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.mount_point
+}
+output "custom_setup_recipes" {
+  description = ""
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_setup_recipes
 }
 output "custom_shutdown_recipes" {
   description = ""
   value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.custom_shutdown_recipes
 }
-output "use_ebs_optimized_instances" {
-  description = "(Optional) Whether to use EBS-optimized instances."
-  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.use_ebs_optimized_instances
+output "name" {
+  description = "(Optional) A human-readable name for the layer."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.tags
+}
+output "system_packages" {
+  description = "(Optional) Names of a set of system packages to install on the layer's instances."
+  value       = aws_opsworks_memcached_layer.aws_opsworks_memcached_layer.system_packages
 }
 output "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."

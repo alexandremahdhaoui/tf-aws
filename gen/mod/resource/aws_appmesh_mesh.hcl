@@ -1,49 +1,22 @@
 resource "aws_appmesh_mesh" "aws_appmesh_mesh" {
-  type              = var.type
-  created_date      = var.created_date
-  egress_filter     = var.egress_filter
-  mesh_owner        = var.mesh_owner
-  name              = var.name
-  spec              = var.spec
   arn               = var.arn
+  egress_filter     = var.egress_filter
   id                = var.id
   last_updated_date = var.last_updated_date
+  mesh_owner        = var.mesh_owner
+  name              = var.name
   resource_owner    = var.resource_owner
+  spec              = var.spec
+  type              = var.type
+  created_date      = var.created_date
   tags              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) Name to use for the service mesh. Must be between 1 and 255 characters in length."
-  type        = string
-}
-variable "spec" {
-  description = "(Optional) Service mesh specification to apply."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Optional) Egress filter type. By default, the type is DROP_ALLALLOW_ALL and DROP_ALL.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "created_date" {
   description = "Creation date of the service mesh."
-  type        = string
-}
-variable "egress_filter" {
-  description = "- (Optional) Egress filter rules for the service mesh.The egress_filter object supports the following:"
-  type        = string
-  default     = ""
-}
-variable "mesh_owner" {
-  description = "AWS account ID of the service mesh's owner."
-  type        = string
-}
-variable "resource_owner" {
-  description = "Resource owner's AWS account ID."
   type        = string
 }
 variable "tags" {
@@ -51,17 +24,44 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "last_updated_date" {
+  description = "Last update date of the service mesh."
+  type        = string
+}
+variable "mesh_owner" {
+  description = "AWS account ID of the service mesh's owner."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name to use for the service mesh. Must be between 1 and 255 characters in length."
+  type        = string
+}
+variable "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  type        = string
+}
+variable "spec" {
+  description = "(Optional) Service mesh specification to apply."
+  type        = string
+  default     = ""
+}
 variable "arn" {
   description = "ARN of the service mesh."
   type        = string
+}
+variable "egress_filter" {
+  description = "- (Optional) Egress filter rules for the service mesh.The egress_filter object supports the following:"
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "ID of the service mesh."
   type        = string
 }
-variable "last_updated_date" {
-  description = "Last update date of the service mesh."
+variable "type" {
+  description = "(Optional) Egress filter type. By default, the type is DROP_ALLALLOW_ALL and DROP_ALL.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -183,25 +183,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "last_updated_date" {
-  description = "Last update date of the service mesh."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.last_updated_date
-}
 output "resource_owner" {
   description = "Resource owner's AWS account ID."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.resource_owner
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.tags
+output "spec" {
+  description = "(Optional) Service mesh specification to apply."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.spec
 }
 output "arn" {
   description = "ARN of the service mesh."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.arn
 }
+output "egress_filter" {
+  description = "- (Optional) Egress filter rules for the service mesh.The egress_filter object supports the following:"
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.egress_filter
+}
 output "id" {
   description = "ID of the service mesh."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.id
+}
+output "last_updated_date" {
+  description = "Last update date of the service mesh."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.last_updated_date
 }
 output "mesh_owner" {
   description = "AWS account ID of the service mesh's owner."
@@ -211,10 +215,6 @@ output "name" {
   description = "(Required) Name to use for the service mesh. Must be between 1 and 255 characters in length."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.name
 }
-output "spec" {
-  description = "(Optional) Service mesh specification to apply."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.spec
-}
 output "type" {
   description = "(Optional) Egress filter type. By default, the type is DROP_ALLALLOW_ALL and DROP_ALL.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appmesh_mesh.aws_appmesh_mesh.type
@@ -223,9 +223,21 @@ output "created_date" {
   description = "Creation date of the service mesh."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.created_date
 }
-output "egress_filter" {
-  description = "- (Optional) Egress filter rules for the service mesh.The egress_filter object supports the following:"
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.egress_filter
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.tags
+}
+output "arn" {
+  description = "ARN of the service mesh."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.arn
+}
+output "created_date" {
+  description = "Creation date of the service mesh."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.created_date
+}
+output "id" {
+  description = "ID of the service mesh."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.id
 }
 output "last_updated_date" {
   description = "Last update date of the service mesh."
@@ -242,18 +254,6 @@ output "resource_owner" {
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.tags_all
-}
-output "arn" {
-  description = "ARN of the service mesh."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.arn
-}
-output "created_date" {
-  description = "Creation date of the service mesh."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.created_date
-}
-output "id" {
-  description = "ID of the service mesh."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

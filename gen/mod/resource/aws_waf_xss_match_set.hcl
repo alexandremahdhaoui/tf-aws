@@ -1,14 +1,22 @@
 resource "aws_waf_xss_match_set" "aws_waf_xss_match_set" {
+  type                = var.type
+  xss_match_tuples    = var.xss_match_tuples
   data                = var.data
   field_to_match      = var.field_to_match
   id                  = var.id
   name                = var.name
   text_transformation = var.text_transformation
-  type                = var.type
-  xss_match_tuples    = var.xss_match_tuples
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the WAF XssMatchSet."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name or description of the SizeConstraintSet."
   type        = string
 }
 variable "text_transformation" {
@@ -31,14 +39,6 @@ variable "data" {
 }
 variable "field_to_match" {
   description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the WAF XssMatchSet."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name or description of the SizeConstraintSet."
   type        = string
 }
 variable "tag_instance_id" {
@@ -161,6 +161,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
+  value       = aws_waf_xss_match_set.aws_waf_xss_match_set.field_to_match
+}
 output "id" {
   description = "The ID of the WAF XssMatchSet."
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.id
@@ -184,10 +188,6 @@ output "xss_match_tuples" {
 output "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.data
-}
-output "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
-  value       = aws_waf_xss_match_set.aws_waf_xss_match_set.field_to_match
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"

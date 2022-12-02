@@ -1,55 +1,31 @@
 resource "aws_route_table" "aws_route_table" {
-  propagating_vgws           = var.propagating_vgws
-  cidr_block                 = var.cidr_block
-  id                         = var.id
-  instance_id                = var.instance_id
-  local_gateway_id           = var.local_gateway_id
-  owner_id                   = var.owner_id
-  tags_all                   = var.tags_all
-  vpc_peering_connection_id  = var.vpc_peering_connection_id
   arn                        = var.arn
-  ipv6_cidr_block            = var.ipv6_cidr_block
-  network_interface_id       = var.network_interface_id
-  route                      = var.route
-  tags                       = var.tags
-  transit_gateway_id         = var.transit_gateway_id
-  vpc_id                     = var.vpc_id
-  carrier_gateway_id         = var.carrier_gateway_id
   create                     = var.create
   destination_prefix_list_id = var.destination_prefix_list_id
-  egress_only_gateway_id     = var.egress_only_gateway_id
-  gateway_id                 = var.gateway_id
-  core_network_arn           = var.core_network_arn
-  nat_gateway_id             = var.nat_gateway_id
+  id                         = var.id
+  network_interface_id       = var.network_interface_id
+  route                      = var.route
+  transit_gateway_id         = var.transit_gateway_id
   update                     = var.update
+  vpc_id                     = var.vpc_id
+  carrier_gateway_id         = var.carrier_gateway_id
+  cidr_block                 = var.cidr_block
+  local_gateway_id           = var.local_gateway_id
+  owner_id                   = var.owner_id
+  egress_only_gateway_id     = var.egress_only_gateway_id
+  propagating_vgws           = var.propagating_vgws
   vpc_endpoint_id            = var.vpc_endpoint_id
+  core_network_arn           = var.core_network_arn
+  gateway_id                 = var.gateway_id
+  instance_id                = var.instance_id
+  ipv6_cidr_block            = var.ipv6_cidr_block
+  nat_gateway_id             = var.nat_gateway_id
+  tags                       = var.tags
+  tags_all                   = var.tags_all
+  vpc_peering_connection_id  = var.vpc_peering_connection_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "destination_prefix_list_id" {
-  description = "(Optional) The ID of a managed prefix list destination of the route.One of the following target arguments must be supplied:"
-  type        = string
-  default     = ""
-}
-variable "egress_only_gateway_id" {
-  description = "(Optional) Identifier of a VPC Egress Only Internet Gateway."
-  type        = string
-  default     = ""
-}
-variable "gateway_id" {
-  description = "(Optional) Identifier of a VPC internet gateway or a virtual private gateway."
-  type        = string
-  default     = ""
-}
-variable "transit_gateway_id" {
-  description = "(Optional) Identifier of an EC2 Transit Gateway."
-  type        = string
-  default     = ""
-}
-variable "vpc_id" {
-  description = "(Required) The VPC ID."
   type        = string
 }
 variable "carrier_gateway_id" {
@@ -57,31 +33,8 @@ variable "carrier_gateway_id" {
   type        = string
   default     = ""
 }
-variable "create" {
-  description = "(Default 5m)"
-  type        = string
-}
-variable "update" {
-  description = "(Default 2m)"
-  type        = string
-}
-variable "vpc_endpoint_id" {
-  description = "(Optional) Identifier of a VPC Endpoint."
-  type        = string
-  default     = ""
-}
-variable "core_network_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of a core network."
-  type        = string
-  default     = ""
-}
-variable "nat_gateway_id" {
-  description = "(Optional) Identifier of a VPC NAT gateway."
-  type        = string
-  default     = ""
-}
-variable "instance_id" {
-  description = "(Optional, strongDeprecated use network_interface_id instead) Identifier of an EC2 instance."
+variable "cidr_block" {
+  description = "(Required) The CIDR block of the route."
   type        = string
 }
 variable "local_gateway_id" {
@@ -93,26 +46,18 @@ variable "owner_id" {
   description = "The ID of the AWS account that owns the route table."
   type        = string
 }
+variable "egress_only_gateway_id" {
+  description = "(Optional) Identifier of a VPC Egress Only Internet Gateway."
+  type        = string
+  default     = ""
+}
 variable "propagating_vgws" {
   description = "(Optional) A list of virtual gateways for propagation.route Argument ReferenceThis argument is processed in attribute-as-blocks mode.One of the following destination arguments must be supplied:"
   type        = string
   default     = ""
 }
-variable "cidr_block" {
-  description = "(Required) The CIDR block of the route."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the routing table."
-  type        = string
-}
-variable "network_interface_id" {
-  description = "(Optional) Identifier of an EC2 network interface."
-  type        = string
-  default     = ""
-}
-variable "route" {
-  description = "(Optional) A list of route objects. Their keys are documented below. This argument is processed in attribute-as-blocks mode"
+variable "vpc_endpoint_id" {
+  description = "(Optional) Identifier of a VPC Endpoint."
   type        = string
   default     = ""
 }
@@ -130,14 +75,69 @@ variable "vpc_peering_connection_id" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "The ARN of the route table."
+variable "core_network_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of a core network."
+  type        = string
+  default     = ""
+}
+variable "gateway_id" {
+  description = "(Optional) Identifier of a VPC internet gateway or a virtual private gateway."
+  type        = string
+  default     = ""
+}
+variable "instance_id" {
+  description = "(Optional, strongDeprecated use network_interface_id instead) Identifier of an EC2 instance."
   type        = string
 }
 variable "ipv6_cidr_block" {
   description = "(Optional) The Ipv6 CIDR block of the route."
   type        = string
   default     = ""
+}
+variable "nat_gateway_id" {
+  description = "(Optional) Identifier of a VPC NAT gateway."
+  type        = string
+  default     = ""
+}
+variable "route" {
+  description = "(Optional) A list of route objects. Their keys are documented below. This argument is processed in attribute-as-blocks mode"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_id" {
+  description = "(Optional) Identifier of an EC2 Transit Gateway."
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 2m)"
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the route table."
+  type        = string
+}
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "destination_prefix_list_id" {
+  description = "(Optional) The ID of a managed prefix list destination of the route.One of the following target arguments must be supplied:"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ID of the routing table."
+  type        = string
+}
+variable "network_interface_id" {
+  description = "(Optional) Identifier of an EC2 network interface."
+  type        = string
+  default     = ""
+}
+variable "vpc_id" {
+  description = "(Required) The VPC ID."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -259,33 +259,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "core_network_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of a core network."
-  value       = aws_route_table.aws_route_table.core_network_arn
+output "arn" {
+  description = "The ARN of the route table."
+  value       = aws_route_table.aws_route_table.arn
 }
-output "nat_gateway_id" {
-  description = "(Optional) Identifier of a VPC NAT gateway."
-  value       = aws_route_table.aws_route_table.nat_gateway_id
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_route_table.aws_route_table.create
 }
-output "update" {
-  description = "(Default 2m)"
-  value       = aws_route_table.aws_route_table.update
-}
-output "vpc_endpoint_id" {
-  description = "(Optional) Identifier of a VPC Endpoint."
-  value       = aws_route_table.aws_route_table.vpc_endpoint_id
-}
-output "cidr_block" {
-  description = "(Required) The CIDR block of the route."
-  value       = aws_route_table.aws_route_table.cidr_block
+output "destination_prefix_list_id" {
+  description = "(Optional) The ID of a managed prefix list destination of the route.One of the following target arguments must be supplied:"
+  value       = aws_route_table.aws_route_table.destination_prefix_list_id
 }
 output "id" {
   description = "The ID of the routing table."
   value       = aws_route_table.aws_route_table.id
 }
-output "instance_id" {
-  description = "(Optional, strongDeprecated use network_interface_id instead) Identifier of an EC2 instance."
-  value       = aws_route_table.aws_route_table.instance_id
+output "network_interface_id" {
+  description = "(Optional) Identifier of an EC2 network interface."
+  value       = aws_route_table.aws_route_table.network_interface_id
+}
+output "route" {
+  description = "(Optional) A list of route objects. Their keys are documented below. This argument is processed in attribute-as-blocks mode"
+  value       = aws_route_table.aws_route_table.route
+}
+output "transit_gateway_id" {
+  description = "(Optional) Identifier of an EC2 Transit Gateway."
+  value       = aws_route_table.aws_route_table.transit_gateway_id
+}
+output "update" {
+  description = "(Default 2m)"
+  value       = aws_route_table.aws_route_table.update
+}
+output "vpc_id" {
+  description = "(Required) The VPC ID."
+  value       = aws_route_table.aws_route_table.vpc_id
+}
+output "carrier_gateway_id" {
+  description = "(Optional) Identifier of a carrier gateway. This attribute can only be used when the VPC contains a subnet which is associated with a Wavelength Zone."
+  value       = aws_route_table.aws_route_table.carrier_gateway_id
+}
+output "cidr_block" {
+  description = "(Required) The CIDR block of the route."
+  value       = aws_route_table.aws_route_table.cidr_block
 }
 output "local_gateway_id" {
   description = "(Optional) Identifier of a Outpost local gateway."
@@ -295,25 +311,37 @@ output "owner_id" {
   description = "The ID of the AWS account that owns the route table."
   value       = aws_route_table.aws_route_table.owner_id
 }
+output "egress_only_gateway_id" {
+  description = "(Optional) Identifier of a VPC Egress Only Internet Gateway."
+  value       = aws_route_table.aws_route_table.egress_only_gateway_id
+}
 output "propagating_vgws" {
   description = "(Optional) A list of virtual gateways for propagation.route Argument ReferenceThis argument is processed in attribute-as-blocks mode.One of the following destination arguments must be supplied:"
   value       = aws_route_table.aws_route_table.propagating_vgws
 }
-output "arn" {
-  description = "The ARN of the route table."
-  value       = aws_route_table.aws_route_table.arn
+output "vpc_endpoint_id" {
+  description = "(Optional) Identifier of a VPC Endpoint."
+  value       = aws_route_table.aws_route_table.vpc_endpoint_id
+}
+output "core_network_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of a core network."
+  value       = aws_route_table.aws_route_table.core_network_arn
+}
+output "gateway_id" {
+  description = "(Optional) Identifier of a VPC internet gateway or a virtual private gateway."
+  value       = aws_route_table.aws_route_table.gateway_id
+}
+output "instance_id" {
+  description = "(Optional, strongDeprecated use network_interface_id instead) Identifier of an EC2 instance."
+  value       = aws_route_table.aws_route_table.instance_id
 }
 output "ipv6_cidr_block" {
   description = "(Optional) The Ipv6 CIDR block of the route."
   value       = aws_route_table.aws_route_table.ipv6_cidr_block
 }
-output "network_interface_id" {
-  description = "(Optional) Identifier of an EC2 network interface."
-  value       = aws_route_table.aws_route_table.network_interface_id
-}
-output "route" {
-  description = "(Optional) A list of route objects. Their keys are documented below. This argument is processed in attribute-as-blocks mode"
-  value       = aws_route_table.aws_route_table.route
+output "nat_gateway_id" {
+  description = "(Optional) Identifier of a VPC NAT gateway."
+  value       = aws_route_table.aws_route_table.nat_gateway_id
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
@@ -327,33 +355,9 @@ output "vpc_peering_connection_id" {
   description = "(Optional) Identifier of a VPC peering connection.Note that the default route, mapping the VPC's CIDR block to \"local\", is created implicitly and cannot be specified.In addition to all arguments above, the following attributes are exported:~> strongNOTE:"
   value       = aws_route_table.aws_route_table.vpc_peering_connection_id
 }
-output "carrier_gateway_id" {
-  description = "(Optional) Identifier of a carrier gateway. This attribute can only be used when the VPC contains a subnet which is associated with a Wavelength Zone."
-  value       = aws_route_table.aws_route_table.carrier_gateway_id
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_route_table.aws_route_table.create
-}
-output "destination_prefix_list_id" {
-  description = "(Optional) The ID of a managed prefix list destination of the route.One of the following target arguments must be supplied:"
-  value       = aws_route_table.aws_route_table.destination_prefix_list_id
-}
-output "egress_only_gateway_id" {
-  description = "(Optional) Identifier of a VPC Egress Only Internet Gateway."
-  value       = aws_route_table.aws_route_table.egress_only_gateway_id
-}
-output "gateway_id" {
-  description = "(Optional) Identifier of a VPC internet gateway or a virtual private gateway."
-  value       = aws_route_table.aws_route_table.gateway_id
-}
-output "transit_gateway_id" {
-  description = "(Optional) Identifier of an EC2 Transit Gateway."
-  value       = aws_route_table.aws_route_table.transit_gateway_id
-}
-output "vpc_id" {
-  description = "(Required) The VPC ID."
-  value       = aws_route_table.aws_route_table.vpc_id
+output "id" {
+  description = "The ID of the routing table."
+  value       = aws_route_table.aws_route_table.id
 }
 output "owner_id" {
   description = "The ID of the AWS account that owns the route table."
@@ -378,10 +382,6 @@ output "create" {
 output "delete" {
   description = "(Default 5m)"
   value       = aws_route_table.aws_route_table.delete
-}
-output "id" {
-  description = "The ID of the routing table."
-  value       = aws_route_table.aws_route_table.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

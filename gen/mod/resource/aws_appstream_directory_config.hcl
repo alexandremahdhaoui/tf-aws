@@ -10,18 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "account_name" {
-  description = "(Required) User name of the account. This account must have the following privileges: create computer objects, join computers to the domain, and change/reset the password on descendant computer objects for the organizational units specified."
-  type        = string
-}
-variable "account_password" {
-  description = "(Required) Password for the account.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "directory_name" {
-  description = "(Required) Fully qualified name of the directory."
-  type        = string
-}
 variable "id" {
   description = "Unique identifier (ID) of the appstream directory config."
   type        = string
@@ -32,6 +20,18 @@ variable "organizational_unit_distinguished_names" {
 }
 variable "service_account_credentials" {
   description = "(Required) Configuration block for the name of the directory and organizational unit (OU) to use to join the directory config to a Microsoft Active Directory domain. See service_account_credentials below.service_account_credentials"
+  type        = string
+}
+variable "account_name" {
+  description = "(Required) User name of the account. This account must have the following privileges: create computer objects, join computers to the domain, and change/reset the password on descendant computer objects for the organizational units specified."
+  type        = string
+}
+variable "account_password" {
+  description = "(Required) Password for the account.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "directory_name" {
+  description = "(Required) Fully qualified name of the directory."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,14 +154,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "directory_name" {
-  description = "(Required) Fully qualified name of the directory."
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.directory_name
-}
-output "id" {
-  description = "Unique identifier (ID) of the appstream directory config."
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.id
-}
 output "organizational_unit_distinguished_names" {
   description = "(Required) Distinguished names of the organizational units for computer accounts."
   value       = aws_appstream_directory_config.aws_appstream_directory_config.organizational_unit_distinguished_names
@@ -178,6 +170,10 @@ output "account_password" {
   description = "(Required) Password for the account.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appstream_directory_config.aws_appstream_directory_config.account_password
 }
+output "directory_name" {
+  description = "(Required) Fully qualified name of the directory."
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.directory_name
+}
 output "id" {
   description = "Unique identifier (ID) of the appstream directory config."
   value       = aws_appstream_directory_config.aws_appstream_directory_config.id
@@ -185,6 +181,10 @@ output "id" {
 output "created_time" {
   description = " Date and time, in UTC and extended RFC 3339 format, when the directory config was created."
   value       = aws_appstream_directory_config.aws_appstream_directory_config.created_time
+}
+output "id" {
+  description = "Unique identifier (ID) of the appstream directory config."
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "dashboard_body" {
-  description = "(Required) The detailed information about the dashboard, including what widgets are included and their location on the dashboard. You can read more about the body structure in the documentation.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "dashboard_name" {
   description = "(Required) The name of the dashboard."
+  type        = string
+}
+variable "dashboard_body" {
+  description = "(Required) The detailed information about the dashboard, including what widgets are included and their location on the dashboard. You can read more about the body structure in the documentation.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

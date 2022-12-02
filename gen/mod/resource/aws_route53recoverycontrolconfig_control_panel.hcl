@@ -1,20 +1,12 @@
 resource "aws_route53recoverycontrolconfig_control_panel" "aws_route53recoverycontrolconfig_control_panel" {
-  arn                   = var.arn
-  cluster_arn           = var.cluster_arn
   default_control_panel = var.default_control_panel
   name                  = var.name
   routing_control_count = var.routing_control_count
+  arn                   = var.arn
+  cluster_arn           = var.cluster_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "routing_control_count" {
-  description = "Number routing controls in a control panel."
   type        = string
 }
 variable "arn" {
@@ -27,6 +19,14 @@ variable "cluster_arn" {
 }
 variable "default_control_panel" {
   description = "Whether a control panel is default."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "routing_control_count" {
+  description = "Number routing controls in a control panel."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,14 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.name
-}
-output "routing_control_count" {
-  description = "Number routing controls in a control panel."
-  value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.routing_control_count
-}
 output "arn" {
   description = "ARN of the control panel."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.arn
@@ -168,6 +160,14 @@ output "cluster_arn" {
 output "default_control_panel" {
   description = "Whether a control panel is default."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.default_control_panel
+}
+output "name" {
+  description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.name
+}
+output "routing_control_count" {
+  description = "Number routing controls in a control panel."
+  value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.routing_control_count
 }
 output "arn" {
   description = "ARN of the control panel."

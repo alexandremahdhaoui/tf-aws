@@ -1,56 +1,57 @@
 resource "aws_route53_key_signing_key" "aws_route53_key_signing_key" {
-  status                     = var.status
+  ds_record                  = var.ds_record
   key_management_service_arn = var.key_management_service_arn
-  digest_algorithm_mnemonic  = var.digest_algorithm_mnemonic
+  signing_algorithm_type     = var.signing_algorithm_type
   dnskey_record              = var.dnskey_record
   flag                       = var.flag
-  id                         = var.id
-  signing_algorithm_mnemonic = var.signing_algorithm_mnemonic
-  digest_algorithm_type      = var.digest_algorithm_type
-  ds_record                  = var.ds_record
-  hosted_zone_id             = var.hosted_zone_id
-  key_tag                    = var.key_tag
   name                       = var.name
+  status                     = var.status
+  digest_algorithm_mnemonic  = var.digest_algorithm_mnemonic
+  digest_algorithm_type      = var.digest_algorithm_type
+  id                         = var.id
+  key_tag                    = var.key_tag
   public_key                 = var.public_key
-  signing_algorithm_type     = var.signing_algorithm_type
+  signing_algorithm_mnemonic = var.signing_algorithm_mnemonic
   digest_value               = var.digest_value
+  hosted_zone_id             = var.hosted_zone_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "name" {
+  description = "(Required) Name of the key-signing key (KSK). Must be unique for each key-singing key in the same hosted zone."
+  type        = string
+}
+variable "dnskey_record" {
+  description = "A string that represents a DNSKEY record."
+  type        = string
+  default     = ""
+}
+variable "flag" {
+  description = "An integer that specifies how the key is used. For key-signing key (KSK), this value is always 257."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Route 53 Hosted Zone identifier and KMS Key identifier, separated by a comma (,)."
+  type        = string
+  default     = ""
 }
 variable "key_tag" {
   description = "An integer used to identify the DNSSEC record for the domain name. The process used to calculate the value is described in RFC-4034 Appendix B."
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Name of the key-signing key (KSK). Must be unique for each key-singing key in the same hosted zone."
-  type        = string
-}
 variable "public_key" {
   description = "The public key, represented as a Base64 encoding, as required by RFC-4034 Page 5."
   type        = string
   default     = ""
 }
-variable "signing_algorithm_type" {
-  description = "An integer used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
+variable "signing_algorithm_mnemonic" {
+  description = "A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
   type        = string
   default     = ""
-}
-variable "digest_value" {
-  description = "A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system."
-  type        = string
-  default     = ""
-}
-variable "ds_record" {
-  description = "A string that represents a delegation signer (DS) record."
-  type        = string
-  default     = ""
-}
-variable "hosted_zone_id" {
-  description = "(Required) Identifier of the Route 53 Hosted Zone."
-  type        = string
 }
 variable "status" {
   description = "(Optional) Status of the key-signing key (KSK). Valid values: ACTIVE, INACTIVE. Defaults to ACTIVE.In addition to all arguments above, the following attributes are exported:"
@@ -62,34 +63,33 @@ variable "digest_algorithm_mnemonic" {
   type        = string
   default     = ""
 }
-variable "key_management_service_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key. This must be unique for each key-signing key (KSK) in a single hosted zone. This key must be in the us-east-1 Region and meet certain requirements, which are described in the Route 53 Developer Guide and Route 53 API Reference."
-  type        = string
-}
-variable "id" {
-  description = "Route 53 Hosted Zone identifier and KMS Key identifier, separated by a comma (,)."
-  type        = string
-  default     = ""
-}
-variable "signing_algorithm_mnemonic" {
-  description = "A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
-  type        = string
-  default     = ""
-}
 variable "digest_algorithm_type" {
   description = "An integer used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3."
   type        = string
   default     = ""
 }
-variable "dnskey_record" {
-  description = "A string that represents a DNSKEY record."
+variable "digest_value" {
+  description = "A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system."
   type        = string
   default     = ""
 }
-variable "flag" {
-  description = "An integer that specifies how the key is used. For key-signing key (KSK), this value is always 257."
+variable "hosted_zone_id" {
+  description = "(Required) Identifier of the Route 53 Hosted Zone."
+  type        = string
+}
+variable "signing_algorithm_type" {
+  description = "An integer used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
   type        = string
   default     = ""
+}
+variable "ds_record" {
+  description = "A string that represents a delegation signer (DS) record."
+  type        = string
+  default     = ""
+}
+variable "key_management_service_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key. This must be unique for each key-signing key (KSK) in a single hosted zone. This key must be in the us-east-1 Region and meet certain requirements, which are described in the Route 53 Developer Guide and Route 53 API Reference."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -211,6 +211,42 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "digest_value" {
+  description = "A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_value
+}
+output "hosted_zone_id" {
+  description = "(Required) Identifier of the Route 53 Hosted Zone."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.hosted_zone_id
+}
+output "ds_record" {
+  description = "A string that represents a delegation signer (DS) record."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.ds_record
+}
+output "key_management_service_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key. This must be unique for each key-signing key (KSK) in a single hosted zone. This key must be in the us-east-1 Region and meet certain requirements, which are described in the Route 53 Developer Guide and Route 53 API Reference."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.key_management_service_arn
+}
+output "signing_algorithm_type" {
+  description = "An integer used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_type
+}
+output "dnskey_record" {
+  description = "A string that represents a DNSKEY record."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.dnskey_record
+}
+output "flag" {
+  description = "An integer that specifies how the key is used. For key-signing key (KSK), this value is always 257."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.flag
+}
+output "name" {
+  description = "(Required) Name of the key-signing key (KSK). Must be unique for each key-singing key in the same hosted zone."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.name
+}
+output "signing_algorithm_mnemonic" {
+  description = "A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_mnemonic
+}
 output "status" {
   description = "(Optional) Status of the key-signing key (KSK). Valid values: ACTIVE, INACTIVE. Defaults to ACTIVE.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.status
@@ -219,17 +255,21 @@ output "digest_algorithm_mnemonic" {
   description = "A string used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_algorithm_mnemonic
 }
-output "key_management_service_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key. This must be unique for each key-signing key (KSK) in a single hosted zone. This key must be in the us-east-1 Region and meet certain requirements, which are described in the Route 53 Developer Guide and Route 53 API Reference."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.key_management_service_arn
-}
 output "digest_algorithm_type" {
   description = "An integer used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_algorithm_type
 }
-output "dnskey_record" {
-  description = "A string that represents a DNSKEY record."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.dnskey_record
+output "id" {
+  description = "Route 53 Hosted Zone identifier and KMS Key identifier, separated by a comma (,)."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.id
+}
+output "key_tag" {
+  description = "An integer used to identify the DNSSEC record for the domain name. The process used to calculate the value is described in RFC-4034 Appendix B."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.key_tag
+}
+output "public_key" {
+  description = "The public key, represented as a Base64 encoding, as required by RFC-4034 Page 5."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.public_key
 }
 output "flag" {
   description = "An integer that specifies how the key is used. For key-signing key (KSK), this value is always 257."
@@ -239,65 +279,33 @@ output "id" {
   description = "Route 53 Hosted Zone identifier and KMS Key identifier, separated by a comma (,)."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.id
 }
-output "signing_algorithm_mnemonic" {
-  description = "A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_mnemonic
+output "key_tag" {
+  description = "An integer used to identify the DNSSEC record for the domain name. The process used to calculate the value is described in RFC-4034 Appendix B."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.key_tag
 }
 output "public_key" {
   description = "The public key, represented as a Base64 encoding, as required by RFC-4034 Page 5."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.public_key
 }
+output "signing_algorithm_mnemonic" {
+  description = "A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_mnemonic
+}
 output "signing_algorithm_type" {
   description = "An integer used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_type
-}
-output "digest_value" {
-  description = "A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_value
-}
-output "ds_record" {
-  description = "A string that represents a delegation signer (DS) record."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.ds_record
-}
-output "hosted_zone_id" {
-  description = "(Required) Identifier of the Route 53 Hosted Zone."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.hosted_zone_id
-}
-output "key_tag" {
-  description = "An integer used to identify the DNSSEC record for the domain name. The process used to calculate the value is described in RFC-4034 Appendix B."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.key_tag
-}
-output "name" {
-  description = "(Required) Name of the key-signing key (KSK). Must be unique for each key-singing key in the same hosted zone."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.name
 }
 output "digest_algorithm_mnemonic" {
   description = "A string used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_algorithm_mnemonic
 }
-output "digest_value" {
-  description = "A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_value
-}
-output "flag" {
-  description = "An integer that specifies how the key is used. For key-signing key (KSK), this value is always 257."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.flag
-}
-output "id" {
-  description = "Route 53 Hosted Zone identifier and KMS Key identifier, separated by a comma (,)."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.id
-}
-output "signing_algorithm_mnemonic" {
-  description = "A string used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_mnemonic
-}
-output "signing_algorithm_type" {
-  description = "An integer used to represent the signing algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.1."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.signing_algorithm_type
-}
 output "digest_algorithm_type" {
   description = "An integer used to represent the delegation signer digest algorithm. This value must follow the guidelines provided by RFC-8624 Section 3.3."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_algorithm_type
+}
+output "digest_value" {
+  description = "A cryptographic digest of a DNSKEY resource record (RR). DNSKEY records are used to publish the public key that resolvers can use to verify DNSSEC signatures that are used to secure certain kinds of information provided by the DNS system."
+  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.digest_value
 }
 output "dnskey_record" {
   description = "A string that represents a DNSKEY record."
@@ -306,14 +314,6 @@ output "dnskey_record" {
 output "ds_record" {
   description = "A string that represents a delegation signer (DS) record."
   value       = aws_route53_key_signing_key.aws_route53_key_signing_key.ds_record
-}
-output "key_tag" {
-  description = "An integer used to identify the DNSSEC record for the domain name. The process used to calculate the value is described in RFC-4034 Appendix B."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.key_tag
-}
-output "public_key" {
-  description = "The public key, represented as a Base64 encoding, as required by RFC-4034 Page 5."
-  value       = aws_route53_key_signing_key.aws_route53_key_signing_key.public_key
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

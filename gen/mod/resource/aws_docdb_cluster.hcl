@@ -1,45 +1,55 @@
 resource "aws_docdb_cluster" "aws_docdb_cluster" {
-  deletion_protection             = var.deletion_protection
-  preferred_maintenance_window    = var.preferred_maintenance_window
-  tags_all                        = var.tags_all
-  apply_immediately               = var.apply_immediately
-  engine_version                  = var.engine_version
-  global_cluster_identifier       = var.global_cluster_identifier
-  hosted_zone_id                  = var.hosted_zone_id
-  tags                            = var.tags
-  vpc_security_group_ids          = var.vpc_security_group_ids
   arn                             = var.arn
-  update                          = var.update
-  enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
-  engine                          = var.engine
-  kms_key_id                      = var.kms_key_id
   master_password                 = var.master_password
-  port                            = var.port
+  availability_zones              = var.availability_zones
+  db_subnet_group_name            = var.db_subnet_group_name
+  deletion_protection             = var.deletion_protection
+  master_username                 = var.master_username
+  tags                            = var.tags
+  tags_all                        = var.tags_all
+  cluster_resource_id             = var.cluster_resource_id
+  db_cluster_parameter_group_name = var.db_cluster_parameter_group_name
+  endpoint                        = var.endpoint
+  engine_version                  = var.engine_version
+  id                              = var.id
+  storage_encrypted               = var.storage_encrypted
+  apply_immediately               = var.apply_immediately
+  enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
+  final_snapshot_identifier       = var.final_snapshot_identifier
+  global_cluster_identifier       = var.global_cluster_identifier
+  preferred_backup_window         = var.preferred_backup_window
+  preferred_maintenance_window    = var.preferred_maintenance_window
+  skip_final_snapshot             = var.skip_final_snapshot
   backup_retention_period         = var.backup_retention_period
   cluster_identifier              = var.cluster_identifier
-  cluster_resource_id             = var.cluster_resource_id
-  master_username                 = var.master_username
-  reader_endpoint                 = var.reader_endpoint
-  cluster_members                 = var.cluster_members
-  db_cluster_parameter_group_name = var.db_cluster_parameter_group_name
-  db_subnet_group_name            = var.db_subnet_group_name
-  storage_encrypted               = var.storage_encrypted
-  endpoint                        = var.endpoint
-  final_snapshot_identifier       = var.final_snapshot_identifier
-  id                              = var.id
-  preferred_backup_window         = var.preferred_backup_window
-  skip_final_snapshot             = var.skip_final_snapshot
-  snapshot_identifier             = var.snapshot_identifier
-  availability_zones              = var.availability_zones
   cluster_identifier_prefix       = var.cluster_identifier_prefix
   create                          = var.create
+  hosted_zone_id                  = var.hosted_zone_id
+  reader_endpoint                 = var.reader_endpoint
+  kms_key_id                      = var.kms_key_id
+  cluster_members                 = var.cluster_members
+  engine                          = var.engine
+  port                            = var.port
+  snapshot_identifier             = var.snapshot_identifier
+  update                          = var.update
+  vpc_security_group_ids          = var.vpc_security_group_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "availability_zones" {
+  description = "(Optional) A list of EC2 Availability Zones that\ninstances in the DB cluster can be created in."
+  type        = string
+  default     = ""
+}
 variable "db_subnet_group_name" {
   description = "(Optional) A DB subnet group to associate with this DB instance."
+  type        = string
+  default     = ""
+}
+variable "deletion_protection" {
+  description = "(Optional) A value that indicates whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection is disabled."
   type        = string
   default     = ""
 }
@@ -47,16 +57,30 @@ variable "master_username" {
   description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier is provided when the cluster is the \"secondary\" cluster of a global database) Username for the master DB user."
   type        = string
 }
-variable "reader_endpoint" {
-  description = "A read-only endpoint for the DocDB cluster, automatically load-balanced across replicas"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
-variable "cluster_members" {
-  description = " – List of DocDB Instances that are a part of this cluster"
+variable "cluster_resource_id" {
+  description = "The DocDB Cluster Resource ID"
   type        = string
 }
 variable "db_cluster_parameter_group_name" {
   description = "(Optional) A cluster parameter group to associate with the cluster."
+  type        = string
+  default     = ""
+}
+variable "endpoint" {
+  description = "The DNS address of the DocDB instance"
+  type        = string
+}
+variable "engine_version" {
+  description = "(Optional) The database engine version. Updating this argument results in an outage."
   type        = string
   default     = ""
 }
@@ -69,54 +93,18 @@ variable "storage_encrypted" {
   type        = string
   default     = ""
 }
-variable "endpoint" {
-  description = "The DNS address of the DocDB instance"
+variable "apply_immediately" {
+  description = "(Optional) Specifies whether any cluster modifications\nare applied immediately, or during the next maintenance window. Default is\nfalse."
   type        = string
+  default     = ""
+}
+variable "enabled_cloudwatch_logs_exports" {
+  description = "(Optional) List of log types to export to cloudwatch. If omitted, no logs will be exported.\nThe following log types are supported: audit, profiler."
+  type        = string
+  default     = ""
 }
 variable "final_snapshot_identifier" {
   description = "(Optional) The name of your final DB snapshot\nwhen this DB cluster is deleted. If omitted, no final snapshot will be\nmade."
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 120m)"
-  type        = string
-}
-variable "preferred_backup_window" {
-  description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled using the BackupRetentionPeriod parameter.Time in UTC\nDefault: A 30-minute window selected at random from an 8-hour block of time per regionE.g., 04:00-09:00"
-  type        = string
-  default     = ""
-}
-variable "skip_final_snapshot" {
-  description = "(Optional) Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false."
-  type        = string
-  default     = ""
-}
-variable "snapshot_identifier" {
-  description = "(Optional) Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot."
-  type        = string
-  default     = ""
-}
-variable "availability_zones" {
-  description = "(Optional) A list of EC2 Availability Zones that\ninstances in the DB cluster can be created in."
-  type        = string
-  default     = ""
-}
-variable "cluster_identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique cluster identifier beginning with the specified prefix. Conflicts with cluster_identifier."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "deletion_protection" {
-  description = "(Optional) A value that indicates whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection is disabled."
-  type        = string
-  default     = ""
-}
-variable "preferred_maintenance_window" {
-  description = "(Optional) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30"
   type        = string
   default     = ""
 }
@@ -125,63 +113,18 @@ variable "global_cluster_identifier" {
   type        = string
   default     = ""
 }
-variable "apply_immediately" {
-  description = "(Optional) Specifies whether any cluster modifications\nare applied immediately, or during the next maintenance window. Default is\nfalse."
+variable "preferred_backup_window" {
+  description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled using the BackupRetentionPeriod parameter.Time in UTC\nDefault: A 30-minute window selected at random from an 8-hour block of time per regionE.g., 04:00-09:00"
   type        = string
   default     = ""
 }
-variable "engine_version" {
-  description = "(Optional) The database engine version. Updating this argument results in an outage."
+variable "preferred_maintenance_window" {
+  description = "(Optional) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30"
   type        = string
   default     = ""
 }
-variable "vpc_security_group_ids" {
-  description = "(Optional) List of VPC security groups to associate\nwith the ClusterIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "hosted_zone_id" {
-  description = "The Route53 Hosted Zone ID of the endpoint"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of cluster"
-  type        = string
-}
-variable "update" {
-  description = "(Default 120m)"
-  type        = string
-}
-variable "cluster_resource_id" {
-  description = "The DocDB Cluster Resource ID"
-  type        = string
-}
-variable "enabled_cloudwatch_logs_exports" {
-  description = "(Optional) List of log types to export to cloudwatch. If omitted, no logs will be exported.\nThe following log types are supported: audit, profiler."
-  type        = string
-  default     = ""
-}
-variable "engine" {
-  description = "(Optional) The name of the database engine to be used for this DB cluster. Defaults to docdb. Valid Values: docdb"
-  type        = string
-  default     = ""
-}
-variable "kms_key_id" {
-  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true."
-  type        = string
-  default     = ""
-}
-variable "master_password" {
-  description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier"
-  type        = string
-}
-variable "port" {
-  description = "(Optional) The port on which the DB accepts connections"
+variable "skip_final_snapshot" {
+  description = "(Optional) Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false."
   type        = string
   default     = ""
 }
@@ -192,6 +135,63 @@ variable "backup_retention_period" {
 }
 variable "cluster_identifier" {
   description = "(Optional, Forces new resources) The cluster identifier. If omitted, Terraform will assign a random, unique identifier."
+  type        = string
+}
+variable "cluster_identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique cluster identifier beginning with the specified prefix. Conflicts with cluster_identifier."
+  type        = string
+}
+variable "create" {
+  description = "(Default 120m)"
+  type        = string
+}
+variable "hosted_zone_id" {
+  description = "The Route53 Hosted Zone ID of the endpoint"
+  type        = string
+}
+variable "reader_endpoint" {
+  description = "A read-only endpoint for the DocDB cluster, automatically load-balanced across replicas"
+  type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true."
+  type        = string
+  default     = ""
+}
+variable "cluster_members" {
+  description = " – List of DocDB Instances that are a part of this cluster"
+  type        = string
+}
+variable "engine" {
+  description = "(Optional) The name of the database engine to be used for this DB cluster. Defaults to docdb. Valid Values: docdb"
+  type        = string
+  default     = ""
+}
+variable "port" {
+  description = "(Optional) The port on which the DB accepts connections"
+  type        = string
+  default     = ""
+}
+variable "snapshot_identifier" {
+  description = "(Optional) Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot."
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 120m)"
+  type        = string
+}
+variable "vpc_security_group_ids" {
+  description = "(Optional) List of VPC security groups to associate\nwith the ClusterIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of cluster"
+  type        = string
+}
+variable "master_password" {
+  description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier"
   type        = string
 }
 variable "tag_instance_id" {
@@ -314,29 +314,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "storage_encrypted" {
+  description = "(Optional) Specifies whether the DB cluster is encrypted. The default is false."
+  value       = aws_docdb_cluster.aws_docdb_cluster.storage_encrypted
+}
 output "cluster_resource_id" {
   description = "The DocDB Cluster Resource ID"
   value       = aws_docdb_cluster.aws_docdb_cluster.cluster_resource_id
+}
+output "db_cluster_parameter_group_name" {
+  description = "(Optional) A cluster parameter group to associate with the cluster."
+  value       = aws_docdb_cluster.aws_docdb_cluster.db_cluster_parameter_group_name
+}
+output "endpoint" {
+  description = "The DNS address of the DocDB instance"
+  value       = aws_docdb_cluster.aws_docdb_cluster.endpoint
+}
+output "engine_version" {
+  description = "(Optional) The database engine version. Updating this argument results in an outage."
+  value       = aws_docdb_cluster.aws_docdb_cluster.engine_version
+}
+output "id" {
+  description = "The DocDB Cluster Identifier"
+  value       = aws_docdb_cluster.aws_docdb_cluster.id
+}
+output "preferred_maintenance_window" {
+  description = "(Optional) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30"
+  value       = aws_docdb_cluster.aws_docdb_cluster.preferred_maintenance_window
+}
+output "apply_immediately" {
+  description = "(Optional) Specifies whether any cluster modifications\nare applied immediately, or during the next maintenance window. Default is\nfalse."
+  value       = aws_docdb_cluster.aws_docdb_cluster.apply_immediately
 }
 output "enabled_cloudwatch_logs_exports" {
   description = "(Optional) List of log types to export to cloudwatch. If omitted, no logs will be exported.\nThe following log types are supported: audit, profiler."
   value       = aws_docdb_cluster.aws_docdb_cluster.enabled_cloudwatch_logs_exports
 }
-output "engine" {
-  description = "(Optional) The name of the database engine to be used for this DB cluster. Defaults to docdb. Valid Values: docdb"
-  value       = aws_docdb_cluster.aws_docdb_cluster.engine
+output "final_snapshot_identifier" {
+  description = "(Optional) The name of your final DB snapshot\nwhen this DB cluster is deleted. If omitted, no final snapshot will be\nmade."
+  value       = aws_docdb_cluster.aws_docdb_cluster.final_snapshot_identifier
 }
-output "kms_key_id" {
-  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true."
-  value       = aws_docdb_cluster.aws_docdb_cluster.kms_key_id
+output "global_cluster_identifier" {
+  description = "(Optional) The global cluster identifier specified on aws_docdb_global_cluster."
+  value       = aws_docdb_cluster.aws_docdb_cluster.global_cluster_identifier
 }
-output "master_password" {
-  description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier"
-  value       = aws_docdb_cluster.aws_docdb_cluster.master_password
+output "preferred_backup_window" {
+  description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled using the BackupRetentionPeriod parameter.Time in UTC\nDefault: A 30-minute window selected at random from an 8-hour block of time per regionE.g., 04:00-09:00"
+  value       = aws_docdb_cluster.aws_docdb_cluster.preferred_backup_window
 }
-output "port" {
-  description = "(Optional) The port on which the DB accepts connections"
-  value       = aws_docdb_cluster.aws_docdb_cluster.port
+output "reader_endpoint" {
+  description = "A read-only endpoint for the DocDB cluster, automatically load-balanced across replicas"
+  value       = aws_docdb_cluster.aws_docdb_cluster.reader_endpoint
+}
+output "skip_final_snapshot" {
+  description = "(Optional) Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false."
+  value       = aws_docdb_cluster.aws_docdb_cluster.skip_final_snapshot
 }
 output "backup_retention_period" {
   description = "(Optional) The days to retain backups for. Default 1"
@@ -346,125 +378,113 @@ output "cluster_identifier" {
   description = "(Optional, Forces new resources) The cluster identifier. If omitted, Terraform will assign a random, unique identifier."
   value       = aws_docdb_cluster.aws_docdb_cluster.cluster_identifier
 }
-output "db_subnet_group_name" {
-  description = "(Optional) A DB subnet group to associate with this DB instance."
-  value       = aws_docdb_cluster.aws_docdb_cluster.db_subnet_group_name
-}
-output "master_username" {
-  description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier is provided when the cluster is the \"secondary\" cluster of a global database) Username for the master DB user."
-  value       = aws_docdb_cluster.aws_docdb_cluster.master_username
-}
-output "reader_endpoint" {
-  description = "A read-only endpoint for the DocDB cluster, automatically load-balanced across replicas"
-  value       = aws_docdb_cluster.aws_docdb_cluster.reader_endpoint
-}
-output "cluster_members" {
-  description = " – List of DocDB Instances that are a part of this cluster"
-  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_members
-}
-output "db_cluster_parameter_group_name" {
-  description = "(Optional) A cluster parameter group to associate with the cluster."
-  value       = aws_docdb_cluster.aws_docdb_cluster.db_cluster_parameter_group_name
-}
-output "id" {
-  description = "The DocDB Cluster Identifier"
-  value       = aws_docdb_cluster.aws_docdb_cluster.id
-}
-output "storage_encrypted" {
-  description = "(Optional) Specifies whether the DB cluster is encrypted. The default is false."
-  value       = aws_docdb_cluster.aws_docdb_cluster.storage_encrypted
-}
-output "endpoint" {
-  description = "The DNS address of the DocDB instance"
-  value       = aws_docdb_cluster.aws_docdb_cluster.endpoint
-}
-output "final_snapshot_identifier" {
-  description = "(Optional) The name of your final DB snapshot\nwhen this DB cluster is deleted. If omitted, no final snapshot will be\nmade."
-  value       = aws_docdb_cluster.aws_docdb_cluster.final_snapshot_identifier
+output "cluster_identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique cluster identifier beginning with the specified prefix. Conflicts with cluster_identifier."
+  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_identifier_prefix
 }
 output "create" {
   description = "(Default 120m)"
   value       = aws_docdb_cluster.aws_docdb_cluster.create
 }
-output "preferred_backup_window" {
-  description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled using the BackupRetentionPeriod parameter.Time in UTC\nDefault: A 30-minute window selected at random from an 8-hour block of time per regionE.g., 04:00-09:00"
-  value       = aws_docdb_cluster.aws_docdb_cluster.preferred_backup_window
+output "hosted_zone_id" {
+  description = "The Route53 Hosted Zone ID of the endpoint"
+  value       = aws_docdb_cluster.aws_docdb_cluster.hosted_zone_id
 }
-output "skip_final_snapshot" {
-  description = "(Optional) Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false."
-  value       = aws_docdb_cluster.aws_docdb_cluster.skip_final_snapshot
-}
-output "snapshot_identifier" {
-  description = "(Optional) Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot."
-  value       = aws_docdb_cluster.aws_docdb_cluster.snapshot_identifier
-}
-output "availability_zones" {
-  description = "(Optional) A list of EC2 Availability Zones that\ninstances in the DB cluster can be created in."
-  value       = aws_docdb_cluster.aws_docdb_cluster.availability_zones
-}
-output "cluster_identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique cluster identifier beginning with the specified prefix. Conflicts with cluster_identifier."
-  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_identifier_prefix
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_docdb_cluster.aws_docdb_cluster.tags_all
-}
-output "deletion_protection" {
-  description = "(Optional) A value that indicates whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection is disabled."
-  value       = aws_docdb_cluster.aws_docdb_cluster.deletion_protection
-}
-output "preferred_maintenance_window" {
-  description = "(Optional) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30"
-  value       = aws_docdb_cluster.aws_docdb_cluster.preferred_maintenance_window
-}
-output "global_cluster_identifier" {
-  description = "(Optional) The global cluster identifier specified on aws_docdb_global_cluster."
-  value       = aws_docdb_cluster.aws_docdb_cluster.global_cluster_identifier
-}
-output "apply_immediately" {
-  description = "(Optional) Specifies whether any cluster modifications\nare applied immediately, or during the next maintenance window. Default is\nfalse."
-  value       = aws_docdb_cluster.aws_docdb_cluster.apply_immediately
-}
-output "engine_version" {
-  description = "(Optional) The database engine version. Updating this argument results in an outage."
-  value       = aws_docdb_cluster.aws_docdb_cluster.engine_version
+output "kms_key_id" {
+  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, storage_encrypted needs to be set to true."
+  value       = aws_docdb_cluster.aws_docdb_cluster.kms_key_id
 }
 output "vpc_security_group_ids" {
   description = "(Optional) List of VPC security groups to associate\nwith the ClusterIn addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_cluster.aws_docdb_cluster.vpc_security_group_ids
 }
-output "hosted_zone_id" {
-  description = "The Route53 Hosted Zone ID of the endpoint"
-  value       = aws_docdb_cluster.aws_docdb_cluster.hosted_zone_id
+output "cluster_members" {
+  description = " – List of DocDB Instances that are a part of this cluster"
+  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_members
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_docdb_cluster.aws_docdb_cluster.tags
+output "engine" {
+  description = "(Optional) The name of the database engine to be used for this DB cluster. Defaults to docdb. Valid Values: docdb"
+  value       = aws_docdb_cluster.aws_docdb_cluster.engine
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of cluster"
-  value       = aws_docdb_cluster.aws_docdb_cluster.arn
+output "port" {
+  description = "(Optional) The port on which the DB accepts connections"
+  value       = aws_docdb_cluster.aws_docdb_cluster.port
+}
+output "snapshot_identifier" {
+  description = "(Optional) Specifies whether or not to create this cluster from a snapshot. You can use either the name or ARN when specifying a DB cluster snapshot, or the ARN when specifying a DB snapshot."
+  value       = aws_docdb_cluster.aws_docdb_cluster.snapshot_identifier
 }
 output "update" {
   description = "(Default 120m)"
   value       = aws_docdb_cluster.aws_docdb_cluster.update
 }
-output "cluster_resource_id" {
-  description = "The DocDB Cluster Resource ID"
-  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_resource_id
+output "arn" {
+  description = "Amazon Resource Name (ARN) of cluster"
+  value       = aws_docdb_cluster.aws_docdb_cluster.arn
+}
+output "master_password" {
+  description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier"
+  value       = aws_docdb_cluster.aws_docdb_cluster.master_password
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_docdb_cluster.aws_docdb_cluster.tags_all
+}
+output "availability_zones" {
+  description = "(Optional) A list of EC2 Availability Zones that\ninstances in the DB cluster can be created in."
+  value       = aws_docdb_cluster.aws_docdb_cluster.availability_zones
+}
+output "db_subnet_group_name" {
+  description = "(Optional) A DB subnet group to associate with this DB instance."
+  value       = aws_docdb_cluster.aws_docdb_cluster.db_subnet_group_name
+}
+output "deletion_protection" {
+  description = "(Optional) A value that indicates whether the DB cluster has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection is disabled."
+  value       = aws_docdb_cluster.aws_docdb_cluster.deletion_protection
+}
+output "master_username" {
+  description = "(Required unless a snapshot_identifier or unless a global_cluster_identifier is provided when the cluster is the \"secondary\" cluster of a global database) Username for the master DB user."
+  value       = aws_docdb_cluster.aws_docdb_cluster.master_username
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_docdb_cluster.aws_docdb_cluster.tags
+}
+output "delete" {
+  description = "(Default 120m"
+  value       = aws_docdb_cluster.aws_docdb_cluster.delete
 }
 output "endpoint" {
   description = "The DNS address of the DocDB instance"
   value       = aws_docdb_cluster.aws_docdb_cluster.endpoint
 }
-output "id" {
-  description = "The DocDB Cluster Identifier"
-  value       = aws_docdb_cluster.aws_docdb_cluster.id
-}
 output "reader_endpoint" {
   description = "A read-only endpoint for the DocDB cluster, automatically load-balanced across replicas"
   value       = aws_docdb_cluster.aws_docdb_cluster.reader_endpoint
+}
+output "update" {
+  description = "(Default 120m)"
+  value       = aws_docdb_cluster.aws_docdb_cluster.update
+}
+output "create" {
+  description = "(Default 120m)"
+  value       = aws_docdb_cluster.aws_docdb_cluster.create
+}
+output "cluster_members" {
+  description = " – List of DocDB Instances that are a part of this cluster"
+  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_members
+}
+output "cluster_resource_id" {
+  description = "The DocDB Cluster Resource ID"
+  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_resource_id
+}
+output "hosted_zone_id" {
+  description = "The Route53 Hosted Zone ID of the endpoint"
+  value       = aws_docdb_cluster.aws_docdb_cluster.hosted_zone_id
+}
+output "id" {
+  description = "The DocDB Cluster Identifier"
+  value       = aws_docdb_cluster.aws_docdb_cluster.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -473,26 +493,6 @@ output "tags_all" {
 output "arn" {
   description = "Amazon Resource Name (ARN) of cluster"
   value       = aws_docdb_cluster.aws_docdb_cluster.arn
-}
-output "cluster_members" {
-  description = " – List of DocDB Instances that are a part of this cluster"
-  value       = aws_docdb_cluster.aws_docdb_cluster.cluster_members
-}
-output "create" {
-  description = "(Default 120m)"
-  value       = aws_docdb_cluster.aws_docdb_cluster.create
-}
-output "delete" {
-  description = "(Default 120m"
-  value       = aws_docdb_cluster.aws_docdb_cluster.delete
-}
-output "hosted_zone_id" {
-  description = "The Route53 Hosted Zone ID of the endpoint"
-  value       = aws_docdb_cluster.aws_docdb_cluster.hosted_zone_id
-}
-output "update" {
-  description = "(Default 120m)"
-  value       = aws_docdb_cluster.aws_docdb_cluster.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

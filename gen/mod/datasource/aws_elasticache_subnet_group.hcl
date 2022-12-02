@@ -29,6 +29,10 @@ variable "subnet_ids" {
   description = "Set of VPC Subnet ID-s of the subnet group."
   type        = string
 }
+output "subnet_ids" {
+  description = "Set of VPC Subnet ID-s of the subnet group."
+  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.subnet_ids
+}
 output "arn" {
   description = "ARN of the subnet group."
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.arn
@@ -44,10 +48,6 @@ output "id" {
 output "name" {
   description = "(Required) Name of the subnet group.In addition, the following attributes are exported:"
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.name
-}
-output "subnet_ids" {
-  description = "Set of VPC Subnet ID-s of the subnet group."
-  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.subnet_ids
 }
 output "arn" {
   description = "ARN of the subnet group."

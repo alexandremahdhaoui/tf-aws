@@ -1,12 +1,12 @@
 resource "aws_waf_byte_match_set" "aws_waf_byte_match_set" {
-  name                  = var.name
-  positional_constraint = var.positional_constraint
-  target_string         = var.target_string
   text_transformation   = var.text_transformation
   type                  = var.type
   byte_match_tuples     = var.byte_match_tuples
   data                  = var.data
   field_to_match        = var.field_to_match
+  name                  = var.name
+  positional_constraint = var.positional_constraint
+  target_string         = var.target_string
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -166,6 +166,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "target_string" {
+  description = "(Optional) The value that you want to search for within the field specified by field_to_match, e.g., badrefer1docs"
+  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.target_string
+}
+output "text_transformation" {
+  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
+  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.text_transformation
+}
+output "type" {
+  description = "HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.type
+}
 output "byte_match_tuples" {
   description = "Nested blocksbyte_match_tuplesArguments"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.byte_match_tuples
@@ -185,18 +197,6 @@ output "name" {
 output "positional_constraint" {
   description = "(Required) Within the portion of a web request that you want to search\n(for example, in the query string, if any), specify where you want to search.\ne.g., CONTAINS, CONTAINS_WORD or EXACTLYdocs"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.positional_constraint
-}
-output "target_string" {
-  description = "(Optional) The value that you want to search for within the field specified by field_to_match, e.g., badrefer1docs"
-  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.target_string
-}
-output "text_transformation" {
-  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
-  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.text_transformation
-}
-output "type" {
-  description = "HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.type
 }
 output "id" {
   description = "The ID of the WAF Byte Match Set."

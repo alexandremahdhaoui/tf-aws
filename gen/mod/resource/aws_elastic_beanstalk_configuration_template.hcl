@@ -1,24 +1,40 @@
 resource "aws_elastic_beanstalk_configuration_template" "aws_elastic_beanstalk_configuration_template" {
-  value               = var.value
   description         = var.description
+  namespace           = var.namespace
+  option_settings     = var.option_settings
+  setting             = var.setting
+  value               = var.value
+  application         = var.application
   environment_id      = var.environment_id
   name                = var.name
-  namespace           = var.namespace
-  solution_stack_name = var.solution_stack_name
-  application         = var.application
-  option_settings     = var.option_settings
   resource            = var.resource
-  setting             = var.setting
+  solution_stack_name = var.solution_stack_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "application" {
+variable "option_settings" {
   description = ""
   type        = string
 }
-variable "option_settings" {
+variable "setting" {
+  description = "Option Settings"
+  type        = string
+}
+variable "value" {
+  description = "value for the configuration option"
+  type        = string
+}
+variable "description" {
+  description = ""
+  type        = string
+}
+variable "namespace" {
+  description = "unique namespace identifying the option's associated AWS resource"
+  type        = string
+}
+variable "name" {
   description = ""
   type        = string
 }
@@ -27,32 +43,16 @@ variable "resource" {
   type        = string
   default     = ""
 }
-variable "setting" {
-  description = "Option Settings"
-  type        = string
-}
 variable "solution_stack_name" {
   description = "Amazon API documentationOption SettingsThe setting field supports the following format:"
   type        = string
 }
-variable "description" {
+variable "application" {
   description = ""
   type        = string
 }
 variable "environment_id" {
   description = ""
-  type        = string
-}
-variable "name" {
-  description = ""
-  type        = string
-}
-variable "namespace" {
-  description = "unique namespace identifying the option's associated AWS resource"
-  type        = string
-}
-variable "value" {
-  description = "value for the configuration option"
   type        = string
 }
 variable "tag_instance_id" {
@@ -175,6 +175,30 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.description
+}
+output "namespace" {
+  description = "unique namespace identifying the option's associated AWS resource"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.namespace
+}
+output "option_settings" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.option_settings
+}
+output "setting" {
+  description = "Option Settings"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.setting
+}
+output "value" {
+  description = "value for the configuration option"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.value
+}
+output "application" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.application
+}
 output "environment_id" {
   description = ""
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.environment_id
@@ -183,37 +207,13 @@ output "name" {
   description = ""
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.name
 }
-output "namespace" {
-  description = "unique namespace identifying the option's associated AWS resource"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.namespace
-}
-output "value" {
-  description = "value for the configuration option"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.value
-}
-output "description" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.description
-}
-output "option_settings" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.option_settings
-}
 output "resource" {
   description = "(Optional) resource name for scheduled actionIn addition to all arguments above, the following attributes are exported:"
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.resource
 }
-output "setting" {
-  description = "Option Settings"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.setting
-}
 output "solution_stack_name" {
   description = "Amazon API documentationOption SettingsThe setting field supports the following format:"
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.solution_stack_name
-}
-output "application" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.application
 }
 output "option_settings" {
   description = ""

@@ -1,9 +1,9 @@
 resource "aws_ec2_transit_gateway_multicast_domain_association" "aws_ec2_transit_gateway_multicast_domain_association" {
-  create                              = var.create
   id                                  = var.id
   subnet_id                           = var.subnet_id
   transit_gateway_attachment_id       = var.transit_gateway_attachment_id
   transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
+  create                              = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,26 +1,35 @@
 resource "aws_sns_platform_application" "aws_sns_platform_application" {
-  failure_feedback_role_arn        = var.failure_feedback_role_arn
-  apple_platform_team_id           = var.apple_platform_team_id
-  event_endpoint_created_topic_arn = var.event_endpoint_created_topic_arn
-  platform_credential              = var.platform_credential
-  success_feedback_role_arn        = var.success_feedback_role_arn
-  success_feedback_sample_rate     = var.success_feedback_sample_rate
-  name                             = var.name
-  platform                         = var.platform
+  event_delivery_failure_topic_arn = var.event_delivery_failure_topic_arn
   event_endpoint_updated_topic_arn = var.event_endpoint_updated_topic_arn
   id                               = var.id
-  platform_principal               = var.platform_principal
-  apple_platform_bundle_id         = var.apple_platform_bundle_id
-  event_delivery_failure_topic_arn = var.event_delivery_failure_topic_arn
+  name                             = var.name
+  success_feedback_sample_rate     = var.success_feedback_sample_rate
+  apple_platform_team_id           = var.apple_platform_team_id
   event_endpoint_deleted_topic_arn = var.event_endpoint_deleted_topic_arn
+  failure_feedback_role_arn        = var.failure_feedback_role_arn
+  success_feedback_role_arn        = var.success_feedback_role_arn
+  apple_platform_bundle_id         = var.apple_platform_bundle_id
+  event_endpoint_created_topic_arn = var.event_endpoint_created_topic_arn
+  platform                         = var.platform
+  platform_credential              = var.platform_credential
+  platform_principal               = var.platform_principal
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "apple_platform_bundle_id" {
-  description = "(Required) The bundle identifier that's assigned to your iOS app. May only include alphanumeric characters, hyphens (-), and periods (.).In addition to all arguments above, the following attributes are exported:"
+variable "id" {
+  description = "The ARN of the SNS platform application"
   type        = string
+}
+variable "name" {
+  description = "(Required) The friendly name for the SNS platform application"
+  type        = string
+}
+variable "success_feedback_sample_rate" {
+  description = "(Optional) The sample rate percentage (0-100) of successfully delivered messages.The following attributes are needed only when using APNS token credentials:"
+  type        = string
+  default     = ""
 }
 variable "event_delivery_failure_topic_arn" {
   description = "(Optional) The ARN of the SNS Topic triggered when a delivery to any of the platform endpoints associated with your platform application encounters a permanent failure."
@@ -32,17 +41,13 @@ variable "event_endpoint_updated_topic_arn" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The ARN of the SNS platform application"
-  type        = string
-}
-variable "platform_principal" {
-  description = "(Optional) Application Platform principal. See Principal for type of principal required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources."
+variable "failure_feedback_role_arn" {
+  description = "(Optional) The IAM role ARN permitted to receive failure feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
   type        = string
   default     = ""
 }
-variable "event_endpoint_deleted_topic_arn" {
-  description = "(Optional) The ARN of the SNS Topic triggered when an existing platform endpoint is deleted from your platform application."
+variable "success_feedback_role_arn" {
+  description = "(Optional) The IAM role ARN permitted to receive success feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
   type        = string
   default     = ""
 }
@@ -50,19 +55,10 @@ variable "apple_platform_team_id" {
   description = "(Required) The identifier that's assigned to your Apple developer account team. Must be 10 alphanumeric characters."
   type        = string
 }
-variable "event_endpoint_created_topic_arn" {
-  description = "(Optional) The ARN of the SNS Topic triggered when a new platform endpoint is added to your platform application."
+variable "event_endpoint_deleted_topic_arn" {
+  description = "(Optional) The ARN of the SNS Topic triggered when an existing platform endpoint is deleted from your platform application."
   type        = string
   default     = ""
-}
-variable "failure_feedback_role_arn" {
-  description = "(Optional) The IAM role ARN permitted to receive failure feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) The friendly name for the SNS platform application"
-  type        = string
 }
 variable "platform" {
   description = "(Required) The platform that the app is registered with. See Platform for supported platforms."
@@ -72,13 +68,17 @@ variable "platform_credential" {
   description = "(Required) Application Platform credential. See Credential for type of credential required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources."
   type        = string
 }
-variable "success_feedback_role_arn" {
-  description = "(Optional) The IAM role ARN permitted to receive success feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
+variable "platform_principal" {
+  description = "(Optional) Application Platform principal. See Principal for type of principal required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources."
   type        = string
   default     = ""
 }
-variable "success_feedback_sample_rate" {
-  description = "(Optional) The sample rate percentage (0-100) of successfully delivered messages.The following attributes are needed only when using APNS token credentials:"
+variable "apple_platform_bundle_id" {
+  description = "(Required) The bundle identifier that's assigned to your iOS app. May only include alphanumeric characters, hyphens (-), and periods (.).In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "event_endpoint_created_topic_arn" {
+  description = "(Optional) The ARN of the SNS Topic triggered when a new platform endpoint is added to your platform application."
   type        = string
   default     = ""
 }
@@ -214,29 +214,37 @@ output "id" {
   description = "The ARN of the SNS platform application"
   value       = aws_sns_platform_application.aws_sns_platform_application.id
 }
-output "platform_principal" {
-  description = "(Optional) Application Platform principal. See Principal for type of principal required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources."
-  value       = aws_sns_platform_application.aws_sns_platform_application.platform_principal
+output "name" {
+  description = "(Required) The friendly name for the SNS platform application"
+  value       = aws_sns_platform_application.aws_sns_platform_application.name
 }
-output "apple_platform_bundle_id" {
-  description = "(Required) The bundle identifier that's assigned to your iOS app. May only include alphanumeric characters, hyphens (-), and periods (.).In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sns_platform_application.aws_sns_platform_application.apple_platform_bundle_id
+output "success_feedback_sample_rate" {
+  description = "(Optional) The sample rate percentage (0-100) of successfully delivered messages.The following attributes are needed only when using APNS token credentials:"
+  value       = aws_sns_platform_application.aws_sns_platform_application.success_feedback_sample_rate
+}
+output "apple_platform_team_id" {
+  description = "(Required) The identifier that's assigned to your Apple developer account team. Must be 10 alphanumeric characters."
+  value       = aws_sns_platform_application.aws_sns_platform_application.apple_platform_team_id
 }
 output "event_endpoint_deleted_topic_arn" {
   description = "(Optional) The ARN of the SNS Topic triggered when an existing platform endpoint is deleted from your platform application."
   value       = aws_sns_platform_application.aws_sns_platform_application.event_endpoint_deleted_topic_arn
 }
-output "event_endpoint_created_topic_arn" {
-  description = "(Optional) The ARN of the SNS Topic triggered when a new platform endpoint is added to your platform application."
-  value       = aws_sns_platform_application.aws_sns_platform_application.event_endpoint_created_topic_arn
-}
 output "failure_feedback_role_arn" {
   description = "(Optional) The IAM role ARN permitted to receive failure feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
   value       = aws_sns_platform_application.aws_sns_platform_application.failure_feedback_role_arn
 }
-output "apple_platform_team_id" {
-  description = "(Required) The identifier that's assigned to your Apple developer account team. Must be 10 alphanumeric characters."
-  value       = aws_sns_platform_application.aws_sns_platform_application.apple_platform_team_id
+output "success_feedback_role_arn" {
+  description = "(Optional) The IAM role ARN permitted to receive success feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
+  value       = aws_sns_platform_application.aws_sns_platform_application.success_feedback_role_arn
+}
+output "apple_platform_bundle_id" {
+  description = "(Required) The bundle identifier that's assigned to your iOS app. May only include alphanumeric characters, hyphens (-), and periods (.).In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sns_platform_application.aws_sns_platform_application.apple_platform_bundle_id
+}
+output "event_endpoint_created_topic_arn" {
+  description = "(Optional) The ARN of the SNS Topic triggered when a new platform endpoint is added to your platform application."
+  value       = aws_sns_platform_application.aws_sns_platform_application.event_endpoint_created_topic_arn
 }
 output "platform" {
   description = "(Required) The platform that the app is registered with. See Platform for supported platforms."
@@ -246,17 +254,9 @@ output "platform_credential" {
   description = "(Required) Application Platform credential. See Credential for type of credential required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources."
   value       = aws_sns_platform_application.aws_sns_platform_application.platform_credential
 }
-output "success_feedback_role_arn" {
-  description = "(Optional) The IAM role ARN permitted to receive success feedback for this application and give SNS write access to use CloudWatch logs on your behalf."
-  value       = aws_sns_platform_application.aws_sns_platform_application.success_feedback_role_arn
-}
-output "success_feedback_sample_rate" {
-  description = "(Optional) The sample rate percentage (0-100) of successfully delivered messages.The following attributes are needed only when using APNS token credentials:"
-  value       = aws_sns_platform_application.aws_sns_platform_application.success_feedback_sample_rate
-}
-output "name" {
-  description = "(Required) The friendly name for the SNS platform application"
-  value       = aws_sns_platform_application.aws_sns_platform_application.name
+output "platform_principal" {
+  description = "(Optional) Application Platform principal. See Principal for type of principal required for platform. The value of this attribute when stored into the Terraform state is only a hash of the real value, so therefore it is not practical to use this as an attribute for other resources."
+  value       = aws_sns_platform_application.aws_sns_platform_application.platform_principal
 }
 output "arn" {
   description = "The ARN of the SNS platform application"

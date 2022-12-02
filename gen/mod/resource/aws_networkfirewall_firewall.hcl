@@ -1,51 +1,78 @@
 resource "aws_networkfirewall_firewall" "aws_networkfirewall_firewall" {
-  availability_zone                 = var.availability_zone
-  id                                = var.id
-  subnet_mapping                    = var.subnet_mapping
   delete_protection                 = var.delete_protection
+  description                       = var.description
+  name                              = var.name
+  subnet_change_protection          = var.subnet_change_protection
+  arn                               = var.arn
+  availability_zone                 = var.availability_zone
   endpoint_id                       = var.endpoint_id
   firewall_status                   = var.firewall_status
   subnet_id                         = var.subnet_id
-  vpc_id                            = var.vpc_id
-  attachment                        = var.attachment
-  firewall_policy_change_protection = var.firewall_policy_change_protection
-  subnet_change_protection          = var.subnet_change_protection
-  tags                              = var.tags
+  subnet_mapping                    = var.subnet_mapping
   tags_all                          = var.tags_all
-  arn                               = var.arn
-  description                       = var.description
+  vpc_id                            = var.vpc_id
   firewall_policy_arn               = var.firewall_policy_arn
-  name                              = var.name
+  firewall_policy_change_protection = var.firewall_policy_change_protection
+  id                                = var.id
+  attachment                        = var.attachment
   sync_states                       = var.sync_states
+  tags                              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "availability_zone" {
-  description = "The Availability Zone where the subnet is configured."
+variable "attachment" {
+  description = ""
   type        = string
 }
-variable "id" {
-  description = "The Amazon Resource Name (ARN) that identifies the firewall."
+variable "sync_states" {
+  description = ""
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "delete_protection" {
+  description = "(Optional) A boolean flag indicating whether it is possible to delete the firewall. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) A friendly description of the firewall."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required, Forces new resource) A friendly name of the firewall."
+  type        = string
+}
+variable "subnet_change_protection" {
+  description = "(Optional) A boolean flag indicating whether it is possible to change the associated subnet(s). Defaults to false."
+  type        = string
+  default     = ""
 }
 variable "subnet_mapping" {
   description = "(Required) Set of configuration blocks describing the public subnets. Each subnet must belong to a different Availability Zone in the VPC. AWS Network Firewall creates a firewall endpoint in each subnet. See Subnet Mapping below for details."
   type        = string
 }
-variable "subnet_id" {
-  description = "The unique identifier of the subnet that you've specified to be used for a firewall endpoint."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "vpc_id" {
   description = "(Required, Forces new resource) The unique identifier of the VPC where AWS Network Firewall should create the firewall.Subnet MappingThe subnet_mapping block supports the following arguments:"
   type        = string
 }
-variable "delete_protection" {
-  description = "(Optional) A boolean flag indicating whether it is possible to delete the firewall. Defaults to false."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) that identifies the firewall."
   type        = string
-  default     = ""
+}
+variable "availability_zone" {
+  description = "The Availability Zone where the subnet is configured."
+  type        = string
 }
 variable "endpoint_id" {
   description = "The identifier of the firewall endpoint that AWS Network Firewall has instantiated in the subnet. You use this to identify the firewall endpoint in the VPC route tables, when you redirect the VPC traffic through the endpoint."
@@ -55,47 +82,20 @@ variable "firewall_status" {
   description = "Nested list of information about the current status of the firewall."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "subnet_id" {
+  description = "The unique identifier of the subnet that you've specified to be used for a firewall endpoint."
   type        = string
 }
-variable "attachment" {
-  description = ""
+variable "firewall_policy_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the VPC Firewall policy."
   type        = string
 }
 variable "firewall_policy_change_protection" {
   description = "(Option) A boolean flag indicating whether it is possible to change the associated firewall policy. Defaults to false."
   type        = string
 }
-variable "subnet_change_protection" {
-  description = "(Optional) A boolean flag indicating whether it is possible to change the associated subnet(s). Defaults to false."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required, Forces new resource) A friendly name of the firewall."
-  type        = string
-}
-variable "sync_states" {
-  description = ""
-  type        = string
-}
-variable "arn" {
+variable "id" {
   description = "The Amazon Resource Name (ARN) that identifies the firewall."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A friendly description of the firewall."
-  type        = string
-  default     = ""
-}
-variable "firewall_policy_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the VPC Firewall policy."
   type        = string
 }
 variable "tag_instance_id" {
@@ -218,78 +218,78 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "firewall_policy_change_protection" {
-  description = "(Option) A boolean flag indicating whether it is possible to change the associated firewall policy. Defaults to false."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_policy_change_protection
-}
 output "subnet_change_protection" {
   description = "(Optional) A boolean flag indicating whether it is possible to change the associated subnet(s). Defaults to false."
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.subnet_change_protection
-}
-output "tags" {
-  description = "(Optional) Map of resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.tags
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.tags_all
-}
-output "attachment" {
-  description = ""
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.attachment
-}
-output "description" {
-  description = "(Optional) A friendly description of the firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.description
-}
-output "firewall_policy_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the VPC Firewall policy."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_policy_arn
-}
-output "name" {
-  description = "(Required, Forces new resource) A friendly name of the firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.name
-}
-output "sync_states" {
-  description = ""
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.sync_states
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) that identifies the firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.arn
-}
-output "id" {
-  description = "The Amazon Resource Name (ARN) that identifies the firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.id
-}
-output "subnet_mapping" {
-  description = "(Required) Set of configuration blocks describing the public subnets. Each subnet must belong to a different Availability Zone in the VPC. AWS Network Firewall creates a firewall endpoint in each subnet. See Subnet Mapping below for details."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.subnet_mapping
-}
-output "availability_zone" {
-  description = "The Availability Zone where the subnet is configured."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.availability_zone
-}
-output "endpoint_id" {
-  description = "The identifier of the firewall endpoint that AWS Network Firewall has instantiated in the subnet. You use this to identify the firewall endpoint in the VPC route tables, when you redirect the VPC traffic through the endpoint."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.endpoint_id
-}
-output "firewall_status" {
-  description = "Nested list of information about the current status of the firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_status
-}
-output "subnet_id" {
-  description = "The unique identifier of the subnet that you've specified to be used for a firewall endpoint."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.subnet_id
-}
-output "vpc_id" {
-  description = "(Required, Forces new resource) The unique identifier of the VPC where AWS Network Firewall should create the firewall.Subnet MappingThe subnet_mapping block supports the following arguments:"
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.vpc_id
 }
 output "delete_protection" {
   description = "(Optional) A boolean flag indicating whether it is possible to delete the firewall. Defaults to false."
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.delete_protection
 }
+output "description" {
+  description = "(Optional) A friendly description of the firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.description
+}
+output "name" {
+  description = "(Required, Forces new resource) A friendly name of the firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.name
+}
+output "firewall_status" {
+  description = "Nested list of information about the current status of the firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_status
+}
+output "subnet_id" {
+  description = "The unique identifier of the subnet that you've specified to be used for a firewall endpoint."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.subnet_id
+}
+output "subnet_mapping" {
+  description = "(Required) Set of configuration blocks describing the public subnets. Each subnet must belong to a different Availability Zone in the VPC. AWS Network Firewall creates a firewall endpoint in each subnet. See Subnet Mapping below for details."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.subnet_mapping
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.tags_all
+}
+output "vpc_id" {
+  description = "(Required, Forces new resource) The unique identifier of the VPC where AWS Network Firewall should create the firewall.Subnet MappingThe subnet_mapping block supports the following arguments:"
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.vpc_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) that identifies the firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.arn
+}
+output "availability_zone" {
+  description = "The Availability Zone where the subnet is configured."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.availability_zone
+}
+output "endpoint_id" {
+  description = "The identifier of the firewall endpoint that AWS Network Firewall has instantiated in the subnet. You use this to identify the firewall endpoint in the VPC route tables, when you redirect the VPC traffic through the endpoint."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.endpoint_id
+}
+output "firewall_policy_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the VPC Firewall policy."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_policy_arn
+}
+output "firewall_policy_change_protection" {
+  description = "(Option) A boolean flag indicating whether it is possible to change the associated firewall policy. Defaults to false."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_policy_change_protection
+}
+output "id" {
+  description = "The Amazon Resource Name (ARN) that identifies the firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.id
+}
+output "attachment" {
+  description = ""
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.attachment
+}
+output "sync_states" {
+  description = ""
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.sync_states
+}
+output "tags" {
+  description = "(Optional) Map of resource tags to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.tags
+}
 output "attachment" {
   description = ""
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.attachment
@@ -302,10 +302,6 @@ output "firewall_status" {
   description = "Nested list of information about the current status of the firewall."
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_status
 }
-output "id" {
-  description = "The Amazon Resource Name (ARN) that identifies the firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.id
-}
 output "sync_states" {
   description = ""
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.sync_states
@@ -313,6 +309,10 @@ output "sync_states" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.tags_all
+}
+output "update_token" {
+  description = "A string token used when updating a firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.update_token
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) that identifies the firewall."
@@ -322,13 +322,13 @@ output "endpoint_id" {
   description = "The identifier of the firewall endpoint that AWS Network Firewall has instantiated in the subnet. You use this to identify the firewall endpoint in the VPC route tables, when you redirect the VPC traffic through the endpoint."
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.endpoint_id
 }
+output "id" {
+  description = "The Amazon Resource Name (ARN) that identifies the firewall."
+  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.id
+}
 output "subnet_id" {
   description = "The unique identifier of the subnet that you've specified to be used for a firewall endpoint."
   value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.subnet_id
-}
-output "update_token" {
-  description = "A string token used when updating a firewall."
-  value       = aws_networkfirewall_firewall.aws_networkfirewall_firewall.update_token
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

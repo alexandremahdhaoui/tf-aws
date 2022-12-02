@@ -1,39 +1,52 @@
 resource "aws_cloudfront_cache_policy" "aws_cloudfront_cache_policy" {
-  min_ttl                                         = var.min_ttl
-  comment                                         = var.comment
   cookie_behavior                                 = var.cookie_behavior
   cookies_config                                  = var.cookies_config
   enable_accept_encoding_brotli                   = var.enable_accept_encoding_brotli
+  query_strings                                   = var.query_strings
+  comment                                         = var.comment
   enable_accept_encoding_gzip                     = var.enable_accept_encoding_gzip
-  headers_config                                  = var.headers_config
-  items                                           = var.items
-  cookies                                         = var.cookies
-  max_ttl                                         = var.max_ttl
   name                                            = var.name
   query_strings_config                            = var.query_strings_config
-  etag                                            = var.etag
-  header_behavior                                 = var.header_behavior
   parameters_in_cache_key_and_forwarded_to_origin = var.parameters_in_cache_key_and_forwarded_to_origin
-  query_strings                                   = var.query_strings
   default_ttl                                     = var.default_ttl
-  headers                                         = var.headers
+  etag                                            = var.etag
+  headers_config                                  = var.headers_config
+  items                                           = var.items
+  min_ttl                                         = var.min_ttl
   query_string_behavior                           = var.query_string_behavior
+  cookies                                         = var.cookies
+  header_behavior                                 = var.header_behavior
+  headers                                         = var.headers
+  max_ttl                                         = var.max_ttl
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "header_behavior" {
+  description = "(Required) Determines whether any HTTP headers are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist."
+  type        = string
+}
+variable "headers" {
+  description = "(Optional) Object that contains a list of header names. See Items for more information.Query String Config"
+  type        = string
+  default     = ""
+}
+variable "max_ttl" {
+  description = "(Optional) The maximum amount of time, in seconds, that objects stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
+  type        = string
+  default     = ""
+}
+variable "min_ttl" {
+  description = "(Required) The minimum amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
   type        = string
 }
 variable "query_string_behavior" {
   description = "(Required) Determines whether any URL query strings in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all."
   type        = string
 }
-variable "default_ttl" {
-  description = "(Optional) The default amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
-  type        = string
-  default     = ""
-}
-variable "headers" {
-  description = "(Optional) Object that contains a list of header names. See Items for more information.Query String Config"
+variable "cookies" {
+  description = "(Optional) Object that contains a list of cookie names. See Items for more information.Headers Config"
   type        = string
   default     = ""
 }
@@ -46,31 +59,19 @@ variable "enable_accept_encoding_brotli" {
   type        = string
   default     = ""
 }
-variable "enable_accept_encoding_gzip" {
-  description = "(Optional) A flag that can affect whether the Accept-Encoding HTTP header is included in the cache key and included in requests that CloudFront sends to the origin.Cookies Config"
-  type        = string
-  default     = ""
-}
-variable "headers_config" {
-  description = "(Required) Object that determines whether any HTTP headers (and if so, which headers) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Headers Config for more information."
-  type        = string
-}
-variable "items" {
-  description = "(Required) A list of item names (cookies, headers, or query strings).In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "min_ttl" {
-  description = "(Required) The minimum amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
-  type        = string
-}
-variable "comment" {
-  description = "(Optional) A comment to describe the cache policy."
+variable "query_strings" {
+  description = "(Optional) Object that contains a list of query string names. See Items for more information.Items"
   type        = string
   default     = ""
 }
 variable "cookie_behavior" {
   description = "(Required) Determines whether any cookies in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all."
   type        = string
+}
+variable "enable_accept_encoding_gzip" {
+  description = "(Optional) A flag that can affect whether the Accept-Encoding HTTP header is included in the cache key and included in requests that CloudFront sends to the origin.Cookies Config"
+  type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) A unique name to identify the cache policy."
@@ -80,22 +81,8 @@ variable "query_strings_config" {
   description = "(Required) Object that determines whether any URL query strings in viewer requests (and if so, which query strings) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Query String Config for more information."
   type        = string
 }
-variable "cookies" {
-  description = "(Optional) Object that contains a list of cookie names. See Items for more information.Headers Config"
-  type        = string
-  default     = ""
-}
-variable "max_ttl" {
-  description = "(Optional) The maximum amount of time, in seconds, that objects stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
-  type        = string
-  default     = ""
-}
-variable "parameters_in_cache_key_and_forwarded_to_origin" {
-  description = "(Required) The HTTP headers, cookies, and URL query strings to include in the cache key. See Parameters In Cache Key And Forwarded To Origin for more information.Parameters In Cache Key And Forwarded To Origin"
-  type        = string
-}
-variable "query_strings" {
-  description = "(Optional) Object that contains a list of query string names. See Items for more information.Items"
+variable "comment" {
+  description = "(Optional) A comment to describe the cache policy."
   type        = string
   default     = ""
 }
@@ -103,9 +90,22 @@ variable "etag" {
   description = "The current version of the cache policy."
   type        = string
 }
-variable "header_behavior" {
-  description = "(Required) Determines whether any HTTP headers are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist."
+variable "headers_config" {
+  description = "(Required) Object that determines whether any HTTP headers (and if so, which headers) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Headers Config for more information."
   type        = string
+}
+variable "items" {
+  description = "(Required) A list of item names (cookies, headers, or query strings).In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "parameters_in_cache_key_and_forwarded_to_origin" {
+  description = "(Required) The HTTP headers, cookies, and URL query strings to include in the cache key. See Parameters In Cache Key And Forwarded To Origin for more information.Parameters In Cache Key And Forwarded To Origin"
+  type        = string
+}
+variable "default_ttl" {
+  description = "(Optional) The default amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -227,50 +227,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "max_ttl" {
-  description = "(Optional) The maximum amount of time, in seconds, that objects stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.max_ttl
-}
-output "name" {
-  description = "(Required) A unique name to identify the cache policy."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.name
-}
-output "query_strings_config" {
-  description = "(Required) Object that determines whether any URL query strings in viewer requests (and if so, which query strings) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Query String Config for more information."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.query_strings_config
-}
-output "cookies" {
-  description = "(Optional) Object that contains a list of cookie names. See Items for more information.Headers Config"
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.cookies
-}
-output "header_behavior" {
-  description = "(Required) Determines whether any HTTP headers are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.header_behavior
-}
-output "parameters_in_cache_key_and_forwarded_to_origin" {
-  description = "(Required) The HTTP headers, cookies, and URL query strings to include in the cache key. See Parameters In Cache Key And Forwarded To Origin for more information.Parameters In Cache Key And Forwarded To Origin"
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.parameters_in_cache_key_and_forwarded_to_origin
-}
-output "query_strings" {
-  description = "(Optional) Object that contains a list of query string names. See Items for more information.Items"
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.query_strings
-}
-output "etag" {
-  description = "The current version of the cache policy."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.etag
-}
-output "headers" {
-  description = "(Optional) Object that contains a list of header names. See Items for more information.Query String Config"
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.headers
-}
-output "query_string_behavior" {
-  description = "(Required) Determines whether any URL query strings in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.query_string_behavior
-}
-output "default_ttl" {
-  description = "(Optional) The default amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.default_ttl
-}
 output "cookie_behavior" {
   description = "(Required) Determines whether any cookies in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all."
   value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.cookie_behavior
@@ -283,9 +239,33 @@ output "enable_accept_encoding_brotli" {
   description = "(Optional) A flag that can affect whether the Accept-Encoding HTTP header is included in the cache key and included in requests that CloudFront sends to the origin."
   value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.enable_accept_encoding_brotli
 }
+output "query_strings" {
+  description = "(Optional) Object that contains a list of query string names. See Items for more information.Items"
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.query_strings
+}
+output "comment" {
+  description = "(Optional) A comment to describe the cache policy."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.comment
+}
 output "enable_accept_encoding_gzip" {
   description = "(Optional) A flag that can affect whether the Accept-Encoding HTTP header is included in the cache key and included in requests that CloudFront sends to the origin.Cookies Config"
   value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.enable_accept_encoding_gzip
+}
+output "name" {
+  description = "(Required) A unique name to identify the cache policy."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.name
+}
+output "query_strings_config" {
+  description = "(Required) Object that determines whether any URL query strings in viewer requests (and if so, which query strings) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Query String Config for more information."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.query_strings_config
+}
+output "default_ttl" {
+  description = "(Optional) The default amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.default_ttl
+}
+output "etag" {
+  description = "The current version of the cache policy."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.etag
 }
 output "headers_config" {
   description = "(Required) Object that determines whether any HTTP headers (and if so, which headers) are included in the cache key and automatically included in requests that CloudFront sends to the origin. See Headers Config for more information."
@@ -295,13 +275,33 @@ output "items" {
   description = "(Required) A list of item names (cookies, headers, or query strings).In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.items
 }
+output "parameters_in_cache_key_and_forwarded_to_origin" {
+  description = "(Required) The HTTP headers, cookies, and URL query strings to include in the cache key. See Parameters In Cache Key And Forwarded To Origin for more information.Parameters In Cache Key And Forwarded To Origin"
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.parameters_in_cache_key_and_forwarded_to_origin
+}
+output "query_string_behavior" {
+  description = "(Required) Determines whether any URL query strings in viewer requests are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allExcept, all."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.query_string_behavior
+}
+output "cookies" {
+  description = "(Optional) Object that contains a list of cookie names. See Items for more information.Headers Config"
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.cookies
+}
+output "header_behavior" {
+  description = "(Required) Determines whether any HTTP headers are included in the cache key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.header_behavior
+}
+output "headers" {
+  description = "(Optional) Object that contains a list of header names. See Items for more information.Query String Config"
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.headers
+}
+output "max_ttl" {
+  description = "(Optional) The maximum amount of time, in seconds, that objects stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
+  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.max_ttl
+}
 output "min_ttl" {
   description = "(Required) The minimum amount of time, in seconds, that you want objects to stay in the CloudFront cache before CloudFront sends another request to the origin to see if the object has been updated."
   value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.min_ttl
-}
-output "comment" {
-  description = "(Optional) A comment to describe the cache policy."
-  value       = aws_cloudfront_cache_policy.aws_cloudfront_cache_policy.comment
 }
 output "etag" {
   description = "The current version of the cache policy."

@@ -1,12 +1,20 @@
 resource "aws_ec2_carrier_gateway" "aws_ec2_carrier_gateway" {
+  tags     = var.tags
+  vpc_id   = var.vpc_id
   arn      = var.arn
   id       = var.id
   owner_id = var.owner_id
-  tags     = var.tags
-  vpc_id   = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the carrier gateway."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the carrier gateway."
   type        = string
 }
 variable "owner_id" {
@@ -20,14 +28,6 @@ variable "tags" {
 }
 variable "vpc_id" {
   description = "(Required) The ID of the VPC to associate with the carrier gateway.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the carrier gateway."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the carrier gateway."
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,14 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "owner_id" {
-  description = "The AWS account ID of the owner of the carrier gateway."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.owner_id
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.tags
-}
 output "vpc_id" {
   description = "(Required) The ID of the VPC to associate with the carrier gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.vpc_id
@@ -170,9 +162,13 @@ output "id" {
   description = "The ID of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
 }
-output "id" {
-  description = "The ID of the carrier gateway."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
+output "owner_id" {
+  description = "The AWS account ID of the owner of the carrier gateway."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.owner_id
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.tags
 }
 output "owner_id" {
   description = "The AWS account ID of the owner of the carrier gateway."
@@ -185,6 +181,10 @@ output "tags_all" {
 output "arn" {
   description = "The ARN of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.arn
+}
+output "id" {
+  description = "The ID of the carrier gateway."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

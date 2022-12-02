@@ -1,21 +1,54 @@
 resource "aws_cloudfront_field_level_encryption_config" "aws_cloudfront_field_level_encryption_config" {
-  query_arg                                 = var.query_arg
-  comment                                   = var.comment
+  query_arg_profile_config                  = var.query_arg_profile_config
+  caller_reference                          = var.caller_reference
   content_type                              = var.content_type
   content_type_profile_config               = var.content_type_profile_config
+  content_type_profiles                     = var.content_type_profiles
   etag                                      = var.etag
+  profile_id                                = var.profile_id
+  comment                                   = var.comment
   format                                    = var.format
   forward_when_content_type_is_unknown      = var.forward_when_content_type_is_unknown
   forward_when_query_arg_profile_is_unknown = var.forward_when_query_arg_profile_is_unknown
-  query_arg_profile_config                  = var.query_arg_profile_config
-  caller_reference                          = var.caller_reference
-  content_type_profiles                     = var.content_type_profiles
-  profile_id                                = var.profile_id
+  query_arg                                 = var.query_arg
   query_arg_profiles                        = var.query_arg_profiles
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "caller_reference" {
+  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Config."
+  type        = string
+}
+variable "content_type" {
+  description = "(Required) he content type for a field-level encryption content type-profile mapping. Valid value is application/x-www-form-urlencoded."
+  type        = string
+}
+variable "content_type_profile_config" {
+  description = "(Required) Content Type Profile Config specifies when to forward content if a content type isn't recognized and profiles to use as by default in a request if a query argument doesn't specify a profile to use."
+  type        = string
+}
+variable "content_type_profiles" {
+  description = "(Required) Object that contains an attribute items that contains the list of configurations for a field-level encryption content type-profile. See Content Type Profile.Content Type Profile"
+  type        = string
+}
+variable "etag" {
+  description = "The current version of the Field Level Encryption Config. For example: E2QWRUHAPOMQZL."
+  type        = string
+}
+variable "profile_id" {
+  description = "(Required) ID of profile to use for field-level encryption query argument-profile mapping"
+  type        = string
+}
+variable "query_arg_profile_config" {
+  description = "(Required) Query Arg Profile Config that specifies when to forward content if a profile isn't found and the profile that can be provided as a query argument in a request.Content Type Profile Config"
+  type        = string
+}
+variable "comment" {
+  description = "(Optional) An optional comment about the Field Level Encryption Config."
+  type        = string
+  default     = ""
 }
 variable "format" {
   description = "(Required) The format for a field-level encryption content type-profile mapping. Valid value is URLEncoded."
@@ -31,39 +64,6 @@ variable "forward_when_query_arg_profile_is_unknown" {
 }
 variable "query_arg" {
   description = "(Required) Query argument for field-level encryption query argument-profile mapping.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "comment" {
-  description = "(Optional) An optional comment about the Field Level Encryption Config."
-  type        = string
-  default     = ""
-}
-variable "content_type" {
-  description = "(Required) he content type for a field-level encryption content type-profile mapping. Valid value is application/x-www-form-urlencoded."
-  type        = string
-}
-variable "content_type_profile_config" {
-  description = "(Required) Content Type Profile Config specifies when to forward content if a content type isn't recognized and profiles to use as by default in a request if a query argument doesn't specify a profile to use."
-  type        = string
-}
-variable "etag" {
-  description = "The current version of the Field Level Encryption Config. For example: E2QWRUHAPOMQZL."
-  type        = string
-}
-variable "query_arg_profile_config" {
-  description = "(Required) Query Arg Profile Config that specifies when to forward content if a profile isn't found and the profile that can be provided as a query argument in a request.Content Type Profile Config"
-  type        = string
-}
-variable "caller_reference" {
-  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Config."
-  type        = string
-}
-variable "content_type_profiles" {
-  description = "(Required) Object that contains an attribute items that contains the list of configurations for a field-level encryption content type-profile. See Content Type Profile.Content Type Profile"
-  type        = string
-}
-variable "profile_id" {
-  description = "(Required) ID of profile to use for field-level encryption query argument-profile mapping"
   type        = string
 }
 variable "query_arg_profiles" {
@@ -191,33 +191,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "profile_id" {
-  description = "(Required) ID of profile to use for field-level encryption query argument-profile mapping"
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.profile_id
-}
-output "query_arg_profiles" {
-  description = "(Optional) Object that contains an attribute items that contains the list ofrofiles specified for query argument-profile mapping for field-level encryption. see Query Arg Profile.Query Arg Profile"
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.query_arg_profiles
-}
-output "caller_reference" {
-  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Config."
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.caller_reference
+output "content_type_profile_config" {
+  description = "(Required) Content Type Profile Config specifies when to forward content if a content type isn't recognized and profiles to use as by default in a request if a query argument doesn't specify a profile to use."
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.content_type_profile_config
 }
 output "content_type_profiles" {
   description = "(Required) Object that contains an attribute items that contains the list of configurations for a field-level encryption content type-profile. See Content Type Profile.Content Type Profile"
   value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.content_type_profiles
 }
-output "content_type_profile_config" {
-  description = "(Required) Content Type Profile Config specifies when to forward content if a content type isn't recognized and profiles to use as by default in a request if a query argument doesn't specify a profile to use."
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.content_type_profile_config
-}
 output "etag" {
   description = "The current version of the Field Level Encryption Config. For example: E2QWRUHAPOMQZL."
   value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.etag
 }
-output "format" {
-  description = "(Required) The format for a field-level encryption content type-profile mapping. Valid value is URLEncoded."
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.format
+output "profile_id" {
+  description = "(Required) ID of profile to use for field-level encryption query argument-profile mapping"
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.profile_id
+}
+output "query_arg_profile_config" {
+  description = "(Required) Query Arg Profile Config that specifies when to forward content if a profile isn't found and the profile that can be provided as a query argument in a request.Content Type Profile Config"
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.query_arg_profile_config
+}
+output "caller_reference" {
+  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Config."
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.caller_reference
+}
+output "content_type" {
+  description = "(Required) he content type for a field-level encryption content type-profile mapping. Valid value is application/x-www-form-urlencoded."
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.content_type
 }
 output "forward_when_content_type_is_unknown" {
   description = "(Required) specifies what to do when an unknown content type is provided for the profile. If true, content is forwarded without being encrypted when the content type is unknown. If false (the default), an error is returned when the content type is unknown."
@@ -231,17 +231,21 @@ output "query_arg" {
   description = "(Required) Query argument for field-level encryption query argument-profile mapping.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.query_arg
 }
+output "query_arg_profiles" {
+  description = "(Optional) Object that contains an attribute items that contains the list ofrofiles specified for query argument-profile mapping for field-level encryption. see Query Arg Profile.Query Arg Profile"
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.query_arg_profiles
+}
 output "comment" {
   description = "(Optional) An optional comment about the Field Level Encryption Config."
   value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.comment
 }
-output "content_type" {
-  description = "(Required) he content type for a field-level encryption content type-profile mapping. Valid value is application/x-www-form-urlencoded."
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.content_type
+output "format" {
+  description = "(Required) The format for a field-level encryption content type-profile mapping. Valid value is URLEncoded."
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.format
 }
-output "query_arg_profile_config" {
-  description = "(Required) Query Arg Profile Config that specifies when to forward content if a profile isn't found and the profile that can be provided as a query argument in a request.Content Type Profile Config"
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.query_arg_profile_config
+output "caller_reference" {
+  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Config."
+  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.caller_reference
 }
 output "etag" {
   description = "The current version of the Field Level Encryption Config. For example: E2QWRUHAPOMQZL."
@@ -250,10 +254,6 @@ output "etag" {
 output "id" {
   description = "The identifier for the Field Level Encryption Config. For example: K3D5EWEUDCCXON."
   value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.id
-}
-output "caller_reference" {
-  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Config."
-  value       = aws_cloudfront_field_level_encryption_config.aws_cloudfront_field_level_encryption_config.caller_reference
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

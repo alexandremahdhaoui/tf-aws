@@ -1,7 +1,7 @@
 resource "aws_s3control_access_point_policy" "aws_s3control_access_point_policy" {
-  policy                   = var.policy
   access_point_arn         = var.access_point_arn
   has_public_access_policy = var.has_public_access_policy
+  policy                   = var.policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "access_point_arn" {
-  description = "(Required) The ARN of the access point that you want to associate with the specified policy."
-  value       = aws_s3control_access_point_policy.aws_s3control_access_point_policy.access_point_arn
-}
 output "has_public_access_policy" {
   description = "Indicates whether this access point currently has a policy that allows public access."
   value       = aws_s3control_access_point_policy.aws_s3control_access_point_policy.has_public_access_policy
@@ -150,6 +146,10 @@ output "has_public_access_policy" {
 output "policy" {
   description = "(Required) The policy that you want to apply to the specified access point.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3control_access_point_policy.aws_s3control_access_point_policy.policy
+}
+output "access_point_arn" {
+  description = "(Required) The ARN of the access point that you want to associate with the specified policy."
+  value       = aws_s3control_access_point_policy.aws_s3control_access_point_policy.access_point_arn
 }
 output "has_public_access_policy" {
   description = "Indicates whether this access point currently has a policy that allows public access."

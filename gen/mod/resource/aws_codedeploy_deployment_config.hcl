@@ -1,31 +1,26 @@
 resource "aws_codedeploy_deployment_config" "aws_codedeploy_deployment_config" {
-  id                     = var.id
   percentage             = var.percentage
-  time_based_canary      = var.time_based_canary
-  time_based_linear      = var.time_based_linear
+  traffic_routing_config = var.traffic_routing_config
   compute_platform       = var.compute_platform
   deployment_config_name = var.deployment_config_name
-  interval               = var.interval
   minimum_healthy_hosts  = var.minimum_healthy_hosts
-  traffic_routing_config = var.traffic_routing_config
+  time_based_linear      = var.time_based_linear
   type                   = var.type
   value                  = var.value
+  id                     = var.id
+  interval               = var.interval
+  time_based_canary      = var.time_based_canary
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "time_based_linear" {
-  description = "(Optional) The time based linear configuration information. If type is TimeBasedCanary, use time_based_canary instead.The time_based_canary block supports the following:"
-  type        = string
-  default     = ""
-}
 variable "id" {
   description = "The deployment group's config name."
   type        = string
 }
-variable "percentage" {
-  description = "(Optional) The percentage of traffic that is shifted at the start of each increment of a TimeBasedLinear deployment.In addition to all arguments above, the following attributes are exported:"
+variable "interval" {
+  description = "(Optional) The number of minutes between each incremental traffic shift of a TimeBasedLinear deployment."
   type        = string
   default     = ""
 }
@@ -34,13 +29,8 @@ variable "time_based_canary" {
   type        = string
   default     = ""
 }
-variable "minimum_healthy_hosts" {
-  description = "(Optional) A minimum_healthy_hosts block. Required for Server compute platform. Minimum Healthy Hosts are documented below."
-  type        = string
-  default     = ""
-}
-variable "traffic_routing_config" {
-  description = "(Optional) A traffic_routing_config block. Traffic Routing Config is documented below.The minimum_healthy_hosts block supports the following:"
+variable "time_based_linear" {
+  description = "(Optional) The time based linear configuration information. If type is TimeBasedCanary, use time_based_canary instead.The time_based_canary block supports the following:"
   type        = string
   default     = ""
 }
@@ -62,8 +52,18 @@ variable "deployment_config_name" {
   description = "(Required) The name of the deployment config."
   type        = string
 }
-variable "interval" {
-  description = "(Optional) The number of minutes between each incremental traffic shift of a TimeBasedLinear deployment."
+variable "minimum_healthy_hosts" {
+  description = "(Optional) A minimum_healthy_hosts block. Required for Server compute platform. Minimum Healthy Hosts are documented below."
+  type        = string
+  default     = ""
+}
+variable "percentage" {
+  description = "(Optional) The percentage of traffic that is shifted at the start of each increment of a TimeBasedLinear deployment.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "traffic_routing_config" {
+  description = "(Optional) A traffic_routing_config block. Traffic Routing Config is documented below.The minimum_healthy_hosts block supports the following:"
   type        = string
   default     = ""
 }
@@ -187,13 +187,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "minimum_healthy_hosts" {
-  description = "(Optional) A minimum_healthy_hosts block. Required for Server compute platform. Minimum Healthy Hosts are documented below."
-  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.minimum_healthy_hosts
+output "id" {
+  description = "The deployment group's config name."
+  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.id
 }
-output "traffic_routing_config" {
-  description = "(Optional) A traffic_routing_config block. Traffic Routing Config is documented below.The minimum_healthy_hosts block supports the following:"
-  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.traffic_routing_config
+output "interval" {
+  description = "(Optional) The number of minutes between each incremental traffic shift of a TimeBasedLinear deployment."
+  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.interval
+}
+output "time_based_canary" {
+  description = "(Optional) The time based canary configuration information. If type is TimeBasedLinear, use time_based_linear instead."
+  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.time_based_canary
+}
+output "time_based_linear" {
+  description = "(Optional) The time based linear configuration information. If type is TimeBasedCanary, use time_based_canary instead.The time_based_canary block supports the following:"
+  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.time_based_linear
 }
 output "type" {
   description = "(Optional) Type of traffic routing config. One of TimeBasedCanary, TimeBasedLinear, AllAtOnce."
@@ -211,25 +219,17 @@ output "deployment_config_name" {
   description = "(Required) The name of the deployment config."
   value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.deployment_config_name
 }
-output "interval" {
-  description = "(Optional) The number of minutes between each incremental traffic shift of a TimeBasedLinear deployment."
-  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.interval
-}
-output "time_based_linear" {
-  description = "(Optional) The time based linear configuration information. If type is TimeBasedCanary, use time_based_canary instead.The time_based_canary block supports the following:"
-  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.time_based_linear
-}
-output "id" {
-  description = "The deployment group's config name."
-  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.id
+output "minimum_healthy_hosts" {
+  description = "(Optional) A minimum_healthy_hosts block. Required for Server compute platform. Minimum Healthy Hosts are documented below."
+  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.minimum_healthy_hosts
 }
 output "percentage" {
   description = "(Optional) The percentage of traffic that is shifted at the start of each increment of a TimeBasedLinear deployment.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.percentage
 }
-output "time_based_canary" {
-  description = "(Optional) The time based canary configuration information. If type is TimeBasedLinear, use time_based_linear instead."
-  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.time_based_canary
+output "traffic_routing_config" {
+  description = "(Optional) A traffic_routing_config block. Traffic Routing Config is documented below.The minimum_healthy_hosts block supports the following:"
+  value       = aws_codedeploy_deployment_config.aws_codedeploy_deployment_config.traffic_routing_config
 }
 output "deployment_config_id" {
   description = "The AWS Assigned deployment config id"

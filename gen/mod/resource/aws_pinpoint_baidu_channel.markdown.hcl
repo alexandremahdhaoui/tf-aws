@@ -7,10 +7,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "api_key" {
-  description = "(Required) Platform credential API key from Baidu."
-  type        = string
-}
 variable "application_id" {
   description = "(Required) The application ID."
   type        = string
@@ -19,6 +15,10 @@ variable "enabled" {
   description = "(Optional) Specifies whether to enable the channel. Defaults to true."
   type        = string
   default     = ""
+}
+variable "api_key" {
+  description = "(Required) Platform credential API key from Baidu."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

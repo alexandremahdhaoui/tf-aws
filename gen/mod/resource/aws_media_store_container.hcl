@@ -1,11 +1,15 @@
 resource "aws_media_store_container" "aws_media_store_container" {
-  endpoint = var.endpoint
-  name     = var.name
   tags     = var.tags
   arn      = var.arn
+  endpoint = var.endpoint
+  name     = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the container. Must contain alphanumeric characters or underscores."
   type        = string
 }
 variable "tags" {
@@ -19,10 +23,6 @@ variable "arn" {
 }
 variable "endpoint" {
   description = "The DNS endpoint of the container."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the container. Must contain alphanumeric characters or underscores."
   type        = string
 }
 variable "tag_instance_id" {
@@ -145,14 +145,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "endpoint" {
-  description = "The DNS endpoint of the container."
-  value       = aws_media_store_container.aws_media_store_container.endpoint
-}
-output "name" {
-  description = "(Required) The name of the container. Must contain alphanumeric characters or underscores."
-  value       = aws_media_store_container.aws_media_store_container.name
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_media_store_container.aws_media_store_container.tags
@@ -160,6 +152,14 @@ output "tags" {
 output "arn" {
   description = "The ARN of the container."
   value       = aws_media_store_container.aws_media_store_container.arn
+}
+output "endpoint" {
+  description = "The DNS endpoint of the container."
+  value       = aws_media_store_container.aws_media_store_container.endpoint
+}
+output "name" {
+  description = "(Required) The name of the container. Must contain alphanumeric characters or underscores."
+  value       = aws_media_store_container.aws_media_store_container.name
 }
 output "arn" {
   description = "The ARN of the container."

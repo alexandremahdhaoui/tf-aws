@@ -2,32 +2,32 @@ resource "aws_securityhub_standards_control.markdown" "aws_securityhub_standards
   control_status            = var.control_status
   description               = var.description
   disabled_reason           = var.disabled_reason
-  id                        = var.id
-  related_requirements      = var.related_requirements
   remediation_url           = var.remediation_url
+  severity_rating           = var.severity_rating
   standards_control_arn     = var.standards_control_arn
   control_id                = var.control_id
-  severity_rating           = var.severity_rating
   control_status_updated_at = var.control_status_updated_at
+  id                        = var.id
+  related_requirements      = var.related_requirements
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "related_requirements" {
-  description = " – The list of requirements that are related to this control."
-  type        = string
-}
-variable "remediation_url" {
-  description = " – A link to remediation information for the control in the Security Hub user documentation."
-  type        = string
-}
-variable "standards_control_arn" {
-  description = "(Required) The standards control ARN."
-  type        = string
-}
 variable "control_id" {
   description = " – The identifier of the security standard control."
+  type        = string
+}
+variable "control_status_updated_at" {
+  description = " – The date and time that the status of the security standard control was most recently updated."
+  type        = string
+}
+variable "id" {
+  description = "The standard control ARN."
+  type        = string
+}
+variable "related_requirements" {
+  description = " – The list of requirements that are related to this control."
   type        = string
 }
 variable "control_status" {
@@ -43,16 +43,16 @@ variable "disabled_reason" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The standard control ARN."
-  type        = string
-}
-variable "control_status_updated_at" {
-  description = " – The date and time that the status of the security standard control was most recently updated."
+variable "remediation_url" {
+  description = " – A link to remediation information for the control in the Security Hub user documentation."
   type        = string
 }
 variable "severity_rating" {
   description = " – The severity of findings generated from this security standard control."
+  type        = string
+}
+variable "standards_control_arn" {
+  description = "(Required) The standards control ARN."
   type        = string
 }
 variable "tag_instance_id" {
@@ -175,14 +175,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "severity_rating" {
-  description = " – The severity of findings generated from this security standard control."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.severity_rating
-}
-output "control_status_updated_at" {
-  description = " – The date and time that the status of the security standard control was most recently updated."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_status_updated_at
-}
 output "control_status" {
   description = " – (Required) The control status could be ENABLED or DISABLED. You have to specify disabled_reason argument for DISABLED control status."
   value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_status
@@ -195,17 +187,13 @@ output "disabled_reason" {
   description = " – (Optional) A description of the reason why you are disabling a security standard control. If you specify this attribute, control_status will be set to DISABLED automatically.In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.disabled_reason
 }
-output "id" {
-  description = "The standard control ARN."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.id
-}
-output "related_requirements" {
-  description = " – The list of requirements that are related to this control."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.related_requirements
-}
 output "remediation_url" {
   description = " – A link to remediation information for the control in the Security Hub user documentation."
   value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.remediation_url
+}
+output "severity_rating" {
+  description = " – The severity of findings generated from this security standard control."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.severity_rating
 }
 output "standards_control_arn" {
   description = "(Required) The standards control ARN."
@@ -214,6 +202,30 @@ output "standards_control_arn" {
 output "control_id" {
   description = " – The identifier of the security standard control."
   value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_id
+}
+output "control_status_updated_at" {
+  description = " – The date and time that the status of the security standard control was most recently updated."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_status_updated_at
+}
+output "id" {
+  description = "The standard control ARN."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.id
+}
+output "related_requirements" {
+  description = " – The list of requirements that are related to this control."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.related_requirements
+}
+output "severity_rating" {
+  description = " – The severity of findings generated from this security standard control."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.severity_rating
+}
+output "control_id" {
+  description = " – The identifier of the security standard control."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_id
+}
+output "control_status_updated_at" {
+  description = " – The date and time that the status of the security standard control was most recently updated."
+  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_status_updated_at
 }
 output "description" {
   description = " – The standard control longer description. Provides information about what the control is checking for."
@@ -230,18 +242,6 @@ output "related_requirements" {
 output "remediation_url" {
   description = " – A link to remediation information for the control in the Security Hub user documentation."
   value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.remediation_url
-}
-output "severity_rating" {
-  description = " – The severity of findings generated from this security standard control."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.severity_rating
-}
-output "control_id" {
-  description = " – The identifier of the security standard control."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_id
-}
-output "control_status_updated_at" {
-  description = " – The date and time that the status of the security standard control was most recently updated."
-  value       = aws_securityhub_standards_control.markdown.aws_securityhub_standards_control.markdown.control_status_updated_at
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

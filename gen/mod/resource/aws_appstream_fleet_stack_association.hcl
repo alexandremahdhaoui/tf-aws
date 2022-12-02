@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "fleet_name" {
-  description = "(Required) Name of the fleet."
-  type        = string
-}
 variable "stack_name" {
   description = " (Required) Name of the stack.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "fleet_name" {
+  description = "(Required) Name of the fleet."
   type        = string
 }
 variable "tag_instance_id" {

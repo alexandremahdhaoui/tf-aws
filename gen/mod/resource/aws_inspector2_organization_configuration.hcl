@@ -10,6 +10,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "auto_enable" {
+  description = "(Required) Configuration block for auto enabling. See below.auto_enable"
+  type        = string
+}
 variable "create" {
   description = "(Default 5m)"
   type        = string
@@ -28,10 +32,6 @@ variable "max_account_limit_reached" {
 }
 variable "update" {
   description = "(Default 5m)"
-  type        = string
-}
-variable "auto_enable" {
-  description = "(Required) Configuration block for auto enabling. See below.auto_enable"
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,14 +154,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "max_account_limit_reached" {
-  description = "Whether your configuration reached the max account limit.TimeoutsConfiguration options:"
-  value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.max_account_limit_reached
-}
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.update
-}
 output "auto_enable" {
   description = "(Required) Configuration block for auto enabling. See below.auto_enable"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.auto_enable
@@ -177,6 +169,14 @@ output "ec2" {
 output "ecr" {
   description = "(Required) Whether Amazon ECR scans are automatically enabled for new members of your Amazon Inspector organization.In addition to all arguments above, the following attributes are exported:"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.ecr
+}
+output "max_account_limit_reached" {
+  description = "Whether your configuration reached the max account limit.TimeoutsConfiguration options:"
+  value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.max_account_limit_reached
+}
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.update
 }
 output "create" {
   description = "(Default 5m)"

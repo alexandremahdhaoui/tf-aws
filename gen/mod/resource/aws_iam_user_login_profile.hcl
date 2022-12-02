@@ -1,22 +1,13 @@
 resource "aws_iam_user_login_profile" "aws_iam_user_login_profile" {
-  password_reset_required = var.password_reset_required
-  pgp_key                 = var.pgp_key
-  user                    = var.user
   key_fingerprint         = var.key_fingerprint
   password                = var.password
   password_length         = var.password_length
+  password_reset_required = var.password_reset_required
+  pgp_key                 = var.pgp_key
+  user                    = var.user
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "pgp_key" {
-  description = "(Optional) Either a base-64 encoded PGP public key, or a keybase username in the form keybase:username. Only applies on resource creation. Drift detection is not possible with this argument."
-  type        = string
-  default     = ""
-}
-variable "user" {
-  description = "(Required) The IAM user's name."
   type        = string
 }
 variable "key_fingerprint" {
@@ -36,6 +27,15 @@ variable "password_reset_required" {
   description = "(Optional) Whether the user should be forced to reset the generated password on resource creation. Only applies on resource creation.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "pgp_key" {
+  description = "(Optional) Either a base-64 encoded PGP public key, or a keybase username in the form keybase:username. Only applies on resource creation. Drift detection is not possible with this argument."
+  type        = string
+  default     = ""
+}
+variable "user" {
+  description = "(Required) The IAM user's name."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -181,10 +181,6 @@ output "user" {
   description = "(Required) The IAM user's name."
   value       = aws_iam_user_login_profile.aws_iam_user_login_profile.user
 }
-output "encrypted_password" {
-  description = "The encrypted password, base64 encoded. Only available if password was handled on Terraform resource creation, not import.~> strongNOTE:terraform output password | base64 --decode | keybase pgp decrypt."
-  value       = aws_iam_user_login_profile.aws_iam_user_login_profile.encrypted_password
-}
 output "key_fingerprint" {
   description = "The fingerprint of the PGP key used to encrypt the password. Only available if password was handled on Terraform resource creation, not import."
   value       = aws_iam_user_login_profile.aws_iam_user_login_profile.key_fingerprint
@@ -192,6 +188,10 @@ output "key_fingerprint" {
 output "password" {
   description = "The plain text password, only available when pgp_key is not provided."
   value       = aws_iam_user_login_profile.aws_iam_user_login_profile.password
+}
+output "encrypted_password" {
+  description = "The encrypted password, base64 encoded. Only available if password was handled on Terraform resource creation, not import.~> strongNOTE:terraform output password | base64 --decode | keybase pgp decrypt."
+  value       = aws_iam_user_login_profile.aws_iam_user_login_profile.encrypted_password
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

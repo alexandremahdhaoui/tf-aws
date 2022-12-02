@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "permission_set_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "inline_policy" {
   description = "(Required) The IAM inline policy to attach to a Permission Set."
   type        = string
 }
 variable "instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
+  type        = string
+}
+variable "permission_set_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

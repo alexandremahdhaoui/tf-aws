@@ -151,6 +151,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "identity_name" {
+  description = "(Optional) The name of the user or group from the Amazon Web Services SSO Identity Store."
+  value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_name
+}
 output "identity_type" {
   description = "(Required) Specifies whether the identity to map to the Amazon EMR Studio is a USER or a GROUP."
   value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_type
@@ -166,10 +170,6 @@ output "studio_id" {
 output "identity_id" {
   description = "- (Optional) The globally unique identifier (GUID) of the user or group from the Amazon Web Services SSO Identity Store."
   value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_id
-}
-output "identity_name" {
-  description = "(Optional) The name of the user or group from the Amazon Web Services SSO Identity Store."
-  value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_name
 }
 output "id" {
   description = "- The id of the Elastic MapReduce Studio Session Mapping."

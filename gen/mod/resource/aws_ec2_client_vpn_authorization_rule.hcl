@@ -10,10 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "target_network_cidr" {
-  description = "(Required) The IPv4 address range, in CIDR notation, of the network to which the authorization rule applies."
-  type        = string
-}
 variable "access_group_id" {
   description = "(Optional) The ID of the group to which the authorization rule grants access. One of access_group_id or authorize_all_groups must be set."
   type        = string
@@ -36,6 +32,10 @@ variable "description" {
   description = "(Optional) A brief description of the authorization rule.No additional attributes are exported.TimeoutsConfiguration options:"
   type        = string
   default     = ""
+}
+variable "target_network_cidr" {
+  description = "(Required) The IPv4 address range, in CIDR notation, of the network to which the authorization rule applies."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -157,6 +157,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "authorize_all_groups" {
+  description = "(Optional) Indicates whether the authorization rule grants access to all clients. One of access_group_id or authorize_all_groups must be set."
+  value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.authorize_all_groups
+}
 output "client_vpn_endpoint_id" {
   description = "(Required) The ID of the Client VPN endpoint."
   value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.client_vpn_endpoint_id
@@ -177,17 +181,13 @@ output "access_group_id" {
   description = "(Optional) The ID of the group to which the authorization rule grants access. One of access_group_id or authorize_all_groups must be set."
   value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.access_group_id
 }
-output "authorize_all_groups" {
-  description = "(Optional) Indicates whether the authorization rule grants access to all clients. One of access_group_id or authorize_all_groups must be set."
-  value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.authorize_all_groups
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.delete
 }
 output "create" {
   description = "(Default 10m)"
   value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.create
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_ec2_client_vpn_authorization_rule.aws_ec2_client_vpn_authorization_rule.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

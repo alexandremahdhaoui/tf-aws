@@ -4,14 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "owner_account_id" {
-  description = "ID of the AWS account that owns the connection."
-  value       = aws_dx_connection.aws_dx_connection.owner_account_id
-}
-output "provider_name" {
-  description = "Name of the service provider associated with the connection."
-  value       = aws_dx_connection.aws_dx_connection.provider_name
-}
 output "tags" {
   description = "Map of tags for the resource."
   value       = aws_dx_connection.aws_dx_connection.tags
@@ -35,6 +27,14 @@ output "id" {
 output "location" {
   description = "AWS Direct Connect location where the connection is located."
   value       = aws_dx_connection.aws_dx_connection.location
+}
+output "owner_account_id" {
+  description = "ID of the AWS account that owns the connection."
+  value       = aws_dx_connection.aws_dx_connection.owner_account_id
+}
+output "provider_name" {
+  description = "Name of the service provider associated with the connection."
+  value       = aws_dx_connection.aws_dx_connection.provider_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

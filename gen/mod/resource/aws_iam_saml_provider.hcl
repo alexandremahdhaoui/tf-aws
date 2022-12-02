@@ -9,6 +9,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "The ARN assigned by AWS for this provider."
+  type        = string
+}
 variable "name" {
   description = "(Required) The name of the provider to create."
   type        = string
@@ -24,10 +28,6 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN assigned by AWS for this provider."
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,10 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN assigned by AWS for this provider."
-  value       = aws_iam_saml_provider.aws_iam_saml_provider.arn
-}
 output "name" {
   description = "(Required) The name of the provider to create."
   value       = aws_iam_saml_provider.aws_iam_saml_provider.name
@@ -181,6 +177,10 @@ output "tags_all" {
 output "valid_until" {
   description = "The expiration date and time for the SAML provider in RFC1123 format, e.g., Mon, 02 Jan 2006 15:04:05 MST."
   value       = aws_iam_saml_provider.aws_iam_saml_provider.valid_until
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this provider."
+  value       = aws_iam_saml_provider.aws_iam_saml_provider.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

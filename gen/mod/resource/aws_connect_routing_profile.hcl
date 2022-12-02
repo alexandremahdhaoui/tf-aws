@@ -1,44 +1,28 @@
 resource "aws_connect_routing_profile" "aws_connect_routing_profile" {
-  channel                   = var.channel
-  concurrency               = var.concurrency
-  default_outbound_queue_id = var.default_outbound_queue_id
+  delay                     = var.delay
+  description               = var.description
   name                      = var.name
-  tags_all                  = var.tags_all
-  id                        = var.id
-  media_concurrencies       = var.media_concurrencies
-  queue_configs             = var.queue_configs
+  channel                   = var.channel
+  instance_id               = var.instance_id
   routing_profile_id        = var.routing_profile_id
   tags                      = var.tags
   arn                       = var.arn
-  queue_arn                 = var.queue_arn
-  delay                     = var.delay
-  description               = var.description
-  instance_id               = var.instance_id
+  id                        = var.id
+  media_concurrencies       = var.media_concurrencies
   priority                  = var.priority
+  queue_configs             = var.queue_configs
+  tags_all                  = var.tags_all
+  concurrency               = var.concurrency
+  default_outbound_queue_id = var.default_outbound_queue_id
+  queue_arn                 = var.queue_arn
   queue_id                  = var.queue_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "channel" {
-  description = "(Required) Specifies the channels agents can handle in the Contact Control Panel (CCP) for this routing profile. Valid values are VOICE, CHAT, TASK."
-  type        = string
-}
-variable "concurrency" {
-  description = "(Required) Specifies the number of contacts an agent can have on a channel simultaneously. Valid Range for VOICE: Minimum value of 1. Maximum value of 1. Valid Range for CHAT: Minimum value of 1. Maximum value of 10. Valid Range for TASK: Minimum value of 1. Maximum value of 10.A queue_configs block supports the following arguments:"
-  type        = string
-}
-variable "default_outbound_queue_id" {
-  description = "(Required) Specifies the default outbound queue for the Routing Profile."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Specifies the name of the Routing Profile."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A queue_configs block supports the following attributes in addition to the arguments defined earlier:"
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Routing Profile."
   type        = string
 }
 variable "id" {
@@ -49,24 +33,32 @@ variable "media_concurrencies" {
   description = "(Required) One or more media_concurrencies blocks that specify the channels that agents can handle in the Contact Control Panel (CCP) for this Routing Profile. The media_concurrencies block is documented below."
   type        = string
 }
+variable "priority" {
+  description = "(Required) Specifies the order in which contacts are to be handled for the queue."
+  type        = string
+}
 variable "queue_configs" {
   description = "In addition to the arguments used in the queue_configs argument block, there are additional attributes exported within the queue_configs block. These additional attributes are documented below."
   type        = string
 }
-variable "routing_profile_id" {
-  description = "The identifier for the Routing Profile."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A queue_configs block supports the following attributes in addition to the arguments defined earlier:"
   type        = string
 }
-variable "tags" {
-  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A media_concurrencies block supports the following arguments:"
+variable "concurrency" {
+  description = "(Required) Specifies the number of contacts an agent can have on a channel simultaneously. Valid Range for VOICE: Minimum value of 1. Maximum value of 1. Valid Range for CHAT: Minimum value of 1. Maximum value of 10. Valid Range for TASK: Minimum value of 1. Maximum value of 10.A queue_configs block supports the following arguments:"
   type        = string
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Routing Profile."
+variable "default_outbound_queue_id" {
+  description = "(Required) Specifies the default outbound queue for the Routing Profile."
   type        = string
 }
 variable "queue_arn" {
   description = "ARN for the queue."
+  type        = string
+}
+variable "queue_id" {
+  description = "(Required) Specifies the identifier for the queue.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "delay" {
@@ -77,16 +69,24 @@ variable "description" {
   description = "(Required) Specifies the description of the Routing Profile."
   type        = string
 }
+variable "name" {
+  description = "(Required) Specifies the name of the Routing Profile."
+  type        = string
+}
+variable "channel" {
+  description = "(Required) Specifies the channels agents can handle in the Contact Control Panel (CCP) for this routing profile. Valid values are VOICE, CHAT, TASK."
+  type        = string
+}
 variable "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   type        = string
 }
-variable "priority" {
-  description = "(Required) Specifies the order in which contacts are to be handled for the queue."
+variable "routing_profile_id" {
+  description = "The identifier for the Routing Profile."
   type        = string
 }
-variable "queue_id" {
-  description = "(Required) Specifies the identifier for the queue.In addition to all arguments above, the following attributes are exported:"
+variable "tags" {
+  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A media_concurrencies block supports the following arguments:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -209,13 +209,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "media_concurrencies" {
-  description = "(Required) One or more media_concurrencies blocks that specify the channels that agents can handle in the Contact Control Panel (CCP) for this Routing Profile. The media_concurrencies block is documented below."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.media_concurrencies
+output "channel" {
+  description = "(Required) Specifies the channels agents can handle in the Contact Control Panel (CCP) for this routing profile. Valid values are VOICE, CHAT, TASK."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.channel
 }
-output "queue_configs" {
-  description = "In addition to the arguments used in the queue_configs argument block, there are additional attributes exported within the queue_configs block. These additional attributes are documented below."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_configs
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.instance_id
 }
 output "routing_profile_id" {
   description = "The identifier for the Routing Profile."
@@ -225,41 +225,29 @@ output "tags" {
   description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A media_concurrencies block supports the following arguments:"
   value       = aws_connect_routing_profile.aws_connect_routing_profile.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A queue_configs block supports the following attributes in addition to the arguments defined earlier:"
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.tags_all
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Routing Profile."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.arn
 }
 output "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Routing Profile separated by a colon (:)."
   value       = aws_connect_routing_profile.aws_connect_routing_profile.id
 }
-output "queue_arn" {
-  description = "ARN for the queue."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_arn
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Routing Profile."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.arn
-}
-output "description" {
-  description = "(Required) Specifies the description of the Routing Profile."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.description
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.instance_id
+output "media_concurrencies" {
+  description = "(Required) One or more media_concurrencies blocks that specify the channels that agents can handle in the Contact Control Panel (CCP) for this Routing Profile. The media_concurrencies block is documented below."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.media_concurrencies
 }
 output "priority" {
   description = "(Required) Specifies the order in which contacts are to be handled for the queue."
   value       = aws_connect_routing_profile.aws_connect_routing_profile.priority
 }
-output "queue_id" {
-  description = "(Required) Specifies the identifier for the queue.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_id
+output "queue_configs" {
+  description = "In addition to the arguments used in the queue_configs argument block, there are additional attributes exported within the queue_configs block. These additional attributes are documented below."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_configs
 }
-output "delay" {
-  description = "(Required) Specifies the delay, in seconds, that a contact should be in the queue before they are routed to an available agent"
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.delay
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A queue_configs block supports the following attributes in addition to the arguments defined earlier:"
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.tags_all
 }
 output "concurrency" {
   description = "(Required) Specifies the number of contacts an agent can have on a channel simultaneously. Valid Range for VOICE: Minimum value of 1. Maximum value of 1. Valid Range for CHAT: Minimum value of 1. Maximum value of 10. Valid Range for TASK: Minimum value of 1. Maximum value of 10.A queue_configs block supports the following arguments:"
@@ -269,21 +257,25 @@ output "default_outbound_queue_id" {
   description = "(Required) Specifies the default outbound queue for the Routing Profile."
   value       = aws_connect_routing_profile.aws_connect_routing_profile.default_outbound_queue_id
 }
-output "name" {
-  description = "(Required) Specifies the name of the Routing Profile."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.name
-}
-output "channel" {
-  description = "(Required) Specifies the channels agents can handle in the Contact Control Panel (CCP) for this routing profile. Valid values are VOICE, CHAT, TASK."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.channel
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Routing Profile separated by a colon (:)."
-  value       = aws_connect_routing_profile.aws_connect_routing_profile.id
-}
 output "queue_arn" {
   description = "ARN for the queue."
   value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_arn
+}
+output "queue_id" {
+  description = "(Required) Specifies the identifier for the queue.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_id
+}
+output "delay" {
+  description = "(Required) Specifies the delay, in seconds, that a contact should be in the queue before they are routed to an available agent"
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.delay
+}
+output "description" {
+  description = "(Required) Specifies the description of the Routing Profile."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.description
+}
+output "name" {
+  description = "(Required) Specifies the name of the Routing Profile."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.name
 }
 output "queue_configs" {
   description = "In addition to the arguments used in the queue_configs argument block, there are additional attributes exported within the queue_configs block. These additional attributes are documented below."
@@ -304,6 +296,14 @@ output "tags_all" {
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Routing Profile."
   value       = aws_connect_routing_profile.aws_connect_routing_profile.arn
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Routing Profile separated by a colon (:)."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.id
+}
+output "queue_arn" {
+  description = "ARN for the queue."
+  value       = aws_connect_routing_profile.aws_connect_routing_profile.queue_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

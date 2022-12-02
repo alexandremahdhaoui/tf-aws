@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "environment_id" {
-  description = "(Required) The ID of the environment that contains the environment member you want to add."
-  type        = string
-}
 variable "id" {
   description = "The ID of the environment membership."
   type        = string
@@ -22,6 +18,10 @@ variable "permissions" {
 }
 variable "user_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the environment member you want to add.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "environment_id" {
+  description = "(Required) The ID of the environment that contains the environment member you want to add."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,14 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "environment_id" {
-  description = "(Required) The ID of the environment that contains the environment member you want to add."
-  value       = aws_cloud9_environment_membership.markdown.aws_cloud9_environment_membership.markdown.environment_id
-}
-output "id" {
-  description = "The ID of the environment membership."
-  value       = aws_cloud9_environment_membership.markdown.aws_cloud9_environment_membership.markdown.id
-}
 output "permissions" {
   description = "(Required) The type of environment member permissions you want to associate with this environment member. Allowed values are read-only and read-write ."
   value       = aws_cloud9_environment_membership.markdown.aws_cloud9_environment_membership.markdown.permissions
@@ -159,6 +151,14 @@ output "permissions" {
 output "user_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the environment member you want to add.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloud9_environment_membership.markdown.aws_cloud9_environment_membership.markdown.user_arn
+}
+output "environment_id" {
+  description = "(Required) The ID of the environment that contains the environment member you want to add."
+  value       = aws_cloud9_environment_membership.markdown.aws_cloud9_environment_membership.markdown.environment_id
+}
+output "id" {
+  description = "The ID of the environment membership."
+  value       = aws_cloud9_environment_membership.markdown.aws_cloud9_environment_membership.markdown.id
 }
 output "id" {
   description = "The ID of the environment membership."

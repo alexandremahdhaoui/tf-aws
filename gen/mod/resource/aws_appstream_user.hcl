@@ -1,46 +1,22 @@
 resource "aws_appstream_user" "aws_appstream_user" {
-  arn                     = var.arn
+  id                      = var.id
   authentication_type     = var.authentication_type
-  first_name              = var.first_name
-  last_name               = var.last_name
-  status                  = var.status
-  user_name               = var.user_name
   created_time            = var.created_time
   enabled                 = var.enabled
-  id                      = var.id
+  first_name              = var.first_name
+  user_name               = var.user_name
+  arn                     = var.arn
+  last_name               = var.last_name
   send_email_notification = var.send_email_notification
+  status                  = var.status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "status" {
-  description = "Status of the user in the user pool."
-  type        = string
-  default     = ""
-}
-variable "user_name" {
-  description = "(Required) Email address of the user."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the appstream user."
-  type        = string
-  default     = ""
-}
 variable "authentication_type" {
   description = "(Required) Authentication type for the user. You must specify USERPOOL. Valid values: API, SAML, USERPOOL"
   type        = string
-}
-variable "first_name" {
-  description = "(Optional) First name, or given name, of the user."
-  type        = string
-  default     = ""
-}
-variable "last_name" {
-  description = "(Optional) Last name, or surname, of the user."
-  type        = string
-  default     = ""
 }
 variable "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the user was created."
@@ -52,8 +28,23 @@ variable "enabled" {
   type        = string
   default     = ""
 }
+variable "first_name" {
+  description = "(Optional) First name, or given name, of the user."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "Unique ID of the appstream user."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the appstream user."
+  type        = string
+  default     = ""
+}
+variable "last_name" {
+  description = "(Optional) Last name, or surname, of the user."
   type        = string
   default     = ""
 }
@@ -61,6 +52,15 @@ variable "send_email_notification" {
   description = "(Optional) Send an email notification.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "status" {
+  description = "Status of the user in the user pool."
+  type        = string
+  default     = ""
+}
+variable "user_name" {
+  description = "(Required) Email address of the user."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -182,29 +182,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "user_name" {
-  description = "(Required) Email address of the user."
-  value       = aws_appstream_user.aws_appstream_user.user_name
-}
 output "arn" {
   description = "ARN of the appstream user."
   value       = aws_appstream_user.aws_appstream_user.arn
-}
-output "authentication_type" {
-  description = "(Required) Authentication type for the user. You must specify USERPOOL. Valid values: API, SAML, USERPOOL"
-  value       = aws_appstream_user.aws_appstream_user.authentication_type
-}
-output "first_name" {
-  description = "(Optional) First name, or given name, of the user."
-  value       = aws_appstream_user.aws_appstream_user.first_name
 }
 output "last_name" {
   description = "(Optional) Last name, or surname, of the user."
   value       = aws_appstream_user.aws_appstream_user.last_name
 }
+output "send_email_notification" {
+  description = "(Optional) Send an email notification.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appstream_user.aws_appstream_user.send_email_notification
+}
 output "status" {
   description = "Status of the user in the user pool."
   value       = aws_appstream_user.aws_appstream_user.status
+}
+output "user_name" {
+  description = "(Required) Email address of the user."
+  value       = aws_appstream_user.aws_appstream_user.user_name
+}
+output "authentication_type" {
+  description = "(Required) Authentication type for the user. You must specify USERPOOL. Valid values: API, SAML, USERPOOL"
+  value       = aws_appstream_user.aws_appstream_user.authentication_type
 }
 output "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the user was created."
@@ -214,13 +214,13 @@ output "enabled" {
   description = "(Optional) Whether the user in the user pool is enabled."
   value       = aws_appstream_user.aws_appstream_user.enabled
 }
+output "first_name" {
+  description = "(Optional) First name, or given name, of the user."
+  value       = aws_appstream_user.aws_appstream_user.first_name
+}
 output "id" {
   description = "Unique ID of the appstream user."
   value       = aws_appstream_user.aws_appstream_user.id
-}
-output "send_email_notification" {
-  description = "(Optional) Send an email notification.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appstream_user.aws_appstream_user.send_email_notification
 }
 output "arn" {
   description = "ARN of the appstream user."

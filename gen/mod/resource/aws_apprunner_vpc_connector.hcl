@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_apprunner_vpc_connector.aws_apprunner_vpc_connector.tags_all
-}
 output "vpc_connector_arn" {
   description = "ARN of VPC connector."
   value       = aws_apprunner_vpc_connector.aws_apprunner_vpc_connector.vpc_connector_arn
@@ -139,6 +135,10 @@ output "vpc_connector_revision" {
 output "status" {
   description = "Current state of the VPC connector. If the status of a connector revision is INACTIVE, it was deleted and can't be used. Inactive connector revisions are permanently removed some time after they are deleted."
   value       = aws_apprunner_vpc_connector.aws_apprunner_vpc_connector.status
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_apprunner_vpc_connector.aws_apprunner_vpc_connector.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

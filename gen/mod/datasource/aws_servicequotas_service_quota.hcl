@@ -4,18 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "adjustable" {
-  description = "Whether the service quota is adjustable."
-  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.adjustable
-}
-output "arn" {
-  description = "ARN of the service quota."
-  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.arn
-}
-output "default_value" {
-  description = "Default value of the service quota."
-  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.default_value
-}
 output "global_quota" {
   description = "Whether the service quota is global for the AWS account."
   value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.global_quota
@@ -27,6 +15,18 @@ output "id" {
 output "service_name" {
   description = "Name of the service."
   value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.service_name
+}
+output "adjustable" {
+  description = "Whether the service quota is adjustable."
+  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.adjustable
+}
+output "arn" {
+  description = "ARN of the service quota."
+  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.arn
+}
+output "default_value" {
+  description = "Default value of the service quota."
+  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.default_value
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

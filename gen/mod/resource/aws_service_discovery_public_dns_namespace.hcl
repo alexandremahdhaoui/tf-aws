@@ -1,14 +1,23 @@
 resource "aws_service_discovery_public_dns_namespace" "aws_service_discovery_public_dns_namespace" {
-  arn         = var.arn
-  description = var.description
-  hosted_zone = var.hosted_zone
   id          = var.id
   name        = var.name
   tags        = var.tags
+  arn         = var.arn
+  description = var.description
+  hosted_zone = var.hosted_zone
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "name" {
+  description = "(Required) The name of the namespace."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
@@ -26,15 +35,6 @@ variable "hosted_zone" {
 variable "id" {
   description = "The ID of a namespace."
   type        = string
-}
-variable "name" {
-  description = "(Required) The name of the namespace."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,6 +156,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name of the namespace."
+  value       = aws_service_discovery_public_dns_namespace.aws_service_discovery_public_dns_namespace.name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_service_discovery_public_dns_namespace.aws_service_discovery_public_dns_namespace.tags
+}
 output "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   value       = aws_service_discovery_public_dns_namespace.aws_service_discovery_public_dns_namespace.arn
@@ -171,14 +179,6 @@ output "hosted_zone" {
 output "id" {
   description = "The ID of a namespace."
   value       = aws_service_discovery_public_dns_namespace.aws_service_discovery_public_dns_namespace.id
-}
-output "name" {
-  description = "(Required) The name of the namespace."
-  value       = aws_service_discovery_public_dns_namespace.aws_service_discovery_public_dns_namespace.name
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_service_discovery_public_dns_namespace.aws_service_discovery_public_dns_namespace.tags
 }
 output "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."

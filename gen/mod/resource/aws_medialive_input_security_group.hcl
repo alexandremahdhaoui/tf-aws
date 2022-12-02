@@ -1,24 +1,35 @@
 resource "aws_medialive_input_security_group" "aws_medialive_input_security_group" {
-  cidr            = var.cidr
-  create          = var.create
-  update          = var.update
-  inputs          = var.inputs
   tags            = var.tags
+  update          = var.update
   whitelist_rules = var.whitelist_rules
   arn             = var.arn
+  create          = var.create
   delete          = var.delete
   id              = var.id
+  cidr            = var.cidr
+  inputs          = var.inputs
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "cidr" {
-  description = " (Required) - The IPv4 CIDR that's whitelisted.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "create" {
   description = "(Default 5m)"
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 5m)"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "InputSecurityGroup Id."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the InputSecurityGroup. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Whitelist Rules"
   type        = string
   default     = ""
 }
@@ -36,25 +47,14 @@ variable "arn" {
   type        = string
   default     = ""
 }
-variable "delete" {
-  description = "(Default 5m)"
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "InputSecurityGroup Id."
-  type        = string
-  default     = ""
-}
 variable "inputs" {
   description = "The list of inputs currently using this InputSecurityGroup.TimeoutsConfiguration options:"
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the InputSecurityGroup. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Whitelist Rules"
+variable "cidr" {
+  description = " (Required) - The IPv4 CIDR that's whitelisted.In addition to all arguments above, the following attributes are exported:"
   type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -180,17 +180,21 @@ output "cidr" {
   description = " (Required) - The IPv4 CIDR that's whitelisted.In addition to all arguments above, the following attributes are exported:"
   value       = aws_medialive_input_security_group.aws_medialive_input_security_group.cidr
 }
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.create
+output "inputs" {
+  description = "The list of inputs currently using this InputSecurityGroup.TimeoutsConfiguration options:"
+  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.inputs
 }
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.update
+output "id" {
+  description = "InputSecurityGroup Id."
+  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.id
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the InputSecurityGroup. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Whitelist Rules"
   value       = aws_medialive_input_security_group.aws_medialive_input_security_group.tags
+}
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.update
 }
 output "whitelist_rules" {
   description = "(Required) Whitelist rules. See Whitelist Rules for more details."
@@ -200,17 +204,13 @@ output "arn" {
   description = "ARN of the InputSecurityGroup."
   value       = aws_medialive_input_security_group.aws_medialive_input_security_group.arn
 }
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.create
+}
 output "delete" {
   description = "(Default 5m)"
   value       = aws_medialive_input_security_group.aws_medialive_input_security_group.delete
-}
-output "id" {
-  description = "InputSecurityGroup Id."
-  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.id
-}
-output "inputs" {
-  description = "The list of inputs currently using this InputSecurityGroup.TimeoutsConfiguration options:"
-  value       = aws_medialive_input_security_group.aws_medialive_input_security_group.inputs
 }
 output "id" {
   description = "InputSecurityGroup Id."

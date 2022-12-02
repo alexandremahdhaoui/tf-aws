@@ -1,4 +1,5 @@
 resource "aws_nat_gateway" "aws_nat_gateway" {
+  public_ip            = var.public_ip
   subnet_id            = var.subnet_id
   tags                 = var.tags
   allocation_id        = var.allocation_id
@@ -6,18 +7,9 @@ resource "aws_nat_gateway" "aws_nat_gateway" {
   id                   = var.id
   network_interface_id = var.network_interface_id
   private_ip           = var.private_ip
-  public_ip            = var.public_ip
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "public_ip" {
-  description = "The public IP address of the NAT Gateway."
-  type        = string
-}
-variable "subnet_id" {
-  description = "The Subnet ID of the subnet in which the NAT gateway is placed."
   type        = string
 }
 variable "tags" {
@@ -44,6 +36,14 @@ variable "network_interface_id" {
 }
 variable "private_ip" {
   description = "The private IP address of the NAT Gateway."
+  type        = string
+}
+variable "public_ip" {
+  description = "The public IP address of the NAT Gateway."
+  type        = string
+}
+variable "subnet_id" {
+  description = "The Subnet ID of the subnet in which the NAT gateway is placed."
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,14 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allocation_id" {
-  description = "The Allocation ID of the Elastic IP address for the gateway."
-  value       = aws_nat_gateway.aws_nat_gateway.allocation_id
-}
-output "connectivity_type" {
-  description = "(Optional) Connectivity type for the gateway. Valid values are private and public. Defaults to public."
-  value       = aws_nat_gateway.aws_nat_gateway.connectivity_type
-}
 output "id" {
   description = "The ID of the NAT Gateway."
   value       = aws_nat_gateway.aws_nat_gateway.id
@@ -198,17 +190,13 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_nat_gateway.aws_nat_gateway.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_nat_gateway.aws_nat_gateway.tags_all
-}
 output "allocation_id" {
   description = "The Allocation ID of the Elastic IP address for the gateway."
   value       = aws_nat_gateway.aws_nat_gateway.allocation_id
 }
-output "id" {
-  description = "The ID of the NAT Gateway."
-  value       = aws_nat_gateway.aws_nat_gateway.id
+output "connectivity_type" {
+  description = "(Optional) Connectivity type for the gateway. Valid values are private and public. Defaults to public."
+  value       = aws_nat_gateway.aws_nat_gateway.connectivity_type
 }
 output "network_interface_id" {
   description = "The ENI ID of the network interface created by the NAT gateway."
@@ -225,6 +213,18 @@ output "public_ip" {
 output "subnet_id" {
   description = "The Subnet ID of the subnet in which the NAT gateway is placed."
   value       = aws_nat_gateway.aws_nat_gateway.subnet_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_nat_gateway.aws_nat_gateway.tags_all
+}
+output "allocation_id" {
+  description = "The Allocation ID of the Elastic IP address for the gateway."
+  value       = aws_nat_gateway.aws_nat_gateway.allocation_id
+}
+output "id" {
+  description = "The ID of the NAT Gateway."
+  value       = aws_nat_gateway.aws_nat_gateway.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "detector_id" {
-  description = "(Required) The detector ID of the member GuardDuty account."
-  type        = string
-}
 variable "id" {
   description = "GuardDuty member detector IDTimeoutsConfiguration options:"
   type        = string
 }
 variable "master_account_id" {
   description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "detector_id" {
+  description = "(Required) The detector ID of the member GuardDuty account."
   type        = string
 }
 variable "tag_instance_id" {

@@ -1,21 +1,13 @@
 resource "aws_s3_bucket_ownership_controls" "aws_s3_bucket_ownership_controls" {
-  rule                 = var.rule
-  BucketOwnerEnforced  = var.BucketOwnerEnforced
   BucketOwnerPreferred = var.BucketOwnerPreferred
   ObjectWriter         = var.ObjectWriter
   bucket               = var.bucket
   object_ownership     = var.object_ownership
+  rule                 = var.rule
+  BucketOwnerEnforced  = var.BucketOwnerEnforced
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "BucketOwnerEnforced" {
-  description = "The bucket owner automatically owns and has full control over every object in the bucket. ACLs no longer affect permissions to data in the S3 bucket.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "BucketOwnerPreferred" {
-  description = "Objects uploaded to the bucket change ownership to the bucket owner if the objects are uploaded with the bucket-owner-full-control canned ACL."
   type        = string
 }
 variable "ObjectWriter" {
@@ -32,6 +24,14 @@ variable "object_ownership" {
 }
 variable "rule" {
   description = "(Required) Configuration block(s) with Ownership Controls rules. Detailed below.rule Configuration Block"
+  type        = string
+}
+variable "BucketOwnerEnforced" {
+  description = "The bucket owner automatically owns and has full control over every object in the bucket. ACLs no longer affect permissions to data in the S3 bucket.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "BucketOwnerPreferred" {
+  description = "Objects uploaded to the bucket change ownership to the bucket owner if the objects are uploaded with the bucket-owner-full-control canned ACL."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,6 +154,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "object_ownership" {
+  description = "(Required) Object ownership. Valid values: BucketOwnerPreferred, ObjectWriter or BucketOwnerEnforced"
+  value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.object_ownership
+}
 output "rule" {
   description = "(Required) Configuration block(s) with Ownership Controls rules. Detailed below.rule Configuration Block"
   value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.rule
@@ -173,10 +177,6 @@ output "ObjectWriter" {
 output "bucket" {
   description = "(Required) The name of the bucket that you want to associate this access point with."
   value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.bucket
-}
-output "object_ownership" {
-  description = "(Required) Object ownership. Valid values: BucketOwnerPreferred, ObjectWriter or BucketOwnerEnforced"
-  value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.object_ownership
 }
 output "id" {
   description = "S3 Bucket name."

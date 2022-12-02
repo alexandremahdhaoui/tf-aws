@@ -1,15 +1,24 @@
 resource "aws_wafregional_size_constraint_set" "aws_wafregional_size_constraint_set" {
-  name                = var.name
-  size                = var.size
-  size_constraints    = var.size_constraints
-  text_transformation = var.text_transformation
   type                = var.type
   comparison_operator = var.comparison_operator
   data                = var.data
   field_to_match      = var.field_to_match
+  name                = var.name
+  size                = var.size
+  size_constraints    = var.size_constraints
+  text_transformation = var.text_transformation
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "size_constraints" {
+  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
+  type        = string
+  default     = ""
+}
+variable "text_transformation" {
+  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
   type        = string
 }
 variable "type" {
@@ -35,15 +44,6 @@ variable "name" {
 }
 variable "size" {
   description = "(Required) The size in bytes that you want to compare against the size of the specified field_to_match"
-  type        = string
-}
-variable "size_constraints" {
-  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
-  type        = string
-  default     = ""
-}
-variable "text_transformation" {
-  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,6 +166,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "comparison_operator" {
+  description = "EQ, NE, LT, GTdocs for all supported values."
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.comparison_operator
+}
+output "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.data
+}
+output "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for the size constraint."
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.field_to_match
+}
 output "name" {
   description = "(Required) The name or description of the Size Constraint Set."
   value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.name
@@ -185,18 +197,6 @@ output "text_transformation" {
 output "type" {
   description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.type
-}
-output "comparison_operator" {
-  description = "EQ, NE, LT, GTdocs for all supported values."
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.comparison_operator
-}
-output "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.data
-}
-output "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for the size constraint."
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.field_to_match
 }
 output "id" {
   description = "The ID of the WAF Size Constraint Set."

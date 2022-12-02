@@ -1,4 +1,5 @@
 datasource "aws_s3_bucket" "aws_s3_bucket" {
+  bucket_domain_name          = var.bucket_domain_name
   bucket_regional_domain_name = var.bucket_regional_domain_name
   hosted_zone_id              = var.hosted_zone_id
   id                          = var.id
@@ -6,10 +7,21 @@ datasource "aws_s3_bucket" "aws_s3_bucket" {
   website_endpoint            = var.website_endpoint
   arn                         = var.arn
   bucket                      = var.bucket
-  bucket_domain_name          = var.bucket_domain_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "website_endpoint" {
+  description = "Website endpoint, if the bucket is configured with a website. If not, this will be an empty string."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
+  type        = string
+}
+variable "bucket" {
+  description = "(Required) Name of the bucketAttribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "bucket_domain_name" {
@@ -32,30 +44,6 @@ variable "region" {
   description = "AWS region this bucket resides in."
   type        = string
 }
-variable "website_endpoint" {
-  description = "Website endpoint, if the bucket is configured with a website. If not, this will be an empty string."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
-  type        = string
-}
-variable "bucket" {
-  description = "(Required) Name of the bucketAttribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-output "id" {
-  description = "Name of the bucket."
-  value       = aws_s3_bucket.aws_s3_bucket.id
-}
-output "region" {
-  description = "AWS region this bucket resides in."
-  value       = aws_s3_bucket.aws_s3_bucket.region
-}
-output "website_endpoint" {
-  description = "Website endpoint, if the bucket is configured with a website. If not, this will be an empty string."
-  value       = aws_s3_bucket.aws_s3_bucket.website_endpoint
-}
 output "arn" {
   description = "ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
   value       = aws_s3_bucket.aws_s3_bucket.arn
@@ -75,6 +63,18 @@ output "bucket_regional_domain_name" {
 output "hosted_zone_id" {
   description = "The Route 53 Hosted Zone ID for this bucket's region."
   value       = aws_s3_bucket.aws_s3_bucket.hosted_zone_id
+}
+output "id" {
+  description = "Name of the bucket."
+  value       = aws_s3_bucket.aws_s3_bucket.id
+}
+output "region" {
+  description = "AWS region this bucket resides in."
+  value       = aws_s3_bucket.aws_s3_bucket.region
+}
+output "website_endpoint" {
+  description = "Website endpoint, if the bucket is configured with a website. If not, this will be an empty string."
+  value       = aws_s3_bucket.aws_s3_bucket.website_endpoint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

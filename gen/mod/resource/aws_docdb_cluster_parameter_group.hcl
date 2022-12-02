@@ -1,35 +1,30 @@
 resource "aws_docdb_cluster_parameter_group" "aws_docdb_cluster_parameter_group" {
-  apply_method = var.apply_method
   arn          = var.arn
   family       = var.family
   id           = var.id
+  name         = var.name
   name_prefix  = var.name_prefix
+  value        = var.value
+  apply_method = var.apply_method
+  description  = var.description
   parameter    = var.parameter
   tags         = var.tags
-  value        = var.value
-  description  = var.description
-  name         = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "description" {
-  description = "(Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
 }
 variable "name" {
   description = "(Required) The name of the documentDB parameter."
   type        = string
 }
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+}
 variable "value" {
   description = "(Required) The value of the documentDB parameter."
   type        = string
-}
-variable "apply_method" {
-  description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The ARN of the documentDB cluster parameter group."
@@ -43,17 +38,22 @@ variable "id" {
   description = "The documentDB cluster parameter group name."
   type        = string
 }
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:~> strongNOTE: These arguments take a string representation of their values."
+  type        = string
+  default     = ""
+}
+variable "apply_method" {
+  description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
 }
 variable "parameter" {
   description = "(Optional) A list of documentDB parameters to apply. Setting parameters to system default values may show a difference on imported resources."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:~> strongNOTE: These arguments take a string representation of their values."
   type        = string
   default     = ""
 }
@@ -177,13 +177,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to \"Managed by Terraform\"."
-  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.description
-}
 output "name" {
   description = "(Required) The name of the documentDB parameter."
   value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.name
+}
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.name_prefix
+}
+output "value" {
+  description = "(Required) The value of the documentDB parameter."
+  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.value
+}
+output "arn" {
+  description = "The ARN of the documentDB cluster parameter group."
+  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.arn
 }
 output "family" {
   description = "(Required, Forces new resource) The family of the documentDB cluster parameter group."
@@ -193,25 +201,21 @@ output "id" {
   description = "The documentDB cluster parameter group name."
   value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.id
 }
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.name_prefix
-}
-output "parameter" {
-  description = "(Optional) A list of documentDB parameters to apply. Setting parameters to system default values may show a difference on imported resources."
-  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.parameter
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:~> strongNOTE: These arguments take a string representation of their values."
   value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.tags
 }
-output "value" {
-  description = "(Required) The value of the documentDB parameter."
-  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.value
-}
 output "apply_method" {
   description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.apply_method
+}
+output "description" {
+  description = "(Optional, Forces new resource) The description of the documentDB cluster parameter group. Defaults to \"Managed by Terraform\"."
+  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.description
+}
+output "parameter" {
+  description = "(Optional) A list of documentDB parameters to apply. Setting parameters to system default values may show a difference on imported resources."
+  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.parameter
 }
 output "arn" {
   description = "The ARN of the documentDB cluster parameter group."
@@ -224,10 +228,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.tags_all
-}
-output "arn" {
-  description = "The ARN of the documentDB cluster parameter group."
-  value       = aws_docdb_cluster_parameter_group.aws_docdb_cluster_parameter_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

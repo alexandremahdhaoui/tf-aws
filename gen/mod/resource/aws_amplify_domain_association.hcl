@@ -1,30 +1,42 @@
 resource "aws_amplify_domain_association" "aws_amplify_domain_association" {
-  app_id                              = var.app_id
   arn                                 = var.arn
   certificate_verification_dns_record = var.certificate_verification_dns_record
   dns_record                          = var.dns_record
   domain_name                         = var.domain_name
-  sub_domain                          = var.sub_domain
-  branch_name                         = var.branch_name
   prefix                              = var.prefix
+  sub_domain                          = var.sub_domain
+  app_id                              = var.app_id
+  branch_name                         = var.branch_name
   wait_for_verification               = var.wait_for_verification
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "branch_name" {
-  description = "(Required) Branch name setting for the subdomain."
+variable "app_id" {
+  description = "(Required) Unique ID for an Amplify app."
   type        = string
 }
-variable "prefix" {
-  description = "(Required) Prefix setting for the subdomain.In addition to all arguments above, the following attributes are exported:"
+variable "branch_name" {
+  description = "(Required) Branch name setting for the subdomain."
   type        = string
 }
 variable "wait_for_verification" {
   description = "(Optional) If enabled, the resource will wait for the domain association status to change to PENDING_DEPLOYMENT or AVAILABLE. Setting this to false will skip the process. Default: true.The sub_domain configuration block supports the following arguments:"
   type        = string
   default     = ""
+}
+variable "sub_domain" {
+  description = "(Required) Setting for the subdomain. Documented below."
+  type        = string
+}
+variable "arn" {
+  description = "ARN for the domain association."
+  type        = string
+}
+variable "certificate_verification_dns_record" {
+  description = "The DNS record for certificate verification.The sub_domain configuration block exports the following attributes:"
+  type        = string
 }
 variable "dns_record" {
   description = "DNS record for the subdomain."
@@ -34,20 +46,8 @@ variable "domain_name" {
   description = "(Required) Domain name for the domain association."
   type        = string
 }
-variable "sub_domain" {
-  description = "(Required) Setting for the subdomain. Documented below."
-  type        = string
-}
-variable "app_id" {
-  description = "(Required) Unique ID for an Amplify app."
-  type        = string
-}
-variable "arn" {
-  description = "ARN for the domain association."
-  type        = string
-}
-variable "certificate_verification_dns_record" {
-  description = "The DNS record for certificate verification.The sub_domain configuration block exports the following attributes:"
+variable "prefix" {
+  description = "(Required) Prefix setting for the subdomain.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -178,13 +178,13 @@ output "domain_name" {
   description = "(Required) Domain name for the domain association."
   value       = aws_amplify_domain_association.aws_amplify_domain_association.domain_name
 }
+output "prefix" {
+  description = "(Required) Prefix setting for the subdomain.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_amplify_domain_association.aws_amplify_domain_association.prefix
+}
 output "sub_domain" {
   description = "(Required) Setting for the subdomain. Documented below."
   value       = aws_amplify_domain_association.aws_amplify_domain_association.sub_domain
-}
-output "app_id" {
-  description = "(Required) Unique ID for an Amplify app."
-  value       = aws_amplify_domain_association.aws_amplify_domain_association.app_id
 }
 output "arn" {
   description = "ARN for the domain association."
@@ -194,17 +194,25 @@ output "certificate_verification_dns_record" {
   description = "The DNS record for certificate verification.The sub_domain configuration block exports the following attributes:"
   value       = aws_amplify_domain_association.aws_amplify_domain_association.certificate_verification_dns_record
 }
+output "wait_for_verification" {
+  description = "(Optional) If enabled, the resource will wait for the domain association status to change to PENDING_DEPLOYMENT or AVAILABLE. Setting this to false will skip the process. Default: true.The sub_domain configuration block supports the following arguments:"
+  value       = aws_amplify_domain_association.aws_amplify_domain_association.wait_for_verification
+}
+output "app_id" {
+  description = "(Required) Unique ID for an Amplify app."
+  value       = aws_amplify_domain_association.aws_amplify_domain_association.app_id
+}
 output "branch_name" {
   description = "(Required) Branch name setting for the subdomain."
   value       = aws_amplify_domain_association.aws_amplify_domain_association.branch_name
 }
-output "prefix" {
-  description = "(Required) Prefix setting for the subdomain.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_amplify_domain_association.aws_amplify_domain_association.prefix
+output "arn" {
+  description = "ARN for the domain association."
+  value       = aws_amplify_domain_association.aws_amplify_domain_association.arn
 }
-output "wait_for_verification" {
-  description = "(Optional) If enabled, the resource will wait for the domain association status to change to PENDING_DEPLOYMENT or AVAILABLE. Setting this to false will skip the process. Default: true.The sub_domain configuration block supports the following arguments:"
-  value       = aws_amplify_domain_association.aws_amplify_domain_association.wait_for_verification
+output "certificate_verification_dns_record" {
+  description = "The DNS record for certificate verification.The sub_domain configuration block exports the following attributes:"
+  value       = aws_amplify_domain_association.aws_amplify_domain_association.certificate_verification_dns_record
 }
 output "dns_record" {
   description = "DNS record for the subdomain."
@@ -213,14 +221,6 @@ output "dns_record" {
 output "verified" {
   description = "Verified status of the subdomain."
   value       = aws_amplify_domain_association.aws_amplify_domain_association.verified
-}
-output "arn" {
-  description = "ARN for the domain association."
-  value       = aws_amplify_domain_association.aws_amplify_domain_association.arn
-}
-output "certificate_verification_dns_record" {
-  description = "The DNS record for certificate verification.The sub_domain configuration block exports the following attributes:"
-  value       = aws_amplify_domain_association.aws_amplify_domain_association.certificate_verification_dns_record
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

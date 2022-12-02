@@ -144,6 +144,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "realtime_metrics_subscription_status" {
+  description = "(Required) A flag that indicates whether additional CloudWatch metrics are enabled for a given CloudFront distribution. Valid values are Enabled and Disabled. See below.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.realtime_metrics_subscription_status
+}
 output "distribution_id" {
   description = "(Required) The ID of the distribution that you are enabling metrics for."
   value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.distribution_id
@@ -155,10 +159,6 @@ output "monitoring_subscription" {
 output "realtime_metrics_subscription_config" {
   description = "(Required) A subscription configuration for additional CloudWatch metrics. See below.realtime_metrics_subscription_config"
   value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.realtime_metrics_subscription_config
-}
-output "realtime_metrics_subscription_status" {
-  description = "(Required) A flag that indicates whether additional CloudWatch metrics are enabled for a given CloudFront distribution. Valid values are Enabled and Disabled. See below.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.realtime_metrics_subscription_status
 }
 output "id" {
   description = "The ID of the CloudFront monitoring subscription, which corresponds to the distribution_id."

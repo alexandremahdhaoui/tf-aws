@@ -1,7 +1,7 @@
 resource "aws_ssm_service_setting" "aws_ssm_service_setting" {
+  setting_value = var.setting_value
   arn           = var.arn
   setting_id    = var.setting_id
-  setting_value = var.setting_value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the service setting."
-  value       = aws_ssm_service_setting.aws_ssm_service_setting.arn
-}
 output "setting_id" {
   description = "(Required) ID of the service setting."
   value       = aws_ssm_service_setting.aws_ssm_service_setting.setting_id
@@ -150,6 +146,10 @@ output "setting_id" {
 output "setting_value" {
   description = "(Required) Value of the service setting.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssm_service_setting.aws_ssm_service_setting.setting_value
+}
+output "arn" {
+  description = "ARN of the service setting."
+  value       = aws_ssm_service_setting.aws_ssm_service_setting.arn
 }
 output "arn" {
   description = "ARN of the service setting."

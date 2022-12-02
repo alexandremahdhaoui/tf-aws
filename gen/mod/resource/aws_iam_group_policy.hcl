@@ -1,16 +1,12 @@
 resource "aws_iam_group_policy" "aws_iam_group_policy" {
+  group       = var.group
   id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
   policy      = var.policy
-  group       = var.group
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "policy" {
-  description = "(Required) The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the AWS IAM Policy Document Guide"
   type        = string
 }
 variable "group" {
@@ -29,6 +25,10 @@ variable "name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
   type        = string
   default     = ""
+}
+variable "policy" {
+  description = "(Required) The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the AWS IAM Policy Document Guide"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

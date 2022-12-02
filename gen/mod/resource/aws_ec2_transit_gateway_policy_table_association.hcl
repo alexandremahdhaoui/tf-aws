@@ -1,15 +1,11 @@
 resource "aws_ec2_transit_gateway_policy_table_association" "aws_ec2_transit_gateway_policy_table_association" {
-  transit_gateway_policy_table_id = var.transit_gateway_policy_table_id
   id                              = var.id
   resource_id                     = var.resource_id
   transit_gateway_attachment_id   = var.transit_gateway_attachment_id
+  transit_gateway_policy_table_id = var.transit_gateway_policy_table_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "transit_gateway_attachment_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Attachment."
   type        = string
 }
 variable "transit_gateway_policy_table_id" {
@@ -22,6 +18,10 @@ variable "id" {
 }
 variable "resource_id" {
   description = "Identifier of the resource"
+  type        = string
+}
+variable "transit_gateway_attachment_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Attachment."
   type        = string
 }
 variable "tag_instance_id" {
@@ -160,6 +160,10 @@ output "transit_gateway_policy_table_id" {
   description = "(Required) Identifier of EC2 Transit Gateway Policy Table.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_policy_table_association.aws_ec2_transit_gateway_policy_table_association.transit_gateway_policy_table_id
 }
+output "resource_type" {
+  description = "Type of the resource"
+  value       = aws_ec2_transit_gateway_policy_table_association.aws_ec2_transit_gateway_policy_table_association.resource_type
+}
 output "id" {
   description = "EC2 Transit Gateway Policy Table identifier combined with EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_policy_table_association.aws_ec2_transit_gateway_policy_table_association.id
@@ -167,10 +171,6 @@ output "id" {
 output "resource_id" {
   description = "Identifier of the resource"
   value       = aws_ec2_transit_gateway_policy_table_association.aws_ec2_transit_gateway_policy_table_association.resource_id
-}
-output "resource_type" {
-  description = "Type of the resource"
-  value       = aws_ec2_transit_gateway_policy_table_association.aws_ec2_transit_gateway_policy_table_association.resource_type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

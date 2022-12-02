@@ -10,18 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "connection_status" {
-  description = "CodeStar Connection status. Possible values are PENDING, AVAILABLE and ERROR."
-  type        = string
-}
-variable "host_arn" {
-  description = "ARN of the host associated with the connection."
-  type        = string
-}
-variable "id" {
-  description = "CodeStar Connection ARN."
-  type        = string
-}
 variable "name" {
   description = "Name of the CodeStar Connection. The name is unique in the calling AWS account."
   type        = string
@@ -34,6 +22,18 @@ variable "arn" {
   description = "(Optional) CodeStar Connection ARN."
   type        = string
   default     = ""
+}
+variable "connection_status" {
+  description = "CodeStar Connection status. Possible values are PENDING, AVAILABLE and ERROR."
+  type        = string
+}
+variable "host_arn" {
+  description = "ARN of the host associated with the connection."
+  type        = string
+}
+variable "id" {
+  description = "CodeStar Connection ARN."
+  type        = string
 }
 output "arn" {
   description = "(Optional) CodeStar Connection ARN."
@@ -59,14 +59,6 @@ output "provider_type" {
   description = "Name of the external provider where your third-party code repository is configured. Possible values are Bitbucket and GitHub. For connections to a GitHub Enterprise Server instance, you must create an aws_codestarconnections_host resource and use host_arn instead."
   value       = aws_codestarconnections_connection.aws_codestarconnections_connection.provider_type
 }
-output "connection_status" {
-  description = "CodeStar Connection status. Possible values are PENDING, AVAILABLE and ERROR."
-  value       = aws_codestarconnections_connection.aws_codestarconnections_connection.connection_status
-}
-output "host_arn" {
-  description = "ARN of the host associated with the connection."
-  value       = aws_codestarconnections_connection.aws_codestarconnections_connection.host_arn
-}
 output "id" {
   description = "CodeStar Connection ARN."
   value       = aws_codestarconnections_connection.aws_codestarconnections_connection.id
@@ -78,6 +70,14 @@ output "name" {
 output "provider_type" {
   description = "Name of the external provider where your third-party code repository is configured. Possible values are Bitbucket and GitHub. For connections to a GitHub Enterprise Server instance, you must create an aws_codestarconnections_host resource and use host_arn instead."
   value       = aws_codestarconnections_connection.aws_codestarconnections_connection.provider_type
+}
+output "connection_status" {
+  description = "CodeStar Connection status. Possible values are PENDING, AVAILABLE and ERROR."
+  value       = aws_codestarconnections_connection.aws_codestarconnections_connection.connection_status
+}
+output "host_arn" {
+  description = "ARN of the host associated with the connection."
+  value       = aws_codestarconnections_connection.aws_codestarconnections_connection.host_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

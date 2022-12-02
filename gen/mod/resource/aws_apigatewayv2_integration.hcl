@@ -1,38 +1,33 @@
 resource "aws_apigatewayv2_integration" "aws_apigatewayv2_integration" {
-  credentials_arn               = var.credentials_arn
-  integration_type              = var.integration_type
-  payload_format_version        = var.payload_format_version
-  timeout_milliseconds          = var.timeout_milliseconds
-  status_code                   = var.status_code
   integration_method            = var.integration_method
-  integration_subtype           = var.integration_subtype
-  request_parameters            = var.request_parameters
-  request_templates             = var.request_templates
-  connection_id                 = var.connection_id
-  connection_type               = var.connection_type
+  passthrough_behavior          = var.passthrough_behavior
   template_selection_expression = var.template_selection_expression
   tls_config                    = var.tls_config
-  integration_uri               = var.integration_uri
-  mappings                      = var.mappings
-  passthrough_behavior          = var.passthrough_behavior
-  response_parameters           = var.response_parameters
-  api_id                        = var.api_id
+  connection_id                 = var.connection_id
   content_handling_strategy     = var.content_handling_strategy
   description                   = var.description
+  mappings                      = var.mappings
+  integration_subtype           = var.integration_subtype
+  request_parameters            = var.request_parameters
+  api_id                        = var.api_id
+  connection_type               = var.connection_type
+  credentials_arn               = var.credentials_arn
   id                            = var.id
+  response_parameters           = var.response_parameters
   server_name_to_verify         = var.server_name_to_verify
+  status_code                   = var.status_code
+  timeout_milliseconds          = var.timeout_milliseconds
+  integration_type              = var.integration_type
+  integration_uri               = var.integration_uri
+  payload_format_version        = var.payload_format_version
+  request_templates             = var.request_templates
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "connection_id" {
-  description = "(Optional) ID of the VPC link for a private integration. Supported only for HTTP APIs. Must be between 1 and 1024 characters in length."
-  type        = string
-  default     = ""
-}
-variable "connection_type" {
-  description = "(Optional) Type of the network connection to the integration endpoint. Valid values: INTERNET, VPC_LINK. Default is INTERNET."
+variable "integration_method" {
+  description = "(Optional) Integration's HTTP method. Must be specified if integration_type is not MOCK."
   type        = string
   default     = ""
 }
@@ -46,14 +41,10 @@ variable "tls_config" {
   type        = string
   default     = ""
 }
-variable "response_parameters" {
-  description = "(Optional) Mappings to transform the HTTP response from a backend integration before returning the response to clients. Supported only for HTTP APIs."
+variable "connection_id" {
+  description = "(Optional) ID of the VPC link for a private integration. Supported only for HTTP APIs. Must be between 1 and 1024 characters in length."
   type        = string
   default     = ""
-}
-variable "api_id" {
-  description = "(Required) API identifier."
-  type        = string
 }
 variable "content_handling_strategy" {
   description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT. Supported only for WebSocket APIs."
@@ -62,15 +53,6 @@ variable "content_handling_strategy" {
 }
 variable "description" {
   description = "(Optional) Description of the integration."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "Integration identifier."
-  type        = string
-}
-variable "integration_uri" {
-  description = "(Optional) URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXYHTTP integration, specify a fully-qualified URL. For an HTTP API private integration, specify the ARN of an Application Load Balancer listener, Network Load Balancer listener, or AWS Cloud Map service."
   type        = string
   default     = ""
 }
@@ -83,8 +65,17 @@ variable "passthrough_behavior" {
   type        = string
   default     = ""
 }
-variable "server_name_to_verify" {
-  description = "(Optional) If you specify a server name, API Gateway uses it to verify the hostname on the integration's certificate. The server name is also included in the TLS handshake to support Server Name Indication (SNI) or virtual hosting.In addition to all arguments above, the following attributes are exported:"
+variable "request_parameters" {
+  description = "(Optional) For WebSocket APIs, a key-value map specifying request parameters that are passed from the method request to the backend.\nFor HTTP APIs with a specified integration_subtype, a key-value map specifying parameters that are passed to AWS_PROXYintegration_subtypeAmazon API Gateway Developer Guide for details."
+  type        = string
+  default     = ""
+}
+variable "api_id" {
+  description = "(Required) API identifier."
+  type        = string
+}
+variable "connection_type" {
+  description = "(Optional) Type of the network connection to the integration endpoint. Valid values: INTERNET, VPC_LINK. Default is INTERNET."
   type        = string
   default     = ""
 }
@@ -93,31 +84,39 @@ variable "credentials_arn" {
   type        = string
   default     = ""
 }
-variable "integration_type" {
-  description = "AWS (supported only for WebSocket APIs), AWS_PROXY, HTTP (supported only for WebSocket APIs), HTTP_PROXY, MOCK (supported only for WebSocket APIs). For an HTTP API private integration, use HTTP_PROXY."
+variable "id" {
+  description = "Integration identifier."
   type        = string
-}
-variable "payload_format_version" {
-  description = "(Optional) The format of the payload sent to an integration. Valid values: 1.0, 2.0. Default is 1.0."
-  type        = string
-  default     = ""
-}
-variable "timeout_milliseconds" {
-  description = ""
-  type        = string
-}
-variable "integration_method" {
-  description = "(Optional) Integration's HTTP method. Must be specified if integration_type is not MOCK."
-  type        = string
-  default     = ""
 }
 variable "integration_subtype" {
   description = "(Optional) AWS service action to invoke. Supported only for HTTP APIs when integration_type is AWS_PROXY. See the AWS service integration reference documentation for supported values. Must be between 1 and 128 characters in length."
   type        = string
   default     = ""
 }
-variable "request_parameters" {
-  description = "(Optional) For WebSocket APIs, a key-value map specifying request parameters that are passed from the method request to the backend.\nFor HTTP APIs with a specified integration_subtype, a key-value map specifying parameters that are passed to AWS_PROXYintegration_subtypeAmazon API Gateway Developer Guide for details."
+variable "server_name_to_verify" {
+  description = "(Optional) If you specify a server name, API Gateway uses it to verify the hostname on the integration's certificate. The server name is also included in the TLS handshake to support Server Name Indication (SNI) or virtual hosting.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "status_code" {
+  description = "(Required) HTTP status code in the range 200-599."
+  type        = string
+}
+variable "timeout_milliseconds" {
+  description = ""
+  type        = string
+}
+variable "integration_type" {
+  description = "AWS (supported only for WebSocket APIs), AWS_PROXY, HTTP (supported only for WebSocket APIs), HTTP_PROXY, MOCK (supported only for WebSocket APIs). For an HTTP API private integration, use HTTP_PROXY."
+  type        = string
+}
+variable "integration_uri" {
+  description = "(Optional) URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXYHTTP integration, specify a fully-qualified URL. For an HTTP API private integration, specify the ARN of an Application Load Balancer listener, Network Load Balancer listener, or AWS Cloud Map service."
+  type        = string
+  default     = ""
+}
+variable "payload_format_version" {
+  description = "(Optional) The format of the payload sent to an integration. Valid values: 1.0, 2.0. Default is 1.0."
   type        = string
   default     = ""
 }
@@ -126,9 +125,10 @@ variable "request_templates" {
   type        = string
   default     = ""
 }
-variable "status_code" {
-  description = "(Required) HTTP status code in the range 200-599."
+variable "response_parameters" {
+  description = "(Optional) Mappings to transform the HTTP response from a backend integration before returning the response to clients. Supported only for HTTP APIs."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -250,61 +250,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "api_id" {
-  description = "(Required) API identifier."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.api_id
-}
-output "content_handling_strategy" {
-  description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.content_handling_strategy
-}
-output "description" {
-  description = "(Optional) Description of the integration."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.description
-}
-output "id" {
-  description = "Integration identifier."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.id
-}
-output "integration_uri" {
-  description = "(Optional) URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXYHTTP integration, specify a fully-qualified URL. For an HTTP API private integration, specify the ARN of an Application Load Balancer listener, Network Load Balancer listener, or AWS Cloud Map service."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.integration_uri
-}
-output "mappings" {
-  description = "(Required) Key-value map. The key of this map identifies the location of the request parameter to change, and how to change it. The corresponding value specifies the new data for the parameter.\nSee the Amazon API Gateway Developer Guide for details.The tls_config object supports the following:"
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.mappings
-}
-output "passthrough_behavior" {
-  description = "(Optional) Pass-through behavior for incoming requests based on the Content-Type header in the request, and the available mapping templates specified as the request_templatesWHEN_NO_MATCH, WHEN_NO_TEMPLATES, NEVER. Default is WHEN_NO_MATCH. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.passthrough_behavior
-}
-output "response_parameters" {
-  description = "(Optional) Mappings to transform the HTTP response from a backend integration before returning the response to clients. Supported only for HTTP APIs."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.response_parameters
-}
-output "server_name_to_verify" {
-  description = "(Optional) If you specify a server name, API Gateway uses it to verify the hostname on the integration's certificate. The server name is also included in the TLS handshake to support Server Name Indication (SNI) or virtual hosting.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.server_name_to_verify
+output "connection_type" {
+  description = "(Optional) Type of the network connection to the integration endpoint. Valid values: INTERNET, VPC_LINK. Default is INTERNET."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.connection_type
 }
 output "credentials_arn" {
   description = "(Optional) Credentials required for the integration, if any."
   value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.credentials_arn
 }
-output "integration_type" {
-  description = "AWS (supported only for WebSocket APIs), AWS_PROXY, HTTP (supported only for WebSocket APIs), HTTP_PROXY, MOCK (supported only for WebSocket APIs). For an HTTP API private integration, use HTTP_PROXY."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.integration_type
-}
-output "payload_format_version" {
-  description = "(Optional) The format of the payload sent to an integration. Valid values: 1.0, 2.0. Default is 1.0."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.payload_format_version
-}
-output "timeout_milliseconds" {
-  description = ""
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.timeout_milliseconds
-}
-output "integration_method" {
-  description = "(Optional) Integration's HTTP method. Must be specified if integration_type is not MOCK."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.integration_method
+output "id" {
+  description = "Integration identifier."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.id
 }
 output "integration_subtype" {
   description = "(Optional) AWS service action to invoke. Supported only for HTTP APIs when integration_type is AWS_PROXY. See the AWS service integration reference documentation for supported values. Must be between 1 and 128 characters in length."
@@ -314,21 +270,61 @@ output "request_parameters" {
   description = "(Optional) For WebSocket APIs, a key-value map specifying request parameters that are passed from the method request to the backend.\nFor HTTP APIs with a specified integration_subtype, a key-value map specifying parameters that are passed to AWS_PROXYintegration_subtypeAmazon API Gateway Developer Guide for details."
   value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.request_parameters
 }
+output "api_id" {
+  description = "(Required) API identifier."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.api_id
+}
+output "integration_uri" {
+  description = "(Optional) URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXYHTTP integration, specify a fully-qualified URL. For an HTTP API private integration, specify the ARN of an Application Load Balancer listener, Network Load Balancer listener, or AWS Cloud Map service."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.integration_uri
+}
+output "payload_format_version" {
+  description = "(Optional) The format of the payload sent to an integration. Valid values: 1.0, 2.0. Default is 1.0."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.payload_format_version
+}
 output "request_templates" {
   description = "(Optional) Map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client. Supported only for WebSocket APIs."
   value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.request_templates
+}
+output "response_parameters" {
+  description = "(Optional) Mappings to transform the HTTP response from a backend integration before returning the response to clients. Supported only for HTTP APIs."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.response_parameters
+}
+output "server_name_to_verify" {
+  description = "(Optional) If you specify a server name, API Gateway uses it to verify the hostname on the integration's certificate. The server name is also included in the TLS handshake to support Server Name Indication (SNI) or virtual hosting.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.server_name_to_verify
 }
 output "status_code" {
   description = "(Required) HTTP status code in the range 200-599."
   value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.status_code
 }
-output "connection_id" {
-  description = "(Optional) ID of the VPC link for a private integration. Supported only for HTTP APIs. Must be between 1 and 1024 characters in length."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.connection_id
+output "timeout_milliseconds" {
+  description = ""
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.timeout_milliseconds
 }
-output "connection_type" {
-  description = "(Optional) Type of the network connection to the integration endpoint. Valid values: INTERNET, VPC_LINK. Default is INTERNET."
-  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.connection_type
+output "integration_type" {
+  description = "AWS (supported only for WebSocket APIs), AWS_PROXY, HTTP (supported only for WebSocket APIs), HTTP_PROXY, MOCK (supported only for WebSocket APIs). For an HTTP API private integration, use HTTP_PROXY."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.integration_type
+}
+output "integration_method" {
+  description = "(Optional) Integration's HTTP method. Must be specified if integration_type is not MOCK."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.integration_method
+}
+output "content_handling_strategy" {
+  description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.content_handling_strategy
+}
+output "description" {
+  description = "(Optional) Description of the integration."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.description
+}
+output "mappings" {
+  description = "(Required) Key-value map. The key of this map identifies the location of the request parameter to change, and how to change it. The corresponding value specifies the new data for the parameter.\nSee the Amazon API Gateway Developer Guide for details.The tls_config object supports the following:"
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.mappings
+}
+output "passthrough_behavior" {
+  description = "(Optional) Pass-through behavior for incoming requests based on the Content-Type header in the request, and the available mapping templates specified as the request_templatesWHEN_NO_MATCH, WHEN_NO_TEMPLATES, NEVER. Default is WHEN_NO_MATCH. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.passthrough_behavior
 }
 output "template_selection_expression" {
   description = "(Optional) The template selection expression for the integration."
@@ -337,6 +333,10 @@ output "template_selection_expression" {
 output "tls_config" {
   description = "(Optional) TLS configuration for a private integration. Supported only for HTTP APIs.The response_parameters object supports the following:"
   value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.tls_config
+}
+output "connection_id" {
+  description = "(Optional) ID of the VPC link for a private integration. Supported only for HTTP APIs. Must be between 1 and 1024 characters in length."
+  value       = aws_apigatewayv2_integration.aws_apigatewayv2_integration.connection_id
 }
 output "id" {
   description = "Integration identifier."

@@ -1,11 +1,15 @@
 resource "aws_lambda_invocation" "aws_lambda_invocation" {
-  qualifier     = var.qualifier
-  triggers      = var.triggers
   function_name = var.function_name
   input         = var.input
+  qualifier     = var.qualifier
+  triggers      = var.triggers
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "function_name" {
+  description = "(Required) Name of the lambda function."
   type        = string
 }
 variable "input" {
@@ -21,10 +25,6 @@ variable "triggers" {
   description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a re-invocation. To force a re-invocation without changing these keys/values, use the terraform taint command.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "function_name" {
-  description = "(Required) Name of the lambda function."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

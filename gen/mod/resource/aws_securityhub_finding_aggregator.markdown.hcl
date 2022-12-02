@@ -135,13 +135,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "linking_mode" {
-  description = "(Required) Indicates whether to aggregate findings from all of the available Regions or from a specified list. The options are ALL_REGIONS, ALL_REGIONS_EXCEPT_SPECIFIED or SPECIFIED_REGIONS. When ALL_REGIONS or ALL_REGIONS_EXCEPT_SPECIFIED are used, Security Hub will automatically aggregate findings from new Regions as Security Hub supports them and you opt into them."
-  value       = aws_securityhub_finding_aggregator.markdown.aws_securityhub_finding_aggregator.markdown.linking_mode
-}
 output "specified_regions" {
   description = "(Optional) List of regions to include or exclude (required if linking_mode is set to ALL_REGIONS_EXCEPT_SPECIFIED or SPECIFIED_REGIONS)In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_finding_aggregator.markdown.aws_securityhub_finding_aggregator.markdown.specified_regions
+}
+output "linking_mode" {
+  description = "(Required) Indicates whether to aggregate findings from all of the available Regions or from a specified list. The options are ALL_REGIONS, ALL_REGIONS_EXCEPT_SPECIFIED or SPECIFIED_REGIONS. When ALL_REGIONS or ALL_REGIONS_EXCEPT_SPECIFIED are used, Security Hub will automatically aggregate findings from new Regions as Security Hub supports them and you opt into them."
+  value       = aws_securityhub_finding_aggregator.markdown.aws_securityhub_finding_aggregator.markdown.linking_mode
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Security Hub finding aggregator."

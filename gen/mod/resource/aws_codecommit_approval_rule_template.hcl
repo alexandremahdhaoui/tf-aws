@@ -1,11 +1,11 @@
 resource "aws_codecommit_approval_rule_template" "aws_codecommit_approval_rule_template" {
+  last_modified_user        = var.last_modified_user
   name                      = var.name
   approval_rule_template_id = var.approval_rule_template_id
   content                   = var.content
   creation_date             = var.creation_date
   description               = var.description
   last_modified_date        = var.last_modified_date
-  last_modified_user        = var.last_modified_user
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -188,6 +188,14 @@ output "last_modified_date" {
   description = "The date the approval rule template was most recently changed, in RFC3339 format."
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_date
 }
+output "approval_rule_template_id" {
+  description = "The ID of the approval rule template"
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.approval_rule_template_id
+}
+output "creation_date" {
+  description = "The date the approval rule template was created, in RFC3339 format."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.creation_date
+}
 output "last_modified_date" {
   description = "The date the approval rule template was most recently changed, in RFC3339 format."
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_date
@@ -199,14 +207,6 @@ output "last_modified_user" {
 output "rule_content_sha256" {
   description = "The SHA-256 hash signature for the content of the approval rule template."
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.rule_content_sha256
-}
-output "approval_rule_template_id" {
-  description = "The ID of the approval rule template"
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.approval_rule_template_id
-}
-output "creation_date" {
-  description = "The date the approval rule template was created, in RFC3339 format."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.creation_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

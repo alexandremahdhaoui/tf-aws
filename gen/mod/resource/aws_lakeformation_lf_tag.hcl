@@ -1,7 +1,7 @@
 resource "aws_lakeformation_lf_tag" "aws_lakeformation_lf_tag" {
-  catalog_id = var.catalog_id
   key        = var.key
   values     = var.values
+  catalog_id = var.catalog_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

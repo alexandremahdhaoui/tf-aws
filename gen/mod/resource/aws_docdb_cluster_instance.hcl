@@ -1,82 +1,48 @@
 resource "aws_docdb_cluster_instance" "aws_docdb_cluster_instance" {
+  db.r5.12xlarge               = var.db.r5.12xlarge
+  engine_version               = var.engine_version
+  port                         = var.port
+  db.r4.large                  = var.db.r4.large
   db.r5.2xlarge                = var.db.r5.2xlarge
-  kms_key_id                   = var.kms_key_id
-  writer                       = var.writer
-  storage_encrypted            = var.storage_encrypted
+  db.t3.medium                 = var.db.t3.medium
+  preferred_maintenance_window = var.preferred_maintenance_window
+  promotion_tier               = var.promotion_tier
   tags_all                     = var.tags_all
   apply_immediately            = var.apply_immediately
-  db.r4.large                  = var.db.r4.large
-  db.r5.xlarge                 = var.db.r5.xlarge
-  dbi_resource_id              = var.dbi_resource_id
-  preferred_maintenance_window = var.preferred_maintenance_window
-  db.r4.4xlarge                = var.db.r4.4xlarge
-  db.r4.xlarge                 = var.db.r4.xlarge
-  db.r5.12xlarge               = var.db.r5.12xlarge
-  db.r5.large                  = var.db.r5.large
-  tags                         = var.tags
-  arn                          = var.arn
   auto_minor_version_upgrade   = var.auto_minor_version_upgrade
-  db.r4.16xlarge               = var.db.r4.16xlarge
-  port                         = var.port
+  db.r4.8xlarge                = var.db.r4.8xlarge
+  db.r5.large                  = var.db.r5.large
   preferred_backup_window      = var.preferred_backup_window
-  availability_zone            = var.availability_zone
+  identifier                   = var.identifier
+  create                       = var.create
+  db.r4.xlarge                 = var.db.r4.xlarge
+  db.r5.24xlarge               = var.db.r5.24xlarge
+  db.r5.xlarge                 = var.db.r5.xlarge
   db_subnet_group_name         = var.db_subnet_group_name
   endpoint                     = var.endpoint
-  update                       = var.update
+  engine                       = var.engine
+  tags                         = var.tags
+  writer                       = var.writer
+  cluster_identifier           = var.cluster_identifier
+  dbi_resource_id              = var.dbi_resource_id
+  storage_encrypted            = var.storage_encrypted
+  kms_key_id                   = var.kms_key_id
+  arn                          = var.arn
   ca_cert_identifier           = var.ca_cert_identifier
   db.r4.2xlarge                = var.db.r4.2xlarge
+  db.r4.4xlarge                = var.db.r4.4xlarge
+  db.r4.16xlarge               = var.db.r4.16xlarge
   db.r5.4xlarge                = var.db.r5.4xlarge
-  engine_version               = var.engine_version
-  identifier                   = var.identifier
-  promotion_tier               = var.promotion_tier
-  db.r5.24xlarge               = var.db.r5.24xlarge
-  db.t3.medium                 = var.db.t3.medium
-  engine                       = var.engine
-  identifier_prefix            = var.identifier_prefix
   instance_class               = var.instance_class
-  cluster_identifier           = var.cluster_identifier
-  create                       = var.create
-  db.r4.8xlarge                = var.db.r4.8xlarge
+  update                       = var.update
+  availability_zone            = var.availability_zone
+  identifier_prefix            = var.identifier_prefix
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "instance_class" {
-  description = "(Required) The instance class to use. For details on CPU and memory, see Scaling for DocDB InstancesAWS Documentation"
-  type        = string
-}
-variable "promotion_tier" {
-  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoter to writer."
-  type        = string
-  default     = ""
-}
-variable "db.r5.24xlarge" {
-  description = ""
-  type        = string
-}
-variable "db.t3.medium" {
-  description = ""
-  type        = string
-}
-variable "engine" {
-  description = "(Optional) The name of the database engine to be used for the DocDB instance. Defaults to docdb. Valid Values: docdb."
-  type        = string
-  default     = ""
-}
-variable "identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
-  type        = string
-}
-variable "cluster_identifier" {
-  description = "(Required) The identifier of the aws_docdb_cluster in which to launch this instance."
-  type        = string
-}
-variable "create" {
-  description = "(Default 90m"
-  type        = string
-}
-variable "db.r4.8xlarge" {
+variable "db.r4.large" {
   description = ""
   type        = string
 }
@@ -84,21 +50,18 @@ variable "db.r5.2xlarge" {
   description = ""
   type        = string
 }
-variable "kms_key_id" {
-  description = "The ARN for the KMS encryption key if one is set to the cluster."
-  type        = string
-}
-variable "writer" {
-  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
+variable "db.t3.medium" {
+  description = ""
   type        = string
 }
 variable "preferred_maintenance_window" {
   description = ""
   type        = string
 }
-variable "storage_encrypted" {
-  description = "Specifies whether the DB cluster is encrypted."
+variable "promotion_tier" {
+  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoter to writer."
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -109,32 +72,12 @@ variable "apply_immediately" {
   type        = string
   default     = ""
 }
-variable "db.r4.large" {
-  description = ""
-  type        = string
-}
-variable "db.r5.xlarge" {
-  description = ""
-  type        = string
-}
-variable "dbi_resource_id" {
-  description = "The region-unique, immutable identifier for the DB instance."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "auto_minor_version_upgrade" {
+  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
   type        = string
   default     = ""
 }
-variable "db.r4.4xlarge" {
-  description = ""
-  type        = string
-}
-variable "db.r4.xlarge" {
-  description = ""
-  type        = string
-}
-variable "db.r5.12xlarge" {
+variable "db.r4.8xlarge" {
   description = ""
   type        = string
 }
@@ -146,25 +89,24 @@ variable "preferred_backup_window" {
   description = "The daily time range during which automated backups are created if automated backups are enabled."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of cluster instance"
+variable "identifier" {
+  description = "(Optional, Forces new resource) The identifier for the DocDB instance, if omitted, Terraform will assign a random, unique identifier."
   type        = string
 }
-variable "auto_minor_version_upgrade" {
-  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
+variable "create" {
+  description = "(Default 90m"
   type        = string
-  default     = ""
 }
-variable "db.r4.16xlarge" {
+variable "db.r4.xlarge" {
   description = ""
   type        = string
 }
-variable "port" {
-  description = "The database port"
+variable "db.r5.24xlarge" {
+  description = ""
   type        = string
 }
-variable "availability_zone" {
-  description = "(Optional, Computed) The EC2 Availability Zone that the DB instance is created in. See docs about the details."
+variable "db.r5.xlarge" {
+  description = ""
   type        = string
 }
 variable "db_subnet_group_name" {
@@ -175,12 +117,38 @@ variable "endpoint" {
   description = "The DNS address for this instance. May not be writable"
   type        = string
 }
-variable "identifier" {
-  description = "(Optional, Forces new resource) The identifier for the DocDB instance, if omitted, Terraform will assign a random, unique identifier."
+variable "engine" {
+  description = "(Optional) The name of the database engine to be used for the DocDB instance. Defaults to docdb. Valid Values: docdb."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "writer" {
+  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
   type        = string
 }
-variable "update" {
-  description = "(Default 90m)"
+variable "cluster_identifier" {
+  description = "(Required) The identifier of the aws_docdb_cluster in which to launch this instance."
+  type        = string
+}
+variable "dbi_resource_id" {
+  description = "The region-unique, immutable identifier for the DB instance."
+  type        = string
+}
+variable "storage_encrypted" {
+  description = "Specifies whether the DB cluster is encrypted."
+  type        = string
+}
+variable "kms_key_id" {
+  description = "The ARN for the KMS encryption key if one is set to the cluster."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of cluster instance"
   type        = string
 }
 variable "ca_cert_identifier" {
@@ -192,12 +160,44 @@ variable "db.r4.2xlarge" {
   description = ""
   type        = string
 }
+variable "db.r4.4xlarge" {
+  description = ""
+  type        = string
+}
+variable "db.r4.16xlarge" {
+  description = ""
+  type        = string
+}
 variable "db.r5.4xlarge" {
+  description = ""
+  type        = string
+}
+variable "instance_class" {
+  description = "(Required) The instance class to use. For details on CPU and memory, see Scaling for DocDB InstancesAWS Documentation"
+  type        = string
+}
+variable "update" {
+  description = "(Default 90m)"
+  type        = string
+}
+variable "availability_zone" {
+  description = "(Optional, Computed) The EC2 Availability Zone that the DB instance is created in. See docs about the details."
+  type        = string
+}
+variable "identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
+  type        = string
+}
+variable "db.r5.12xlarge" {
   description = ""
   type        = string
 }
 variable "engine_version" {
   description = "The database engine version"
+  type        = string
+}
+variable "port" {
+  description = "The database port"
   type        = string
 }
 variable "tag_instance_id" {
@@ -320,25 +320,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "auto_minor_version_upgrade" {
-  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.auto_minor_version_upgrade
-}
-output "db.r4.16xlarge" {
+output "db.r5.xlarge" {
   description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.16xlarge
-}
-output "port" {
-  description = "The database port"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.port
-}
-output "preferred_backup_window" {
-  description = "The daily time range during which automated backups are created if automated backups are enabled."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.preferred_backup_window
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of cluster instance"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.arn
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.xlarge
 }
 output "db_subnet_group_name" {
   description = "The DB subnet group to associate with this DB instance."
@@ -347,150 +331,66 @@ output "db_subnet_group_name" {
 output "endpoint" {
   description = "The DNS address for this instance. May not be writable"
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.endpoint
-}
-output "availability_zone" {
-  description = "(Optional, Computed) The EC2 Availability Zone that the DB instance is created in. See docs about the details."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.availability_zone
-}
-output "db.r4.2xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.2xlarge
-}
-output "db.r5.4xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.4xlarge
-}
-output "engine_version" {
-  description = "The database engine version"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.engine_version
-}
-output "identifier" {
-  description = "(Optional, Forces new resource) The identifier for the DocDB instance, if omitted, Terraform will assign a random, unique identifier."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.identifier
-}
-output "update" {
-  description = "(Default 90m)"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.update
-}
-output "ca_cert_identifier" {
-  description = "(Optional) The identifier of the CA certificate for the DB instance.TimeoutsConfiguration options:"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.ca_cert_identifier
-}
-output "db.t3.medium" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.t3.medium
 }
 output "engine" {
   description = "(Optional) The name of the database engine to be used for the DocDB instance. Defaults to docdb. Valid Values: docdb."
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.engine
 }
-output "identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.identifier_prefix
-}
-output "instance_class" {
-  description = "(Required) The instance class to use. For details on CPU and memory, see Scaling for DocDB InstancesAWS Documentation"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.instance_class
-}
-output "promotion_tier" {
-  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoter to writer."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.promotion_tier
-}
-output "db.r5.24xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.24xlarge
+output "identifier" {
+  description = "(Optional, Forces new resource) The identifier for the DocDB instance, if omitted, Terraform will assign a random, unique identifier."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.identifier
 }
 output "create" {
   description = "(Default 90m"
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.create
 }
-output "db.r4.8xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.8xlarge
-}
-output "cluster_identifier" {
-  description = "(Required) The identifier of the aws_docdb_cluster in which to launch this instance."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.cluster_identifier
-}
-output "kms_key_id" {
-  description = "The ARN for the KMS encryption key if one is set to the cluster."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.kms_key_id
-}
-output "writer" {
-  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.writer
-}
-output "db.r5.2xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.2xlarge
-}
-output "db.r4.large" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.large
-}
-output "db.r5.xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.xlarge
-}
-output "dbi_resource_id" {
-  description = "The region-unique, immutable identifier for the DB instance."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.dbi_resource_id
-}
-output "preferred_maintenance_window" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.preferred_maintenance_window
-}
-output "storage_encrypted" {
-  description = "Specifies whether the DB cluster is encrypted."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.storage_encrypted
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.tags_all
-}
-output "apply_immediately" {
-  description = "(Optional) Specifies whether any database modifications\nare applied immediately, or during the next maintenance window. Default isfalse."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.apply_immediately
-}
 output "db.r4.xlarge" {
   description = ""
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.xlarge
 }
-output "db.r5.12xlarge" {
+output "db.r5.24xlarge" {
   description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.12xlarge
-}
-output "db.r5.large" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.large
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.24xlarge
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.tags
 }
-output "db.r4.4xlarge" {
-  description = ""
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.4xlarge
+output "writer" {
+  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.writer
 }
-output "db_subnet_group_name" {
-  description = "The DB subnet group to associate with this DB instance."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db_subnet_group_name
+output "cluster_identifier" {
+  description = "(Required) The identifier of the aws_docdb_cluster in which to launch this instance."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.cluster_identifier
 }
 output "dbi_resource_id" {
   description = "The region-unique, immutable identifier for the DB instance."
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.dbi_resource_id
 }
-output "delete" {
-  description = "(Default 90m"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.delete
-}
-output "engine_version" {
-  description = "The database engine version"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.engine_version
-}
 output "storage_encrypted" {
   description = "Specifies whether the DB cluster is encrypted."
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.storage_encrypted
+}
+output "db.r4.4xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.4xlarge
+}
+output "db.r4.16xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.16xlarge
+}
+output "db.r5.4xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.4xlarge
+}
+output "instance_class" {
+  description = "(Required) The instance class to use. For details on CPU and memory, see Scaling for DocDB InstancesAWS Documentation"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.instance_class
+}
+output "kms_key_id" {
+  description = "The ARN for the KMS encryption key if one is set to the cluster."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.kms_key_id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of cluster instance"
@@ -500,37 +400,137 @@ output "ca_cert_identifier" {
   description = "(Optional) The identifier of the CA certificate for the DB instance.TimeoutsConfiguration options:"
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.ca_cert_identifier
 }
-output "create" {
-  description = "(Default 90m"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.create
+output "db.r4.2xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.2xlarge
 }
-output "endpoint" {
-  description = "The DNS address for this instance. May not be writable"
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.endpoint
+output "update" {
+  description = "(Default 90m)"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.update
 }
-output "preferred_backup_window" {
-  description = "The daily time range during which automated backups are created if automated backups are enabled."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.preferred_backup_window
+output "availability_zone" {
+  description = "(Optional, Computed) The EC2 Availability Zone that the DB instance is created in. See docs about the details."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.availability_zone
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.tags_all
+output "identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.identifier_prefix
 }
-output "writer" {
-  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.writer
+output "db.r5.12xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.12xlarge
 }
-output "kms_key_id" {
-  description = "The ARN for the KMS encryption key if one is set to the cluster."
-  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.kms_key_id
+output "engine_version" {
+  description = "The database engine version"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.engine_version
 }
 output "port" {
   description = "The database port"
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.port
 }
+output "preferred_maintenance_window" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.preferred_maintenance_window
+}
+output "promotion_tier" {
+  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoter to writer."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.promotion_tier
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.tags_all
+}
+output "db.r4.large" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.large
+}
+output "db.r5.2xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.2xlarge
+}
+output "db.t3.medium" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.t3.medium
+}
+output "apply_immediately" {
+  description = "(Optional) Specifies whether any database modifications\nare applied immediately, or during the next maintenance window. Default isfalse."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.apply_immediately
+}
+output "auto_minor_version_upgrade" {
+  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.auto_minor_version_upgrade
+}
+output "db.r4.8xlarge" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r4.8xlarge
+}
+output "db.r5.large" {
+  description = ""
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db.r5.large
+}
+output "preferred_backup_window" {
+  description = "The daily time range during which automated backups are created if automated backups are enabled."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.preferred_backup_window
+}
+output "create" {
+  description = "(Default 90m"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.create
+}
+output "dbi_resource_id" {
+  description = "The region-unique, immutable identifier for the DB instance."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.dbi_resource_id
+}
+output "writer" {
+  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.writer
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of cluster instance"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.arn
+}
+output "delete" {
+  description = "(Default 90m"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.delete
+}
+output "storage_encrypted" {
+  description = "Specifies whether the DB cluster is encrypted."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.storage_encrypted
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.tags_all
+}
 output "update" {
   description = "(Default 90m)"
   value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.update
+}
+output "ca_cert_identifier" {
+  description = "(Optional) The identifier of the CA certificate for the DB instance.TimeoutsConfiguration options:"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.ca_cert_identifier
+}
+output "endpoint" {
+  description = "The DNS address for this instance. May not be writable"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.endpoint
+}
+output "port" {
+  description = "The database port"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.port
+}
+output "preferred_backup_window" {
+  description = "The daily time range during which automated backups are created if automated backups are enabled."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.preferred_backup_window
+}
+output "db_subnet_group_name" {
+  description = "The DB subnet group to associate with this DB instance."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.db_subnet_group_name
+}
+output "engine_version" {
+  description = "The database engine version"
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.engine_version
+}
+output "kms_key_id" {
+  description = "The ARN for the KMS encryption key if one is set to the cluster."
+  value       = aws_docdb_cluster_instance.aws_docdb_cluster_instance.kms_key_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

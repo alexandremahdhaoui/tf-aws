@@ -1,7 +1,7 @@
 resource "aws_lightsail_lb_stickiness_policy" "aws_lightsail_lb_stickiness_policy" {
-  lb_name         = var.lb_name
   cookie_duration = var.cookie_duration
   enabled         = var.enabled
+  lb_name         = var.lb_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "enabled" {
+  description = "(Required) - The Session Stickiness state of the load balancer. true to activate session stickiness or false to deactivate session stickiness.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_lb_stickiness_policy.aws_lightsail_lb_stickiness_policy.enabled
+}
 output "lb_name" {
   description = "(Required) The name of the load balancer to which you want to enable session stickiness."
   value       = aws_lightsail_lb_stickiness_policy.aws_lightsail_lb_stickiness_policy.lb_name
@@ -146,10 +150,6 @@ output "lb_name" {
 output "cookie_duration" {
   description = "(Required) The cookie duration in seconds. This determines the length of the session stickiness."
   value       = aws_lightsail_lb_stickiness_policy.aws_lightsail_lb_stickiness_policy.cookie_duration
-}
-output "enabled" {
-  description = "(Required) - The Session Stickiness state of the load balancer. true to activate session stickiness or false to deactivate session stickiness.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_lb_stickiness_policy.aws_lightsail_lb_stickiness_policy.enabled
 }
 output "id" {
   description = "The name used for this load balancer (matches lb_name)."

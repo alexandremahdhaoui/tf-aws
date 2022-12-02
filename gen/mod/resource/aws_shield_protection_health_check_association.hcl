@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "health_check_arn" {
-  description = "(Required) The ARN (Amazon Resource Name) of the Route53 Health Check resource which will be associated to the protected resource."
-  type        = string
-}
 variable "shield_protection_id" {
   description = "(Required) The ID of the protected resource.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "health_check_arn" {
+  description = "(Required) The ARN (Amazon Resource Name) of the Route53 Health Check resource which will be associated to the protected resource."
   type        = string
 }
 variable "tag_instance_id" {

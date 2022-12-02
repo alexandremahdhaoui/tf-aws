@@ -1,17 +1,17 @@
 resource "aws_appsync_domain_name_api_association" "aws_appsync_domain_name_api_association" {
-  domain_name = var.domain_name
   api_id      = var.api_id
+  domain_name = var.domain_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "api_id" {
-  description = "(Required) API ID."
-  type        = string
-}
 variable "domain_name" {
   description = "(Required) Appsync domain name.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "api_id" {
+  description = "(Required) API ID."
   type        = string
 }
 variable "tag_instance_id" {

@@ -1,20 +1,15 @@
 resource "aws_lakeformation_data_lake_settings" "aws_lakeformation_data_lake_settings" {
+  admins                              = var.admins
+  catalog_id                          = var.catalog_id
   create_database_default_permissions = var.create_database_default_permissions
   create_table_default_permissions    = var.create_table_default_permissions
   permissions                         = var.permissions
   principal                           = var.principal
   trusted_resource_owners             = var.trusted_resource_owners
-  admins                              = var.admins
-  catalog_id                          = var.catalog_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "trusted_resource_owners" {
-  description = " – (Optional) List of the resource-owning account IDs that the caller's account can use to share their user access details (user ARNs).~> strongNOTE: Although optional, not including admins, create_database_default_permissions, create_table_default_permissions, and/or trusted_resource_owners results in the setting being cleared.create_database_default_permissions"
-  type        = string
-  default     = ""
 }
 variable "admins" {
   description = " – (Optional) Set of ARNs of AWS Lake Formation principals (IAM users or roles)."
@@ -43,6 +38,11 @@ variable "permissions" {
 }
 variable "principal" {
   description = "(Optional) Principal who is granted permissions. To enforce metadata and underlying data access control only by IAM on new databases and tables set principal to IAM_ALLOWED_PRINCIPALS and permissions to [\"ALL\"]."
+  type        = string
+  default     = ""
+}
+variable "trusted_resource_owners" {
+  description = " – (Optional) List of the resource-owning account IDs that the caller's account can use to share their user access details (user ARNs).~> strongNOTE: Although optional, not including admins, create_database_default_permissions, create_table_default_permissions, and/or trusted_resource_owners results in the setting being cleared.create_database_default_permissions"
   type        = string
   default     = ""
 }
@@ -166,10 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "permissions" {
-  description = "(Optional) List of permissions that are granted to the principal. Valid values may include ALL, SELECT, ALTER, DROP, DELETE, INSERT, and DESCRIBE. For more details, see Lake Formation Permissions Reference."
-  value       = aws_lakeformation_data_lake_settings.aws_lakeformation_data_lake_settings.permissions
-}
 output "principal" {
   description = "(Optional) Principal who is granted permissions. To enforce metadata and underlying data access control only by IAM on new databases and tables set principal to IAM_ALLOWED_PRINCIPALS and permissions to [\"ALL\"]."
   value       = aws_lakeformation_data_lake_settings.aws_lakeformation_data_lake_settings.principal
@@ -193,6 +189,10 @@ output "create_database_default_permissions" {
 output "create_table_default_permissions" {
   description = "(Optional) Up to three configuration blocks of principal permissions for default create table permissions. Detailed below."
   value       = aws_lakeformation_data_lake_settings.aws_lakeformation_data_lake_settings.create_table_default_permissions
+}
+output "permissions" {
+  description = "(Optional) List of permissions that are granted to the principal. Valid values may include ALL, SELECT, ALTER, DROP, DELETE, INSERT, and DESCRIBE. For more details, see Lake Formation Permissions Reference."
+  value       = aws_lakeformation_data_lake_settings.aws_lakeformation_data_lake_settings.permissions
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

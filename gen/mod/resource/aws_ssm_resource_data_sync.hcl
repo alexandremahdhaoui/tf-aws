@@ -1,13 +1,21 @@
 resource "aws_ssm_resource_data_sync" "aws_ssm_resource_data_sync" {
+  bucket_name    = var.bucket_name
   kms_key_arn    = var.kms_key_arn
   name           = var.name
   prefix         = var.prefix
   region         = var.region
   s3_destination = var.s3_destination
-  bucket_name    = var.bucket_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "region" {
+  description = "(Required) Region with the bucket targeted by the Resource Data Sync."
+  type        = string
+}
+variable "s3_destination" {
+  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
   type        = string
 }
 variable "bucket_name" {
@@ -27,14 +35,6 @@ variable "prefix" {
   description = "(Optional) Prefix for the bucket."
   type        = string
   default     = ""
-}
-variable "region" {
-  description = "(Required) Region with the bucket targeted by the Resource Data Sync."
-  type        = string
-}
-variable "s3_destination" {
-  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,10 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "s3_destination" {
-  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
-  value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.s3_destination
-}
 output "bucket_name" {
   description = "(Required) Name of S3 bucket where the aggregated data is stored."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.bucket_name
@@ -179,6 +175,10 @@ output "prefix" {
 output "region" {
   description = "(Required) Region with the bucket targeted by the Resource Data Sync."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.region
+}
+output "s3_destination" {
+  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
+  value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.s3_destination
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,19 +1,11 @@
 datasource "aws_backup_vault" "aws_backup_vault" {
+  arn             = var.arn
   kms_key_arn     = var.kms_key_arn
   name            = var.name
   recovery_points = var.recovery_points
-  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "kms_key_arn" {
-  description = "Server-side encryption key that is used to protect your backups."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the backup vault.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "recovery_points" {
@@ -22,6 +14,14 @@ variable "recovery_points" {
 }
 variable "arn" {
   description = "ARN of the vault."
+  type        = string
+}
+variable "kms_key_arn" {
+  description = "Server-side encryption key that is used to protect your backups."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the backup vault.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 output "arn" {

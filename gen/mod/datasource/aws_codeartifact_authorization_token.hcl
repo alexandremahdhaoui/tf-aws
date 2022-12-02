@@ -1,8 +1,8 @@
 datasource "aws_codeartifact_authorization_token" "aws_codeartifact_authorization_token" {
-  duration_seconds    = var.duration_seconds
   authorization_token = var.authorization_token
   domain              = var.domain
   domain_owner        = var.domain_owner
+  duration_seconds    = var.duration_seconds
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

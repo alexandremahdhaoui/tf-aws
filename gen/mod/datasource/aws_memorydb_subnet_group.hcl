@@ -1,10 +1,10 @@
 datasource "aws_memorydb_subnet_group" "aws_memorydb_subnet_group" {
-  arn         = var.arn
   description = var.description
   id          = var.id
   name        = var.name
   subnet_ids  = var.subnet_ids
   vpc_id      = var.vpc_id
+  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -34,6 +34,10 @@ variable "id" {
   description = "Name of the subnet group."
   type        = string
 }
+output "arn" {
+  description = "ARN of the subnet group."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.arn
+}
 output "description" {
   description = "Description of the subnet group."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.description
@@ -54,14 +58,6 @@ output "vpc_id" {
   description = "VPC in which the subnet group exists."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.vpc_id
 }
-output "arn" {
-  description = "ARN of the subnet group."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.arn
-}
-output "id" {
-  description = "Name of the subnet group."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.id
-}
 output "subnet_ids" {
   description = "Set of VPC Subnet ID-s of the subnet group."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.subnet_ids
@@ -77,6 +73,10 @@ output "arn" {
 output "description" {
   description = "Description of the subnet group."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.description
+}
+output "id" {
+  description = "Name of the subnet group."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,19 +1,14 @@
 resource "aws_route53_traffic_policy" "aws_route53_traffic_policy" {
-  type     = var.type
-  version  = var.version
-  comment  = var.comment
   document = var.document
   id       = var.id
   name     = var.name
+  type     = var.type
+  version  = var.version
+  comment  = var.comment
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "type" {
-  description = "DNS type of the resource record sets that Amazon Route 53 creates when you use a traffic policy to create a traffic policy instance."
-  type        = string
-  default     = ""
 }
 variable "version" {
   description = "Version number of the traffic policy. This value is automatically incremented by AWS after each update of this resource."
@@ -37,6 +32,11 @@ variable "id" {
 variable "name" {
   description = "(Required) Name of the traffic policy."
   type        = string
+}
+variable "type" {
+  description = "DNS type of the resource record sets that Amazon Route 53 creates when you use a traffic policy to create a traffic policy instance."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -158,6 +158,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "ID of the traffic policy"
+  value       = aws_route53_traffic_policy.aws_route53_traffic_policy.id
+}
+output "name" {
+  description = "(Required) Name of the traffic policy."
+  value       = aws_route53_traffic_policy.aws_route53_traffic_policy.name
+}
 output "type" {
   description = "DNS type of the resource record sets that Amazon Route 53 creates when you use a traffic policy to create a traffic policy instance."
   value       = aws_route53_traffic_policy.aws_route53_traffic_policy.type
@@ -174,13 +182,9 @@ output "document" {
   description = "(Required) Policy document. This is a JSON formatted string. For more information about building Route53 traffic policy documents, see the AWS Route53 Traffic Policy document format"
   value       = aws_route53_traffic_policy.aws_route53_traffic_policy.document
 }
-output "id" {
-  description = "ID of the traffic policy"
-  value       = aws_route53_traffic_policy.aws_route53_traffic_policy.id
-}
-output "name" {
-  description = "(Required) Name of the traffic policy."
-  value       = aws_route53_traffic_policy.aws_route53_traffic_policy.name
+output "version" {
+  description = "Version number of the traffic policy. This value is automatically incremented by AWS after each update of this resource."
+  value       = aws_route53_traffic_policy.aws_route53_traffic_policy.version
 }
 output "id" {
   description = "ID of the traffic policy"
@@ -189,10 +193,6 @@ output "id" {
 output "type" {
   description = "DNS type of the resource record sets that Amazon Route 53 creates when you use a traffic policy to create a traffic policy instance."
   value       = aws_route53_traffic_policy.aws_route53_traffic_policy.type
-}
-output "version" {
-  description = "Version number of the traffic policy. This value is automatically incremented by AWS after each update of this resource."
-  value       = aws_route53_traffic_policy.aws_route53_traffic_policy.version
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

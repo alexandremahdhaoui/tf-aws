@@ -1,15 +1,23 @@
 resource "aws_lightsail_key_pair" "aws_lightsail_key_pair" {
+  id                    = var.id
+  name                  = var.name
+  pgp_key               = var.pgp_key
   private_key           = var.private_key
   public_key            = var.public_key
   arn                   = var.arn
   encrypted_private_key = var.encrypted_private_key
   fingerprint           = var.fingerprint
-  id                    = var.id
-  name                  = var.name
-  pgp_key               = var.pgp_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = ""
+  type        = string
+}
+variable "pgp_key" {
+  description = ""
   type        = string
 }
 variable "private_key" {
@@ -34,14 +42,6 @@ variable "fingerprint" {
 }
 variable "id" {
   description = "The name used for this key pair"
-  type        = string
-}
-variable "name" {
-  description = ""
-  type        = string
-}
-variable "pgp_key" {
-  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,6 +164,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = ""
+  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.name
+}
 output "pgp_key" {
   description = ""
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.pgp_key
@@ -192,9 +196,9 @@ output "id" {
   description = "The name used for this key pair"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.id
 }
-output "name" {
-  description = ""
-  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.name
+output "fingerprint" {
+  description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
+  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.fingerprint
 }
 output "id" {
   description = "The name used for this key pair"
@@ -219,10 +223,6 @@ output "encrypted_fingerprint" {
 output "encrypted_private_key" {
   description = "pgp_keypgp_key is supplied"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.encrypted_private_key
-}
-output "fingerprint" {
-  description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
-  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.fingerprint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

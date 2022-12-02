@@ -9,6 +9,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "rack_elevation" {
+  description = "Position of an asset in a rack measured in rack units."
+  type        = string
+}
 variable "arn" {
   description = "(Required) Outpost ARN."
   type        = string
@@ -25,14 +29,6 @@ variable "host_id" {
   description = "Host ID of the Dedicated Hosts on the asset, if a Dedicated Host is provisioned."
   type        = string
 }
-variable "rack_elevation" {
-  description = "Position of an asset in a rack measured in rack units."
-  type        = string
-}
-output "host_id" {
-  description = "Host ID of the Dedicated Hosts on the asset, if a Dedicated Host is provisioned."
-  value       = aws_outposts_asset.aws_outposts_asset.host_id
-}
 output "rack_elevation" {
   description = "Position of an asset in a rack measured in rack units."
   value       = aws_outposts_asset.aws_outposts_asset.rack_elevation
@@ -48,6 +44,10 @@ output "asset_id" {
 output "asset_type" {
   description = "Type of the asset."
   value       = aws_outposts_asset.aws_outposts_asset.asset_type
+}
+output "host_id" {
+  description = "Host ID of the Dedicated Hosts on the asset, if a Dedicated Host is provisioned."
+  value       = aws_outposts_asset.aws_outposts_asset.host_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

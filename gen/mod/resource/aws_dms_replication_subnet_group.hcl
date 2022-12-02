@@ -1,14 +1,27 @@
 resource "aws_dms_replication_subnet_group" "aws_dms_replication_subnet_group" {
-  tags                                                                                             = var.tags
-  tags_all                                                                                         = var.tags_all
   Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens. = var.Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens.
   Must not be "default".                                                                           = var.Must not be "default".
   replication_subnet_group_description                                                             = var.replication_subnet_group_description
   replication_subnet_group_id                                                                      = var.replication_subnet_group_id
   subnet_ids                                                                                       = var.subnet_ids
+  tags                                                                                             = var.tags
+  tags_all                                                                                         = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens." {
+  description = ""
   type        = string
 }
 variable "Must not be \"default\"." {
@@ -25,19 +38,6 @@ variable "replication_subnet_group_id" {
 }
 variable "subnet_ids" {
   description = "(Required) A list of the EC2 subnet IDs for the subnet group."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens." {
-  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -160,10 +160,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens." {
-  description = ""
-  value       = aws_dms_replication_subnet_group.aws_dms_replication_subnet_group.Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens.
-}
 output "Must not be \"default\"." {
   description = ""
   value       = aws_dms_replication_subnet_group.aws_dms_replication_subnet_group.Must not be "default".
@@ -187,6 +183,10 @@ output "tags" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_dms_replication_subnet_group.aws_dms_replication_subnet_group.tags_all
+}
+output "Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens." {
+  description = ""
+  value       = aws_dms_replication_subnet_group.aws_dms_replication_subnet_group.Must contain no more than 255 alphanumeric characters, periods, spaces, underscores, or hyphens.
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."

@@ -12,20 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "etag" {
-  description = "ETag hash of the function. This is the value for the DEVELOPMENT stage of the function."
-  type        = string
-  default     = ""
-}
-variable "live_stage_etag" {
-  description = "ETag hash of any LIVE stage of the function."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Unique name for your CloudFront Function."
-  type        = string
-}
 variable "publish" {
   description = "(Optional) Whether to publish creation/change as Live CloudFront Function Version. Defaults to true.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -49,6 +35,20 @@ variable "comment" {
   description = "(Optional) Comment."
   type        = string
   default     = ""
+}
+variable "etag" {
+  description = "ETag hash of the function. This is the value for the DEVELOPMENT stage of the function."
+  type        = string
+  default     = ""
+}
+variable "live_stage_etag" {
+  description = "ETag hash of any LIVE stage of the function."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Unique name for your CloudFront Function."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -170,10 +170,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Unique name for your CloudFront Function."
-  value       = aws_cloudfront_function.aws_cloudfront_function.name
-}
 output "publish" {
   description = "(Optional) Whether to publish creation/change as Live CloudFront Function Version. Defaults to true.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudfront_function.aws_cloudfront_function.publish
@@ -202,6 +198,14 @@ output "live_stage_etag" {
   description = "ETag hash of any LIVE stage of the function."
   value       = aws_cloudfront_function.aws_cloudfront_function.live_stage_etag
 }
+output "name" {
+  description = "(Required) Unique name for your CloudFront Function."
+  value       = aws_cloudfront_function.aws_cloudfront_function.name
+}
+output "etag" {
+  description = "ETag hash of the function. This is the value for the DEVELOPMENT stage of the function."
+  value       = aws_cloudfront_function.aws_cloudfront_function.etag
+}
 output "live_stage_etag" {
   description = "ETag hash of any LIVE stage of the function."
   value       = aws_cloudfront_function.aws_cloudfront_function.live_stage_etag
@@ -213,10 +217,6 @@ output "status" {
 output "arn" {
   description = "Amazon Resource Name (ARN) identifying your CloudFront Function."
   value       = aws_cloudfront_function.aws_cloudfront_function.arn
-}
-output "etag" {
-  description = "ETag hash of the function. This is the value for the DEVELOPMENT stage of the function."
-  value       = aws_cloudfront_function.aws_cloudfront_function.etag
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

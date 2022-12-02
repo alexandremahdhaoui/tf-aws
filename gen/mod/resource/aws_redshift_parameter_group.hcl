@@ -1,4 +1,5 @@
 resource "aws_redshift_parameter_group" "aws_redshift_parameter_group" {
+  description = var.description
   family      = var.family
   id          = var.id
   name        = var.name
@@ -6,14 +7,9 @@ resource "aws_redshift_parameter_group" "aws_redshift_parameter_group" {
   tags        = var.tags
   value       = var.value
   arn         = var.arn
-  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "value" {
-  description = "(Required) The value of the Redshift parameter."
   type        = string
 }
 variable "arn" {
@@ -46,6 +42,10 @@ variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.You can read more about the parameters that Redshift supports in the documentationIn addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "value" {
+  description = "(Required) The value of the Redshift parameter."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -167,6 +167,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The Redshift parameter group name."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
+}
 output "name" {
   description = "(Required) The name of the Redshift parameter."
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.name
@@ -194,10 +198,6 @@ output "description" {
 output "family" {
   description = "(Required) The family of the Redshift parameter group."
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.family
-}
-output "id" {
-  description = "The Redshift parameter group name."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of parameter group"

@@ -1,42 +1,16 @@
 resource "aws_datasync_location_s3" "aws_datasync_location_s3" {
-  agent_arns             = var.agent_arns
   arn                    = var.arn
-  bucket_access_role_arn = var.bucket_access_role_arn
-  s3_bucket_arn          = var.s3_bucket_arn
+  id                     = var.id
   s3_storage_class       = var.s3_storage_class
   subdirectory           = var.subdirectory
-  id                     = var.id
-  s3_config              = var.s3_config
   tags                   = var.tags
+  agent_arns             = var.agent_arns
+  s3_bucket_arn          = var.s3_bucket_arn
+  s3_config              = var.s3_config
+  bucket_access_role_arn = var.bucket_access_role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
-variable "s3_config" {
-  description = "(Required) Configuration block containing information for connecting to S3."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.s3_config Argument References3_config configuration block:"
-  type        = string
-  default     = ""
-}
-variable "s3_bucket_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the S3 Bucket."
-  type        = string
-}
-variable "s3_storage_class" {
-  description = "(Optional) The Amazon S3 storage class that you want to store your files in when this location is used as a task destination. Valid values"
-  type        = string
-  default     = ""
-}
-variable "subdirectory" {
-  description = "(Required) Prefix to perform actions as source or destination."
   type        = string
 }
 variable "agent_arns" {
@@ -48,8 +22,34 @@ variable "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   type        = string
 }
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "s3_storage_class" {
+  description = "(Optional) The Amazon S3 storage class that you want to store your files in when this location is used as a task destination. Valid values"
+  type        = string
+  default     = ""
+}
+variable "subdirectory" {
+  description = "(Required) Prefix to perform actions as source or destination."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.s3_config Argument References3_config configuration block:"
+  type        = string
+  default     = ""
+}
 variable "bucket_access_role_arn" {
   description = "(Required) ARN of the IAM Role used to connect to the S3 Bucket.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "s3_bucket_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the S3 Bucket."
+  type        = string
+}
+variable "s3_config" {
+  description = "(Required) Configuration block containing information for connecting to S3."
   type        = string
 }
 variable "tag_instance_id" {
@@ -172,33 +172,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.id
-}
-output "s3_config" {
-  description = "(Required) Configuration block containing information for connecting to S3."
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.s3_config
-}
-output "tags" {
-  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.s3_config Argument References3_config configuration block:"
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.tags
-}
-output "agent_arns" {
-  description = "(Optional) A list of DataSync Agent ARNs with which this location will be associated."
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.agent_arns
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_s3.aws_datasync_location_s3.arn
 }
-output "bucket_access_role_arn" {
-  description = "(Required) ARN of the IAM Role used to connect to the S3 Bucket.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.bucket_access_role_arn
-}
-output "s3_bucket_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the S3 Bucket."
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.s3_bucket_arn
+output "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.id
 }
 output "s3_storage_class" {
   description = "(Optional) The Amazon S3 storage class that you want to store your files in when this location is used as a task destination. Valid values"
@@ -208,6 +188,30 @@ output "subdirectory" {
   description = "(Required) Prefix to perform actions as source or destination."
   value       = aws_datasync_location_s3.aws_datasync_location_s3.subdirectory
 }
+output "tags" {
+  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.s3_config Argument References3_config configuration block:"
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.tags
+}
+output "agent_arns" {
+  description = "(Optional) A list of DataSync Agent ARNs with which this location will be associated."
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.agent_arns
+}
+output "s3_bucket_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the S3 Bucket."
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.s3_bucket_arn
+}
+output "s3_config" {
+  description = "(Required) Configuration block containing information for connecting to S3."
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.s3_config
+}
+output "bucket_access_role_arn" {
+  description = "(Required) ARN of the IAM Role used to connect to the S3 Bucket.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.bucket_access_role_arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_datasync_location_s3.aws_datasync_location_s3.tags_all
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_s3.aws_datasync_location_s3.arn
@@ -215,10 +219,6 @@ output "arn" {
 output "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_s3.aws_datasync_location_s3.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_datasync_location_s3.aws_datasync_location_s3.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "filter" {
-  description = " configuration block:"
-  type        = string
-}
-variable "id" {
-  description = "ID of the selected prefix list."
-  type        = string
-}
 variable "name" {
   description = "Name of the selected prefix list."
   type        = string
@@ -27,6 +19,14 @@ variable "values" {
 }
 variable "cidr_blocks" {
   description = "List of CIDR blocks for the AWS service associated with the prefix list.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "filter" {
+  description = " configuration block:"
+  type        = string
+}
+variable "id" {
+  description = "ID of the selected prefix list."
   type        = string
 }
 output "cidr_blocks" {
@@ -49,6 +49,10 @@ output "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
   value       = aws_prefix_list.aws_prefix_list.values
 }
+output "name" {
+  description = "Name of the selected prefix list."
+  value       = aws_prefix_list.aws_prefix_list.name
+}
 output "cidr_blocks" {
   description = "List of CIDR blocks for the AWS service associated with the prefix list.TimeoutsConfiguration options:"
   value       = aws_prefix_list.aws_prefix_list.cidr_blocks
@@ -56,10 +60,6 @@ output "cidr_blocks" {
 output "id" {
   description = "ID of the selected prefix list."
   value       = aws_prefix_list.aws_prefix_list.id
-}
-output "name" {
-  description = "Name of the selected prefix list."
-  value       = aws_prefix_list.aws_prefix_list.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

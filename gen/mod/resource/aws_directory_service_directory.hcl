@@ -1,32 +1,68 @@
 resource "aws_directory_service_directory" "aws_directory_service_directory" {
-  access_url                           = var.access_url
   edition                              = var.edition
   password                             = var.password
   security_group_id                    = var.security_group_id
-  tags                                 = var.tags
-  vpc_id                               = var.vpc_id
-  customer_dns_ips                     = var.customer_dns_ips
-  description                          = var.description
-  dns_ip_addresses                     = var.dns_ip_addresses
-  id                                   = var.id
-  update                               = var.update
-  vpc_settings                         = var.vpc_settings
+  short_name                           = var.short_name
   alias                                = var.alias
   connect_ips                          = var.connect_ips
-  connect_settings                     = var.connect_settings
-  customer_username                    = var.customer_username
-  name                                 = var.name
-  type                                 = var.type
-  tags_all                             = var.tags_all
   create                               = var.create
-  desired_number_of_domain_controllers = var.desired_number_of_domain_controllers
+  description                          = var.description
+  tags                                 = var.tags
+  type                                 = var.type
+  dns_ip_addresses                     = var.dns_ip_addresses
   enable_sso                           = var.enable_sso
-  short_name                           = var.short_name
+  name                                 = var.name
   size                                 = var.size
   subnet_ids                           = var.subnet_ids
+  tags_all                             = var.tags_all
+  customer_dns_ips                     = var.customer_dns_ips
+  customer_username                    = var.customer_username
+  desired_number_of_domain_controllers = var.desired_number_of_domain_controllers
+  id                                   = var.id
+  vpc_settings                         = var.vpc_settings
+  access_url                           = var.access_url
+  connect_settings                     = var.connect_settings
+  update                               = var.update
+  vpc_id                               = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "dns_ip_addresses" {
+  description = "A list of IP addresses of the DNS servers for the directory or connector."
+  type        = string
+}
+variable "enable_sso" {
+  description = "(Optional) Whether to enable single-sign on for the directory. Requires alias. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The fully qualified name for the directory, such as corp.example.com"
+  type        = string
+}
+variable "size" {
+  description = "(Optional) (For SimpleAD and ADConnector types) The size of the directory (Small or Large are accepted values). Large by default."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongvpc_settings supports the following:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = " (Optional) - The directory type (SimpleAD, ADConnector or MicrosoftAD are accepted values). Defaults to SimpleAD."
+  type        = string
+  default     = ""
+}
+variable "customer_dns_ips" {
+  description = "(Required) The DNS IP addresses of the domain to connect to."
+  type        = string
+}
+variable "customer_username" {
+  description = "(Required) The username corresponding to the password provided."
   type        = string
 }
 variable "desired_number_of_domain_controllers" {
@@ -34,20 +70,9 @@ variable "desired_number_of_domain_controllers" {
   type        = string
   default     = ""
 }
-variable "enable_sso" {
-  description = "(Optional) Whether to enable single-sign on for the directory. Requires alias. Defaults to false."
+variable "id" {
+  description = "The directory identifier."
   type        = string
-  default     = ""
-}
-variable "short_name" {
-  description = "(Optional) The short name of the directory, such as CORP."
-  type        = string
-  default     = ""
-}
-variable "size" {
-  description = "(Optional) (For SimpleAD and ADConnector types) The size of the directory (Small or Large are accepted values). Large by default."
-  type        = string
-  default     = ""
 }
 variable "subnet_ids" {
   description = "(Required) The identifiers of the subnets for the directory servers (2 subnets in 2 different AZs)."
@@ -57,9 +82,48 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.connect_settings (for ADConnector) is also exported with the following attributes:"
   type        = string
 }
+variable "access_url" {
+  description = "The access URL for the directory, such as http://alias.awsapps.com."
+  type        = string
+}
+variable "connect_settings" {
+  description = "(Required for ADConnector) Connector related information about the directory. Fields documented below."
+  type        = string
+}
+variable "update" {
+  description = "(Default 60 minutes) Used for directory update"
+  type        = string
+}
+variable "vpc_id" {
+  description = "(Required) The identifier of the VPC that the directory is in.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "vpc_settings" {
+  description = "(Required for SimpleAD and MicrosoftAD) VPC related information about the directory. Fields documented below."
+  type        = string
+}
+variable "short_name" {
+  description = "(Optional) The short name of the directory, such as CORP."
+  type        = string
+  default     = ""
+}
+variable "alias" {
+  description = "(Optional) The alias for the directory (must be unique amongst all aliases in AWS). Required for enable_sso."
+  type        = string
+  default     = ""
+}
+variable "connect_ips" {
+  description = "The IP addresses of the AD Connector servers.Timeoutsaws_directory_service_directory provides the following Timeouts configuration options:"
+  type        = string
+}
 variable "create" {
   description = "(Default 60 minutes) Used for directory creation"
   type        = string
+}
+variable "description" {
+  description = "(Optional) A textual description for the directory."
+  type        = string
+  default     = ""
 }
 variable "edition" {
   description = "(Optional, for type MicrosoftAD only) The MicrosoftAD edition (Standard or Enterprise). Defaults to Enterprise."
@@ -72,70 +136,6 @@ variable "password" {
 variable "security_group_id" {
   description = "The ID of the security group created by the directory."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongvpc_settings supports the following:"
-  type        = string
-  default     = ""
-}
-variable "vpc_id" {
-  description = "(Required) The identifier of the VPC that the directory is in.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "access_url" {
-  description = "The access URL for the directory, such as http://alias.awsapps.com."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A textual description for the directory."
-  type        = string
-  default     = ""
-}
-variable "dns_ip_addresses" {
-  description = "A list of IP addresses of the DNS servers for the directory or connector."
-  type        = string
-}
-variable "id" {
-  description = "The directory identifier."
-  type        = string
-}
-variable "update" {
-  description = "(Default 60 minutes) Used for directory update"
-  type        = string
-}
-variable "vpc_settings" {
-  description = "(Required for SimpleAD and MicrosoftAD) VPC related information about the directory. Fields documented below."
-  type        = string
-}
-variable "customer_dns_ips" {
-  description = "(Required) The DNS IP addresses of the domain to connect to."
-  type        = string
-}
-variable "connect_ips" {
-  description = "The IP addresses of the AD Connector servers.Timeoutsaws_directory_service_directory provides the following Timeouts configuration options:"
-  type        = string
-}
-variable "connect_settings" {
-  description = "(Required for ADConnector) Connector related information about the directory. Fields documented below."
-  type        = string
-}
-variable "customer_username" {
-  description = "(Required) The username corresponding to the password provided."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The fully qualified name for the directory, such as corp.example.com"
-  type        = string
-}
-variable "type" {
-  description = " (Optional) - The directory type (SimpleAD, ADConnector or MicrosoftAD are accepted values). Defaults to SimpleAD."
-  type        = string
-  default     = ""
-}
-variable "alias" {
-  description = "(Optional) The alias for the directory (must be unique amongst all aliases in AWS). Required for enable_sso."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -257,6 +257,30 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "access_url" {
+  description = "The access URL for the directory, such as http://alias.awsapps.com."
+  value       = aws_directory_service_directory.aws_directory_service_directory.access_url
+}
+output "connect_settings" {
+  description = "(Required for ADConnector) Connector related information about the directory. Fields documented below."
+  value       = aws_directory_service_directory.aws_directory_service_directory.connect_settings
+}
+output "update" {
+  description = "(Default 60 minutes) Used for directory update"
+  value       = aws_directory_service_directory.aws_directory_service_directory.update
+}
+output "vpc_id" {
+  description = "(Required) The identifier of the VPC that the directory is in.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_directory_service_directory.aws_directory_service_directory.vpc_id
+}
+output "vpc_settings" {
+  description = "(Required for SimpleAD and MicrosoftAD) VPC related information about the directory. Fields documented below."
+  value       = aws_directory_service_directory.aws_directory_service_directory.vpc_settings
+}
+output "short_name" {
+  description = "(Optional) The short name of the directory, such as CORP."
+  value       = aws_directory_service_directory.aws_directory_service_directory.short_name
+}
 output "alias" {
   description = "(Optional) The alias for the directory (must be unique amongst all aliases in AWS). Required for enable_sso."
   value       = aws_directory_service_directory.aws_directory_service_directory.alias
@@ -265,53 +289,13 @@ output "connect_ips" {
   description = "The IP addresses of the AD Connector servers.Timeoutsaws_directory_service_directory provides the following Timeouts configuration options:"
   value       = aws_directory_service_directory.aws_directory_service_directory.connect_ips
 }
-output "connect_settings" {
-  description = "(Required for ADConnector) Connector related information about the directory. Fields documented below."
-  value       = aws_directory_service_directory.aws_directory_service_directory.connect_settings
-}
-output "customer_username" {
-  description = "(Required) The username corresponding to the password provided."
-  value       = aws_directory_service_directory.aws_directory_service_directory.customer_username
-}
-output "name" {
-  description = "(Required) The fully qualified name for the directory, such as corp.example.com"
-  value       = aws_directory_service_directory.aws_directory_service_directory.name
-}
-output "type" {
-  description = " (Optional) - The directory type (SimpleAD, ADConnector or MicrosoftAD are accepted values). Defaults to SimpleAD."
-  value       = aws_directory_service_directory.aws_directory_service_directory.type
-}
 output "create" {
   description = "(Default 60 minutes) Used for directory creation"
   value       = aws_directory_service_directory.aws_directory_service_directory.create
 }
-output "desired_number_of_domain_controllers" {
-  description = "(Optional) The number of domain controllers desired in the directory. Minimum value of 2. Scaling of domain controllers is only supported for MicrosoftAD directories."
-  value       = aws_directory_service_directory.aws_directory_service_directory.desired_number_of_domain_controllers
-}
-output "enable_sso" {
-  description = "(Optional) Whether to enable single-sign on for the directory. Requires alias. Defaults to false."
-  value       = aws_directory_service_directory.aws_directory_service_directory.enable_sso
-}
-output "short_name" {
-  description = "(Optional) The short name of the directory, such as CORP."
-  value       = aws_directory_service_directory.aws_directory_service_directory.short_name
-}
-output "size" {
-  description = "(Optional) (For SimpleAD and ADConnector types) The size of the directory (Small or Large are accepted values). Large by default."
-  value       = aws_directory_service_directory.aws_directory_service_directory.size
-}
-output "subnet_ids" {
-  description = "(Required) The identifiers of the subnets for the directory servers (2 subnets in 2 different AZs)."
-  value       = aws_directory_service_directory.aws_directory_service_directory.subnet_ids
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.connect_settings (for ADConnector) is also exported with the following attributes:"
-  value       = aws_directory_service_directory.aws_directory_service_directory.tags_all
-}
-output "access_url" {
-  description = "The access URL for the directory, such as http://alias.awsapps.com."
-  value       = aws_directory_service_directory.aws_directory_service_directory.access_url
+output "description" {
+  description = "(Optional) A textual description for the directory."
+  value       = aws_directory_service_directory.aws_directory_service_directory.description
 }
 output "edition" {
   description = "(Optional, for type MicrosoftAD only) The MicrosoftAD edition (Standard or Enterprise). Defaults to Enterprise."
@@ -325,49 +309,53 @@ output "security_group_id" {
   description = "The ID of the security group created by the directory."
   value       = aws_directory_service_directory.aws_directory_service_directory.security_group_id
 }
+output "dns_ip_addresses" {
+  description = "A list of IP addresses of the DNS servers for the directory or connector."
+  value       = aws_directory_service_directory.aws_directory_service_directory.dns_ip_addresses
+}
+output "enable_sso" {
+  description = "(Optional) Whether to enable single-sign on for the directory. Requires alias. Defaults to false."
+  value       = aws_directory_service_directory.aws_directory_service_directory.enable_sso
+}
+output "name" {
+  description = "(Required) The fully qualified name for the directory, such as corp.example.com"
+  value       = aws_directory_service_directory.aws_directory_service_directory.name
+}
+output "size" {
+  description = "(Optional) (For SimpleAD and ADConnector types) The size of the directory (Small or Large are accepted values). Large by default."
+  value       = aws_directory_service_directory.aws_directory_service_directory.size
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongvpc_settings supports the following:"
   value       = aws_directory_service_directory.aws_directory_service_directory.tags
 }
-output "vpc_id" {
-  description = "(Required) The identifier of the VPC that the directory is in.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_directory_service_directory.aws_directory_service_directory.vpc_id
+output "type" {
+  description = " (Optional) - The directory type (SimpleAD, ADConnector or MicrosoftAD are accepted values). Defaults to SimpleAD."
+  value       = aws_directory_service_directory.aws_directory_service_directory.type
 }
 output "customer_dns_ips" {
   description = "(Required) The DNS IP addresses of the domain to connect to."
   value       = aws_directory_service_directory.aws_directory_service_directory.customer_dns_ips
 }
-output "description" {
-  description = "(Optional) A textual description for the directory."
-  value       = aws_directory_service_directory.aws_directory_service_directory.description
+output "customer_username" {
+  description = "(Required) The username corresponding to the password provided."
+  value       = aws_directory_service_directory.aws_directory_service_directory.customer_username
 }
-output "dns_ip_addresses" {
-  description = "A list of IP addresses of the DNS servers for the directory or connector."
-  value       = aws_directory_service_directory.aws_directory_service_directory.dns_ip_addresses
+output "desired_number_of_domain_controllers" {
+  description = "(Optional) The number of domain controllers desired in the directory. Minimum value of 2. Scaling of domain controllers is only supported for MicrosoftAD directories."
+  value       = aws_directory_service_directory.aws_directory_service_directory.desired_number_of_domain_controllers
 }
 output "id" {
   description = "The directory identifier."
   value       = aws_directory_service_directory.aws_directory_service_directory.id
 }
-output "update" {
-  description = "(Default 60 minutes) Used for directory update"
-  value       = aws_directory_service_directory.aws_directory_service_directory.update
+output "subnet_ids" {
+  description = "(Required) The identifiers of the subnets for the directory servers (2 subnets in 2 different AZs)."
+  value       = aws_directory_service_directory.aws_directory_service_directory.subnet_ids
 }
-output "vpc_settings" {
-  description = "(Required for SimpleAD and MicrosoftAD) VPC related information about the directory. Fields documented below."
-  value       = aws_directory_service_directory.aws_directory_service_directory.vpc_settings
-}
-output "access_url" {
-  description = "The access URL for the directory, such as http://alias.awsapps.com."
-  value       = aws_directory_service_directory.aws_directory_service_directory.access_url
-}
-output "delete" {
-  description = "(Default 60 minutes) Used for directory deletion"
-  value       = aws_directory_service_directory.aws_directory_service_directory.delete
-}
-output "dns_ip_addresses" {
-  description = "A list of IP addresses of the DNS servers for the directory or connector."
-  value       = aws_directory_service_directory.aws_directory_service_directory.dns_ip_addresses
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.connect_settings (for ADConnector) is also exported with the following attributes:"
+  value       = aws_directory_service_directory.aws_directory_service_directory.tags_all
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.connect_settings (for ADConnector) is also exported with the following attributes:"
@@ -377,13 +365,13 @@ output "update" {
   description = "(Default 60 minutes) Used for directory update"
   value       = aws_directory_service_directory.aws_directory_service_directory.update
 }
+output "access_url" {
+  description = "The access URL for the directory, such as http://alias.awsapps.com."
+  value       = aws_directory_service_directory.aws_directory_service_directory.access_url
+}
 output "connect_ips" {
   description = "The IP addresses of the AD Connector servers.Timeoutsaws_directory_service_directory provides the following Timeouts configuration options:"
   value       = aws_directory_service_directory.aws_directory_service_directory.connect_ips
-}
-output "create" {
-  description = "(Default 60 minutes) Used for directory creation"
-  value       = aws_directory_service_directory.aws_directory_service_directory.create
 }
 output "id" {
   description = "The directory identifier."
@@ -392,6 +380,18 @@ output "id" {
 output "security_group_id" {
   description = "The ID of the security group created by the directory."
   value       = aws_directory_service_directory.aws_directory_service_directory.security_group_id
+}
+output "create" {
+  description = "(Default 60 minutes) Used for directory creation"
+  value       = aws_directory_service_directory.aws_directory_service_directory.create
+}
+output "delete" {
+  description = "(Default 60 minutes) Used for directory deletion"
+  value       = aws_directory_service_directory.aws_directory_service_directory.delete
+}
+output "dns_ip_addresses" {
+  description = "A list of IP addresses of the DNS servers for the directory or connector."
+  value       = aws_directory_service_directory.aws_directory_service_directory.dns_ip_addresses
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

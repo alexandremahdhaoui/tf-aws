@@ -1,8 +1,8 @@
 resource "aws_ssoadmin_managed_policy_attachment" "aws_ssoadmin_managed_policy_attachment" {
-  id                 = var.id
-  instance_arn       = var.instance_arn
   managed_policy_arn = var.managed_policy_arn
   permission_set_arn = var.permission_set_arn
+  id                 = var.id
+  instance_arn       = var.instance_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -144,6 +144,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The Amazon Resource Names (ARNs) of the Managed Policy, Permission Set, and SSO Instance, separated by a comma (,)."
+  value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.id
+}
+output "instance_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
+  value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.instance_arn
+}
 output "managed_policy_arn" {
   description = "(Required, Forces new resource) The IAM managed policy Amazon Resource Name (ARN) to be attached to the Permission Set."
   value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.managed_policy_arn
@@ -156,17 +164,9 @@ output "id" {
   description = "The Amazon Resource Names (ARNs) of the Managed Policy, Permission Set, and SSO Instance, separated by a comma (,)."
   value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.id
 }
-output "instance_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
-  value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.instance_arn
-}
 output "managed_policy_name" {
   description = "The name of the IAM Managed Policy."
   value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.managed_policy_name
-}
-output "id" {
-  description = "The Amazon Resource Names (ARNs) of the Managed Policy, Permission Set, and SSO Instance, separated by a comma (,)."
-  value       = aws_ssoadmin_managed_policy_attachment.aws_ssoadmin_managed_policy_attachment.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

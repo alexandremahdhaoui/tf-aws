@@ -1,39 +1,67 @@
 resource "aws_db_cluster_snapshot" "aws_db_cluster_snapshot" {
-  availability_zones                    = var.availability_zones
+  allocated_storage                     = var.allocated_storage
+  license_model                         = var.license_model
+  source_db_cluster_snapshot_identifier = var.source_db_cluster_snapshot_identifier
+  vpc_id                                = var.vpc_id
   db_cluster_identifier                 = var.db_cluster_identifier
   db_cluster_snapshot_arn               = var.db_cluster_snapshot_arn
-  db_cluster_snapshot_identifier        = var.db_cluster_snapshot_identifier
-  engine                                = var.engine
-  port                                  = var.port
-  status                                = var.status
-  allocated_storage                     = var.allocated_storage
   engine_version                        = var.engine_version
-  kms_key_id                            = var.kms_key_id
-  source_db_cluster_snapshot_identifier = var.source_db_cluster_snapshot_identifier
-  storage_encrypted                     = var.storage_encrypted
-  vpc_id                                = var.vpc_id
-  license_model                         = var.license_model
   tags                                  = var.tags
   tags_all                              = var.tags_all
+  db_cluster_snapshot_identifier        = var.db_cluster_snapshot_identifier
+  kms_key_id                            = var.kms_key_id
+  storage_encrypted                     = var.storage_encrypted
+  status                                = var.status
+  availability_zones                    = var.availability_zones
+  engine                                = var.engine
+  port                                  = var.port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "status" {
+  description = "The status of this DB Cluster Snapshot."
+  type        = string
+}
+variable "availability_zones" {
+  description = "List of EC2 Availability Zones that instances in the DB cluster snapshot can be restored in."
+  type        = string
+}
+variable "engine" {
+  description = "Name of the database engine."
+  type        = string
+}
+variable "port" {
+  description = "Port that the DB cluster was listening on at the time of the snapshot."
+  type        = string
+}
+variable "allocated_storage" {
+  description = "Allocated storage size in gigabytes (GB)."
+  type        = string
+}
+variable "license_model" {
+  description = "License model information for the restored DB cluster."
   type        = string
 }
 variable "source_db_cluster_snapshot_identifier" {
   description = "DB Cluster Snapshot ARN that the DB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
   type        = string
 }
-variable "storage_encrypted" {
-  description = "Whether the DB cluster snapshot is encrypted."
-  type        = string
-}
 variable "vpc_id" {
   description = "The VPC ID associated with the DB cluster snapshot.TimeoutsConfiguration options:"
   type        = string
 }
-variable "license_model" {
-  description = "License model information for the restored DB cluster."
+variable "db_cluster_identifier" {
+  description = "(Required) The DB Cluster Identifier from which to take the snapshot."
+  type        = string
+}
+variable "db_cluster_snapshot_arn" {
+  description = "The Amazon Resource Name (ARN) for the DB Cluster Snapshot."
+  type        = string
+}
+variable "engine_version" {
+  description = "Version of the database engine for this DB cluster snapshot."
   type        = string
 }
 variable "tags" {
@@ -45,44 +73,16 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
-variable "port" {
-  description = "Port that the DB cluster was listening on at the time of the snapshot."
-  type        = string
-}
-variable "status" {
-  description = "The status of this DB Cluster Snapshot."
-  type        = string
-}
-variable "availability_zones" {
-  description = "List of EC2 Availability Zones that instances in the DB cluster snapshot can be restored in."
-  type        = string
-}
-variable "db_cluster_identifier" {
-  description = "(Required) The DB Cluster Identifier from which to take the snapshot."
-  type        = string
-}
-variable "db_cluster_snapshot_arn" {
-  description = "The Amazon Resource Name (ARN) for the DB Cluster Snapshot."
-  type        = string
-}
 variable "db_cluster_snapshot_identifier" {
   description = "(Required) The Identifier for the snapshot."
   type        = string
 }
-variable "engine" {
-  description = "Name of the database engine."
-  type        = string
-}
-variable "allocated_storage" {
-  description = "Allocated storage size in gigabytes (GB)."
-  type        = string
-}
-variable "engine_version" {
-  description = "Version of the database engine for this DB cluster snapshot."
-  type        = string
-}
 variable "kms_key_id" {
   description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DB cluster snapshot."
+  type        = string
+}
+variable "storage_encrypted" {
+  description = "Whether the DB cluster snapshot is encrypted."
   type        = string
 }
 variable "tag_instance_id" {
@@ -205,61 +205,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "engine" {
-  description = "Name of the database engine."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.engine
-}
-output "port" {
-  description = "Port that the DB cluster was listening on at the time of the snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.port
-}
-output "status" {
-  description = "The status of this DB Cluster Snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.status
-}
-output "availability_zones" {
-  description = "List of EC2 Availability Zones that instances in the DB cluster snapshot can be restored in."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.availability_zones
-}
-output "db_cluster_identifier" {
-  description = "(Required) The DB Cluster Identifier from which to take the snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_identifier
-}
-output "db_cluster_snapshot_arn" {
-  description = "The Amazon Resource Name (ARN) for the DB Cluster Snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_snapshot_arn
-}
-output "db_cluster_snapshot_identifier" {
-  description = "(Required) The Identifier for the snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_snapshot_identifier
-}
-output "allocated_storage" {
-  description = "Allocated storage size in gigabytes (GB)."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.allocated_storage
-}
-output "engine_version" {
-  description = "Version of the database engine for this DB cluster snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.engine_version
-}
 output "kms_key_id" {
   description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DB cluster snapshot."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.kms_key_id
 }
-output "source_db_cluster_snapshot_identifier" {
-  description = "DB Cluster Snapshot ARN that the DB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.source_db_cluster_snapshot_identifier
-}
 output "storage_encrypted" {
   description = "Whether the DB cluster snapshot is encrypted."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.storage_encrypted
-}
-output "vpc_id" {
-  description = "The VPC ID associated with the DB cluster snapshot.TimeoutsConfiguration options:"
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.vpc_id
-}
-output "license_model" {
-  description = "License model information for the restored DB cluster."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.license_model
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the DB cluster. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -269,33 +221,33 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.tags_all
 }
-output "status" {
-  description = "The status of this DB Cluster Snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.status
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.tags_all
-}
-output "vpc_id" {
-  description = "The VPC ID associated with the DB cluster snapshot.TimeoutsConfiguration options:"
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.vpc_id
-}
-output "db_cluster_snapshot_arn" {
-  description = "The Amazon Resource Name (ARN) for the DB Cluster Snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_snapshot_arn
+output "db_cluster_snapshot_identifier" {
+  description = "(Required) The Identifier for the snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_snapshot_identifier
 }
 output "engine" {
   description = "Name of the database engine."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.engine
 }
-output "storage_encrypted" {
-  description = "Whether the DB cluster snapshot is encrypted."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.storage_encrypted
+output "port" {
+  description = "Port that the DB cluster was listening on at the time of the snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.port
 }
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.create
+output "status" {
+  description = "The status of this DB Cluster Snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.status
+}
+output "availability_zones" {
+  description = "List of EC2 Availability Zones that instances in the DB cluster snapshot can be restored in."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.availability_zones
+}
+output "allocated_storage" {
+  description = "Allocated storage size in gigabytes (GB)."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.allocated_storage
+}
+output "db_cluster_snapshot_arn" {
+  description = "The Amazon Resource Name (ARN) for the DB Cluster Snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_snapshot_arn
 }
 output "engine_version" {
   description = "Version of the database engine for this DB cluster snapshot."
@@ -305,25 +257,73 @@ output "license_model" {
   description = "License model information for the restored DB cluster."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.license_model
 }
-output "port" {
-  description = "Port that the DB cluster was listening on at the time of the snapshot."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.port
+output "source_db_cluster_snapshot_identifier" {
+  description = "DB Cluster Snapshot ARN that the DB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.source_db_cluster_snapshot_identifier
 }
-output "allocated_storage" {
-  description = "Allocated storage size in gigabytes (GB)."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.allocated_storage
+output "vpc_id" {
+  description = "The VPC ID associated with the DB cluster snapshot.TimeoutsConfiguration options:"
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.vpc_id
+}
+output "db_cluster_identifier" {
+  description = "(Required) The DB Cluster Identifier from which to take the snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_identifier
+}
+output "db_cluster_snapshot_arn" {
+  description = "The Amazon Resource Name (ARN) for the DB Cluster Snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.db_cluster_snapshot_arn
+}
+output "license_model" {
+  description = "License model information for the restored DB cluster."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.license_model
+}
+output "source_db_cluster_snapshot_identifier" {
+  description = "DB Cluster Snapshot ARN that the DB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.source_db_cluster_snapshot_identifier
+}
+output "vpc_id" {
+  description = "The VPC ID associated with the DB cluster snapshot.TimeoutsConfiguration options:"
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.vpc_id
 }
 output "availability_zones" {
   description = "List of EC2 Availability Zones that instances in the DB cluster snapshot can be restored in."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.availability_zones
 }
+output "engine_version" {
+  description = "Version of the database engine for this DB cluster snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.engine_version
+}
+output "allocated_storage" {
+  description = "Allocated storage size in gigabytes (GB)."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.allocated_storage
+}
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.create
+}
+output "port" {
+  description = "Port that the DB cluster was listening on at the time of the snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.port
+}
+output "storage_encrypted" {
+  description = "Whether the DB cluster snapshot is encrypted."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.storage_encrypted
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.tags_all
+}
+output "engine" {
+  description = "Name of the database engine."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.engine
+}
 output "kms_key_id" {
   description = "If storage_encrypted is true, the AWS KMS key identifier for the encrypted DB cluster snapshot."
   value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.kms_key_id
 }
-output "source_db_cluster_snapshot_identifier" {
-  description = "DB Cluster Snapshot ARN that the DB Cluster Snapshot was copied from. It only has value in case of cross customer or cross region copy."
-  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.source_db_cluster_snapshot_identifier
+output "status" {
+  description = "The status of this DB Cluster Snapshot."
+  value       = aws_db_cluster_snapshot.aws_db_cluster_snapshot.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

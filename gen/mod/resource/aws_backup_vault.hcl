@@ -12,14 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "force_destroy" {
-  description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
-  type        = string
-}
-variable "id" {
-  description = "The name of the vault."
-  type        = string
-}
 variable "kms_key_arn" {
   description = "(Optional) The server-side encryption key that is used to protect your backups."
   type        = string
@@ -44,6 +36,14 @@ variable "tags_all" {
 }
 variable "arn" {
   description = "The ARN of the vault."
+  type        = string
+}
+variable "force_destroy" {
+  description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
+  type        = string
+}
+variable "id" {
+  description = "The name of the vault."
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,6 +166,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The ARN of the vault."
+  value       = aws_backup_vault.aws_backup_vault.arn
+}
+output "force_destroy" {
+  description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
+  value       = aws_backup_vault.aws_backup_vault.force_destroy
+}
+output "id" {
+  description = "The name of the vault."
+  value       = aws_backup_vault.aws_backup_vault.id
+}
 output "kms_key_arn" {
   description = "(Optional) The server-side encryption key that is used to protect your backups."
   value       = aws_backup_vault.aws_backup_vault.kms_key_arn
@@ -190,14 +202,6 @@ output "arn" {
   description = "The ARN of the vault."
   value       = aws_backup_vault.aws_backup_vault.arn
 }
-output "force_destroy" {
-  description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
-  value       = aws_backup_vault.aws_backup_vault.force_destroy
-}
-output "id" {
-  description = "The name of the vault."
-  value       = aws_backup_vault.aws_backup_vault.id
-}
 output "delete" {
   description = "(Default 10m)"
   value       = aws_backup_vault.aws_backup_vault.delete
@@ -213,10 +217,6 @@ output "recovery_points" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_backup_vault.aws_backup_vault.tags_all
-}
-output "arn" {
-  description = "The ARN of the vault."
-  value       = aws_backup_vault.aws_backup_vault.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

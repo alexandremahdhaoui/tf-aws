@@ -140,10 +140,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "update" {
-  description = "(Default 180m)"
-  value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.update
-}
 output "access_policies" {
   description = "(Optional) IAM policy document specifying the access policies for the domain"
   value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.access_policies
@@ -151,6 +147,10 @@ output "access_policies" {
 output "domain_name" {
   description = "(Required) Name of the domain.No additional attributes are exported.TimeoutsConfiguration options:"
   value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.domain_name
+}
+output "update" {
+  description = "(Default 180m)"
+  value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.update
 }
 output "update" {
   description = "(Default 180m)"

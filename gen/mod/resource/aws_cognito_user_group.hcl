@@ -1,8 +1,8 @@
 resource "aws_cognito_user_group" "aws_cognito_user_group" {
+  description  = var.description
   name         = var.name
   precedence   = var.precedence
   user_pool_id = var.user_pool_id
-  description  = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -146,6 +146,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "user_pool_id" {
+  description = "(Required) The user pool ID."
+  value       = aws_cognito_user_group.aws_cognito_user_group.user_pool_id
+}
 output "description" {
   description = "(Optional) The description of the user group."
   value       = aws_cognito_user_group.aws_cognito_user_group.description
@@ -157,10 +161,6 @@ output "name" {
 output "precedence" {
   description = "(Optional) The precedence of the user group."
   value       = aws_cognito_user_group.aws_cognito_user_group.precedence
-}
-output "user_pool_id" {
-  description = "(Required) The user pool ID."
-  value       = aws_cognito_user_group.aws_cognito_user_group.user_pool_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,36 +1,23 @@
 resource "aws_worklink_fleet" "aws_worklink_fleet" {
-  optimize_for_end_user_location = var.optimize_for_end_user_location
-  saml_metadata                  = var.saml_metadata
-  security_group_ids             = var.security_group_ids
-  vpc_id                         = var.vpc_id
+  device_ca_certificate          = var.device_ca_certificate
   display_name                   = var.display_name
-  name                           = var.name
+  arn                            = var.arn
+  created_time                   = var.created_time
+  network                        = var.network
+  optimize_for_end_user_location = var.optimize_for_end_user_location
+  security_group_ids             = var.security_group_ids
+  audit_stream_arn               = var.audit_stream_arn
   company_code                   = var.company_code
   identity_provider              = var.identity_provider
-  id                             = var.id
-  network                        = var.network
+  saml_metadata                  = var.saml_metadata
   type                           = var.type
-  audit_stream_arn               = var.audit_stream_arn
-  created_time                   = var.created_time
+  vpc_id                         = var.vpc_id
+  id                             = var.id
+  name                           = var.name
   subnet_ids                     = var.subnet_ids
-  arn                            = var.arn
-  device_ca_certificate          = var.device_ca_certificate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "audit_stream_arn" {
-  description = "(Optional) The ARN of the Amazon Kinesis data stream that receives the audit events. Kinesis data stream name must begin with \"AmazonWorkLink-\"."
-  type        = string
-  default     = ""
-}
-variable "created_time" {
-  description = "The time that the fleet was created."
-  type        = string
-}
-variable "id" {
-  description = "The ARN of the created WorkLink Fleet."
   type        = string
 }
 variable "network" {
@@ -38,34 +25,25 @@ variable "network" {
   type        = string
   default     = ""
 }
-variable "type" {
-  description = "(Required) The type of identity provider."
+variable "optimize_for_end_user_location" {
+  description = "(Optional) The option to optimize for better performance by routing traffic through the closest AWS Region to users, which may be outside of your home Region. Defaults to true.strongnetwork requires the following:~> strongNOTE: network cannot be removed without force recreating by terraform taint."
+  type        = string
+  default     = ""
+}
+variable "security_group_ids" {
+  description = "(Required) A list of security group IDs associated with access to the provided subnets.strongidentity_provider requires the following:~> strongNOTE: identity_provider cannot be removed without force recreating by terraform taint."
   type        = string
 }
 variable "arn" {
   description = "The ARN of the created WorkLink Fleet."
   type        = string
 }
-variable "device_ca_certificate" {
-  description = "(Optional) The certificate chain, including intermediate certificates and the root certificate authority certificate used to issue device certificates."
-  type        = string
-  default     = ""
-}
-variable "subnet_ids" {
-  description = "(Required) A list of subnet IDs used for X-ENI connections from Amazon WorkLink rendering containers."
+variable "created_time" {
+  description = "The time that the fleet was created."
   type        = string
 }
-variable "display_name" {
-  description = "(Optional) The name of the fleet."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) A region-unique name for the AMI."
-  type        = string
-}
-variable "optimize_for_end_user_location" {
-  description = "(Optional) The option to optimize for better performance by routing traffic through the closest AWS Region to users, which may be outside of your home Region. Defaults to true.strongnetwork requires the following:~> strongNOTE: network cannot be removed without force recreating by terraform taint."
+variable "identity_provider" {
+  description = "(Optional) Provide this to allow manage the identity provider configuration for the fleet. Fields documented below."
   type        = string
   default     = ""
 }
@@ -73,20 +51,42 @@ variable "saml_metadata" {
   description = "(Required) The SAML metadata document provided by the customer’s identity provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "security_group_ids" {
-  description = "(Required) A list of security group IDs associated with access to the provided subnets.strongidentity_provider requires the following:~> strongNOTE: identity_provider cannot be removed without force recreating by terraform taint."
+variable "type" {
+  description = "(Required) The type of identity provider."
   type        = string
 }
 variable "vpc_id" {
   description = "(Required) The VPC ID with connectivity to associated websites."
   type        = string
 }
+variable "audit_stream_arn" {
+  description = "(Optional) The ARN of the Amazon Kinesis data stream that receives the audit events. Kinesis data stream name must begin with \"AmazonWorkLink-\"."
+  type        = string
+  default     = ""
+}
 variable "company_code" {
   description = "The identifier used by users to sign in to the Amazon WorkLink app."
   type        = string
 }
-variable "identity_provider" {
-  description = "(Optional) Provide this to allow manage the identity provider configuration for the fleet. Fields documented below."
+variable "subnet_ids" {
+  description = "(Required) A list of subnet IDs used for X-ENI connections from Amazon WorkLink rendering containers."
+  type        = string
+}
+variable "id" {
+  description = "The ARN of the created WorkLink Fleet."
+  type        = string
+}
+variable "name" {
+  description = "(Required) A region-unique name for the AMI."
+  type        = string
+}
+variable "device_ca_certificate" {
+  description = "(Optional) The certificate chain, including intermediate certificates and the root certificate authority certificate used to issue device certificates."
+  type        = string
+  default     = ""
+}
+variable "display_name" {
+  description = "(Optional) The name of the fleet."
   type        = string
   default     = ""
 }
@@ -210,61 +210,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "audit_stream_arn" {
-  description = "(Optional) The ARN of the Amazon Kinesis data stream that receives the audit events. Kinesis data stream name must begin with \"AmazonWorkLink-\"."
-  value       = aws_worklink_fleet.aws_worklink_fleet.audit_stream_arn
-}
-output "created_time" {
-  description = "The time that the fleet was created."
-  value       = aws_worklink_fleet.aws_worklink_fleet.created_time
-}
-output "id" {
-  description = "The ARN of the created WorkLink Fleet."
-  value       = aws_worklink_fleet.aws_worklink_fleet.id
-}
-output "network" {
-  description = "(Optional) Provide this to allow manage the company network configuration for the fleet. Fields documented below."
-  value       = aws_worklink_fleet.aws_worklink_fleet.network
-}
-output "type" {
-  description = "(Required) The type of identity provider."
-  value       = aws_worklink_fleet.aws_worklink_fleet.type
-}
-output "arn" {
-  description = "The ARN of the created WorkLink Fleet."
-  value       = aws_worklink_fleet.aws_worklink_fleet.arn
-}
-output "device_ca_certificate" {
-  description = "(Optional) The certificate chain, including intermediate certificates and the root certificate authority certificate used to issue device certificates."
-  value       = aws_worklink_fleet.aws_worklink_fleet.device_ca_certificate
+output "name" {
+  description = "(Required) A region-unique name for the AMI."
+  value       = aws_worklink_fleet.aws_worklink_fleet.name
 }
 output "subnet_ids" {
   description = "(Required) A list of subnet IDs used for X-ENI connections from Amazon WorkLink rendering containers."
   value       = aws_worklink_fleet.aws_worklink_fleet.subnet_ids
 }
+output "id" {
+  description = "The ARN of the created WorkLink Fleet."
+  value       = aws_worklink_fleet.aws_worklink_fleet.id
+}
 output "display_name" {
   description = "(Optional) The name of the fleet."
   value       = aws_worklink_fleet.aws_worklink_fleet.display_name
 }
-output "name" {
-  description = "(Required) A region-unique name for the AMI."
-  value       = aws_worklink_fleet.aws_worklink_fleet.name
+output "device_ca_certificate" {
+  description = "(Optional) The certificate chain, including intermediate certificates and the root certificate authority certificate used to issue device certificates."
+  value       = aws_worklink_fleet.aws_worklink_fleet.device_ca_certificate
+}
+output "created_time" {
+  description = "The time that the fleet was created."
+  value       = aws_worklink_fleet.aws_worklink_fleet.created_time
+}
+output "network" {
+  description = "(Optional) Provide this to allow manage the company network configuration for the fleet. Fields documented below."
+  value       = aws_worklink_fleet.aws_worklink_fleet.network
 }
 output "optimize_for_end_user_location" {
   description = "(Optional) The option to optimize for better performance by routing traffic through the closest AWS Region to users, which may be outside of your home Region. Defaults to true.strongnetwork requires the following:~> strongNOTE: network cannot be removed without force recreating by terraform taint."
   value       = aws_worklink_fleet.aws_worklink_fleet.optimize_for_end_user_location
 }
-output "saml_metadata" {
-  description = "(Required) The SAML metadata document provided by the customer’s identity provider.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_worklink_fleet.aws_worklink_fleet.saml_metadata
-}
 output "security_group_ids" {
   description = "(Required) A list of security group IDs associated with access to the provided subnets.strongidentity_provider requires the following:~> strongNOTE: identity_provider cannot be removed without force recreating by terraform taint."
   value       = aws_worklink_fleet.aws_worklink_fleet.security_group_ids
 }
-output "vpc_id" {
-  description = "(Required) The VPC ID with connectivity to associated websites."
-  value       = aws_worklink_fleet.aws_worklink_fleet.vpc_id
+output "arn" {
+  description = "The ARN of the created WorkLink Fleet."
+  value       = aws_worklink_fleet.aws_worklink_fleet.arn
 }
 output "company_code" {
   description = "The identifier used by users to sign in to the Amazon WorkLink app."
@@ -273,6 +257,22 @@ output "company_code" {
 output "identity_provider" {
   description = "(Optional) Provide this to allow manage the identity provider configuration for the fleet. Fields documented below."
   value       = aws_worklink_fleet.aws_worklink_fleet.identity_provider
+}
+output "saml_metadata" {
+  description = "(Required) The SAML metadata document provided by the customer’s identity provider.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_worklink_fleet.aws_worklink_fleet.saml_metadata
+}
+output "type" {
+  description = "(Required) The type of identity provider."
+  value       = aws_worklink_fleet.aws_worklink_fleet.type
+}
+output "vpc_id" {
+  description = "(Required) The VPC ID with connectivity to associated websites."
+  value       = aws_worklink_fleet.aws_worklink_fleet.vpc_id
+}
+output "audit_stream_arn" {
+  description = "(Optional) The ARN of the Amazon Kinesis data stream that receives the audit events. Kinesis data stream name must begin with \"AmazonWorkLink-\"."
+  value       = aws_worklink_fleet.aws_worklink_fleet.audit_stream_arn
 }
 output "arn" {
   description = "The ARN of the created WorkLink Fleet."

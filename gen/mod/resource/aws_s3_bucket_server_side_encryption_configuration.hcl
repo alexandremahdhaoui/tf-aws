@@ -1,24 +1,15 @@
 resource "aws_s3_bucket_server_side_encryption_configuration" "aws_s3_bucket_server_side_encryption_configuration" {
+  kms_master_key_id                       = var.kms_master_key_id
+  rule                                    = var.rule
   sse_algorithm                           = var.sse_algorithm
   apply_server_side_encryption_by_default = var.apply_server_side_encryption_by_default
   bucket                                  = var.bucket
   bucket_key_enabled                      = var.bucket_key_enabled
   expected_bucket_owner                   = var.expected_bucket_owner
-  kms_master_key_id                       = var.kms_master_key_id
-  rule                                    = var.rule
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  type        = string
-}
-variable "bucket_key_enabled" {
-  description = "(Optional) Whether or not to use Amazon S3 Bucket Keys for SSE-KMS.apply_server_side_encryption_by_defaultThe apply_server_side_encryption_by_default configuration block supports the following arguments:"
-  type        = string
-  default     = ""
 }
 variable "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
@@ -39,6 +30,15 @@ variable "sse_algorithm" {
 }
 variable "apply_server_side_encryption_by_default" {
   description = "(Optional) A single object for setting server-side encryption by default documented below"
+  type        = string
+  default     = ""
+}
+variable "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  type        = string
+}
+variable "bucket_key_enabled" {
+  description = "(Optional) Whether or not to use Amazon S3 Bucket Keys for SSE-KMS.apply_server_side_encryption_by_defaultThe apply_server_side_encryption_by_default configuration block supports the following arguments:"
   type        = string
   default     = ""
 }

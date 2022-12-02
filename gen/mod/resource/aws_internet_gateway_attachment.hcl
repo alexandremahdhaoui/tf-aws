@@ -1,15 +1,11 @@
 resource "aws_internet_gateway_attachment" "aws_internet_gateway_attachment" {
+  create              = var.create
   id                  = var.id
   internet_gateway_id = var.internet_gateway_id
   vpc_id              = var.vpc_id
-  create              = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "vpc_id" {
-  description = "(Required) The ID of the VPC.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create" {
@@ -22,6 +18,10 @@ variable "id" {
 }
 variable "internet_gateway_id" {
   description = "(Required) The ID of the internet gateway."
+  type        = string
+}
+variable "vpc_id" {
+  description = "(Required) The ID of the VPC.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,14 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.create
-}
-output "id" {
-  description = "The ID of the VPC and Internet Gateway separated by a colon.TimeoutsConfiguration options:"
-  value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.id
-}
 output "internet_gateway_id" {
   description = "(Required) The ID of the internet gateway."
   value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.internet_gateway_id
@@ -159,6 +151,10 @@ output "internet_gateway_id" {
 output "vpc_id" {
   description = "(Required) The ID of the VPC.In addition to all arguments above, the following attributes are exported:"
   value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.vpc_id
+}
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.create
 }
 output "id" {
   description = "The ID of the VPC and Internet Gateway separated by a colon.TimeoutsConfiguration options:"
@@ -171,6 +167,10 @@ output "create" {
 output "delete" {
   description = "(Default 20m)"
   value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.delete
+}
+output "id" {
+  description = "The ID of the VPC and Internet Gateway separated by a colon.TimeoutsConfiguration options:"
+  value       = aws_internet_gateway_attachment.aws_internet_gateway_attachment.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

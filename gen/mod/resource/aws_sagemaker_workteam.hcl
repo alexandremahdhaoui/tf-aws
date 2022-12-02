@@ -1,36 +1,49 @@
 resource "aws_sagemaker_workteam" "aws_sagemaker_workteam" {
-  description                = var.description
-  member_definition          = var.member_definition
-  notification_topic_arn     = var.notification_topic_arn
-  oidc_member_definition     = var.oidc_member_definition
-  workforce_name             = var.workforce_name
-  workteam_name              = var.workteam_name
-  client_id                  = var.client_id
-  notification_configuration = var.notification_configuration
-  subdomain                  = var.subdomain
-  user_pool                  = var.user_pool
-  cognito_member_definition  = var.cognito_member_definition
-  tags                       = var.tags
-  arn                        = var.arn
-  groups                     = var.groups
   id                         = var.id
+  subdomain                  = var.subdomain
+  tags                       = var.tags
   user_group                 = var.user_group
+  user_pool                  = var.user_pool
+  workforce_name             = var.workforce_name
+  description                = var.description
+  oidc_member_definition     = var.oidc_member_definition
+  cognito_member_definition  = var.cognito_member_definition
+  groups                     = var.groups
+  arn                        = var.arn
+  client_id                  = var.client_id
+  notification_topic_arn     = var.notification_topic_arn
+  workteam_name              = var.workteam_name
+  member_definition          = var.member_definition
+  notification_configuration = var.notification_configuration
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "client_id" {
-  description = "(Required) An identifier for an application client. You must create the app client ID using Amazon Cognito."
+variable "id" {
+  description = "The name of the Workteam."
   type        = string
 }
-variable "notification_configuration" {
-  description = "(Optional) Configures notification of workers regarding available or expiring work items. see Notification Configuration details below."
+variable "description" {
+  description = "(Required) A description of the work team."
+  type        = string
+}
+variable "oidc_member_definition" {
+  description = "(Optional) A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. See Cognito Member Definition details below.Cognito Member Definition"
   type        = string
   default     = ""
 }
 variable "subdomain" {
   description = "The subdomain for your OIDC Identity Provider."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Member Definition"
+  type        = string
+  default     = ""
+}
+variable "user_group" {
+  description = "(Required) An identifier for a user group.Oidc Member Definition"
   type        = string
 }
 variable "user_pool" {
@@ -41,8 +54,12 @@ variable "workforce_name" {
   description = "(Required) The name of the Workteam (must be unique)."
   type        = string
 }
-variable "workteam_name" {
-  description = "(Required) The name of the workforce."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workteam."
+  type        = string
+}
+variable "client_id" {
+  description = "(Required) An identifier for an application client. You must create the app client ID using Amazon Cognito."
   type        = string
 }
 variable "cognito_member_definition" {
@@ -50,43 +67,26 @@ variable "cognito_member_definition" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Member Definition"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workteam."
-  type        = string
-}
 variable "groups" {
   description = "(Required) A list of comma separated strings that identifies user groups in your OIDC IdP. Each user group is made up of a group of private workers.Notification Configuration"
-  type        = string
-}
-variable "id" {
-  description = "The name of the Workteam."
-  type        = string
-}
-variable "user_group" {
-  description = "(Required) An identifier for a user group.Oidc Member Definition"
-  type        = string
-}
-variable "description" {
-  description = "(Required) A description of the work team."
   type        = string
 }
 variable "member_definition" {
   description = "(Required) A list of Member Definitions that contains objects that identify the workers that make up the work team. Workforces can be created using Amazon Cognito or your own OIDC Identity Provider (IdP). For private workforces created using Amazon Cognito use cognito_member_definition. For workforces created using your own OIDC identity provider (IdP) use oidc_member_definition. Do not provide input for both of these parameters in a single request. see Member Definition details below."
   type        = string
 }
+variable "notification_configuration" {
+  description = "(Optional) Configures notification of workers regarding available or expiring work items. see Notification Configuration details below."
+  type        = string
+  default     = ""
+}
 variable "notification_topic_arn" {
   description = "(Required) The ARN for the SNS topic to which notifications should be published.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "oidc_member_definition" {
-  description = "(Optional) A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. See Cognito Member Definition details below.Cognito Member Definition"
+variable "workteam_name" {
+  description = "(Required) The name of the workforce."
   type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -208,53 +208,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workteam."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.arn
-}
-output "groups" {
-  description = "(Required) A list of comma separated strings that identifies user groups in your OIDC IdP. Each user group is made up of a group of private workers.Notification Configuration"
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.groups
-}
-output "id" {
-  description = "The name of the Workteam."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.id
-}
-output "user_group" {
-  description = "(Required) An identifier for a user group.Oidc Member Definition"
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.user_group
-}
-output "description" {
-  description = "(Required) A description of the work team."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.description
-}
-output "member_definition" {
-  description = "(Required) A list of Member Definitions that contains objects that identify the workers that make up the work team. Workforces can be created using Amazon Cognito or your own OIDC Identity Provider (IdP). For private workforces created using Amazon Cognito use cognito_member_definition. For workforces created using your own OIDC identity provider (IdP) use oidc_member_definition. Do not provide input for both of these parameters in a single request. see Member Definition details below."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.member_definition
-}
-output "notification_topic_arn" {
-  description = "(Required) The ARN for the SNS topic to which notifications should be published.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.notification_topic_arn
-}
 output "oidc_member_definition" {
   description = "(Optional) A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. See Cognito Member Definition details below.Cognito Member Definition"
   value       = aws_sagemaker_workteam.aws_sagemaker_workteam.oidc_member_definition
 }
-output "workteam_name" {
-  description = "(Required) The name of the workforce."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.workteam_name
-}
-output "client_id" {
-  description = "(Required) An identifier for an application client. You must create the app client ID using Amazon Cognito."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.client_id
-}
-output "notification_configuration" {
-  description = "(Optional) Configures notification of workers regarding available or expiring work items. see Notification Configuration details below."
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.notification_configuration
-}
 output "subdomain" {
   description = "The subdomain for your OIDC Identity Provider."
   value       = aws_sagemaker_workteam.aws_sagemaker_workteam.subdomain
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Member Definition"
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.tags
+}
+output "user_group" {
+  description = "(Required) An identifier for a user group.Oidc Member Definition"
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.user_group
 }
 output "user_pool" {
   description = "(Required) An identifier for a user pool. The user pool must be in the same region as the service that you are calling."
@@ -264,13 +232,45 @@ output "workforce_name" {
   description = "(Required) The name of the Workteam (must be unique)."
   value       = aws_sagemaker_workteam.aws_sagemaker_workteam.workforce_name
 }
+output "description" {
+  description = "(Required) A description of the work team."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.description
+}
+output "client_id" {
+  description = "(Required) An identifier for an application client. You must create the app client ID using Amazon Cognito."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.client_id
+}
 output "cognito_member_definition" {
   description = "(Optional) The Amazon Cognito user group that is part of the work team. See Cognito Member Definition details below."
   value       = aws_sagemaker_workteam.aws_sagemaker_workteam.cognito_member_definition
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Member Definition"
-  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.tags
+output "groups" {
+  description = "(Required) A list of comma separated strings that identifies user groups in your OIDC IdP. Each user group is made up of a group of private workers.Notification Configuration"
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.groups
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workteam."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.arn
+}
+output "notification_configuration" {
+  description = "(Optional) Configures notification of workers regarding available or expiring work items. see Notification Configuration details below."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.notification_configuration
+}
+output "notification_topic_arn" {
+  description = "(Required) The ARN for the SNS topic to which notifications should be published.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.notification_topic_arn
+}
+output "workteam_name" {
+  description = "(Required) The name of the workforce."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.workteam_name
+}
+output "member_definition" {
+  description = "(Required) A list of Member Definitions that contains objects that identify the workers that make up the work team. Workforces can be created using Amazon Cognito or your own OIDC Identity Provider (IdP). For private workforces created using Amazon Cognito use cognito_member_definition. For workforces created using your own OIDC identity provider (IdP) use oidc_member_definition. Do not provide input for both of these parameters in a single request. see Member Definition details below."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.member_definition
+}
+output "id" {
+  description = "The name of the Workteam."
+  value       = aws_sagemaker_workteam.aws_sagemaker_workteam.id
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Workteam."

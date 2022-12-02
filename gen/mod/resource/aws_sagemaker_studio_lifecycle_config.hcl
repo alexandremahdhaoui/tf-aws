@@ -1,13 +1,21 @@
 resource "aws_sagemaker_studio_lifecycle_config" "aws_sagemaker_studio_lifecycle_config" {
-  tags                             = var.tags
   arn                              = var.arn
   id                               = var.id
   studio_lifecycle_config_app_type = var.studio_lifecycle_config_app_type
   studio_lifecycle_config_content  = var.studio_lifecycle_config_content
   studio_lifecycle_config_name     = var.studio_lifecycle_config_name
+  tags                             = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "studio_lifecycle_config_app_type" {
+  description = "(Required) The App type that the Lifecycle Configuration is attached to. Valid values are JupyterServer and KernelGateway."
+  type        = string
+}
+variable "studio_lifecycle_config_content" {
+  description = "(Required) The content of your Studio Lifecycle Configuration script. This content must be base64 encoded."
   type        = string
 }
 variable "studio_lifecycle_config_name" {
@@ -25,14 +33,6 @@ variable "arn" {
 }
 variable "id" {
   description = "The name of the Studio Lifecycle Config."
-  type        = string
-}
-variable "studio_lifecycle_config_app_type" {
-  description = "(Required) The App type that the Lifecycle Configuration is attached to. Valid values are JupyterServer and KernelGateway."
-  type        = string
-}
-variable "studio_lifecycle_config_content" {
-  description = "(Required) The content of your Studio Lifecycle Configuration script. This content must be base64 encoded."
   type        = string
 }
 variable "tag_instance_id" {
@@ -155,6 +155,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "studio_lifecycle_config_content" {
+  description = "(Required) The content of your Studio Lifecycle Configuration script. This content must be base64 encoded."
+  value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.studio_lifecycle_config_content
+}
+output "studio_lifecycle_config_name" {
+  description = "(Required) The name of the Studio Lifecycle Configuration to create."
+  value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.studio_lifecycle_config_name
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.tags
@@ -171,18 +179,6 @@ output "studio_lifecycle_config_app_type" {
   description = "(Required) The App type that the Lifecycle Configuration is attached to. Valid values are JupyterServer and KernelGateway."
   value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.studio_lifecycle_config_app_type
 }
-output "studio_lifecycle_config_content" {
-  description = "(Required) The content of your Studio Lifecycle Configuration script. This content must be base64 encoded."
-  value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.studio_lifecycle_config_content
-}
-output "studio_lifecycle_config_name" {
-  description = "(Required) The name of the Studio Lifecycle Configuration to create."
-  value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.studio_lifecycle_config_name
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.tags_all
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Studio Lifecycle Config."
   value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.arn
@@ -190,6 +186,10 @@ output "arn" {
 output "id" {
   description = "The name of the Studio Lifecycle Config."
   value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_sagemaker_studio_lifecycle_config.aws_sagemaker_studio_lifecycle_config.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

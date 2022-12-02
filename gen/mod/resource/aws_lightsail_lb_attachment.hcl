@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "instance_name" {
-  description = "(Required) The name of the instance to attach to the load balancer.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_lb_attachment.aws_lightsail_lb_attachment.instance_name
-}
 output "lb_name" {
   description = "(Required) The name of the Lightsail load balancer."
   value       = aws_lightsail_lb_attachment.aws_lightsail_lb_attachment.lb_name
+}
+output "instance_name" {
+  description = "(Required) The name of the instance to attach to the load balancer.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_lb_attachment.aws_lightsail_lb_attachment.instance_name
 }
 output "id" {
   description = "A combination of attributes to create a unique id: lb_name,instance_name"

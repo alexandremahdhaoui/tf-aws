@@ -1,7 +1,7 @@
 resource "aws_chime_voice_connector" "aws_chime_voice_connector" {
+  require_encryption = var.require_encryption
   aws_region         = var.aws_region
   name               = var.name
-  require_encryption = var.require_encryption
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

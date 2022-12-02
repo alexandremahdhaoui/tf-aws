@@ -2,17 +2,22 @@ resource "aws_neptune_cluster_parameter_group" "aws_neptune_cluster_parameter_gr
   description  = var.description
   id           = var.id
   name         = var.name
+  name_prefix  = var.name_prefix
   parameter    = var.parameter
+  tags         = var.tags
   apply_method = var.apply_method
   arn          = var.arn
-  tags         = var.tags
-  value        = var.value
   family       = var.family
-  name_prefix  = var.name_prefix
+  value        = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
+  type        = string
+  default     = ""
 }
 variable "apply_method" {
   description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
@@ -36,6 +41,10 @@ variable "name" {
   description = "(Required) The name of the neptune parameter."
   type        = string
 }
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+}
 variable "parameter" {
   description = "(Optional) A list of neptune parameters to apply."
   type        = string
@@ -44,15 +53,6 @@ variable "parameter" {
 variable "family" {
   description = "(Required) The family of the neptune cluster parameter group."
   type        = string
-}
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
-  type        = string
-  default     = ""
 }
 variable "value" {
   description = "(Required) The value of the neptune parameter."
@@ -178,14 +178,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "apply_method" {
-  description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.apply_method
-}
-output "arn" {
-  description = "The ARN of the neptune cluster parameter group."
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.arn
-}
 output "description" {
   description = "(Optional) The description of the neptune cluster parameter group. Defaults to \"Managed by Terraform\"."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.description
@@ -198,21 +190,29 @@ output "name" {
   description = "(Required) The name of the neptune parameter."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.name
 }
-output "parameter" {
-  description = "(Optional) A list of neptune parameters to apply."
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.parameter
-}
-output "family" {
-  description = "(Required) The family of the neptune cluster parameter group."
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.family
-}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.name_prefix
 }
+output "parameter" {
+  description = "(Optional) A list of neptune parameters to apply."
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.parameter
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.tags
+}
+output "apply_method" {
+  description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.apply_method
+}
+output "arn" {
+  description = "The ARN of the neptune cluster parameter group."
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.arn
+}
+output "family" {
+  description = "(Required) The family of the neptune cluster parameter group."
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.family
 }
 output "value" {
   description = "(Required) The value of the neptune parameter."

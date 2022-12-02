@@ -1,36 +1,32 @@
 resource "aws_s3_bucket_notification" "aws_s3_bucket_notification" {
-  bucket              = var.bucket
-  events              = var.events
-  id                  = var.id
-  queue               = var.queue
-  topic               = var.topic
-  topic_arn           = var.topic_arn
   eventbridge         = var.eventbridge
-  filter_prefix       = var.filter_prefix
+  events              = var.events
   filter_suffix       = var.filter_suffix
+  topic               = var.topic
+  queue               = var.queue
+  queue_arn           = var.queue_arn
+  topic_arn           = var.topic_arn
+  bucket              = var.bucket
+  filter_prefix       = var.filter_prefix
+  id                  = var.id
   lambda_function     = var.lambda_function
   lambda_function_arn = var.lambda_function_arn
-  queue_arn           = var.queue_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "bucket" {
-  description = "(Required) Name of the bucket for notification configuration."
   type        = string
 }
 variable "events" {
   description = "(Required) Event for which to send notifications."
   type        = string
 }
-variable "id" {
-  description = "(Optional) Unique identifier for each of the notification configurations."
+variable "filter_suffix" {
+  description = "(Optional) Object key name suffix."
   type        = string
   default     = ""
 }
-variable "queue" {
-  description = "(Optional) Notification configuration to SQS Queue. See below."
+variable "topic" {
+  description = "(Optional) Notification configuration to SNS Topic. See below.lambda_function"
   type        = string
   default     = ""
 }
@@ -44,8 +40,8 @@ variable "filter_prefix" {
   type        = string
   default     = ""
 }
-variable "filter_suffix" {
-  description = "(Optional) Object key name suffix."
+variable "id" {
+  description = "(Optional) Unique identifier for each of the notification configurations."
   type        = string
   default     = ""
 }
@@ -58,19 +54,23 @@ variable "lambda_function_arn" {
   description = "(Required) Lambda function ARN.queue"
   type        = string
 }
+variable "queue" {
+  description = "(Optional) Notification configuration to SQS Queue. See below."
+  type        = string
+  default     = ""
+}
 variable "queue_arn" {
   description = "(Required) SQS queue ARN.topic"
   type        = string
-}
-variable "topic" {
-  description = "(Optional) Notification configuration to SNS Topic. See below.lambda_function"
-  type        = string
-  default     = ""
 }
 variable "topic_arn" {
   description = "(Required) SNS topic ARN.No additional attributes are exported."
   type        = string
   default     = ""
+}
+variable "bucket" {
+  description = "(Required) Name of the bucket for notification configuration."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -192,41 +192,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bucket" {
-  description = "(Required) Name of the bucket for notification configuration."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.bucket
-}
-output "events" {
-  description = "(Required) Event for which to send notifications."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.events
-}
-output "id" {
-  description = "(Optional) Unique identifier for each of the notification configurations."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.id
-}
-output "queue" {
-  description = "(Optional) Notification configuration to SQS Queue. See below."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue
-}
-output "queue_arn" {
-  description = "(Required) SQS queue ARN.topic"
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue_arn
-}
 output "topic" {
   description = "(Optional) Notification configuration to SNS Topic. See below.lambda_function"
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.topic
-}
-output "topic_arn" {
-  description = "(Required) SNS topic ARN.No additional attributes are exported."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.topic_arn
 }
 output "eventbridge" {
   description = "(Optional) Whether to enable Amazon EventBridge notifications."
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.eventbridge
 }
-output "filter_prefix" {
-  description = "(Optional) Object key name prefix."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.filter_prefix
+output "events" {
+  description = "(Required) Event for which to send notifications."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.events
 }
 output "filter_suffix" {
   description = "(Optional) Object key name suffix."
@@ -239,6 +215,30 @@ output "lambda_function" {
 output "lambda_function_arn" {
   description = "(Required) Lambda function ARN.queue"
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.lambda_function_arn
+}
+output "queue" {
+  description = "(Optional) Notification configuration to SQS Queue. See below."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue
+}
+output "queue_arn" {
+  description = "(Required) SQS queue ARN.topic"
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue_arn
+}
+output "topic_arn" {
+  description = "(Required) SNS topic ARN.No additional attributes are exported."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.topic_arn
+}
+output "bucket" {
+  description = "(Required) Name of the bucket for notification configuration."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.bucket
+}
+output "filter_prefix" {
+  description = "(Optional) Object key name prefix."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.filter_prefix
+}
+output "id" {
+  description = "(Optional) Unique identifier for each of the notification configurations."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

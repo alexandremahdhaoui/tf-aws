@@ -1,102 +1,34 @@
 resource "aws_api_gateway_stage" "aws_api_gateway_stage" {
-  format                   = var.format
-  invoke_url               = var.invoke_url
-  stage_name               = var.stage_name
-  tags                     = var.tags
-  tags_all                 = var.tags_all
-  xray_tracing_enabled     = var.xray_tracing_enabled
-  access_log_settings      = var.access_log_settings
-  arn                      = var.arn
-  client_certificate_id    = var.client_certificate_id
   execution_arn            = var.execution_arn
-  percent_traffic          = var.percent_traffic
-  cache_cluster_enabled    = var.cache_cluster_enabled
-  cache_cluster_size       = var.cache_cluster_size
-  canary_settings          = var.canary_settings
   rest_api_id              = var.rest_api_id
-  variables                = var.variables
+  stage_name               = var.stage_name
+  tags_all                 = var.tags_all
+  use_stage_cache          = var.use_stage_cache
+  canary_settings          = var.canary_settings
   deployment_id            = var.deployment_id
   description              = var.description
-  destination_arn          = var.destination_arn
-  documentation_version    = var.documentation_version
   id                       = var.id
+  cache_cluster_enabled    = var.cache_cluster_enabled
+  client_certificate_id    = var.client_certificate_id
+  documentation_version    = var.documentation_version
+  format                   = var.format
+  invoke_url               = var.invoke_url
+  tags                     = var.tags
+  variables                = var.variables
+  access_log_settings      = var.access_log_settings
+  destination_arn          = var.destination_arn
+  percent_traffic          = var.percent_traffic
   stage_variable_overrides = var.stage_variable_overrides
-  use_stage_cache          = var.use_stage_cache
+  xray_tracing_enabled     = var.xray_tracing_enabled
+  arn                      = var.arn
+  cache_cluster_size       = var.cache_cluster_size
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "stage_name" {
-  description = "(Required) Name of the stage"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "xray_tracing_enabled" {
-  description = "(Optional) Whether active tracing with X-ray is enabled. Defaults to false.Access Log Settings"
-  type        = string
-  default     = ""
-}
-variable "format" {
-  description = "documentationCanary Settings"
-  type        = string
-}
-variable "invoke_url" {
-  description = "https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
-  type        = string
-}
-variable "client_certificate_id" {
-  description = "(Optional) Identifier of a client certificate for the stage."
-  type        = string
-  default     = ""
-}
-variable "execution_arn" {
-  description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
-  type        = string
-}
-variable "percent_traffic" {
-  description = "(Optional) Percent 0.0100.0 of traffic to divert to the canary deployment."
-  type        = string
-  default     = ""
-}
 variable "access_log_settings" {
   description = "(Optional) Enables access logs for the API stage. See Access Log Settings below."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN"
-  type        = string
-}
-variable "canary_settings" {
-  description = "(Optional) Configuration settings of a canary deployment. See Canary Settings below."
-  type        = string
-  default     = ""
-}
-variable "rest_api_id" {
-  description = "(Required) ID of the associated REST API"
-  type        = string
-}
-variable "variables" {
-  description = "(Optional) Map that defines the stage variables"
-  type        = string
-  default     = ""
-}
-variable "cache_cluster_enabled" {
-  description = "(Optional) Whether a cache cluster is enabled for the stage"
-  type        = string
-  default     = ""
-}
-variable "cache_cluster_size" {
-  description = "(Optional) Size of the cache cluster for the stage, if enabled. Allowed values include 0.5, 1.6, 6.1, 13.5, 28.4, 58.2, 118 and 237."
   type        = string
   default     = ""
 }
@@ -109,17 +41,50 @@ variable "documentation_version" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "ID of the stage"
+variable "format" {
+  description = "documentationCanary Settings"
   type        = string
+}
+variable "invoke_url" {
+  description = "https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "variables" {
+  description = "(Optional) Map that defines the stage variables"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN"
+  type        = string
+}
+variable "cache_cluster_size" {
+  description = "(Optional) Size of the cache cluster for the stage, if enabled. Allowed values include 0.5, 1.6, 6.1, 13.5, 28.4, 58.2, 118 and 237."
+  type        = string
+  default     = ""
+}
+variable "percent_traffic" {
+  description = "(Optional) Percent 0.0100.0 of traffic to divert to the canary deployment."
+  type        = string
+  default     = ""
 }
 variable "stage_variable_overrides" {
   description = "(Optional) Map of overridden stage variables (including new variables) for the canary deployment."
   type        = string
   default     = ""
 }
-variable "use_stage_cache" {
-  description = "(Optional) Whether the canary deployment uses the stage cache. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+variable "xray_tracing_enabled" {
+  description = "(Optional) Whether active tracing with X-ray is enabled. Defaults to false.Access Log Settings"
+  type        = string
+  default     = ""
+}
+variable "canary_settings" {
+  description = "(Optional) Configuration settings of a canary deployment. See Canary Settings below."
   type        = string
   default     = ""
 }
@@ -127,10 +92,45 @@ variable "deployment_id" {
   description = "(Required) ID of the deployment that the stage points to"
   type        = string
 }
+variable "execution_arn" {
+  description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
+  type        = string
+}
+variable "rest_api_id" {
+  description = "(Required) ID of the associated REST API"
+  type        = string
+}
+variable "stage_name" {
+  description = "(Required) Name of the stage"
+  type        = string
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "use_stage_cache" {
+  description = "(Optional) Whether the canary deployment uses the stage cache. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "cache_cluster_enabled" {
+  description = "(Optional) Whether a cache cluster is enabled for the stage"
+  type        = string
+  default     = ""
+}
+variable "client_certificate_id" {
+  description = "(Optional) Identifier of a client certificate for the stage."
+  type        = string
+  default     = ""
+}
 variable "description" {
   description = "(Optional) Description of the stage."
   type        = string
   default     = ""
+}
+variable "id" {
+  description = "ID of the stage"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -252,37 +252,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cache_cluster_enabled" {
-  description = "(Optional) Whether a cache cluster is enabled for the stage"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.cache_cluster_enabled
-}
-output "cache_cluster_size" {
-  description = "(Optional) Size of the cache cluster for the stage, if enabled. Allowed values include 0.5, 1.6, 6.1, 13.5, 28.4, 58.2, 118 and 237."
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.cache_cluster_size
-}
-output "canary_settings" {
-  description = "(Optional) Configuration settings of a canary deployment. See Canary Settings below."
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.canary_settings
-}
-output "rest_api_id" {
-  description = "(Required) ID of the associated REST API"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.rest_api_id
-}
-output "variables" {
-  description = "(Optional) Map that defines the stage variables"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.variables
-}
-output "use_stage_cache" {
-  description = "(Optional) Whether the canary deployment uses the stage cache. Defaults to false.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.use_stage_cache
-}
-output "deployment_id" {
-  description = "(Required) ID of the deployment that the stage points to"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.deployment_id
+output "client_certificate_id" {
+  description = "(Optional) Identifier of a client certificate for the stage."
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.client_certificate_id
 }
 output "description" {
   description = "(Optional) Description of the stage."
   value       = aws_api_gateway_stage.aws_api_gateway_stage.description
+}
+output "id" {
+  description = "ID of the stage"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.id
+}
+output "cache_cluster_enabled" {
+  description = "(Optional) Whether a cache cluster is enabled for the stage"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.cache_cluster_enabled
 }
 output "destination_arn" {
   description = "(Required) ARN of the CloudWatch Logs log group or Kinesis Data Firehose delivery stream to receive access logs. If you specify a Kinesis Data Firehose delivery stream, the stream name must begin with amazon-apigateway-. Automatically removes trailing :* if present."
@@ -292,14 +276,6 @@ output "documentation_version" {
   description = "(Optional) Version of the associated API documentation"
   value       = aws_api_gateway_stage.aws_api_gateway_stage.documentation_version
 }
-output "id" {
-  description = "ID of the stage"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.id
-}
-output "stage_variable_overrides" {
-  description = "(Optional) Map of overridden stage variables (including new variables) for the canary deployment."
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.stage_variable_overrides
-}
 output "format" {
   description = "documentationCanary Settings"
   value       = aws_api_gateway_stage.aws_api_gateway_stage.format
@@ -308,41 +284,69 @@ output "invoke_url" {
   description = "https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
   value       = aws_api_gateway_stage.aws_api_gateway_stage.invoke_url
 }
-output "stage_name" {
-  description = "(Required) Name of the stage"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.stage_name
-}
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_api_gateway_stage.aws_api_gateway_stage.tags
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.tags_all
-}
-output "xray_tracing_enabled" {
-  description = "(Optional) Whether active tracing with X-ray is enabled. Defaults to false.Access Log Settings"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.xray_tracing_enabled
+output "variables" {
+  description = "(Optional) Map that defines the stage variables"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.variables
 }
 output "access_log_settings" {
   description = "(Optional) Enables access logs for the API stage. See Access Log Settings below."
   value       = aws_api_gateway_stage.aws_api_gateway_stage.access_log_settings
 }
+output "cache_cluster_size" {
+  description = "(Optional) Size of the cache cluster for the stage, if enabled. Allowed values include 0.5, 1.6, 6.1, 13.5, 28.4, 58.2, 118 and 237."
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.cache_cluster_size
+}
+output "percent_traffic" {
+  description = "(Optional) Percent 0.0100.0 of traffic to divert to the canary deployment."
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.percent_traffic
+}
+output "stage_variable_overrides" {
+  description = "(Optional) Map of overridden stage variables (including new variables) for the canary deployment."
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.stage_variable_overrides
+}
+output "xray_tracing_enabled" {
+  description = "(Optional) Whether active tracing with X-ray is enabled. Defaults to false.Access Log Settings"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.xray_tracing_enabled
+}
 output "arn" {
   description = "ARN"
   value       = aws_api_gateway_stage.aws_api_gateway_stage.arn
 }
-output "client_certificate_id" {
-  description = "(Optional) Identifier of a client certificate for the stage."
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.client_certificate_id
+output "deployment_id" {
+  description = "(Required) ID of the deployment that the stage points to"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.deployment_id
 }
 output "execution_arn" {
   description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
   value       = aws_api_gateway_stage.aws_api_gateway_stage.execution_arn
 }
-output "percent_traffic" {
-  description = "(Optional) Percent 0.0100.0 of traffic to divert to the canary deployment."
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.percent_traffic
+output "rest_api_id" {
+  description = "(Required) ID of the associated REST API"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.rest_api_id
+}
+output "stage_name" {
+  description = "(Required) Name of the stage"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.stage_name
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.tags_all
+}
+output "use_stage_cache" {
+  description = "(Optional) Whether the canary deployment uses the stage cache. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.use_stage_cache
+}
+output "canary_settings" {
+  description = "(Optional) Configuration settings of a canary deployment. See Canary Settings below."
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.canary_settings
+}
+output "id" {
+  description = "ID of the stage"
+  value       = aws_api_gateway_stage.aws_api_gateway_stage.id
 }
 output "invoke_url" {
   description = "https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
@@ -363,10 +367,6 @@ output "arn" {
 output "execution_arn" {
   description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
   value       = aws_api_gateway_stage.aws_api_gateway_stage.execution_arn
-}
-output "id" {
-  description = "ID of the stage"
-  value       = aws_api_gateway_stage.aws_api_gateway_stage.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

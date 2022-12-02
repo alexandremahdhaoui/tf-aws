@@ -8,6 +8,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "values" {
+  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "filter" {
   description = "(Optional) One or more configuration blocks containing name-values filters. Detailed below.filter Argument Reference"
   type        = string
@@ -19,10 +23,6 @@ variable "ids" {
 }
 variable "name" {
   description = "(Required) Name of the filter check available value on official documentation"
-  type        = string
-}
-variable "values" {
-  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 output "filter" {

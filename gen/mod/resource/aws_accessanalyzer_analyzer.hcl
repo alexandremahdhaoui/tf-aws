@@ -1,10 +1,10 @@
 resource "aws_accessanalyzer_analyzer" "aws_accessanalyzer_analyzer" {
+  tags_all      = var.tags_all
+  type          = var.type
   analyzer_name = var.analyzer_name
   arn           = var.arn
   id            = var.id
   tags          = var.tags
-  tags_all      = var.tags_all
-  type          = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -160,14 +160,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags_all
-}
 output "type" {
   description = "(Optional) Type of Analyzer. Valid values are ACCOUNT or ORGANIZATION. Defaults to ACCOUNT.In addition to all arguments above, the following attributes are exported:"
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.type
@@ -183,6 +175,14 @@ output "arn" {
 output "id" {
   description = "yolo."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.id
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags_all
 }
 output "arn" {
   description = "ARN of the Analyzer."

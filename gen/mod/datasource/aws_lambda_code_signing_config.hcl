@@ -1,11 +1,11 @@
 datasource "aws_lambda_code_signing_config" "aws_lambda_code_signing_config" {
-  description                  = var.description
-  last_modified                = var.last_modified
-  policies                     = var.policies
   signing_profile_version_arns = var.signing_profile_version_arns
   allowed_publishers           = var.allowed_publishers
   arn                          = var.arn
   config_id                    = var.config_id
+  description                  = var.description
+  last_modified                = var.last_modified
+  policies                     = var.policies
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -39,14 +39,6 @@ variable "signing_profile_version_arns" {
   description = "The ARN for each of the signing profiles. A signing profile defines a trusted user who can sign a code package.policies is exported with the following attribute:"
   type        = string
 }
-output "policies" {
-  description = "List of code signing policies that control the validation failure action for signature mismatch or expiry.allowed_publishers is exported with the following attribute:"
-  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.policies
-}
-output "signing_profile_version_arns" {
-  description = "The ARN for each of the signing profiles. A signing profile defines a trusted user who can sign a code package.policies is exported with the following attribute:"
-  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.signing_profile_version_arns
-}
 output "allowed_publishers" {
   description = "List of allowed publishers as signing profiles for this code signing configuration."
   value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.allowed_publishers
@@ -67,14 +59,6 @@ output "last_modified" {
   description = "Date and time that the code signing configuration was last modified."
   value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.last_modified
 }
-output "description" {
-  description = "Code signing configuration description."
-  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.description
-}
-output "last_modified" {
-  description = "Date and time that the code signing configuration was last modified."
-  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.last_modified
-}
 output "policies" {
   description = "List of code signing policies that control the validation failure action for signature mismatch or expiry.allowed_publishers is exported with the following attribute:"
   value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.policies
@@ -90,6 +74,22 @@ output "allowed_publishers" {
 output "config_id" {
   description = "Unique identifier for the code signing configuration."
   value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.config_id
+}
+output "description" {
+  description = "Code signing configuration description."
+  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.description
+}
+output "last_modified" {
+  description = "Date and time that the code signing configuration was last modified."
+  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.last_modified
+}
+output "policies" {
+  description = "List of code signing policies that control the validation failure action for signature mismatch or expiry.allowed_publishers is exported with the following attribute:"
+  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.policies
+}
+output "signing_profile_version_arns" {
+  description = "The ARN for each of the signing profiles. A signing profile defines a trusted user who can sign a code package.policies is exported with the following attribute:"
+  value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.signing_profile_version_arns
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,39 +1,18 @@
 resource "aws_iam_server_certificate" "aws_iam_server_certificate" {
+  tags_all          = var.tags_all
   arn               = var.arn
-  certificate_body  = var.certificate_body
-  expiration        = var.expiration
+  private_key       = var.private_key
+  tags              = var.tags
+  id                = var.id
   name              = var.name
   name_prefix       = var.name_prefix
   path              = var.path
+  certificate_body  = var.certificate_body
   certificate_chain = var.certificate_chain
-  id                = var.id
-  private_key       = var.private_key
-  tags              = var.tags
-  tags_all          = var.tags_all
+  expiration        = var.expiration
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of resource tags for the server certificate. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE: AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in terraform forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that certificate_body contains only one certificate. All other certificates should go in certificate_chain. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "certificate_chain" {
-  description = ""
-  type        = string
-}
-variable "id" {
-  description = "The unique Server Certificate name"
-  type        = string
-}
-variable "private_key" {
-  description = " – (Required) The contents of the private key in PEM-encoded format."
   type        = string
 }
 variable "name" {
@@ -50,16 +29,37 @@ variable "path" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the server certificate."
+variable "certificate_body" {
+  description = ""
   type        = string
 }
-variable "certificate_body" {
+variable "certificate_chain" {
   description = ""
   type        = string
 }
 variable "expiration" {
   description = "Date and time in RFC3339 format on which the certificate is set to expire."
+  type        = string
+}
+variable "id" {
+  description = "The unique Server Certificate name"
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the server certificate."
+  type        = string
+}
+variable "private_key" {
+  description = " – (Required) The contents of the private key in PEM-encoded format."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags for the server certificate. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE: AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in terraform forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that certificate_body contains only one certificate. All other certificates should go in certificate_chain. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "tag_instance_id" {
@@ -186,13 +186,33 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the server certificate."
   value       = aws_iam_server_certificate.aws_iam_server_certificate.arn
 }
+output "private_key" {
+  description = " – (Required) The contents of the private key in PEM-encoded format."
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.private_key
+}
+output "tags" {
+  description = "(Optional) Map of resource tags for the server certificate. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE: AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in terraform forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that certificate_body contains only one certificate. All other certificates should go in certificate_chain. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.tags_all
+}
 output "certificate_body" {
   description = ""
   value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_body
 }
+output "certificate_chain" {
+  description = ""
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_chain
+}
 output "expiration" {
   description = "Date and time in RFC3339 format on which the certificate is set to expire."
   value       = aws_iam_server_certificate.aws_iam_server_certificate.expiration
+}
+output "id" {
+  description = "The unique Server Certificate name"
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.id
 }
 output "name" {
   description = "The name of the Server Certificate"
@@ -205,26 +225,6 @@ output "name_prefix" {
 output "path" {
   description = "(Optional) The IAM path for the server certificate.  If it is not\nincluded, it defaults to a slash (/). If this certificate is for use with\nAWS CloudFront, the path must be in format /cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths."
   value       = aws_iam_server_certificate.aws_iam_server_certificate.path
-}
-output "certificate_chain" {
-  description = ""
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_chain
-}
-output "id" {
-  description = "The unique Server Certificate name"
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.id
-}
-output "private_key" {
-  description = " – (Required) The contents of the private key in PEM-encoded format."
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.private_key
-}
-output "tags" {
-  description = "(Optional) Map of resource tags for the server certificate. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.~> strongNOTE: AWS performs behind-the-scenes modifications to some certificate files if they do not adhere to a specific format. These modifications will result in terraform forever believing that it needs to update the resources since the local and AWS file contents will not match after theses modifications occur. In order to prevent this from happening you must ensure that all your PEM-encoded files use UNIX line-breaks and that certificate_body contains only one certificate. All other certificates should go in certificate_chain. It is common for some Certificate Authorities to issue certificate files that have DOS line-breaks and that are actually multiple certificates concatenated together in order to form a full certificate chain.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.tags
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.tags_all
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the server certificate."

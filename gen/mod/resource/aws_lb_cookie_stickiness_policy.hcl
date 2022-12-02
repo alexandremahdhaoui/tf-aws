@@ -1,9 +1,9 @@
 resource "aws_lb_cookie_stickiness_policy" "aws_lb_cookie_stickiness_policy" {
+  name                     = var.name
   cookie_expiration_period = var.cookie_expiration_period
   id                       = var.id
   lb_port                  = var.lb_port
   load_balancer            = var.load_balancer
-  name                     = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -149,6 +149,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "lb_port" {
+  description = "The load balancer port to which the policy is applied."
+  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.lb_port
+}
+output "load_balancer" {
+  description = "The load balancer to which the policy is attached."
+  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.load_balancer
+}
+output "name" {
+  description = "The name of the stickiness policy."
+  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.name
+}
 output "cookie_expiration_period" {
   description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.cookie_expiration_period
@@ -157,14 +169,6 @@ output "id" {
   description = "The ID of the policy."
   value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.id
 }
-output "lb_port" {
-  description = "The load balancer port to which the policy is applied."
-  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.lb_port
-}
-output "load_balancer" {
-  description = "The load balancer to which the policy is attached."
-  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.load_balancer
-}
 output "name" {
   description = "The name of the stickiness policy."
   value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.name
@@ -180,10 +184,6 @@ output "lb_port" {
 output "load_balancer" {
   description = "The load balancer to which the policy is attached."
   value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.load_balancer
-}
-output "name" {
-  description = "The name of the stickiness policy."
-  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

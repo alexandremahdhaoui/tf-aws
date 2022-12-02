@@ -1,7 +1,7 @@
 resource "aws_efs_backup_policy" "aws_efs_backup_policy" {
-  file_system_id = var.file_system_id
   status         = var.status
   backup_policy  = var.backup_policy
+  file_system_id = var.file_system_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

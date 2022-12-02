@@ -1,29 +1,42 @@
 resource "aws_waf_rule" "aws_waf_rule" {
-  tags        = var.tags
-  type        = var.type
-  data_id     = var.data_id
-  metric_name = var.metric_name
-  name        = var.name
-  predicates  = var.predicates
-  arn         = var.arn
   id          = var.id
+  metric_name = var.metric_name
+  type        = var.type
+  arn         = var.arn
+  data_id     = var.data_id
+  name        = var.name
   negated     = var.negated
+  predicates  = var.predicates
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "data_id" {
-  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
   type        = string
 }
 variable "metric_name" {
   description = "(Required) The name or description for the Amazon CloudWatch metric of this rule. The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace."
   type        = string
 }
+variable "id" {
+  description = "The ID of the WAF rule."
+  type        = string
+}
+variable "data_id" {
+  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
+  type        = string
+}
 variable "name" {
   description = "(Required) The name or description of the rule."
   type        = string
+}
+variable "negated" {
+  description = "(Required) Set this to falsewaf_byte_match_set, waf_ipset, aws_waf_size_constraint_set, aws_waf_sql_injection_match_set or aws_waf_xss_match_set192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses except 192.0.2.44."
+  type        = string
+}
+variable "predicates" {
+  description = "(Optional) The objects to include in a rule (documented below)."
+  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicatesSee the WAF Documentation for more information.Arguments"
@@ -37,19 +50,6 @@ variable "type" {
 variable "arn" {
   description = "The ARN of the WAF rule."
   type        = string
-}
-variable "id" {
-  description = "The ID of the WAF rule."
-  type        = string
-}
-variable "negated" {
-  description = "(Required) Set this to falsewaf_byte_match_set, waf_ipset, aws_waf_size_constraint_set, aws_waf_sql_injection_match_set or aws_waf_xss_match_set192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses except 192.0.2.44."
-  type        = string
-}
-variable "predicates" {
-  description = "(Optional) The objects to include in a rule (documented below)."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -171,6 +171,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name or description of the rule."
+  value       = aws_waf_rule.aws_waf_rule.name
+}
+output "negated" {
+  description = "(Required) Set this to falsewaf_byte_match_set, waf_ipset, aws_waf_size_constraint_set, aws_waf_sql_injection_match_set or aws_waf_xss_match_set192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses except 192.0.2.44."
+  value       = aws_waf_rule.aws_waf_rule.negated
+}
+output "predicates" {
+  description = "(Optional) The objects to include in a rule (documented below)."
+  value       = aws_waf_rule.aws_waf_rule.predicates
+}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicatesSee the WAF Documentation for more information.Arguments"
   value       = aws_waf_rule.aws_waf_rule.tags
@@ -179,33 +191,21 @@ output "type" {
   description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.In addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_rule.aws_waf_rule.type
 }
-output "data_id" {
-  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
-  value       = aws_waf_rule.aws_waf_rule.data_id
-}
-output "metric_name" {
-  description = "(Required) The name or description for the Amazon CloudWatch metric of this rule. The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace."
-  value       = aws_waf_rule.aws_waf_rule.metric_name
-}
-output "name" {
-  description = "(Required) The name or description of the rule."
-  value       = aws_waf_rule.aws_waf_rule.name
-}
-output "predicates" {
-  description = "(Optional) The objects to include in a rule (documented below)."
-  value       = aws_waf_rule.aws_waf_rule.predicates
-}
 output "arn" {
   description = "The ARN of the WAF rule."
   value       = aws_waf_rule.aws_waf_rule.arn
+}
+output "data_id" {
+  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
+  value       = aws_waf_rule.aws_waf_rule.data_id
 }
 output "id" {
   description = "The ID of the WAF rule."
   value       = aws_waf_rule.aws_waf_rule.id
 }
-output "negated" {
-  description = "(Required) Set this to falsewaf_byte_match_set, waf_ipset, aws_waf_size_constraint_set, aws_waf_sql_injection_match_set or aws_waf_xss_match_set192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses except 192.0.2.44."
-  value       = aws_waf_rule.aws_waf_rule.negated
+output "metric_name" {
+  description = "(Required) The name or description for the Amazon CloudWatch metric of this rule. The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace."
+  value       = aws_waf_rule.aws_waf_rule.metric_name
 }
 output "arn" {
   description = "The ARN of the WAF rule."

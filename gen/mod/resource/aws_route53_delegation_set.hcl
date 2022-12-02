@@ -1,7 +1,7 @@
 resource "aws_route53_delegation_set" "aws_route53_delegation_set" {
+  reference_name = var.reference_name
   arn            = var.arn
   id             = var.id
-  reference_name = var.reference_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -152,6 +152,10 @@ output "reference_name" {
   description = "(Optional) This is a reference name used in Caller Reference\n(helpful for identifying single delegation set amongst others)In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_delegation_set.aws_route53_delegation_set.reference_name
 }
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Delegation Set."
+  value       = aws_route53_delegation_set.aws_route53_delegation_set.arn
+}
 output "id" {
   description = "The delegation set ID"
   value       = aws_route53_delegation_set.aws_route53_delegation_set.id
@@ -159,10 +163,6 @@ output "id" {
 output "name_servers" {
   description = "A list of authoritative name servers for the hosted zone\n(effectively a list of NS records)."
   value       = aws_route53_delegation_set.aws_route53_delegation_set.name_servers
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Delegation Set."
-  value       = aws_route53_delegation_set.aws_route53_delegation_set.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

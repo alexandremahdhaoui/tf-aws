@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The Amazon Resource Name (ARN) that identifies the created activity."
+  value       = aws_sfn_activity.aws_sfn_activity.id
+}
 output "name" {
   description = "The name of the activity."
   value       = aws_sfn_activity.aws_sfn_activity.name
@@ -157,9 +161,9 @@ output "creation_date" {
   description = "The date the activity was created."
   value       = aws_sfn_activity.aws_sfn_activity.creation_date
 }
-output "id" {
-  description = "The Amazon Resource Name (ARN) that identifies the created activity."
-  value       = aws_sfn_activity.aws_sfn_activity.id
+output "creation_date" {
+  description = "The date the activity was created."
+  value       = aws_sfn_activity.aws_sfn_activity.creation_date
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) that identifies the created activity."
@@ -172,10 +176,6 @@ output "name" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sfn_activity.aws_sfn_activity.tags_all
-}
-output "creation_date" {
-  description = "The date the activity was created."
-  value       = aws_sfn_activity.aws_sfn_activity.creation_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

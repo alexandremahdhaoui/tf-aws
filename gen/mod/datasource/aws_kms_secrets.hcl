@@ -1,9 +1,9 @@
 datasource "aws_kms_secrets" "aws_kms_secrets" {
-  grant_tokens = var.grant_tokens
-  name         = var.name
   payload      = var.payload
   secret       = var.secret
   context      = var.context
+  grant_tokens = var.grant_tokens
+  name         = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,4 +1,5 @@
 resource "aws_internet_gateway" "aws_internet_gateway" {
+  owner_id = var.owner_id
   tags     = var.tags
   tags_all = var.tags_all
   update   = var.update
@@ -6,7 +7,6 @@ resource "aws_internet_gateway" "aws_internet_gateway" {
   arn      = var.arn
   create   = var.create
   id       = var.id
-  owner_id = var.owner_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -166,6 +166,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_internet_gateway.aws_internet_gateway.create
+}
+output "id" {
+  description = "The ID of the Internet Gateway."
+  value       = aws_internet_gateway.aws_internet_gateway.id
+}
 output "owner_id" {
   description = "The ID of the AWS account that owns the internet gateway."
   value       = aws_internet_gateway.aws_internet_gateway.owner_id
@@ -190,13 +198,13 @@ output "arn" {
   description = "The ARN of the Internet Gateway."
   value       = aws_internet_gateway.aws_internet_gateway.arn
 }
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_internet_gateway.aws_internet_gateway.create
+output "owner_id" {
+  description = "The ID of the AWS account that owns the internet gateway."
+  value       = aws_internet_gateway.aws_internet_gateway.owner_id
 }
-output "id" {
-  description = "The ID of the Internet Gateway."
-  value       = aws_internet_gateway.aws_internet_gateway.id
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_internet_gateway.aws_internet_gateway.tags_all
 }
 output "update" {
   description = "(Default 20m)"
@@ -217,14 +225,6 @@ output "delete" {
 output "id" {
   description = "The ID of the Internet Gateway."
   value       = aws_internet_gateway.aws_internet_gateway.id
-}
-output "owner_id" {
-  description = "The ID of the AWS account that owns the internet gateway."
-  value       = aws_internet_gateway.aws_internet_gateway.owner_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_internet_gateway.aws_internet_gateway.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

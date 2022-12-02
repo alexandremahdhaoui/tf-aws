@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
-  type        = string
-}
 variable "arns" {
   description = "Set of ARNs of the matched Image Builder Image Recipes."
   type        = string
@@ -24,9 +20,9 @@ variable "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListImageRecipes API Reference."
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListImageRecipes API Reference."
-  value       = aws_imagebuilder_image_recipes.aws_imagebuilder_image_recipes.name
+variable "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
+  type        = string
 }
 output "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
@@ -39,6 +35,10 @@ output "arns" {
 output "filter" {
   description = " configuration block:"
   value       = aws_imagebuilder_image_recipes.aws_imagebuilder_image_recipes.filter
+}
+output "name" {
+  description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListImageRecipes API Reference."
+  value       = aws_imagebuilder_image_recipes.aws_imagebuilder_image_recipes.name
 }
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Image Recipes."

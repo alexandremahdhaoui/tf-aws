@@ -25,6 +25,10 @@ variable "plaintext" {
   description = "(Required) Data to be encrypted. Note that this may show up in logs, and it will be stored in the state file."
   type        = string
 }
+output "context" {
+  description = "(Optional) An optional mapping that makes up the encryption context.All of the argument attributes are also exported as result attributes."
+  value       = aws_kms_ciphertext.aws_kms_ciphertext.context
+}
 output "id" {
   description = "Globally unique key ID for the customer master key."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.id
@@ -36,10 +40,6 @@ output "key_id" {
 output "plaintext" {
   description = "(Required) Data to be encrypted. Note that this may show up in logs, and it will be stored in the state file."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.plaintext
-}
-output "context" {
-  description = "(Optional) An optional mapping that makes up the encryption context.All of the argument attributes are also exported as result attributes."
-  value       = aws_kms_ciphertext.aws_kms_ciphertext.context
 }
 output "id" {
   description = "Globally unique key ID for the customer master key."

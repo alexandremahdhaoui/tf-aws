@@ -1,13 +1,17 @@
 resource "aws_apigatewayv2_vpc_link" "aws_apigatewayv2_vpc_link" {
-  subnet_ids         = var.subnet_ids
-  tags               = var.tags
   arn                = var.arn
   id                 = var.id
   name               = var.name
   security_group_ids = var.security_group_ids
+  subnet_ids         = var.subnet_ids
+  tags               = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "VPC Link ARN."
   type        = string
 }
 variable "id" {
@@ -30,10 +34,6 @@ variable "tags" {
   description = "(Optional) Map of tags to assign to the VPC Link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "arn" {
-  description = "VPC Link ARN."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -155,14 +155,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "VPC Link ARN."
-  value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.arn
-}
-output "id" {
-  description = "VPC Link identifier."
-  value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.id
-}
 output "name" {
   description = "(Required) Name of the VPC Link. Must be between 1 and 128 characters in length."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.name
@@ -178,6 +170,14 @@ output "subnet_ids" {
 output "tags" {
   description = "(Optional) Map of tags to assign to the VPC Link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.tags
+}
+output "arn" {
+  description = "VPC Link ARN."
+  value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.arn
+}
+output "id" {
+  description = "VPC Link identifier."
+  value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.id
 }
 output "arn" {
   description = "VPC Link ARN."

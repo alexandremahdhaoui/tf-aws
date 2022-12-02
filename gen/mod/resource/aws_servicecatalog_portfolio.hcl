@@ -1,40 +1,36 @@
 resource "aws_servicecatalog_portfolio" "aws_servicecatalog_portfolio" {
-  create        = var.create
   description   = var.description
-  id            = var.id
+  name          = var.name
   provider_name = var.provider_name
+  update        = var.update
+  create        = var.create
+  id            = var.id
+  read          = var.read
   tags          = var.tags
   tags_all      = var.tags_all
-  name          = var.name
-  read          = var.read
-  update        = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "read" {
-  description = "(Default 10m)"
+variable "provider_name" {
+  description = "(Required) Name of the person or organization who owns the portfolio."
   type        = string
 }
 variable "update" {
   description = "(Default 30m)"
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the portfolio."
-  type        = string
-}
 variable "description" {
   description = "(Required) Description of the portfolio"
   type        = string
 }
-variable "id" {
-  description = "The ID of the Service Catalog Portfolio."
+variable "name" {
+  description = "(Required) The name of the portfolio."
   type        = string
 }
-variable "provider_name" {
-  description = "(Required) Name of the person or organization who owns the portfolio."
+variable "read" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "tags" {
@@ -48,6 +44,10 @@ variable "tags_all" {
 }
 variable "create" {
   description = "(Default 30m)"
+  type        = string
+}
+variable "id" {
+  description = "The ID of the Service Catalog Portfolio."
   type        = string
 }
 variable "tag_instance_id" {
@@ -170,17 +170,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ID of the Service Catalog Portfolio."
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.id
+output "description" {
+  description = "(Required) Description of the portfolio"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.description
+}
+output "name" {
+  description = "(Required) The name of the portfolio."
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.name
 }
 output "provider_name" {
   description = "(Required) Name of the person or organization who owns the portfolio."
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.provider_name
 }
-output "tags" {
-  description = "(Optional) Tags to apply to the connection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.tags
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.update
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -190,21 +194,29 @@ output "create" {
   description = "(Default 30m)"
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.create
 }
-output "description" {
-  description = "(Required) Description of the portfolio"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.description
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.update
-}
-output "name" {
-  description = "(Required) The name of the portfolio."
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.name
+output "id" {
+  description = "The ID of the Service Catalog Portfolio."
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.id
 }
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.read
+}
+output "tags" {
+  description = "(Optional) Tags to apply to the connection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.tags
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.read
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.tags_all
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.update
 }
 output "create" {
   description = "(Default 30m)"
@@ -217,18 +229,6 @@ output "delete" {
 output "id" {
   description = "The ID of the Service Catalog Portfolio."
   value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.id
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.read
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.tags_all
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_servicecatalog_portfolio.aws_servicecatalog_portfolio.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

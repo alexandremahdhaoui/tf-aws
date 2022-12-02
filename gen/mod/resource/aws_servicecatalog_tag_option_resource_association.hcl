@@ -1,16 +1,36 @@
 resource "aws_servicecatalog_tag_option_resource_association" "aws_servicecatalog_tag_option_resource_association" {
+  tag_option_id         = var.tag_option_id
+  resource_description  = var.resource_description
+  id                    = var.id
+  read                  = var.read
   resource_arn          = var.resource_arn
   resource_created_time = var.resource_created_time
-  resource_description  = var.resource_description
   resource_id           = var.resource_id
-  tag_option_id         = var.tag_option_id
-  create                = var.create
-  read                  = var.read
-  id                    = var.id
   resource_name         = var.resource_name
+  create                = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "resource_created_time" {
+  description = "Creation time of the resource."
+  type        = string
+}
+variable "resource_id" {
+  description = "(Required) Resource identifier."
+  type        = string
+}
+variable "resource_name" {
+  description = "Description of the resource.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "create" {
+  description = "(Default 3m)"
+  type        = string
+}
+variable "id" {
+  description = "Identifier of the association."
   type        = string
 }
 variable "read" {
@@ -21,32 +41,12 @@ variable "resource_arn" {
   description = "ARN of the resource."
   type        = string
 }
-variable "resource_created_time" {
-  description = "Creation time of the resource."
-  type        = string
-}
 variable "resource_description" {
   description = "Description of the resource."
   type        = string
 }
-variable "resource_id" {
-  description = "(Required) Resource identifier."
-  type        = string
-}
 variable "tag_option_id" {
   description = "(Required) Tag Option identifier.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "create" {
-  description = "(Default 3m)"
-  type        = string
-}
-variable "resource_name" {
-  description = "Description of the resource.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the association."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,9 +169,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Identifier of the association."
-  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.id
+output "resource_id" {
+  description = "(Required) Resource identifier."
+  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_id
 }
 output "resource_name" {
   description = "Description of the resource.TimeoutsConfiguration options:"
@@ -180,6 +180,10 @@ output "resource_name" {
 output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.create
+}
+output "id" {
+  description = "Identifier of the association."
+  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.id
 }
 output "read" {
   description = "(Default 10m)"
@@ -197,25 +201,9 @@ output "resource_description" {
   description = "Description of the resource."
   value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_description
 }
-output "resource_id" {
-  description = "(Required) Resource identifier."
-  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_id
-}
 output "tag_option_id" {
   description = "(Required) Tag Option identifier.In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.tag_option_id
-}
-output "resource_created_time" {
-  description = "Creation time of the resource."
-  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_created_time
-}
-output "resource_description" {
-  description = "Description of the resource."
-  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_description
-}
-output "resource_name" {
-  description = "Description of the resource.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_name
 }
 output "create" {
   description = "(Default 3m)"
@@ -236,6 +224,18 @@ output "read" {
 output "resource_arn" {
   description = "ARN of the resource."
   value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_arn
+}
+output "resource_created_time" {
+  description = "Creation time of the resource."
+  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_created_time
+}
+output "resource_description" {
+  description = "Description of the resource."
+  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_description
+}
+output "resource_name" {
+  description = "Description of the resource.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_tag_option_resource_association.aws_servicecatalog_tag_option_resource_association.resource_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

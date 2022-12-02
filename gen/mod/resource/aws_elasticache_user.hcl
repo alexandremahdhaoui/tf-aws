@@ -1,28 +1,15 @@
 resource "aws_elasticache_user" "aws_elasticache_user" {
+  passwords            = var.passwords
+  tags                 = var.tags
+  user_id              = var.user_id
   user_name            = var.user_name
   access_string        = var.access_string
   arn                  = var.arn
   engine               = var.engine
   no_password_required = var.no_password_required
-  passwords            = var.passwords
-  tags                 = var.tags
-  user_id              = var.user_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A list of tags to be added to this resource. A tag is a key-value pair.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "user_id" {
-  description = "(Required) The ID of the user."
-  type        = string
-}
-variable "user_name" {
-  description = "(Required) The username of the user."
   type        = string
 }
 variable "access_string" {
@@ -47,6 +34,19 @@ variable "passwords" {
   description = "(Optional) Passwords used for this user. You can create up to two passwords for each user."
   type        = string
   default     = ""
+}
+variable "tags" {
+  description = "(Optional) A list of tags to be added to this resource. A tag is a key-value pair.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "user_id" {
+  description = "(Required) The ID of the user."
+  type        = string
+}
+variable "user_name" {
+  description = "(Required) The username of the user."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -168,22 +168,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the created ElastiCache User."
-  value       = aws_elasticache_user.aws_elasticache_user.arn
-}
-output "engine" {
-  description = "(Required) The current supported value is REDIS."
-  value       = aws_elasticache_user.aws_elasticache_user.engine
-}
-output "no_password_required" {
-  description = "(Optional) Indicates a password is not required for this user."
-  value       = aws_elasticache_user.aws_elasticache_user.no_password_required
-}
-output "passwords" {
-  description = "(Optional) Passwords used for this user. You can create up to two passwords for each user."
-  value       = aws_elasticache_user.aws_elasticache_user.passwords
-}
 output "tags" {
   description = "(Optional) A list of tags to be added to this resource. A tag is a key-value pair.In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_user.aws_elasticache_user.tags
@@ -199,6 +183,22 @@ output "user_name" {
 output "access_string" {
   description = "(Required) Access permissions string used for this user. See Specifying Permissions Using an Access String for more details."
   value       = aws_elasticache_user.aws_elasticache_user.access_string
+}
+output "arn" {
+  description = "The ARN of the created ElastiCache User."
+  value       = aws_elasticache_user.aws_elasticache_user.arn
+}
+output "engine" {
+  description = "(Required) The current supported value is REDIS."
+  value       = aws_elasticache_user.aws_elasticache_user.engine
+}
+output "no_password_required" {
+  description = "(Optional) Indicates a password is not required for this user."
+  value       = aws_elasticache_user.aws_elasticache_user.no_password_required
+}
+output "passwords" {
+  description = "(Optional) Passwords used for this user. You can create up to two passwords for each user."
+  value       = aws_elasticache_user.aws_elasticache_user.passwords
 }
 output "arn" {
   description = "The ARN of the created ElastiCache User."

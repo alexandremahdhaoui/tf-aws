@@ -1,16 +1,11 @@
 resource "aws_acm_certificate_validation" "aws_acm_certificate_validation" {
-  certificate_arn         = var.certificate_arn
   id                      = var.id
   validation_record_fqdns = var.validation_record_fqdns
+  certificate_arn         = var.certificate_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "validation_record_fqdns" {
-  description = "(Optional) List of FQDNs that implement the validation. Only valid for DNS validation method ACM certificates. If this is set, the resource can implement additional sanity checks and has an explicit dependency on the resource that is implementing the validationIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "certificate_arn" {
   description = "(Required) ARN of the certificate that is being validated."
@@ -19,6 +14,11 @@ variable "certificate_arn" {
 variable "id" {
   description = "Time at which the certificate was issuedTimeoutsConfiguration options:"
   type        = string
+}
+variable "validation_record_fqdns" {
+  description = "(Optional) List of FQDNs that implement the validation. Only valid for DNS validation method ACM certificates. If this is set, the resource can implement additional sanity checks and has an explicit dependency on the resource that is implementing the validationIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

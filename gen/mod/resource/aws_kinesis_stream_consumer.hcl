@@ -1,8 +1,8 @@
 resource "aws_kinesis_stream_consumer" "aws_kinesis_stream_consumer" {
-  arn                = var.arn
-  creation_timestamp = var.creation_timestamp
   name               = var.name
   stream_arn         = var.stream_arn
+  arn                = var.arn
+  creation_timestamp = var.creation_timestamp
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -144,14 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "stream_arn" {
-  description = " – (Required, Forces new resource) Amazon Resource Name (ARN) of the data stream the consumer is registered with.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_kinesis_stream_consumer.aws_kinesis_stream_consumer.stream_arn
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the stream consumer."
-  value       = aws_kinesis_stream_consumer.aws_kinesis_stream_consumer.arn
-}
 output "creation_timestamp" {
   description = "Approximate timestamp in RFC3339 format of when the stream consumer was created."
   value       = aws_kinesis_stream_consumer.aws_kinesis_stream_consumer.creation_timestamp
@@ -159,6 +151,14 @@ output "creation_timestamp" {
 output "name" {
   description = "(Required, Forces new resource) Name of the stream consumer."
   value       = aws_kinesis_stream_consumer.aws_kinesis_stream_consumer.name
+}
+output "stream_arn" {
+  description = " – (Required, Forces new resource) Amazon Resource Name (ARN) of the data stream the consumer is registered with.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_kinesis_stream_consumer.aws_kinesis_stream_consumer.stream_arn
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the stream consumer."
+  value       = aws_kinesis_stream_consumer.aws_kinesis_stream_consumer.arn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the stream consumer."

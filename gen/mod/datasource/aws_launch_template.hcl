@@ -1,9 +1,9 @@
 datasource "aws_launch_template" "aws_launch_template" {
-  filter = var.filter
   id     = var.id
   name   = var.name
   tags   = var.tags
   values = var.values
+  filter = var.filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -31,6 +31,14 @@ variable "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+output "tags" {
+  description = "(Optional) Map of tags, each pair of which must exactly match a pair on the desired Launch Template.filter Configuration Blockfilter configuration block:"
+  value       = aws_launch_template.aws_launch_template.tags
+}
+output "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_launch_template.aws_launch_template.values
+}
 output "filter" {
   description = "(Optional) Configuration block(s) for filtering. Detailed below."
   value       = aws_launch_template.aws_launch_template.filter
@@ -42,14 +50,6 @@ output "id" {
 output "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the EC2 DescribeLaunchTemplates API Reference."
   value       = aws_launch_template.aws_launch_template.name
-}
-output "tags" {
-  description = "(Optional) Map of tags, each pair of which must exactly match a pair on the desired Launch Template.filter Configuration Blockfilter configuration block:"
-  value       = aws_launch_template.aws_launch_template.tags
-}
-output "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_launch_template.aws_launch_template.values
 }
 output "id" {
   description = "ID of the launch template.This resource also exports a full set of attributes corresponding to the arguments of the aws_launch_template resource.TimeoutsConfiguration options:"

@@ -1,15 +1,11 @@
 resource "aws_inspector2_enabler" "aws_inspector2_enabler" {
-  update         = var.update
-  account_ids    = var.account_ids
   create         = var.create
   resource_types = var.resource_types
+  update         = var.update
+  account_ids    = var.account_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "account_ids" {
-  description = "(Required) Set of account IDs."
   type        = string
 }
 variable "create" {
@@ -22,6 +18,10 @@ variable "resource_types" {
 }
 variable "update" {
   description = "(Default 15m)"
+  type        = string
+}
+variable "account_ids" {
+  description = "(Required) Set of account IDs."
   type        = string
 }
 variable "tag_instance_id" {

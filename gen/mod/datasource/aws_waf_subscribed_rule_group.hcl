@@ -1,6 +1,6 @@
 datasource "aws_waf_subscribed_rule_group" "aws_waf_subscribed_rule_group" {
-  name        = var.name
   metric_name = var.metric_name
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

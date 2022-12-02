@@ -1,28 +1,56 @@
 resource "aws_redshift_event_subscription" "aws_redshift_event_subscription" {
+  sns_topic_arn    = var.sns_topic_arn
   arn              = var.arn
-  event_categories = var.event_categories
+  id               = var.id
   name             = var.name
   severity         = var.severity
-  sns_topic_arn    = var.sns_topic_arn
-  customer_aws_id  = var.customer_aws_id
-  enabled          = var.enabled
-  id               = var.id
-  source_ids       = var.source_ids
   source_type      = var.source_type
   tags             = var.tags
+  customer_aws_id  = var.customer_aws_id
+  enabled          = var.enabled
+  event_categories = var.event_categories
+  source_ids       = var.source_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift event notification subscription"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "customer_aws_id" {
+  description = "The AWS customer account associated with the Redshift event notification subscription"
+  type        = string
+}
+variable "enabled" {
+  description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
+  type        = string
+  default     = ""
 }
 variable "event_categories" {
   description = "(Optional) A list of event categories for a SourceType that you want to subscribe to. See https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-event-notifications.html or run aws redshift describe-event-categories."
   type        = string
   default     = ""
+}
+variable "source_ids" {
+  description = "(Optional) A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified."
+  type        = string
+  default     = ""
+}
+variable "source_type" {
+  description = "(Optional) The type of source that will be generating the events. Valid options are cluster, cluster-parameter-group, cluster-security-group, cluster-snapshot, or scheduled-action. If not set, all sources will be subscribed to."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift event notification subscription"
+  type        = string
+}
+variable "id" {
+  description = "The name of the Redshift event notification subscription"
+  type        = string
 }
 variable "name" {
   description = "(Required) The name of the Redshift event subscription."
@@ -36,34 +64,6 @@ variable "severity" {
 variable "sns_topic_arn" {
   description = "(Required) The ARN of the SNS topic to send events to."
   type        = string
-}
-variable "customer_aws_id" {
-  description = "The AWS customer account associated with the Redshift event notification subscription"
-  type        = string
-}
-variable "enabled" {
-  description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The name of the Redshift event notification subscription"
-  type        = string
-}
-variable "source_ids" {
-  description = "(Optional) A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified."
-  type        = string
-  default     = ""
-}
-variable "source_type" {
-  description = "(Optional) The type of source that will be generating the events. Valid options are cluster, cluster-parameter-group, cluster-security-group, cluster-snapshot, or scheduled-action. If not set, all sources will be subscribed to."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -185,33 +185,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "event_categories" {
-  description = "(Optional) A list of event categories for a SourceType that you want to subscribe to. See https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-event-notifications.html or run aws redshift describe-event-categories."
-  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.event_categories
-}
-output "name" {
-  description = "(Required) The name of the Redshift event subscription."
-  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.name
-}
-output "severity" {
-  description = "(Optional) The event severity to be published by the notification subscription. Valid options are INFO or ERROR. Default value of INFO."
-  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.severity
-}
-output "sns_topic_arn" {
-  description = "(Required) The ARN of the SNS topic to send events to."
-  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.sns_topic_arn
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift event notification subscription"
-  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.arn
-}
 output "enabled" {
   description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
   value       = aws_redshift_event_subscription.aws_redshift_event_subscription.enabled
 }
-output "id" {
-  description = "The name of the Redshift event notification subscription"
-  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.id
+output "event_categories" {
+  description = "(Optional) A list of event categories for a SourceType that you want to subscribe to. See https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-event-notifications.html or run aws redshift describe-event-categories."
+  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.event_categories
 }
 output "source_ids" {
   description = "(Optional) A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified."
@@ -228,6 +208,26 @@ output "tags" {
 output "customer_aws_id" {
   description = "The AWS customer account associated with the Redshift event notification subscription"
   value       = aws_redshift_event_subscription.aws_redshift_event_subscription.customer_aws_id
+}
+output "id" {
+  description = "The name of the Redshift event notification subscription"
+  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.id
+}
+output "name" {
+  description = "(Required) The name of the Redshift event subscription."
+  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.name
+}
+output "severity" {
+  description = "(Optional) The event severity to be published by the notification subscription. Valid options are INFO or ERROR. Default value of INFO."
+  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.severity
+}
+output "sns_topic_arn" {
+  description = "(Required) The ARN of the SNS topic to send events to."
+  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.sns_topic_arn
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift event notification subscription"
+  value       = aws_redshift_event_subscription.aws_redshift_event_subscription.arn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift event notification subscription"

@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "users" {
-  description = "list of IAM User names"
-  type        = string
-}
 variable "group" {
   description = " – (Required) The IAM Group name to attach the list of users toIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "name" {
   description = "The name to identify the Group Membership"
+  type        = string
+}
+variable "users" {
+  description = "list of IAM User names"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "users" {
-  description = "list of IAM User names"
-  value       = aws_iam_group_membership.aws_iam_group_membership.users
-}
 output "group" {
   description = " – (Required) The IAM Group name to attach the list of users toIn addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_group_membership.aws_iam_group_membership.group
@@ -150,6 +146,10 @@ output "group" {
 output "name" {
   description = "The name to identify the Group Membership"
   value       = aws_iam_group_membership.aws_iam_group_membership.name
+}
+output "users" {
+  description = "list of IAM User names"
+  value       = aws_iam_group_membership.aws_iam_group_membership.users
 }
 output "name" {
   description = "The name to identify the Group Membership"

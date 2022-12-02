@@ -1,68 +1,25 @@
 resource "aws_appsync_resolver" "aws_appsync_resolver" {
+  request_template               = var.request_template
+  sync_config                    = var.sync_config
+  type                           = var.type
+  api_id                         = var.api_id
+  caching_keys                   = var.caching_keys
   conflict_detection             = var.conflict_detection
-  lambda_conflict_handler_arn    = var.lambda_conflict_handler_arn
+  max_batch_size                 = var.max_batch_size
+  data_source                    = var.data_source
+  kind                           = var.kind
   pipeline_config                = var.pipeline_config
   response_template              = var.response_template
-  caching_keys                   = var.caching_keys
-  kind                           = var.kind
-  max_batch_size                 = var.max_batch_size
-  request_template               = var.request_template
   ttl                            = var.ttl
-  type                           = var.type
-  lambda_conflict_handler_config = var.lambda_conflict_handler_config
-  sync_config                    = var.sync_config
-  api_id                         = var.api_id
   caching_config                 = var.caching_config
   conflict_handler               = var.conflict_handler
-  data_source                    = var.data_source
   field                          = var.field
   functions                      = var.functions
+  lambda_conflict_handler_arn    = var.lambda_conflict_handler_arn
+  lambda_conflict_handler_config = var.lambda_conflict_handler_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "caching_keys" {
-  description = "(Optional) List of caching key."
-  type        = string
-  default     = ""
-}
-variable "kind" {
-  description = "  - (Optional) Resolver type. Valid values are UNIT and PIPELINE."
-  type        = string
-  default     = ""
-}
-variable "max_batch_size" {
-  description = "(Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000."
-  type        = string
-  default     = ""
-}
-variable "request_template" {
-  description = "(Optional) Request mapping template for UNIT resolver or 'before mapping template' for PIPELINE resolver. Required for non-Lambda resolvers."
-  type        = string
-  default     = ""
-}
-variable "ttl" {
-  description = "(Optional) TTL in seconds.Sync Config"
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required) Type name from the schema defined in the GraphQL API."
-  type        = string
-}
-variable "lambda_conflict_handler_config" {
-  description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
-  type        = string
-  default     = ""
-}
-variable "sync_config" {
-  description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
-  type        = string
-  default     = ""
-}
-variable "api_id" {
-  description = "(Required) API ID for the GraphQL API."
   type        = string
 }
 variable "caching_config" {
@@ -74,11 +31,6 @@ variable "conflict_handler" {
   type        = string
   default     = ""
 }
-variable "data_source" {
-  description = "(Optional) Data source name."
-  type        = string
-  default     = ""
-}
 variable "field" {
   description = "(Required) Field name from the schema defined in the GraphQL API."
   type        = string
@@ -87,13 +39,56 @@ variable "functions" {
   description = "(Required) List of Function ID."
   type        = string
 }
+variable "lambda_conflict_handler_arn" {
+  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "lambda_conflict_handler_config" {
+  description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
+  type        = string
+  default     = ""
+}
+variable "request_template" {
+  description = "(Optional) Request mapping template for UNIT resolver or 'before mapping template' for PIPELINE resolver. Required for non-Lambda resolvers."
+  type        = string
+  default     = ""
+}
+variable "sync_config" {
+  description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) Type name from the schema defined in the GraphQL API."
+  type        = string
+}
+variable "api_id" {
+  description = "(Required) API ID for the GraphQL API."
+  type        = string
+}
+variable "caching_keys" {
+  description = "(Optional) List of caching key."
+  type        = string
+  default     = ""
+}
 variable "conflict_detection" {
   description = "(Optional) Conflict Detection strategy to use. Valid values are NONE and VERSION."
   type        = string
   default     = ""
 }
-variable "lambda_conflict_handler_arn" {
-  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
+variable "max_batch_size" {
+  description = "(Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000."
+  type        = string
+  default     = ""
+}
+variable "data_source" {
+  description = "(Optional) Data source name."
+  type        = string
+  default     = ""
+}
+variable "kind" {
+  description = "  - (Optional) Resolver type. Valid values are UNIT and PIPELINE."
   type        = string
   default     = ""
 }
@@ -103,6 +98,11 @@ variable "pipeline_config" {
 }
 variable "response_template" {
   description = "(Optional) Response mapping template for UNIT resolver or 'after mapping template' for PIPELINE resolver. Required for non-Lambda resolvers."
+  type        = string
+  default     = ""
+}
+variable "ttl" {
+  description = "(Optional) TTL in seconds.Sync Config"
   type        = string
   default     = ""
 }
@@ -226,13 +226,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "request_template" {
+  description = "(Optional) Request mapping template for UNIT resolver or 'before mapping template' for PIPELINE resolver. Required for non-Lambda resolvers."
+  value       = aws_appsync_resolver.aws_appsync_resolver.request_template
+}
+output "sync_config" {
+  description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
+  value       = aws_appsync_resolver.aws_appsync_resolver.sync_config
+}
+output "type" {
+  description = "(Required) Type name from the schema defined in the GraphQL API."
+  value       = aws_appsync_resolver.aws_appsync_resolver.type
+}
+output "api_id" {
+  description = "(Required) API ID for the GraphQL API."
+  value       = aws_appsync_resolver.aws_appsync_resolver.api_id
+}
+output "caching_keys" {
+  description = "(Optional) List of caching key."
+  value       = aws_appsync_resolver.aws_appsync_resolver.caching_keys
+}
 output "conflict_detection" {
   description = "(Optional) Conflict Detection strategy to use. Valid values are NONE and VERSION."
   value       = aws_appsync_resolver.aws_appsync_resolver.conflict_detection
 }
-output "lambda_conflict_handler_arn" {
-  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appsync_resolver.aws_appsync_resolver.lambda_conflict_handler_arn
+output "max_batch_size" {
+  description = "(Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000."
+  value       = aws_appsync_resolver.aws_appsync_resolver.max_batch_size
+}
+output "data_source" {
+  description = "(Optional) Data source name."
+  value       = aws_appsync_resolver.aws_appsync_resolver.data_source
+}
+output "kind" {
+  description = "  - (Optional) Resolver type. Valid values are UNIT and PIPELINE."
+  value       = aws_appsync_resolver.aws_appsync_resolver.kind
 }
 output "pipeline_config" {
   description = ""
@@ -242,45 +270,9 @@ output "response_template" {
   description = "(Optional) Response mapping template for UNIT resolver or 'after mapping template' for PIPELINE resolver. Required for non-Lambda resolvers."
   value       = aws_appsync_resolver.aws_appsync_resolver.response_template
 }
-output "type" {
-  description = "(Required) Type name from the schema defined in the GraphQL API."
-  value       = aws_appsync_resolver.aws_appsync_resolver.type
-}
-output "caching_keys" {
-  description = "(Optional) List of caching key."
-  value       = aws_appsync_resolver.aws_appsync_resolver.caching_keys
-}
-output "kind" {
-  description = "  - (Optional) Resolver type. Valid values are UNIT and PIPELINE."
-  value       = aws_appsync_resolver.aws_appsync_resolver.kind
-}
-output "max_batch_size" {
-  description = "(Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000."
-  value       = aws_appsync_resolver.aws_appsync_resolver.max_batch_size
-}
-output "request_template" {
-  description = "(Optional) Request mapping template for UNIT resolver or 'before mapping template' for PIPELINE resolver. Required for non-Lambda resolvers."
-  value       = aws_appsync_resolver.aws_appsync_resolver.request_template
-}
 output "ttl" {
   description = "(Optional) TTL in seconds.Sync Config"
   value       = aws_appsync_resolver.aws_appsync_resolver.ttl
-}
-output "functions" {
-  description = "(Required) List of Function ID."
-  value       = aws_appsync_resolver.aws_appsync_resolver.functions
-}
-output "lambda_conflict_handler_config" {
-  description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
-  value       = aws_appsync_resolver.aws_appsync_resolver.lambda_conflict_handler_config
-}
-output "sync_config" {
-  description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
-  value       = aws_appsync_resolver.aws_appsync_resolver.sync_config
-}
-output "api_id" {
-  description = "(Required) API ID for the GraphQL API."
-  value       = aws_appsync_resolver.aws_appsync_resolver.api_id
 }
 output "caching_config" {
   description = ""
@@ -290,13 +282,21 @@ output "conflict_handler" {
   description = "(Optional) Conflict Resolution strategy to perform in the event of a conflict. Valid values are NONE, OPTIMISTIC_CONCURRENCY, AUTOMERGE, and LAMBDA."
   value       = aws_appsync_resolver.aws_appsync_resolver.conflict_handler
 }
-output "data_source" {
-  description = "(Optional) Data source name."
-  value       = aws_appsync_resolver.aws_appsync_resolver.data_source
-}
 output "field" {
   description = "(Required) Field name from the schema defined in the GraphQL API."
   value       = aws_appsync_resolver.aws_appsync_resolver.field
+}
+output "functions" {
+  description = "(Required) List of Function ID."
+  value       = aws_appsync_resolver.aws_appsync_resolver.functions
+}
+output "lambda_conflict_handler_arn" {
+  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appsync_resolver.aws_appsync_resolver.lambda_conflict_handler_arn
+}
+output "lambda_conflict_handler_config" {
+  description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
+  value       = aws_appsync_resolver.aws_appsync_resolver.lambda_conflict_handler_config
 }
 output "arn" {
   description = "ARN"

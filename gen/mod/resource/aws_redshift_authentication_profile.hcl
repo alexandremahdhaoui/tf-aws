@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "authentication_profile_content" {
-  description = "(Required) The content of the authentication profile in JSON format. The maximum length of the JSON string is determined by a quota for your account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_authentication_profile.aws_redshift_authentication_profile.authentication_profile_content
-}
 output "authentication_profile_name" {
   description = "(Required, Forces new resource) The name of the authentication profile."
   value       = aws_redshift_authentication_profile.aws_redshift_authentication_profile.authentication_profile_name
+}
+output "authentication_profile_content" {
+  description = "(Required) The content of the authentication profile in JSON format. The maximum length of the JSON string is determined by a quota for your account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_authentication_profile.aws_redshift_authentication_profile.authentication_profile_content
 }
 output "id" {
   description = "The name of the authentication profile."

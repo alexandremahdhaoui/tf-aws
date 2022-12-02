@@ -1,13 +1,17 @@
 datasource "aws_location_geofence_collection" "aws_location_geofence_collection" {
-  create_time     = var.create_time
-  description     = var.description
   kms_key_id      = var.kms_key_id
   tags            = var.tags
   collection_arn  = var.collection_arn
   collection_name = var.collection_name
+  create_time     = var.create_time
+  description     = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "collection_name" {
+  description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create_time" {
@@ -30,9 +34,13 @@ variable "collection_arn" {
   description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
   type        = string
 }
-variable "collection_name" {
+output "collection_name" {
   description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_name
+}
+output "create_time" {
+  description = "Timestamp for when the geofence collection resource was created in ISO 8601 format."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
 }
 output "description" {
   description = "Optional description of the geofence collection resource."
@@ -49,14 +57,6 @@ output "tags" {
 output "collection_arn" {
   description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_arn
-}
-output "collection_name" {
-  description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_name
-}
-output "create_time" {
-  description = "Timestamp for when the geofence collection resource was created in ISO 8601 format."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
 }
 output "collection_arn" {
   description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."

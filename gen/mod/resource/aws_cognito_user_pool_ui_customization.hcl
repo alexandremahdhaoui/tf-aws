@@ -1,18 +1,14 @@
 resource "aws_cognito_user_pool_ui_customization" "aws_cognito_user_pool_ui_customization" {
-  image_file    = var.image_file
-  image_url     = var.image_url
-  user_pool_id  = var.user_pool_id
   client_id     = var.client_id
   creation_date = var.creation_date
   css           = var.css
   css_version   = var.css_version
+  image_file    = var.image_file
+  image_url     = var.image_url
+  user_pool_id  = var.user_pool_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "image_url" {
-  description = "The logo image URL for the UI customization."
   type        = string
 }
 variable "user_pool_id" {
@@ -41,6 +37,10 @@ variable "image_file" {
   description = " (Optional) - The uploaded logo image for the UI customization, provided as a base64-encoded String. Drift detection is not possible for this argument. At least one of css or image_file is required."
   type        = string
   default     = ""
+}
+variable "image_url" {
+  description = "The logo image URL for the UI customization."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -162,10 +162,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "client_id" {
-  description = " (Optional) The client ID for the client app. Defaults to ALL. If ALL is specified, the css and/or image_file settings will be used for every client that has no UI customization set previously."
-  value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.client_id
-}
 output "creation_date" {
   description = "The creation date in RFC3339 format for the UI customization."
   value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.creation_date
@@ -190,13 +186,9 @@ output "user_pool_id" {
   description = " (Required) - The user pool ID for the user pool.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.user_pool_id
 }
-output "image_url" {
-  description = "The logo image URL for the UI customization."
-  value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.image_url
-}
-output "last_modified_date" {
-  description = "The last-modified date in RFC3339 format for the UI customization."
-  value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.last_modified_date
+output "client_id" {
+  description = " (Optional) The client ID for the client app. Defaults to ALL. If ALL is specified, the css and/or image_file settings will be used for every client that has no UI customization set previously."
+  value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.client_id
 }
 output "creation_date" {
   description = "The creation date in RFC3339 format for the UI customization."
@@ -205,6 +197,14 @@ output "creation_date" {
 output "css_version" {
   description = "The CSS version number."
   value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.css_version
+}
+output "image_url" {
+  description = "The logo image URL for the UI customization."
+  value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.image_url
+}
+output "last_modified_date" {
+  description = "The last-modified date in RFC3339 format for the UI customization."
+  value       = aws_cognito_user_pool_ui_customization.aws_cognito_user_pool_ui_customization.last_modified_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

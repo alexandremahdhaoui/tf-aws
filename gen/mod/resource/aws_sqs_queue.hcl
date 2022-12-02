@@ -1,32 +1,71 @@
 resource "aws_sqs_queue" "aws_sqs_queue" {
-  redrive_policy                    = var.redrive_policy
-  arn                               = var.arn
-  fifo_queue                        = var.fifo_queue
-  name_prefix                       = var.name_prefix
-  policy                            = var.policy
-  receive_wait_time_seconds         = var.receive_wait_time_seconds
-  redrive_allow_policy              = var.redrive_allow_policy
-  deduplication_scope               = var.deduplication_scope
-  delay_seconds                     = var.delay_seconds
-  id                                = var.id
-  kms_data_key_reuse_period_seconds = var.kms_data_key_reuse_period_seconds
-  visibility_timeout_seconds        = var.visibility_timeout_seconds
-  fifo_throughput_limit             = var.fifo_throughput_limit
-  kms_master_key_id                 = var.kms_master_key_id
   name                              = var.name
+  receive_wait_time_seconds         = var.receive_wait_time_seconds
+  fifo_queue                        = var.fifo_queue
+  kms_data_key_reuse_period_seconds = var.kms_data_key_reuse_period_seconds
+  message_retention_seconds         = var.message_retention_seconds
+  redrive_allow_policy              = var.redrive_allow_policy
+  redrive_policy                    = var.redrive_policy
   sqs_managed_sse_enabled           = var.sqs_managed_sse_enabled
+  arn                               = var.arn
+  deduplication_scope               = var.deduplication_scope
+  kms_master_key_id                 = var.kms_master_key_id
   tags                              = var.tags
   tags_all                          = var.tags_all
-  content_based_deduplication       = var.content_based_deduplication
+  visibility_timeout_seconds        = var.visibility_timeout_seconds
+  delay_seconds                     = var.delay_seconds
+  id                                = var.id
   max_message_size                  = var.max_message_size
-  message_retention_seconds         = var.message_retention_seconds
+  name_prefix                       = var.name_prefix
+  policy                            = var.policy
+  content_based_deduplication       = var.content_based_deduplication
+  fifo_throughput_limit             = var.fifo_throughput_limit
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "redrive_allow_policy" {
+  description = "(Optional) The JSON policy to set up the Dead Letter Queue redrive permission, see AWS docs."
+  type        = string
+  default     = ""
+}
+variable "redrive_policy" {
+  description = "(Optional) The JSON policy to set up the Dead Letter Queue, see AWS docs. strongNote: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")."
+  type        = string
+  default     = ""
+}
+variable "sqs_managed_sse_enabled" {
+  description = "(Optional) Boolean to enable server-side encryption (SSE) of message content with SQS-owned encryption keys. See Encryption at rest. Terraform will only perform drift detection of its value when present in a configuration."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the SQS queue"
+  type        = string
+}
 variable "deduplication_scope" {
   description = "(Optional) Specifies whether message deduplication occurs at the message group or queue level. Valid values are messageGroup and queue (default)."
+  type        = string
+  default     = ""
+}
+variable "fifo_queue" {
+  description = "(Optional) Boolean designating a FIFO queue. If not set, it defaults to false making it standard."
+  type        = string
+  default     = ""
+}
+variable "kms_data_key_reuse_period_seconds" {
+  description = "(Optional) The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again. An integer representing seconds, between 60 seconds (1 minute) and 86,400 seconds (24 hours). The default is 300 (5 minutes)."
+  type        = string
+  default     = ""
+}
+variable "message_retention_seconds" {
+  description = "(Optional) The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). The default for this attribute is 345600 (4 days)."
+  type        = string
+  default     = ""
+}
+variable "visibility_timeout_seconds" {
+  description = "(Optional) The visibility timeout for the queue. An integer from 0 to 43200 (12 hours). The default for this attribute is 30. For more information about visibility timeout, see AWS docs."
   type        = string
   default     = ""
 }
@@ -39,37 +78,8 @@ variable "id" {
   description = "The URL for the created Amazon SQS queue."
   type        = string
 }
-variable "kms_data_key_reuse_period_seconds" {
-  description = "(Optional) The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again. An integer representing seconds, between 60 seconds (1 minute) and 86,400 seconds (24 hours). The default is 300 (5 minutes)."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "visibility_timeout_seconds" {
-  description = "(Optional) The visibility timeout for the queue. An integer from 0 to 43200 (12 hours). The default for this attribute is 30. For more information about visibility timeout, see AWS docs."
-  type        = string
-  default     = ""
-}
-variable "fifo_throughput_limit" {
-  description = "(Optional) Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId."
-  type        = string
-  default     = ""
-}
 variable "kms_master_key_id" {
   description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SQS or a custom CMK. For more information, see Key Terms."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Optional) The name of the queue. Queue names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 80 characters long. For a FIFO (first-in-first-out) queue, the name must end with the .fifo suffix. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix"
-  type        = string
-  default     = ""
-}
-variable "sqs_managed_sse_enabled" {
-  description = "(Optional) Boolean to enable server-side encryption (SSE) of message content with SQS-owned encryption keys. See Encryption at rest. Terraform will only perform drift detection of its value when present in a configuration."
   type        = string
   default     = ""
 }
@@ -78,37 +88,22 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
 variable "content_based_deduplication" {
   description = "(Optional) Enables content-based deduplication for FIFO queues. For more information, see the related documentation"
   type        = string
   default     = ""
 }
+variable "fifo_throughput_limit" {
+  description = "(Optional) Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId."
+  type        = string
+  default     = ""
+}
 variable "max_message_size" {
   description = "(Optional) The limit of how many bytes a message can contain before Amazon SQS rejects it. An integer from 1024 bytes (1 KiB) up to 262144 bytes (256 KiB). The default for this attribute is 262144 (256 KiB)."
-  type        = string
-  default     = ""
-}
-variable "message_retention_seconds" {
-  description = "(Optional) The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). The default for this attribute is 345600 (4 days)."
-  type        = string
-  default     = ""
-}
-variable "redrive_allow_policy" {
-  description = "(Optional) The JSON policy to set up the Dead Letter Queue redrive permission, see AWS docs."
-  type        = string
-  default     = ""
-}
-variable "redrive_policy" {
-  description = "(Optional) The JSON policy to set up the Dead Letter Queue, see AWS docs. strongNote: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the SQS queue"
-  type        = string
-}
-variable "fifo_queue" {
-  description = "(Optional) Boolean designating a FIFO queue. If not set, it defaults to false making it standard."
   type        = string
   default     = ""
 }
@@ -119,6 +114,11 @@ variable "name_prefix" {
 }
 variable "policy" {
   description = "(Optional) The JSON policy for the SQS queue. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) The name of the queue. Queue names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 80 characters long. For a FIFO (first-in-first-out) queue, the name must end with the .fifo suffix. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix"
   type        = string
   default     = ""
 }
@@ -251,25 +251,13 @@ output "content_based_deduplication" {
   description = "(Optional) Enables content-based deduplication for FIFO queues. For more information, see the related documentation"
   value       = aws_sqs_queue.aws_sqs_queue.content_based_deduplication
 }
+output "fifo_throughput_limit" {
+  description = "(Optional) Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId."
+  value       = aws_sqs_queue.aws_sqs_queue.fifo_throughput_limit
+}
 output "max_message_size" {
   description = "(Optional) The limit of how many bytes a message can contain before Amazon SQS rejects it. An integer from 1024 bytes (1 KiB) up to 262144 bytes (256 KiB). The default for this attribute is 262144 (256 KiB)."
   value       = aws_sqs_queue.aws_sqs_queue.max_message_size
-}
-output "message_retention_seconds" {
-  description = "(Optional) The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). The default for this attribute is 345600 (4 days)."
-  value       = aws_sqs_queue.aws_sqs_queue.message_retention_seconds
-}
-output "redrive_policy" {
-  description = "(Optional) The JSON policy to set up the Dead Letter Queue, see AWS docs. strongNote: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")."
-  value       = aws_sqs_queue.aws_sqs_queue.redrive_policy
-}
-output "arn" {
-  description = "The ARN of the SQS queue"
-  value       = aws_sqs_queue.aws_sqs_queue.arn
-}
-output "fifo_queue" {
-  description = "(Optional) Boolean designating a FIFO queue. If not set, it defaults to false making it standard."
-  value       = aws_sqs_queue.aws_sqs_queue.fifo_queue
 }
 output "name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name"
@@ -279,17 +267,45 @@ output "policy" {
   description = "(Optional) The JSON policy for the SQS queue. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
   value       = aws_sqs_queue.aws_sqs_queue.policy
 }
+output "name" {
+  description = "(Optional) The name of the queue. Queue names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 80 characters long. For a FIFO (first-in-first-out) queue, the name must end with the .fifo suffix. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix"
+  value       = aws_sqs_queue.aws_sqs_queue.name
+}
 output "receive_wait_time_seconds" {
   description = "(Optional) The time for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. An integer from 0 to 20 (seconds). The default for this attribute is 0, meaning that the call will return immediately."
   value       = aws_sqs_queue.aws_sqs_queue.receive_wait_time_seconds
 }
-output "redrive_allow_policy" {
-  description = "(Optional) The JSON policy to set up the Dead Letter Queue redrive permission, see AWS docs."
-  value       = aws_sqs_queue.aws_sqs_queue.redrive_allow_policy
+output "redrive_policy" {
+  description = "(Optional) The JSON policy to set up the Dead Letter Queue, see AWS docs. strongNote: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")."
+  value       = aws_sqs_queue.aws_sqs_queue.redrive_policy
+}
+output "sqs_managed_sse_enabled" {
+  description = "(Optional) Boolean to enable server-side encryption (SSE) of message content with SQS-owned encryption keys. See Encryption at rest. Terraform will only perform drift detection of its value when present in a configuration."
+  value       = aws_sqs_queue.aws_sqs_queue.sqs_managed_sse_enabled
+}
+output "arn" {
+  description = "The ARN of the SQS queue"
+  value       = aws_sqs_queue.aws_sqs_queue.arn
 }
 output "deduplication_scope" {
   description = "(Optional) Specifies whether message deduplication occurs at the message group or queue level. Valid values are messageGroup and queue (default)."
   value       = aws_sqs_queue.aws_sqs_queue.deduplication_scope
+}
+output "fifo_queue" {
+  description = "(Optional) Boolean designating a FIFO queue. If not set, it defaults to false making it standard."
+  value       = aws_sqs_queue.aws_sqs_queue.fifo_queue
+}
+output "kms_data_key_reuse_period_seconds" {
+  description = "(Optional) The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again. An integer representing seconds, between 60 seconds (1 minute) and 86,400 seconds (24 hours). The default is 300 (5 minutes)."
+  value       = aws_sqs_queue.aws_sqs_queue.kms_data_key_reuse_period_seconds
+}
+output "message_retention_seconds" {
+  description = "(Optional) The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). The default for this attribute is 345600 (4 days)."
+  value       = aws_sqs_queue.aws_sqs_queue.message_retention_seconds
+}
+output "redrive_allow_policy" {
+  description = "(Optional) The JSON policy to set up the Dead Letter Queue redrive permission, see AWS docs."
+  value       = aws_sqs_queue.aws_sqs_queue.redrive_allow_policy
 }
 output "delay_seconds" {
   description = "(Optional) The time in seconds that the delivery of all messages in the queue will be delayed. An integer from 0 to 900 (15 minutes). The default for this attribute is 0 seconds."
@@ -299,29 +315,9 @@ output "id" {
   description = "The URL for the created Amazon SQS queue."
   value       = aws_sqs_queue.aws_sqs_queue.id
 }
-output "kms_data_key_reuse_period_seconds" {
-  description = "(Optional) The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again. An integer representing seconds, between 60 seconds (1 minute) and 86,400 seconds (24 hours). The default is 300 (5 minutes)."
-  value       = aws_sqs_queue.aws_sqs_queue.kms_data_key_reuse_period_seconds
-}
-output "visibility_timeout_seconds" {
-  description = "(Optional) The visibility timeout for the queue. An integer from 0 to 43200 (12 hours). The default for this attribute is 30. For more information about visibility timeout, see AWS docs."
-  value       = aws_sqs_queue.aws_sqs_queue.visibility_timeout_seconds
-}
-output "fifo_throughput_limit" {
-  description = "(Optional) Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId."
-  value       = aws_sqs_queue.aws_sqs_queue.fifo_throughput_limit
-}
 output "kms_master_key_id" {
   description = "(Optional) The ID of an AWS-managed customer master key (CMK) for Amazon SQS or a custom CMK. For more information, see Key Terms."
   value       = aws_sqs_queue.aws_sqs_queue.kms_master_key_id
-}
-output "name" {
-  description = "(Optional) The name of the queue. Queue names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 80 characters long. For a FIFO (first-in-first-out) queue, the name must end with the .fifo suffix. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix"
-  value       = aws_sqs_queue.aws_sqs_queue.name
-}
-output "sqs_managed_sse_enabled" {
-  description = "(Optional) Boolean to enable server-side encryption (SSE) of message content with SQS-owned encryption keys. See Encryption at rest. Terraform will only perform drift detection of its value when present in a configuration."
-  value       = aws_sqs_queue.aws_sqs_queue.sqs_managed_sse_enabled
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the queue. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -330,6 +326,14 @@ output "tags" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sqs_queue.aws_sqs_queue.tags_all
+}
+output "visibility_timeout_seconds" {
+  description = "(Optional) The visibility timeout for the queue. An integer from 0 to 43200 (12 hours). The default for this attribute is 30. For more information about visibility timeout, see AWS docs."
+  value       = aws_sqs_queue.aws_sqs_queue.visibility_timeout_seconds
+}
+output "id" {
+  description = "The URL for the created Amazon SQS queue."
+  value       = aws_sqs_queue.aws_sqs_queue.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -342,10 +346,6 @@ output "url" {
 output "arn" {
   description = "The ARN of the SQS queue"
   value       = aws_sqs_queue.aws_sqs_queue.arn
-}
-output "id" {
-  description = "The URL for the created Amazon SQS queue."
-  value       = aws_sqs_queue.aws_sqs_queue.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

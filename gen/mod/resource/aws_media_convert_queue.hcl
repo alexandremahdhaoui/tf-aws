@@ -1,18 +1,40 @@
 resource "aws_media_convert_queue" "aws_media_convert_queue" {
-  commitment                = var.commitment
-  pricing_plan              = var.pricing_plan
-  renewal_type              = var.renewal_type
-  status                    = var.status
-  tags                      = var.tags
   arn                       = var.arn
   id                        = var.id
-  name                      = var.name
+  tags                      = var.tags
+  renewal_type              = var.renewal_type
   reservation_plan_settings = var.reservation_plan_settings
   reserved_slots            = var.reserved_slots
+  status                    = var.status
+  commitment                = var.commitment
   description               = var.description
+  name                      = var.name
+  pricing_plan              = var.pricing_plan
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The Arn of the queue"
+  type        = string
+}
+variable "id" {
+  description = "The same as name"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsreservation_plan_settings"
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
+  type        = string
+  default     = ""
+}
+variable "commitment" {
+  description = "(Required) The length of the term of your reserved queue pricing plan commitment. Valid value is ONE_YEAR."
   type        = string
 }
 variable "description" {
@@ -20,29 +42,8 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The same as name"
-  type        = string
-}
 variable "name" {
   description = "(Required) A unique identifier describing the queue"
-  type        = string
-}
-variable "reservation_plan_settings" {
-  description = "(Optional) A detail pricing plan of the  reserved queue. See below."
-  type        = string
-  default     = ""
-}
-variable "reserved_slots" {
-  description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The Arn of the queue"
-  type        = string
-}
-variable "commitment" {
-  description = "(Required) The length of the term of your reserved queue pricing plan commitment. Valid value is ONE_YEAR."
   type        = string
 }
 variable "pricing_plan" {
@@ -54,15 +55,14 @@ variable "renewal_type" {
   description = "(Required) Specifies whether the term of your reserved queue pricing plan. Valid values are AUTO_RENEW or EXPIRE."
   type        = string
 }
-variable "status" {
-  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
+variable "reservation_plan_settings" {
+  description = "(Optional) A detail pricing plan of the  reserved queue. See below."
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsreservation_plan_settings"
+variable "reserved_slots" {
+  description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
   type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -184,14 +184,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Arn of the queue"
-  value       = aws_media_convert_queue.aws_media_convert_queue.arn
-}
-output "commitment" {
-  description = "(Required) The length of the term of your reserved queue pricing plan commitment. Valid value is ONE_YEAR."
-  value       = aws_media_convert_queue.aws_media_convert_queue.commitment
-}
 output "pricing_plan" {
   description = "(Optional) Specifies whether the pricing plan for the queue is on-demand or reserved. Valid values are ON_DEMAND or RESERVED. Default to ON_DEMAND."
   value       = aws_media_convert_queue.aws_media_convert_queue.pricing_plan
@@ -200,26 +192,6 @@ output "renewal_type" {
   description = "(Required) Specifies whether the term of your reserved queue pricing plan. Valid values are AUTO_RENEW or EXPIRE."
   value       = aws_media_convert_queue.aws_media_convert_queue.renewal_type
 }
-output "status" {
-  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
-  value       = aws_media_convert_queue.aws_media_convert_queue.status
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsreservation_plan_settings"
-  value       = aws_media_convert_queue.aws_media_convert_queue.tags
-}
-output "description" {
-  description = "(Optional) A description of the queue"
-  value       = aws_media_convert_queue.aws_media_convert_queue.description
-}
-output "id" {
-  description = "The same as name"
-  value       = aws_media_convert_queue.aws_media_convert_queue.id
-}
-output "name" {
-  description = "(Required) A unique identifier describing the queue"
-  value       = aws_media_convert_queue.aws_media_convert_queue.name
-}
 output "reservation_plan_settings" {
   description = "(Optional) A detail pricing plan of the  reserved queue. See below."
   value       = aws_media_convert_queue.aws_media_convert_queue.reservation_plan_settings
@@ -227,6 +199,34 @@ output "reservation_plan_settings" {
 output "reserved_slots" {
   description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
   value       = aws_media_convert_queue.aws_media_convert_queue.reserved_slots
+}
+output "status" {
+  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
+  value       = aws_media_convert_queue.aws_media_convert_queue.status
+}
+output "commitment" {
+  description = "(Required) The length of the term of your reserved queue pricing plan commitment. Valid value is ONE_YEAR."
+  value       = aws_media_convert_queue.aws_media_convert_queue.commitment
+}
+output "description" {
+  description = "(Optional) A description of the queue"
+  value       = aws_media_convert_queue.aws_media_convert_queue.description
+}
+output "name" {
+  description = "(Required) A unique identifier describing the queue"
+  value       = aws_media_convert_queue.aws_media_convert_queue.name
+}
+output "arn" {
+  description = "The Arn of the queue"
+  value       = aws_media_convert_queue.aws_media_convert_queue.arn
+}
+output "id" {
+  description = "The same as name"
+  value       = aws_media_convert_queue.aws_media_convert_queue.id
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsreservation_plan_settings"
+  value       = aws_media_convert_queue.aws_media_convert_queue.tags
 }
 output "arn" {
   description = "The Arn of the queue"

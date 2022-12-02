@@ -1,20 +1,16 @@
 datasource "aws_fsx_openzfs_snapshot" "aws_fsx_openzfs_snapshot" {
+  tags          = var.tags
   arn           = var.arn
   creation_time = var.creation_time
   filter        = var.filter
+  id            = var.id
   most_recent   = var.most_recent
+  snapshot_id   = var.snapshot_id
   name          = var.name
   snapshot_ids  = var.snapshot_ids
-  id            = var.id
-  snapshot_id   = var.snapshot_id
-  tags          = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the snapshot, e.g., fsvolsnap-12345678"
   type        = string
 }
 variable "snapshot_id" {
@@ -24,11 +20,6 @@ variable "snapshot_id" {
 variable "tags" {
   description = "List of Tag values, with a maximum of 50 elements."
   type        = string
-}
-variable "snapshot_ids" {
-  description = "(Optional) Returns information on a specific snapshot_id."
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "Amazon Resource Name of the snapshot."
@@ -43,6 +34,10 @@ variable "filter" {
   type        = string
   default     = ""
 }
+variable "id" {
+  description = "Identifier of the snapshot, e.g., fsvolsnap-12345678"
+  type        = string
+}
 variable "most_recent" {
   description = "(Optional) If more than one result is returned, use the most recent snapshot."
   type        = string
@@ -51,6 +46,11 @@ variable "most_recent" {
 variable "name" {
   description = "Name of the snapshot."
   type        = string
+}
+variable "snapshot_ids" {
+  description = "(Optional) Returns information on a specific snapshot_id."
+  type        = string
+  default     = ""
 }
 output "name" {
   description = "Name of the snapshot."
@@ -72,13 +72,13 @@ output "filter" {
   description = "(Optional) One or more name/value pairs to filter off of. The\nsupported names are file-system-id or volume-id.In addition to all arguments above, the following attributes are exported:"
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.filter
 }
-output "most_recent" {
-  description = "(Optional) If more than one result is returned, use the most recent snapshot."
-  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.most_recent
-}
 output "id" {
   description = "Identifier of the snapshot, e.g., fsvolsnap-12345678"
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.id
+}
+output "most_recent" {
+  description = "(Optional) If more than one result is returned, use the most recent snapshot."
+  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.most_recent
 }
 output "snapshot_id" {
   description = "ID of the snapshot."
@@ -87,10 +87,6 @@ output "snapshot_id" {
 output "tags" {
   description = "List of Tag values, with a maximum of 50 elements."
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.tags
-}
-output "arn" {
-  description = "Amazon Resource Name of the snapshot."
-  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.arn
 }
 output "creation_time" {
   description = "Time that the resource was created."
@@ -111,6 +107,10 @@ output "snapshot_id" {
 output "tags" {
   description = "List of Tag values, with a maximum of 50 elements."
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.tags
+}
+output "arn" {
+  description = "Amazon Resource Name of the snapshot."
+  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

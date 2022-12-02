@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "listener_arn" {
-  description = "(Required, Forces New Resource) The ARN of the listener to which to attach the certificate."
-  value       = aws_lb_listener_certificate.aws_lb_listener_certificate.listener_arn
-}
 output "certificate_arn" {
   description = "(Required, Forces New Resource) The ARN of the certificate to attach to the listener.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lb_listener_certificate.aws_lb_listener_certificate.certificate_arn
+}
+output "listener_arn" {
+  description = "(Required, Forces New Resource) The ARN of the listener to which to attach the certificate."
+  value       = aws_lb_listener_certificate.aws_lb_listener_certificate.listener_arn
 }
 output "id" {
   description = "The listener_arn and certificate_arn separated by a _."

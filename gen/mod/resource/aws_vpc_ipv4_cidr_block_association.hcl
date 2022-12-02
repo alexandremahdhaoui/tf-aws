@@ -10,15 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "ipv4_netmask_length" {
-  description = "(Optional) The netmask length of the IPv4 CIDR you want to allocate to this VPC. Requires specifying a ipv4_ipam_pool_id."
-  type        = string
-  default     = ""
-}
-variable "vpc_id" {
-  description = "(Required) The ID of the VPC to make the association with.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "cidr_block" {
   description = "(Optional) The IPv4 CIDR block for the VPC. CIDR can be explicitly set or it can be derived from IPAM using ipv4_netmask_length."
   type        = string
@@ -36,6 +27,15 @@ variable "ipv4_ipam_pool_id" {
   description = "(Optional) The ID of an IPv4 IPAM pool you want to use for allocating this VPC's CIDR. IPAM is a VPC feature that you can use to automate your IP address management workflows including assigning, tracking, troubleshooting, and auditing IP addresses across AWS Regions and accounts. Using IPAM you can monitor IP address usage throughout your AWS Organization."
   type        = string
   default     = ""
+}
+variable "ipv4_netmask_length" {
+  description = "(Optional) The netmask length of the IPv4 CIDR you want to allocate to this VPC. Requires specifying a ipv4_ipam_pool_id."
+  type        = string
+  default     = ""
+}
+variable "vpc_id" {
+  description = "(Required) The ID of the VPC to make the association with.In addition to all arguments above, the following attributes are exported:"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -157,14 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "ipv4_ipam_pool_id" {
-  description = "(Optional) The ID of an IPv4 IPAM pool you want to use for allocating this VPC's CIDR. IPAM is a VPC feature that you can use to automate your IP address management workflows including assigning, tracking, troubleshooting, and auditing IP addresses across AWS Regions and accounts. Using IPAM you can monitor IP address usage throughout your AWS Organization."
-  value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.ipv4_ipam_pool_id
-}
-output "ipv4_netmask_length" {
-  description = "(Optional) The netmask length of the IPv4 CIDR you want to allocate to this VPC. Requires specifying a ipv4_ipam_pool_id."
-  value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.ipv4_netmask_length
-}
 output "vpc_id" {
   description = "(Required) The ID of the VPC to make the association with.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.vpc_id
@@ -181,9 +173,13 @@ output "id" {
   description = "The ID of the VPC CIDR associationTimeoutsConfiguration options:"
   value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.id
 }
-output "id" {
-  description = "The ID of the VPC CIDR associationTimeoutsConfiguration options:"
-  value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.id
+output "ipv4_ipam_pool_id" {
+  description = "(Optional) The ID of an IPv4 IPAM pool you want to use for allocating this VPC's CIDR. IPAM is a VPC feature that you can use to automate your IP address management workflows including assigning, tracking, troubleshooting, and auditing IP addresses across AWS Regions and accounts. Using IPAM you can monitor IP address usage throughout your AWS Organization."
+  value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.ipv4_ipam_pool_id
+}
+output "ipv4_netmask_length" {
+  description = "(Optional) The netmask length of the IPv4 CIDR you want to allocate to this VPC. Requires specifying a ipv4_ipam_pool_id."
+  value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.ipv4_netmask_length
 }
 output "create" {
   description = "(Default 10m)"
@@ -192,6 +188,10 @@ output "create" {
 output "delete" {
   description = "(Default 10m)"
   value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.delete
+}
+output "id" {
+  description = "The ID of the VPC CIDR associationTimeoutsConfiguration options:"
+  value       = aws_vpc_ipv4_cidr_block_association.aws_vpc_ipv4_cidr_block_association.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

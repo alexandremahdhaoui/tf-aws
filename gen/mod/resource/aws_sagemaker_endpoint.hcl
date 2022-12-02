@@ -1,56 +1,25 @@
 resource "aws_sagemaker_endpoint" "aws_sagemaker_endpoint" {
-  blue_green_update_policy             = var.blue_green_update_policy
-  canary_size                          = var.canary_size
-  linear_step_size                     = var.linear_step_size
-  maximum_execution_timeout_in_seconds = var.maximum_execution_timeout_in_seconds
-  traffic_routing_configuration        = var.traffic_routing_configuration
-  alarm_name                           = var.alarm_name
-  alarms                               = var.alarms
-  tags                                 = var.tags
-  deployment_config                    = var.deployment_config
-  endpoint_config_name                 = var.endpoint_config_name
-  name                                 = var.name
-  termination_wait_in_seconds          = var.termination_wait_in_seconds
-  wait_interval_in_seconds             = var.wait_interval_in_seconds
-  arn                                  = var.arn
   auto_rollback_configuration          = var.auto_rollback_configuration
+  endpoint_config_name                 = var.endpoint_config_name
+  wait_interval_in_seconds             = var.wait_interval_in_seconds
+  alarms                               = var.alarms
+  canary_size                          = var.canary_size
+  maximum_execution_timeout_in_seconds = var.maximum_execution_timeout_in_seconds
+  name                                 = var.name
+  blue_green_update_policy             = var.blue_green_update_policy
+  arn                                  = var.arn
+  tags                                 = var.tags
+  traffic_routing_configuration        = var.traffic_routing_configuration
   type                                 = var.type
   value                                = var.value
+  alarm_name                           = var.alarm_name
+  linear_step_size                     = var.linear_step_size
+  termination_wait_in_seconds          = var.termination_wait_in_seconds
+  deployment_config                    = var.deployment_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "deployment_config" {
-  description = "(Optional) The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations. See Deployment Config."
-  type        = string
-  default     = ""
-}
-variable "endpoint_config_name" {
-  description = "(Required) The name of the endpoint configuration to use."
-  type        = string
-}
-variable "name" {
-  description = "The name of the endpoint."
-  type        = string
-}
-variable "termination_wait_in_seconds" {
-  description = "(Optional) Additional waiting time in seconds after the completion of an endpoint deployment before terminating the old endpoint fleet. Default is 0. Valid values are between 0 and 3600.Traffic Routing Configuration"
-  type        = string
-  default     = ""
-}
-variable "wait_interval_in_seconds" {
-  description = "(Required) The waiting time (in seconds) between incremental steps to turn on traffic on the new endpoint fleet. Valid values are between 0 and 3600."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this endpoint."
-  type        = string
-}
-variable "auto_rollback_configuration" {
-  description = "(Optional) Automatic rollback configuration for handling endpoint deployment failures and recovery. See Auto Rollback Configuration.Blue Green Update Config"
-  type        = string
-  default     = ""
 }
 variable "type" {
   description = "(Required) Specifies the endpoint capacity type. Valid values are: INSTANCE_COUNT, or CAPACITY_PERCENT."
@@ -58,6 +27,55 @@ variable "type" {
 }
 variable "value" {
   description = "(Required) Defines the capacity size, either as a number of instances or a capacity percentage.Auto Rollback Configuration"
+  type        = string
+}
+variable "alarm_name" {
+  description = "(Required) The name of a CloudWatch alarm in your account.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this endpoint."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Deployment Config"
+  type        = string
+  default     = ""
+}
+variable "traffic_routing_configuration" {
+  description = "(Required) Defines the traffic routing strategy to shift traffic from the old fleet to the new fleet during an endpoint deployment. See Traffic Routing Configuration."
+  type        = string
+}
+variable "deployment_config" {
+  description = "(Optional) The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations. See Deployment Config."
+  type        = string
+  default     = ""
+}
+variable "linear_step_size" {
+  description = "(Optional) Batch size for each step to turn on traffic on the new endpoint fleet. Value must be 10-50% of the variant's total instance count. See Linear Step Size.Canary Size"
+  type        = string
+  default     = ""
+}
+variable "termination_wait_in_seconds" {
+  description = "(Optional) Additional waiting time in seconds after the completion of an endpoint deployment before terminating the old endpoint fleet. Default is 0. Valid values are between 0 and 3600.Traffic Routing Configuration"
+  type        = string
+  default     = ""
+}
+variable "alarms" {
+  description = "(Required) List of CloudWatch alarms in your account that are configured to monitor metrics on an endpoint. If any alarms are tripped during a deployment, SageMaker rolls back the deployment. See Alarms.Alarms"
+  type        = string
+}
+variable "auto_rollback_configuration" {
+  description = "(Optional) Automatic rollback configuration for handling endpoint deployment failures and recovery. See Auto Rollback Configuration.Blue Green Update Config"
+  type        = string
+  default     = ""
+}
+variable "endpoint_config_name" {
+  description = "(Required) The name of the endpoint configuration to use."
+  type        = string
+}
+variable "wait_interval_in_seconds" {
+  description = "(Required) The waiting time (in seconds) between incremental steps to turn on traffic on the new endpoint fleet. Valid values are between 0 and 3600."
   type        = string
 }
 variable "blue_green_update_policy" {
@@ -69,32 +87,14 @@ variable "canary_size" {
   type        = string
   default     = ""
 }
-variable "linear_step_size" {
-  description = "(Optional) Batch size for each step to turn on traffic on the new endpoint fleet. Value must be 10-50% of the variant's total instance count. See Linear Step Size.Canary Size"
-  type        = string
-  default     = ""
-}
 variable "maximum_execution_timeout_in_seconds" {
   description = "(Optional) Maximum execution timeout for the deployment. Note that the timeout value should be larger than the total waiting time specified in termination_wait_in_seconds and wait_interval_in_seconds. Valid values are between 600 and 14400."
   type        = string
   default     = ""
 }
-variable "traffic_routing_configuration" {
-  description = "(Required) Defines the traffic routing strategy to shift traffic from the old fleet to the new fleet during an endpoint deployment. See Traffic Routing Configuration."
+variable "name" {
+  description = "The name of the endpoint."
   type        = string
-}
-variable "alarm_name" {
-  description = "(Required) The name of a CloudWatch alarm in your account.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "alarms" {
-  description = "(Required) List of CloudWatch alarms in your account that are configured to monitor metrics on an endpoint. If any alarms are tripped during a deployment, SageMaker rolls back the deployment. See Alarms.Alarms"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Deployment Config"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -216,29 +216,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "value" {
-  description = "(Required) Defines the capacity size, either as a number of instances or a capacity percentage.Auto Rollback Configuration"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.value
+output "alarm_name" {
+  description = "(Required) The name of a CloudWatch alarm in your account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.alarm_name
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this endpoint."
   value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.arn
 }
-output "auto_rollback_configuration" {
-  description = "(Optional) Automatic rollback configuration for handling endpoint deployment failures and recovery. See Auto Rollback Configuration.Blue Green Update Config"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.auto_rollback_configuration
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Deployment Config"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.tags
+}
+output "traffic_routing_configuration" {
+  description = "(Required) Defines the traffic routing strategy to shift traffic from the old fleet to the new fleet during an endpoint deployment. See Traffic Routing Configuration."
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.traffic_routing_configuration
 }
 output "type" {
   description = "(Required) Specifies the endpoint capacity type. Valid values are: INSTANCE_COUNT, or CAPACITY_PERCENT."
   value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.type
 }
-output "maximum_execution_timeout_in_seconds" {
-  description = "(Optional) Maximum execution timeout for the deployment. Note that the timeout value should be larger than the total waiting time specified in termination_wait_in_seconds and wait_interval_in_seconds. Valid values are between 600 and 14400."
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.maximum_execution_timeout_in_seconds
+output "value" {
+  description = "(Required) Defines the capacity size, either as a number of instances or a capacity percentage.Auto Rollback Configuration"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.value
 }
-output "traffic_routing_configuration" {
-  description = "(Required) Defines the traffic routing strategy to shift traffic from the old fleet to the new fleet during an endpoint deployment. See Traffic Routing Configuration."
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.traffic_routing_configuration
+output "deployment_config" {
+  description = "(Optional) The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations. See Deployment Config."
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.deployment_config
+}
+output "linear_step_size" {
+  description = "(Optional) Batch size for each step to turn on traffic on the new endpoint fleet. Value must be 10-50% of the variant's total instance count. See Linear Step Size.Canary Size"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.linear_step_size
+}
+output "termination_wait_in_seconds" {
+  description = "(Optional) Additional waiting time in seconds after the completion of an endpoint deployment before terminating the old endpoint fleet. Default is 0. Valid values are between 0 and 3600.Traffic Routing Configuration"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.termination_wait_in_seconds
+}
+output "alarms" {
+  description = "(Required) List of CloudWatch alarms in your account that are configured to monitor metrics on an endpoint. If any alarms are tripped during a deployment, SageMaker rolls back the deployment. See Alarms.Alarms"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.alarms
+}
+output "auto_rollback_configuration" {
+  description = "(Optional) Automatic rollback configuration for handling endpoint deployment failures and recovery. See Auto Rollback Configuration.Blue Green Update Config"
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.auto_rollback_configuration
+}
+output "endpoint_config_name" {
+  description = "(Required) The name of the endpoint configuration to use."
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.endpoint_config_name
+}
+output "wait_interval_in_seconds" {
+  description = "(Required) The waiting time (in seconds) between incremental steps to turn on traffic on the new endpoint fleet. Valid values are between 0 and 3600."
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.wait_interval_in_seconds
 }
 output "blue_green_update_policy" {
   description = "(Required) Update policy for a blue/green deployment. If this update policy is specified, SageMaker creates a new fleet during the deployment while maintaining the old fleet. See Blue Green Update Config."
@@ -248,37 +276,9 @@ output "canary_size" {
   description = "(Optional) Batch size for the first step to turn on traffic on the new endpoint fleet. Value must be less than or equal to 50% of the variant's total instance count. See Canary Size."
   value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.canary_size
 }
-output "linear_step_size" {
-  description = "(Optional) Batch size for each step to turn on traffic on the new endpoint fleet. Value must be 10-50% of the variant's total instance count. See Linear Step Size.Canary Size"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.linear_step_size
-}
-output "alarm_name" {
-  description = "(Required) The name of a CloudWatch alarm in your account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.alarm_name
-}
-output "alarms" {
-  description = "(Required) List of CloudWatch alarms in your account that are configured to monitor metrics on an endpoint. If any alarms are tripped during a deployment, SageMaker rolls back the deployment. See Alarms.Alarms"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.alarms
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Deployment Config"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.tags
-}
-output "termination_wait_in_seconds" {
-  description = "(Optional) Additional waiting time in seconds after the completion of an endpoint deployment before terminating the old endpoint fleet. Default is 0. Valid values are between 0 and 3600.Traffic Routing Configuration"
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.termination_wait_in_seconds
-}
-output "wait_interval_in_seconds" {
-  description = "(Required) The waiting time (in seconds) between incremental steps to turn on traffic on the new endpoint fleet. Valid values are between 0 and 3600."
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.wait_interval_in_seconds
-}
-output "deployment_config" {
-  description = "(Optional) The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations. See Deployment Config."
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.deployment_config
-}
-output "endpoint_config_name" {
-  description = "(Required) The name of the endpoint configuration to use."
-  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.endpoint_config_name
+output "maximum_execution_timeout_in_seconds" {
+  description = "(Optional) Maximum execution timeout for the deployment. Note that the timeout value should be larger than the total waiting time specified in termination_wait_in_seconds and wait_interval_in_seconds. Valid values are between 600 and 14400."
+  value       = aws_sagemaker_endpoint.aws_sagemaker_endpoint.maximum_execution_timeout_in_seconds
 }
 output "name" {
   description = "The name of the endpoint."

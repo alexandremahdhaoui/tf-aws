@@ -1,28 +1,24 @@
 datasource "aws_customer_gateway" "aws_customer_gateway" {
-  bgp_asn         = var.bgp_asn
-  id              = var.id
+  filter          = var.filter
   tags            = var.tags
+  type            = var.type
   arn             = var.arn
   device_name     = var.device_name
-  filter          = var.filter
+  id              = var.id
   ip_address      = var.ip_address
-  type            = var.type
+  bgp_asn         = var.bgp_asn
   certificate_arn = var.certificate_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags" {
-  description = "Map of key-value pairs assigned to the gateway."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the customer gateway."
-  type        = string
-}
 variable "bgp_asn" {
   description = "Gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
+  type        = string
+}
+variable "certificate_arn" {
+  description = "ARN for the customer gateway certificate."
   type        = string
 }
 variable "id" {
@@ -38,8 +34,8 @@ variable "type" {
   description = "Type of customer gateway. The only type AWS supports at this time is \"ipsec.1\".TimeoutsConfiguration options:"
   type        = string
 }
-variable "certificate_arn" {
-  description = "ARN for the customer gateway certificate."
+variable "arn" {
+  description = "ARN of the customer gateway."
   type        = string
 }
 variable "device_name" {
@@ -51,17 +47,21 @@ variable "filter" {
   type        = string
   default     = ""
 }
+variable "tags" {
+  description = "Map of key-value pairs assigned to the gateway."
+  type        = string
+}
+output "bgp_asn" {
+  description = "Gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
+  value       = aws_customer_gateway.aws_customer_gateway.bgp_asn
+}
 output "certificate_arn" {
   description = "ARN for the customer gateway certificate."
   value       = aws_customer_gateway.aws_customer_gateway.certificate_arn
 }
-output "device_name" {
-  description = "Name for the customer gateway device."
-  value       = aws_customer_gateway.aws_customer_gateway.device_name
-}
-output "filter" {
-  description = "(Optional) One or more name-value pairs to filter by.Attribute ReferenceIn addition to the arguments above, the following attributes are exported:"
-  value       = aws_customer_gateway.aws_customer_gateway.filter
+output "id" {
+  description = "(Optional) ID of the gateway."
+  value       = aws_customer_gateway.aws_customer_gateway.id
 }
 output "ip_address" {
   description = "IP address of the gateway's Internet-routable external interface."
@@ -75,13 +75,13 @@ output "arn" {
   description = "ARN of the customer gateway."
   value       = aws_customer_gateway.aws_customer_gateway.arn
 }
-output "bgp_asn" {
-  description = "Gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
-  value       = aws_customer_gateway.aws_customer_gateway.bgp_asn
+output "device_name" {
+  description = "Name for the customer gateway device."
+  value       = aws_customer_gateway.aws_customer_gateway.device_name
 }
-output "id" {
-  description = "(Optional) ID of the gateway."
-  value       = aws_customer_gateway.aws_customer_gateway.id
+output "filter" {
+  description = "(Optional) One or more name-value pairs to filter by.Attribute ReferenceIn addition to the arguments above, the following attributes are exported:"
+  value       = aws_customer_gateway.aws_customer_gateway.filter
 }
 output "tags" {
   description = "Map of key-value pairs assigned to the gateway."

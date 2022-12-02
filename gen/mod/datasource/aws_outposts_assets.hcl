@@ -1,7 +1,7 @@
 datasource "aws_outposts_assets" "aws_outposts_assets" {
+  host_id_filter   = var.host_id_filter
   status_id_filter = var.status_id_filter
   arn              = var.arn
-  host_id_filter   = var.host_id_filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

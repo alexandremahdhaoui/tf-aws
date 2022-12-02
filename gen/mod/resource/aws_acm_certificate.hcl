@@ -1,57 +1,64 @@
 resource "aws_acm_certificate" "aws_acm_certificate" {
-  domain_name                                 = var.domain_name
-  private_key                                 = var.private_key
-  tags                                        = var.tags
-  certificate_authority_arn                   = var.certificate_authority_arn
-  validation_method                           = var.validation_method
-  validation_option                           = var.validation_option
-  certificate_body                            = var.certificate_body
-  certificate_transparency_logging_preference = var.certificate_transparency_logging_preference
-  id                                          = var.id
-  pending_renewal                             = var.pending_renewal
-  subject_alternative_names                   = var.subject_alternative_names
-  type                                        = var.type
-  certificate_chain                           = var.certificate_chain
   early_renewal_duration                      = var.early_renewal_duration
-  options                                     = var.options
-  renewal_eligibility                         = var.renewal_eligibility
-  renewal_status                              = var.renewal_status
-  resource_record_type                        = var.resource_record_type
-  resource_record_name                        = var.resource_record_name
-  arn                                         = var.arn
-  not_after                                   = var.not_after
-  renewal_summary                             = var.renewal_summary
-  resource_record_value                       = var.resource_record_value
-  tags_all                                    = var.tags_all
-  validation_emails                           = var.validation_emails
-  domain_validation_options                   = var.domain_validation_options
-  status                                      = var.status
-  not_before                                  = var.not_before
+  tags                                        = var.tags
   validation_domain                           = var.validation_domain
+  resource_record_type                        = var.resource_record_type
+  validation_method                           = var.validation_method
+  id                                          = var.id
+  not_before                                  = var.not_before
+  renewal_eligibility                         = var.renewal_eligibility
+  subject_alternative_names                   = var.subject_alternative_names
+  validation_option                           = var.validation_option
+  resource_record_value                       = var.resource_record_value
+  validation_emails                           = var.validation_emails
+  arn                                         = var.arn
+  certificate_chain                           = var.certificate_chain
+  not_after                                   = var.not_after
+  pending_renewal                             = var.pending_renewal
+  renewal_summary                             = var.renewal_summary
+  certificate_authority_arn                   = var.certificate_authority_arn
+  domain_name                                 = var.domain_name
+  options                                     = var.options
+  certificate_body                            = var.certificate_body
+  domain_validation_options                   = var.domain_validation_options
+  private_key                                 = var.private_key
+  renewal_status                              = var.renewal_status
+  resource_record_name                        = var.resource_record_name
+  tags_all                                    = var.tags_all
+  certificate_transparency_logging_preference = var.certificate_transparency_logging_preference
+  status                                      = var.status
+  type                                        = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "certificate_authority_arn" {
-  description = "(Required) ARN of an ACM PCA"
+variable "private_key" {
+  description = "(Required) Certificate's PEM-formatted private key"
   type        = string
 }
-variable "validation_method" {
-  description = "(Required) Which method to use for validation. DNS or EMAIL are valid, NONE can be used for certificates that were imported into ACM and then into Terraform."
+variable "renewal_status" {
+  description = "The status of ACM's managed renewal of the certificate"
   type        = string
 }
-variable "validation_option" {
-  description = "(Optional) Configuration block used to specify information about the initial validation of each domain name. Detailed below."
+variable "resource_record_name" {
+  description = "The name of the DNS record to create to validate the certificate"
   type        = string
-  default     = ""
 }
-variable "pending_renewal" {
-  description = "true if a Private certificate eligible for managed renewal is within the early_renewal_duration period."
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "certificate_body" {
   description = "(Required) Certificate's PEM-formatted public key"
+  type        = string
+}
+variable "domain_validation_options" {
+  description = "Set of domain validation objects which can be used to complete certificate validation.\nCan have more than one element, e.g., if SANs are defined.\nOnly set if DNS-validation was used."
+  type        = string
+}
+variable "type" {
+  description = "Source of the certificate."
   type        = string
 }
 variable "certificate_transparency_logging_preference" {
@@ -59,20 +66,34 @@ variable "certificate_transparency_logging_preference" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "ARN of the certificate"
+variable "status" {
+  description = "Status of the certificate."
+  type        = string
+}
+variable "validation_domain" {
+  description = "(Required) Domain name that you want ACM to use to send you validation emails. This domain name is the suffix of the email addresses that you want ACM to use. This must be the same as the domain_name value or a superdomain of the domain_name value. For example, if you request a certificate for \"testing.example.com\", you can specify \"example.com\" for this value.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "early_renewal_duration" {
+  description = "(Optional) Amount of time to start automatic renewal process before expiration.\nHas no effect if less than 60 days.\nRepresented by either\na subset of RFC 3339 duration supporting years, months, and days (e.g., P90D2160h."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options Configuration BlockSupported nested arguments for the options configuration block:"
+  type        = string
+  default     = ""
+}
+variable "resource_record_type" {
+  description = "The type of DNS record to create"
+  type        = string
+}
+variable "validation_method" {
+  description = "(Required) Which method to use for validation. DNS or EMAIL are valid, NONE can be used for certificates that were imported into ACM and then into Terraform."
   type        = string
 }
 variable "renewal_eligibility" {
   description = "Whether the certificate is eligible for managed renewal."
-  type        = string
-}
-variable "renewal_status" {
-  description = "The status of ACM's managed renewal of the certificate"
-  type        = string
-}
-variable "resource_record_type" {
-  description = "The type of DNS record to create"
   type        = string
 }
 variable "subject_alternative_names" {
@@ -80,17 +101,45 @@ variable "subject_alternative_names" {
   type        = string
   default     = ""
 }
-variable "type" {
-  description = "Source of the certificate."
+variable "validation_option" {
+  description = "(Optional) Configuration block used to specify information about the initial validation of each domain name. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "ARN of the certificate"
+  type        = string
+}
+variable "not_before" {
+  description = "Start of the validity period of the certificate."
+  type        = string
+}
+variable "resource_record_value" {
+  description = "The value the DNS record needs to haveRenewal summary objects export the following attributes:"
+  type        = string
+}
+variable "validation_emails" {
+  description = "List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:"
+  type        = string
+}
+variable "not_after" {
+  description = "Expiration date and time of the certificate."
+  type        = string
+}
+variable "pending_renewal" {
+  description = "true if a Private certificate eligible for managed renewal is within the early_renewal_duration period."
+  type        = string
+}
+variable "renewal_summary" {
+  description = "Contains information about the status of ACM's managed renewal for the certificate."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the certificate"
   type        = string
 }
 variable "certificate_chain" {
   description = "(Optional) Certificate's PEM-formatted chain"
-  type        = string
-  default     = ""
-}
-variable "early_renewal_duration" {
-  description = "(Optional) Amount of time to start automatic renewal process before expiration.\nHas no effect if less than 60 days.\nRepresented by either\na subset of RFC 3339 duration supporting years, months, and days (e.g., P90D2160h."
   type        = string
   default     = ""
 }
@@ -99,62 +148,13 @@ variable "options" {
   type        = string
   default     = ""
 }
-variable "resource_record_name" {
-  description = "The name of the DNS record to create to validate the certificate"
-  type        = string
-}
-variable "resource_record_value" {
-  description = "The value the DNS record needs to haveRenewal summary objects export the following attributes:"
-  type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "validation_emails" {
-  description = "List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the certificate"
-  type        = string
-}
-variable "not_after" {
-  description = "Expiration date and time of the certificate."
-  type        = string
-}
-variable "renewal_summary" {
-  description = "Contains information about the status of ACM's managed renewal for the certificate."
-  type        = string
-}
-variable "domain_validation_options" {
-  description = "Set of domain validation objects which can be used to complete certificate validation.\nCan have more than one element, e.g., if SANs are defined.\nOnly set if DNS-validation was used."
-  type        = string
-}
-variable "status" {
-  description = "Status of the certificate."
-  type        = string
-}
-variable "not_before" {
-  description = "Start of the validity period of the certificate."
-  type        = string
-}
-variable "validation_domain" {
-  description = "(Required) Domain name that you want ACM to use to send you validation emails. This domain name is the suffix of the email addresses that you want ACM to use. This must be the same as the domain_name value or a superdomain of the domain_name value. For example, if you request a certificate for \"testing.example.com\", you can specify \"example.com\" for this value.In addition to all arguments above, the following attributes are exported:"
+variable "certificate_authority_arn" {
+  description = "(Required) ARN of an ACM PCA"
   type        = string
 }
 variable "domain_name" {
   description = "Domain to be validated"
   type        = string
-}
-variable "private_key" {
-  description = "(Required) Certificate's PEM-formatted private key"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options Configuration BlockSupported nested arguments for the options configuration block:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -276,149 +276,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "domain_validation_options" {
-  description = "Set of domain validation objects which can be used to complete certificate validation.\nCan have more than one element, e.g., if SANs are defined.\nOnly set if DNS-validation was used."
-  value       = aws_acm_certificate.aws_acm_certificate.domain_validation_options
-}
-output "status" {
-  description = "Status of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.status
-}
-output "not_before" {
-  description = "Start of the validity period of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.not_before
-}
-output "validation_domain" {
-  description = "(Required) Domain name that you want ACM to use to send you validation emails. This domain name is the suffix of the email addresses that you want ACM to use. This must be the same as the domain_name value or a superdomain of the domain_name value. For example, if you request a certificate for \"testing.example.com\", you can specify \"example.com\" for this value.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_acm_certificate.aws_acm_certificate.validation_domain
-}
-output "domain_name" {
-  description = "Domain to be validated"
-  value       = aws_acm_certificate.aws_acm_certificate.domain_name
-}
-output "private_key" {
-  description = "(Required) Certificate's PEM-formatted private key"
-  value       = aws_acm_certificate.aws_acm_certificate.private_key
+output "early_renewal_duration" {
+  description = "(Optional) Amount of time to start automatic renewal process before expiration.\nHas no effect if less than 60 days.\nRepresented by either\na subset of RFC 3339 duration supporting years, months, and days (e.g., P90D2160h."
+  value       = aws_acm_certificate.aws_acm_certificate.early_renewal_duration
 }
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options Configuration BlockSupported nested arguments for the options configuration block:"
   value       = aws_acm_certificate.aws_acm_certificate.tags
 }
-output "certificate_authority_arn" {
-  description = "(Required) ARN of an ACM PCA"
-  value       = aws_acm_certificate.aws_acm_certificate.certificate_authority_arn
-}
-output "validation_method" {
-  description = "(Required) Which method to use for validation. DNS or EMAIL are valid, NONE can be used for certificates that were imported into ACM and then into Terraform."
-  value       = aws_acm_certificate.aws_acm_certificate.validation_method
-}
-output "validation_option" {
-  description = "(Optional) Configuration block used to specify information about the initial validation of each domain name. Detailed below."
-  value       = aws_acm_certificate.aws_acm_certificate.validation_option
-}
-output "certificate_body" {
-  description = "(Required) Certificate's PEM-formatted public key"
-  value       = aws_acm_certificate.aws_acm_certificate.certificate_body
-}
-output "certificate_transparency_logging_preference" {
-  description = "(Optional) Whether certificate details should be added to a certificate transparency log. Valid values are ENABLED or DISABLED. See https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency for more details.validation_option Configuration BlockSupported nested arguments for the validation_option configuration block:"
-  value       = aws_acm_certificate.aws_acm_certificate.certificate_transparency_logging_preference
-}
-output "id" {
-  description = "ARN of the certificate"
-  value       = aws_acm_certificate.aws_acm_certificate.id
-}
-output "pending_renewal" {
-  description = "true if a Private certificate eligible for managed renewal is within the early_renewal_duration period."
-  value       = aws_acm_certificate.aws_acm_certificate.pending_renewal
-}
-output "type" {
-  description = "Source of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.type
-}
-output "certificate_chain" {
-  description = "(Optional) Certificate's PEM-formatted chain"
-  value       = aws_acm_certificate.aws_acm_certificate.certificate_chain
-}
-output "early_renewal_duration" {
-  description = "(Optional) Amount of time to start automatic renewal process before expiration.\nHas no effect if less than 60 days.\nRepresented by either\na subset of RFC 3339 duration supporting years, months, and days (e.g., P90D2160h."
-  value       = aws_acm_certificate.aws_acm_certificate.early_renewal_duration
-}
-output "options" {
-  description = "(Optional) Configuration block used to set certificate options. Detailed below."
-  value       = aws_acm_certificate.aws_acm_certificate.options
-}
-output "renewal_eligibility" {
-  description = "Whether the certificate is eligible for managed renewal."
-  value       = aws_acm_certificate.aws_acm_certificate.renewal_eligibility
-}
-output "renewal_status" {
-  description = "The status of ACM's managed renewal of the certificate"
-  value       = aws_acm_certificate.aws_acm_certificate.renewal_status
+output "validation_domain" {
+  description = "(Required) Domain name that you want ACM to use to send you validation emails. This domain name is the suffix of the email addresses that you want ACM to use. This must be the same as the domain_name value or a superdomain of the domain_name value. For example, if you request a certificate for \"testing.example.com\", you can specify \"example.com\" for this value.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_acm_certificate.aws_acm_certificate.validation_domain
 }
 output "resource_record_type" {
   description = "The type of DNS record to create"
   value       = aws_acm_certificate.aws_acm_certificate.resource_record_type
 }
-output "subject_alternative_names" {
-  description = "(Optional) Set of domains that should be SANs in the issued certificate.\nTo remove all elements of a previously configured list, set this value equal to an empty list ([]terraform taint command to trigger recreation."
-  value       = aws_acm_certificate.aws_acm_certificate.subject_alternative_names
+output "validation_method" {
+  description = "(Required) Which method to use for validation. DNS or EMAIL are valid, NONE can be used for certificates that were imported into ACM and then into Terraform."
+  value       = aws_acm_certificate.aws_acm_certificate.validation_method
 }
-output "resource_record_name" {
-  description = "The name of the DNS record to create to validate the certificate"
-  value       = aws_acm_certificate.aws_acm_certificate.resource_record_name
-}
-output "arn" {
+output "id" {
   description = "ARN of the certificate"
-  value       = aws_acm_certificate.aws_acm_certificate.arn
-}
-output "not_after" {
-  description = "Expiration date and time of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.not_after
-}
-output "renewal_summary" {
-  description = "Contains information about the status of ACM's managed renewal for the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.renewal_summary
-}
-output "resource_record_value" {
-  description = "The value the DNS record needs to haveRenewal summary objects export the following attributes:"
-  value       = aws_acm_certificate.aws_acm_certificate.resource_record_value
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_acm_certificate.aws_acm_certificate.tags_all
-}
-output "validation_emails" {
-  description = "List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:"
-  value       = aws_acm_certificate.aws_acm_certificate.validation_emails
-}
-output "resource_record_name" {
-  description = "The name of the DNS record to create to validate the certificate"
-  value       = aws_acm_certificate.aws_acm_certificate.resource_record_name
-}
-output "validation_emails" {
-  description = "List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:"
-  value       = aws_acm_certificate.aws_acm_certificate.validation_emails
-}
-output "domain_validation_options" {
-  description = "Set of domain validation objects which can be used to complete certificate validation.\nCan have more than one element, e.g., if SANs are defined.\nOnly set if DNS-validation was used."
-  value       = aws_acm_certificate.aws_acm_certificate.domain_validation_options
-}
-output "pending_renewal" {
-  description = "true if a Private certificate eligible for managed renewal is within the early_renewal_duration period."
-  value       = aws_acm_certificate.aws_acm_certificate.pending_renewal
-}
-output "renewal_status_reason" {
-  description = "The reason that a renewal request was unsuccessful or is pending"
-  value       = aws_acm_certificate.aws_acm_certificate.renewal_status_reason
-}
-output "type" {
-  description = "Source of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.type
-}
-output "not_after" {
-  description = "Expiration date and time of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.not_after
+  value       = aws_acm_certificate.aws_acm_certificate.id
 }
 output "not_before" {
   description = "Start of the validity period of the certificate."
@@ -428,29 +308,89 @@ output "renewal_eligibility" {
   description = "Whether the certificate is eligible for managed renewal."
   value       = aws_acm_certificate.aws_acm_certificate.renewal_eligibility
 }
-output "renewal_status" {
-  description = "The status of ACM's managed renewal of the certificate"
-  value       = aws_acm_certificate.aws_acm_certificate.renewal_status
+output "subject_alternative_names" {
+  description = "(Optional) Set of domains that should be SANs in the issued certificate.\nTo remove all elements of a previously configured list, set this value equal to an empty list ([]terraform taint command to trigger recreation."
+  value       = aws_acm_certificate.aws_acm_certificate.subject_alternative_names
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_acm_certificate.aws_acm_certificate.tags_all
+output "validation_option" {
+  description = "(Optional) Configuration block used to specify information about the initial validation of each domain name. Detailed below."
+  value       = aws_acm_certificate.aws_acm_certificate.validation_option
 }
 output "resource_record_value" {
   description = "The value the DNS record needs to haveRenewal summary objects export the following attributes:"
   value       = aws_acm_certificate.aws_acm_certificate.resource_record_value
 }
-output "status" {
-  description = "Status of the certificate."
-  value       = aws_acm_certificate.aws_acm_certificate.status
+output "validation_emails" {
+  description = "List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:"
+  value       = aws_acm_certificate.aws_acm_certificate.validation_emails
 }
 output "arn" {
   description = "ARN of the certificate"
   value       = aws_acm_certificate.aws_acm_certificate.arn
 }
+output "certificate_chain" {
+  description = "(Optional) Certificate's PEM-formatted chain"
+  value       = aws_acm_certificate.aws_acm_certificate.certificate_chain
+}
+output "not_after" {
+  description = "Expiration date and time of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.not_after
+}
+output "pending_renewal" {
+  description = "true if a Private certificate eligible for managed renewal is within the early_renewal_duration period."
+  value       = aws_acm_certificate.aws_acm_certificate.pending_renewal
+}
+output "renewal_summary" {
+  description = "Contains information about the status of ACM's managed renewal for the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.renewal_summary
+}
+output "certificate_authority_arn" {
+  description = "(Required) ARN of an ACM PCA"
+  value       = aws_acm_certificate.aws_acm_certificate.certificate_authority_arn
+}
 output "domain_name" {
   description = "Domain to be validated"
   value       = aws_acm_certificate.aws_acm_certificate.domain_name
+}
+output "options" {
+  description = "(Optional) Configuration block used to set certificate options. Detailed below."
+  value       = aws_acm_certificate.aws_acm_certificate.options
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_acm_certificate.aws_acm_certificate.tags_all
+}
+output "certificate_body" {
+  description = "(Required) Certificate's PEM-formatted public key"
+  value       = aws_acm_certificate.aws_acm_certificate.certificate_body
+}
+output "domain_validation_options" {
+  description = "Set of domain validation objects which can be used to complete certificate validation.\nCan have more than one element, e.g., if SANs are defined.\nOnly set if DNS-validation was used."
+  value       = aws_acm_certificate.aws_acm_certificate.domain_validation_options
+}
+output "private_key" {
+  description = "(Required) Certificate's PEM-formatted private key"
+  value       = aws_acm_certificate.aws_acm_certificate.private_key
+}
+output "renewal_status" {
+  description = "The status of ACM's managed renewal of the certificate"
+  value       = aws_acm_certificate.aws_acm_certificate.renewal_status
+}
+output "resource_record_name" {
+  description = "The name of the DNS record to create to validate the certificate"
+  value       = aws_acm_certificate.aws_acm_certificate.resource_record_name
+}
+output "certificate_transparency_logging_preference" {
+  description = "(Optional) Whether certificate details should be added to a certificate transparency log. Valid values are ENABLED or DISABLED. See https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency for more details.validation_option Configuration BlockSupported nested arguments for the validation_option configuration block:"
+  value       = aws_acm_certificate.aws_acm_certificate.certificate_transparency_logging_preference
+}
+output "status" {
+  description = "Status of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.status
+}
+output "type" {
+  description = "Source of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.type
 }
 output "id" {
   description = "ARN of the certificate"
@@ -460,9 +400,69 @@ output "renewal_summary" {
   description = "Contains information about the status of ACM's managed renewal for the certificate."
   value       = aws_acm_certificate.aws_acm_certificate.renewal_summary
 }
+output "resource_record_value" {
+  description = "The value the DNS record needs to haveRenewal summary objects export the following attributes:"
+  value       = aws_acm_certificate.aws_acm_certificate.resource_record_value
+}
+output "status" {
+  description = "Status of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.status
+}
+output "type" {
+  description = "Source of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.type
+}
+output "domain_validation_options" {
+  description = "Set of domain validation objects which can be used to complete certificate validation.\nCan have more than one element, e.g., if SANs are defined.\nOnly set if DNS-validation was used."
+  value       = aws_acm_certificate.aws_acm_certificate.domain_validation_options
+}
+output "renewal_status_reason" {
+  description = "The reason that a renewal request was unsuccessful or is pending"
+  value       = aws_acm_certificate.aws_acm_certificate.renewal_status_reason
+}
+output "resource_record_name" {
+  description = "The name of the DNS record to create to validate the certificate"
+  value       = aws_acm_certificate.aws_acm_certificate.resource_record_name
+}
 output "resource_record_type" {
   description = "The type of DNS record to create"
   value       = aws_acm_certificate.aws_acm_certificate.resource_record_type
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_acm_certificate.aws_acm_certificate.tags_all
+}
+output "arn" {
+  description = "ARN of the certificate"
+  value       = aws_acm_certificate.aws_acm_certificate.arn
+}
+output "domain_name" {
+  description = "Domain to be validated"
+  value       = aws_acm_certificate.aws_acm_certificate.domain_name
+}
+output "renewal_eligibility" {
+  description = "Whether the certificate is eligible for managed renewal."
+  value       = aws_acm_certificate.aws_acm_certificate.renewal_eligibility
+}
+output "renewal_status" {
+  description = "The status of ACM's managed renewal of the certificate"
+  value       = aws_acm_certificate.aws_acm_certificate.renewal_status
+}
+output "validation_emails" {
+  description = "List of addresses that received a validation email. Only set if EMAIL validation was used.Domain validation objects export the following attributes:"
+  value       = aws_acm_certificate.aws_acm_certificate.validation_emails
+}
+output "not_after" {
+  description = "Expiration date and time of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.not_after
+}
+output "not_before" {
+  description = "Start of the validity period of the certificate."
+  value       = aws_acm_certificate.aws_acm_certificate.not_before
+}
+output "pending_renewal" {
+  description = "true if a Private certificate eligible for managed renewal is within the early_renewal_duration period."
+  value       = aws_acm_certificate.aws_acm_certificate.pending_renewal
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

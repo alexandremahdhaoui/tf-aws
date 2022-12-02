@@ -7,11 +7,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "(Optional) ARN of the listener. Required if load_balancer_arn and port is not set."
-  type        = string
-  default     = ""
-}
 variable "load_balancer_arn" {
   description = "(Optional) ARN of the load balancer. Required if arn is not set."
   type        = string
@@ -22,9 +17,10 @@ variable "port" {
   type        = string
   default     = ""
 }
-output "port" {
-  description = "(Optional) Port of the listener. Required if arn is not set.See the LB Listener Resource for details on the returned attributes - they are identical.TimeoutsConfiguration options:"
-  value       = aws_lb_listener.aws_lb_listener.port
+variable "arn" {
+  description = "(Optional) ARN of the listener. Required if load_balancer_arn and port is not set."
+  type        = string
+  default     = ""
 }
 output "arn" {
   description = "(Optional) ARN of the listener. Required if load_balancer_arn and port is not set."
@@ -33,6 +29,10 @@ output "arn" {
 output "load_balancer_arn" {
   description = "(Optional) ARN of the load balancer. Required if arn is not set."
   value       = aws_lb_listener.aws_lb_listener.load_balancer_arn
+}
+output "port" {
+  description = "(Optional) Port of the listener. Required if arn is not set.See the LB Listener Resource for details on the returned attributes - they are identical.TimeoutsConfiguration options:"
+  value       = aws_lb_listener.aws_lb_listener.port
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,25 +1,16 @@
 resource "aws_customer_gateway" "aws_customer_gateway" {
-  certificate_arn = var.certificate_arn
-  device_name     = var.device_name
   id              = var.id
   ip_address      = var.ip_address
   tags            = var.tags
   type            = var.type
   arn             = var.arn
   bgp_asn         = var.bgp_asn
+  certificate_arn = var.certificate_arn
+  device_name     = var.device_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "bgp_asn" {
-  description = "(Required) The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
-  type        = string
-}
-variable "certificate_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) for the customer gateway certificate."
-  type        = string
-  default     = ""
 }
 variable "device_name" {
   description = "(Optional) A name for the customer gateway device."
@@ -46,6 +37,15 @@ variable "type" {
 variable "arn" {
   description = "The ARN of the customer gateway."
   type        = string
+}
+variable "bgp_asn" {
+  description = "(Required) The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
+  type        = string
+}
+variable "certificate_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) for the customer gateway certificate."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -167,10 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The amazon-assigned ID of the gateway."
-  value       = aws_customer_gateway.aws_customer_gateway.id
-}
 output "ip_address" {
   description = "(Required) The IPv4 address for the customer gateway device's outside interface."
   value       = aws_customer_gateway.aws_customer_gateway.ip_address
@@ -198,6 +194,10 @@ output "certificate_arn" {
 output "device_name" {
   description = "(Optional) A name for the customer gateway device."
   value       = aws_customer_gateway.aws_customer_gateway.device_name
+}
+output "id" {
+  description = "The amazon-assigned ID of the gateway."
+  value       = aws_customer_gateway.aws_customer_gateway.id
 }
 output "arn" {
   description = "The ARN of the customer gateway."

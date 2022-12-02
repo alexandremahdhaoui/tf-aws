@@ -1,24 +1,28 @@
 resource "aws_licensemanager_license_configuration.markdown" "aws_licensemanager_license_configuration.markdown" {
-  allowedTenancy           = var.allowedTenancy
+  license_count            = var.license_count
   maximumCores             = var.maximumCores
-  minimumSockets           = var.minimumSockets
-  id                       = var.id
-  license_counting_type    = var.license_counting_type
-  tags                     = var.tags
+  minimumVcpus             = var.minimumVcpus
   arn                      = var.arn
+  license_count_hard_limit = var.license_count_hard_limit
+  license_counting_type    = var.license_counting_type
+  license_rules            = var.license_rules
   description              = var.description
+  id                       = var.id
+  minimumCores             = var.minimumCores
+  minimumSockets           = var.minimumSockets
+  name                     = var.name
+  tags                     = var.tags
+  allowedTenancy           = var.allowedTenancy
   maximumSockets           = var.maximumSockets
   maximumVcpus             = var.maximumVcpus
-  minimumCores             = var.minimumCores
-  name                     = var.name
-  license_count            = var.license_count
-  license_count_hard_limit = var.license_count_hard_limit
-  license_rules            = var.license_rules
-  minimumVcpus             = var.minimumVcpus
   owner_account_id         = var.owner_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The license configuration ARN."
   type        = string
 }
 variable "license_count_hard_limit" {
@@ -26,13 +30,51 @@ variable "license_count_hard_limit" {
   type        = string
   default     = ""
 }
+variable "license_counting_type" {
+  description = "(Required) Dimension to use to track license inventory. Specify either vCPU, Instance, Core or Socket."
+  type        = string
+}
 variable "license_rules" {
   description = "(Optional) Array of configured License Manager rules."
   type        = string
   default     = ""
 }
-variable "minimumVcpus" {
-  description = "Resource must have minimum vCPU count in order to use the license. Default: 1"
+variable "description" {
+  description = "(Optional) Description of the license configuration."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The license configuration ARN."
+  type        = string
+}
+variable "minimumCores" {
+  description = "Resource must have minimum core count in order to use the license. Default: 1"
+  type        = string
+}
+variable "minimumSockets" {
+  description = "Resource must have minimum socket count in order to use the license. Default: 1"
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the license configuration."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.RulesLicense rules should be in the format of #RuleType=RuleValue. Supported rule types:"
+  type        = string
+  default     = ""
+}
+variable "allowedTenancy" {
+  description = "Defines where the license can be used. If set, restricts license usage to selected tenancies. Specify a comma delimited list of EC2-Default, EC2-DedicatedHost, EC2-DedicatedInstanceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "maximumSockets" {
+  description = "Resource must have maximum socket count in order to use the license. Default: unbounded, limit: 10000"
+  type        = string
+}
+variable "maximumVcpus" {
+  description = "Resource must have maximum vCPU count in order to use the license. Default: unbounded, limit: 10000"
   type        = string
 }
 variable "owner_account_id" {
@@ -48,50 +90,8 @@ variable "maximumCores" {
   description = "Resource must have maximum core count in order to use the license. Default: unbounded, limit: 10000"
   type        = string
 }
-variable "minimumSockets" {
-  description = "Resource must have minimum socket count in order to use the license. Default: 1"
-  type        = string
-}
-variable "allowedTenancy" {
-  description = "Defines where the license can be used. If set, restricts license usage to selected tenancies. Specify a comma delimited list of EC2-Default, EC2-DedicatedHost, EC2-DedicatedInstanceIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "license_counting_type" {
-  description = "(Required) Dimension to use to track license inventory. Specify either vCPU, Instance, Core or Socket."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.RulesLicense rules should be in the format of #RuleType=RuleValue. Supported rule types:"
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The license configuration ARN."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the license configuration."
-  type        = string
-  default     = ""
-}
-variable "maximumSockets" {
-  description = "Resource must have maximum socket count in order to use the license. Default: unbounded, limit: 10000"
-  type        = string
-}
-variable "maximumVcpus" {
-  description = "Resource must have maximum vCPU count in order to use the license. Default: unbounded, limit: 10000"
-  type        = string
-}
-variable "minimumCores" {
-  description = "Resource must have minimum core count in order to use the license. Default: 1"
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the license configuration."
-  type        = string
-}
-variable "arn" {
-  description = "The license configuration ARN."
+variable "minimumVcpus" {
+  description = "Resource must have minimum vCPU count in order to use the license. Default: 1"
   type        = string
 }
 variable "tag_instance_id" {
@@ -214,29 +214,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The license configuration ARN."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.id
-}
-output "license_counting_type" {
-  description = "(Required) Dimension to use to track license inventory. Specify either vCPU, Instance, Core or Socket."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_counting_type
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.RulesLicense rules should be in the format of #RuleType=RuleValue. Supported rule types:"
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.tags
-}
-output "name" {
-  description = "(Required) Name of the license configuration."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.name
-}
-output "arn" {
-  description = "The license configuration ARN."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.arn
-}
-output "description" {
-  description = "(Optional) Description of the license configuration."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.description
+output "allowedTenancy" {
+  description = "Defines where the license can be used. If set, restricts license usage to selected tenancies. Specify a comma delimited list of EC2-Default, EC2-DedicatedHost, EC2-DedicatedInstanceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.allowedTenancy
 }
 output "maximumSockets" {
   description = "Resource must have maximum socket count in order to use the license. Default: unbounded, limit: 10000"
@@ -246,41 +226,61 @@ output "maximumVcpus" {
   description = "Resource must have maximum vCPU count in order to use the license. Default: unbounded, limit: 10000"
   value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.maximumVcpus
 }
-output "minimumCores" {
-  description = "Resource must have minimum core count in order to use the license. Default: 1"
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.minimumCores
+output "owner_account_id" {
+  description = "Account ID of the owner of the license configuration."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.owner_account_id
 }
 output "license_count" {
   description = "(Optional) Number of licenses managed by the license configuration."
   value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_count
 }
-output "license_count_hard_limit" {
-  description = "(Optional) Sets the number of available licenses as a hard limit."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_count_hard_limit
-}
-output "license_rules" {
-  description = "(Optional) Array of configured License Manager rules."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_rules
+output "maximumCores" {
+  description = "Resource must have maximum core count in order to use the license. Default: unbounded, limit: 10000"
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.maximumCores
 }
 output "minimumVcpus" {
   description = "Resource must have minimum vCPU count in order to use the license. Default: 1"
   value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.minimumVcpus
 }
-output "owner_account_id" {
-  description = "Account ID of the owner of the license configuration."
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.owner_account_id
+output "arn" {
+  description = "The license configuration ARN."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.arn
 }
-output "allowedTenancy" {
-  description = "Defines where the license can be used. If set, restricts license usage to selected tenancies. Specify a comma delimited list of EC2-Default, EC2-DedicatedHost, EC2-DedicatedInstanceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.allowedTenancy
+output "license_count_hard_limit" {
+  description = "(Optional) Sets the number of available licenses as a hard limit."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_count_hard_limit
 }
-output "maximumCores" {
-  description = "Resource must have maximum core count in order to use the license. Default: unbounded, limit: 10000"
-  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.maximumCores
+output "license_counting_type" {
+  description = "(Required) Dimension to use to track license inventory. Specify either vCPU, Instance, Core or Socket."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_counting_type
+}
+output "license_rules" {
+  description = "(Optional) Array of configured License Manager rules."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.license_rules
+}
+output "description" {
+  description = "(Optional) Description of the license configuration."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.description
+}
+output "id" {
+  description = "The license configuration ARN."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.id
+}
+output "minimumCores" {
+  description = "Resource must have minimum core count in order to use the license. Default: 1"
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.minimumCores
 }
 output "minimumSockets" {
   description = "Resource must have minimum socket count in order to use the license. Default: 1"
   value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.minimumSockets
+}
+output "name" {
+  description = "(Required) Name of the license configuration."
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.RulesLicense rules should be in the format of #RuleType=RuleValue. Supported rule types:"
+  value       = aws_licensemanager_license_configuration.markdown.aws_licensemanager_license_configuration.markdown.tags
 }
 output "arn" {
   description = "The license configuration ARN."

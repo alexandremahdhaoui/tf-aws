@@ -1,19 +1,15 @@
 resource "aws_dx_hosted_private_virtual_interface_accepter" "aws_dx_hosted_private_virtual_interface_accepter" {
-  tags_all             = var.tags_all
-  virtual_interface_id = var.virtual_interface_id
-  vpn_gateway_id       = var.vpn_gateway_id
-  arn                  = var.arn
   create               = var.create
   dx_gateway_id        = var.dx_gateway_id
   id                   = var.id
   tags                 = var.tags
+  tags_all             = var.tags_all
+  virtual_interface_id = var.virtual_interface_id
+  vpn_gateway_id       = var.vpn_gateway_id
+  arn                  = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the virtual interface."
   type        = string
 }
 variable "tags" {
@@ -46,6 +42,10 @@ variable "dx_gateway_id" {
   description = "(Optional) The ID of the Direct Connect gateway to which to connect the virtual interface."
   type        = string
   default     = ""
+}
+variable "id" {
+  description = "The ID of the virtual interface."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -199,10 +199,6 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_dx_hosted_private_virtual_interface_accepter.aws_dx_hosted_private_virtual_interface_accepter.tags
 }
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_private_virtual_interface_accepter.aws_dx_hosted_private_virtual_interface_accepter.delete
-}
 output "id" {
   description = "The ID of the virtual interface."
   value       = aws_dx_hosted_private_virtual_interface_accepter.aws_dx_hosted_private_virtual_interface_accepter.id
@@ -218,6 +214,10 @@ output "arn" {
 output "create" {
   description = "(Default 10m)"
   value       = aws_dx_hosted_private_virtual_interface_accepter.aws_dx_hosted_private_virtual_interface_accepter.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_private_virtual_interface_accepter.aws_dx_hosted_private_virtual_interface_accepter.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

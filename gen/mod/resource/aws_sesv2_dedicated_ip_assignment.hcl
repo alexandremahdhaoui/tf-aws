@@ -1,8 +1,8 @@
 resource "aws_sesv2_dedicated_ip_assignment" "aws_sesv2_dedicated_ip_assignment" {
-  ip                    = var.ip
   create                = var.create
   destination_pool_name = var.destination_pool_name
   id                    = var.id
+  ip                    = var.ip
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -160,6 +160,10 @@ output "destination_pool_name" {
   description = "(Required) Dedicated IP address.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.destination_pool_name
 }
+output "id" {
+  description = "A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:"
+  value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.id
+}
 output "create" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.create
@@ -167,10 +171,6 @@ output "create" {
 output "delete" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.delete
-}
-output "id" {
-  description = "A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:"
-  value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

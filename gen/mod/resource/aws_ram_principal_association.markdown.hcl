@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "principal" {
-  description = "(Required) The principal to associate with the resource share. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN."
-  type        = string
-}
 variable "resource_share_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the resource share.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "principal" {
+  description = "(Required) The principal to associate with the resource share. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN."
   type        = string
 }
 variable "tag_instance_id" {

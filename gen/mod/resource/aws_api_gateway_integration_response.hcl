@@ -12,6 +12,19 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "content_handling" {
+  description = "(Optional) How to handle request payload content type conversions. Supported values are CONVERT_TO_BINARY and CONVERT_TO_TEXT. If this property is not defined, the response payload will be passed through from the integration response to the method response without modification."
+  type        = string
+  default     = ""
+}
+variable "http_method" {
+  description = "(Required) HTTP method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)."
+  type        = string
+}
+variable "resource_id" {
+  description = "(Required) API resource ID."
+  type        = string
+}
 variable "response_parameters" {
   description = "(Optional) Map of response parameters that can be read from the backend response. For example: response_parameters = { \"method.response.header.X-Some-Header\" = \"integration.response.header.X-Some-Other-Header\" }."
   type        = string
@@ -33,19 +46,6 @@ variable "selection_pattern" {
 }
 variable "status_code" {
   description = "(Required) HTTP status code."
-  type        = string
-}
-variable "content_handling" {
-  description = "(Optional) How to handle request payload content type conversions. Supported values are CONVERT_TO_BINARY and CONVERT_TO_TEXT. If this property is not defined, the response payload will be passed through from the integration response to the method response without modification."
-  type        = string
-  default     = ""
-}
-variable "http_method" {
-  description = "(Required) HTTP method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)."
-  type        = string
-}
-variable "resource_id" {
-  description = "(Required) API resource ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -168,6 +168,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "content_handling" {
+  description = "(Optional) How to handle request payload content type conversions. Supported values are CONVERT_TO_BINARY and CONVERT_TO_TEXT. If this property is not defined, the response payload will be passed through from the integration response to the method response without modification."
+  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.content_handling
+}
+output "http_method" {
+  description = "(Required) HTTP method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)."
+  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.http_method
+}
+output "resource_id" {
+  description = "(Required) API resource ID."
+  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.resource_id
+}
 output "response_parameters" {
   description = "(Optional) Map of response parameters that can be read from the backend response. For example: response_parameters = { \"method.response.header.X-Some-Header\" = \"integration.response.header.X-Some-Other-Header\" }."
   value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.response_parameters
@@ -187,18 +199,6 @@ output "selection_pattern" {
 output "status_code" {
   description = "(Required) HTTP status code."
   value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.status_code
-}
-output "content_handling" {
-  description = "(Optional) How to handle request payload content type conversions. Supported values are CONVERT_TO_BINARY and CONVERT_TO_TEXT. If this property is not defined, the response payload will be passed through from the integration response to the method response without modification."
-  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.content_handling
-}
-output "http_method" {
-  description = "(Required) HTTP method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)."
-  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.http_method
-}
-output "resource_id" {
-  description = "(Required) API resource ID."
-  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.resource_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

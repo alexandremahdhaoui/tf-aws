@@ -1,52 +1,52 @@
 datasource "aws_appmesh_virtual_service" "aws_appmesh_virtual_service" {
+  mesh_owner        = var.mesh_owner
   provider          = var.provider
   spec              = var.spec
-  virtual_router    = var.virtual_router
-  resource_owner    = var.resource_owner
   tags              = var.tags
-  arn               = var.arn
-  created_date      = var.created_date
-  last_updated_date = var.last_updated_date
-  mesh_name         = var.mesh_name
-  mesh_owner        = var.mesh_owner
-  name              = var.name
   virtual_node      = var.virtual_node
   virtual_node_name = var.virtual_node_name
+  created_date      = var.created_date
+  mesh_name         = var.mesh_name
+  name              = var.name
+  resource_owner    = var.resource_owner
+  virtual_router    = var.virtual_router
+  arn               = var.arn
+  last_updated_date = var.last_updated_date
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "provider" {
-  description = "App Mesh object that is acting as the provider for a virtual service.Provider"
-  type        = string
-}
-variable "spec" {
-  description = "Virtual service specification"
-  type        = string
-}
-variable "virtual_router" {
-  description = "Virtual router associated with the virtual service.Virtual Node"
-  type        = string
-}
-variable "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  type        = string
-}
-variable "tags" {
-  description = "Map of tags.Spec"
   type        = string
 }
 variable "arn" {
   description = "ARN of the virtual service."
   type        = string
 }
-variable "created_date" {
-  description = "Creation date of the virtual service."
-  type        = string
-}
 variable "last_updated_date" {
   description = "Last update date of the virtual service."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the virtual service."
+  type        = string
+}
+variable "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  type        = string
+}
+variable "virtual_router" {
+  description = "Virtual router associated with the virtual service.Virtual Node"
+  type        = string
+}
+variable "virtual_node" {
+  description = "Virtual node associated with the virtual service."
+  type        = string
+}
+variable "virtual_node_name" {
+  description = "Name of the virtual node that is acting as a service provider.Virtual Router"
+  type        = string
+}
+variable "created_date" {
+  description = "Creation date of the virtual service."
   type        = string
 }
 variable "mesh_name" {
@@ -58,17 +58,21 @@ variable "mesh_owner" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Name of the virtual service."
+variable "provider" {
+  description = "App Mesh object that is acting as the provider for a virtual service.Provider"
   type        = string
 }
-variable "virtual_node" {
-  description = "Virtual node associated with the virtual service."
+variable "spec" {
+  description = "Virtual service specification"
   type        = string
 }
-variable "virtual_node_name" {
-  description = "Name of the virtual node that is acting as a service provider.Virtual Router"
+variable "tags" {
+  description = "Map of tags.Spec"
   type        = string
+}
+output "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_owner
 }
 output "provider" {
   description = "App Mesh object that is acting as the provider for a virtual service.Provider"
@@ -78,29 +82,25 @@ output "spec" {
   description = "Virtual service specification"
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.spec
 }
-output "virtual_router" {
-  description = "Virtual router associated with the virtual service.Virtual Node"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router
+output "tags" {
+  description = "Map of tags.Spec"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags
 }
-output "arn" {
-  description = "ARN of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
+output "virtual_node" {
+  description = "Virtual node associated with the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node
+}
+output "virtual_node_name" {
+  description = "Name of the virtual node that is acting as a service provider.Virtual Router"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node_name
 }
 output "created_date" {
   description = "Creation date of the virtual service."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.created_date
 }
-output "last_updated_date" {
-  description = "Last update date of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
-}
 output "mesh_name" {
   description = "(Required) Name of the service mesh in which the virtual service exists."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_name
-}
-output "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_owner
 }
 output "name" {
   description = "(Required) Name of the virtual service."
@@ -110,57 +110,57 @@ output "resource_owner" {
   description = "Resource owner's AWS account ID."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.resource_owner
 }
-output "tags" {
-  description = "Map of tags.Spec"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags
-}
-output "virtual_node" {
-  description = "Virtual node associated with the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node
-}
-output "virtual_node_name" {
-  description = "Name of the virtual node that is acting as a service provider.Virtual Router"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node_name
-}
-output "virtual_node" {
-  description = "Virtual node associated with the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node
-}
 output "virtual_router" {
   description = "Virtual router associated with the virtual service.Virtual Node"
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router
-}
-output "last_updated_date" {
-  description = "Last update date of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
-}
-output "tags" {
-  description = "Map of tags.Spec"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags
-}
-output "provider" {
-  description = "App Mesh object that is acting as the provider for a virtual service.Provider"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.provider
-}
-output "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.resource_owner
-}
-output "spec" {
-  description = "Virtual service specification"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.spec
-}
-output "virtual_node_name" {
-  description = "Name of the virtual node that is acting as a service provider.Virtual Router"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node_name
 }
 output "arn" {
   description = "ARN of the virtual service."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
 }
+output "last_updated_date" {
+  description = "Last update date of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
+}
+output "arn" {
+  description = "ARN of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
+}
+output "spec" {
+  description = "Virtual service specification"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.spec
+}
+output "tags" {
+  description = "Map of tags.Spec"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags
+}
+output "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.resource_owner
+}
+output "virtual_node" {
+  description = "Virtual node associated with the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node
+}
+output "virtual_node_name" {
+  description = "Name of the virtual node that is acting as a service provider.Virtual Router"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node_name
+}
+output "virtual_router" {
+  description = "Virtual router associated with the virtual service.Virtual Node"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router
+}
 output "created_date" {
   description = "Creation date of the virtual service."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.created_date
+}
+output "last_updated_date" {
+  description = "Last update date of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
+}
+output "provider" {
+  description = "App Mesh object that is acting as the provider for a virtual service.Provider"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.provider
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

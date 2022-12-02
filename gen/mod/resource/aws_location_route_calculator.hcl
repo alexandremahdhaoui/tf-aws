@@ -1,19 +1,52 @@
 resource "aws_location_route_calculator" "aws_location_route_calculator" {
-  calculator_arn  = var.calculator_arn
+  calculator_name = var.calculator_name
   create_time     = var.create_time
   data_source     = var.data_source
-  tags_all        = var.tags_all
-  tags            = var.tags
-  update          = var.update
-  update_time     = var.update_time
-  calculator_name = var.calculator_name
-  create          = var.create
+  calculator_arn  = var.calculator_arn
   delete          = var.delete
   description     = var.description
+  tags            = var.tags
+  tags_all        = var.tags_all
+  update          = var.update
+  update_time     = var.update_time
+  create          = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "calculator_arn" {
+  description = "The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS."
+  type        = string
+  default     = ""
+}
+variable "calculator_name" {
+  description = "(Required) The name of the route calculator resource."
+  type        = string
+}
+variable "create_time" {
+  description = "The timestamp for when the route calculator resource was created in ISO 8601 format."
+  type        = string
+  default     = ""
+}
+variable "data_source" {
+  description = "(Required) Specifies the data provider of traffic and road network data."
+  type        = string
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "update_time" {
+  description = "The timestamp for when the route calculator resource was last update in ISO 8601."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 30m)"
@@ -30,41 +63,8 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-  default     = ""
-}
-variable "update_time" {
-  description = "The timestamp for when the route calculator resource was last update in ISO 8601."
-  type        = string
-  default     = ""
-}
-variable "calculator_name" {
-  description = "(Required) The name of the route calculator resource."
-  type        = string
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-  default     = ""
-}
-variable "data_source" {
-  description = "(Required) Specifies the data provider of traffic and road network data."
-  type        = string
-}
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "calculator_arn" {
-  description = "The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS."
-  type        = string
-  default     = ""
-}
-variable "create_time" {
-  description = "The timestamp for when the route calculator resource was created in ISO 8601 format."
   type        = string
   default     = ""
 }
@@ -188,25 +188,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) The optional description for the route calculator resource."
-  value       = aws_location_route_calculator.aws_location_route_calculator.description
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the route calculator. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_location_route_calculator.aws_location_route_calculator.tags
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_location_route_calculator.aws_location_route_calculator.update
-}
-output "update_time" {
-  description = "The timestamp for when the route calculator resource was last update in ISO 8601."
-  value       = aws_location_route_calculator.aws_location_route_calculator.update_time
+output "calculator_arn" {
+  description = "The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS."
+  value       = aws_location_route_calculator.aws_location_route_calculator.calculator_arn
 }
 output "calculator_name" {
   description = "(Required) The name of the route calculator resource."
   value       = aws_location_route_calculator.aws_location_route_calculator.calculator_name
+}
+output "create_time" {
+  description = "The timestamp for when the route calculator resource was created in ISO 8601 format."
+  value       = aws_location_route_calculator.aws_location_route_calculator.create_time
+}
+output "data_source" {
+  description = "(Required) Specifies the data provider of traffic and road network data."
+  value       = aws_location_route_calculator.aws_location_route_calculator.data_source
+}
+output "update_time" {
+  description = "The timestamp for when the route calculator resource was last update in ISO 8601."
+  value       = aws_location_route_calculator.aws_location_route_calculator.update_time
 }
 output "create" {
   description = "(Default 30m)"
@@ -216,21 +216,21 @@ output "delete" {
   description = "(Default 30m)"
   value       = aws_location_route_calculator.aws_location_route_calculator.delete
 }
+output "description" {
+  description = "(Optional) The optional description for the route calculator resource."
+  value       = aws_location_route_calculator.aws_location_route_calculator.description
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the route calculator. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_location_route_calculator.aws_location_route_calculator.tags
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_location_route_calculator.aws_location_route_calculator.tags_all
 }
-output "calculator_arn" {
-  description = "The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS."
-  value       = aws_location_route_calculator.aws_location_route_calculator.calculator_arn
-}
-output "create_time" {
-  description = "The timestamp for when the route calculator resource was created in ISO 8601 format."
-  value       = aws_location_route_calculator.aws_location_route_calculator.create_time
-}
-output "data_source" {
-  description = "(Required) Specifies the data provider of traffic and road network data."
-  value       = aws_location_route_calculator.aws_location_route_calculator.data_source
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_location_route_calculator.aws_location_route_calculator.update
 }
 output "calculator_arn" {
   description = "The Amazon Resource Name (ARN) for the Route calculator resource. Use the ARN when you specify a resource across AWS."

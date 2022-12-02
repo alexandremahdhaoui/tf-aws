@@ -16,13 +16,13 @@ variable "version" {
   type        = string
   default     = ""
 }
-output "preferred_versions" {
-  description = "(Optional) Ordered list of preferred Kafka versions. The first match in this list will be returned. Either preferred_versions or version must be set."
-  value       = aws_msk_kafka_version.aws_msk_kafka_version.preferred_versions
-}
 output "version" {
   description = "(Optional) Version of MSK Kafka. For example 2.4.1.1 or \"2.2.1\" etc. Either preferred_versions or version must be set.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   value       = aws_msk_kafka_version.aws_msk_kafka_version.version
+}
+output "preferred_versions" {
+  description = "(Optional) Ordered list of preferred Kafka versions. The first match in this list will be returned. Either preferred_versions or version must be set."
+  value       = aws_msk_kafka_version.aws_msk_kafka_version.preferred_versions
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

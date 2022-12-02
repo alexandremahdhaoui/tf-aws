@@ -1,32 +1,41 @@
 resource "aws_route53_resolver_endpoint" "aws_route53_resolver_endpoint" {
-  arn                = var.arn
-  create             = var.create
-  host_vpc_id        = var.host_vpc_id
+  direction          = var.direction
+  id                 = var.id
   name               = var.name
   security_group_ids = var.security_group_ids
   subnet_id          = var.subnet_id
   tags               = var.tags
   tags_all           = var.tags_all
-  direction          = var.direction
-  id                 = var.id
+  create             = var.create
+  update             = var.update
+  host_vpc_id        = var.host_vpc_id
   ip                 = var.ip
   ip_address         = var.ip_address
-  update             = var.update
+  arn                = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "ip" {
+  description = "(Optional) The IP address in the subnet that you want to use for DNS queries.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "ip_address" {
+  description = ""
   type        = string
 }
 variable "arn" {
   description = "The ARN of the Route 53 Resolver endpoint."
   type        = string
 }
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-}
 variable "host_vpc_id" {
   description = "The ID of the VPC that you want to create the resolver endpoint in."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the Route 53 Resolver endpoint."
   type        = string
 }
 variable "name" {
@@ -51,21 +60,12 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
+variable "create" {
+  description = "(Default 10m)"
+  type        = string
+}
 variable "direction" {
   description = "(Required) The direction of DNS queries to or from the Route 53 Resolver endpoint.\nValid values are INBOUNDOUTBOUND (resolver forwards DNS queries from the DNS service for a VPC to your network or another VPC)."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the Route 53 Resolver endpoint."
-  type        = string
-}
-variable "ip" {
-  description = "(Optional) The IP address in the subnet that you want to use for DNS queries.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "ip_address" {
-  description = ""
   type        = string
 }
 variable "update" {
@@ -192,21 +192,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
+output "ip_address" {
+  description = ""
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip_address
 }
 output "arn" {
   description = "The ARN of the Route 53 Resolver endpoint."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.arn
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.create
-}
 output "host_vpc_id" {
   description = "The ID of the VPC that you want to create the resolver endpoint in."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.host_vpc_id
+}
+output "ip" {
+  description = "(Optional) The IP address in the subnet that you want to use for DNS queries.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip
 }
 output "name" {
   description = "(Optional) The friendly name of the Route 53 Resolver endpoint."
@@ -224,6 +224,14 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The ip_address object supports the following:"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags
 }
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.create
+}
 output "direction" {
   description = "(Required) The direction of DNS queries to or from the Route 53 Resolver endpoint.\nValid values are INBOUNDOUTBOUND (resolver forwards DNS queries from the DNS service for a VPC to your network or another VPC)."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.direction
@@ -232,25 +240,9 @@ output "id" {
   description = "The ID of the Route 53 Resolver endpoint."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.id
 }
-output "ip" {
-  description = "(Optional) The IP address in the subnet that you want to use for DNS queries.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip
-}
-output "ip_address" {
-  description = ""
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip_address
-}
 output "update" {
   description = "(Default 10m)"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.update
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.update
-}
-output "arn" {
-  description = "The ARN of the Route 53 Resolver endpoint."
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.arn
 }
 output "create" {
   description = "(Default 10m)"
@@ -271,6 +263,14 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.update
+}
+output "arn" {
+  description = "The ARN of the Route 53 Resolver endpoint."
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

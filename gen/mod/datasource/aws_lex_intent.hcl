@@ -12,11 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "version" {
-  description = "(Optional) Version of the intent.The following attributes are exported."
-  type        = string
-  default     = ""
-}
 variable "arn" {
   description = "ARN of the Lex intent."
   type        = string
@@ -45,17 +40,10 @@ variable "parent_intent_signature" {
   description = "Standard Built-in Intents"
   type        = string
 }
-output "description" {
-  description = "Description of the intent."
-  value       = aws_lex_intent.aws_lex_intent.description
-}
-output "last_updated_date" {
-  description = "Date when the $LATEST version of this intent was updated."
-  value       = aws_lex_intent.aws_lex_intent.last_updated_date
-}
-output "name" {
-  description = "Name of the intent, not case sensitive."
-  value       = aws_lex_intent.aws_lex_intent.name
+variable "version" {
+  description = "(Optional) Version of the intent.The following attributes are exported."
+  type        = string
+  default     = ""
 }
 output "parent_intent_signature" {
   description = "Standard Built-in Intents"
@@ -77,13 +65,17 @@ output "created_date" {
   description = "Date when the intent version was created."
   value       = aws_lex_intent.aws_lex_intent.created_date
 }
-output "created_date" {
-  description = "Date when the intent version was created."
-  value       = aws_lex_intent.aws_lex_intent.created_date
-}
 output "description" {
   description = "Description of the intent."
   value       = aws_lex_intent.aws_lex_intent.description
+}
+output "last_updated_date" {
+  description = "Date when the $LATEST version of this intent was updated."
+  value       = aws_lex_intent.aws_lex_intent.last_updated_date
+}
+output "name" {
+  description = "Name of the intent, not case sensitive."
+  value       = aws_lex_intent.aws_lex_intent.name
 }
 output "last_updated_date" {
   description = "Date when the $LATEST version of this intent was updated."
@@ -104,6 +96,14 @@ output "arn" {
 output "checksum" {
   description = "Checksum identifying the version of the intent that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the intent."
   value       = aws_lex_intent.aws_lex_intent.checksum
+}
+output "created_date" {
+  description = "Date when the intent version was created."
+  value       = aws_lex_intent.aws_lex_intent.created_date
+}
+output "description" {
+  description = "Description of the intent."
+  value       = aws_lex_intent.aws_lex_intent.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

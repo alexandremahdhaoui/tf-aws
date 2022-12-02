@@ -12,6 +12,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "filter_type" {
+  description = "(Required) The repository filter type. The only supported value is PREFIX_MATCH, which is a repository name prefix specified with the filter parameter.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "region" {
+  description = "(Required) A Region to replicate to."
+  type        = string
+}
 variable "registry_id" {
   description = "(Required) The account ID of the destination registry to replicate to.Repository Filter"
   type        = string
@@ -35,14 +43,6 @@ variable "destination" {
 }
 variable "filter" {
   description = "(Required) The repository filter details."
-  type        = string
-}
-variable "filter_type" {
-  description = "(Required) The repository filter type. The only supported value is PREFIX_MATCH, which is a repository name prefix specified with the filter parameter.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "region" {
-  description = "(Required) A Region to replicate to."
   type        = string
 }
 variable "tag_instance_id" {

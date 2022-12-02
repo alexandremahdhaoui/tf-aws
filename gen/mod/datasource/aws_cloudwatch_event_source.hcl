@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "Name of the event source"
-  type        = string
-}
 variable "name_prefix" {
   description = "(Optional) Specifying this limits the results to only those partner event sources with names that start with the specified prefixIn addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -23,6 +19,10 @@ variable "arn" {
 }
 variable "created_by" {
   description = "Name of the SaaS partner that created the event source"
+  type        = string
+}
+variable "name" {
+  description = "Name of the event source"
   type        = string
 }
 output "arn" {

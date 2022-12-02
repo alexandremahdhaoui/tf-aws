@@ -1,15 +1,24 @@
 resource "aws_shield_protection_group" "aws_shield_protection_group" {
+  aggregation          = var.aggregation
+  members              = var.members
+  pattern              = var.pattern
   protection_group_arn = var.protection_group_arn
   protection_group_id  = var.protection_group_id
   resource_type        = var.resource_type
   tags                 = var.tags
-  aggregation          = var.aggregation
-  members              = var.members
-  pattern              = var.pattern
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "aggregation" {
+  description = "(Required) Defines how AWS Shield combines resource data for the group in order to detect, mitigate, and report events."
+  type        = string
+}
+variable "members" {
+  description = "(Optional) The Amazon Resource Names (ARNs) of the resources to include in the protection group. You must set this when you set pattern to ARBITRARY and you must not set it for any other pattern setting."
+  type        = string
+  default     = ""
 }
 variable "pattern" {
   description = "(Required) The criteria to use to choose the protected resources for inclusion in the group."
@@ -30,15 +39,6 @@ variable "resource_type" {
 }
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "aggregation" {
-  description = "(Required) Defines how AWS Shield combines resource data for the group in order to detect, mitigate, and report events."
-  type        = string
-}
-variable "members" {
-  description = "(Optional) The Amazon Resource Names (ARNs) of the resources to include in the protection group. You must set this when you set pattern to ARBITRARY and you must not set it for any other pattern setting."
   type        = string
   default     = ""
 }
@@ -162,6 +162,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "pattern" {
+  description = "(Required) The criteria to use to choose the protected resources for inclusion in the group."
+  value       = aws_shield_protection_group.aws_shield_protection_group.pattern
+}
+output "protection_group_arn" {
+  description = "The ARN (Amazon Resource Name) of the protection group."
+  value       = aws_shield_protection_group.aws_shield_protection_group.protection_group_arn
+}
 output "protection_group_id" {
   description = "(Required) The name of the protection group."
   value       = aws_shield_protection_group.aws_shield_protection_group.protection_group_id
@@ -181,14 +189,6 @@ output "aggregation" {
 output "members" {
   description = "(Optional) The Amazon Resource Names (ARNs) of the resources to include in the protection group. You must set this when you set pattern to ARBITRARY and you must not set it for any other pattern setting."
   value       = aws_shield_protection_group.aws_shield_protection_group.members
-}
-output "pattern" {
-  description = "(Required) The criteria to use to choose the protected resources for inclusion in the group."
-  value       = aws_shield_protection_group.aws_shield_protection_group.pattern
-}
-output "protection_group_arn" {
-  description = "The ARN (Amazon Resource Name) of the protection group."
-  value       = aws_shield_protection_group.aws_shield_protection_group.protection_group_arn
 }
 output "protection_group_arn" {
   description = "The ARN (Amazon Resource Name) of the protection group."

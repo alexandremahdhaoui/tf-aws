@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "group_id" {
-  description = "(Required)  The identifier for a group in the Identity Store."
-  type        = string
-}
 variable "identity_store_id" {
   description = "(Required) Identity Store ID associated with the Single Sign-On Instance.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "member_id" {
   description = "(Required) The identifier for a user in the Identity Store."
+  type        = string
+}
+variable "group_id" {
+  description = "(Required)  The identifier for a group in the Identity Store."
   type        = string
 }
 variable "tag_instance_id" {

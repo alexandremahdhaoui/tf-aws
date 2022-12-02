@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The ARN of the SES template"
-  type        = string
-}
 variable "html" {
   description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
   type        = string
@@ -31,6 +27,10 @@ variable "text" {
   description = "(Optional) The email body that will be visible to recipients whose email clients do not display HTML. Must be less than 500KB in size, including both the text and HTML parts.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "arn" {
+  description = "The ARN of the SES template"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

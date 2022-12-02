@@ -1,16 +1,12 @@
 datasource "aws_msk_configuration" "aws_msk_configuration" {
+  arn             = var.arn
   description     = var.description
   kafka_versions  = var.kafka_versions
   latest_revision = var.latest_revision
   name            = var.name
-  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -29,6 +25,14 @@ variable "latest_revision" {
   description = "Latest revision of the configuration."
   type        = string
 }
+variable "name" {
+  description = "(Required) Name of the configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+output "name" {
+  description = "(Required) Name of the configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_msk_configuration.aws_msk_configuration.name
+}
 output "arn" {
   description = "ARN of the configuration."
   value       = aws_msk_configuration.aws_msk_configuration.arn
@@ -44,10 +48,6 @@ output "kafka_versions" {
 output "latest_revision" {
   description = "Latest revision of the configuration."
   value       = aws_msk_configuration.aws_msk_configuration.latest_revision
-}
-output "name" {
-  description = "(Required) Name of the configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_msk_configuration.aws_msk_configuration.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

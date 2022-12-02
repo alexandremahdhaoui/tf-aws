@@ -1,17 +1,37 @@
 resource "aws_ssm_activation" "aws_ssm_activation" {
   description        = var.description
   expired            = var.expired
-  id                 = var.id
-  name               = var.name
-  tags               = var.tags
-  activation_code    = var.activation_code
-  expiration_date    = var.expiration_date
   iam_role           = var.iam_role
+  name               = var.name
   registration_count = var.registration_count
   registration_limit = var.registration_limit
+  activation_code    = var.activation_code
+  expiration_date    = var.expiration_date
+  id                 = var.id
+  tags               = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "The description of the resource that was registered."
+  type        = string
+}
+variable "expired" {
+  description = "If the current activation has expired."
+  type        = string
+}
+variable "iam_role" {
+  description = "The IAM Role attached to the managed instance."
+  type        = string
+}
+variable "name" {
+  description = "The default name of the registered managed instance."
+  type        = string
+}
+variable "registration_count" {
+  description = "The number of managed instances that are currently registered using this activation."
   type        = string
 }
 variable "registration_limit" {
@@ -26,34 +46,14 @@ variable "expiration_date" {
   description = "The date by which this activation request should expire. The default value is 24 hours."
   type        = string
 }
-variable "iam_role" {
-  description = "The IAM Role attached to the managed instance."
-  type        = string
-}
-variable "registration_count" {
-  description = "The number of managed instances that are currently registered using this activation."
+variable "id" {
+  description = "The activation ID."
   type        = string
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "description" {
-  description = "The description of the resource that was registered."
-  type        = string
-}
-variable "expired" {
-  description = "If the current activation has expired."
-  type        = string
-}
-variable "id" {
-  description = "The activation ID."
-  type        = string
-}
-variable "name" {
-  description = "The default name of the registered managed instance."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -175,61 +175,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The activation ID."
-  value       = aws_ssm_activation.aws_ssm_activation.id
+output "description" {
+  description = "The description of the resource that was registered."
+  value       = aws_ssm_activation.aws_ssm_activation.description
+}
+output "expired" {
+  description = "If the current activation has expired."
+  value       = aws_ssm_activation.aws_ssm_activation.expired
+}
+output "iam_role" {
+  description = "The IAM Role attached to the managed instance."
+  value       = aws_ssm_activation.aws_ssm_activation.iam_role
 }
 output "name" {
   description = "The default name of the registered managed instance."
   value       = aws_ssm_activation.aws_ssm_activation.name
+}
+output "registration_count" {
+  description = "The number of managed instances that are currently registered using this activation."
+  value       = aws_ssm_activation.aws_ssm_activation.registration_count
+}
+output "registration_limit" {
+  description = "The maximum number of managed instances you want to be registered. The default value is 1 instance."
+  value       = aws_ssm_activation.aws_ssm_activation.registration_limit
+}
+output "activation_code" {
+  description = "The code the system generates when it processes the activation."
+  value       = aws_ssm_activation.aws_ssm_activation.activation_code
+}
+output "expiration_date" {
+  description = "The date by which this activation request should expire. The default value is 24 hours."
+  value       = aws_ssm_activation.aws_ssm_activation.expiration_date
+}
+output "id" {
+  description = "The activation ID."
+  value       = aws_ssm_activation.aws_ssm_activation.id
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssm_activation.aws_ssm_activation.tags
 }
-output "description" {
-  description = "The description of the resource that was registered."
-  value       = aws_ssm_activation.aws_ssm_activation.description
-}
-output "expired" {
-  description = "If the current activation has expired."
-  value       = aws_ssm_activation.aws_ssm_activation.expired
-}
 output "iam_role" {
   description = "The IAM Role attached to the managed instance."
   value       = aws_ssm_activation.aws_ssm_activation.iam_role
 }
-output "registration_count" {
-  description = "The number of managed instances that are currently registered using this activation."
-  value       = aws_ssm_activation.aws_ssm_activation.registration_count
+output "id" {
+  description = "The activation ID."
+  value       = aws_ssm_activation.aws_ssm_activation.id
 }
 output "registration_limit" {
   description = "The maximum number of managed instances you want to be registered. The default value is 1 instance."
   value       = aws_ssm_activation.aws_ssm_activation.registration_limit
 }
-output "activation_code" {
-  description = "The code the system generates when it processes the activation."
-  value       = aws_ssm_activation.aws_ssm_activation.activation_code
-}
-output "expiration_date" {
-  description = "The date by which this activation request should expire. The default value is 24 hours."
-  value       = aws_ssm_activation.aws_ssm_activation.expiration_date
-}
-output "expired" {
-  description = "If the current activation has expired."
-  value       = aws_ssm_activation.aws_ssm_activation.expired
-}
-output "iam_role" {
-  description = "The IAM Role attached to the managed instance."
-  value       = aws_ssm_activation.aws_ssm_activation.iam_role
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ssm_activation.aws_ssm_activation.tags_all
 }
-output "id" {
-  description = "The activation ID."
-  value       = aws_ssm_activation.aws_ssm_activation.id
+output "description" {
+  description = "The description of the resource that was registered."
+  value       = aws_ssm_activation.aws_ssm_activation.description
+}
+output "expiration_date" {
+  description = "The date by which this activation request should expire. The default value is 24 hours."
+  value       = aws_ssm_activation.aws_ssm_activation.expiration_date
 }
 output "name" {
   description = "The default name of the registered managed instance."
@@ -239,21 +247,13 @@ output "registration_count" {
   description = "The number of managed instances that are currently registered using this activation."
   value       = aws_ssm_activation.aws_ssm_activation.registration_count
 }
-output "registration_limit" {
-  description = "The maximum number of managed instances you want to be registered. The default value is 1 instance."
-  value       = aws_ssm_activation.aws_ssm_activation.registration_limit
-}
 output "activation_code" {
   description = "The code the system generates when it processes the activation."
   value       = aws_ssm_activation.aws_ssm_activation.activation_code
 }
-output "description" {
-  description = "The description of the resource that was registered."
-  value       = aws_ssm_activation.aws_ssm_activation.description
-}
-output "expiration_date" {
-  description = "The date by which this activation request should expire. The default value is 24 hours."
-  value       = aws_ssm_activation.aws_ssm_activation.expiration_date
+output "expired" {
+  description = "If the current activation has expired."
+  value       = aws_ssm_activation.aws_ssm_activation.expired
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

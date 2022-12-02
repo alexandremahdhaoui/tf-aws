@@ -1,36 +1,23 @@
 resource "aws_imagebuilder_component" "aws_imagebuilder_component" {
-  uri                   = var.uri
-  version               = var.version
-  arn                   = var.arn
-  name                  = var.name
-  supported_os_versions = var.supported_os_versions
-  tags                  = var.tags
+  change_description    = var.change_description
   description           = var.description
+  kms_key_id            = var.kms_key_id
+  name                  = var.name
+  platform              = var.platform
+  tags                  = var.tags
   data                  = var.data
   date_created          = var.date_created
   encrypted             = var.encrypted
-  kms_key_id            = var.kms_key_id
   owner                 = var.owner
-  platform              = var.platform
+  uri                   = var.uri
+  supported_os_versions = var.supported_os_versions
+  version               = var.version
+  arn                   = var.arn
   tags_all              = var.tags_all
-  change_description    = var.change_description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "platform" {
-  description = "(Required) Platform of the component."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "change_description" {
-  description = "(Optional) Change description of the component."
-  type        = string
-  default     = ""
 }
 variable "data" {
   description = "(Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration."
@@ -45,11 +32,6 @@ variable "encrypted" {
   description = "Encryption status of the component."
   type        = string
 }
-variable "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
-  type        = string
-  default     = ""
-}
 variable "owner" {
   description = "Owner of the component."
   type        = string
@@ -59,16 +41,35 @@ variable "uri" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the component."
+variable "supported_os_versions" {
+  description = "(Optional) Set of Operating Systems (OS) supported by the component."
   type        = string
+  default     = ""
 }
 variable "version" {
   description = "(Required) Version of the component.The following attributes are optional:"
   type        = string
 }
+variable "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the component."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "change_description" {
+  description = "(Optional) Change description of the component."
+  type        = string
+  default     = ""
+}
 variable "description" {
   description = "(Optional) Description of the component."
+  type        = string
+  default     = ""
+}
+variable "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
   type        = string
   default     = ""
 }
@@ -76,10 +77,9 @@ variable "name" {
   description = "(Required) Name of the component."
   type        = string
 }
-variable "supported_os_versions" {
-  description = "(Optional) Set of Operating Systems (OS) supported by the component."
+variable "platform" {
+  description = "(Required) Platform of the component."
   type        = string
-  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
@@ -206,53 +206,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "uri" {
-  description = "(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.uri
-}
-output "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.arn
-}
-output "version" {
-  description = "(Required) Version of the component.The following attributes are optional:"
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.version
-}
-output "description" {
-  description = "(Optional) Description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
-}
-output "name" {
-  description = "(Required) Name of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.name
-}
-output "supported_os_versions" {
-  description = "(Optional) Set of Operating Systems (OS) supported by the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
-}
-output "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.kms_key_id
+output "encrypted" {
+  description = "Encryption status of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
 }
 output "owner" {
   description = "Owner of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
 }
-output "platform" {
-  description = "(Required) Platform of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags_all
-}
-output "change_description" {
-  description = "(Optional) Change description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
+output "uri" {
+  description = "(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.uri
 }
 output "data" {
   description = "(Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration."
@@ -262,9 +226,45 @@ output "date_created" {
   description = "Date the component was created."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
 }
-output "encrypted" {
-  description = "Encryption status of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
+output "supported_os_versions" {
+  description = "(Optional) Set of Operating Systems (OS) supported by the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
+}
+output "version" {
+  description = "(Required) Version of the component.The following attributes are optional:"
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.version
+}
+output "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags_all
+}
+output "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.kms_key_id
+}
+output "name" {
+  description = "(Required) Name of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.name
+}
+output "platform" {
+  description = "(Required) Platform of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
+}
+output "change_description" {
+  description = "(Optional) Change description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
+}
+output "description" {
+  description = "(Optional) Description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
 }
 output "arn" {
   description = "(Required) Amazon Resource Name (ARN) of the component."

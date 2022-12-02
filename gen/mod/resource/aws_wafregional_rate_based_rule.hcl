@@ -1,15 +1,15 @@
 resource "aws_wafregional_rate_based_rule" "aws_wafregional_rate_based_rule" {
   type        = var.type
+  arn         = var.arn
   name        = var.name
   negated     = var.negated
   rate_key    = var.rate_key
   rate_limit  = var.rate_limit
-  predicate   = var.predicate
   tags        = var.tags
-  arn         = var.arn
   data_id     = var.data_id
   id          = var.id
   metric_name = var.metric_name
+  predicate   = var.predicate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -27,20 +27,21 @@ variable "rate_limit" {
   description = "(Required) The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. Minimum value is 100."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicateSee the WAF Documentation for more information.Arguments"
+  type        = string
+  default     = ""
+}
 variable "type" {
   description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+variable "arn" {
+  description = "The ARN of the WAF Regional Rate Based Rule."
+  type        = string
+}
 variable "name" {
   description = "(Required) The name or description of the rule."
-  type        = string
-}
-variable "data_id" {
-  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the WAF Regional Rate Based Rule."
   type        = string
 }
 variable "metric_name" {
@@ -52,13 +53,12 @@ variable "predicate" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicateSee the WAF Documentation for more information.Arguments"
+variable "data_id" {
+  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
   type        = string
-  default     = ""
 }
-variable "arn" {
-  description = "The ARN of the WAF Regional Rate Based Rule."
+variable "id" {
+  description = "The ID of the WAF Regional Rate Based Rule."
   type        = string
 }
 variable "tag_instance_id" {
@@ -181,10 +181,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type" {
-  description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.type
-}
 output "name" {
   description = "(Required) The name or description of the rule."
   value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.name
@@ -201,21 +197,17 @@ output "rate_limit" {
   description = "(Required) The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. Minimum value is 100."
   value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.rate_limit
 }
-output "predicate" {
-  description = "(Optional) The objects to include in a rule (documented below)."
-  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.predicate
-}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicateSee the WAF Documentation for more information.Arguments"
   value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.tags
 }
+output "type" {
+  description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.type
+}
 output "arn" {
   description = "The ARN of the WAF Regional Rate Based Rule."
   value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.arn
-}
-output "data_id" {
-  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
-  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.data_id
 }
 output "id" {
   description = "The ID of the WAF Regional Rate Based Rule."
@@ -225,9 +217,13 @@ output "metric_name" {
   description = "(Required) The name or description for the Amazon CloudWatch metric of this rule."
   value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.metric_name
 }
-output "arn" {
-  description = "The ARN of the WAF Regional Rate Based Rule."
-  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.arn
+output "predicate" {
+  description = "(Optional) The objects to include in a rule (documented below)."
+  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.predicate
+}
+output "data_id" {
+  description = "(Required) A unique identifier for a predicate in the rule, such as Byte Match Set ID or IPSet ID."
+  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.data_id
 }
 output "id" {
   description = "The ID of the WAF Regional Rate Based Rule."
@@ -236,6 +232,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.tags_all
+}
+output "arn" {
+  description = "The ARN of the WAF Regional Rate Based Rule."
+  value       = aws_wafregional_rate_based_rule.aws_wafregional_rate_based_rule.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

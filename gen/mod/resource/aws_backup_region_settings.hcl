@@ -1,6 +1,6 @@
 resource "aws_backup_region_settings" "aws_backup_region_settings" {
-  resource_type_management_preference = var.resource_type_management_preference
   resource_type_opt_in_preference     = var.resource_type_opt_in_preference
+  resource_type_management_preference = var.resource_type_management_preference
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

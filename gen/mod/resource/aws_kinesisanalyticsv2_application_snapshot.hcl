@@ -1,13 +1,17 @@
 resource "aws_kinesisanalyticsv2_application_snapshot" "aws_kinesisanalyticsv2_application_snapshot" {
-  application_name            = var.application_name
-  application_version_id      = var.application_version_id
-  create                      = var.create
   id                          = var.id
   snapshot_creation_timestamp = var.snapshot_creation_timestamp
   snapshot_name               = var.snapshot_name
+  application_name            = var.application_name
+  application_version_id      = var.application_version_id
+  create                      = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "snapshot_name" {
+  description = "(Required) The name of the application snapshot.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "application_name" {
@@ -28,10 +32,6 @@ variable "id" {
 }
 variable "snapshot_creation_timestamp" {
   description = "The timestamp of the application snapshot.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "snapshot_name" {
-  description = "(Required) The name of the application snapshot.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,10 +154,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "snapshot_creation_timestamp" {
-  description = "The timestamp of the application snapshot.TimeoutsConfiguration options:"
-  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.snapshot_creation_timestamp
-}
 output "snapshot_name" {
   description = "(Required) The name of the application snapshot.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.snapshot_name
@@ -177,6 +173,10 @@ output "create" {
 output "id" {
   description = "The application snapshot identifier."
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.id
+}
+output "snapshot_creation_timestamp" {
+  description = "The timestamp of the application snapshot.TimeoutsConfiguration options:"
+  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.snapshot_creation_timestamp
 }
 output "application_version_id" {
   description = "The current application version ID when the snapshot was created."

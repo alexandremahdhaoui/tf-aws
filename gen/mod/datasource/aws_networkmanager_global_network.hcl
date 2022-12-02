@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "description" {
-  description = "Description of the global network."
-  value       = aws_networkmanager_global_network.aws_networkmanager_global_network.description
-}
 output "arn" {
   description = "ARN of the global network."
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.arn
+}
+output "description" {
+  description = "Description of the global network."
+  value       = aws_networkmanager_global_network.aws_networkmanager_global_network.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

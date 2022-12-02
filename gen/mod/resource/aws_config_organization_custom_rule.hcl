@@ -1,38 +1,30 @@
 resource "aws_config_organization_custom_rule" "aws_config_organization_custom_rule" {
+  maximum_execution_frequency = var.maximum_execution_frequency
   resource_id_scope           = var.resource_id_scope
-  arn                         = var.arn
-  name                        = var.name
   resource_types_scope        = var.resource_types_scope
-  create                      = var.create
   description                 = var.description
+  input_parameters            = var.input_parameters
+  lambda_function_arn         = var.lambda_function_arn
+  arn                         = var.arn
+  delete                      = var.delete
+  excluded_accounts           = var.excluded_accounts
+  name                        = var.name
   tag_key_scope               = var.tag_key_scope
+  create                      = var.create
   tag_value_scope             = var.tag_value_scope
   trigger_types               = var.trigger_types
-  delete                      = var.delete
-  maximum_execution_frequency = var.maximum_execution_frequency
-  lambda_function_arn         = var.lambda_function_arn
-  excluded_accounts           = var.excluded_accounts
-  input_parameters            = var.input_parameters
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the ruleTimeoutsConfiguration options:"
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the rule"
-  type        = string
-}
-variable "resource_id_scope" {
-  description = "(Optional) Identifier of the AWS resource to evaluate"
+variable "input_parameters" {
+  description = "(Optional) A string in JSON format that is passed to the AWS Config Rule Lambda Function"
   type        = string
   default     = ""
 }
-variable "create" {
-  description = "(Default 5m)"
+variable "lambda_function_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the rule Lambda Function"
   type        = string
 }
 variable "description" {
@@ -40,22 +32,25 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "resource_types_scope" {
-  description = "(Optional) List of types of AWS resources to evaluate"
-  type        = string
-  default     = ""
-}
 variable "delete" {
   description = "(Default 5m)"
   type        = string
 }
-variable "maximum_execution_frequency" {
-  description = "(Optional) The maximum frequency with which AWS Config runs evaluations for a rule, if the rule is triggered at a periodic frequency. Defaults to TwentyFour_Hours for periodic frequency triggered rules. Valid values: One_Hour, Three_Hours, Six_Hours, Twelve_Hours, or TwentyFour_Hours."
+variable "excluded_accounts" {
+  description = "(Optional) List of AWS account identifiers to exclude from the rule"
   type        = string
   default     = ""
 }
+variable "name" {
+  description = "(Required) The name of the rule"
+  type        = string
+}
 variable "tag_key_scope" {
   description = "(Optional, Required if tag_value_scope is configured) Tag key of AWS resources to evaluate"
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the ruleTimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_value_scope" {
@@ -67,19 +62,24 @@ variable "trigger_types" {
   description = "(Required) List of notification types that trigger AWS Config to run an evaluation for the rule. Valid values: ConfigurationItemChangeNotification, OversizedConfigurationItemChangeNotification, and ScheduledNotification"
   type        = string
 }
-variable "excluded_accounts" {
-  description = "(Optional) List of AWS account identifiers to exclude from the rule"
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "resource_id_scope" {
+  description = "(Optional) Identifier of the AWS resource to evaluate"
   type        = string
   default     = ""
 }
-variable "input_parameters" {
-  description = "(Optional) A string in JSON format that is passed to the AWS Config Rule Lambda Function"
+variable "resource_types_scope" {
+  description = "(Optional) List of types of AWS resources to evaluate"
   type        = string
   default     = ""
 }
-variable "lambda_function_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the rule Lambda Function"
+variable "maximum_execution_frequency" {
+  description = "(Optional) The maximum frequency with which AWS Config runs evaluations for a rule, if the rule is triggered at a periodic frequency. Defaults to TwentyFour_Hours for periodic frequency triggered rules. Valid values: One_Hour, Three_Hours, Six_Hours, Twelve_Hours, or TwentyFour_Hours."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -201,29 +201,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "trigger_types" {
-  description = "(Required) List of notification types that trigger AWS Config to run an evaluation for the rule. Valid values: ConfigurationItemChangeNotification, OversizedConfigurationItemChangeNotification, and ScheduledNotification"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.trigger_types
-}
-output "delete" {
+output "create" {
   description = "(Default 5m)"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.delete
-}
-output "maximum_execution_frequency" {
-  description = "(Optional) The maximum frequency with which AWS Config runs evaluations for a rule, if the rule is triggered at a periodic frequency. Defaults to TwentyFour_Hours for periodic frequency triggered rules. Valid values: One_Hour, Three_Hours, Six_Hours, Twelve_Hours, or TwentyFour_Hours."
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.maximum_execution_frequency
-}
-output "tag_key_scope" {
-  description = "(Optional, Required if tag_value_scope is configured) Tag key of AWS resources to evaluate"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.tag_key_scope
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.create
 }
 output "tag_value_scope" {
   description = "(Optional) Tag value of AWS resources to evaluateIn addition to all arguments above, the following attributes are exported:"
   value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.tag_value_scope
 }
-output "excluded_accounts" {
-  description = "(Optional) List of AWS account identifiers to exclude from the rule"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.excluded_accounts
+output "trigger_types" {
+  description = "(Required) List of notification types that trigger AWS Config to run an evaluation for the rule. Valid values: ConfigurationItemChangeNotification, OversizedConfigurationItemChangeNotification, and ScheduledNotification"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.trigger_types
+}
+output "maximum_execution_frequency" {
+  description = "(Optional) The maximum frequency with which AWS Config runs evaluations for a rule, if the rule is triggered at a periodic frequency. Defaults to TwentyFour_Hours for periodic frequency triggered rules. Valid values: One_Hour, Three_Hours, Six_Hours, Twelve_Hours, or TwentyFour_Hours."
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.maximum_execution_frequency
+}
+output "resource_id_scope" {
+  description = "(Optional) Identifier of the AWS resource to evaluate"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.resource_id_scope
+}
+output "resource_types_scope" {
+  description = "(Optional) List of types of AWS resources to evaluate"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.resource_types_scope
+}
+output "description" {
+  description = "(Optional) Description of the rule"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.description
 }
 output "input_parameters" {
   description = "(Optional) A string in JSON format that is passed to the AWS Config Rule Lambda Function"
@@ -237,25 +241,21 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of the ruleTimeoutsConfiguration options:"
   value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.arn
 }
+output "delete" {
+  description = "(Default 5m)"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.delete
+}
+output "excluded_accounts" {
+  description = "(Optional) List of AWS account identifiers to exclude from the rule"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.excluded_accounts
+}
 output "name" {
   description = "(Required) The name of the rule"
   value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.name
 }
-output "resource_id_scope" {
-  description = "(Optional) Identifier of the AWS resource to evaluate"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.resource_id_scope
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.create
-}
-output "description" {
-  description = "(Optional) Description of the rule"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.description
-}
-output "resource_types_scope" {
-  description = "(Optional) List of types of AWS resources to evaluate"
-  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.resource_types_scope
+output "tag_key_scope" {
+  description = "(Optional, Required if tag_value_scope is configured) Tag key of AWS resources to evaluate"
+  value       = aws_config_organization_custom_rule.aws_config_organization_custom_rule.tag_key_scope
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the ruleTimeoutsConfiguration options:"

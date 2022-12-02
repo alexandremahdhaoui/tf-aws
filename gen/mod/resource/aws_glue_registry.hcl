@@ -1,9 +1,9 @@
 resource "aws_glue_registry" "aws_glue_registry" {
+  arn           = var.arn
   description   = var.description
   id            = var.id
   registry_name = var.registry_name
   tags          = var.tags
-  arn           = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -151,6 +151,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = " – (Optional) A description of the registry."
+  value       = aws_glue_registry.aws_glue_registry.description
+}
 output "id" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   value       = aws_glue_registry.aws_glue_registry.id
@@ -167,9 +171,9 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   value       = aws_glue_registry.aws_glue_registry.arn
 }
-output "description" {
-  description = " – (Optional) A description of the registry."
-  value       = aws_glue_registry.aws_glue_registry.description
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_glue_registry.aws_glue_registry.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
@@ -178,10 +182,6 @@ output "arn" {
 output "id" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   value       = aws_glue_registry.aws_glue_registry.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_glue_registry.aws_glue_registry.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

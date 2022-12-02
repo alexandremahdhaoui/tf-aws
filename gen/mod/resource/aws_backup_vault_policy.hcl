@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "policy" {
+  description = "(Required) The backup vault access policy document in JSON format.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "backup_vault_name" {
   description = "(Required) Name of the backup vault to add policy for."
   type        = string
 }
 variable "id" {
   description = "The name of the vault."
-  type        = string
-}
-variable "policy" {
-  description = "(Required) The backup vault access policy document in JSON format.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -151,13 +151,13 @@ output "policy" {
   description = "(Required) The backup vault access policy document in JSON format.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_vault_policy.aws_backup_vault_policy.policy
 }
-output "backup_vault_arn" {
-  description = "The ARN of the vault."
-  value       = aws_backup_vault_policy.aws_backup_vault_policy.backup_vault_arn
-}
 output "id" {
   description = "The name of the vault."
   value       = aws_backup_vault_policy.aws_backup_vault_policy.id
+}
+output "backup_vault_arn" {
+  description = "The ARN of the vault."
+  value       = aws_backup_vault_policy.aws_backup_vault_policy.backup_vault_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

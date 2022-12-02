@@ -7,6 +7,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "zone_id" {
+  description = "(Required) The ID of the private hosted zone that you want to authorize associating a VPC with."
+  type        = string
+}
 variable "vpc_id" {
   description = "(Required) The VPC to authorize for association with the private hosted zone."
   type        = string
@@ -15,10 +19,6 @@ variable "vpc_region" {
   description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "zone_id" {
-  description = "(Required) The ID of the private hosted zone that you want to authorize associating a VPC with."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

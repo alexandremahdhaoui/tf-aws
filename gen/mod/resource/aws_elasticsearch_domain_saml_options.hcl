@@ -1,16 +1,16 @@
 resource "aws_elasticsearch_domain_saml_options" "aws_elasticsearch_domain_saml_options" {
-  domain_name             = var.domain_name
+  idp                     = var.idp
+  master_backend_role     = var.master_backend_role
+  entity_id               = var.entity_id
   id                      = var.id
   master_user_name        = var.master_user_name
-  subject_key             = var.subject_key
   metadata_content        = var.metadata_content
   roles_key               = var.roles_key
   saml_options            = var.saml_options
   session_timeout_minutes = var.session_timeout_minutes
+  subject_key             = var.subject_key
+  domain_name             = var.domain_name
   enabled                 = var.enabled
-  entity_id               = var.entity_id
-  idp                     = var.idp
-  master_backend_role     = var.master_backend_role
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -26,21 +26,21 @@ variable "session_timeout_minutes" {
   type        = string
   default     = ""
 }
+variable "subject_key" {
+  description = "(Optional) Custom SAML attribute to use for user names. Default is an empty string - \"\". This will cause Elasticsearch to use the NameID element of the Subject, which is the default location for name identifiers in the SAML specification.idp"
+  type        = string
+  default     = ""
+}
+variable "domain_name" {
+  description = "(Required) Name of the domain."
+  type        = string
+}
 variable "enabled" {
   description = "(Required) Whether SAML authentication is enabled."
   type        = string
 }
-variable "entity_id" {
-  description = "(Required) The unique Entity ID of the application in SAML Identity Provider."
-  type        = string
-}
-variable "idp" {
-  description = "(Optional) Information from your identity provider."
-  type        = string
-  default     = ""
-}
-variable "master_backend_role" {
-  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+variable "master_user_name" {
+  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
   type        = string
   default     = ""
 }
@@ -53,8 +53,8 @@ variable "roles_key" {
   type        = string
   default     = ""
 }
-variable "domain_name" {
-  description = "(Required) Name of the domain."
+variable "entity_id" {
+  description = "(Required) The unique Entity ID of the application in SAML Identity Provider."
   type        = string
 }
 variable "id" {
@@ -62,13 +62,13 @@ variable "id" {
   type        = string
   default     = ""
 }
-variable "master_user_name" {
-  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+variable "idp" {
+  description = "(Optional) Information from your identity provider."
   type        = string
   default     = ""
 }
-variable "subject_key" {
-  description = "(Optional) Custom SAML attribute to use for user names. Default is an empty string - \"\". This will cause Elasticsearch to use the NameID element of the Subject, which is the default location for name identifiers in the SAML specification.idp"
+variable "master_backend_role" {
+  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
   type        = string
   default     = ""
 }
@@ -192,17 +192,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "entity_id" {
-  description = "(Required) The unique Entity ID of the application in SAML Identity Provider."
-  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.entity_id
+output "enabled" {
+  description = "(Required) Whether SAML authentication is enabled."
+  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.enabled
 }
-output "idp" {
-  description = "(Optional) Information from your identity provider."
-  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.idp
-}
-output "master_backend_role" {
-  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
-  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.master_backend_role
+output "master_user_name" {
+  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.master_user_name
 }
 output "metadata_content" {
   description = "(Required) The Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
@@ -220,18 +216,6 @@ output "session_timeout_minutes" {
   description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
   value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.session_timeout_minutes
 }
-output "enabled" {
-  description = "(Required) Whether SAML authentication is enabled."
-  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.enabled
-}
-output "id" {
-  description = "The name of the domain the SAML options are associated with."
-  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.id
-}
-output "master_user_name" {
-  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
-  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.master_user_name
-}
 output "subject_key" {
   description = "(Optional) Custom SAML attribute to use for user names. Default is an empty string - \"\". This will cause Elasticsearch to use the NameID element of the Subject, which is the default location for name identifiers in the SAML specification.idp"
   value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.subject_key
@@ -239,6 +223,22 @@ output "subject_key" {
 output "domain_name" {
   description = "(Required) Name of the domain."
   value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.domain_name
+}
+output "id" {
+  description = "The name of the domain the SAML options are associated with."
+  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.id
+}
+output "idp" {
+  description = "(Optional) Information from your identity provider."
+  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.idp
+}
+output "master_backend_role" {
+  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.master_backend_role
+}
+output "entity_id" {
+  description = "(Required) The unique Entity ID of the application in SAML Identity Provider."
+  value       = aws_elasticsearch_domain_saml_options.aws_elasticsearch_domain_saml_options.entity_id
 }
 output "id" {
   description = "The name of the domain the SAML options are associated with."

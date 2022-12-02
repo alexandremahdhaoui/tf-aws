@@ -1,22 +1,13 @@
 resource "aws_lightsail_domain_entry" "aws_lightsail_domain_entry" {
-  type        = var.type
-  domain_name = var.domain_name
   is_alias    = var.is_alias
   name        = var.name
   target      = var.target
+  type        = var.type
+  domain_name = var.domain_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "domain_name" {
-  description = "(Required) The name of the Lightsail domain in which to create the entry"
-  type        = string
-}
-variable "is_alias" {
-  description = "(Optional) If the entry should be an alias Defaults to falseIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the entry record"
@@ -29,6 +20,15 @@ variable "target" {
 variable "type" {
   description = "(Required) Type of record"
   type        = string
+}
+variable "domain_name" {
+  description = "(Required) The name of the Lightsail domain in which to create the entry"
+  type        = string
+}
+variable "is_alias" {
+  description = "(Optional) If the entry should be an alias Defaults to falseIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -150,10 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type" {
-  description = "(Required) Type of record"
-  value       = aws_lightsail_domain_entry.aws_lightsail_domain_entry.type
-}
 output "domain_name" {
   description = "(Required) The name of the Lightsail domain in which to create the entry"
   value       = aws_lightsail_domain_entry.aws_lightsail_domain_entry.domain_name
@@ -169,6 +165,10 @@ output "name" {
 output "target" {
   description = "(Required) Target of the domain entry"
   value       = aws_lightsail_domain_entry.aws_lightsail_domain_entry.target
+}
+output "type" {
+  description = "(Required) Type of record"
+  value       = aws_lightsail_domain_entry.aws_lightsail_domain_entry.type
 }
 output "id" {
   description = "A combination of attributes to create a unique id: name_domain_name_type_target"

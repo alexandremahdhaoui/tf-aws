@@ -1,5 +1,4 @@
 resource "aws_appintegrations_event_integration" "aws_appintegrations_event_integration" {
-  arn             = var.arn
   description     = var.description
   event_filter    = var.event_filter
   eventbridge_bus = var.eventbridge_bus
@@ -7,6 +6,7 @@ resource "aws_appintegrations_event_integration" "aws_appintegrations_event_inte
   name            = var.name
   source          = var.source
   tags            = var.tags
+  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -166,10 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the Event Integration."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.name
-}
 output "source" {
   description = "(Required) Source of the events.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.source
@@ -197,6 +193,10 @@ output "eventbridge_bus" {
 output "id" {
   description = "Identifier of the Event Integration which is the name of the Event Integration."
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.id
+}
+output "name" {
+  description = "(Required) Name of the Event Integration."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.name
 }
 output "arn" {
   description = "ARN of the Event Integration."

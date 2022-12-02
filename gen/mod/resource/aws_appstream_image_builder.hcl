@@ -1,32 +1,81 @@
 resource "aws_appstream_image_builder" "aws_appstream_image_builder" {
-  image_arn                              = var.image_arn
-  instance_type                          = var.instance_type
-  tags                                   = var.tags
-  vpce_id                                = var.vpce_id
+  access_endpoint                        = var.access_endpoint
   arn                                    = var.arn
-  id                                     = var.id
+  enable_default_internet_access         = var.enable_default_internet_access
+  vpc_config                             = var.vpc_config
   domain_join_info                       = var.domain_join_info
   endpoint_type                          = var.endpoint_type
-  iam_role_arn                           = var.iam_role_arn
-  image_name                             = var.image_name
-  security_group_ids                     = var.security_group_ids
-  vpc_config                             = var.vpc_config
-  description                            = var.description
-  display_name                           = var.display_name
-  directory_name                         = var.directory_name
+  id                                     = var.id
   name                                   = var.name
-  organizational_unit_distinguished_name = var.organizational_unit_distinguished_name
+  security_group_ids                     = var.security_group_ids
   state                                  = var.state
   subnet_ids                             = var.subnet_ids
-  access_endpoint                        = var.access_endpoint
-  created_time                           = var.created_time
   tags_all                               = var.tags_all
+  directory_name                         = var.directory_name
+  display_name                           = var.display_name
+  iam_role_arn                           = var.iam_role_arn
+  image_arn                              = var.image_arn
+  instance_type                          = var.instance_type
+  organizational_unit_distinguished_name = var.organizational_unit_distinguished_name
+  tags                                   = var.tags
+  vpce_id                                = var.vpce_id
   appstream_agent_version                = var.appstream_agent_version
-  enable_default_internet_access         = var.enable_default_internet_access
+  created_time                           = var.created_time
+  description                            = var.description
+  image_name                             = var.image_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "image_name" {
+  description = "(Optional, Required if image_arn not provided) Name of the image used to create the image builder."
+  type        = string
+  default     = ""
+}
+variable "appstream_agent_version" {
+  description = "(Optional) Version of the AppStream 2.0 agent to use for this image builder."
+  type        = string
+  default     = ""
+}
+variable "created_time" {
+  description = " Date and time, in UTC and extended RFC 3339 format, when the image builder was created."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) Description to display."
+  type        = string
+  default     = ""
+}
+variable "vpc_config" {
+  description = "(Optional) Configuration block for the VPC configuration for the image builder. See below."
+  type        = string
+  default     = ""
+}
+variable "access_endpoint" {
+  description = "(Optional) Set of interface VPC endpoint (interface endpoint) objects. Maximum of 4. See below."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the appstream image builder."
+  type        = string
+  default     = ""
+}
+variable "enable_default_internet_access" {
+  description = "(Optional) Enables or disables default internet access for the image builder."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Unique name for the image builder."
+  type        = string
+}
+variable "security_group_ids" {
+  description = "(Optional) Identifiers of the security groups for the image builder or image builder."
+  type        = string
+  default     = ""
 }
 variable "state" {
   description = "State of the image builder. Can be: PENDING, UPDATING_AGENT, RUNNING, STOPPING, STOPPED, REBOOTING, SNAPSHOTTING, DELETING, FAILED, UPDATING, PENDING_QUALIFICATION"
@@ -38,54 +87,19 @@ variable "subnet_ids" {
   type        = string
   default     = ""
 }
-variable "access_endpoint" {
-  description = "(Optional) Set of interface VPC endpoint (interface endpoint) objects. Maximum of 4. See below."
-  type        = string
-  default     = ""
-}
-variable "created_time" {
-  description = " Date and time, in UTC and extended RFC 3339 format, when the image builder was created."
-  type        = string
-  default     = ""
-}
-variable "directory_name" {
-  description = "(Optional) Fully qualified name of the directory (for example, corp.example.com)."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Unique name for the image builder."
-  type        = string
-}
-variable "organizational_unit_distinguished_name" {
-  description = "(Optional) Distinguished name of the organizational unit for computer accounts.vpc_configThe vpc_config block supports the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "appstream_agent_version" {
-  description = "(Optional) Version of the AppStream 2.0 agent to use for this image builder."
-  type        = string
-  default     = ""
-}
-variable "enable_default_internet_access" {
-  description = "(Optional) Enables or disables default internet access for the image builder."
-  type        = string
-  default     = ""
-}
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
   default     = ""
 }
-variable "vpce_id" {
-  description = "(Optional) Identifier (ID) of the VPC in which the interface endpoint is used.domain_join_infoThe domain_join_info block supports the following arguments:"
+variable "domain_join_info" {
+  description = "(Optional) Configuration block for the name of the directory and organizational unit (OU) to use to join the image builder to a Microsoft Active Directory domain. See below."
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "ARN of the appstream image builder."
+variable "endpoint_type" {
+  description = "(Required) Type of interface endpoint."
   type        = string
-  default     = ""
 }
 variable "id" {
   description = "Name of the image builder."
@@ -101,28 +115,23 @@ variable "instance_type" {
   description = "(Required) Instance type to use when launching the image builder."
   type        = string
 }
+variable "organizational_unit_distinguished_name" {
+  description = "(Optional) Distinguished name of the organizational unit for computer accounts.vpc_configThe vpc_config block supports the following arguments:"
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.access_endpointThe access_endpoint block supports the following arguments:"
   type        = string
   default     = ""
 }
-variable "image_name" {
-  description = "(Optional, Required if image_arn not provided) Name of the image used to create the image builder."
+variable "vpce_id" {
+  description = "(Optional) Identifier (ID) of the VPC in which the interface endpoint is used.domain_join_infoThe domain_join_info block supports the following arguments:"
   type        = string
   default     = ""
 }
-variable "security_group_ids" {
-  description = "(Optional) Identifiers of the security groups for the image builder or image builder."
-  type        = string
-  default     = ""
-}
-variable "vpc_config" {
-  description = "(Optional) Configuration block for the VPC configuration for the image builder. See below."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Description to display."
+variable "directory_name" {
+  description = "(Optional) Fully qualified name of the directory (for example, corp.example.com)."
   type        = string
   default     = ""
 }
@@ -130,15 +139,6 @@ variable "display_name" {
   description = "(Optional) Human-readable friendly name for the AppStream image builder."
   type        = string
   default     = ""
-}
-variable "domain_join_info" {
-  description = "(Optional) Configuration block for the name of the directory and organizational unit (OU) to use to join the image builder to a Microsoft Active Directory domain. See below."
-  type        = string
-  default     = ""
-}
-variable "endpoint_type" {
-  description = "(Required) Type of interface endpoint."
-  type        = string
 }
 variable "iam_role_arn" {
   description = "(Optional) ARN of the IAM role to apply to the image builder."
@@ -265,69 +265,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "instance_type" {
-  description = "(Required) Instance type to use when launching the image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.instance_type
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.access_endpointThe access_endpoint block supports the following arguments:"
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.tags
-}
-output "vpce_id" {
-  description = "(Optional) Identifier (ID) of the VPC in which the interface endpoint is used.domain_join_infoThe domain_join_info block supports the following arguments:"
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.vpce_id
+output "access_endpoint" {
+  description = "(Optional) Set of interface VPC endpoint (interface endpoint) objects. Maximum of 4. See below."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.access_endpoint
 }
 output "arn" {
   description = "ARN of the appstream image builder."
   value       = aws_appstream_image_builder.aws_appstream_image_builder.arn
 }
-output "id" {
-  description = "Name of the image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.id
-}
-output "image_arn" {
-  description = "(Optional, Required if image_name not provided) ARN of the public, private, or shared image to use."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.image_arn
-}
-output "endpoint_type" {
-  description = "(Required) Type of interface endpoint."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.endpoint_type
-}
-output "iam_role_arn" {
-  description = "(Optional) ARN of the IAM role to apply to the image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.iam_role_arn
-}
-output "image_name" {
-  description = "(Optional, Required if image_arn not provided) Name of the image used to create the image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.image_name
-}
-output "security_group_ids" {
-  description = "(Optional) Identifiers of the security groups for the image builder or image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.security_group_ids
+output "enable_default_internet_access" {
+  description = "(Optional) Enables or disables default internet access for the image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.enable_default_internet_access
 }
 output "vpc_config" {
   description = "(Optional) Configuration block for the VPC configuration for the image builder. See below."
   value       = aws_appstream_image_builder.aws_appstream_image_builder.vpc_config
-}
-output "description" {
-  description = "(Optional) Description to display."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.description
-}
-output "display_name" {
-  description = "(Optional) Human-readable friendly name for the AppStream image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.display_name
-}
-output "domain_join_info" {
-  description = "(Optional) Configuration block for the name of the directory and organizational unit (OU) to use to join the image builder to a Microsoft Active Directory domain. See below."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.domain_join_info
-}
-output "name" {
-  description = "(Required) Unique name for the image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.name
-}
-output "organizational_unit_distinguished_name" {
-  description = "(Optional) Distinguished name of the organizational unit for computer accounts.vpc_configThe vpc_config block supports the following arguments:"
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.organizational_unit_distinguished_name
 }
 output "state" {
   description = "State of the image builder. Can be: PENDING, UPDATING_AGENT, RUNNING, STOPPING, STOPPED, REBOOTING, SNAPSHOTTING, DELETING, FAILED, UPDATING, PENDING_QUALIFICATION"
@@ -337,37 +289,77 @@ output "subnet_ids" {
   description = "(Optional) Identifiers of the subnets to which a network interface is attached from the image builder instance or image builder instance.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appstream_image_builder.aws_appstream_image_builder.subnet_ids
 }
-output "access_endpoint" {
-  description = "(Optional) Set of interface VPC endpoint (interface endpoint) objects. Maximum of 4. See below."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.access_endpoint
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.tags_all
 }
-output "created_time" {
-  description = " Date and time, in UTC and extended RFC 3339 format, when the image builder was created."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.created_time
+output "domain_join_info" {
+  description = "(Optional) Configuration block for the name of the directory and organizational unit (OU) to use to join the image builder to a Microsoft Active Directory domain. See below."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.domain_join_info
+}
+output "endpoint_type" {
+  description = "(Required) Type of interface endpoint."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.endpoint_type
+}
+output "id" {
+  description = "Name of the image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.id
+}
+output "name" {
+  description = "(Required) Unique name for the image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.name
+}
+output "security_group_ids" {
+  description = "(Optional) Identifiers of the security groups for the image builder or image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.security_group_ids
+}
+output "organizational_unit_distinguished_name" {
+  description = "(Optional) Distinguished name of the organizational unit for computer accounts.vpc_configThe vpc_config block supports the following arguments:"
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.organizational_unit_distinguished_name
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.access_endpointThe access_endpoint block supports the following arguments:"
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.tags
+}
+output "vpce_id" {
+  description = "(Optional) Identifier (ID) of the VPC in which the interface endpoint is used.domain_join_infoThe domain_join_info block supports the following arguments:"
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.vpce_id
 }
 output "directory_name" {
   description = "(Optional) Fully qualified name of the directory (for example, corp.example.com)."
   value       = aws_appstream_image_builder.aws_appstream_image_builder.directory_name
 }
+output "display_name" {
+  description = "(Optional) Human-readable friendly name for the AppStream image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.display_name
+}
+output "iam_role_arn" {
+  description = "(Optional) ARN of the IAM role to apply to the image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.iam_role_arn
+}
+output "image_arn" {
+  description = "(Optional, Required if image_name not provided) ARN of the public, private, or shared image to use."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.image_arn
+}
+output "instance_type" {
+  description = "(Required) Instance type to use when launching the image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.instance_type
+}
 output "appstream_agent_version" {
   description = "(Optional) Version of the AppStream 2.0 agent to use for this image builder."
   value       = aws_appstream_image_builder.aws_appstream_image_builder.appstream_agent_version
 }
-output "enable_default_internet_access" {
-  description = "(Optional) Enables or disables default internet access for the image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.enable_default_internet_access
+output "created_time" {
+  description = " Date and time, in UTC and extended RFC 3339 format, when the image builder was created."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.created_time
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.tags_all
+output "description" {
+  description = "(Optional) Description to display."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.description
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.tags_all
-}
-output "arn" {
-  description = "ARN of the appstream image builder."
-  value       = aws_appstream_image_builder.aws_appstream_image_builder.arn
+output "image_name" {
+  description = "(Optional, Required if image_arn not provided) Name of the image used to create the image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.image_name
 }
 output "created_time" {
   description = " Date and time, in UTC and extended RFC 3339 format, when the image builder was created."
@@ -380,6 +372,14 @@ output "id" {
 output "state" {
   description = "State of the image builder. Can be: PENDING, UPDATING_AGENT, RUNNING, STOPPING, STOPPED, REBOOTING, SNAPSHOTTING, DELETING, FAILED, UPDATING, PENDING_QUALIFICATION"
   value       = aws_appstream_image_builder.aws_appstream_image_builder.state
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.tags_all
+}
+output "arn" {
+  description = "ARN of the appstream image builder."
+  value       = aws_appstream_image_builder.aws_appstream_image_builder.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

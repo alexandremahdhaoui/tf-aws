@@ -124,6 +124,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The Amazon Resource Name of this upload."
+  value       = aws_devicefarm_upload.aws_devicefarm_upload.arn
+}
 output "category" {
   description = "The upload's category."
   value       = aws_devicefarm_upload.aws_devicefarm_upload.category
@@ -135,10 +139,6 @@ output "metadata" {
 output "url" {
   description = "The presigned Amazon S3 URL that was used to store a file using a PUT request."
   value       = aws_devicefarm_upload.aws_devicefarm_upload.url
-}
-output "arn" {
-  description = "The Amazon Resource Name of this upload."
-  value       = aws_devicefarm_upload.aws_devicefarm_upload.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -19,10 +19,6 @@ variable "pipeline_id" {
   description = "(Required) ID of the pipeline.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-output "description" {
-  description = "Description of Pipeline."
-  value       = aws_datapipeline_pipeline.aws_datapipeline_pipeline.description
-}
 output "name" {
   description = "Name of Pipeline."
   value       = aws_datapipeline_pipeline.aws_datapipeline_pipeline.name
@@ -30,6 +26,10 @@ output "name" {
 output "pipeline_id" {
   description = "(Required) ID of the pipeline.In addition to all arguments above, the following attributes are exported:"
   value       = aws_datapipeline_pipeline.aws_datapipeline_pipeline.pipeline_id
+}
+output "description" {
+  description = "Description of Pipeline."
+  value       = aws_datapipeline_pipeline.aws_datapipeline_pipeline.description
 }
 output "description" {
   description = "Description of Pipeline."

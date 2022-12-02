@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "s3_canonical_user_id" {
-  description = "Using With CloudFrontorigin-access-identity/cloudfront/cloudfront_access_identity_paths3_origin_configaws_cloudfront_distribution resource:Updating your bucket policyNote that the AWS API may translate the s3_canonical_user_id CanonicalUserAWSaws_s3_bucketiam_arn instead:"
-  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.s3_canonical_user_id
-}
 output "caller_reference" {
   description = "Internal value used by CloudFront to allow future\nupdates to the origin access identity."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.caller_reference
@@ -147,6 +143,10 @@ output "iam_arn" {
 output "id" {
   description = "The identifier for the distribution. For example: EDFDVBD632BHDS5."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.id
+}
+output "s3_canonical_user_id" {
+  description = "Using With CloudFrontorigin-access-identity/cloudfront/cloudfront_access_identity_paths3_origin_configaws_cloudfront_distribution resource:Updating your bucket policyNote that the AWS API may translate the s3_canonical_user_id CanonicalUserAWSaws_s3_bucketiam_arn instead:"
+  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.s3_canonical_user_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

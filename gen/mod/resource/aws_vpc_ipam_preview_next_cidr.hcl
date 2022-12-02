@@ -1,8 +1,8 @@
 resource "aws_vpc_ipam_preview_next_cidr" "aws_vpc_ipam_preview_next_cidr" {
+  netmask_length   = var.netmask_length
   cidr             = var.cidr
   disallowed_cidrs = var.disallowed_cidrs
   ipam_pool_id     = var.ipam_pool_id
-  netmask_length   = var.netmask_length
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -146,10 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "netmask_length" {
-  description = "(Optional) The netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.netmask_length
-}
 output "cidr" {
   description = "The previewed CIDR from the pool."
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.cidr
@@ -161,6 +157,10 @@ output "disallowed_cidrs" {
 output "ipam_pool_id" {
   description = "(Required) The ID of the pool to which you want to assign a CIDR."
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.ipam_pool_id
+}
+output "netmask_length" {
+  description = "(Optional) The netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.netmask_length
 }
 output "cidr" {
   description = "The previewed CIDR from the pool."

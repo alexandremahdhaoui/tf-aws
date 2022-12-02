@@ -1,18 +1,14 @@
 datasource "aws_ec2_local_gateway_virtual_interface_groups" "aws_ec2_local_gateway_virtual_interface_groups" {
+  filter                              = var.filter
+  id                                  = var.id
   ids                                 = var.ids
   local_gateway_virtual_interface_ids = var.local_gateway_virtual_interface_ids
   name                                = var.name
   tags                                = var.tags
   values                              = var.values
-  filter                              = var.filter
-  id                                  = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the filter."
   type        = string
 }
 variable "tags" {
@@ -44,17 +40,9 @@ variable "local_gateway_virtual_interface_ids" {
   type        = string
   default     = ""
 }
-output "local_gateway_virtual_interface_ids" {
-  description = "Set of EC2 Local Gateway Virtual Interface identifiers.TimeoutsConfiguration options:"
-  value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.local_gateway_virtual_interface_ids
-}
-output "name" {
+variable "name" {
   description = "(Required) Name of the filter."
-  value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.name
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags, each pair of which must exactly match a pair on the desired local gateway route table.filter Argument ReferenceThe filter configuration block supports the following arguments:"
-  value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.tags
+  type        = string
 }
 output "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
@@ -71,6 +59,18 @@ output "id" {
 output "ids" {
   description = "Set of EC2 Local Gateway Virtual Interface Group identifiers."
   value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.ids
+}
+output "local_gateway_virtual_interface_ids" {
+  description = "Set of EC2 Local Gateway Virtual Interface identifiers.TimeoutsConfiguration options:"
+  value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.local_gateway_virtual_interface_ids
+}
+output "name" {
+  description = "(Required) Name of the filter."
+  value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.name
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags, each pair of which must exactly match a pair on the desired local gateway route table.filter Argument ReferenceThe filter configuration block supports the following arguments:"
+  value       = aws_ec2_local_gateway_virtual_interface_groups.aws_ec2_local_gateway_virtual_interface_groups.tags
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

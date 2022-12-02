@@ -1,35 +1,35 @@
 resource "aws_cloudfront_response_headers_policy" "aws_cloudfront_response_headers_policy" {
-  access_control_expose_headers    = var.access_control_expose_headers
-  access_control_max_age_sec       = var.access_control_max_age_sec
-  name                             = var.name
-  sampling_rate                    = var.sampling_rate
-  frame_options                    = var.frame_options
-  header                           = var.header
-  mode_block                       = var.mode_block
   override                         = var.override
-  xss_protection                   = var.xss_protection
-  custom_headers_config            = var.custom_headers_config
-  content_security_policy          = var.content_security_policy
-  origin_override                  = var.origin_override
   preload                          = var.preload
-  referrer_policy                  = var.referrer_policy
-  server_timing_headers_config     = var.server_timing_headers_config
-  value                            = var.value
-  access_control_allow_methods     = var.access_control_allow_methods
-  cors_config                      = var.cors_config
-  enabled                          = var.enabled
-  frame_option                     = var.frame_option
+  protection                       = var.protection
   report_uri                       = var.report_uri
-  strict_transport_security        = var.strict_transport_security
+  frame_options                    = var.frame_options
+  origin_override                  = var.origin_override
+  referrer_policy                  = var.referrer_policy
+  sampling_rate                    = var.sampling_rate
+  access_control_max_age_sec       = var.access_control_max_age_sec
+  mode_block                       = var.mode_block
   access_control_allow_headers     = var.access_control_allow_headers
   access_control_allow_origins     = var.access_control_allow_origins
+  enabled                          = var.enabled
+  strict_transport_security        = var.strict_transport_security
   comment                          = var.comment
-  content_type_options             = var.content_type_options
+  cors_config                      = var.cors_config
   include_subdomains               = var.include_subdomains
-  access_control_allow_credentials = var.access_control_allow_credentials
-  etag                             = var.etag
-  protection                       = var.protection
+  access_control_expose_headers    = var.access_control_expose_headers
+  content_security_policy          = var.content_security_policy
+  content_type_options             = var.content_type_options
+  custom_headers_config            = var.custom_headers_config
+  header                           = var.header
   security_headers_config          = var.security_headers_config
+  value                            = var.value
+  xss_protection                   = var.xss_protection
+  etag                             = var.etag
+  frame_option                     = var.frame_option
+  name                             = var.name
+  access_control_allow_credentials = var.access_control_allow_credentials
+  access_control_allow_methods     = var.access_control_allow_methods
+  server_timing_headers_config     = var.server_timing_headers_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -40,37 +40,12 @@ variable "access_control_expose_headers" {
   type        = string
   default     = ""
 }
-variable "access_control_max_age_sec" {
-  description = "(Required) A number that CloudFront uses as the value for the max-age directive in the Strict-Transport-Security HTTP response header."
+variable "content_security_policy" {
+  description = "(Required) The policy directives and their values that CloudFront includes as values for the Content-Security-Policy HTTP response header."
   type        = string
 }
-variable "name" {
-  description = "(Required) A unique name to identify the response headers policy."
-  type        = string
-}
-variable "sampling_rate" {
-  description = "(Required) A number 0–100 (inclusive) that specifies the percentage of responses that you want CloudFront to add the Server-Timing header to. Valid range: Minimum value of 0.0. Maximum value of 100.0.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "frame_options" {
-  description = "(Optional) Determines whether CloudFront includes the X-Frame-Options HTTP response header and the header’s value. See Frame Options for more information."
-  type        = string
-  default     = ""
-}
-variable "header" {
-  description = "(Required) The HTTP response header name."
-  type        = string
-}
-variable "mode_block" {
-  description = "(Required) Whether CloudFront includes the mode=block directive in the X-XSS-Protection header."
-  type        = string
-}
-variable "override" {
-  description = "(Required) Whether CloudFront overrides the X-XSS-Protection HTTP response header received from the origin with the one specified in this response headers policy."
-  type        = string
-}
-variable "xss_protection" {
-  description = "(Optional) Determine whether CloudFront includes the X-XSS-Protection HTTP response header and the header’s value. See XSS Protection for more information.Content Security Policy"
+variable "content_type_options" {
+  description = "(Optional) Determines whether CloudFront includes the X-Content-Type-Options HTTP response header with its value set to nosniff. See Content Type Options for more information."
   type        = string
   default     = ""
 }
@@ -79,21 +54,42 @@ variable "custom_headers_config" {
   type        = string
   default     = ""
 }
-variable "content_security_policy" {
-  description = "(Required) The policy directives and their values that CloudFront includes as values for the Content-Security-Policy HTTP response header."
+variable "header" {
+  description = "(Required) The HTTP response header name."
   type        = string
 }
-variable "origin_override" {
-  description = "(Required) A Boolean value that determines how CloudFront behaves for the HTTP response header.Custom Header"
-  type        = string
-}
-variable "preload" {
-  description = "(Optional) Whether CloudFront includes the preload directive in the Strict-Transport-Security HTTP response header.XSS Protection"
+variable "security_headers_config" {
+  description = "(Optional) A configuration for a set of security-related HTTP response headers. See Security Headers Config for more information."
   type        = string
   default     = ""
 }
-variable "referrer_policy" {
-  description = "(Required) The value of the Referrer-Policy HTTP response header. Valid Values: no-referrer | no-referrer-when-downgrade | origin | origin-when-cross-origin | same-origin | strict-origin | strict-origin-when-cross-origin | unsafe-url"
+variable "value" {
+  description = "(Required) The value for the HTTP response header.Security Headers Config"
+  type        = string
+}
+variable "xss_protection" {
+  description = "(Optional) Determine whether CloudFront includes the X-XSS-Protection HTTP response header and the header’s value. See XSS Protection for more information.Content Security Policy"
+  type        = string
+  default     = ""
+}
+variable "etag" {
+  description = "The current version of the response headers policy."
+  type        = string
+}
+variable "frame_option" {
+  description = "(Required) The value of the X-Frame-Options HTTP response header. Valid values: DENY | SAMEORIGIN"
+  type        = string
+}
+variable "name" {
+  description = "(Required) A unique name to identify the response headers policy."
+  type        = string
+}
+variable "access_control_allow_credentials" {
+  description = "(Required) A Boolean value that CloudFront uses as the value for the Access-Control-Allow-Credentials HTTP response header."
+  type        = string
+}
+variable "access_control_allow_methods" {
+  description = "(Required) Object that contains an attribute items that contains a list of HTTP methods that CloudFront includes as values for the Access-Control-Allow-Methods HTTP response header. Valid values: GET | POST | OPTIONS | PUT | DELETE | HEAD | ALL"
   type        = string
 }
 variable "server_timing_headers_config" {
@@ -101,21 +97,17 @@ variable "server_timing_headers_config" {
   type        = string
   default     = ""
 }
-variable "access_control_allow_methods" {
-  description = "(Required) Object that contains an attribute items that contains a list of HTTP methods that CloudFront includes as values for the Access-Control-Allow-Methods HTTP response header. Valid values: GET | POST | OPTIONS | PUT | DELETE | HEAD | ALL"
+variable "override" {
+  description = "(Required) Whether CloudFront overrides the X-XSS-Protection HTTP response header received from the origin with the one specified in this response headers policy."
   type        = string
 }
-variable "cors_config" {
-  description = "(Optional) A configuration for a set of HTTP response headers that are used for Cross-Origin Resource Sharing (CORS). See Cors Config for more information."
+variable "preload" {
+  description = "(Optional) Whether CloudFront includes the preload directive in the Strict-Transport-Security HTTP response header.XSS Protection"
   type        = string
   default     = ""
 }
-variable "enabled" {
-  description = "(Required) A Whether CloudFront adds the Server-Timing header to HTTP responses that it sends in response to requests that match a cache behavior that's associated with this response headers policy."
-  type        = string
-}
-variable "frame_option" {
-  description = "(Required) The value of the X-Frame-Options HTTP response header. Valid values: DENY | SAMEORIGIN"
+variable "protection" {
+  description = "(Required) A Boolean value that determines the value of the X-XSS-Protection HTTP response header. When this setting is true, the value of the X-XSS-Protection header is 1. When this setting is false, the value of the X-XSS-Protection header is 0."
   type        = string
 }
 variable "report_uri" {
@@ -123,13 +115,29 @@ variable "report_uri" {
   type        = string
   default     = ""
 }
-variable "strict_transport_security" {
-  description = "(Optional) Determines whether CloudFront includes the Strict-Transport-Security HTTP response header and the header’s value. See Strict Transport Security for more information."
+variable "frame_options" {
+  description = "(Optional) Determines whether CloudFront includes the X-Frame-Options HTTP response header and the header’s value. See Frame Options for more information."
   type        = string
   default     = ""
 }
-variable "value" {
-  description = "(Required) The value for the HTTP response header.Security Headers Config"
+variable "origin_override" {
+  description = "(Required) A Boolean value that determines how CloudFront behaves for the HTTP response header.Custom Header"
+  type        = string
+}
+variable "referrer_policy" {
+  description = "(Required) The value of the Referrer-Policy HTTP response header. Valid Values: no-referrer | no-referrer-when-downgrade | origin | origin-when-cross-origin | same-origin | strict-origin | strict-origin-when-cross-origin | unsafe-url"
+  type        = string
+}
+variable "sampling_rate" {
+  description = "(Required) A number 0–100 (inclusive) that specifies the percentage of responses that you want CloudFront to add the Server-Timing header to. Valid range: Minimum value of 0.0. Maximum value of 100.0.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "access_control_max_age_sec" {
+  description = "(Required) A number that CloudFront uses as the value for the max-age directive in the Strict-Transport-Security HTTP response header."
+  type        = string
+}
+variable "mode_block" {
+  description = "(Required) Whether CloudFront includes the mode=block directive in the X-XSS-Protection header."
   type        = string
 }
 variable "access_control_allow_headers" {
@@ -140,35 +148,27 @@ variable "access_control_allow_origins" {
   description = "(Required) Object that contains an attribute items that contains a list of origins that CloudFront can use as the value for the Access-Control-Allow-Origin HTTP response header."
   type        = string
 }
+variable "enabled" {
+  description = "(Required) A Whether CloudFront adds the Server-Timing header to HTTP responses that it sends in response to requests that match a cache behavior that's associated with this response headers policy."
+  type        = string
+}
+variable "strict_transport_security" {
+  description = "(Optional) Determines whether CloudFront includes the Strict-Transport-Security HTTP response header and the header’s value. See Strict Transport Security for more information."
+  type        = string
+  default     = ""
+}
 variable "comment" {
   description = "(Optional) A comment to describe the response headers policy. The comment cannot be longer than 128 characters."
   type        = string
   default     = ""
 }
-variable "content_type_options" {
-  description = "(Optional) Determines whether CloudFront includes the X-Content-Type-Options HTTP response header with its value set to nosniff. See Content Type Options for more information."
+variable "cors_config" {
+  description = "(Optional) A configuration for a set of HTTP response headers that are used for Cross-Origin Resource Sharing (CORS). See Cors Config for more information."
   type        = string
   default     = ""
 }
 variable "include_subdomains" {
   description = "(Optional) Whether CloudFront includes the includeSubDomains directive in the Strict-Transport-Security HTTP response header."
-  type        = string
-  default     = ""
-}
-variable "access_control_allow_credentials" {
-  description = "(Required) A Boolean value that CloudFront uses as the value for the Access-Control-Allow-Credentials HTTP response header."
-  type        = string
-}
-variable "etag" {
-  description = "The current version of the response headers policy."
-  type        = string
-}
-variable "protection" {
-  description = "(Required) A Boolean value that determines the value of the X-XSS-Protection HTTP response header. When this setting is true, the value of the X-XSS-Protection header is 1. When this setting is false, the value of the X-XSS-Protection header is 0."
-  type        = string
-}
-variable "security_headers_config" {
-  description = "(Optional) A configuration for a set of security-related HTTP response headers. See Security Headers Config for more information."
   type        = string
   default     = ""
 }
@@ -292,57 +292,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "custom_headers_config" {
-  description = "(Optional) Object that contains an attribute items that contains a list of custom headers. See Custom Header for more information."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.custom_headers_config
-}
-output "content_security_policy" {
-  description = "(Required) The policy directives and their values that CloudFront includes as values for the Content-Security-Policy HTTP response header."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.content_security_policy
+output "frame_options" {
+  description = "(Optional) Determines whether CloudFront includes the X-Frame-Options HTTP response header and the header’s value. See Frame Options for more information."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.frame_options
 }
 output "origin_override" {
   description = "(Required) A Boolean value that determines how CloudFront behaves for the HTTP response header.Custom Header"
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.origin_override
 }
-output "preload" {
-  description = "(Optional) Whether CloudFront includes the preload directive in the Strict-Transport-Security HTTP response header.XSS Protection"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.preload
-}
 output "referrer_policy" {
   description = "(Required) The value of the Referrer-Policy HTTP response header. Valid Values: no-referrer | no-referrer-when-downgrade | origin | origin-when-cross-origin | same-origin | strict-origin | strict-origin-when-cross-origin | unsafe-url"
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.referrer_policy
 }
-output "server_timing_headers_config" {
-  description = "(Optional) A configuration for enabling the Server-Timing header in HTTP responses sent from CloudFront. See Server Timing Headers Config for more information.Cors Config"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.server_timing_headers_config
+output "sampling_rate" {
+  description = "(Required) A number 0–100 (inclusive) that specifies the percentage of responses that you want CloudFront to add the Server-Timing header to. Valid range: Minimum value of 0.0. Maximum value of 100.0.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.sampling_rate
 }
-output "access_control_allow_methods" {
-  description = "(Required) Object that contains an attribute items that contains a list of HTTP methods that CloudFront includes as values for the Access-Control-Allow-Methods HTTP response header. Valid values: GET | POST | OPTIONS | PUT | DELETE | HEAD | ALL"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_allow_methods
+output "access_control_max_age_sec" {
+  description = "(Required) A number that CloudFront uses as the value for the max-age directive in the Strict-Transport-Security HTTP response header."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_max_age_sec
 }
-output "cors_config" {
-  description = "(Optional) A configuration for a set of HTTP response headers that are used for Cross-Origin Resource Sharing (CORS). See Cors Config for more information."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.cors_config
-}
-output "enabled" {
-  description = "(Required) A Whether CloudFront adds the Server-Timing header to HTTP responses that it sends in response to requests that match a cache behavior that's associated with this response headers policy."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.enabled
-}
-output "frame_option" {
-  description = "(Required) The value of the X-Frame-Options HTTP response header. Valid values: DENY | SAMEORIGIN"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.frame_option
-}
-output "report_uri" {
-  description = "(Optional) A reporting URI, which CloudFront uses as the value of the report directive in the X-XSS-Protection header. You cannot specify a report_uri when mode_block is true.Server Timing Headers Config"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.report_uri
-}
-output "strict_transport_security" {
-  description = "(Optional) Determines whether CloudFront includes the Strict-Transport-Security HTTP response header and the header’s value. See Strict Transport Security for more information."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.strict_transport_security
-}
-output "value" {
-  description = "(Required) The value for the HTTP response header.Security Headers Config"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.value
+output "mode_block" {
+  description = "(Required) Whether CloudFront includes the mode=block directive in the X-XSS-Protection header."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.mode_block
 }
 output "access_control_allow_headers" {
   description = "(Required) Object that contains an attribute items that contains a list of HTTP header names that CloudFront includes as values for the Access-Control-Allow-Headers HTTP response header."
@@ -352,69 +324,97 @@ output "access_control_allow_origins" {
   description = "(Required) Object that contains an attribute items that contains a list of origins that CloudFront can use as the value for the Access-Control-Allow-Origin HTTP response header."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_allow_origins
 }
+output "enabled" {
+  description = "(Required) A Whether CloudFront adds the Server-Timing header to HTTP responses that it sends in response to requests that match a cache behavior that's associated with this response headers policy."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.enabled
+}
+output "strict_transport_security" {
+  description = "(Optional) Determines whether CloudFront includes the Strict-Transport-Security HTTP response header and the header’s value. See Strict Transport Security for more information."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.strict_transport_security
+}
 output "comment" {
   description = "(Optional) A comment to describe the response headers policy. The comment cannot be longer than 128 characters."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.comment
 }
-output "content_type_options" {
-  description = "(Optional) Determines whether CloudFront includes the X-Content-Type-Options HTTP response header with its value set to nosniff. See Content Type Options for more information."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.content_type_options
+output "cors_config" {
+  description = "(Optional) A configuration for a set of HTTP response headers that are used for Cross-Origin Resource Sharing (CORS). See Cors Config for more information."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.cors_config
 }
 output "include_subdomains" {
   description = "(Optional) Whether CloudFront includes the includeSubDomains directive in the Strict-Transport-Security HTTP response header."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.include_subdomains
 }
-output "access_control_allow_credentials" {
-  description = "(Required) A Boolean value that CloudFront uses as the value for the Access-Control-Allow-Credentials HTTP response header."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_allow_credentials
-}
-output "etag" {
-  description = "The current version of the response headers policy."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.etag
-}
-output "protection" {
-  description = "(Required) A Boolean value that determines the value of the X-XSS-Protection HTTP response header. When this setting is true, the value of the X-XSS-Protection header is 1. When this setting is false, the value of the X-XSS-Protection header is 0."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.protection
-}
 output "security_headers_config" {
   description = "(Optional) A configuration for a set of security-related HTTP response headers. See Security Headers Config for more information."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.security_headers_config
+}
+output "value" {
+  description = "(Required) The value for the HTTP response header.Security Headers Config"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.value
+}
+output "xss_protection" {
+  description = "(Optional) Determine whether CloudFront includes the X-XSS-Protection HTTP response header and the header’s value. See XSS Protection for more information.Content Security Policy"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.xss_protection
 }
 output "access_control_expose_headers" {
   description = "(Optional) Object that contains an attribute items that contains a list of HTTP headers that CloudFront includes as values for the Access-Control-Expose-Headers HTTP response header."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_expose_headers
 }
-output "access_control_max_age_sec" {
-  description = "(Required) A number that CloudFront uses as the value for the max-age directive in the Strict-Transport-Security HTTP response header."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_max_age_sec
+output "content_security_policy" {
+  description = "(Required) The policy directives and their values that CloudFront includes as values for the Content-Security-Policy HTTP response header."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.content_security_policy
 }
-output "name" {
-  description = "(Required) A unique name to identify the response headers policy."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.name
+output "content_type_options" {
+  description = "(Optional) Determines whether CloudFront includes the X-Content-Type-Options HTTP response header with its value set to nosniff. See Content Type Options for more information."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.content_type_options
 }
-output "sampling_rate" {
-  description = "(Required) A number 0–100 (inclusive) that specifies the percentage of responses that you want CloudFront to add the Server-Timing header to. Valid range: Minimum value of 0.0. Maximum value of 100.0.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.sampling_rate
-}
-output "frame_options" {
-  description = "(Optional) Determines whether CloudFront includes the X-Frame-Options HTTP response header and the header’s value. See Frame Options for more information."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.frame_options
+output "custom_headers_config" {
+  description = "(Optional) Object that contains an attribute items that contains a list of custom headers. See Custom Header for more information."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.custom_headers_config
 }
 output "header" {
   description = "(Required) The HTTP response header name."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.header
 }
-output "mode_block" {
-  description = "(Required) Whether CloudFront includes the mode=block directive in the X-XSS-Protection header."
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.mode_block
+output "etag" {
+  description = "The current version of the response headers policy."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.etag
+}
+output "frame_option" {
+  description = "(Required) The value of the X-Frame-Options HTTP response header. Valid values: DENY | SAMEORIGIN"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.frame_option
+}
+output "name" {
+  description = "(Required) A unique name to identify the response headers policy."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.name
+}
+output "access_control_allow_credentials" {
+  description = "(Required) A Boolean value that CloudFront uses as the value for the Access-Control-Allow-Credentials HTTP response header."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_allow_credentials
+}
+output "access_control_allow_methods" {
+  description = "(Required) Object that contains an attribute items that contains a list of HTTP methods that CloudFront includes as values for the Access-Control-Allow-Methods HTTP response header. Valid values: GET | POST | OPTIONS | PUT | DELETE | HEAD | ALL"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.access_control_allow_methods
+}
+output "server_timing_headers_config" {
+  description = "(Optional) A configuration for enabling the Server-Timing header in HTTP responses sent from CloudFront. See Server Timing Headers Config for more information.Cors Config"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.server_timing_headers_config
 }
 output "override" {
   description = "(Required) Whether CloudFront overrides the X-XSS-Protection HTTP response header received from the origin with the one specified in this response headers policy."
   value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.override
 }
-output "xss_protection" {
-  description = "(Optional) Determine whether CloudFront includes the X-XSS-Protection HTTP response header and the header’s value. See XSS Protection for more information.Content Security Policy"
-  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.xss_protection
+output "preload" {
+  description = "(Optional) Whether CloudFront includes the preload directive in the Strict-Transport-Security HTTP response header.XSS Protection"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.preload
+}
+output "protection" {
+  description = "(Required) A Boolean value that determines the value of the X-XSS-Protection HTTP response header. When this setting is true, the value of the X-XSS-Protection header is 1. When this setting is false, the value of the X-XSS-Protection header is 0."
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.protection
+}
+output "report_uri" {
+  description = "(Optional) A reporting URI, which CloudFront uses as the value of the report directive in the X-XSS-Protection header. You cannot specify a report_uri when mode_block is true.Server Timing Headers Config"
+  value       = aws_cloudfront_response_headers_policy.aws_cloudfront_response_headers_policy.report_uri
 }
 output "etag" {
   description = "The current version of the response headers policy."

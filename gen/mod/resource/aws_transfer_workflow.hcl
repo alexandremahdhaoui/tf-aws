@@ -1,35 +1,92 @@
 resource "aws_transfer_workflow" "aws_transfer_workflow" {
+  arn                       = var.arn
+  copy_step_details         = var.copy_step_details
+  description               = var.description
+  efs_file_location         = var.efs_file_location
+  file_system_id            = var.file_system_id
+  id                        = var.id
   name                      = var.name
   on_exception_steps        = var.on_exception_steps
-  path                      = var.path
-  delete_step_details       = var.delete_step_details
-  description               = var.description
-  destination_file_location = var.destination_file_location
-  efs_file_location         = var.efs_file_location
-  key                       = var.key
-  steps                     = var.steps
   tag_step_details          = var.tag_step_details
-  tags                      = var.tags
-  target                    = var.target
-  type                      = var.type
-  bucket                    = var.bucket
-  copy_step_details         = var.copy_step_details
-  custom_step_details       = var.custom_step_details
-  file_system_id            = var.file_system_id
-  s3_file_location          = var.s3_file_location
   value                     = var.value
-  arn                       = var.arn
+  path                      = var.path
+  s3_file_location          = var.s3_file_location
+  tags                      = var.tags
+  bucket                    = var.bucket
+  custom_step_details       = var.custom_step_details
+  delete_step_details       = var.delete_step_details
+  key                       = var.key
   overwrite_existing        = var.overwrite_existing
-  timeout_seconds           = var.timeout_seconds
-  id                        = var.id
   source_file_location      = var.source_file_location
+  steps                     = var.steps
+  target                    = var.target
+  timeout_seconds           = var.timeout_seconds
+  destination_file_location = var.destination_file_location
+  type                      = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "custom_step_details" {
+  description = "(Optional) Details for a step that invokes a lambda function."
+  type        = string
+  default     = ""
+}
+variable "delete_step_details" {
+  description = "(Optional) Details for a step that deletes the file."
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Required) The name assigned to the tag that you create."
+  type        = string
+}
+variable "overwrite_existing" {
+  description = "(Optional) A flag that indicates whether or not to overwrite an existing file of the same name. The default is FALSE. Valid values are TRUE and FALSE."
+  type        = string
+  default     = ""
+}
+variable "source_file_location" {
+  description = "(Optional) Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. Enter $${previous.file} to use the previous file as the input. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. Enter $${original.file} to use the originally-uploaded file location as input for this step."
+  type        = string
+  default     = ""
+}
+variable "steps" {
+  description = "(Required) Specifies the details for the steps that are in the specified workflow. See Workflow Steps below."
+  type        = string
+}
+variable "target" {
+  description = "(Optional) The ARN for the lambda function that is being called."
+  type        = string
+  default     = ""
+}
+variable "bucket" {
+  description = "(Optional) Specifies the S3 bucket for the customer input file."
+  type        = string
+  default     = ""
+}
+variable "timeout_seconds" {
+  description = "(Optional) Timeout, in seconds, for the step.Delete Step Details"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) One of the following step types are supported. COPY, CUSTOM, DELETE, and TAG.Copy Step Details"
+  type        = string
+}
 variable "destination_file_location" {
   description = "(Optional) Specifies the location for the file being copied. Use $${Transfer:username} in this field to parametrize the destination prefix by username."
+  type        = string
+  default     = ""
+}
+variable "copy_step_details" {
+  description = "(Optional) Details for a step that performs a file copy. See Copy Step Details below."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) A textual description for the workflow."
   type        = string
   default     = ""
 }
@@ -38,8 +95,13 @@ variable "efs_file_location" {
   type        = string
   default     = ""
 }
-variable "key" {
-  description = "(Required) The name assigned to the tag that you create."
+variable "file_system_id" {
+  description = "(Optional) The ID of the file system, assigned by Amazon EFS."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The Workflow id."
   type        = string
 }
 variable "name" {
@@ -52,37 +114,16 @@ variable "on_exception_steps" {
   type        = string
   default     = ""
 }
-variable "path" {
-  description = "(Optional) The pathname for the folder being used by a workflow.S3 File Location"
+variable "arn" {
+  description = "The Workflow ARN."
   type        = string
-  default     = ""
 }
-variable "delete_step_details" {
-  description = "(Optional) Details for a step that deletes the file."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) A textual description for the workflow."
-  type        = string
-  default     = ""
-}
-variable "steps" {
-  description = "(Required) Specifies the details for the steps that are in the specified workflow. See Workflow Steps below."
+variable "value" {
+  description = "(Required) The value that corresponds to the key.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_step_details" {
   description = "(Optional) Details for a step that creates one or more tags."
-  type        = string
-  default     = ""
-}
-variable "custom_step_details" {
-  description = "(Optional) Details for a step that invokes a lambda function."
-  type        = string
-  default     = ""
-}
-variable "file_system_id" {
-  description = "(Optional) The ID of the file system, assigned by Amazon EFS."
   type        = string
   default     = ""
 }
@@ -96,49 +137,8 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "target" {
-  description = "(Optional) The ARN for the lambda function that is being called."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required) One of the following step types are supported. COPY, CUSTOM, DELETE, and TAG.Copy Step Details"
-  type        = string
-}
-variable "bucket" {
-  description = "(Optional) Specifies the S3 bucket for the customer input file."
-  type        = string
-  default     = ""
-}
-variable "copy_step_details" {
-  description = "(Optional) Details for a step that performs a file copy. See Copy Step Details below."
-  type        = string
-  default     = ""
-}
-variable "value" {
-  description = "(Required) The value that corresponds to the key.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "timeout_seconds" {
-  description = "(Optional) Timeout, in seconds, for the step.Delete Step Details"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Workflow ARN."
-  type        = string
-}
-variable "overwrite_existing" {
-  description = "(Optional) A flag that indicates whether or not to overwrite an existing file of the same name. The default is FALSE. Valid values are TRUE and FALSE."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The Workflow id."
-  type        = string
-}
-variable "source_file_location" {
-  description = "(Optional) Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. Enter $${previous.file} to use the previous file as the input. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. Enter $${original.file} to use the originally-uploaded file location as input for this step."
+variable "path" {
+  description = "(Optional) The pathname for the folder being used by a workflow.S3 File Location"
   type        = string
   default     = ""
 }
@@ -262,89 +262,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Workflow ARN."
-  value       = aws_transfer_workflow.aws_transfer_workflow.arn
-}
-output "overwrite_existing" {
-  description = "(Optional) A flag that indicates whether or not to overwrite an existing file of the same name. The default is FALSE. Valid values are TRUE and FALSE."
-  value       = aws_transfer_workflow.aws_transfer_workflow.overwrite_existing
-}
-output "timeout_seconds" {
-  description = "(Optional) Timeout, in seconds, for the step.Delete Step Details"
-  value       = aws_transfer_workflow.aws_transfer_workflow.timeout_seconds
-}
-output "id" {
-  description = "The Workflow id."
-  value       = aws_transfer_workflow.aws_transfer_workflow.id
-}
-output "source_file_location" {
-  description = "(Optional) Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. Enter $${previous.file} to use the previous file as the input. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. Enter $${original.file} to use the originally-uploaded file location as input for this step."
-  value       = aws_transfer_workflow.aws_transfer_workflow.source_file_location
-}
-output "on_exception_steps" {
-  description = "(Optional) Specifies the steps (actions) to take if errors are encountered during execution of the workflow. See Workflow Steps below."
-  value       = aws_transfer_workflow.aws_transfer_workflow.on_exception_steps
-}
-output "path" {
-  description = "(Optional) The pathname for the folder being used by a workflow.S3 File Location"
-  value       = aws_transfer_workflow.aws_transfer_workflow.path
-}
-output "delete_step_details" {
-  description = "(Optional) Details for a step that deletes the file."
-  value       = aws_transfer_workflow.aws_transfer_workflow.delete_step_details
-}
-output "description" {
-  description = "(Optional) A textual description for the workflow."
-  value       = aws_transfer_workflow.aws_transfer_workflow.description
-}
 output "destination_file_location" {
   description = "(Optional) Specifies the location for the file being copied. Use $${Transfer:username} in this field to parametrize the destination prefix by username."
   value       = aws_transfer_workflow.aws_transfer_workflow.destination_file_location
-}
-output "efs_file_location" {
-  description = "(Optional) Specifies the details for the EFS file being copied."
-  value       = aws_transfer_workflow.aws_transfer_workflow.efs_file_location
-}
-output "key" {
-  description = "(Required) The name assigned to the tag that you create."
-  value       = aws_transfer_workflow.aws_transfer_workflow.key
-}
-output "name" {
-  description = "(Optional) The name of the step, used as an identifier."
-  value       = aws_transfer_workflow.aws_transfer_workflow.name
-}
-output "steps" {
-  description = "(Required) Specifies the details for the steps that are in the specified workflow. See Workflow Steps below."
-  value       = aws_transfer_workflow.aws_transfer_workflow.steps
-}
-output "tag_step_details" {
-  description = "(Optional) Details for a step that creates one or more tags."
-  value       = aws_transfer_workflow.aws_transfer_workflow.tag_step_details
-}
-output "target" {
-  description = "(Optional) The ARN for the lambda function that is being called."
-  value       = aws_transfer_workflow.aws_transfer_workflow.target
 }
 output "type" {
   description = "(Required) One of the following step types are supported. COPY, CUSTOM, DELETE, and TAG.Copy Step Details"
   value       = aws_transfer_workflow.aws_transfer_workflow.type
 }
-output "bucket" {
-  description = "(Optional) Specifies the S3 bucket for the customer input file."
-  value       = aws_transfer_workflow.aws_transfer_workflow.bucket
+output "on_exception_steps" {
+  description = "(Optional) Specifies the steps (actions) to take if errors are encountered during execution of the workflow. See Workflow Steps below."
+  value       = aws_transfer_workflow.aws_transfer_workflow.on_exception_steps
+}
+output "arn" {
+  description = "The Workflow ARN."
+  value       = aws_transfer_workflow.aws_transfer_workflow.arn
 }
 output "copy_step_details" {
   description = "(Optional) Details for a step that performs a file copy. See Copy Step Details below."
   value       = aws_transfer_workflow.aws_transfer_workflow.copy_step_details
 }
-output "custom_step_details" {
-  description = "(Optional) Details for a step that invokes a lambda function."
-  value       = aws_transfer_workflow.aws_transfer_workflow.custom_step_details
+output "description" {
+  description = "(Optional) A textual description for the workflow."
+  value       = aws_transfer_workflow.aws_transfer_workflow.description
+}
+output "efs_file_location" {
+  description = "(Optional) Specifies the details for the EFS file being copied."
+  value       = aws_transfer_workflow.aws_transfer_workflow.efs_file_location
 }
 output "file_system_id" {
   description = "(Optional) The ID of the file system, assigned by Amazon EFS."
   value       = aws_transfer_workflow.aws_transfer_workflow.file_system_id
+}
+output "id" {
+  description = "The Workflow id."
+  value       = aws_transfer_workflow.aws_transfer_workflow.id
+}
+output "name" {
+  description = "(Optional) The name of the step, used as an identifier."
+  value       = aws_transfer_workflow.aws_transfer_workflow.name
+}
+output "tag_step_details" {
+  description = "(Optional) Details for a step that creates one or more tags."
+  value       = aws_transfer_workflow.aws_transfer_workflow.tag_step_details
+}
+output "value" {
+  description = "(Required) The value that corresponds to the key.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_transfer_workflow.aws_transfer_workflow.value
+}
+output "path" {
+  description = "(Optional) The pathname for the folder being used by a workflow.S3 File Location"
+  value       = aws_transfer_workflow.aws_transfer_workflow.path
 }
 output "s3_file_location" {
   description = "(Optional) Specifies the details for the S3 file being copied.EFS File Location"
@@ -354,9 +322,41 @@ output "tags" {
   description = "(Optional) Array that contains from 1 to 10 key/value pairs. See S3 Tags below.Destination File Location"
   value       = aws_transfer_workflow.aws_transfer_workflow.tags
 }
-output "value" {
-  description = "(Required) The value that corresponds to the key.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_transfer_workflow.aws_transfer_workflow.value
+output "target" {
+  description = "(Optional) The ARN for the lambda function that is being called."
+  value       = aws_transfer_workflow.aws_transfer_workflow.target
+}
+output "bucket" {
+  description = "(Optional) Specifies the S3 bucket for the customer input file."
+  value       = aws_transfer_workflow.aws_transfer_workflow.bucket
+}
+output "custom_step_details" {
+  description = "(Optional) Details for a step that invokes a lambda function."
+  value       = aws_transfer_workflow.aws_transfer_workflow.custom_step_details
+}
+output "delete_step_details" {
+  description = "(Optional) Details for a step that deletes the file."
+  value       = aws_transfer_workflow.aws_transfer_workflow.delete_step_details
+}
+output "key" {
+  description = "(Required) The name assigned to the tag that you create."
+  value       = aws_transfer_workflow.aws_transfer_workflow.key
+}
+output "overwrite_existing" {
+  description = "(Optional) A flag that indicates whether or not to overwrite an existing file of the same name. The default is FALSE. Valid values are TRUE and FALSE."
+  value       = aws_transfer_workflow.aws_transfer_workflow.overwrite_existing
+}
+output "source_file_location" {
+  description = "(Optional) Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. Enter $${previous.file} to use the previous file as the input. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. Enter $${original.file} to use the originally-uploaded file location as input for this step."
+  value       = aws_transfer_workflow.aws_transfer_workflow.source_file_location
+}
+output "steps" {
+  description = "(Required) Specifies the details for the steps that are in the specified workflow. See Workflow Steps below."
+  value       = aws_transfer_workflow.aws_transfer_workflow.steps
+}
+output "timeout_seconds" {
+  description = "(Optional) Timeout, in seconds, for the step.Delete Step Details"
+  value       = aws_transfer_workflow.aws_transfer_workflow.timeout_seconds
 }
 output "arn" {
   description = "The Workflow ARN."

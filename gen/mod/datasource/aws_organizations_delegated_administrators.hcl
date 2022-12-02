@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "delegated_administrators" {
-  description = "The list of delegated administrators in your organization, which have the following attributes:\n"
-  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegated_administrators
-}
 output "delegation_enabled_date" {
   description = "The date when the account was made a delegated administrator."
   value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegation_enabled_date
@@ -35,6 +31,10 @@ output "name" {
 output "arn" {
   description = "The ARN of the delegated administrator's account."
   value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.arn
+}
+output "delegated_administrators" {
+  description = "The list of delegated administrators in your organization, which have the following attributes:\n"
+  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegated_administrators
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

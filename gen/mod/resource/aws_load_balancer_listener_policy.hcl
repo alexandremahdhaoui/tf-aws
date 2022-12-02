@@ -1,15 +1,11 @@
 resource "aws_load_balancer_listener_policy" "aws_load_balancer_listener_policy" {
+  id                 = var.id
   load_balancer_name = var.load_balancer_name
   load_balancer_port = var.load_balancer_port
   policy_names       = var.policy_names
-  id                 = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the policy."
   type        = string
 }
 variable "load_balancer_name" {
@@ -22,6 +18,10 @@ variable "load_balancer_port" {
 }
 variable "policy_names" {
   description = "(Required) List of Policy Names to apply to the backend server.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "The ID of the policy."
   type        = string
 }
 variable "tag_instance_id" {

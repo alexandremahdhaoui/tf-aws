@@ -1,45 +1,95 @@
 resource "aws_redshiftserverless_workgroup" "aws_redshiftserverless_workgroup" {
-  enhanced_vpc_routing = var.enhanced_vpc_routing
-  parameter_key        = var.parameter_key
-  parameter_value      = var.parameter_value
-  security_group_ids   = var.security_group_ids
-  vpc_id               = var.vpc_id
-  workgroup_id         = var.workgroup_id
-  address              = var.address
-  endpoint             = var.endpoint
-  port                 = var.port
-  private_ip_address   = var.private_ip_address
-  network_interface    = var.network_interface
-  workgroup_name       = var.workgroup_name
-  base_capacity        = var.base_capacity
-  config_parameter     = var.config_parameter
   id                   = var.id
-  network_interface_id = var.network_interface_id
+  parameter_key        = var.parameter_key
+  port                 = var.port
   publicly_accessible  = var.publicly_accessible
-  subnet_ids           = var.subnet_ids
-  tags                 = var.tags
-  tags_all             = var.tags_all
-  arn                  = var.arn
-  availability_zone    = var.availability_zone
   vpc_endpoint         = var.vpc_endpoint
   vpc_endpoint_id      = var.vpc_endpoint_id
+  vpc_id               = var.vpc_id
+  address              = var.address
+  availability_zone    = var.availability_zone
+  base_capacity        = var.base_capacity
+  workgroup_name       = var.workgroup_name
+  tags_all             = var.tags_all
+  config_parameter     = var.config_parameter
+  endpoint             = var.endpoint
+  enhanced_vpc_routing = var.enhanced_vpc_routing
+  network_interface    = var.network_interface
+  parameter_value      = var.parameter_value
+  subnet_ids           = var.subnet_ids
+  tags                 = var.tags
+  workgroup_id         = var.workgroup_id
+  arn                  = var.arn
+  network_interface_id = var.network_interface_id
+  private_ip_address   = var.private_ip_address
+  security_group_ids   = var.security_group_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The Redshift Workgroup Name."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Workgroup."
   type        = string
 }
 variable "network_interface_id" {
   description = "The unique identifier of the network interface."
   type        = string
 }
+variable "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
+  type        = string
+}
+variable "security_group_ids" {
+  description = "(Optional) An array of security group IDs to associate with the workgroup."
+  type        = string
+  default     = ""
+}
+variable "vpc_endpoint_id" {
+  description = "The DNS address of the VPC endpoint."
+  type        = string
+}
+variable "vpc_id" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  type        = string
+}
+variable "id" {
+  description = "The Redshift Workgroup Name."
+  type        = string
+}
+variable "parameter_key" {
+  description = "(Required) The key of the parameter. The options are datestyle, enable_user_activity_logging, query_group, search_path, and max_query_execution_time."
+  type        = string
+}
+variable "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  type        = string
+}
 variable "publicly_accessible" {
   description = "(Optional) A value that specifies whether the workgroup can be accessed from a public network."
   type        = string
   default     = ""
+}
+variable "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+  type        = string
+}
+variable "address" {
+  description = "The DNS address of the VPC endpoint."
+  type        = string
+}
+variable "availability_zone" {
+  description = "The availability Zone."
+  type        = string
+}
+variable "base_capacity" {
+  description = "(Optional) The base data warehouse capacity of the workgroup in Redshift Processing Units (RPUs)."
+  type        = string
+  default     = ""
+}
+variable "workgroup_name" {
+  description = "(Required) The name of the workgroup."
+  type        = string
 }
 variable "subnet_ids" {
   description = "(Optional) An array of VPC subnet IDs to associate with the workgroup."
@@ -55,20 +105,13 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Endpoint"
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Workgroup."
+variable "config_parameter" {
+  description = "(Optional) An array of parameters to set for more control over a serverless database. See Config Parameter below."
   type        = string
+  default     = ""
 }
-variable "availability_zone" {
-  description = "The availability Zone."
-  type        = string
-}
-variable "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
-  type        = string
-}
-variable "vpc_endpoint_id" {
-  description = "The DNS address of the VPC endpoint."
+variable "endpoint" {
+  description = "The endpoint that is created from the workgroup. See Endpoint below."
   type        = string
 }
 variable "enhanced_vpc_routing" {
@@ -76,60 +119,17 @@ variable "enhanced_vpc_routing" {
   type        = string
   default     = ""
 }
-variable "parameter_key" {
-  description = "(Required) The key of the parameter. The options are datestyle, enable_user_activity_logging, query_group, search_path, and max_query_execution_time."
+variable "network_interface" {
+  description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
   type        = string
 }
 variable "parameter_value" {
   description = "(Required) The value of the parameter to set.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "security_group_ids" {
-  description = "(Optional) An array of security group IDs to associate with the workgroup."
-  type        = string
-  default     = ""
-}
-variable "vpc_id" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  type        = string
-}
 variable "workgroup_id" {
   description = "The Redshift Workgroup ID."
   type        = string
-}
-variable "address" {
-  description = "The DNS address of the VPC endpoint."
-  type        = string
-}
-variable "endpoint" {
-  description = "The endpoint that is created from the workgroup. See Endpoint below."
-  type        = string
-}
-variable "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  type        = string
-}
-variable "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
-  type        = string
-}
-variable "network_interface" {
-  description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
-  type        = string
-}
-variable "workgroup_name" {
-  description = "(Required) The name of the workgroup."
-  type        = string
-}
-variable "base_capacity" {
-  description = "(Optional) The base data warehouse capacity of the workgroup in Redshift Processing Units (RPUs)."
-  type        = string
-  default     = ""
-}
-variable "config_parameter" {
-  description = "(Optional) An array of parameters to set for more control over a serverless database. See Config Parameter below."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -251,21 +251,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "base_capacity" {
-  description = "(Optional) The base data warehouse capacity of the workgroup in Redshift Processing Units (RPUs)."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.base_capacity
-}
-output "config_parameter" {
-  description = "(Optional) An array of parameters to set for more control over a serverless database. See Config Parameter below."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.config_parameter
-}
 output "network_interface" {
   description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.network_interface
 }
-output "workgroup_name" {
-  description = "(Required) The name of the workgroup."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.workgroup_name
+output "parameter_value" {
+  description = "(Required) The value of the parameter to set.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.parameter_value
 }
 output "subnet_ids" {
   description = "(Optional) An array of VPC subnet IDs to associate with the workgroup."
@@ -279,21 +271,37 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Endpoint"
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.tags_all
 }
+output "config_parameter" {
+  description = "(Optional) An array of parameters to set for more control over a serverless database. See Config Parameter below."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.config_parameter
+}
+output "endpoint" {
+  description = "The endpoint that is created from the workgroup. See Endpoint below."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.endpoint
+}
+output "enhanced_vpc_routing" {
+  description = "(Optional) The value that specifies whether to turn on enhanced virtual private cloud (VPC) routing, which forces Amazon Redshift Serverless to route traffic through your VPC instead of over the internet."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.enhanced_vpc_routing
+}
+output "workgroup_id" {
+  description = "The Redshift Workgroup ID."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.workgroup_id
+}
+output "security_group_ids" {
+  description = "(Optional) An array of security group IDs to associate with the workgroup."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.security_group_ids
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Serverless Workgroup."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.arn
 }
-output "availability_zone" {
-  description = "The availability Zone."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.availability_zone
-}
-output "id" {
-  description = "The Redshift Workgroup Name."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.id
-}
 output "network_interface_id" {
   description = "The unique identifier of the network interface."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.network_interface_id
+}
+output "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.private_ip_address
 }
 output "publicly_accessible" {
   description = "(Optional) A value that specifies whether the workgroup can be accessed from a public network."
@@ -307,57 +315,37 @@ output "vpc_endpoint_id" {
   description = "The DNS address of the VPC endpoint."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.vpc_endpoint_id
 }
-output "security_group_ids" {
-  description = "(Optional) An array of security group IDs to associate with the workgroup."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.security_group_ids
-}
 output "vpc_id" {
   description = "The port that Amazon Redshift Serverless listens on."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.vpc_id
 }
-output "workgroup_id" {
-  description = "The Redshift Workgroup ID."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.workgroup_id
-}
-output "address" {
-  description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.address
-}
-output "endpoint" {
-  description = "The endpoint that is created from the workgroup. See Endpoint below."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.endpoint
-}
-output "enhanced_vpc_routing" {
-  description = "(Optional) The value that specifies whether to turn on enhanced virtual private cloud (VPC) routing, which forces Amazon Redshift Serverless to route traffic through your VPC instead of over the internet."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.enhanced_vpc_routing
+output "id" {
+  description = "The Redshift Workgroup Name."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.id
 }
 output "parameter_key" {
   description = "(Required) The key of the parameter. The options are datestyle, enable_user_activity_logging, query_group, search_path, and max_query_execution_time."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.parameter_key
 }
-output "parameter_value" {
-  description = "(Required) The value of the parameter to set.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.parameter_value
-}
 output "port" {
   description = "The port that Amazon Redshift Serverless listens on."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.port
 }
-output "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.private_ip_address
+output "workgroup_name" {
+  description = "(Required) The name of the workgroup."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.workgroup_name
 }
-output "vpc_endpoint_id" {
+output "address" {
   description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.vpc_endpoint_id
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.address
 }
-output "vpc_id" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.vpc_id
+output "availability_zone" {
+  description = "The availability Zone."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.availability_zone
 }
-output "subnet_id" {
-  description = "The unique identifier of the subnet."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.subnet_id
+output "base_capacity" {
+  description = "(Optional) The base data warehouse capacity of the workgroup in Redshift Processing Units (RPUs)."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.base_capacity
 }
 output "availability_zone" {
   description = "The availability Zone."
@@ -367,10 +355,6 @@ output "private_ip_address" {
   description = "The IPv4 address of the network interface within the subnet."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.private_ip_address
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Endpoint"
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.tags_all
-}
 output "address" {
   description = "The DNS address of the VPC endpoint."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.address
@@ -379,9 +363,41 @@ output "id" {
   description = "The Redshift Workgroup Name."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.id
 }
+output "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.port
+}
+output "subnet_id" {
+  description = "The unique identifier of the subnet."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.subnet_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Endpoint"
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.tags_all
+}
+output "vpc_endpoint_id" {
+  description = "The DNS address of the VPC endpoint."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.vpc_endpoint_id
+}
+output "vpc_id" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.vpc_id
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Workgroup."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.arn
+}
+output "endpoint" {
+  description = "The endpoint that is created from the workgroup. See Endpoint below."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.endpoint
+}
 output "network_interface" {
   description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.network_interface
+}
+output "network_interface_id" {
+  description = "The unique identifier of the network interface."
+  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.network_interface_id
 }
 output "vpc_endpoint" {
   description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
@@ -390,22 +406,6 @@ output "vpc_endpoint" {
 output "workgroup_id" {
   description = "The Redshift Workgroup ID."
   value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.workgroup_id
-}
-output "endpoint" {
-  description = "The endpoint that is created from the workgroup. See Endpoint below."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.endpoint
-}
-output "network_interface_id" {
-  description = "The unique identifier of the network interface."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.network_interface_id
-}
-output "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.port
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Workgroup."
-  value       = aws_redshiftserverless_workgroup.aws_redshiftserverless_workgroup.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

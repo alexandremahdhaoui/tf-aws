@@ -1,36 +1,40 @@
 resource "aws_sfn_state_machine" "aws_sfn_state_machine" {
+  name                   = var.name
+  tags                   = var.tags
+  log_destination        = var.log_destination
+  definition             = var.definition
+  id                     = var.id
   logging_configuration  = var.logging_configuration
   name_prefix            = var.name_prefix
-  status                 = var.status
   tracing_configuration  = var.tracing_configuration
-  creation_date          = var.creation_date
-  enabled                = var.enabled
-  tags                   = var.tags
-  arn                    = var.arn
-  role_arn               = var.role_arn
   type                   = var.type
-  id                     = var.id
-  log_destination        = var.log_destination
-  level                  = var.level
-  name                   = var.name
-  definition             = var.definition
+  arn                    = var.arn
+  status                 = var.status
+  enabled                = var.enabled
   include_execution_data = var.include_execution_data
+  level                  = var.level
+  role_arn               = var.role_arn
+  creation_date          = var.creation_date
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "type" {
-  description = "(Optional) Determines whether a Standard or Express state machine is created. The default is STANDARD. You cannot update the type of a state machine once it has been created. Valid values: STANDARD, EXPRESS.logging_configuration Configuration Block"
+variable "enabled" {
+  description = "(Optional) When set to true, AWS X-Ray tracing is enabled. Make sure the State Machine has the correct IAM policies for logging. See the AWS Step Functions Developer Guide for details.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The ARN of the state machine."
+variable "status" {
+  description = "The current status of the state machine. Either ACTIVE or DELETING."
   type        = string
 }
-variable "log_destination" {
-  description = "(Optional) Amazon Resource Name (ARN) of a CloudWatch log group. Make sure the State Machine has the correct IAM policies for logging. The ARN must end with :*tracing_configuration Configuration Block"
+variable "creation_date" {
+  description = "The date the state machine was created."
+  type        = string
+}
+variable "include_execution_data" {
+  description = "(Optional) Determines whether execution data is included in your log. When set to false, data is excluded."
   type        = string
   default     = ""
 }
@@ -39,19 +43,41 @@ variable "level" {
   type        = string
   default     = ""
 }
+variable "role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the IAM role to use for this state machine."
+  type        = string
+}
+variable "log_destination" {
+  description = "(Optional) Amazon Resource Name (ARN) of a CloudWatch log group. Make sure the State Machine has the correct IAM policies for logging. The ARN must end with :*tracing_configuration Configuration Block"
+  type        = string
+  default     = ""
+}
 variable "name" {
   description = "(Optional) The name of the state machine. The name should only contain 0-9, A-Z, -z, - and _. If omitted, Terraform will assign a random, unique name."
   type        = string
   default     = ""
 }
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) Determines whether a Standard or Express state machine is created. The default is STANDARD. You cannot update the type of a state machine once it has been created. Valid values: STANDARD, EXPRESS.logging_configuration Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the state machine."
+  type        = string
+}
 variable "definition" {
   description = "(Required) The Amazon States Language definition of the state machine."
   type        = string
 }
-variable "include_execution_data" {
-  description = "(Optional) Determines whether execution data is included in your log. When set to false, data is excluded."
+variable "id" {
+  description = "The ARN of the state machine."
   type        = string
-  default     = ""
 }
 variable "logging_configuration" {
   description = "(Optional) Defines what execution history events are logged and where they are logged. The logging_configuration parameter is only valid when type is set to EXPRESS. Defaults to OFF. For more information see Logging Express Workflows and Log Levels in the AWS Step Functions User Guide."
@@ -63,36 +89,10 @@ variable "name_prefix" {
   type        = string
   default     = ""
 }
-variable "status" {
-  description = "The current status of the state machine. Either ACTIVE or DELETING."
-  type        = string
-}
 variable "tracing_configuration" {
   description = "(Optional) Selects whether AWS X-Ray tracing is enabled."
   type        = string
   default     = ""
-}
-variable "creation_date" {
-  description = "The date the state machine was created."
-  type        = string
-}
-variable "enabled" {
-  description = "(Optional) When set to true, AWS X-Ray tracing is enabled. Make sure the State Machine has the correct IAM policies for logging. See the AWS Step Functions Developer Guide for details.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the state machine."
-  type        = string
-}
-variable "role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the IAM role to use for this state machine."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -214,73 +214,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type" {
-  description = "(Optional) Determines whether a Standard or Express state machine is created. The default is STANDARD. You cannot update the type of a state machine once it has been created. Valid values: STANDARD, EXPRESS.logging_configuration Configuration Block"
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.type
-}
-output "id" {
-  description = "The ARN of the state machine."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.id
-}
-output "log_destination" {
-  description = "(Optional) Amazon Resource Name (ARN) of a CloudWatch log group. Make sure the State Machine has the correct IAM policies for logging. The ARN must end with :*tracing_configuration Configuration Block"
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.log_destination
-}
-output "level" {
-  description = "(Optional) Defines which category of execution history events are logged. Valid values: ALL, ERROR, FATAL, OFF"
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.level
-}
-output "name" {
-  description = "(Optional) The name of the state machine. The name should only contain 0-9, A-Z, -z, - and _. If omitted, Terraform will assign a random, unique name."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.name
-}
-output "definition" {
-  description = "(Required) The Amazon States Language definition of the state machine."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.definition
-}
-output "include_execution_data" {
-  description = "(Optional) Determines whether execution data is included in your log. When set to false, data is excluded."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.include_execution_data
-}
-output "logging_configuration" {
-  description = "(Optional) Defines what execution history events are logged and where they are logged. The logging_configuration parameter is only valid when type is set to EXPRESS. Defaults to OFF. For more information see Logging Express Workflows and Log Levels in the AWS Step Functions User Guide."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.logging_configuration
-}
 output "name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.name_prefix
-}
-output "status" {
-  description = "The current status of the state machine. Either ACTIVE or DELETING."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.status
 }
 output "tracing_configuration" {
   description = "(Optional) Selects whether AWS X-Ray tracing is enabled."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.tracing_configuration
 }
-output "creation_date" {
-  description = "The date the state machine was created."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.creation_date
+output "type" {
+  description = "(Optional) Determines whether a Standard or Express state machine is created. The default is STANDARD. You cannot update the type of a state machine once it has been created. Valid values: STANDARD, EXPRESS.logging_configuration Configuration Block"
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.type
+}
+output "arn" {
+  description = "The ARN of the state machine."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.arn
+}
+output "definition" {
+  description = "(Required) The Amazon States Language definition of the state machine."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.definition
+}
+output "id" {
+  description = "The ARN of the state machine."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.id
+}
+output "logging_configuration" {
+  description = "(Optional) Defines what execution history events are logged and where they are logged. The logging_configuration parameter is only valid when type is set to EXPRESS. Defaults to OFF. For more information see Logging Express Workflows and Log Levels in the AWS Step Functions User Guide."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.logging_configuration
 }
 output "enabled" {
   description = "(Optional) When set to true, AWS X-Ray tracing is enabled. Make sure the State Machine has the correct IAM policies for logging. See the AWS Step Functions Developer Guide for details.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sfn_state_machine.aws_sfn_state_machine.enabled
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.tags
+output "status" {
+  description = "The current status of the state machine. Either ACTIVE or DELETING."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.status
 }
-output "arn" {
-  description = "The ARN of the state machine."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.arn
+output "creation_date" {
+  description = "The date the state machine was created."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.creation_date
+}
+output "include_execution_data" {
+  description = "(Optional) Determines whether execution data is included in your log. When set to false, data is excluded."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.include_execution_data
+}
+output "level" {
+  description = "(Optional) Defines which category of execution history events are logged. Valid values: ALL, ERROR, FATAL, OFF"
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.level
 }
 output "role_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the IAM role to use for this state machine."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.role_arn
 }
-output "arn" {
-  description = "The ARN of the state machine."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.arn
+output "log_destination" {
+  description = "(Optional) Amazon Resource Name (ARN) of a CloudWatch log group. Make sure the State Machine has the correct IAM policies for logging. The ARN must end with :*tracing_configuration Configuration Block"
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.log_destination
+}
+output "name" {
+  description = "(Optional) The name of the state machine. The name should only contain 0-9, A-Z, -z, - and _. If omitted, Terraform will assign a random, unique name."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.name
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.tags
 }
 output "creation_date" {
   description = "The date the state machine was created."
@@ -297,6 +293,10 @@ output "status" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.tags_all
+}
+output "arn" {
+  description = "The ARN of the state machine."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

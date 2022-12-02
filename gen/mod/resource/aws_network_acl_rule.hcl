@@ -1,30 +1,26 @@
 resource "aws_network_acl_rule" "aws_network_acl_rule" {
-  cidr_block      = var.cidr_block
-  from_port       = var.from_port
-  network_acl_id  = var.network_acl_id
-  protocol        = var.protocol
-  rule_number     = var.rule_number
   to_port         = var.to_port
+  cidr_block      = var.cidr_block
   egress          = var.egress
+  from_port       = var.from_port
   icmp_code       = var.icmp_code
+  protocol        = var.protocol
+  rule_action     = var.rule_action
   icmp_type       = var.icmp_type
   ipv6_cidr_block = var.ipv6_cidr_block
-  rule_action     = var.rule_action
+  network_acl_id  = var.network_acl_id
+  rule_number     = var.rule_number
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "network_acl_id" {
-  description = "(Required) The ID of the network ACL."
   type        = string
 }
 variable "protocol" {
   description = "(Required) The protocol. A value of -1 means all protocols."
   type        = string
 }
-variable "rule_number" {
-  description = "(Required) The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number."
+variable "rule_action" {
+  description = "(Required) Indicates whether to allow or deny the traffic that matches the rule. Accepted values: allow | deny"
   type        = string
 }
 variable "to_port" {
@@ -37,8 +33,17 @@ variable "cidr_block" {
   type        = string
   default     = ""
 }
+variable "egress" {
+  description = "(Optional, bool) Indicates whether this is an egress rule (rule is applied to traffic leaving the subnet). Default false."
+  type        = string
+}
 variable "from_port" {
   description = "(Optional) The from port to match."
+  type        = string
+  default     = ""
+}
+variable "icmp_code" {
+  description = "(Optional) ICMP protocol: The ICMP code. Required if specifying ICMP for the protocolE.g., -1~> strongNOTE: If the value of protocol is -1 or all, the from_port and to_port values will be ignored and the rule will apply to all ports.~> strongNOTE: If the value of icmp_type is -1 (which results in a wildcard ICMP type), the icmp_code must also be set to -1 (wildcard ICMP code).~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -52,18 +57,13 @@ variable "ipv6_cidr_block" {
   type        = string
   default     = ""
 }
-variable "rule_action" {
-  description = "(Required) Indicates whether to allow or deny the traffic that matches the rule. Accepted values: allow | deny"
+variable "network_acl_id" {
+  description = "(Required) The ID of the network ACL."
   type        = string
 }
-variable "egress" {
-  description = "(Optional, bool) Indicates whether this is an egress rule (rule is applied to traffic leaving the subnet). Default false."
+variable "rule_number" {
+  description = "(Required) The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number."
   type        = string
-}
-variable "icmp_code" {
-  description = "(Optional) ICMP protocol: The ICMP code. Required if specifying ICMP for the protocolE.g., -1~> strongNOTE: If the value of protocol is -1 or all, the from_port and to_port values will be ignored and the rule will apply to all ports.~> strongNOTE: If the value of icmp_type is -1 (which results in a wildcard ICMP type), the icmp_code must also be set to -1 (wildcard ICMP code).~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -185,49 +185,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cidr_block" {
-  description = "(Optional) The network range to allow or deny, in CIDR notation (for example 172.16.0.0/24 )."
-  value       = aws_network_acl_rule.aws_network_acl_rule.cidr_block
+output "egress" {
+  description = "(Optional, bool) Indicates whether this is an egress rule (rule is applied to traffic leaving the subnet). Default false."
+  value       = aws_network_acl_rule.aws_network_acl_rule.egress
 }
 output "from_port" {
   description = "(Optional) The from port to match."
   value       = aws_network_acl_rule.aws_network_acl_rule.from_port
 }
-output "network_acl_id" {
-  description = "(Required) The ID of the network ACL."
-  value       = aws_network_acl_rule.aws_network_acl_rule.network_acl_id
+output "icmp_code" {
+  description = "(Optional) ICMP protocol: The ICMP code. Required if specifying ICMP for the protocolE.g., -1~> strongNOTE: If the value of protocol is -1 or all, the from_port and to_port values will be ignored and the rule will apply to all ports.~> strongNOTE: If the value of icmp_type is -1 (which results in a wildcard ICMP type), the icmp_code must also be set to -1 (wildcard ICMP code).~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_network_acl_rule.aws_network_acl_rule.icmp_code
 }
 output "protocol" {
   description = "(Required) The protocol. A value of -1 means all protocols."
   value       = aws_network_acl_rule.aws_network_acl_rule.protocol
 }
-output "rule_number" {
-  description = "(Required) The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number."
-  value       = aws_network_acl_rule.aws_network_acl_rule.rule_number
+output "rule_action" {
+  description = "(Required) Indicates whether to allow or deny the traffic that matches the rule. Accepted values: allow | deny"
+  value       = aws_network_acl_rule.aws_network_acl_rule.rule_action
 }
 output "to_port" {
   description = "(Optional) The to port to match."
   value       = aws_network_acl_rule.aws_network_acl_rule.to_port
 }
-output "egress" {
-  description = "(Optional, bool) Indicates whether this is an egress rule (rule is applied to traffic leaving the subnet). Default false."
-  value       = aws_network_acl_rule.aws_network_acl_rule.egress
-}
-output "icmp_code" {
-  description = "(Optional) ICMP protocol: The ICMP code. Required if specifying ICMP for the protocolE.g., -1~> strongNOTE: If the value of protocol is -1 or all, the from_port and to_port values will be ignored and the rule will apply to all ports.~> strongNOTE: If the value of icmp_type is -1 (which results in a wildcard ICMP type), the icmp_code must also be set to -1 (wildcard ICMP code).~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_network_acl_rule.aws_network_acl_rule.icmp_code
-}
-output "icmp_type" {
-  description = "(Optional) ICMP protocol: The ICMP type. Required if specifying ICMP for the protocolE.g., -1"
-  value       = aws_network_acl_rule.aws_network_acl_rule.icmp_type
+output "cidr_block" {
+  description = "(Optional) The network range to allow or deny, in CIDR notation (for example 172.16.0.0/24 )."
+  value       = aws_network_acl_rule.aws_network_acl_rule.cidr_block
 }
 output "ipv6_cidr_block" {
   description = "(Optional) The IPv6 CIDR block to allow or deny."
   value       = aws_network_acl_rule.aws_network_acl_rule.ipv6_cidr_block
 }
-output "rule_action" {
-  description = "(Required) Indicates whether to allow or deny the traffic that matches the rule. Accepted values: allow | deny"
-  value       = aws_network_acl_rule.aws_network_acl_rule.rule_action
+output "network_acl_id" {
+  description = "(Required) The ID of the network ACL."
+  value       = aws_network_acl_rule.aws_network_acl_rule.network_acl_id
+}
+output "rule_number" {
+  description = "(Required) The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number."
+  value       = aws_network_acl_rule.aws_network_acl_rule.rule_number
+}
+output "icmp_type" {
+  description = "(Optional) ICMP protocol: The ICMP type. Required if specifying ICMP for the protocolE.g., -1"
+  value       = aws_network_acl_rule.aws_network_acl_rule.icmp_type
 }
 output "id" {
   description = "The ID of the network ACL Rule"

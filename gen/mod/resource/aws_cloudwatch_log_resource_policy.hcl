@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_resource_policy" "aws_cloudwatch_log_resource_policy" {
-  policy_document = var.policy_document
   policy_name     = var.policy_name
+  policy_document = var.policy_document
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

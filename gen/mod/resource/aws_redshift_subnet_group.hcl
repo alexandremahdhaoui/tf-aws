@@ -1,23 +1,14 @@
 resource "aws_redshift_subnet_group" "aws_redshift_subnet_group" {
+  arn         = var.arn
+  description = var.description
   id          = var.id
   name        = var.name
   subnet_ids  = var.subnet_ids
   tags        = var.tags
-  arn         = var.arn
-  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
-  type        = string
-  default     = ""
 }
 variable "id" {
   description = "The Redshift Subnet group ID."
@@ -33,6 +24,15 @@ variable "subnet_ids" {
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
   type        = string
   default     = ""
 }
@@ -156,6 +156,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
+  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.arn
+}
 output "description" {
   description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.description
@@ -175,10 +179,6 @@ output "subnet_ids" {
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.tags
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
-  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.arn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"

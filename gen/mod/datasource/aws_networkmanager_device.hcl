@@ -4,17 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "serial_number" {
-  description = "Serial number of the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.serial_number
-}
 output "site_id" {
   description = "ID of the site."
   value       = aws_networkmanager_device.aws_networkmanager_device.site_id
 }
-output "subnet_arn" {
-  description = "ARN of the subnet that the device is located in."
-  value       = aws_networkmanager_device.aws_networkmanager_device.subnet_arn
+output "tags" {
+  description = "Key-value tags for the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.tags
 }
 output "type" {
   description = "Type of device."
@@ -24,33 +20,17 @@ output "address" {
   description = "Physical address."
   value       = aws_networkmanager_device.aws_networkmanager_device.address
 }
-output "description" {
-  description = "Description of the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.description
+output "arn" {
+  description = "ARN of the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.arn
 }
-output "latitude" {
-  description = "Latitude."
-  value       = aws_networkmanager_device.aws_networkmanager_device.latitude
-}
-output "tags" {
-  description = "Key-value tags for the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.tags
-}
-output "model" {
-  description = "Model of device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.model
-}
-output "vendor" {
-  description = "Vendor of the device.The aws_location object supports the following:"
-  value       = aws_networkmanager_device.aws_networkmanager_device.vendor
+output "subnet_arn" {
+  description = "ARN of the subnet that the device is located in."
+  value       = aws_networkmanager_device.aws_networkmanager_device.subnet_arn
 }
 output "zone" {
   description = "Zone that the device is located in.The location object supports the following:"
   value       = aws_networkmanager_device.aws_networkmanager_device.zone
-}
-output "arn" {
-  description = "ARN of the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.arn
 }
 output "aws_location" {
   description = "AWS location of the device. Documented below."
@@ -59,6 +39,26 @@ output "aws_location" {
 output "location" {
   description = "Location of the device. Documented below."
   value       = aws_networkmanager_device.aws_networkmanager_device.location
+}
+output "description" {
+  description = "Description of the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.description
+}
+output "latitude" {
+  description = "Latitude."
+  value       = aws_networkmanager_device.aws_networkmanager_device.latitude
+}
+output "model" {
+  description = "Model of device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.model
+}
+output "serial_number" {
+  description = "Serial number of the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.serial_number
+}
+output "vendor" {
+  description = "Vendor of the device.The aws_location object supports the following:"
+  value       = aws_networkmanager_device.aws_networkmanager_device.vendor
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

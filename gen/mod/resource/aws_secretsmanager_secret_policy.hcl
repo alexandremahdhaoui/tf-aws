@@ -1,19 +1,11 @@
 resource "aws_secretsmanager_secret_policy" "aws_secretsmanager_secret_policy" {
-  secret_arn          = var.secret_arn
   block_public_policy = var.block_public_policy
   id                  = var.id
   policy              = var.policy
+  secret_arn          = var.secret_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "policy" {
-  description = "(Required) Valid JSON document representing a resource policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide. Unlike aws_secretsmanager_secret, where policy can be set to \"{}\" to delete the policy, \"{}\" is not a valid policy since policy is required."
-  type        = string
-}
-variable "secret_arn" {
-  description = "(Required) Secret ARN."
   type        = string
 }
 variable "block_public_policy" {
@@ -25,6 +17,14 @@ variable "id" {
   description = "Amazon Resource Name (ARN) of the secret."
   type        = string
   default     = ""
+}
+variable "policy" {
+  description = "(Required) Valid JSON document representing a resource policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide. Unlike aws_secretsmanager_secret, where policy can be set to \"{}\" to delete the policy, \"{}\" is not a valid policy since policy is required."
+  type        = string
+}
+variable "secret_arn" {
+  description = "(Required) Secret ARN."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

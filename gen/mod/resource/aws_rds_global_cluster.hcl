@@ -1,37 +1,48 @@
 resource "aws_rds_global_cluster" "aws_rds_global_cluster" {
-  deletion_protection          = var.deletion_protection
+  arn                          = var.arn
+  database_name                = var.database_name
+  id                           = var.id
+  source_db_cluster_identifier = var.source_db_cluster_identifier
+  update                       = var.update
+  create                       = var.create
+  engine                       = var.engine
   force_destroy                = var.force_destroy
-  global_cluster_members       = var.global_cluster_members
+  global_cluster_identifier    = var.global_cluster_identifier
   global_cluster_resource_id   = var.global_cluster_resource_id
   is_writer                    = var.is_writer
-  create                       = var.create
   db_cluster_arn               = var.db_cluster_arn
-  id                           = var.id
-  update                       = var.update
-  database_name                = var.database_name
-  source_db_cluster_identifier = var.source_db_cluster_identifier
-  arn                          = var.arn
-  engine                       = var.engine
+  deletion_protection          = var.deletion_protection
   engine_version               = var.engine_version
-  global_cluster_identifier    = var.global_cluster_identifier
   storage_encrypted            = var.storage_encrypted
+  global_cluster_members       = var.global_cluster_members
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "deletion_protection" {
-  description = "(Optional) If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false."
+variable "database_name" {
+  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
   type        = string
-  default     = ""
+}
+variable "id" {
+  description = "RDS Global Cluster identifierTimeoutsConfiguration options:"
+  type        = string
+}
+variable "arn" {
+  description = "RDS Global Cluster Amazon Resource Name (ARN)"
+  type        = string
+}
+variable "engine" {
+  description = "(Optional, Forces new resources) Name of the database engine to be used for this DB cluster. Terraform will only perform drift detection if a configuration value is provided. Valid values: aurora, aurora-mysql, aurora-postgresql. Defaults to aurora. Conflicts with source_db_cluster_identifier."
+  type        = string
 }
 variable "force_destroy" {
   description = "(Optional) Enable to remove DB Cluster members from Global Cluster on destroy. Required with source_db_cluster_identifier."
   type        = string
   default     = ""
 }
-variable "global_cluster_members" {
-  description = ""
+variable "global_cluster_identifier" {
+  description = "(Required, Forces new resources) Global cluster identifier."
   type        = string
 }
 variable "global_cluster_resource_id" {
@@ -42,50 +53,39 @@ variable "is_writer" {
   description = "Whether the member is the primary DB Cluster"
   type        = string
 }
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "db_cluster_arn" {
-  description = "Amazon Resource Name (ARN) of member DB Cluster"
-  type        = string
-}
-variable "id" {
-  description = "RDS Global Cluster identifierTimeoutsConfiguration options:"
-  type        = string
-}
-variable "update" {
-  description = "(Default 90m)"
-  type        = string
-}
-variable "database_name" {
-  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
-  type        = string
-}
 variable "source_db_cluster_identifier" {
   description = "(Optional) Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation. Terraform cannot perform drift detection of this value."
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "RDS Global Cluster Amazon Resource Name (ARN)"
+variable "update" {
+  description = "(Default 90m)"
   type        = string
 }
-variable "engine" {
-  description = "(Optional, Forces new resources) Name of the database engine to be used for this DB cluster. Terraform will only perform drift detection if a configuration value is provided. Valid values: aurora, aurora-mysql, aurora-postgresql. Defaults to aurora. Conflicts with source_db_cluster_identifier."
+variable "create" {
+  description = "(Default 30m)"
   type        = string
+}
+variable "deletion_protection" {
+  description = "(Optional) If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false."
+  type        = string
+  default     = ""
 }
 variable "engine_version" {
   description = "(Optional) Engine version of the Aurora global database. The engine, engine_version, and instance_class (on the aws_rds_cluster_instance) must together support global databases. See Using Amazon Aurora global databases for more information. By upgrading the engine version, Terraform will upgrade cluster members. strongNOTE: To avoid an inconsistent final plan error while upgrading, use the lifecycle ignore_changes for engine_version meta argument on the associated aws_rds_cluster resource as shown above in Upgrading Engine Versions example."
   type        = string
   default     = ""
 }
-variable "global_cluster_identifier" {
-  description = "(Required, Forces new resources) Global cluster identifier."
-  type        = string
-}
 variable "storage_encrypted" {
   description = "(Optional, Forces new resources) Specifies whether the DB cluster is encrypted. The default is false unless source_db_cluster_identifier is specified and encrypted. Terraform will only perform drift detection if a configuration value is provided.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "db_cluster_arn" {
+  description = "Amazon Resource Name (ARN) of member DB Cluster"
+  type        = string
+}
+variable "global_cluster_members" {
+  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -208,81 +208,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "deletion_protection" {
-  description = "(Optional) If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false."
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.deletion_protection
-}
-output "force_destroy" {
-  description = "(Optional) Enable to remove DB Cluster members from Global Cluster on destroy. Required with source_db_cluster_identifier."
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.force_destroy
-}
-output "global_cluster_members" {
-  description = ""
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_members
-}
-output "global_cluster_resource_id" {
-  description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_resource_id
-}
-output "is_writer" {
-  description = "Whether the member is the primary DB Cluster"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.is_writer
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.create
-}
-output "db_cluster_arn" {
-  description = "Amazon Resource Name (ARN) of member DB Cluster"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.db_cluster_arn
-}
-output "id" {
-  description = "RDS Global Cluster identifierTimeoutsConfiguration options:"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.id
+output "source_db_cluster_identifier" {
+  description = "(Optional) Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation. Terraform cannot perform drift detection of this value."
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.source_db_cluster_identifier
 }
 output "update" {
   description = "(Default 90m)"
   value       = aws_rds_global_cluster.aws_rds_global_cluster.update
 }
-output "database_name" {
-  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.database_name
-}
-output "source_db_cluster_identifier" {
-  description = "(Optional) Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation. Terraform cannot perform drift detection of this value."
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.source_db_cluster_identifier
-}
-output "arn" {
-  description = "RDS Global Cluster Amazon Resource Name (ARN)"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.arn
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.create
 }
 output "engine" {
   description = "(Optional, Forces new resources) Name of the database engine to be used for this DB cluster. Terraform will only perform drift detection if a configuration value is provided. Valid values: aurora, aurora-mysql, aurora-postgresql. Defaults to aurora. Conflicts with source_db_cluster_identifier."
   value       = aws_rds_global_cluster.aws_rds_global_cluster.engine
 }
-output "engine_version" {
-  description = "(Optional) Engine version of the Aurora global database. The engine, engine_version, and instance_class (on the aws_rds_cluster_instance) must together support global databases. See Using Amazon Aurora global databases for more information. By upgrading the engine version, Terraform will upgrade cluster members. strongNOTE: To avoid an inconsistent final plan error while upgrading, use the lifecycle ignore_changes for engine_version meta argument on the associated aws_rds_cluster resource as shown above in Upgrading Engine Versions example."
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.engine_version
+output "force_destroy" {
+  description = "(Optional) Enable to remove DB Cluster members from Global Cluster on destroy. Required with source_db_cluster_identifier."
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.force_destroy
 }
 output "global_cluster_identifier" {
   description = "(Required, Forces new resources) Global cluster identifier."
   value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_identifier
 }
-output "storage_encrypted" {
-  description = "(Optional, Forces new resources) Specifies whether the DB cluster is encrypted. The default is false unless source_db_cluster_identifier is specified and encrypted. Terraform will only perform drift detection if a configuration value is provided.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.storage_encrypted
+output "global_cluster_resource_id" {
+  description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_resource_id
 }
-output "arn" {
-  description = "RDS Global Cluster Amazon Resource Name (ARN)"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.arn
+output "is_writer" {
+  description = "Whether the member is the primary DB Cluster"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.is_writer
 }
 output "db_cluster_arn" {
   description = "Amazon Resource Name (ARN) of member DB Cluster"
   value       = aws_rds_global_cluster.aws_rds_global_cluster.db_cluster_arn
 }
+output "deletion_protection" {
+  description = "(Optional) If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false."
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.deletion_protection
+}
+output "engine_version" {
+  description = "(Optional) Engine version of the Aurora global database. The engine, engine_version, and instance_class (on the aws_rds_cluster_instance) must together support global databases. See Using Amazon Aurora global databases for more information. By upgrading the engine version, Terraform will upgrade cluster members. strongNOTE: To avoid an inconsistent final plan error while upgrading, use the lifecycle ignore_changes for engine_version meta argument on the associated aws_rds_cluster resource as shown above in Upgrading Engine Versions example."
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.engine_version
+}
+output "storage_encrypted" {
+  description = "(Optional, Forces new resources) Specifies whether the DB cluster is encrypted. The default is false unless source_db_cluster_identifier is specified and encrypted. Terraform will only perform drift detection if a configuration value is provided.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.storage_encrypted
+}
 output "global_cluster_members" {
   description = ""
   value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_members
+}
+output "arn" {
+  description = "RDS Global Cluster Amazon Resource Name (ARN)"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.arn
+}
+output "database_name" {
+  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.database_name
+}
+output "id" {
+  description = "RDS Global Cluster identifierTimeoutsConfiguration options:"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.id
 }
 output "id" {
   description = "RDS Global Cluster identifierTimeoutsConfiguration options:"
@@ -292,21 +280,33 @@ output "is_writer" {
   description = "Whether the member is the primary DB Cluster"
   value       = aws_rds_global_cluster.aws_rds_global_cluster.is_writer
 }
-output "update" {
-  description = "(Default 90m)"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.update
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_rds_global_cluster.aws_rds_global_cluster.create
+output "db_cluster_arn" {
+  description = "Amazon Resource Name (ARN) of member DB Cluster"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.db_cluster_arn
 }
 output "delete" {
   description = "(Default 30m)"
   value       = aws_rds_global_cluster.aws_rds_global_cluster.delete
 }
+output "global_cluster_members" {
+  description = ""
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_members
+}
 output "global_cluster_resource_id" {
   description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed"
   value       = aws_rds_global_cluster.aws_rds_global_cluster.global_cluster_resource_id
+}
+output "arn" {
+  description = "RDS Global Cluster Amazon Resource Name (ARN)"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.create
+}
+output "update" {
+  description = "(Default 90m)"
+  value       = aws_rds_global_cluster.aws_rds_global_cluster.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

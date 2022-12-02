@@ -1,74 +1,55 @@
 resource "aws_emrserverless_application.markdown" "aws_emrserverless_application.markdown" {
-  id                       = var.id
-  idle_timeout_minutes     = var.idle_timeout_minutes
-  initial_capacity         = var.initial_capacity
-  initial_capacity_type    = var.initial_capacity_type
-  maximum_capacity         = var.maximum_capacity
-  auto_start_configuration = var.auto_start_configuration
-  auto_stop_configuration  = var.auto_stop_configuration
-  cpu                      = var.cpu
-  type                     = var.type
-  worker_configuration     = var.worker_configuration
-  worker_count             = var.worker_count
-  disk                     = var.disk
-  security_group_ids       = var.security_group_ids
-  subnet_ids               = var.subnet_ids
-  arn                      = var.arn
-  tags                     = var.tags
-  name                     = var.name
-  network_configuration    = var.network_configuration
-  release_label            = var.release_label
-  enabled                  = var.enabled
   initial_capacity_config  = var.initial_capacity_config
   memory                   = var.memory
+  worker_configuration     = var.worker_configuration
+  worker_count             = var.worker_count
+  auto_stop_configuration  = var.auto_stop_configuration
+  cpu                      = var.cpu
+  disk                     = var.disk
+  enabled                  = var.enabled
+  subnet_ids               = var.subnet_ids
+  tags                     = var.tags
+  initial_capacity         = var.initial_capacity
+  maximum_capacity         = var.maximum_capacity
+  network_configuration    = var.network_configuration
+  release_label            = var.release_label
+  arn                      = var.arn
+  idle_timeout_minutes     = var.idle_timeout_minutes
+  name                     = var.name
+  type                     = var.type
+  auto_start_configuration = var.auto_start_configuration
+  id                       = var.id
+  initial_capacity_type    = var.initial_capacity_type
+  security_group_ids       = var.security_group_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "cpu" {
-  description = "(Required) The CPU requirements for every worker instance of the worker type."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the cluster."
-  type        = string
-}
-variable "idle_timeout_minutes" {
-  description = "(Optional) The amount of idle time in minutes after which your application will automatically stop. Defaults to 15 minutes.initial_capacity Arguments"
-  type        = string
-  default     = ""
-}
-variable "initial_capacity" {
-  description = " – (Optional) The capacity to initialize when the application is created."
-  type        = string
-  default     = ""
-}
-variable "initial_capacity_type" {
-  description = "(Required) The worker type for an analytics framework. For Spark applications, the key can either be set to Driver or Executor. For Hive applications, it can be set to HiveDriver or TezTask.maximum_capacity Arguments"
-  type        = string
-}
-variable "maximum_capacity" {
-  description = " – (Optional) The maximum capacity to allocate when the application is created. This is cumulative across all workers at any given point in time, not just when an application is created. No new resources will be created once any one of the defined limits is hit."
-  type        = string
-  default     = ""
 }
 variable "auto_start_configuration" {
   description = " – (Optional) The configuration for an application to automatically start on job submission."
   type        = string
   default     = ""
 }
-variable "auto_stop_configuration" {
-  description = " – (Optional) The configuration for an application to automatically stop after a certain amount of time being idle."
+variable "id" {
+  description = "The ID of the cluster."
+  type        = string
+}
+variable "initial_capacity_type" {
+  description = "(Required) The worker type for an analytics framework. For Spark applications, the key can either be set to Driver or Executor. For Hive applications, it can be set to HiveDriver or TezTask.maximum_capacity Arguments"
+  type        = string
+}
+variable "security_group_ids" {
+  description = "(Optional) The array of security group Ids for customer VPC connectivity."
   type        = string
   default     = ""
 }
-variable "worker_count" {
-  description = "(Required) The number of workers in the initial capacity configuration.worker_configuration Arguments"
-  type        = string
-}
 variable "type" {
   description = " – (Required) The type of application you want to start, such as spark or hive."
+  type        = string
+}
+variable "memory" {
+  description = "(Required) The memory requirements for every worker instance of the worker type.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "worker_configuration" {
@@ -76,46 +57,23 @@ variable "worker_configuration" {
   type        = string
   default     = ""
 }
-variable "subnet_ids" {
-  description = "(Optional) The array of subnet Ids for customer VPC connectivity.initial_capacity_config Arguments"
+variable "worker_count" {
+  description = "(Required) The number of workers in the initial capacity configuration.worker_configuration Arguments"
+  type        = string
+}
+variable "auto_stop_configuration" {
+  description = " – (Optional) The configuration for an application to automatically stop after a certain amount of time being idle."
   type        = string
   default     = ""
+}
+variable "cpu" {
+  description = "(Required) The CPU requirements for every worker instance of the worker type."
+  type        = string
 }
 variable "disk" {
   description = "(Optional) The disk requirements for every worker instance of the worker type."
   type        = string
   default     = ""
-}
-variable "security_group_ids" {
-  description = "(Optional) The array of security group Ids for customer VPC connectivity."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the cluster."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.auto_start_configuration Arguments"
-  type        = string
-  default     = ""
-}
-variable "memory" {
-  description = "(Required) The memory requirements for every worker instance of the worker type.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "name" {
-  description = " – (Required) The name of the application."
-  type        = string
-}
-variable "network_configuration" {
-  description = " – (Optional) The network configuration for customer VPC connectivity."
-  type        = string
-  default     = ""
-}
-variable "release_label" {
-  description = " – (Required) The EMR release version associated with the application."
-  type        = string
 }
 variable "enabled" {
   description = "(Optional) Enables the application to automatically stop after a certain amount of time being idle. Defaults to true."
@@ -126,6 +84,48 @@ variable "initial_capacity_config" {
   description = "(Optional) The initial capacity configuration per worker."
   type        = string
   default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.auto_start_configuration Arguments"
+  type        = string
+  default     = ""
+}
+variable "initial_capacity" {
+  description = " – (Optional) The capacity to initialize when the application is created."
+  type        = string
+  default     = ""
+}
+variable "maximum_capacity" {
+  description = " – (Optional) The maximum capacity to allocate when the application is created. This is cumulative across all workers at any given point in time, not just when an application is created. No new resources will be created once any one of the defined limits is hit."
+  type        = string
+  default     = ""
+}
+variable "network_configuration" {
+  description = " – (Optional) The network configuration for customer VPC connectivity."
+  type        = string
+  default     = ""
+}
+variable "release_label" {
+  description = " – (Required) The EMR release version associated with the application."
+  type        = string
+}
+variable "subnet_ids" {
+  description = "(Optional) The array of subnet Ids for customer VPC connectivity.initial_capacity_config Arguments"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the cluster."
+  type        = string
+}
+variable "idle_timeout_minutes" {
+  description = "(Optional) The amount of idle time in minutes after which your application will automatically stop. Defaults to 15 minutes.initial_capacity Arguments"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = " – (Required) The name of the application."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -247,41 +247,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "subnet_ids" {
-  description = "(Optional) The array of subnet Ids for customer VPC connectivity.initial_capacity_config Arguments"
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.subnet_ids
-}
-output "disk" {
-  description = "(Optional) The disk requirements for every worker instance of the worker type."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.disk
-}
-output "security_group_ids" {
-  description = "(Optional) The array of security group Ids for customer VPC connectivity."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.security_group_ids
-}
-output "arn" {
-  description = "ARN of the cluster."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.arn
-}
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.auto_start_configuration Arguments"
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.tags
-}
 output "memory" {
   description = "(Required) The memory requirements for every worker instance of the worker type.In addition to all arguments above, the following attributes are exported:"
   value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.memory
 }
-output "name" {
-  description = " – (Required) The name of the application."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.name
+output "worker_configuration" {
+  description = "(Optional) The resource configuration of the initial capacity configuration."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.worker_configuration
 }
-output "network_configuration" {
-  description = " – (Optional) The network configuration for customer VPC connectivity."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.network_configuration
+output "worker_count" {
+  description = "(Required) The number of workers in the initial capacity configuration.worker_configuration Arguments"
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.worker_count
 }
-output "release_label" {
-  description = " – (Required) The EMR release version associated with the application."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.release_label
+output "auto_stop_configuration" {
+  description = " – (Optional) The configuration for an application to automatically stop after a certain amount of time being idle."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.auto_stop_configuration
+}
+output "cpu" {
+  description = "(Required) The CPU requirements for every worker instance of the worker type."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.cpu
+}
+output "disk" {
+  description = "(Optional) The disk requirements for every worker instance of the worker type."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.disk
 }
 output "enabled" {
   description = "(Optional) Enables the application to automatically stop after a certain amount of time being idle. Defaults to true."
@@ -291,49 +279,61 @@ output "initial_capacity_config" {
   description = "(Optional) The initial capacity configuration per worker."
   value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.initial_capacity_config
 }
-output "cpu" {
-  description = "(Required) The CPU requirements for every worker instance of the worker type."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.cpu
-}
-output "id" {
-  description = "The ID of the cluster."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.id
-}
-output "idle_timeout_minutes" {
-  description = "(Optional) The amount of idle time in minutes after which your application will automatically stop. Defaults to 15 minutes.initial_capacity Arguments"
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.idle_timeout_minutes
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.auto_start_configuration Arguments"
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.tags
 }
 output "initial_capacity" {
   description = " – (Optional) The capacity to initialize when the application is created."
   value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.initial_capacity
 }
-output "initial_capacity_type" {
-  description = "(Required) The worker type for an analytics framework. For Spark applications, the key can either be set to Driver or Executor. For Hive applications, it can be set to HiveDriver or TezTask.maximum_capacity Arguments"
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.initial_capacity_type
-}
 output "maximum_capacity" {
   description = " – (Optional) The maximum capacity to allocate when the application is created. This is cumulative across all workers at any given point in time, not just when an application is created. No new resources will be created once any one of the defined limits is hit."
   value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.maximum_capacity
+}
+output "network_configuration" {
+  description = " – (Optional) The network configuration for customer VPC connectivity."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.network_configuration
+}
+output "release_label" {
+  description = " – (Required) The EMR release version associated with the application."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.release_label
+}
+output "subnet_ids" {
+  description = "(Optional) The array of subnet Ids for customer VPC connectivity.initial_capacity_config Arguments"
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.subnet_ids
+}
+output "arn" {
+  description = "ARN of the cluster."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.arn
+}
+output "idle_timeout_minutes" {
+  description = "(Optional) The amount of idle time in minutes after which your application will automatically stop. Defaults to 15 minutes.initial_capacity Arguments"
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.idle_timeout_minutes
+}
+output "name" {
+  description = " – (Required) The name of the application."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.name
 }
 output "auto_start_configuration" {
   description = " – (Optional) The configuration for an application to automatically start on job submission."
   value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.auto_start_configuration
 }
-output "auto_stop_configuration" {
-  description = " – (Optional) The configuration for an application to automatically stop after a certain amount of time being idle."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.auto_stop_configuration
+output "id" {
+  description = "The ID of the cluster."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.id
 }
-output "worker_count" {
-  description = "(Required) The number of workers in the initial capacity configuration.worker_configuration Arguments"
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.worker_count
+output "initial_capacity_type" {
+  description = "(Required) The worker type for an analytics framework. For Spark applications, the key can either be set to Driver or Executor. For Hive applications, it can be set to HiveDriver or TezTask.maximum_capacity Arguments"
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.initial_capacity_type
+}
+output "security_group_ids" {
+  description = "(Optional) The array of security group Ids for customer VPC connectivity."
+  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.security_group_ids
 }
 output "type" {
   description = " – (Required) The type of application you want to start, such as spark or hive."
   value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.type
-}
-output "worker_configuration" {
-  description = "(Optional) The resource configuration of the initial capacity configuration."
-  value       = aws_emrserverless_application.markdown.aws_emrserverless_application.markdown.worker_configuration
 }
 output "arn" {
   description = "ARN of the cluster."

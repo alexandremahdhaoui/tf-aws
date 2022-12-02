@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "image_name" {
-  description = "(Required) The name of the image. Must be unique to your account."
-  type        = string
-}
 variable "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image Version."
   type        = string
@@ -27,6 +23,10 @@ variable "id" {
 }
 variable "image_arn" {
   description = "- The Amazon Resource Name (ARN) of the image the version is based on."
+  type        = string
+}
+variable "image_name" {
+  description = "(Required) The name of the image. Must be unique to your account."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,6 +149,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "image_arn" {
+  description = "- The Amazon Resource Name (ARN) of the image the version is based on."
+  value       = aws_sagemaker_image_version.aws_sagemaker_image_version.image_arn
+}
+output "image_name" {
+  description = "(Required) The name of the image. Must be unique to your account."
+  value       = aws_sagemaker_image_version.aws_sagemaker_image_version.image_name
+}
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image Version."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.arn
@@ -160,14 +168,6 @@ output "base_image" {
 output "id" {
   description = "The name of the Image."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.id
-}
-output "image_arn" {
-  description = "- The Amazon Resource Name (ARN) of the image the version is based on."
-  value       = aws_sagemaker_image_version.aws_sagemaker_image_version.image_arn
-}
-output "image_name" {
-  description = "(Required) The name of the image. Must be unique to your account."
-  value       = aws_sagemaker_image_version.aws_sagemaker_image_version.image_name
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image Version."

@@ -4,77 +4,45 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "service_ipv4_cidr" {
-  description = "The CIDR block to assign Kubernetes pod and service IP addresses from if ipv4 was specified when the cluster was created."
-  value       = aws_eks_cluster.aws_eks_cluster.service_ipv4_cidr
-}
-output "service_ipv6_cidr" {
-  description = "The CIDR block to assign Kubernetes pod and service IP addresses from if ipv6 was specified when the cluster was created. Kubernetes assigns service addresses from the unique local address range (fc00::/7) because you can't specify a custom IPv6 CIDR block when you create the cluster."
-  value       = aws_eks_cluster.aws_eks_cluster.service_ipv6_cidr
-}
-output "status" {
-  description = "Status of the EKS cluster. One of CREATING, ACTIVE, DELETING, FAILED."
-  value       = aws_eks_cluster.aws_eks_cluster.status
-}
-output "tags" {
-  description = "Key-value map of resource tags."
-  value       = aws_eks_cluster.aws_eks_cluster.tags
-}
-output "control_plane_instance_type" {
-  description = "The Amazon EC2 instance type for all Kubernetes control plane instances."
-  value       = aws_eks_cluster.aws_eks_cluster.control_plane_instance_type
-}
-output "platform_version" {
-  description = "Platform version for the cluster."
-  value       = aws_eks_cluster.aws_eks_cluster.platform_version
-}
-output "role_arn" {
-  description = "ARN of the IAM role that provides permissions for the Kubernetes control plane to make calls to AWS API operations on your behalf."
-  value       = aws_eks_cluster.aws_eks_cluster.role_arn
-}
-output "security_group_ids" {
-  description = " – List of security group IDs"
-  value       = aws_eks_cluster.aws_eks_cluster.security_group_ids
-}
-output "endpoint" {
-  description = "Endpoint for your Kubernetes API server."
-  value       = aws_eks_cluster.aws_eks_cluster.endpoint
-}
 output "identity" {
   description = "Nested attribute containing identity provider information for your cluster. Only available on Kubernetes version 1.13 and 1.14 clusters created or upgraded on or after September 3, 2019. For an example using this information to enable IAM Roles for Service Accounts, see the aws_eks_cluster resource documentation"
   value       = aws_eks_cluster.aws_eks_cluster.identity
-}
-output "outpost_arns" {
-  description = "List of ARNs of the Outposts hosting the EKS cluster. Only a single ARN is supported currently."
-  value       = aws_eks_cluster.aws_eks_cluster.outpost_arns
-}
-output "outpost_config" {
-  description = ""
-  value       = aws_eks_cluster.aws_eks_cluster.outpost_config
-}
-output "issuer" {
-  description = "Issuer URL for the OpenID Connect identity provider."
-  value       = aws_eks_cluster.aws_eks_cluster.issuer
 }
 output "kubernetes_network_config" {
   description = "Nested list containing Kubernetes Network Configuration.\n"
   value       = aws_eks_cluster.aws_eks_cluster.kubernetes_network_config
 }
+output "security_group_ids" {
+  description = " – List of security group IDs"
+  value       = aws_eks_cluster.aws_eks_cluster.security_group_ids
+}
 output "subnet_ids" {
   description = " – List of subnet IDs"
   value       = aws_eks_cluster.aws_eks_cluster.subnet_ids
 }
-output "ip_family" {
-  description = "ipv4 or ipv6."
-  value       = aws_eks_cluster.aws_eks_cluster.ip_family
+output "version" {
+  description = "Kubernetes server version for the cluster."
+  value       = aws_eks_cluster.aws_eks_cluster.version
 }
-output "public_access_cidrs" {
-  description = "List of CIDR blocks. Indicates which CIDR blocks can access the Amazon EKS public API server endpoint."
-  value       = aws_eks_cluster.aws_eks_cluster.public_access_cidrs
+output "enabled_cluster_log_types" {
+  description = "The enabled control plane logs."
+  value       = aws_eks_cluster.aws_eks_cluster.enabled_cluster_log_types
 }
-output "id" {
-  description = "Name of the cluster"
-  value       = aws_eks_cluster.aws_eks_cluster.id
+output "endpoint" {
+  description = "Endpoint for your Kubernetes API server."
+  value       = aws_eks_cluster.aws_eks_cluster.endpoint
+}
+output "endpoint_private_access" {
+  description = "Indicates whether or not the Amazon EKS private API server endpoint is enabled."
+  value       = aws_eks_cluster.aws_eks_cluster.endpoint_private_access
+}
+output "outpost_arns" {
+  description = "List of ARNs of the Outposts hosting the EKS cluster. Only a single ARN is supported currently."
+  value       = aws_eks_cluster.aws_eks_cluster.outpost_arns
+}
+output "service_ipv6_cidr" {
+  description = "The CIDR block to assign Kubernetes pod and service IP addresses from if ipv6 was specified when the cluster was created. Kubernetes assigns service addresses from the unique local address range (fc00::/7) because you can't specify a custom IPv6 CIDR block when you create the cluster."
+  value       = aws_eks_cluster.aws_eks_cluster.service_ipv6_cidr
 }
 output "arn" {
   description = "ARN of the cluster."
@@ -84,41 +52,73 @@ output "certificate_authority" {
   description = "Nested attribute containing certificate-authority-data"
   value       = aws_eks_cluster.aws_eks_cluster.certificate_authority
 }
-output "oidc" {
-  description = "Nested attribute containing OpenID Connect"
-  value       = aws_eks_cluster.aws_eks_cluster.oidc
+output "control_plane_instance_type" {
+  description = "The Amazon EC2 instance type for all Kubernetes control plane instances."
+  value       = aws_eks_cluster.aws_eks_cluster.control_plane_instance_type
 }
-output "vpc_config" {
-  description = "Nested list containing VPC configuration for the cluster.\n"
-  value       = aws_eks_cluster.aws_eks_cluster.vpc_config
+output "id" {
+  description = "Name of the cluster"
+  value       = aws_eks_cluster.aws_eks_cluster.id
+}
+output "issuer" {
+  description = "Issuer URL for the OpenID Connect identity provider."
+  value       = aws_eks_cluster.aws_eks_cluster.issuer
+}
+output "public_access_cidrs" {
+  description = "List of CIDR blocks. Indicates which CIDR blocks can access the Amazon EKS public API server endpoint."
+  value       = aws_eks_cluster.aws_eks_cluster.public_access_cidrs
 }
 output "cluster_security_group_id" {
   description = "The cluster security group that was created by Amazon EKS for the cluster."
   value       = aws_eks_cluster.aws_eks_cluster.cluster_security_group_id
 }
-output "endpoint_private_access" {
-  description = "Indicates whether or not the Amazon EKS private API server endpoint is enabled."
-  value       = aws_eks_cluster.aws_eks_cluster.endpoint_private_access
+output "ip_family" {
+  description = "ipv4 or ipv6."
+  value       = aws_eks_cluster.aws_eks_cluster.ip_family
 }
-output "data" {
-  description = "The base64 encoded certificate data required to communicate with your cluster. Add this to the certificate-authority-data section of the kubeconfig file for your cluster."
-  value       = aws_eks_cluster.aws_eks_cluster.data
+output "oidc" {
+  description = "Nested attribute containing OpenID Connect"
+  value       = aws_eks_cluster.aws_eks_cluster.oidc
 }
-output "version" {
-  description = "Kubernetes server version for the cluster."
-  value       = aws_eks_cluster.aws_eks_cluster.version
+output "role_arn" {
+  description = "ARN of the IAM role that provides permissions for the Kubernetes control plane to make calls to AWS API operations on your behalf."
+  value       = aws_eks_cluster.aws_eks_cluster.role_arn
 }
-output "endpoint_public_access" {
-  description = "Indicates whether or not the Amazon EKS public API server endpoint is enabled."
-  value       = aws_eks_cluster.aws_eks_cluster.endpoint_public_access
+output "platform_version" {
+  description = "Platform version for the cluster."
+  value       = aws_eks_cluster.aws_eks_cluster.platform_version
+}
+output "service_ipv4_cidr" {
+  description = "The CIDR block to assign Kubernetes pod and service IP addresses from if ipv4 was specified when the cluster was created."
+  value       = aws_eks_cluster.aws_eks_cluster.service_ipv4_cidr
+}
+output "tags" {
+  description = "Key-value map of resource tags."
+  value       = aws_eks_cluster.aws_eks_cluster.tags
+}
+output "vpc_config" {
+  description = "Nested list containing VPC configuration for the cluster.\n"
+  value       = aws_eks_cluster.aws_eks_cluster.vpc_config
 }
 output "created_at" {
   description = "Unix epoch time stamp in seconds for when the cluster was created."
   value       = aws_eks_cluster.aws_eks_cluster.created_at
 }
-output "enabled_cluster_log_types" {
-  description = "The enabled control plane logs."
-  value       = aws_eks_cluster.aws_eks_cluster.enabled_cluster_log_types
+output "data" {
+  description = "The base64 encoded certificate data required to communicate with your cluster. Add this to the certificate-authority-data section of the kubeconfig file for your cluster."
+  value       = aws_eks_cluster.aws_eks_cluster.data
+}
+output "endpoint_public_access" {
+  description = "Indicates whether or not the Amazon EKS public API server endpoint is enabled."
+  value       = aws_eks_cluster.aws_eks_cluster.endpoint_public_access
+}
+output "outpost_config" {
+  description = ""
+  value       = aws_eks_cluster.aws_eks_cluster.outpost_config
+}
+output "status" {
+  description = "Status of the EKS cluster. One of CREATING, ACTIVE, DELETING, FAILED."
+  value       = aws_eks_cluster.aws_eks_cluster.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

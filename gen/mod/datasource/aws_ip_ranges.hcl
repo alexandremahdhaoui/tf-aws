@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "cidr_blocks" {
+  description = "Lexically ordered list of CIDR blocks."
+  value       = aws_ip_ranges.aws_ip_ranges.cidr_blocks
+}
 output "create_date" {
   description = "Publication time of the IP ranges (e.g., 2016-08-03-23-46-05)."
   value       = aws_ip_ranges.aws_ip_ranges.create_date
@@ -11,10 +15,6 @@ output "create_date" {
 output "ipv6_cidr_blocks" {
   description = "Lexically ordered list of IPv6 CIDR blocks."
   value       = aws_ip_ranges.aws_ip_ranges.ipv6_cidr_blocks
-}
-output "cidr_blocks" {
-  description = "Lexically ordered list of CIDR blocks."
-  value       = aws_ip_ranges.aws_ip_ranges.cidr_blocks
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

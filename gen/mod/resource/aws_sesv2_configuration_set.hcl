@@ -1,43 +1,44 @@
 resource "aws_sesv2_configuration_set" "aws_sesv2_configuration_set" {
-  suppression_options        = var.suppression_options
-  arn                        = var.arn
   configuration_set_name     = var.configuration_set_name
+  sending_enabled            = var.sending_enabled
+  sending_pool_name          = var.sending_pool_name
+  suppressed_reasons         = var.suppressed_reasons
+  suppression_options        = var.suppression_options
+  tls_policy                 = var.tls_policy
+  arn                        = var.arn
+  reputation_metrics_enabled = var.reputation_metrics_enabled
+  tracking_options           = var.tracking_options
   delivery_options           = var.delivery_options
   reputation_options         = var.reputation_options
-  sending_enabled            = var.sending_enabled
-  sending_options            = var.sending_options
-  sending_pool_name          = var.sending_pool_name
-  tags                       = var.tags
-  tracking_options           = var.tracking_options
   custom_redirect_domain     = var.custom_redirect_domain
-  reputation_metrics_enabled = var.reputation_metrics_enabled
-  suppressed_reasons         = var.suppressed_reasons
-  tls_policy                 = var.tls_policy
+  sending_options            = var.sending_options
+  tags                       = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "suppressed_reasons" {
+  description = "(Optional) A list that contains the reasons that email addresses are automatically added to the suppression list for your account. Valid values: BOUNCE, COMPLAINT.tracking_options"
+  type        = string
+  default     = ""
+}
+variable "suppression_options" {
+  description = "(Optional) An object that contains information about the suppression list preferences for your account."
+  type        = string
+  default     = ""
+}
+variable "tls_policy" {
+  description = "(Optional) Specifies whether messages that use the configuration set are required to use Transport Layer Security (TLS). Valid values: REQUIRE, OPTIONAL.reputation_options"
+  type        = string
+  default     = ""
+}
 variable "configuration_set_name" {
   description = "(Required) The name of the configuration set."
   type        = string
 }
-variable "delivery_options" {
-  description = "(Optional) An object that defines the dedicated IP pool that is used to send emails that you send using the configuration set."
-  type        = string
-  default     = ""
-}
-variable "reputation_options" {
-  description = "An object that defines whether or not Amazon SES collects reputation metrics for the emails that you send that use the configuration set.\n"
-  type        = string
-}
 variable "sending_enabled" {
   description = "(Optional) If true, email sending is enabled for the configuration set. If false, email sending is disabled for the configuration set.suppression_options"
-  type        = string
-  default     = ""
-}
-variable "sending_options" {
-  description = "(Optional) An object that defines whether or not Amazon SES can send email that you send using the configuration set."
   type        = string
   default     = ""
 }
@@ -50,37 +51,36 @@ variable "arn" {
   description = "ARN of the Configuration Set."
   type        = string
 }
-variable "tracking_options" {
-  description = "(Optional) An object that defines the open and click tracking options for emails that you send using the configuration set.delivery_options"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
 variable "reputation_metrics_enabled" {
   description = "(Optional) If true, tracking of reputation metrics is enabled for the configuration set. If false, tracking of reputation metrics is disabled for the configuration set.sending_options"
   type        = string
   default     = ""
 }
-variable "suppressed_reasons" {
-  description = "(Optional) A list that contains the reasons that email addresses are automatically added to the suppression list for your account. Valid values: BOUNCE, COMPLAINT.tracking_options"
+variable "tracking_options" {
+  description = "(Optional) An object that defines the open and click tracking options for emails that you send using the configuration set.delivery_options"
   type        = string
   default     = ""
 }
-variable "tls_policy" {
-  description = "(Optional) Specifies whether messages that use the configuration set are required to use Transport Layer Security (TLS). Valid values: REQUIRE, OPTIONAL.reputation_options"
+variable "delivery_options" {
+  description = "(Optional) An object that defines the dedicated IP pool that is used to send emails that you send using the configuration set."
   type        = string
   default     = ""
+}
+variable "reputation_options" {
+  description = "An object that defines whether or not Amazon SES collects reputation metrics for the emails that you send that use the configuration set.\n"
+  type        = string
 }
 variable "custom_redirect_domain" {
   description = "(Required) The domain to use for tracking open and click events.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "suppression_options" {
-  description = "(Optional) An object that contains information about the suppression list preferences for your account."
+variable "sending_options" {
+  description = "(Optional) An object that defines whether or not Amazon SES can send email that you send using the configuration set."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
   default     = ""
 }
@@ -204,17 +204,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "suppression_options" {
-  description = "(Optional) An object that contains information about the suppression list preferences for your account."
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.suppression_options
-}
 output "arn" {
   description = "ARN of the Configuration Set."
   value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.arn
 }
-output "configuration_set_name" {
-  description = "(Required) The name of the configuration set."
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.configuration_set_name
+output "reputation_metrics_enabled" {
+  description = "(Optional) If true, tracking of reputation metrics is enabled for the configuration set. If false, tracking of reputation metrics is disabled for the configuration set.sending_options"
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.reputation_metrics_enabled
+}
+output "tracking_options" {
+  description = "(Optional) An object that defines the open and click tracking options for emails that you send using the configuration set.delivery_options"
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.tracking_options
 }
 output "delivery_options" {
   description = "(Optional) An object that defines the dedicated IP pool that is used to send emails that you send using the configuration set."
@@ -224,37 +224,37 @@ output "reputation_options" {
   description = "An object that defines whether or not Amazon SES collects reputation metrics for the emails that you send that use the configuration set.\n"
   value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.reputation_options
 }
-output "sending_enabled" {
-  description = "(Optional) If true, email sending is enabled for the configuration set. If false, email sending is disabled for the configuration set.suppression_options"
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.sending_enabled
+output "custom_redirect_domain" {
+  description = "(Required) The domain to use for tracking open and click events.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.custom_redirect_domain
 }
 output "sending_options" {
   description = "(Optional) An object that defines whether or not Amazon SES can send email that you send using the configuration set."
   value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.sending_options
 }
-output "sending_pool_name" {
-  description = "(Optional) The name of the dedicated IP pool to associate with the configuration set."
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.sending_pool_name
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.tags
 }
-output "tracking_options" {
-  description = "(Optional) An object that defines the open and click tracking options for emails that you send using the configuration set.delivery_options"
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.tracking_options
+output "configuration_set_name" {
+  description = "(Required) The name of the configuration set."
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.configuration_set_name
 }
-output "custom_redirect_domain" {
-  description = "(Required) The domain to use for tracking open and click events.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.custom_redirect_domain
+output "sending_enabled" {
+  description = "(Optional) If true, email sending is enabled for the configuration set. If false, email sending is disabled for the configuration set.suppression_options"
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.sending_enabled
 }
-output "reputation_metrics_enabled" {
-  description = "(Optional) If true, tracking of reputation metrics is enabled for the configuration set. If false, tracking of reputation metrics is disabled for the configuration set.sending_options"
-  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.reputation_metrics_enabled
+output "sending_pool_name" {
+  description = "(Optional) The name of the dedicated IP pool to associate with the configuration set."
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.sending_pool_name
 }
 output "suppressed_reasons" {
   description = "(Optional) A list that contains the reasons that email addresses are automatically added to the suppression list for your account. Valid values: BOUNCE, COMPLAINT.tracking_options"
   value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.suppressed_reasons
+}
+output "suppression_options" {
+  description = "(Optional) An object that contains information about the suppression list preferences for your account."
+  value       = aws_sesv2_configuration_set.aws_sesv2_configuration_set.suppression_options
 }
 output "tls_policy" {
   description = "(Optional) Specifies whether messages that use the configuration set are required to use Transport Layer Security (TLS). Valid values: REQUIRE, OPTIONAL.reputation_options"

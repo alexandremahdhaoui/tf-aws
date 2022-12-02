@@ -1,5 +1,4 @@
 resource "aws_ec2_client_vpn_route" "aws_ec2_client_vpn_route" {
-  create                 = var.create
   description            = var.description
   destination_cidr_block = var.destination_cidr_block
   id                     = var.id
@@ -7,22 +6,10 @@ resource "aws_ec2_client_vpn_route" "aws_ec2_client_vpn_route" {
   target_vpc_subnet_id   = var.target_vpc_subnet_id
   type                   = var.type
   client_vpn_endpoint_id = var.client_vpn_endpoint_id
+  create                 = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A brief description of the route."
-  type        = string
-  default     = ""
-}
-variable "destination_cidr_block" {
-  description = "(Required) The IPv4 address range, in CIDR notation, of the route destination."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the Client VPN endpoint."
   type        = string
 }
 variable "origin" {
@@ -43,6 +30,19 @@ variable "client_vpn_endpoint_id" {
 }
 variable "create" {
   description = "(Default 1m)"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) A brief description of the route."
+  type        = string
+  default     = ""
+}
+variable "destination_cidr_block" {
+  description = "(Required) The IPv4 address range, in CIDR notation, of the route destination."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the Client VPN endpoint."
   type        = string
 }
 variable "tag_instance_id" {
@@ -165,14 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "origin" {
-  description = "Indicates how the Client VPN route was added. Will be add-route for routes created by this resource."
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.origin
-}
-output "target_vpc_subnet_id" {
-  description = "(Required) The ID of the Subnet to route the traffic through. It must already be attached to the Client VPN.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.target_vpc_subnet_id
-}
 output "type" {
   description = "The type of the route.TimeoutsConfiguration options:"
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
@@ -197,13 +189,13 @@ output "id" {
   description = "The ID of the Client VPN endpoint."
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.id
 }
-output "type" {
-  description = "The type of the route.TimeoutsConfiguration options:"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
+output "origin" {
+  description = "Indicates how the Client VPN route was added. Will be add-route for routes created by this resource."
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.origin
 }
-output "create" {
-  description = "(Default 1m)"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.create
+output "target_vpc_subnet_id" {
+  description = "(Required) The ID of the Subnet to route the traffic through. It must already be attached to the Client VPN.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.target_vpc_subnet_id
 }
 output "delete" {
   description = "(Default 1m)"
@@ -216,6 +208,14 @@ output "id" {
 output "origin" {
   description = "Indicates how the Client VPN route was added. Will be add-route for routes created by this resource."
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.origin
+}
+output "type" {
+  description = "The type of the route.TimeoutsConfiguration options:"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
+}
+output "create" {
+  description = "(Default 1m)"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

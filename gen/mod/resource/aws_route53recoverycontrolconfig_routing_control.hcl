@@ -1,22 +1,13 @@
 resource "aws_route53recoverycontrolconfig_routing_control" "aws_route53recoverycontrolconfig_routing_control" {
+  arn               = var.arn
   cluster_arn       = var.cluster_arn
   control_panel_arn = var.control_panel_arn
   name              = var.name
   status            = var.status
-  arn               = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "cluster_arn" {
-  description = "(Required) ARN of the cluster in which this routing control will reside."
-  type        = string
-}
-variable "control_panel_arn" {
-  description = "(Optional) ARN of the control panel in which this routing control will reside.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "name" {
   description = "(Required) The name describing the routing control."
@@ -29,6 +20,15 @@ variable "status" {
 }
 variable "arn" {
   description = "ARN of the routing control."
+  type        = string
+  default     = ""
+}
+variable "cluster_arn" {
+  description = "(Required) ARN of the cluster in which this routing control will reside."
+  type        = string
+}
+variable "control_panel_arn" {
+  description = "(Optional) ARN of the control panel in which this routing control will reside.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }

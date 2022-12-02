@@ -1,29 +1,101 @@
 resource "aws_kendra_experience" "aws_kendra_experience" {
-  name                         = var.name
+  description                  = var.description
   status                       = var.status
+  user_identity_configuration  = var.user_identity_configuration
   arn                          = var.arn
   delete                       = var.delete
   endpoint_type                = var.endpoint_type
-  id                           = var.id
-  content_source_configuration = var.content_source_configuration
-  experience_id                = var.experience_id
-  identity_attribute_name      = var.identity_attribute_name
-  role_arn                     = var.role_arn
-  create                       = var.create
-  endpoint                     = var.endpoint
   endpoints                    = var.endpoints
-  faq_ids                      = var.faq_ids
-  index_id                     = var.index_id
+  id                           = var.id
+  identity_attribute_name      = var.identity_attribute_name
   update                       = var.update
-  user_identity_configuration  = var.user_identity_configuration
+  content_source_configuration = var.content_source_configuration
+  create                       = var.create
+  direct_put_content           = var.direct_put_content
+  endpoint                     = var.endpoint
+  index_id                     = var.index_id
+  role_arn                     = var.role_arn
   configuration                = var.configuration
   data_source_ids              = var.data_source_ids
-  description                  = var.description
-  direct_put_content           = var.direct_put_content
+  experience_id                = var.experience_id
+  faq_ids                      = var.faq_ids
+  name                         = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "content_source_configuration" {
+  description = "(Optional, Required if user_identity_configuration not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the BatchPutDocument API. Terraform will only perform drift detection of its value when present in a configuration. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "direct_put_content" {
+  description = "(Optional) Whether to use documents you indexed directly using the BatchPutDocument API. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "endpoint" {
+  description = "The endpoint of your Amazon Kendra experience."
+  type        = string
+  default     = ""
+}
+variable "index_id" {
+  description = "(Required, Forces new resource) The identifier of the index for your Amazon Kendra experience."
+  type        = string
+}
+variable "role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information. For more information, see IAM roles for Amazon Kendra."
+  type        = string
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "configuration" {
+  description = "(Optional) Configuration information for your Amazon Kendra experience. Terraform will only perform drift detection of its value when present in a configuration. Detailed below.configuration~> strongNOTE: By default of the AWS Kendra API, the content_source_configuration.direct_put_content parameter will be set to false if not provided.The configuration configuration block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "data_source_ids" {
+  description = "(Optional) The identifiers of the data sources you want to use for your Amazon Kendra experience. Maximum number of 100 items."
+  type        = string
+  default     = ""
+}
+variable "experience_id" {
+  description = "The unique identifier of the experience."
+  type        = string
+  default     = ""
+}
+variable "faq_ids" {
+  description = "(Optional) The identifier of the FAQs that you want to use for your Amazon Kendra experience. Maximum number of 100 items.user_identity_configurationThe user_identity_configuration configuration block supports the following argument:"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) A name for your Amazon Kendra experience."
+  type        = string
+}
+variable "description" {
+  description = "(Optional, Forces new resource if removed) A description for your Amazon Kendra experience."
+  type        = string
+  default     = ""
+}
+variable "user_identity_configuration" {
+  description = "(Optional, Required if content_source_configuration not provided) The AWS SSO field name that contains the identifiers of your users, such as their emails. Detailed below.content_source_configurationThe content_source_configuration configuration block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the Experience."
+  type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 30m)"
@@ -35,27 +107,13 @@ variable "endpoint_type" {
   type        = string
   default     = ""
 }
+variable "endpoints" {
+  description = "Shows the endpoint URLs for your Amazon Kendra experiences. The URLs are unique and fully hosted by AWS.\n"
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "The unique identifiers of the experience and index separated by a slash (/)."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) A name for your Amazon Kendra experience."
-  type        = string
-}
-variable "status" {
-  description = "The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the Experience."
-  type        = string
-  default     = ""
-}
-variable "experience_id" {
-  description = "The unique identifier of the experience."
   type        = string
   default     = ""
 }
@@ -63,66 +121,8 @@ variable "identity_attribute_name" {
   description = "(Required) The AWS SSO field name that contains the identifiers of your users, such as their emails.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "content_source_configuration" {
-  description = "(Optional, Required if user_identity_configuration not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the BatchPutDocument API. Terraform will only perform drift detection of its value when present in a configuration. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "endpoint" {
-  description = "The endpoint of your Amazon Kendra experience."
-  type        = string
-  default     = ""
-}
-variable "endpoints" {
-  description = "Shows the endpoint URLs for your Amazon Kendra experiences. The URLs are unique and fully hosted by AWS.\n"
-  type        = string
-  default     = ""
-}
-variable "faq_ids" {
-  description = "(Optional) The identifier of the FAQs that you want to use for your Amazon Kendra experience. Maximum number of 100 items.user_identity_configurationThe user_identity_configuration configuration block supports the following argument:"
-  type        = string
-  default     = ""
-}
-variable "role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information. For more information, see IAM roles for Amazon Kendra."
-  type        = string
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-  default     = ""
-}
-variable "data_source_ids" {
-  description = "(Optional) The identifiers of the data sources you want to use for your Amazon Kendra experience. Maximum number of 100 items."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional, Forces new resource if removed) A description for your Amazon Kendra experience."
-  type        = string
-  default     = ""
-}
-variable "direct_put_content" {
-  description = "(Optional) Whether to use documents you indexed directly using the BatchPutDocument API. Defaults to false."
-  type        = string
-  default     = ""
-}
-variable "index_id" {
-  description = "(Required, Forces new resource) The identifier of the index for your Amazon Kendra experience."
-  type        = string
-}
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-  default     = ""
-}
-variable "user_identity_configuration" {
-  description = "(Optional, Required if content_source_configuration not provided) The AWS SSO field name that contains the identifiers of your users, such as their emails. Detailed below.content_source_configurationThe content_source_configuration configuration block supports the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "configuration" {
-  description = "(Optional) Configuration information for your Amazon Kendra experience. Terraform will only perform drift detection of its value when present in a configuration. Detailed below.configuration~> strongNOTE: By default of the AWS Kendra API, the content_source_configuration.direct_put_content parameter will be set to false if not provided.The configuration configuration block supports the following arguments:"
+variable "status" {
+  description = "The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:"
   type        = string
   default     = ""
 }
@@ -246,85 +246,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "experience_id" {
-  description = "The unique identifier of the experience."
-  value       = aws_kendra_experience.aws_kendra_experience.experience_id
-}
-output "identity_attribute_name" {
-  description = "(Required) The AWS SSO field name that contains the identifiers of your users, such as their emails.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_kendra_experience.aws_kendra_experience.identity_attribute_name
-}
-output "content_source_configuration" {
-  description = "(Optional, Required if user_identity_configuration not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the BatchPutDocument API. Terraform will only perform drift detection of its value when present in a configuration. Detailed below."
-  value       = aws_kendra_experience.aws_kendra_experience.content_source_configuration
-}
 output "endpoint" {
   description = "The endpoint of your Amazon Kendra experience."
   value       = aws_kendra_experience.aws_kendra_experience.endpoint
-}
-output "endpoints" {
-  description = "Shows the endpoint URLs for your Amazon Kendra experiences. The URLs are unique and fully hosted by AWS.\n"
-  value       = aws_kendra_experience.aws_kendra_experience.endpoints
-}
-output "faq_ids" {
-  description = "(Optional) The identifier of the FAQs that you want to use for your Amazon Kendra experience. Maximum number of 100 items.user_identity_configurationThe user_identity_configuration configuration block supports the following argument:"
-  value       = aws_kendra_experience.aws_kendra_experience.faq_ids
-}
-output "role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information. For more information, see IAM roles for Amazon Kendra."
-  value       = aws_kendra_experience.aws_kendra_experience.role_arn
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_kendra_experience.aws_kendra_experience.create
-}
-output "data_source_ids" {
-  description = "(Optional) The identifiers of the data sources you want to use for your Amazon Kendra experience. Maximum number of 100 items."
-  value       = aws_kendra_experience.aws_kendra_experience.data_source_ids
-}
-output "description" {
-  description = "(Optional, Forces new resource if removed) A description for your Amazon Kendra experience."
-  value       = aws_kendra_experience.aws_kendra_experience.description
-}
-output "direct_put_content" {
-  description = "(Optional) Whether to use documents you indexed directly using the BatchPutDocument API. Defaults to false."
-  value       = aws_kendra_experience.aws_kendra_experience.direct_put_content
 }
 output "index_id" {
   description = "(Required, Forces new resource) The identifier of the index for your Amazon Kendra experience."
   value       = aws_kendra_experience.aws_kendra_experience.index_id
 }
+output "role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of a role with permission to access Query API, QuerySuggestions API, SubmitFeedback API, and AWS SSO that stores your user and group information. For more information, see IAM roles for Amazon Kendra."
+  value       = aws_kendra_experience.aws_kendra_experience.role_arn
+}
 output "update" {
   description = "(Default 30m)"
   value       = aws_kendra_experience.aws_kendra_experience.update
 }
-output "user_identity_configuration" {
-  description = "(Optional, Required if content_source_configuration not provided) The AWS SSO field name that contains the identifiers of your users, such as their emails. Detailed below.content_source_configurationThe content_source_configuration configuration block supports the following arguments:"
-  value       = aws_kendra_experience.aws_kendra_experience.user_identity_configuration
+output "content_source_configuration" {
+  description = "(Optional, Required if user_identity_configuration not provided) The identifiers of your data sources and FAQs. Or, you can specify that you want to use documents indexed via the BatchPutDocument API. Terraform will only perform drift detection of its value when present in a configuration. Detailed below."
+  value       = aws_kendra_experience.aws_kendra_experience.content_source_configuration
 }
-output "configuration" {
-  description = "(Optional) Configuration information for your Amazon Kendra experience. Terraform will only perform drift detection of its value when present in a configuration. Detailed below.configuration~> strongNOTE: By default of the AWS Kendra API, the content_source_configuration.direct_put_content parameter will be set to false if not provided.The configuration configuration block supports the following arguments:"
-  value       = aws_kendra_experience.aws_kendra_experience.configuration
-}
-output "delete" {
+output "create" {
   description = "(Default 30m)"
-  value       = aws_kendra_experience.aws_kendra_experience.delete
+  value       = aws_kendra_experience.aws_kendra_experience.create
 }
-output "endpoint_type" {
-  description = "The type of endpoint for your Amazon Kendra experience."
-  value       = aws_kendra_experience.aws_kendra_experience.endpoint_type
+output "direct_put_content" {
+  description = "(Optional) Whether to use documents you indexed directly using the BatchPutDocument API. Defaults to false."
+  value       = aws_kendra_experience.aws_kendra_experience.direct_put_content
 }
-output "id" {
-  description = "The unique identifiers of the experience and index separated by a slash (/)."
-  value       = aws_kendra_experience.aws_kendra_experience.id
+output "faq_ids" {
+  description = "(Optional) The identifier of the FAQs that you want to use for your Amazon Kendra experience. Maximum number of 100 items.user_identity_configurationThe user_identity_configuration configuration block supports the following argument:"
+  value       = aws_kendra_experience.aws_kendra_experience.faq_ids
 }
 output "name" {
   description = "(Required) A name for your Amazon Kendra experience."
   value       = aws_kendra_experience.aws_kendra_experience.name
 }
+output "configuration" {
+  description = "(Optional) Configuration information for your Amazon Kendra experience. Terraform will only perform drift detection of its value when present in a configuration. Detailed below.configuration~> strongNOTE: By default of the AWS Kendra API, the content_source_configuration.direct_put_content parameter will be set to false if not provided.The configuration configuration block supports the following arguments:"
+  value       = aws_kendra_experience.aws_kendra_experience.configuration
+}
+output "data_source_ids" {
+  description = "(Optional) The identifiers of the data sources you want to use for your Amazon Kendra experience. Maximum number of 100 items."
+  value       = aws_kendra_experience.aws_kendra_experience.data_source_ids
+}
+output "experience_id" {
+  description = "The unique identifier of the experience."
+  value       = aws_kendra_experience.aws_kendra_experience.experience_id
+}
+output "description" {
+  description = "(Optional, Forces new resource if removed) A description for your Amazon Kendra experience."
+  value       = aws_kendra_experience.aws_kendra_experience.description
+}
+output "endpoints" {
+  description = "Shows the endpoint URLs for your Amazon Kendra experiences. The URLs are unique and fully hosted by AWS.\n"
+  value       = aws_kendra_experience.aws_kendra_experience.endpoints
+}
+output "id" {
+  description = "The unique identifiers of the experience and index separated by a slash (/)."
+  value       = aws_kendra_experience.aws_kendra_experience.id
+}
+output "identity_attribute_name" {
+  description = "(Required) The AWS SSO field name that contains the identifiers of your users, such as their emails.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_kendra_experience.aws_kendra_experience.identity_attribute_name
+}
 output "status" {
   description = "The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:"
   value       = aws_kendra_experience.aws_kendra_experience.status
+}
+output "user_identity_configuration" {
+  description = "(Optional, Required if content_source_configuration not provided) The AWS SSO field name that contains the identifiers of your users, such as their emails. Detailed below.content_source_configurationThe content_source_configuration configuration block supports the following arguments:"
+  value       = aws_kendra_experience.aws_kendra_experience.user_identity_configuration
 }
 output "arn" {
   description = "ARN of the Experience."
@@ -334,21 +326,13 @@ output "delete" {
   description = "(Default 30m)"
   value       = aws_kendra_experience.aws_kendra_experience.delete
 }
-output "endpoint" {
-  description = "The endpoint of your Amazon Kendra experience."
-  value       = aws_kendra_experience.aws_kendra_experience.endpoint
+output "endpoint_type" {
+  description = "The type of endpoint for your Amazon Kendra experience."
+  value       = aws_kendra_experience.aws_kendra_experience.endpoint_type
 }
 output "experience_id" {
   description = "The unique identifier of the experience."
   value       = aws_kendra_experience.aws_kendra_experience.experience_id
-}
-output "id" {
-  description = "The unique identifiers of the experience and index separated by a slash (/)."
-  value       = aws_kendra_experience.aws_kendra_experience.id
-}
-output "status" {
-  description = "The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:"
-  value       = aws_kendra_experience.aws_kendra_experience.status
 }
 output "update" {
   description = "(Default 30m)"
@@ -369,6 +353,22 @@ output "endpoint_type" {
 output "endpoints" {
   description = "Shows the endpoint URLs for your Amazon Kendra experiences. The URLs are unique and fully hosted by AWS.\n"
   value       = aws_kendra_experience.aws_kendra_experience.endpoints
+}
+output "id" {
+  description = "The unique identifiers of the experience and index separated by a slash (/)."
+  value       = aws_kendra_experience.aws_kendra_experience.id
+}
+output "status" {
+  description = "The current processing status of your Amazon Kendra experience.TimeoutsConfiguration options:"
+  value       = aws_kendra_experience.aws_kendra_experience.status
+}
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_kendra_experience.aws_kendra_experience.delete
+}
+output "endpoint" {
+  description = "The endpoint of your Amazon Kendra experience."
+  value       = aws_kendra_experience.aws_kendra_experience.endpoint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

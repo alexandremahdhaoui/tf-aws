@@ -1,4 +1,5 @@
 datasource "aws_ec2_instance_type_offerings" "aws_ec2_instance_type_offerings" {
+  name           = var.name
   values         = var.values
   filter         = var.filter
   id             = var.id
@@ -6,7 +7,6 @@ datasource "aws_ec2_instance_type_offerings" "aws_ec2_instance_type_offerings" {
   location_type  = var.location_type
   location_types = var.location_types
   locations      = var.locations
-  name           = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -46,18 +46,6 @@ variable "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-output "values" {
-  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.values
-}
-output "filter" {
-  description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
-  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.filter
-}
-output "id" {
-  description = "AWS Region."
-  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.id
-}
 output "instance_types" {
   description = "List of EC2 Instance Types."
   value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.instance_types
@@ -77,6 +65,18 @@ output "locations" {
 output "name" {
   description = "(Required) Name of the filter. The location filter depends on the top-level location_type argument and if not specified, defaults to the current region."
   value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.name
+}
+output "values" {
+  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.values
+}
+output "filter" {
+  description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
+  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.filter
+}
+output "id" {
+  description = "AWS Region."
+  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

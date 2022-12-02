@@ -149,10 +149,30 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "email" {
+  description = "The Organizations email for the delegate account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.email
+}
+output "id" {
+  description = "The Organizations member account ID that you want to enable as the IPAM account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.id
+}
+output "name" {
+  description = "The Organizations name for the delegate account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
+}
+output "arn" {
+  description = "The Organizations ARN for the delegate account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
+}
 output "delegated_admin_account_id" {
   description = "(Required)In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.delegated_admin_account_id
 }
+output "arn" {
+  description = "The Organizations ARN for the delegate account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
+}
 output "email" {
   description = "The Organizations email for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.email
@@ -164,30 +184,10 @@ output "id" {
 output "name" {
   description = "The Organizations name for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
-}
-output "arn" {
-  description = "The Organizations ARN for the delegate account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
 }
 output "service_principal" {
   description = "The AWS service principal."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.service_principal
-}
-output "arn" {
-  description = "The Organizations ARN for the delegate account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
-}
-output "email" {
-  description = "The Organizations email for the delegate account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.email
-}
-output "id" {
-  description = "The Organizations member account ID that you want to enable as the IPAM account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.id
-}
-output "name" {
-  description = "The Organizations name for the delegate account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

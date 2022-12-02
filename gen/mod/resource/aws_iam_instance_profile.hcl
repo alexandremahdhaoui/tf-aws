@@ -1,13 +1,13 @@
 resource "aws_iam_instance_profile" "aws_iam_instance_profile" {
-  tags        = var.tags
-  create_date = var.create_date
-  id          = var.id
-  name_prefix = var.name_prefix
-  path        = var.path
+  role        = var.role
   unique_id   = var.unique_id
   arn         = var.arn
+  create_date = var.create_date
+  id          = var.id
+  path        = var.path
   name        = var.name
-  role        = var.role
+  name_prefix = var.name_prefix
+  tags        = var.tags
   tags_all    = var.tags_all
 }
 variable "provider_region" {
@@ -16,26 +16,6 @@ variable "provider_region" {
 }
 variable "arn" {
   description = "ARN assigned by AWS to the instance profile."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
-  type        = string
-  default     = ""
-}
-variable "role" {
-  description = "(Optional) Name of the role to add to the profile."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "unique_id" {
-  description = "Unique ID assigned by AWS."
   type        = string
   default     = ""
 }
@@ -49,18 +29,38 @@ variable "id" {
   type        = string
   default     = ""
 }
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-  default     = ""
-}
 variable "path" {
   description = "(Optional, default \"/\") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\\u0021) through the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercase letters."
   type        = string
   default     = ""
 }
+variable "role" {
+  description = "(Optional) Name of the role to add to the profile."
+  type        = string
+  default     = ""
+}
+variable "unique_id" {
+  description = "Unique ID assigned by AWS."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
+  type        = string
+  default     = ""
+}
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Map of resource tags for the IAM Instance Profile. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
   default     = ""
 }
@@ -184,45 +184,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Instance profile's ID."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.id
+output "name" {
+  description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.name
 }
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.name_prefix
 }
-output "path" {
-  description = "(Optional, default \"/\") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\\u0021) through the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercase letters."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.path
-}
 output "tags" {
   description = "(Optional) Map of resource tags for the IAM Instance Profile. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_instance_profile.aws_iam_instance_profile.tags
-}
-output "create_date" {
-  description = "Creation timestamp of the instance profile."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
-}
-output "name" {
-  description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.name
-}
-output "role" {
-  description = "(Optional) Name of the role to add to the profile."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.role
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.tags_all
 }
-output "unique_id" {
-  description = "Unique ID assigned by AWS."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.unique_id
-}
 output "arn" {
   description = "ARN assigned by AWS to the instance profile."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
+}
+output "create_date" {
+  description = "Creation timestamp of the instance profile."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
+}
+output "id" {
+  description = "Instance profile's ID."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.id
+}
+output "path" {
+  description = "(Optional, default \"/\") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\\u0021) through the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercase letters."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.path
+}
+output "role" {
+  description = "(Optional) Name of the role to add to the profile."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.role
+}
+output "unique_id" {
+  description = "Unique ID assigned by AWS."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.unique_id
 }
 output "arn" {
   description = "ARN assigned by AWS to the instance profile."

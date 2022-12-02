@@ -1,10 +1,14 @@
 resource "aws_redshift_cluster_iam_roles" "aws_redshift_cluster_iam_roles" {
+  default_iam_role_arn = var.default_iam_role_arn
   iam_role_arns        = var.iam_role_arns
   cluster_identifier   = var.cluster_identifier
-  default_iam_role_arn = var.default_iam_role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "cluster_identifier" {
+  description = "(Required) The name of the Redshift Cluster IAM Roles."
   type        = string
 }
 variable "default_iam_role_arn" {
@@ -16,10 +20,6 @@ variable "iam_role_arns" {
   description = "(Optional) A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time."
   type        = string
   default     = ""
-}
-variable "cluster_identifier" {
-  description = "(Required) The name of the Redshift Cluster IAM Roles."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

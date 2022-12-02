@@ -24,6 +24,10 @@ variable "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
   type        = string
 }
+output "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
+  value       = aws_imagebuilder_components.aws_imagebuilder_components.values
+}
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Components."
   value       = aws_imagebuilder_components.aws_imagebuilder_components.arns
@@ -35,10 +39,6 @@ output "filter" {
 output "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListComponents API Reference."
   value       = aws_imagebuilder_components.aws_imagebuilder_components.name
-}
-output "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
-  value       = aws_imagebuilder_components.aws_imagebuilder_components.values
 }
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Components."

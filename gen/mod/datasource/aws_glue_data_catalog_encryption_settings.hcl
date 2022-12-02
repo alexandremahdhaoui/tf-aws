@@ -4,6 +4,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "data_catalog_encryption_settings" {
+  description = " – The security configuration to set. see Data Catalog Encryption Settings."
+  value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.data_catalog_encryption_settings
+}
+output "encryption_at_rest" {
+  description = "Encryption-at-rest configuration for the Data Catalog. see Encryption At Rest.connection_password_encryption"
+  value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.encryption_at_rest
+}
 output "id" {
   description = " – The ID of the Data Catalog to set the security configuration for.data_catalog_encryption_settings"
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.id
@@ -23,14 +31,6 @@ output "catalog_encryption_mode" {
 output "connection_password_encryption" {
   description = "When connection password protection is enabled, the Data Catalog uses a customer-provided key to encrypt the password as part of CreateConnection or UpdateConnection and store it in the ENCRYPTED_PASSWORD field in the connection properties. You can enable catalog encryption or only password encryption. see Connection Password Encryption."
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.connection_password_encryption
-}
-output "data_catalog_encryption_settings" {
-  description = " – The security configuration to set. see Data Catalog Encryption Settings."
-  value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.data_catalog_encryption_settings
-}
-output "encryption_at_rest" {
-  description = "Encryption-at-rest configuration for the Data Catalog. see Encryption At Rest.connection_password_encryption"
-  value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.encryption_at_rest
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,11 +1,11 @@
 resource "aws_appconfig_hosted_configuration_version" "aws_appconfig_hosted_configuration_version" {
+  content_type             = var.content_type
+  description              = var.description
+  id                       = var.id
   application_id           = var.application_id
   arn                      = var.arn
   configuration_profile_id = var.configuration_profile_id
   content                  = var.content
-  content_type             = var.content_type
-  description              = var.description
-  id                       = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -159,10 +159,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the AppConfig  hosted configuration version."
-  value       = aws_appconfig_hosted_configuration_version.aws_appconfig_hosted_configuration_version.arn
-}
 output "configuration_profile_id" {
   description = "(Required, Forces new resource) Configuration profile ID."
   value       = aws_appconfig_hosted_configuration_version.aws_appconfig_hosted_configuration_version.configuration_profile_id
@@ -186,6 +182,10 @@ output "id" {
 output "application_id" {
   description = "(Required, Forces new resource) Application ID."
   value       = aws_appconfig_hosted_configuration_version.aws_appconfig_hosted_configuration_version.application_id
+}
+output "arn" {
+  description = "ARN of the AppConfig  hosted configuration version."
+  value       = aws_appconfig_hosted_configuration_version.aws_appconfig_hosted_configuration_version.arn
 }
 output "arn" {
   description = "ARN of the AppConfig  hosted configuration version."

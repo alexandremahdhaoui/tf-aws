@@ -12,10 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "organization_resource_id" {
-  description = "The organization resource identifier for the security profile."
-  type        = string
-}
 variable "permissions" {
   description = "List of permissions assigned to the security profile."
   type        = string
@@ -45,6 +41,10 @@ variable "name" {
   description = "(Optional) Returns information on a specific Security Profile by nameIn addition to all of the arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "organization_resource_id" {
+  description = "The organization resource identifier for the security profile."
+  type        = string
 }
 output "id" {
   description = "Identifier of the hosting Amazon Connect Instance and identifier of the Security Profile separated by a colon (:)."
@@ -78,6 +78,10 @@ output "description" {
   description = "Description of the Security Profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.description
 }
+output "permissions" {
+  description = "List of permissions assigned to the security profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.permissions
+}
 output "arn" {
   description = "ARN of the Security Profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.arn
@@ -93,10 +97,6 @@ output "id" {
 output "organization_resource_id" {
   description = "The organization resource identifier for the security profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.organization_resource_id
-}
-output "permissions" {
-  description = "List of permissions assigned to the security profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.permissions
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

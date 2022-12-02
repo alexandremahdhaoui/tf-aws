@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "baseline_id" {
-  description = "(Required) The ID of the patch baseline to register the patch group with."
-  type        = string
-}
 variable "patch_group" {
   description = "(Required) The name of the patch group that should be registered with the patch baseline.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "baseline_id" {
+  description = "(Required) The ID of the patch baseline to register the patch group with."
   type        = string
 }
 variable "tag_instance_id" {

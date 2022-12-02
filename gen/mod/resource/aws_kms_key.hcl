@@ -1,17 +1,17 @@
 resource "aws_kms_key" "aws_kms_key" {
-  key_id                             = var.key_id
-  key_usage                          = var.key_usage
-  custom_key_store_id                = var.custom_key_store_id
-  customer_master_key_spec           = var.customer_master_key_spec
+  arn                                = var.arn
   enable_key_rotation                = var.enable_key_rotation
-  description                        = var.description
-  is_enabled                         = var.is_enabled
+  key_id                             = var.key_id
   multi_region                       = var.multi_region
   policy                             = var.policy
   tags                               = var.tags
-  arn                                = var.arn
+  key_usage                          = var.key_usage
   bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
+  custom_key_store_id                = var.custom_key_store_id
+  customer_master_key_spec           = var.customer_master_key_spec
   deletion_window_in_days            = var.deletion_window_in_days
+  description                        = var.description
+  is_enabled                         = var.is_enabled
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -26,24 +26,14 @@ variable "arn" {
   description = "The Amazon Resource Name (ARN) of the key."
   type        = string
 }
-variable "bypass_policy_lockout_safety_check" {
-  description = "Default Key Policy section in the emAWS Key Management Service Developer Guidefalse."
-  type        = string
-}
-variable "deletion_window_in_days" {
-  description = "(Optional) The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key.\nIf you specify a value, it must be between 7 and 30, inclusive. If you do not specify a value, it defaults to 30"
+variable "enable_key_rotation" {
+  description = "(Optional) Specifies whether key rotation is enabled. Defaults to false."
   type        = string
   default     = ""
 }
-variable "description" {
-  description = "(Optional) The description of the key as viewed in AWS console."
+variable "key_id" {
+  description = "The globally unique identifier for the key."
   type        = string
-  default     = ""
-}
-variable "is_enabled" {
-  description = "(Optional) Specifies whether the key is enabled. Defaults to true."
-  type        = string
-  default     = ""
 }
 variable "multi_region" {
   description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
@@ -55,6 +45,20 @@ variable "policy" {
   type        = string
   default     = ""
 }
+variable "is_enabled" {
+  description = "(Optional) Specifies whether the key is enabled. Defaults to true."
+  type        = string
+  default     = ""
+}
+variable "key_usage" {
+  description = "(Optional) Specifies the intended use of the key. Valid values: ENCRYPT_DECRYPT, SIGN_VERIFY, or GENERATE_VERIFY_MACENCRYPT_DECRYPT."
+  type        = string
+  default     = ""
+}
+variable "bypass_policy_lockout_safety_check" {
+  description = "Default Key Policy section in the emAWS Key Management Service Developer Guidefalse."
+  type        = string
+}
 variable "custom_key_store_id" {
   description = "(Optional) ID of the KMS Custom Key Store where the key will be stored instead of KMS (eg CloudHSM)."
   type        = string
@@ -64,17 +68,13 @@ variable "customer_master_key_spec" {
   description = "SYMMETRIC_DEFAULT,  RSA_2048, RSA_3072, RSA_4096, HMAC_256, ECC_NIST_P256, ECC_NIST_P384, ECC_NIST_P521, or ECC_SECG_P256K1. Defaults to SYMMETRIC_DEFAULT. For help with choosing a key spec, see the AWS KMS Developer Guide."
   type        = string
 }
-variable "enable_key_rotation" {
-  description = "(Optional) Specifies whether key rotation is enabled. Defaults to false."
+variable "deletion_window_in_days" {
+  description = "(Optional) The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key.\nIf you specify a value, it must be between 7 and 30, inclusive. If you do not specify a value, it defaults to 30"
   type        = string
   default     = ""
 }
-variable "key_id" {
-  description = "The globally unique identifier for the key."
-  type        = string
-}
-variable "key_usage" {
-  description = "(Optional) Specifies the intended use of the key. Valid values: ENCRYPT_DECRYPT, SIGN_VERIFY, or GENERATE_VERIFY_MACENCRYPT_DECRYPT."
+variable "description" {
+  description = "(Optional) The description of the key as viewed in AWS console."
   type        = string
   default     = ""
 }
@@ -198,37 +198,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "multi_region" {
-  description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
-  value       = aws_kms_key.aws_kms_key.multi_region
+output "is_enabled" {
+  description = "(Optional) Specifies whether the key is enabled. Defaults to true."
+  value       = aws_kms_key.aws_kms_key.is_enabled
 }
-output "policy" {
-  description = "(Optional) A valid policy JSON document. Although this is a key policy, not an IAM policy, an aws_iam_policy_document, in the form that designates a principal, can be used. For more information about building policy documents with Terraform, see the AWS IAM Policy Document Guide.~> strongNOTE: Note: All KMS keys must have a key policy. If a key policy is not specified, AWS gives the KMS key a default key policy that gives all principals in the owning account unlimited access to all KMS operations for the key. This default key policy effectively delegates all access control to IAM policies and KMS grants."
-  value       = aws_kms_key.aws_kms_key.policy
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_kms_key.aws_kms_key.tags
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the key."
-  value       = aws_kms_key.aws_kms_key.arn
+output "key_usage" {
+  description = "(Optional) Specifies the intended use of the key. Valid values: ENCRYPT_DECRYPT, SIGN_VERIFY, or GENERATE_VERIFY_MACENCRYPT_DECRYPT."
+  value       = aws_kms_key.aws_kms_key.key_usage
 }
 output "bypass_policy_lockout_safety_check" {
   description = "Default Key Policy section in the emAWS Key Management Service Developer Guidefalse."
   value       = aws_kms_key.aws_kms_key.bypass_policy_lockout_safety_check
-}
-output "deletion_window_in_days" {
-  description = "(Optional) The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key.\nIf you specify a value, it must be between 7 and 30, inclusive. If you do not specify a value, it defaults to 30"
-  value       = aws_kms_key.aws_kms_key.deletion_window_in_days
-}
-output "description" {
-  description = "(Optional) The description of the key as viewed in AWS console."
-  value       = aws_kms_key.aws_kms_key.description
-}
-output "is_enabled" {
-  description = "(Optional) Specifies whether the key is enabled. Defaults to true."
-  value       = aws_kms_key.aws_kms_key.is_enabled
 }
 output "custom_key_store_id" {
   description = "(Optional) ID of the KMS Custom Key Store where the key will be stored instead of KMS (eg CloudHSM)."
@@ -238,6 +218,22 @@ output "customer_master_key_spec" {
   description = "SYMMETRIC_DEFAULT,  RSA_2048, RSA_3072, RSA_4096, HMAC_256, ECC_NIST_P256, ECC_NIST_P384, ECC_NIST_P521, or ECC_SECG_P256K1. Defaults to SYMMETRIC_DEFAULT. For help with choosing a key spec, see the AWS KMS Developer Guide."
   value       = aws_kms_key.aws_kms_key.customer_master_key_spec
 }
+output "deletion_window_in_days" {
+  description = "(Optional) The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key.\nIf you specify a value, it must be between 7 and 30, inclusive. If you do not specify a value, it defaults to 30"
+  value       = aws_kms_key.aws_kms_key.deletion_window_in_days
+}
+output "description" {
+  description = "(Optional) The description of the key as viewed in AWS console."
+  value       = aws_kms_key.aws_kms_key.description
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_kms_key.aws_kms_key.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the key."
+  value       = aws_kms_key.aws_kms_key.arn
+}
 output "enable_key_rotation" {
   description = "(Optional) Specifies whether key rotation is enabled. Defaults to false."
   value       = aws_kms_key.aws_kms_key.enable_key_rotation
@@ -246,9 +242,17 @@ output "key_id" {
   description = "The globally unique identifier for the key."
   value       = aws_kms_key.aws_kms_key.key_id
 }
-output "key_usage" {
-  description = "(Optional) Specifies the intended use of the key. Valid values: ENCRYPT_DECRYPT, SIGN_VERIFY, or GENERATE_VERIFY_MACENCRYPT_DECRYPT."
-  value       = aws_kms_key.aws_kms_key.key_usage
+output "multi_region" {
+  description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
+  value       = aws_kms_key.aws_kms_key.multi_region
+}
+output "policy" {
+  description = "(Optional) A valid policy JSON document. Although this is a key policy, not an IAM policy, an aws_iam_policy_document, in the form that designates a principal, can be used. For more information about building policy documents with Terraform, see the AWS IAM Policy Document Guide.~> strongNOTE: Note: All KMS keys must have a key policy. If a key policy is not specified, AWS gives the KMS key a default key policy that gives all principals in the owning account unlimited access to all KMS operations for the key. This default key policy effectively delegates all access control to IAM policies and KMS grants."
+  value       = aws_kms_key.aws_kms_key.policy
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_kms_key.aws_kms_key.tags_all
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the key."
@@ -257,10 +261,6 @@ output "arn" {
 output "key_id" {
   description = "The globally unique identifier for the key."
   value       = aws_kms_key.aws_kms_key.key_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_kms_key.aws_kms_key.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

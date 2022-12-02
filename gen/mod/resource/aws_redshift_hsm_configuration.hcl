@@ -1,33 +1,38 @@
 resource "aws_redshift_hsm_configuration" "aws_redshift_hsm_configuration" {
+  arn                           = var.arn
+  hsm_server_public_certificate = var.hsm_server_public_certificate
+  hsm_configuration_public_key  = var.hsm_configuration_public_key
   hsm_ip_address                = var.hsm_ip_address
   hsm_partition_name            = var.hsm_partition_name
+  hsm_partition_password        = var.hsm_partition_password
   tags                          = var.tags
-  arn                           = var.arn
   description                   = var.description
   hsm_configuration_identifier  = var.hsm_configuration_identifier
-  hsm_configuration_public_key  = var.hsm_configuration_public_key
-  hsm_partition_password        = var.hsm_partition_password
-  hsm_server_public_certificate = var.hsm_server_public_certificate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "hsm_configuration_public_key" {
-  description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
-  type        = string
-}
-variable "hsm_partition_password" {
-  description = "(Required, Forces new resource) The password required to access the HSM partition."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
   type        = string
 }
 variable "hsm_server_public_certificate" {
   description = "(Required, Forces new resource) The HSMs public certificate file. When using Cloud HSM, the file name is server.pem."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
+variable "hsm_partition_name" {
+  description = "(Required, Forces new resource) The name of the partition in the HSM where the Amazon Redshift clusters will store their database encryption keys."
   type        = string
+}
+variable "hsm_partition_password" {
+  description = "(Required, Forces new resource) The password required to access the HSM partition."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Required, Forces new resource) A text description of the HSM configuration to be created."
@@ -37,18 +42,13 @@ variable "hsm_configuration_identifier" {
   description = "(Required, Forces new resource) The identifier to be assigned to the new Amazon Redshift HSM configuration."
   type        = string
 }
+variable "hsm_configuration_public_key" {
+  description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
+  type        = string
+}
 variable "hsm_ip_address" {
   description = "(Required, Forces new resource) The IP address that the Amazon Redshift cluster must use to access the HSM."
   type        = string
-}
-variable "hsm_partition_name" {
-  description = "(Required, Forces new resource) The name of the partition in the HSM where the Amazon Redshift clusters will store their database encryption keys."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -170,22 +170,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "hsm_configuration_public_key" {
-  description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
-  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_configuration_public_key
-}
-output "hsm_partition_password" {
-  description = "(Required, Forces new resource) The password required to access the HSM partition."
-  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_partition_password
-}
-output "hsm_server_public_certificate" {
-  description = "(Required, Forces new resource) The HSMs public certificate file. When using Cloud HSM, the file name is server.pem."
-  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_server_public_certificate
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
-  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.arn
-}
 output "description" {
   description = "(Required, Forces new resource) A text description of the HSM configuration to be created."
   value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.description
@@ -193,6 +177,10 @@ output "description" {
 output "hsm_configuration_identifier" {
   description = "(Required, Forces new resource) The identifier to be assigned to the new Amazon Redshift HSM configuration."
   value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_configuration_identifier
+}
+output "hsm_configuration_public_key" {
+  description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
+  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_configuration_public_key
 }
 output "hsm_ip_address" {
   description = "(Required, Forces new resource) The IP address that the Amazon Redshift cluster must use to access the HSM."
@@ -202,9 +190,25 @@ output "hsm_partition_name" {
   description = "(Required, Forces new resource) The name of the partition in the HSM where the Amazon Redshift clusters will store their database encryption keys."
   value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_partition_name
 }
+output "hsm_partition_password" {
+  description = "(Required, Forces new resource) The password required to access the HSM partition."
+  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_partition_password
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.tags
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
+  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.arn
+}
+output "hsm_server_public_certificate" {
+  description = "(Required, Forces new resource) The HSMs public certificate file. When using Cloud HSM, the file name is server.pem."
+  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.hsm_server_public_certificate
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
+  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.arn
 }
 output "hsm_configuration_public_key" {
   description = "The public key that the Amazon Redshift cluster will use to connect to the HSM. You must register the public key in the HSM."
@@ -213,10 +217,6 @@ output "hsm_configuration_public_key" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.tags_all
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Hsm Client Certificate."
-  value       = aws_redshift_hsm_configuration.aws_redshift_hsm_configuration.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

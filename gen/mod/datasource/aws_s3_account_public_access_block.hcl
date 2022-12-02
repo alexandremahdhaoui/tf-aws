@@ -9,6 +9,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "block_public_acls" {
+  description = "Whether or not Amazon S3 should block public ACLs for buckets in this account is enabled. Returns as true or false."
+  type        = string
+}
+variable "block_public_policy" {
+  description = "Whether or not Amazon S3 should block public bucket policies for buckets in this account is enabled. Returns as true or false."
+  type        = string
+}
 variable "id" {
   description = "AWS account ID"
   type        = string
@@ -21,14 +29,6 @@ variable "account_id" {
   description = "(Optional) AWS account ID to configure. Defaults to automatically determined account ID of the Terraform AWS provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "block_public_acls" {
-  description = "Whether or not Amazon S3 should block public ACLs for buckets in this account is enabled. Returns as true or false."
-  type        = string
-}
-variable "block_public_policy" {
-  description = "Whether or not Amazon S3 should block public bucket policies for buckets in this account is enabled. Returns as true or false."
-  type        = string
 }
 output "account_id" {
   description = "(Optional) AWS account ID to configure. Defaults to automatically determined account ID of the Terraform AWS provider.In addition to all arguments above, the following attributes are exported:"
@@ -50,10 +50,6 @@ output "ignore_public_acls" {
   description = "Whether or not Amazon S3 should ignore public ACLs for buckets in this account is enabled. Returns as true or false."
   value       = aws_s3_account_public_access_block.aws_s3_account_public_access_block.ignore_public_acls
 }
-output "block_public_policy" {
-  description = "Whether or not Amazon S3 should block public bucket policies for buckets in this account is enabled. Returns as true or false."
-  value       = aws_s3_account_public_access_block.aws_s3_account_public_access_block.block_public_policy
-}
 output "id" {
   description = "AWS account ID"
   value       = aws_s3_account_public_access_block.aws_s3_account_public_access_block.id
@@ -65,6 +61,10 @@ output "ignore_public_acls" {
 output "block_public_acls" {
   description = "Whether or not Amazon S3 should block public ACLs for buckets in this account is enabled. Returns as true or false."
   value       = aws_s3_account_public_access_block.aws_s3_account_public_access_block.block_public_acls
+}
+output "block_public_policy" {
+  description = "Whether or not Amazon S3 should block public bucket policies for buckets in this account is enabled. Returns as true or false."
+  value       = aws_s3_account_public_access_block.aws_s3_account_public_access_block.block_public_policy
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

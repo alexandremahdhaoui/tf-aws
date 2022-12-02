@@ -1,6 +1,7 @@
 package apis
 
 import (
+	log "github.com/sirupsen/logrus"
 	"os"
 	"strings"
 )
@@ -11,10 +12,13 @@ const (
 )
 
 func TerraformVersionTag() string {
-	return os.Getenv(terraformVersionTagEnv)
+	v := os.Getenv(terraformVersionTagEnv)
+	log.Debugf("getting env `%s`: `%s`", terraformVersionTagEnv, v)
+	return v
 }
 
 func SetTerraformVersionTag(version string) error {
+	log.Debugf("setting env `%s`: `%s`", terraformVersionTagEnv, version)
 	err := os.Setenv(terraformVersionTagEnv, version)
 	if err != nil {
 		return err
@@ -23,10 +27,13 @@ func SetTerraformVersionTag(version string) error {
 }
 
 func ProviderVersionTag() string {
-	return os.Getenv(providerVersionTagEnv)
+	v := os.Getenv(providerVersionTagEnv)
+	log.Debugf("getting env `%s`: `%s`", providerVersionTagEnv, v)
+	return v
 }
 
 func SetProviderVersionTag(version string) error {
+	log.Debugf("setting env `%s`: `%s`", providerVersionTagEnv, version)
 	err := os.Setenv(providerVersionTagEnv, version)
 	if err != nil {
 		return err

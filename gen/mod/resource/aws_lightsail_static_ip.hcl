@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "name" {
+  description = "(Required) The name for the allocated static IPIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "arn" {
   description = "The ARN of the Lightsail static IP"
   type        = string
 }
 variable "ip_address" {
   description = "The allocated static IP address"
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name for the allocated static IPIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

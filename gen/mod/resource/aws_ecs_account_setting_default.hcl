@@ -1,7 +1,7 @@
 resource "aws_ecs_account_setting_default" "aws_ecs_account_setting_default" {
-  value = var.value
   id    = var.id
   name  = var.name
+  value = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -151,13 +151,13 @@ output "value" {
   description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.value
 }
-output "id" {
-  description = "ARN that identifies the account setting."
-  value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.id
-}
 output "prinicpal_arn" {
   description = "ARN that identifies the account setting."
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.prinicpal_arn
+}
+output "id" {
+  description = "ARN that identifies the account setting."
+  value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

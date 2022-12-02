@@ -1,7 +1,7 @@
 resource "aws_networkmanager_customer_gateway_association" "aws_networkmanager_customer_gateway_association" {
+  global_network_id    = var.global_network_id
   customer_gateway_arn = var.customer_gateway_arn
   device_id            = var.device_id
-  global_network_id    = var.global_network_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "global_network_id" {
-  description = "(Required) The ID of the global network."
-  value       = aws_networkmanager_customer_gateway_association.aws_networkmanager_customer_gateway_association.global_network_id
-}
 output "customer_gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the customer gateway."
   value       = aws_networkmanager_customer_gateway_association.aws_networkmanager_customer_gateway_association.customer_gateway_arn
@@ -150,6 +146,10 @@ output "customer_gateway_arn" {
 output "device_id" {
   description = "(Required) The ID of the device."
   value       = aws_networkmanager_customer_gateway_association.aws_networkmanager_customer_gateway_association.device_id
+}
+output "global_network_id" {
+  description = "(Required) The ID of the global network."
+  value       = aws_networkmanager_customer_gateway_association.aws_networkmanager_customer_gateway_association.global_network_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

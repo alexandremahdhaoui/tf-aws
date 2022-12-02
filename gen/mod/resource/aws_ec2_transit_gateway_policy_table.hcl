@@ -1,21 +1,12 @@
 resource "aws_ec2_transit_gateway_policy_table" "aws_ec2_transit_gateway_policy_table" {
+  id                 = var.id
+  state              = var.state
   tags               = var.tags
   transit_gateway_id = var.transit_gateway_id
   arn                = var.arn
-  id                 = var.id
-  state              = var.state
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Policy Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "transit_gateway_id" {
-  description = "(Required) EC2 Transit Gateway identifier."
   type        = string
 }
 variable "arn" {
@@ -28,6 +19,15 @@ variable "id" {
 }
 variable "state" {
   description = "The state of the EC2 Transit Gateway Policy Table."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Policy Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_id" {
+  description = "(Required) EC2 Transit Gateway identifier."
   type        = string
 }
 variable "tag_instance_id" {

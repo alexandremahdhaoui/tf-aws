@@ -1,49 +1,27 @@
 resource "aws_connect_hours_of_operation" "aws_connect_hours_of_operation" {
+  start_time             = var.start_time
   config                 = var.config
+  id                     = var.id
+  minutes                = var.minutes
+  description            = var.description
   hours_of_operation_id  = var.hours_of_operation_id
   instance_id            = var.instance_id
-  time_zone              = var.time_zone
-  start_time             = var.start_time
-  tags                   = var.tags
-  day                    = var.day
-  description            = var.description
-  end_time               = var.end_time
-  hours_of_operation_arn = var.hours_of_operation_arn
-  minutes                = var.minutes
   name                   = var.name
-  arn                    = var.arn
+  tags                   = var.tags
+  time_zone              = var.time_zone
+  day                    = var.day
   hours                  = var.hours
-  id                     = var.id
+  hours_of_operation_arn = var.hours_of_operation_arn
+  arn                    = var.arn
+  end_time               = var.end_time
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "hours_of_operation_id" {
-  description = "The identifier for the hours of operation."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Hours of Operation."
   type        = string
-}
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  type        = string
-}
-variable "time_zone" {
-  description = "(Required) Specifies the time zone of the Hours of Operation.A config block supports the following arguments:"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the Hours of Operation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "day" {
-  description = "(Required) Specifies the day that the hours of operation applies to."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Specifies the description of the Hours of Operation."
-  type        = string
-  default     = ""
 }
 variable "end_time" {
   description = "(Required) A end time block specifies the time that your contact center closes. The end_time is documented below."
@@ -53,32 +31,54 @@ variable "hours_of_operation_arn" {
   description = "(strongDeprecated) The Amazon Resource Name (ARN) of the Hours of Operation."
   type        = string
 }
-variable "minutes" {
-  description = "(Required) Specifies the minute of opening.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "name" {
-  description = "(Required) Specifies the name of the Hours of Operation."
-  type        = string
-}
-variable "start_time" {
-  description = "(Required) A start time block specifies the time that your contact center opens. The start_time is documented below.A end_time block supports the following arguments:"
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Hours of Operation."
-  type        = string
-}
-variable "hours" {
-  description = "(Required) Specifies the hour of opening."
+variable "config" {
+  description = "(Required) One or more config blocks which define the configuration information for the hours of operation: day, start time, and end time . Config blocks are documented below."
   type        = string
 }
 variable "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Hours of Operation separated by a colon (:)."
   type        = string
 }
-variable "config" {
-  description = "(Required) One or more config blocks which define the configuration information for the hours of operation: day, start time, and end time . Config blocks are documented below."
+variable "start_time" {
+  description = "(Required) A start time block specifies the time that your contact center opens. The start_time is documented below.A end_time block supports the following arguments:"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Specifies the description of the Hours of Operation."
+  type        = string
+  default     = ""
+}
+variable "hours_of_operation_id" {
+  description = "The identifier for the hours of operation."
+  type        = string
+}
+variable "minutes" {
+  description = "(Required) Specifies the minute of opening.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the Hours of Operation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "time_zone" {
+  description = "(Required) Specifies the time zone of the Hours of Operation.A config block supports the following arguments:"
+  type        = string
+}
+variable "day" {
+  description = "(Required) Specifies the day that the hours of operation applies to."
+  type        = string
+}
+variable "hours" {
+  description = "(Required) Specifies the hour of opening."
+  type        = string
+}
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Specifies the name of the Hours of Operation."
   type        = string
 }
 variable "tag_instance_id" {
@@ -201,33 +201,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Hours of Operation separated by a colon (:)."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.id
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Hours of Operation."
   value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.arn
-}
-output "hours" {
-  description = "(Required) Specifies the hour of opening."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.hours
-}
-output "config" {
-  description = "(Required) One or more config blocks which define the configuration information for the hours of operation: day, start time, and end time . Config blocks are documented below."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.config
-}
-output "time_zone" {
-  description = "(Required) Specifies the time zone of the Hours of Operation.A config block supports the following arguments:"
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.time_zone
-}
-output "hours_of_operation_id" {
-  description = "The identifier for the hours of operation."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.hours_of_operation_id
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.instance_id
 }
 output "end_time" {
   description = "(Required) A end time block specifies the time that your contact center closes. The end_time is documented below."
@@ -237,29 +213,53 @@ output "hours_of_operation_arn" {
   description = "(strongDeprecated) The Amazon Resource Name (ARN) of the Hours of Operation."
   value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.hours_of_operation_arn
 }
-output "minutes" {
-  description = "(Required) Specifies the minute of opening.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.minutes
+output "config" {
+  description = "(Required) One or more config blocks which define the configuration information for the hours of operation: day, start time, and end time . Config blocks are documented below."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.config
 }
-output "name" {
-  description = "(Required) Specifies the name of the Hours of Operation."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.name
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Hours of Operation separated by a colon (:)."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.id
 }
 output "start_time" {
   description = "(Required) A start time block specifies the time that your contact center opens. The start_time is documented below.A end_time block supports the following arguments:"
   value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.start_time
 }
-output "tags" {
-  description = "(Optional) Tags to apply to the Hours of Operation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.tags
+output "description" {
+  description = "(Optional) Specifies the description of the Hours of Operation."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.description
+}
+output "hours_of_operation_id" {
+  description = "The identifier for the hours of operation."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.hours_of_operation_id
+}
+output "minutes" {
+  description = "(Required) Specifies the minute of opening.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.minutes
 }
 output "day" {
   description = "(Required) Specifies the day that the hours of operation applies to."
   value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.day
 }
-output "description" {
-  description = "(Optional) Specifies the description of the Hours of Operation."
-  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.description
+output "hours" {
+  description = "(Required) Specifies the hour of opening."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.hours
+}
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.instance_id
+}
+output "name" {
+  description = "(Required) Specifies the name of the Hours of Operation."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.name
+}
+output "tags" {
+  description = "(Optional) Tags to apply to the Hours of Operation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.tags
+}
+output "time_zone" {
+  description = "(Required) Specifies the time zone of the Hours of Operation.A config block supports the following arguments:"
+  value       = aws_connect_hours_of_operation.aws_connect_hours_of_operation.time_zone
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."

@@ -1,25 +1,13 @@
 resource "aws_cloudhsm_v2_hsm" "aws_cloudhsm_v2_hsm" {
+  subnet_id         = var.subnet_id
   availability_zone = var.availability_zone
   cluster_id        = var.cluster_id
   hsm_id            = var.hsm_id
   hsm_state         = var.hsm_state
   ip_address        = var.ip_address
-  subnet_id         = var.subnet_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "cluster_id" {
-  description = "(Required) The ID of Cloud HSM v2 cluster to which HSM will be added."
-  type        = string
-}
-variable "hsm_id" {
-  description = "The id of the HSM module."
-  type        = string
-}
-variable "hsm_state" {
-  description = "The state of the HSM module."
   type        = string
 }
 variable "ip_address" {
@@ -36,6 +24,18 @@ variable "availability_zone" {
   description = "(Optional) The IDs of AZ in which HSM module will be located. Do not use together with subnet_id."
   type        = string
   default     = ""
+}
+variable "cluster_id" {
+  description = "(Required) The ID of Cloud HSM v2 cluster to which HSM will be added."
+  type        = string
+}
+variable "hsm_id" {
+  description = "The id of the HSM module."
+  type        = string
+}
+variable "hsm_state" {
+  description = "The state of the HSM module."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -157,6 +157,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "subnet_id" {
+  description = "(Optional) The ID of subnet in which HSM module will be located."
+  value       = aws_cloudhsm_v2_hsm.aws_cloudhsm_v2_hsm.subnet_id
+}
 output "availability_zone" {
   description = "(Optional) The IDs of AZ in which HSM module will be located. Do not use together with subnet_id."
   value       = aws_cloudhsm_v2_hsm.aws_cloudhsm_v2_hsm.availability_zone
@@ -176,10 +180,6 @@ output "hsm_state" {
 output "ip_address" {
   description = "(Optional) The IP address of HSM module. Must be within the CIDR of selected subnet.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudhsm_v2_hsm.aws_cloudhsm_v2_hsm.ip_address
-}
-output "subnet_id" {
-  description = "(Optional) The ID of subnet in which HSM module will be located."
-  value       = aws_cloudhsm_v2_hsm.aws_cloudhsm_v2_hsm.subnet_id
 }
 output "hsm_eni_id" {
   description = "The id of the ENI interface allocated for HSM module."

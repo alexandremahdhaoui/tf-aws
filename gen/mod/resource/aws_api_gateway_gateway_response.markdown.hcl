@@ -1,8 +1,8 @@
 resource "aws_api_gateway_gateway_response.markdown" "aws_api_gateway_gateway_response.markdown" {
+  response_templates = var.response_templates
   response_type      = var.response_type
   rest_api_id        = var.rest_api_id
   status_code        = var.status_code
-  response_templates = var.response_templates
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,8 +1,8 @@
 resource "aws_ec2_transit_gateway_route_table_propagation" "aws_ec2_transit_gateway_route_table_propagation" {
-  resource_id                    = var.resource_id
   transit_gateway_attachment_id  = var.transit_gateway_attachment_id
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
   id                             = var.id
+  resource_id                    = var.resource_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -144,10 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "transit_gateway_route_table_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.transit_gateway_route_table_id
-}
 output "id" {
   description = "EC2 Transit Gateway Route Table identifier combined with EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.id
@@ -160,6 +156,14 @@ output "transit_gateway_attachment_id" {
   description = "(Required) Identifier of EC2 Transit Gateway Attachment."
   value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.transit_gateway_attachment_id
 }
+output "transit_gateway_route_table_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.transit_gateway_route_table_id
+}
+output "resource_type" {
+  description = "Type of the resource"
+  value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.resource_type
+}
 output "id" {
   description = "EC2 Transit Gateway Route Table identifier combined with EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.id
@@ -167,10 +171,6 @@ output "id" {
 output "resource_id" {
   description = "Identifier of the resource"
   value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.resource_id
-}
-output "resource_type" {
-  description = "Type of the resource"
-  value       = aws_ec2_transit_gateway_route_table_propagation.aws_ec2_transit_gateway_route_table_propagation.resource_type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

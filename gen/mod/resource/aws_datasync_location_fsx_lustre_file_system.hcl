@@ -1,23 +1,15 @@
 resource "aws_datasync_location_fsx_lustre_file_system" "aws_datasync_location_fsx_lustre_file_system" {
+  security_group_arns = var.security_group_arns
+  subdirectory        = var.subdirectory
+  tags                = var.tags
   tags_all            = var.tags_all
   uri                 = var.uri
   arn                 = var.arn
   fsx_filesystem_arn  = var.fsx_filesystem_arn
   id                  = var.id
-  security_group_arns = var.security_group_arns
-  subdirectory        = var.subdirectory
-  tags                = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "fsx_filesystem_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) for the FSx for Lustre file system."
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
   type        = string
 }
 variable "security_group_arns" {
@@ -44,6 +36,14 @@ variable "uri" {
   type        = string
 }
 variable "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "fsx_filesystem_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) for the FSx for Lustre file system."
+  type        = string
+}
+variable "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   type        = string
 }
@@ -167,6 +167,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "uri" {
+  description = "The URL of the FSx for Lustre location that was described."
+  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.uri
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.arn
@@ -195,14 +199,6 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.tags_all
 }
-output "uri" {
-  description = "The URL of the FSx for Lustre location that was described."
-  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.uri
-}
-output "creation_time" {
-  description = "The time that the FSx for Lustre location was created."
-  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.creation_time
-}
 output "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.id
@@ -218,6 +214,10 @@ output "uri" {
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.arn
+}
+output "creation_time" {
+  description = "The time that the FSx for Lustre location was created."
+  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.creation_time
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

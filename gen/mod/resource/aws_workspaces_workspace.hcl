@@ -1,106 +1,35 @@
 resource "aws_workspaces_workspace" "aws_workspaces_workspace" {
-  bundle_id                                 = var.bundle_id
-  root_volume_encryption_enabled            = var.root_volume_encryption_enabled
+  tags_all                                  = var.tags_all
+  update                                    = var.update
+  compute_type_name                         = var.compute_type_name
+  create                                    = var.create
+  id                                        = var.id
+  root_volume_size_gib                      = var.root_volume_size_gib
   running_mode                              = var.running_mode
   tags                                      = var.tags
-  computer_name                             = var.computer_name
-  create                                    = var.create
-  root_volume_size_gib                      = var.root_volume_size_gib
-  update                                    = var.update
   user_volume_size_gib                      = var.user_volume_size_gib
-  volume_encryption_key                     = var.volume_encryption_key
-  compute_type_name                         = var.compute_type_name
+  bundle_id                                 = var.bundle_id
+  computer_name                             = var.computer_name
+  root_volume_encryption_enabled            = var.root_volume_encryption_enabled
+  user_volume_encryption_enabled            = var.user_volume_encryption_enabled
   directory_id                              = var.directory_id
+  state                                     = var.state
+  user_name                                 = var.user_name
   ip_address                                = var.ip_address
   running_mode_auto_stop_timeout_in_minutes = var.running_mode_auto_stop_timeout_in_minutes
-  state                                     = var.state
-  tags_all                                  = var.tags_all
-  id                                        = var.id
-  user_name                                 = var.user_name
-  user_volume_encryption_enabled            = var.user_volume_encryption_enabled
+  volume_encryption_key                     = var.volume_encryption_key
   workspace_properties                      = var.workspace_properties
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "user_volume_size_gib" {
-  description = " – (Optional) The size of the user storage.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "volume_encryption_key" {
-  description = " – (Optional) The symmetric AWS KMS customer master key (CMK) used to encrypt data stored on your WorkSpace. Amazon WorkSpaces does not support asymmetric CMKs."
-  type        = string
-  default     = ""
-}
-variable "computer_name" {
-  description = "The name of the WorkSpace, as seen by the operating system."
-  type        = string
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "root_volume_size_gib" {
-  description = " – (Optional) The size of the root volume."
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "state" {
-  description = "The operational state of the WorkSpace."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "compute_type_name" {
-  description = " – (Optional) The compute type. For more information, see Amazon WorkSpaces Bundles. Valid values are VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, and GRAPHICSPRO_G4DN."
-  type        = string
-  default     = ""
-}
-variable "directory_id" {
-  description = "(Required) The ID of the directory for the WorkSpace."
-  type        = string
-}
-variable "ip_address" {
-  description = "The IP address of the WorkSpace."
-  type        = string
-}
-variable "running_mode_auto_stop_timeout_in_minutes" {
-  description = " – (Optional) The time after a user logs off when WorkSpaces are automatically stopped. Configured in 60-minute intervals."
-  type        = string
-  default     = ""
-}
 variable "id" {
   description = "The workspaces ID."
   type        = string
 }
-variable "user_name" {
-  description = " – (Required) The user name of the user for the WorkSpace. This user name must exist in the directory for the WorkSpace."
-  type        = string
-}
-variable "user_volume_encryption_enabled" {
-  description = " – (Optional) Indicates whether the data stored on the user volume is encrypted."
-  type        = string
-  default     = ""
-}
-variable "workspace_properties" {
-  description = " – (Optional) The WorkSpace properties.workspace_properties supports the following:"
-  type        = string
-  default     = ""
-}
-variable "bundle_id" {
-  description = "(Required) The ID of the bundle for the WorkSpace."
-  type        = string
-}
-variable "root_volume_encryption_enabled" {
-  description = "(Optional) Indicates whether the data stored on the root volume is encrypted."
+variable "root_volume_size_gib" {
+  description = " – (Optional) The size of the root volume."
   type        = string
   default     = ""
 }
@@ -111,6 +40,77 @@ variable "running_mode" {
 }
 variable "tags" {
   description = "(Optional) The tags for the WorkSpace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 10m)"
+  type        = string
+}
+variable "compute_type_name" {
+  description = " – (Optional) The compute type. For more information, see Amazon WorkSpaces Bundles. Valid values are VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, and GRAPHICSPRO_G4DN."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+}
+variable "user_volume_size_gib" {
+  description = " – (Optional) The size of the user storage.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "root_volume_encryption_enabled" {
+  description = "(Optional) Indicates whether the data stored on the root volume is encrypted."
+  type        = string
+  default     = ""
+}
+variable "user_volume_encryption_enabled" {
+  description = " – (Optional) Indicates whether the data stored on the user volume is encrypted."
+  type        = string
+  default     = ""
+}
+variable "bundle_id" {
+  description = "(Required) The ID of the bundle for the WorkSpace."
+  type        = string
+}
+variable "computer_name" {
+  description = "The name of the WorkSpace, as seen by the operating system."
+  type        = string
+}
+variable "user_name" {
+  description = " – (Required) The user name of the user for the WorkSpace. This user name must exist in the directory for the WorkSpace."
+  type        = string
+}
+variable "directory_id" {
+  description = "(Required) The ID of the directory for the WorkSpace."
+  type        = string
+}
+variable "state" {
+  description = "The operational state of the WorkSpace."
+  type        = string
+}
+variable "volume_encryption_key" {
+  description = " – (Optional) The symmetric AWS KMS customer master key (CMK) used to encrypt data stored on your WorkSpace. Amazon WorkSpaces does not support asymmetric CMKs."
+  type        = string
+  default     = ""
+}
+variable "workspace_properties" {
+  description = " – (Optional) The WorkSpace properties.workspace_properties supports the following:"
+  type        = string
+  default     = ""
+}
+variable "ip_address" {
+  description = "The IP address of the WorkSpace."
+  type        = string
+}
+variable "running_mode_auto_stop_timeout_in_minutes" {
+  description = " – (Optional) The time after a user logs off when WorkSpaces are automatically stopped. Configured in 60-minute intervals."
   type        = string
   default     = ""
 }
@@ -234,21 +234,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "state" {
-  description = "The operational state of the WorkSpace."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.state
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.tags_all
-}
-output "compute_type_name" {
-  description = " – (Optional) The compute type. For more information, see Amazon WorkSpaces Bundles. Valid values are VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, and GRAPHICSPRO_G4DN."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.compute_type_name
-}
-output "directory_id" {
-  description = "(Required) The ID of the directory for the WorkSpace."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.directory_id
+output "workspace_properties" {
+  description = " – (Optional) The WorkSpace properties.workspace_properties supports the following:"
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.workspace_properties
 }
 output "ip_address" {
   description = "The IP address of the WorkSpace."
@@ -258,29 +246,13 @@ output "running_mode_auto_stop_timeout_in_minutes" {
   description = " – (Optional) The time after a user logs off when WorkSpaces are automatically stopped. Configured in 60-minute intervals."
   value       = aws_workspaces_workspace.aws_workspaces_workspace.running_mode_auto_stop_timeout_in_minutes
 }
-output "id" {
-  description = "The workspaces ID."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.id
+output "volume_encryption_key" {
+  description = " – (Optional) The symmetric AWS KMS customer master key (CMK) used to encrypt data stored on your WorkSpace. Amazon WorkSpaces does not support asymmetric CMKs."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.volume_encryption_key
 }
-output "user_name" {
-  description = " – (Required) The user name of the user for the WorkSpace. This user name must exist in the directory for the WorkSpace."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.user_name
-}
-output "user_volume_encryption_enabled" {
-  description = " – (Optional) Indicates whether the data stored on the user volume is encrypted."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.user_volume_encryption_enabled
-}
-output "workspace_properties" {
-  description = " – (Optional) The WorkSpace properties.workspace_properties supports the following:"
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.workspace_properties
-}
-output "bundle_id" {
-  description = "(Required) The ID of the bundle for the WorkSpace."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.bundle_id
-}
-output "root_volume_encryption_enabled" {
-  description = "(Optional) Indicates whether the data stored on the root volume is encrypted."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.root_volume_encryption_enabled
+output "root_volume_size_gib" {
+  description = " – (Optional) The size of the root volume."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.root_volume_size_gib
 }
 output "running_mode" {
   description = " – (Optional) The running mode. For more information, see Manage the WorkSpace Running Mode. Valid values are AUTO_STOP and ALWAYS_ON."
@@ -290,29 +262,61 @@ output "tags" {
   description = "(Optional) The tags for the WorkSpace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_workspaces_workspace.aws_workspaces_workspace.tags
 }
-output "user_volume_size_gib" {
-  description = " – (Optional) The size of the user storage.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.user_volume_size_gib
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.tags_all
 }
-output "volume_encryption_key" {
-  description = " – (Optional) The symmetric AWS KMS customer master key (CMK) used to encrypt data stored on your WorkSpace. Amazon WorkSpaces does not support asymmetric CMKs."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.volume_encryption_key
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.update
 }
-output "computer_name" {
-  description = "The name of the WorkSpace, as seen by the operating system."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.computer_name
+output "compute_type_name" {
+  description = " – (Optional) The compute type. For more information, see Amazon WorkSpaces Bundles. Valid values are VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, and GRAPHICSPRO_G4DN."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.compute_type_name
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_workspaces_workspace.aws_workspaces_workspace.create
 }
-output "root_volume_size_gib" {
-  description = " – (Optional) The size of the root volume."
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.root_volume_size_gib
+output "id" {
+  description = "The workspaces ID."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.id
 }
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.update
+output "user_volume_size_gib" {
+  description = " – (Optional) The size of the user storage.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.user_volume_size_gib
+}
+output "user_volume_encryption_enabled" {
+  description = " – (Optional) Indicates whether the data stored on the user volume is encrypted."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.user_volume_encryption_enabled
+}
+output "bundle_id" {
+  description = "(Required) The ID of the bundle for the WorkSpace."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.bundle_id
+}
+output "computer_name" {
+  description = "The name of the WorkSpace, as seen by the operating system."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.computer_name
+}
+output "root_volume_encryption_enabled" {
+  description = "(Optional) Indicates whether the data stored on the root volume is encrypted."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.root_volume_encryption_enabled
+}
+output "directory_id" {
+  description = "(Required) The ID of the directory for the WorkSpace."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.directory_id
+}
+output "state" {
+  description = "The operational state of the WorkSpace."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.state
+}
+output "user_name" {
+  description = " – (Required) The user name of the user for the WorkSpace. This user name must exist in the directory for the WorkSpace."
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.user_name
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_workspaces_workspace.aws_workspaces_workspace.tags_all
 }
 output "update" {
   description = "(Default 10m)"
@@ -341,10 +345,6 @@ output "ip_address" {
 output "state" {
   description = "The operational state of the WorkSpace."
   value       = aws_workspaces_workspace.aws_workspaces_workspace.state
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_workspaces_workspace.aws_workspaces_workspace.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

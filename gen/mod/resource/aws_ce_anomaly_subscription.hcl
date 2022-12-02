@@ -1,18 +1,31 @@
 resource "aws_ce_anomaly_subscription" "aws_ce_anomaly_subscription" {
-  threshold        = var.threshold
-  arn              = var.arn
   id               = var.id
   name             = var.name
-  subscriber       = var.subscriber
-  tags             = var.tags
-  type             = var.type
+  threshold        = var.threshold
   account_id       = var.account_id
   address          = var.address
   frequency        = var.frequency
+  tags             = var.tags
+  type             = var.type
+  arn              = var.arn
   monitor_arn_list = var.monitor_arn_list
+  subscriber       = var.subscriber
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "account_id" {
+  description = "(Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created."
+  type        = string
+  default     = ""
+}
+variable "address" {
+  description = "(Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address."
+  type        = string
+}
+variable "frequency" {
+  description = "(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY."
   type        = string
 }
 variable "id" {
@@ -23,10 +36,6 @@ variable "name" {
   description = "(Required) The name for the subscription."
   type        = string
 }
-variable "subscriber" {
-  description = ""
-  type        = string
-}
 variable "threshold" {
   description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
   type        = string
@@ -35,16 +44,12 @@ variable "arn" {
   description = "ARN of the anomaly subscription."
   type        = string
 }
-variable "address" {
-  description = "(Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address."
-  type        = string
-}
-variable "frequency" {
-  description = "(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY."
-  type        = string
-}
 variable "monitor_arn_list" {
   description = "(Required) A list of cost anomaly monitors."
+  type        = string
+}
+variable "subscriber" {
+  description = ""
   type        = string
 }
 variable "tags" {
@@ -55,11 +60,6 @@ variable "tags" {
 variable "type" {
   description = "(Required) The type of subscription. Valid Values: SNS | EMAIL."
   type        = string
-}
-variable "account_id" {
-  description = "(Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -181,34 +181,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name for the subscription."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.name
-}
-output "subscriber" {
-  description = ""
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.subscriber
-}
-output "threshold" {
-  description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.threshold
-}
-output "arn" {
-  description = "ARN of the anomaly subscription."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.arn
-}
-output "id" {
-  description = "Unique ID of the anomaly subscription. Same as arn."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.id
-}
-output "frequency" {
-  description = "(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.frequency
-}
-output "monitor_arn_list" {
-  description = "(Required) A list of cost anomaly monitors."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.monitor_arn_list
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags
@@ -216,6 +188,30 @@ output "tags" {
 output "type" {
   description = "(Required) The type of subscription. Valid Values: SNS | EMAIL."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.type
+}
+output "arn" {
+  description = "ARN of the anomaly subscription."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.arn
+}
+output "monitor_arn_list" {
+  description = "(Required) A list of cost anomaly monitors."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.monitor_arn_list
+}
+output "subscriber" {
+  description = ""
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.subscriber
+}
+output "id" {
+  description = "Unique ID of the anomaly subscription. Same as arn."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.id
+}
+output "name" {
+  description = "(Required) The name for the subscription."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.name
+}
+output "threshold" {
+  description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.threshold
 }
 output "account_id" {
   description = "(Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created."
@@ -225,9 +221,9 @@ output "address" {
   description = "(Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.address
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags_all
+output "frequency" {
+  description = "(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.frequency
 }
 output "arn" {
   description = "ARN of the anomaly subscription."
@@ -236,6 +232,10 @@ output "arn" {
 output "id" {
   description = "Unique ID of the anomaly subscription. Same as arn."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

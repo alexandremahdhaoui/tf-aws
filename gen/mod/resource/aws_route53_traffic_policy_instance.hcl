@@ -1,9 +1,9 @@
 resource "aws_route53_traffic_policy_instance" "aws_route53_traffic_policy_instance" {
+  traffic_policy_id      = var.traffic_policy_id
   traffic_policy_version = var.traffic_policy_version
   ttl                    = var.ttl
   hosted_zone_id         = var.hosted_zone_id
   name                   = var.name
-  traffic_policy_id      = var.traffic_policy_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -149,14 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "ttl" {
-  description = "(Required) TTL that you want Amazon Route 53 to assign to all the resource record sets that it creates in the specified hosted zone.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_traffic_policy_instance.aws_route53_traffic_policy_instance.ttl
-}
-output "hosted_zone_id" {
-  description = "(Required) ID of the hosted zone that you want Amazon Route 53 to create resource record sets in by using the configuration in a traffic policy."
-  value       = aws_route53_traffic_policy_instance.aws_route53_traffic_policy_instance.hosted_zone_id
-}
 output "name" {
   description = "(Required) Domain name for which Amazon Route 53 responds to DNS queries by using the resource record sets that Route 53 creates for this traffic policy instance."
   value       = aws_route53_traffic_policy_instance.aws_route53_traffic_policy_instance.name
@@ -168,6 +160,14 @@ output "traffic_policy_id" {
 output "traffic_policy_version" {
   description = "(Required) Version of the traffic policy"
   value       = aws_route53_traffic_policy_instance.aws_route53_traffic_policy_instance.traffic_policy_version
+}
+output "ttl" {
+  description = "(Required) TTL that you want Amazon Route 53 to assign to all the resource record sets that it creates in the specified hosted zone.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_traffic_policy_instance.aws_route53_traffic_policy_instance.ttl
+}
+output "hosted_zone_id" {
+  description = "(Required) ID of the hosted zone that you want Amazon Route 53 to create resource record sets in by using the configuration in a traffic policy."
+  value       = aws_route53_traffic_policy_instance.aws_route53_traffic_policy_instance.hosted_zone_id
 }
 output "id" {
   description = "ID of traffic policy instance."

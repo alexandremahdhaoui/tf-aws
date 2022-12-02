@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "enabled" {
-  description = "Whether or not serial console access is enabled. Returns as true or false."
-  value       = aws_ec2_serial_console_access.aws_ec2_serial_console_access.enabled
-}
 output "id" {
   description = "Region of serial console access.TimeoutsConfiguration options:"
   value       = aws_ec2_serial_console_access.aws_ec2_serial_console_access.id
+}
+output "enabled" {
+  description = "Whether or not serial console access is enabled. Returns as true or false."
+  value       = aws_ec2_serial_console_access.aws_ec2_serial_console_access.enabled
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

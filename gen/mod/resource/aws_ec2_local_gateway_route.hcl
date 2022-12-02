@@ -1,14 +1,10 @@
 resource "aws_ec2_local_gateway_route" "aws_ec2_local_gateway_route" {
+  local_gateway_virtual_interface_group_id = var.local_gateway_virtual_interface_group_id
   destination_cidr_block                   = var.destination_cidr_block
   local_gateway_route_table_id             = var.local_gateway_route_table_id
-  local_gateway_virtual_interface_group_id = var.local_gateway_virtual_interface_group_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "local_gateway_virtual_interface_group_id" {
-  description = "(Required) Identifier of EC2 Local Gateway Virtual Interface Group.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "destination_cidr_block" {
@@ -17,6 +13,10 @@ variable "destination_cidr_block" {
 }
 variable "local_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Local Gateway Route Table."
+  type        = string
+}
+variable "local_gateway_virtual_interface_group_id" {
+  description = "(Required) Identifier of EC2 Local Gateway Virtual Interface Group.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "destination_cidr_block" {
-  description = "(Required) IPv4 CIDR range used for destination matches. Routing decisions are based on the most specific match."
-  value       = aws_ec2_local_gateway_route.aws_ec2_local_gateway_route.destination_cidr_block
-}
 output "local_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Local Gateway Route Table."
   value       = aws_ec2_local_gateway_route.aws_ec2_local_gateway_route.local_gateway_route_table_id
@@ -150,6 +146,10 @@ output "local_gateway_route_table_id" {
 output "local_gateway_virtual_interface_group_id" {
   description = "(Required) Identifier of EC2 Local Gateway Virtual Interface Group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_local_gateway_route.aws_ec2_local_gateway_route.local_gateway_virtual_interface_group_id
+}
+output "destination_cidr_block" {
+  description = "(Required) IPv4 CIDR range used for destination matches. Routing decisions are based on the most specific match."
+  value       = aws_ec2_local_gateway_route.aws_ec2_local_gateway_route.destination_cidr_block
 }
 output "id" {
   description = "EC2 Local Gateway Route Table identifier and destination CIDR block separated by underscores (_)"

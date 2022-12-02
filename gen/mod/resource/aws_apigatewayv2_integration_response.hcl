@@ -1,14 +1,24 @@
 resource "aws_apigatewayv2_integration_response" "aws_apigatewayv2_integration_response" {
+  api_id                        = var.api_id
   content_handling_strategy     = var.content_handling_strategy
   integration_id                = var.integration_id
   integration_response_key      = var.integration_response_key
   response_templates            = var.response_templates
   template_selection_expression = var.template_selection_expression
-  api_id                        = var.api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "response_templates" {
+  description = "(Optional) Map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client."
+  type        = string
+  default     = ""
+}
+variable "template_selection_expression" {
+  description = "(Optional) The template selection expression for the integration response.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "api_id" {
   description = "(Required) API identifier."
@@ -26,16 +36,6 @@ variable "integration_id" {
 variable "integration_response_key" {
   description = "(Required) Integration response key."
   type        = string
-}
-variable "response_templates" {
-  description = "(Optional) Map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client."
-  type        = string
-  default     = ""
-}
-variable "template_selection_expression" {
-  description = "(Optional) The template selection expression for the integration response.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -157,6 +157,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "template_selection_expression" {
+  description = "(Optional) The template selection expression for the integration response.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.template_selection_expression
+}
+output "api_id" {
+  description = "(Required) API identifier."
+  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.api_id
+}
 output "content_handling_strategy" {
   description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT."
   value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.content_handling_strategy
@@ -172,14 +180,6 @@ output "integration_response_key" {
 output "response_templates" {
   description = "(Optional) Map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client."
   value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.response_templates
-}
-output "template_selection_expression" {
-  description = "(Optional) The template selection expression for the integration response.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.template_selection_expression
-}
-output "api_id" {
-  description = "(Required) API identifier."
-  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.api_id
 }
 output "id" {
   description = "Integration response identifier."

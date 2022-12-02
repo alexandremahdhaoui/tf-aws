@@ -1,15 +1,30 @@
 datasource "aws_outposts_outpost" "aws_outposts_outpost" {
-  owner_id             = var.owner_id
   arn                  = var.arn
   availability_zone    = var.availability_zone
   availability_zone_id = var.availability_zone_id
   description          = var.description
   id                   = var.id
   name                 = var.name
+  owner_id             = var.owner_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "id" {
+  description = "(Optional) Identifier of the Outpost."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) Name of the Outpost."
+  type        = string
+  default     = ""
+}
+variable "owner_id" {
+  description = "(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "(Optional) ARN."
@@ -28,20 +43,13 @@ variable "description" {
   description = "Description."
   type        = string
 }
-variable "id" {
+output "description" {
+  description = "Description."
+  value       = aws_outposts_outpost.aws_outposts_outpost.description
+}
+output "id" {
   description = "(Optional) Identifier of the Outpost."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Optional) Name of the Outpost."
-  type        = string
-  default     = ""
-}
-variable "owner_id" {
-  description = "(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
+  value       = aws_outposts_outpost.aws_outposts_outpost.id
 }
 output "name" {
   description = "(Optional) Name of the Outpost."
@@ -62,14 +70,6 @@ output "availability_zone" {
 output "availability_zone_id" {
   description = "Availability Zone identifier."
   value       = aws_outposts_outpost.aws_outposts_outpost.availability_zone_id
-}
-output "description" {
-  description = "Description."
-  value       = aws_outposts_outpost.aws_outposts_outpost.description
-}
-output "id" {
-  description = "(Optional) Identifier of the Outpost."
-  value       = aws_outposts_outpost.aws_outposts_outpost.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,36 +1,82 @@
 resource "aws_glue_trigger" "aws_glue_trigger" {
-  batch_window             = var.batch_window
-  type                     = var.type
-  arguments                = var.arguments
-  arn                      = var.arn
-  crawler_name             = var.crawler_name
-  id                       = var.id
-  notification_property    = var.notification_property
-  notify_delay_after       = var.notify_delay_after
-  start_on_creation        = var.start_on_creation
   tags_all                 = var.tags_all
-  actions                  = var.actions
-  workflow_name            = var.workflow_name
-  crawl_state              = var.crawl_state
-  create                   = var.create
-  state                    = var.state
-  conditions               = var.conditions
-  logical                  = var.logical
-  logical_operator         = var.logical_operator
-  name                     = var.name
+  arguments                = var.arguments
   description              = var.description
-  enabled                  = var.enabled
-  security_configuration   = var.security_configuration
-  batch_size               = var.batch_size
-  schedule                 = var.schedule
-  predicate                = var.predicate
-  tags                     = var.tags
-  job_name                 = var.job_name
-  timeout                  = var.timeout
   event_batching_condition = var.event_batching_condition
+  notification_property    = var.notification_property
+  schedule                 = var.schedule
+  security_configuration   = var.security_configuration
+  start_on_creation        = var.start_on_creation
+  type                     = var.type
+  actions                  = var.actions
+  conditions               = var.conditions
+  crawl_state              = var.crawl_state
+  batch_window             = var.batch_window
+  workflow_name            = var.workflow_name
+  create                   = var.create
+  logical                  = var.logical
+  notify_delay_after       = var.notify_delay_after
+  timeout                  = var.timeout
+  name                     = var.name
+  state                    = var.state
+  tags                     = var.tags
+  arn                      = var.arn
+  batch_size               = var.batch_size
+  enabled                  = var.enabled
+  crawler_name             = var.crawler_name
+  job_name                 = var.job_name
+  logical_operator         = var.logical_operator
+  id                       = var.id
+  predicate                = var.predicate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "batch_window" {
+  description = "(Optional) Window of time in seconds after which EventBridge event trigger fires. Window starts when first event is received. Default value is 900.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "workflow_name" {
+  description = "(Optional) A workflow to which the trigger should be associated to. Every workflow graph (DAG) needs a starting trigger (ON_DEMAND or SCHEDULED type) and can contain multiple additional CONDITIONAL triggers."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "logical" {
+  description = "(Optional) How to handle multiple conditions. Defaults to AND. Valid values are AND or ANY.Conditions"
+  type        = string
+  default     = ""
+}
+variable "notify_delay_after" {
+  description = "(Optional) After a job run starts, the number of minutes to wait before sending a job run delay notification.Predicate"
+  type        = string
+  default     = ""
+}
+variable "timeout" {
+  description = "(Optional) The job run timeout in minutes. It overrides the timeout value of the job."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = " – (Required) The name of the trigger."
+  type        = string
+}
+variable "state" {
+  description = "The current state of the trigger."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of Glue Trigger"
   type        = string
 }
 variable "batch_size" {
@@ -42,13 +88,8 @@ variable "enabled" {
   type        = string
   default     = ""
 }
-variable "security_configuration" {
-  description = "(Optional) The name of the Security Configuration structure to be used with this action."
-  type        = string
-  default     = ""
-}
-variable "schedule" {
-  description = " – (Optional) A cron expression used to specify the schedule. Time-Based Schedules for Jobs and Crawlers"
+variable "crawler_name" {
+  description = "(Optional) The name of the crawler to watch. If this is specified, crawl_state must also be specified. Conflicts with job_name."
   type        = string
   default     = ""
 }
@@ -57,13 +98,31 @@ variable "job_name" {
   type        = string
   default     = ""
 }
+variable "logical_operator" {
+  description = "(Optional) A logical operator. Defaults to EQUALS.Event Batching Condition"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Trigger name"
+  type        = string
+}
 variable "predicate" {
   description = " – (Optional) A predicate to specify when the new trigger should fire. Required when trigger type is CONDITIONAL. See Predicate Below."
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "arguments" {
+  description = "(Optional) Arguments to be passed to the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = " – (Optional) A description of the new trigger."
   type        = string
   default     = ""
 }
@@ -72,18 +131,23 @@ variable "event_batching_condition" {
   type        = string
   default     = ""
 }
-variable "timeout" {
-  description = "(Optional) The job run timeout in minutes. It overrides the timeout value of the job."
+variable "notification_property" {
+  description = "(Optional) Specifies configuration properties of a job run notification. See Notification Property details below.Notification Property"
   type        = string
   default     = ""
 }
-variable "arguments" {
-  description = "(Optional) Arguments to be passed to the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes."
+variable "schedule" {
+  description = " – (Optional) A cron expression used to specify the schedule. Time-Based Schedules for Jobs and Crawlers"
   type        = string
   default     = ""
 }
-variable "batch_window" {
-  description = "(Optional) Window of time in seconds after which EventBridge event trigger fires. Window starts when first event is received. Default value is 900.In addition to all arguments above, the following attributes are exported:"
+variable "security_configuration" {
+  description = "(Optional) The name of the Security Configuration structure to be used with this action."
+  type        = string
+  default     = ""
+}
+variable "start_on_creation" {
+  description = " – (Optional) Set to true to start SCHEDULED and CONDITIONAL triggers when created. True is not supported for ON_DEMAND triggers."
   type        = string
   default     = ""
 }
@@ -95,43 +159,6 @@ variable "actions" {
   description = " – (Required) List of actions initiated by this trigger when it fires. See Actions Below."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of Glue Trigger"
-  type        = string
-}
-variable "crawler_name" {
-  description = "(Optional) The name of the crawler to watch. If this is specified, crawl_state must also be specified. Conflicts with job_name."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "Trigger name"
-  type        = string
-}
-variable "notification_property" {
-  description = "(Optional) Specifies configuration properties of a job run notification. See Notification Property details below.Notification Property"
-  type        = string
-  default     = ""
-}
-variable "notify_delay_after" {
-  description = "(Optional) After a job run starts, the number of minutes to wait before sending a job run delay notification.Predicate"
-  type        = string
-  default     = ""
-}
-variable "start_on_creation" {
-  description = " – (Optional) Set to true to start SCHEDULED and CONDITIONAL triggers when created. True is not supported for ON_DEMAND triggers."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "workflow_name" {
-  description = "(Optional) A workflow to which the trigger should be associated to. Every workflow graph (DAG) needs a starting trigger (ON_DEMAND or SCHEDULED type) and can contain multiple additional CONDITIONAL triggers."
-  type        = string
-  default     = ""
-}
 variable "conditions" {
   description = "(Required) A list of the conditions that determine when the trigger will fire. See Conditions."
   type        = string
@@ -140,33 +167,6 @@ variable "crawl_state" {
   description = "(Optional) The condition crawl state. Currently, the values supported are RUNNING, SUCCEEDED, CANCELLED, and FAILED. If this is specified, crawler_name must also be specified. Conflicts with state."
   type        = string
   default     = ""
-}
-variable "create" {
-  description = "(Default 5m)"
-  type        = string
-}
-variable "state" {
-  description = "The current state of the trigger."
-  type        = string
-}
-variable "description" {
-  description = " – (Optional) A description of the new trigger."
-  type        = string
-  default     = ""
-}
-variable "logical" {
-  description = "(Optional) How to handle multiple conditions. Defaults to AND. Valid values are AND or ANY.Conditions"
-  type        = string
-  default     = ""
-}
-variable "logical_operator" {
-  description = "(Optional) A logical operator. Defaults to EQUALS.Event Batching Condition"
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = " – (Required) The name of the trigger."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -288,21 +288,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = " – (Optional) A description of the new trigger."
-  value       = aws_glue_trigger.aws_glue_trigger.description
+output "batch_window" {
+  description = "(Optional) Window of time in seconds after which EventBridge event trigger fires. Window starts when first event is received. Default value is 900.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_trigger.aws_glue_trigger.batch_window
+}
+output "workflow_name" {
+  description = "(Optional) A workflow to which the trigger should be associated to. Every workflow graph (DAG) needs a starting trigger (ON_DEMAND or SCHEDULED type) and can contain multiple additional CONDITIONAL triggers."
+  value       = aws_glue_trigger.aws_glue_trigger.workflow_name
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_glue_trigger.aws_glue_trigger.create
 }
 output "logical" {
   description = "(Optional) How to handle multiple conditions. Defaults to AND. Valid values are AND or ANY.Conditions"
   value       = aws_glue_trigger.aws_glue_trigger.logical
 }
-output "logical_operator" {
-  description = "(Optional) A logical operator. Defaults to EQUALS.Event Batching Condition"
-  value       = aws_glue_trigger.aws_glue_trigger.logical_operator
+output "notify_delay_after" {
+  description = "(Optional) After a job run starts, the number of minutes to wait before sending a job run delay notification.Predicate"
+  value       = aws_glue_trigger.aws_glue_trigger.notify_delay_after
 }
-output "name" {
-  description = " – (Required) The name of the trigger."
-  value       = aws_glue_trigger.aws_glue_trigger.name
+output "timeout" {
+  description = "(Optional) The job run timeout in minutes. It overrides the timeout value of the job."
+  value       = aws_glue_trigger.aws_glue_trigger.timeout
+}
+output "state" {
+  description = "The current state of the trigger."
+  value       = aws_glue_trigger.aws_glue_trigger.state
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_glue_trigger.aws_glue_trigger.tags
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue Trigger"
+  value       = aws_glue_trigger.aws_glue_trigger.arn
 }
 output "batch_size" {
   description = "(Required)Number of events that must be received from Amazon EventBridge before EventBridge  event trigger fires."
@@ -312,81 +332,65 @@ output "enabled" {
   description = " – (Optional) Start the trigger. Defaults to true."
   value       = aws_glue_trigger.aws_glue_trigger.enabled
 }
-output "security_configuration" {
-  description = "(Optional) The name of the Security Configuration structure to be used with this action."
-  value       = aws_glue_trigger.aws_glue_trigger.security_configuration
-}
-output "schedule" {
-  description = " – (Optional) A cron expression used to specify the schedule. Time-Based Schedules for Jobs and Crawlers"
-  value       = aws_glue_trigger.aws_glue_trigger.schedule
-}
-output "job_name" {
-  description = "(Optional) The name of the job to watch. If this is specified, state must also be specified. Conflicts with crawler_name."
-  value       = aws_glue_trigger.aws_glue_trigger.job_name
-}
-output "predicate" {
-  description = " – (Optional) A predicate to specify when the new trigger should fire. Required when trigger type is CONDITIONAL. See Predicate Below."
-  value       = aws_glue_trigger.aws_glue_trigger.predicate
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_glue_trigger.aws_glue_trigger.tags
-}
-output "event_batching_condition" {
-  description = "(Optional) Batch condition that must be met (specified number of events received or batch time window expired) before EventBridge event trigger fires. See Event Batching Condition.Actions"
-  value       = aws_glue_trigger.aws_glue_trigger.event_batching_condition
-}
-output "timeout" {
-  description = "(Optional) The job run timeout in minutes. It overrides the timeout value of the job."
-  value       = aws_glue_trigger.aws_glue_trigger.timeout
-}
-output "arguments" {
-  description = "(Optional) Arguments to be passed to the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes."
-  value       = aws_glue_trigger.aws_glue_trigger.arguments
-}
-output "batch_window" {
-  description = "(Optional) Window of time in seconds after which EventBridge event trigger fires. Window starts when first event is received. Default value is 900.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_trigger.aws_glue_trigger.batch_window
-}
-output "type" {
-  description = " – (Required) The type of trigger. Valid values are CONDITIONAL, ON_DEMAND, and SCHEDULED."
-  value       = aws_glue_trigger.aws_glue_trigger.type
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_glue_trigger.aws_glue_trigger.tags_all
-}
-output "actions" {
-  description = " – (Required) List of actions initiated by this trigger when it fires. See Actions Below."
-  value       = aws_glue_trigger.aws_glue_trigger.actions
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue Trigger"
-  value       = aws_glue_trigger.aws_glue_trigger.arn
+output "name" {
+  description = " – (Required) The name of the trigger."
+  value       = aws_glue_trigger.aws_glue_trigger.name
 }
 output "crawler_name" {
   description = "(Optional) The name of the crawler to watch. If this is specified, crawl_state must also be specified. Conflicts with job_name."
   value       = aws_glue_trigger.aws_glue_trigger.crawler_name
 }
+output "job_name" {
+  description = "(Optional) The name of the job to watch. If this is specified, state must also be specified. Conflicts with crawler_name."
+  value       = aws_glue_trigger.aws_glue_trigger.job_name
+}
+output "logical_operator" {
+  description = "(Optional) A logical operator. Defaults to EQUALS.Event Batching Condition"
+  value       = aws_glue_trigger.aws_glue_trigger.logical_operator
+}
 output "id" {
   description = "Trigger name"
   value       = aws_glue_trigger.aws_glue_trigger.id
 }
-output "notification_property" {
-  description = "(Optional) Specifies configuration properties of a job run notification. See Notification Property details below.Notification Property"
-  value       = aws_glue_trigger.aws_glue_trigger.notification_property
+output "predicate" {
+  description = " – (Optional) A predicate to specify when the new trigger should fire. Required when trigger type is CONDITIONAL. See Predicate Below."
+  value       = aws_glue_trigger.aws_glue_trigger.predicate
 }
-output "notify_delay_after" {
-  description = "(Optional) After a job run starts, the number of minutes to wait before sending a job run delay notification.Predicate"
-  value       = aws_glue_trigger.aws_glue_trigger.notify_delay_after
+output "arguments" {
+  description = "(Optional) Arguments to be passed to the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes."
+  value       = aws_glue_trigger.aws_glue_trigger.arguments
+}
+output "description" {
+  description = " – (Optional) A description of the new trigger."
+  value       = aws_glue_trigger.aws_glue_trigger.description
+}
+output "event_batching_condition" {
+  description = "(Optional) Batch condition that must be met (specified number of events received or batch time window expired) before EventBridge event trigger fires. See Event Batching Condition.Actions"
+  value       = aws_glue_trigger.aws_glue_trigger.event_batching_condition
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_glue_trigger.aws_glue_trigger.tags_all
+}
+output "schedule" {
+  description = " – (Optional) A cron expression used to specify the schedule. Time-Based Schedules for Jobs and Crawlers"
+  value       = aws_glue_trigger.aws_glue_trigger.schedule
+}
+output "security_configuration" {
+  description = "(Optional) The name of the Security Configuration structure to be used with this action."
+  value       = aws_glue_trigger.aws_glue_trigger.security_configuration
 }
 output "start_on_creation" {
   description = " – (Optional) Set to true to start SCHEDULED and CONDITIONAL triggers when created. True is not supported for ON_DEMAND triggers."
   value       = aws_glue_trigger.aws_glue_trigger.start_on_creation
 }
-output "workflow_name" {
-  description = "(Optional) A workflow to which the trigger should be associated to. Every workflow graph (DAG) needs a starting trigger (ON_DEMAND or SCHEDULED type) and can contain multiple additional CONDITIONAL triggers."
-  value       = aws_glue_trigger.aws_glue_trigger.workflow_name
+output "type" {
+  description = " – (Required) The type of trigger. Valid values are CONDITIONAL, ON_DEMAND, and SCHEDULED."
+  value       = aws_glue_trigger.aws_glue_trigger.type
+}
+output "actions" {
+  description = " – (Required) List of actions initiated by this trigger when it fires. See Actions Below."
+  value       = aws_glue_trigger.aws_glue_trigger.actions
 }
 output "conditions" {
   description = "(Required) A list of the conditions that determine when the trigger will fire. See Conditions."
@@ -396,13 +400,13 @@ output "crawl_state" {
   description = "(Optional) The condition crawl state. Currently, the values supported are RUNNING, SUCCEEDED, CANCELLED, and FAILED. If this is specified, crawler_name must also be specified. Conflicts with state."
   value       = aws_glue_trigger.aws_glue_trigger.crawl_state
 }
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_glue_trigger.aws_glue_trigger.create
+output "notification_property" {
+  description = "(Optional) Specifies configuration properties of a job run notification. See Notification Property details below.Notification Property"
+  value       = aws_glue_trigger.aws_glue_trigger.notification_property
 }
-output "state" {
-  description = "The current state of the trigger."
-  value       = aws_glue_trigger.aws_glue_trigger.state
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_glue_trigger.aws_glue_trigger.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of Glue Trigger"
@@ -423,10 +427,6 @@ output "id" {
 output "state" {
   description = "The current state of the trigger."
   value       = aws_glue_trigger.aws_glue_trigger.state
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_glue_trigger.aws_glue_trigger.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

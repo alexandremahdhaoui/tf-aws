@@ -1,11 +1,11 @@
 datasource "aws_ssoadmin_permission_set" "aws_ssoadmin_permission_set" {
-  instance_arn     = var.instance_arn
-  name             = var.name
   relay_state      = var.relay_state
   session_duration = var.session_duration
   arn              = var.arn
   description      = var.description
   id               = var.id
+  instance_arn     = var.instance_arn
+  name             = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -41,6 +41,18 @@ variable "description" {
   description = "Description of the Permission Set."
   type        = string
 }
+output "arn" {
+  description = "(Optional) ARN of the permission set."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.arn
+}
+output "description" {
+  description = "Description of the Permission Set."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.description
+}
+output "id" {
+  description = "ARN of the Permission Set."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.id
+}
 output "instance_arn" {
   description = "(Required) ARN of the SSO Instance associated with the permission set."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.instance_arn
@@ -56,18 +68,6 @@ output "relay_state" {
 output "session_duration" {
   description = "Length of time that the application user sessions are valid in the ISO-8601 standard."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.session_duration
-}
-output "arn" {
-  description = "(Optional) ARN of the permission set."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.arn
-}
-output "description" {
-  description = "Description of the Permission Set."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.description
-}
-output "id" {
-  description = "ARN of the Permission Set."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.id
 }
 output "description" {
   description = "Description of the Permission Set."

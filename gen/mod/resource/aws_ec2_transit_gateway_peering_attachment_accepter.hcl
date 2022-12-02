@@ -179,10 +179,6 @@ output "transit_gateway_id" {
   description = "Identifier of EC2 Transit Gateway."
   value       = aws_ec2_transit_gateway_peering_attachment_accepter.aws_ec2_transit_gateway_peering_attachment_accepter.transit_gateway_id
 }
-output "transit_gateway_id" {
-  description = "Identifier of EC2 Transit Gateway."
-  value       = aws_ec2_transit_gateway_peering_attachment_accepter.aws_ec2_transit_gateway_peering_attachment_accepter.transit_gateway_id
-}
 output "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_peering_attachment_accepter.aws_ec2_transit_gateway_peering_attachment_accepter.id
@@ -198,6 +194,10 @@ output "peer_transit_gateway_id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_transit_gateway_peering_attachment_accepter.aws_ec2_transit_gateway_peering_attachment_accepter.tags_all
+}
+output "transit_gateway_id" {
+  description = "Identifier of EC2 Transit Gateway."
+  value       = aws_ec2_transit_gateway_peering_attachment_accepter.aws_ec2_transit_gateway_peering_attachment_accepter.transit_gateway_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

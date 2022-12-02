@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "arn" {
-  description = "ARN of the queue."
-  value       = aws_sqs_queue.aws_sqs_queue.arn
-}
 output "url" {
   description = "URL of the queue."
   value       = aws_sqs_queue.aws_sqs_queue.url
+}
+output "arn" {
+  description = "ARN of the queue."
+  value       = aws_sqs_queue.aws_sqs_queue.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

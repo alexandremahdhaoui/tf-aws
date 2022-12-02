@@ -1,61 +1,40 @@
 resource "aws_connect_user_hierarchy_group" "aws_connect_user_hierarchy_group" {
-  arn                = var.arn
+  hierarchy_group_id = var.hierarchy_group_id
   level_id           = var.level_id
-  name               = var.name
-  parent_group_id    = var.parent_group_id
   tags               = var.tags
+  arn                = var.arn
+  hierarchy_path     = var.hierarchy_path
   instance_id        = var.instance_id
   level_five         = var.level_five
-  level_two          = var.level_two
-  hierarchy_group_id = var.hierarchy_group_id
-  hierarchy_path     = var.hierarchy_path
-  id                 = var.id
   level_four         = var.level_four
-  level_three        = var.level_three
-  level_one          = var.level_one
+  parent_group_id    = var.parent_group_id
   tags_all           = var.tags_all
+  id                 = var.id
+  level_three        = var.level_three
+  name               = var.name
+  level_one          = var.level_one
+  level_two          = var.level_two
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "level_two" {
+  description = "A block that defines the details of level two. The level block is documented below."
   type        = string
 }
 variable "level_one" {
   description = "A block that defines the details of level one. The level block is documented below."
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:"
-  type        = string
-}
-variable "arn" {
-  description = " The Amazon Resource Name (ARN) of the hierarchy group."
-  type        = string
-}
 variable "level_id" {
   description = "The identifier of the level in the hierarchy group."
   type        = string
-}
-variable "name" {
-  description = "(Required) The name of the user hierarchy group. Must not be more than 100 characters."
-  type        = string
-}
-variable "parent_group_id" {
-  description = "(Optional) The identifier for the parent hierarchy group. The user hierarchy is created at level one if the parent group ID is null."
-  type        = string
-  default     = ""
 }
 variable "tags" {
   description = "(Optional) Tags to apply to the hierarchy group. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  type        = string
-}
-variable "level_five" {
-  description = "A block that defines the details of level five. The level block is documented below.A level block supports the following attributes:"
-  type        = string
 }
 variable "hierarchy_group_id" {
   description = "The identifier for the hierarchy group."
@@ -65,20 +44,41 @@ variable "hierarchy_path" {
   description = "A block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below."
   type        = string
 }
-variable "id" {
-  description = " The identifier of the hierarchy group."
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  type        = string
+}
+variable "level_five" {
+  description = "A block that defines the details of level five. The level block is documented below.A level block supports the following attributes:"
   type        = string
 }
 variable "level_four" {
   description = "A block that defines the details of level four. The level block is documented below."
   type        = string
 }
+variable "parent_group_id" {
+  description = "(Optional) The identifier for the parent hierarchy group. The user hierarchy is created at level one if the parent group ID is null."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:"
+  type        = string
+}
+variable "arn" {
+  description = " The Amazon Resource Name (ARN) of the hierarchy group."
+  type        = string
+}
 variable "level_three" {
   description = "A block that defines the details of level three. The level block is documented below."
   type        = string
 }
-variable "level_two" {
-  description = "A block that defines the details of level two. The level block is documented below."
+variable "name" {
+  description = "(Required) The name of the user hierarchy group. Must not be more than 100 characters."
+  type        = string
+}
+variable "id" {
+  description = " The identifier of the hierarchy group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -201,6 +201,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) Tags to apply to the hierarchy group. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.tags
+}
+output "hierarchy_group_id" {
+  description = "The identifier for the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_group_id
+}
+output "level_id" {
+  description = "The identifier of the level in the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_id
+}
 output "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.instance_id
@@ -209,65 +221,53 @@ output "level_five" {
   description = "A block that defines the details of level five. The level block is documented below.A level block supports the following attributes:"
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_five
 }
-output "level_three" {
-  description = "A block that defines the details of level three. The level block is documented below."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_three
-}
-output "level_two" {
-  description = "A block that defines the details of level two. The level block is documented below."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_two
-}
-output "hierarchy_group_id" {
-  description = "The identifier for the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_group_id
-}
-output "hierarchy_path" {
-  description = "A block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_path
-}
-output "id" {
-  description = " The identifier of the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.id
-}
 output "level_four" {
   description = "A block that defines the details of level four. The level block is documented below."
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_four
-}
-output "level_one" {
-  description = "A block that defines the details of level one. The level block is documented below."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_one
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:"
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.tags_all
-}
-output "tags" {
-  description = "(Optional) Tags to apply to the hierarchy group. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.tags
-}
-output "arn" {
-  description = " The Amazon Resource Name (ARN) of the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.arn
-}
-output "level_id" {
-  description = "The identifier of the level in the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_id
-}
-output "name" {
-  description = "(Required) The name of the user hierarchy group. Must not be more than 100 characters."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.name
 }
 output "parent_group_id" {
   description = "(Optional) The identifier for the parent hierarchy group. The user hierarchy is created at level one if the parent group ID is null."
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.parent_group_id
 }
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:"
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.tags_all
+}
+output "arn" {
+  description = " The Amazon Resource Name (ARN) of the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.arn
+}
+output "hierarchy_path" {
+  description = "A block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_path
+}
+output "name" {
+  description = "(Required) The name of the user hierarchy group. Must not be more than 100 characters."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.name
+}
+output "id" {
+  description = " The identifier of the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.id
+}
+output "level_three" {
+  description = "A block that defines the details of level three. The level block is documented below."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_three
+}
+output "level_one" {
+  description = "A block that defines the details of level one. The level block is documented below."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_one
+}
+output "level_two" {
+  description = "A block that defines the details of level two. The level block is documented below."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_two
+}
+output "id" {
+  description = " The identifier of the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.id
+}
 output "level_five" {
   description = "A block that defines the details of level five. The level block is documented below.A level block supports the following attributes:"
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_five
-}
-output "level_id" {
-  description = "The identifier of the level in the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_id
 }
 output "level_one" {
   description = "A block that defines the details of level one. The level block is documented below."
@@ -277,37 +277,37 @@ output "level_three" {
   description = "A block that defines the details of level three. The level block is documented below."
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_three
 }
-output "name" {
-  description = "The name of the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.name
-}
-output "arn" {
-  description = " The Amazon Resource Name (ARN) of the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.arn
+output "level_two" {
+  description = "A block that defines the details of level two. The level block is documented below."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_two
 }
 output "hierarchy_group_id" {
   description = "The identifier for the hierarchy group."
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_group_id
 }
-output "id" {
-  description = " The identifier of the hierarchy group."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.id
+output "hierarchy_path" {
+  description = "A block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_path
+}
+output "level_id" {
+  description = "The identifier of the level in the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_id
+}
+output "name" {
+  description = "The name of the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.name
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:"
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.tags_all
 }
-output "hierarchy_path" {
-  description = "A block that contains information about the levels in the hierarchy group. The hierarchy_path block is documented below."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.hierarchy_path
+output "arn" {
+  description = " The Amazon Resource Name (ARN) of the hierarchy group."
+  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.arn
 }
 output "level_four" {
   description = "A block that defines the details of level four. The level block is documented below."
   value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_four
-}
-output "level_two" {
-  description = "A block that defines the details of level two. The level block is documented below."
-  value       = aws_connect_user_hierarchy_group.aws_connect_user_hierarchy_group.level_two
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

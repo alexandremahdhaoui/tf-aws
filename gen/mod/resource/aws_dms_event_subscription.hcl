@@ -1,26 +1,18 @@
 resource "aws_dms_event_subscription" "aws_dms_event_subscription" {
+  update           = var.update
   arn              = var.arn
   event_categories = var.event_categories
   name             = var.name
-  source_ids       = var.source_ids
+  sns_topic_arn    = var.sns_topic_arn
   tags             = var.tags
-  tags_all         = var.tags_all
-  update           = var.update
   create           = var.create
   enabled          = var.enabled
-  sns_topic_arn    = var.sns_topic_arn
+  source_ids       = var.source_ids
   source_type      = var.source_type
+  tags_all         = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "sns_topic_arn" {
-  description = "(Required) SNS topic arn to send events on."
-  type        = string
-}
-variable "source_type" {
-  description = "(Optional, Default: all events) Type of source for events. Valid values: replication-instance or replication-task"
   type        = string
 }
 variable "create" {
@@ -31,25 +23,16 @@ variable "enabled" {
   description = "(Optional, Default: true) Whether the event subscription should be enabled."
   type        = string
 }
-variable "name" {
-  description = "(Required) Name of event subscription."
-  type        = string
-}
 variable "source_ids" {
   description = "(Required) Ids of sources to listen to."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of resource tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "source_type" {
+  description = "(Optional, Default: all events) Type of source for events. Valid values: replication-instance or replication-task"
   type        = string
-  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "update" {
-  description = "(Default 10m)"
   type        = string
 }
 variable "arn" {
@@ -60,6 +43,23 @@ variable "event_categories" {
   description = "(Optional) List of event categories to listen for, see DescribeEventCategories for a canonical list."
   type        = string
   default     = ""
+}
+variable "name" {
+  description = "(Required) Name of event subscription."
+  type        = string
+}
+variable "sns_topic_arn" {
+  description = "(Required) SNS topic arn to send events on."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 10m)"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -181,18 +181,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Map of resource tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dms_event_subscription.aws_dms_event_subscription.tags
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_dms_event_subscription.aws_dms_event_subscription.tags_all
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_dms_event_subscription.aws_dms_event_subscription.update
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DMS Event Subscription."
   value       = aws_dms_event_subscription.aws_dms_event_subscription.arn
@@ -205,9 +193,17 @@ output "name" {
   description = "(Required) Name of event subscription."
   value       = aws_dms_event_subscription.aws_dms_event_subscription.name
 }
-output "source_ids" {
-  description = "(Required) Ids of sources to listen to."
-  value       = aws_dms_event_subscription.aws_dms_event_subscription.source_ids
+output "sns_topic_arn" {
+  description = "(Required) SNS topic arn to send events on."
+  value       = aws_dms_event_subscription.aws_dms_event_subscription.sns_topic_arn
+}
+output "tags" {
+  description = "(Optional) Map of resource tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dms_event_subscription.aws_dms_event_subscription.tags
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_dms_event_subscription.aws_dms_event_subscription.update
 }
 output "create" {
   description = "(Default 10m)"
@@ -217,9 +213,9 @@ output "enabled" {
   description = "(Optional, Default: true) Whether the event subscription should be enabled."
   value       = aws_dms_event_subscription.aws_dms_event_subscription.enabled
 }
-output "sns_topic_arn" {
-  description = "(Required) SNS topic arn to send events on."
-  value       = aws_dms_event_subscription.aws_dms_event_subscription.sns_topic_arn
+output "source_ids" {
+  description = "(Required) Ids of sources to listen to."
+  value       = aws_dms_event_subscription.aws_dms_event_subscription.source_ids
 }
 output "source_type" {
   description = "(Optional, Default: all events) Type of source for events. Valid values: replication-instance or replication-task"
@@ -228,10 +224,6 @@ output "source_type" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_dms_event_subscription.aws_dms_event_subscription.tags_all
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_dms_event_subscription.aws_dms_event_subscription.update
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DMS Event Subscription."
@@ -244,6 +236,14 @@ output "create" {
 output "delete" {
   description = "(Default 10m)"
   value       = aws_dms_event_subscription.aws_dms_event_subscription.delete
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_dms_event_subscription.aws_dms_event_subscription.tags_all
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_dms_event_subscription.aws_dms_event_subscription.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

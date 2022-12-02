@@ -124,9 +124,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The Spot Instance Request ID."
+  value       = aws_spot_instance_request.aws_spot_instance_request.id
+}
+output "private_ip" {
+  description = "The private IP address assigned to the instance"
+  value       = aws_spot_instance_request.aws_spot_instance_request.private_ip
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_spot_instance_request.aws_spot_instance_request.tags_all
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_spot_instance_request.aws_spot_instance_request.create
+}
+output "private_dns" {
+  description = "The private DNS name assigned to the instance. Can only be\nused inside the Amazon EC2, and only available if you've enabled DNS hostnames\nfor your VPC"
+  value       = aws_spot_instance_request.aws_spot_instance_request.private_dns
+}
 output "public_dns" {
   description = "The public DNS name assigned to the instance. For EC2-VPC, this\nis only available if you've enabled DNS hostnames for your VPC"
   value       = aws_spot_instance_request.aws_spot_instance_request.public_dns
+}
+output "public_ip" {
+  description = "The public IP address assigned to the instance, if applicable."
+  value       = aws_spot_instance_request.aws_spot_instance_request.public_ip
 }
 output "spot_bid_status" {
   description = "The current "
@@ -136,33 +160,9 @@ output "spot_instance_id" {
   description = "The Instance ID (if any) that is currently fulfilling\nthe Spot Instance request."
   value       = aws_spot_instance_request.aws_spot_instance_request.spot_instance_id
 }
-output "id" {
-  description = "The Spot Instance Request ID."
-  value       = aws_spot_instance_request.aws_spot_instance_request.id
-}
-output "private_dns" {
-  description = "The private DNS name assigned to the instance. Can only be\nused inside the Amazon EC2, and only available if you've enabled DNS hostnames\nfor your VPC"
-  value       = aws_spot_instance_request.aws_spot_instance_request.private_dns
-}
-output "private_ip" {
-  description = "The private IP address assigned to the instance"
-  value       = aws_spot_instance_request.aws_spot_instance_request.private_ip
-}
-output "public_ip" {
-  description = "The public IP address assigned to the instance, if applicable."
-  value       = aws_spot_instance_request.aws_spot_instance_request.public_ip
-}
 output "spot_request_state" {
   description = " The current "
   value       = aws_spot_instance_request.aws_spot_instance_request.spot_request_state
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_spot_instance_request.aws_spot_instance_request.tags_all
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_spot_instance_request.aws_spot_instance_request.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

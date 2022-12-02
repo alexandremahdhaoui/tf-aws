@@ -1,14 +1,22 @@
 datasource "aws_msk_broker_nodes" "aws_msk_broker_nodes" {
+  client_subnet         = var.client_subnet
   client_vpc_ip_address = var.client_vpc_ip_address
   cluster_arn           = var.cluster_arn
   endpoints             = var.endpoints
   node_info_list        = var.node_info_list
   attached_eni_id       = var.attached_eni_id
   broker_id             = var.broker_id
-  client_subnet         = var.client_subnet
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "broker_id" {
+  description = "ID of the broker"
+  type        = string
+}
+variable "client_subnet" {
+  description = "Client subnet to which this broker node belongs"
   type        = string
 }
 variable "client_vpc_ip_address" {
@@ -31,13 +39,9 @@ variable "attached_eni_id" {
   description = "Attached elastic network interface of the broker"
   type        = string
 }
-variable "broker_id" {
-  description = "ID of the broker"
-  type        = string
-}
-variable "client_subnet" {
-  description = "Client subnet to which this broker node belongs"
-  type        = string
+output "attached_eni_id" {
+  description = "Attached elastic network interface of the broker"
+  value       = aws_msk_broker_nodes.aws_msk_broker_nodes.attached_eni_id
 }
 output "broker_id" {
   description = "ID of the broker"
@@ -62,10 +66,6 @@ output "endpoints" {
 output "node_info_list" {
   description = "List of MSK Broker Nodes, sorted by broker ID in ascending order.Nodes"
   value       = aws_msk_broker_nodes.aws_msk_broker_nodes.node_info_list
-}
-output "attached_eni_id" {
-  description = "Attached elastic network interface of the broker"
-  value       = aws_msk_broker_nodes.aws_msk_broker_nodes.attached_eni_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

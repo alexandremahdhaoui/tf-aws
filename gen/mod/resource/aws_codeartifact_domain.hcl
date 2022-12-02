@@ -1,40 +1,29 @@
 resource "aws_codeartifact_domain" "aws_codeartifact_domain" {
-  owner            = var.owner
-  repository_count = var.repository_count
-  asset_size_bytes = var.asset_size_bytes
+  tags             = var.tags
+  arn              = var.arn
   domain           = var.domain
   encryption_key   = var.encryption_key
   id               = var.id
-  tags             = var.tags
-  arn              = var.arn
+  asset_size_bytes = var.asset_size_bytes
   created_time     = var.created_time
+  owner            = var.owner
+  repository_count = var.repository_count
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "asset_size_bytes" {
-  description = "The total size of all assets in the domain."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "domain" {
-  description = "(Required) The name of the domain to create. All domain names in an AWS Region that are in the same AWS account must be unique. The domain name is used as the prefix in DNS hostnames. Do not use sensitive information in a domain name because it is publicly discoverable."
-  type        = string
-}
-variable "owner" {
-  description = "The AWS account ID that owns the domain."
-  type        = string
-}
-variable "repository_count" {
-  description = "The number of repositories in the domain."
-  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the Domain."
   type        = string
 }
-variable "created_time" {
-  description = "A timestamp that represents the date and time the domain was created in RFC3339 format."
+variable "domain" {
+  description = "(Required) The name of the domain to create. All domain names in an AWS Region that are in the same AWS account must be unique. The domain name is used as the prefix in DNS hostnames. Do not use sensitive information in a domain name because it is publicly discoverable."
   type        = string
 }
 variable "encryption_key" {
@@ -46,10 +35,21 @@ variable "id" {
   description = "The ARN of the Domain."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "asset_size_bytes" {
+  description = "The total size of all assets in the domain."
   type        = string
-  default     = ""
+}
+variable "created_time" {
+  description = "A timestamp that represents the date and time the domain was created in RFC3339 format."
+  type        = string
+}
+variable "owner" {
+  description = "The AWS account ID that owns the domain."
+  type        = string
+}
+variable "repository_count" {
+  description = "The number of repositories in the domain."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -171,34 +171,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "asset_size_bytes" {
-  description = "The total size of all assets in the domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.asset_size_bytes
-}
-output "domain" {
-  description = "(Required) The name of the domain to create. All domain names in an AWS Region that are in the same AWS account must be unique. The domain name is used as the prefix in DNS hostnames. Do not use sensitive information in a domain name because it is publicly discoverable."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.domain
-}
-output "owner" {
-  description = "The AWS account ID that owns the domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.owner
-}
-output "repository_count" {
-  description = "The number of repositories in the domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.repository_count
-}
-output "arn" {
-  description = "The ARN of the Domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.arn
-}
-output "created_time" {
-  description = "A timestamp that represents the date and time the domain was created in RFC3339 format."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.created_time
-}
-output "encryption_key" {
-  description = "(Optional) The encryption key for the domain. This is used to encrypt content stored in a domain. The KMS Key Amazon Resource Name (ARN). The default aws/codeartifact AWS KMS master key is used if this element is absent."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.encryption_key
-}
 output "id" {
   description = "The ARN of the Domain."
   value       = aws_codeartifact_domain.aws_codeartifact_domain.id
@@ -206,6 +178,34 @@ output "id" {
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codeartifact_domain.aws_codeartifact_domain.tags
+}
+output "arn" {
+  description = "The ARN of the Domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.arn
+}
+output "domain" {
+  description = "(Required) The name of the domain to create. All domain names in an AWS Region that are in the same AWS account must be unique. The domain name is used as the prefix in DNS hostnames. Do not use sensitive information in a domain name because it is publicly discoverable."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.domain
+}
+output "encryption_key" {
+  description = "(Optional) The encryption key for the domain. This is used to encrypt content stored in a domain. The KMS Key Amazon Resource Name (ARN). The default aws/codeartifact AWS KMS master key is used if this element is absent."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.encryption_key
+}
+output "repository_count" {
+  description = "The number of repositories in the domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.repository_count
+}
+output "asset_size_bytes" {
+  description = "The total size of all assets in the domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.asset_size_bytes
+}
+output "created_time" {
+  description = "A timestamp that represents the date and time the domain was created in RFC3339 format."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.created_time
+}
+output "owner" {
+  description = "The AWS account ID that owns the domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.owner
 }
 output "created_time" {
   description = "A timestamp that represents the date and time the domain was created in RFC3339 format."

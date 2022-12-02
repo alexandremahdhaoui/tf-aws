@@ -153,13 +153,13 @@ output "tags" {
   description = "(Optional) Key-value tags for the Global Network. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.tags
 }
-output "arn" {
-  description = "Global Network Amazon Resource Name (ARN)"
-  value       = aws_networkmanager_global_network.aws_networkmanager_global_network.arn
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.tags_all
+}
+output "arn" {
+  description = "Global Network Amazon Resource Name (ARN)"
+  value       = aws_networkmanager_global_network.aws_networkmanager_global_network.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

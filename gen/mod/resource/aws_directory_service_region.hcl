@@ -1,29 +1,25 @@
 resource "aws_directory_service_region" "aws_directory_service_region" {
-  update                               = var.update
+  tags                                 = var.tags
   vpc_id                               = var.vpc_id
-  create                               = var.create
-  desired_number_of_domain_controllers = var.desired_number_of_domain_controllers
+  directory_id                         = var.directory_id
   region_name                          = var.region_name
   subnet_ids                           = var.subnet_ids
-  directory_id                         = var.directory_id
-  tags                                 = var.tags
   tags_all                             = var.tags_all
+  update                               = var.update
   vpc_settings                         = var.vpc_settings
+  create                               = var.create
+  desired_number_of_domain_controllers = var.desired_number_of_domain_controllers
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_directory_service_region provides the following Timeouts configuration options:"
-  type        = string
-}
-variable "vpc_settings" {
-  description = "(Required) VPC information in the replicated Region. Detailed below.vpc_settings"
-  type        = string
-}
 variable "directory_id" {
   description = "(Required) The identifier of the directory to which you want to add Region replication."
+  type        = string
+}
+variable "region_name" {
+  description = "(Required) The name of the Region where you want to add domain controllers for replication."
   type        = string
 }
 variable "tags" {
@@ -31,22 +27,14 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "region_name" {
-  description = "(Required) The name of the Region where you want to add domain controllers for replication."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Required) The identifiers of the subnets for the directory servers."
-  type        = string
-}
-variable "update" {
-  description = "(Default 90 minutes) Used for replicated directory update"
-  type        = string
-}
 variable "vpc_id" {
   description = "(Optional) The identifier of the VPC in which to create the directory.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "vpc_settings" {
+  description = "(Required) VPC information in the replicated Region. Detailed below.vpc_settings"
+  type        = string
 }
 variable "create" {
   description = "(Default 180 minutes) Used for Region addition"
@@ -56,6 +44,18 @@ variable "desired_number_of_domain_controllers" {
   description = "(Optional) The number of domain controllers desired in the replicated directory. Minimum value of 2."
   type        = string
   default     = ""
+}
+variable "subnet_ids" {
+  description = "(Required) The identifiers of the subnets for the directory servers."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_directory_service_region provides the following Timeouts configuration options:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 90 minutes) Used for replicated directory update"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -181,17 +181,17 @@ output "directory_id" {
   description = "(Required) The identifier of the directory to which you want to add Region replication."
   value       = aws_directory_service_region.aws_directory_service_region.directory_id
 }
+output "region_name" {
+  description = "(Required) The name of the Region where you want to add domain controllers for replication."
+  value       = aws_directory_service_region.aws_directory_service_region.region_name
+}
 output "tags" {
   description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_directory_service_region.aws_directory_service_region.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_directory_service_region provides the following Timeouts configuration options:"
-  value       = aws_directory_service_region.aws_directory_service_region.tags_all
-}
-output "vpc_settings" {
-  description = "(Required) VPC information in the replicated Region. Detailed below.vpc_settings"
-  value       = aws_directory_service_region.aws_directory_service_region.vpc_settings
+output "vpc_id" {
+  description = "(Optional) The identifier of the VPC in which to create the directory.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_directory_service_region.aws_directory_service_region.vpc_id
 }
 output "create" {
   description = "(Default 180 minutes) Used for Region addition"
@@ -201,21 +201,25 @@ output "desired_number_of_domain_controllers" {
   description = "(Optional) The number of domain controllers desired in the replicated directory. Minimum value of 2."
   value       = aws_directory_service_region.aws_directory_service_region.desired_number_of_domain_controllers
 }
-output "region_name" {
-  description = "(Required) The name of the Region where you want to add domain controllers for replication."
-  value       = aws_directory_service_region.aws_directory_service_region.region_name
-}
 output "subnet_ids" {
   description = "(Required) The identifiers of the subnets for the directory servers."
   value       = aws_directory_service_region.aws_directory_service_region.subnet_ids
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_directory_service_region provides the following Timeouts configuration options:"
+  value       = aws_directory_service_region.aws_directory_service_region.tags_all
 }
 output "update" {
   description = "(Default 90 minutes) Used for replicated directory update"
   value       = aws_directory_service_region.aws_directory_service_region.update
 }
-output "vpc_id" {
-  description = "(Optional) The identifier of the VPC in which to create the directory.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_directory_service_region.aws_directory_service_region.vpc_id
+output "vpc_settings" {
+  description = "(Required) VPC information in the replicated Region. Detailed below.vpc_settings"
+  value       = aws_directory_service_region.aws_directory_service_region.vpc_settings
+}
+output "update" {
+  description = "(Default 90 minutes) Used for replicated directory update"
+  value       = aws_directory_service_region.aws_directory_service_region.update
 }
 output "create" {
   description = "(Default 180 minutes) Used for Region addition"
@@ -228,10 +232,6 @@ output "delete" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_directory_service_region provides the following Timeouts configuration options:"
   value       = aws_directory_service_region.aws_directory_service_region.tags_all
-}
-output "update" {
-  description = "(Default 90 minutes) Used for replicated directory update"
-  value       = aws_directory_service_region.aws_directory_service_region.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

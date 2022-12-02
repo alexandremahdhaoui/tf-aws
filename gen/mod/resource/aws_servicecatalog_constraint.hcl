@@ -1,33 +1,61 @@
 resource "aws_servicecatalog_constraint" "aws_servicecatalog_constraint" {
-  description     = var.description
-  type            = var.type
-  accept_language = var.accept_language
+  STACKSET        = var.STACKSET
   delete          = var.delete
+  portfolio_id    = var.portfolio_id
+  description     = var.description
   parameters      = var.parameters
   product_id      = var.product_id
-  portfolio_id    = var.portfolio_id
-  read            = var.read
   update          = var.update
   LAUNCH          = var.LAUNCH
-  RESOURCE_UPDATE = var.RESOURCE_UPDATE
-  id              = var.id
-  owner           = var.owner
-  NOTIFICATION    = var.NOTIFICATION
-  STACKSET        = var.STACKSET
   TEMPLATE        = var.TEMPLATE
   create          = var.create
+  NOTIFICATION    = var.NOTIFICATION
+  owner           = var.owner
+  read            = var.read
+  type            = var.type
+  RESOURCE_UPDATE = var.RESOURCE_UPDATE
+  accept_language = var.accept_language
+  id              = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "NOTIFICATION" {
-  description = ": Specify the NotificationArns property as follows:"
+variable "RESOURCE_UPDATE" {
+  description = ": Specify the TagUpdatesOnProvisionedProduct property as follows. The TagUpdatesOnProvisionedProduct property accepts a string value of ALLOWED or NOT_ALLOWED."
   type        = string
   default     = ""
 }
+variable "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Constraint identifier."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) Type of constraint. Valid values are LAUNCH, NOTIFICATION, RESOURCE_UPDATE, STACKSET, and TEMPLATE."
+  type        = string
+}
 variable "STACKSET" {
   description = ": Specify the Parameters property as follows. You cannot have both a LAUNCH and a STACKSET constraint. You also cannot have more than one STACKSET constraint on on an aws_servicecatalog_product and aws_servicecatalog_portfolio. Products with a STACKSET constraint will launch an AWS CloudFormation stack set."
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
+}
+variable "portfolio_id" {
+  description = "(Required) Portfolio identifier."
+  type        = string
+}
+variable "LAUNCH" {
+  description = ": You are required to specify either the RoleArn or the LocalRoleName but can't use both. If you specify the LocalRoleName property, when an account uses the launch constraint, the IAM role with that name in the account will be used. This allows launch-role constraints to be account-agnostic so the administrator can create fewer resources per shared account. The given role name must exist in the account used to create the launch constraint and the account of the user who launches a product with this launch constraint. You cannot have both a LAUNCH and a STACKSET constraint. You also cannot have more than one LAUNCH constraint on an aws_servicecatalog_product and aws_servicecatalog_portfolio. Specify the RoleArn and LocalRoleName properties as follows:"
   type        = string
   default     = ""
 }
@@ -46,16 +74,6 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
-  type        = string
-  default     = ""
-}
-variable "delete" {
-  description = "(Default 3m)"
-  type        = string
-  default     = ""
-}
 variable "parameters" {
   description = "(Required) Constraint parameters in JSON format. The syntax depends on the constraint type. See details below."
   type        = string
@@ -64,22 +82,13 @@ variable "product_id" {
   description = "(Required) Product identifier."
   type        = string
 }
-variable "type" {
-  description = "(Required) Type of constraint. Valid values are LAUNCH, NOTIFICATION, RESOURCE_UPDATE, STACKSET, and TEMPLATE."
-  type        = string
-}
-variable "LAUNCH" {
-  description = ": You are required to specify either the RoleArn or the LocalRoleName but can't use both. If you specify the LocalRoleName property, when an account uses the launch constraint, the IAM role with that name in the account will be used. This allows launch-role constraints to be account-agnostic so the administrator can create fewer resources per shared account. The given role name must exist in the account used to create the launch constraint and the account of the user who launches a product with this launch constraint. You cannot have both a LAUNCH and a STACKSET constraint. You also cannot have more than one LAUNCH constraint on an aws_servicecatalog_product and aws_servicecatalog_portfolio. Specify the RoleArn and LocalRoleName properties as follows:"
+variable "update" {
+  description = "(Default 3m)"
   type        = string
   default     = ""
 }
-variable "RESOURCE_UPDATE" {
-  description = ": Specify the TagUpdatesOnProvisionedProduct property as follows. The TagUpdatesOnProvisionedProduct property accepts a string value of ALLOWED or NOT_ALLOWED."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "Constraint identifier."
+variable "NOTIFICATION" {
+  description = ": Specify the NotificationArns property as follows:"
   type        = string
   default     = ""
 }
@@ -88,17 +97,8 @@ variable "owner" {
   type        = string
   default     = ""
 }
-variable "portfolio_id" {
-  description = "(Required) Portfolio identifier."
-  type        = string
-}
 variable "read" {
   description = "(Default 10m)"
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 3m)"
   type        = string
   default     = ""
 }
@@ -222,41 +222,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) Description of the constraint.parametersThe type you specify determines what must be included in the parameters JSON:"
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.description
-}
-output "product_id" {
-  description = "(Required) Product identifier."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.product_id
-}
 output "type" {
   description = "(Required) Type of constraint. Valid values are LAUNCH, NOTIFICATION, RESOURCE_UPDATE, STACKSET, and TEMPLATE."
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.type
+}
+output "RESOURCE_UPDATE" {
+  description = ": Specify the TagUpdatesOnProvisionedProduct property as follows. The TagUpdatesOnProvisionedProduct property accepts a string value of ALLOWED or NOT_ALLOWED."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.RESOURCE_UPDATE
 }
 output "accept_language" {
   description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.accept_language
 }
+output "id" {
+  description = "Constraint identifier."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.id
+}
+output "STACKSET" {
+  description = ": Specify the Parameters property as follows. You cannot have both a LAUNCH and a STACKSET constraint. You also cannot have more than one STACKSET constraint on on an aws_servicecatalog_product and aws_servicecatalog_portfolio. Products with a STACKSET constraint will launch an AWS CloudFormation stack set."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.STACKSET
+}
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.delete
-}
-output "parameters" {
-  description = "(Required) Constraint parameters in JSON format. The syntax depends on the constraint type. See details below."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.parameters
-}
-output "owner" {
-  description = "Owner of the constraint.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.owner
 }
 output "portfolio_id" {
   description = "(Required) Portfolio identifier."
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.portfolio_id
 }
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.read
+output "description" {
+  description = "(Optional) Description of the constraint.parametersThe type you specify determines what must be included in the parameters JSON:"
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.description
+}
+output "parameters" {
+  description = "(Required) Constraint parameters in JSON format. The syntax depends on the constraint type. See details below."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.parameters
+}
+output "product_id" {
+  description = "(Required) Product identifier."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.product_id
 }
 output "update" {
   description = "(Default 3m)"
@@ -266,13 +270,9 @@ output "LAUNCH" {
   description = ": You are required to specify either the RoleArn or the LocalRoleName but can't use both. If you specify the LocalRoleName property, when an account uses the launch constraint, the IAM role with that name in the account will be used. This allows launch-role constraints to be account-agnostic so the administrator can create fewer resources per shared account. The given role name must exist in the account used to create the launch constraint and the account of the user who launches a product with this launch constraint. You cannot have both a LAUNCH and a STACKSET constraint. You also cannot have more than one LAUNCH constraint on an aws_servicecatalog_product and aws_servicecatalog_portfolio. Specify the RoleArn and LocalRoleName properties as follows:"
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.LAUNCH
 }
-output "RESOURCE_UPDATE" {
-  description = ": Specify the TagUpdatesOnProvisionedProduct property as follows. The TagUpdatesOnProvisionedProduct property accepts a string value of ALLOWED or NOT_ALLOWED."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.RESOURCE_UPDATE
-}
-output "id" {
-  description = "Constraint identifier."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.id
+output "TEMPLATE" {
+  description = ": Specify the Rules property. For more information, see Template Constraint Rules.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.TEMPLATE
 }
 output "create" {
   description = "(Default 3m)"
@@ -282,21 +282,13 @@ output "NOTIFICATION" {
   description = ": Specify the NotificationArns property as follows:"
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.NOTIFICATION
 }
-output "STACKSET" {
-  description = ": Specify the Parameters property as follows. You cannot have both a LAUNCH and a STACKSET constraint. You also cannot have more than one STACKSET constraint on on an aws_servicecatalog_product and aws_servicecatalog_portfolio. Products with a STACKSET constraint will launch an AWS CloudFormation stack set."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.STACKSET
+output "owner" {
+  description = "Owner of the constraint.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.owner
 }
-output "TEMPLATE" {
-  description = ": Specify the Rules property. For more information, see Template Constraint Rules.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.TEMPLATE
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.create
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.delete
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.read
 }
 output "id" {
   description = "Constraint identifier."
@@ -313,6 +305,14 @@ output "read" {
 output "update" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.update
+}
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.create
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

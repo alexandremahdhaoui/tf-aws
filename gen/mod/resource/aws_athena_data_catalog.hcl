@@ -1,22 +1,14 @@
 resource "aws_athena_data_catalog" "aws_athena_data_catalog" {
-  arn         = var.arn
-  description = var.description
-  id          = var.id
   name        = var.name
   parameters  = var.parameters
   tags        = var.tags
   type        = var.type
+  arn         = var.arn
+  description = var.description
+  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the data catalog."
-  type        = string
-}
-variable "description" {
-  description = "(Required) Description of the data catalog."
   type        = string
 }
 variable "id" {
@@ -38,6 +30,14 @@ variable "tags" {
 }
 variable "type" {
   description = "(Required) Type of data catalog: LAMBDA for a federated catalog, GLUE for AWS Glue Catalog, or HIVE for an external hive metastore."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the data catalog."
+  type        = string
+}
+variable "description" {
+  description = "(Required) Description of the data catalog."
   type        = string
 }
 variable "tag_instance_id" {
@@ -188,6 +188,10 @@ output "description" {
   description = "(Required) Description of the data catalog."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.description
 }
+output "arn" {
+  description = "ARN of the data catalog."
+  value       = aws_athena_data_catalog.aws_athena_data_catalog.arn
+}
 output "id" {
   description = "Name of the data catalog."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.id
@@ -195,10 +199,6 @@ output "id" {
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.tags_all
-}
-output "arn" {
-  description = "ARN of the data catalog."
-  value       = aws_athena_data_catalog.aws_athena_data_catalog.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

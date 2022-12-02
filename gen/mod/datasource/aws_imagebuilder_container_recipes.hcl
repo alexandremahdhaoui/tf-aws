@@ -24,14 +24,6 @@ variable "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListContainerRecipes API Reference."
-  value       = aws_imagebuilder_container_recipes.aws_imagebuilder_container_recipes.name
-}
-output "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
-  value       = aws_imagebuilder_container_recipes.aws_imagebuilder_container_recipes.values
-}
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Container Recipes."
   value       = aws_imagebuilder_container_recipes.aws_imagebuilder_container_recipes.arns
@@ -39,6 +31,14 @@ output "arns" {
 output "filter" {
   description = " configuration block:"
   value       = aws_imagebuilder_container_recipes.aws_imagebuilder_container_recipes.filter
+}
+output "name" {
+  description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListContainerRecipes API Reference."
+  value       = aws_imagebuilder_container_recipes.aws_imagebuilder_container_recipes.name
+}
+output "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
+  value       = aws_imagebuilder_container_recipes.aws_imagebuilder_container_recipes.values
 }
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Container Recipes."

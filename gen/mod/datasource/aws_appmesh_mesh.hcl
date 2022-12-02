@@ -1,29 +1,24 @@
 datasource "aws_appmesh_mesh" "aws_appmesh_mesh" {
-  arn               = var.arn
+  created_date      = var.created_date
   egress_filter     = var.egress_filter
   last_updated_date = var.last_updated_date
   spec              = var.spec
   tags              = var.tags
-  created_date      = var.created_date
-  mesh_owner        = var.mesh_owner
+  arn               = var.arn
   name              = var.name
   resource_owner    = var.resource_owner
+  mesh_owner        = var.mesh_owner
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Name of the service mesh."
+variable "tags" {
+  description = "Map of tags.Spec"
   type        = string
 }
-variable "resource_owner" {
-  description = "Resource owner's AWS account ID."
+variable "arn" {
+  description = "ARN of the service mesh."
   type        = string
 }
 variable "created_date" {
@@ -42,17 +37,30 @@ variable "spec" {
   description = "Service mesh specification."
   type        = string
 }
-variable "tags" {
-  description = "Map of tags.Spec"
+variable "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name of the service mesh."
   type        = string
 }
-variable "arn" {
-  description = "ARN of the service mesh."
+variable "resource_owner" {
+  description = "Resource owner's AWS account ID."
   type        = string
 }
-output "arn" {
-  description = "ARN of the service mesh."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.arn
+output "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.resource_owner
+}
+output "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.mesh_owner
+}
+output "name" {
+  description = "(Required) Name of the service mesh."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.name
 }
 output "egress_filter" {
   description = "Egress filter rules for the service mesh.Egress Filter"
@@ -70,21 +78,13 @@ output "tags" {
   description = "Map of tags.Spec"
   value       = aws_appmesh_mesh.aws_appmesh_mesh.tags
 }
+output "arn" {
+  description = "ARN of the service mesh."
+  value       = aws_appmesh_mesh.aws_appmesh_mesh.arn
+}
 output "created_date" {
   description = "Creation date of the service mesh."
   value       = aws_appmesh_mesh.aws_appmesh_mesh.created_date
-}
-output "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.mesh_owner
-}
-output "name" {
-  description = "(Required) Name of the service mesh."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.name
-}
-output "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  value       = aws_appmesh_mesh.aws_appmesh_mesh.resource_owner
 }
 output "last_updated_date" {
   description = "Last update date of the service mesh."

@@ -1,7 +1,7 @@
 datasource "aws_mskconnect_connector" "aws_mskconnect_connector" {
-  arn         = var.arn
   description = var.description
   name        = var.name
+  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

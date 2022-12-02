@@ -152,14 +152,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness readiness checks can be imported via the readiness check name, e.g.,TimeoutsConfiguration options:"
-  value       = aws_route53recoveryreadiness_readiness_check.aws_route53recoveryreadiness_readiness_check.tags_all
-}
-output "arn" {
-  description = "ARN of the readiness_check"
-  value       = aws_route53recoveryreadiness_readiness_check.aws_route53recoveryreadiness_readiness_check.arn
-}
 output "readiness_check_name" {
   description = "(Required) Unique name describing the readiness check."
   value       = aws_route53recoveryreadiness_readiness_check.aws_route53recoveryreadiness_readiness_check.readiness_check_name
@@ -171,6 +163,14 @@ output "resource_set_name" {
 output "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53recoveryreadiness_readiness_check.aws_route53recoveryreadiness_readiness_check.tags
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.ImportRoute53 Recovery Readiness readiness checks can be imported via the readiness check name, e.g.,TimeoutsConfiguration options:"
+  value       = aws_route53recoveryreadiness_readiness_check.aws_route53recoveryreadiness_readiness_check.tags_all
+}
+output "arn" {
+  description = "ARN of the readiness_check"
+  value       = aws_route53recoveryreadiness_readiness_check.aws_route53recoveryreadiness_readiness_check.arn
 }
 output "arn" {
   description = "ARN of the readiness_check"

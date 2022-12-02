@@ -1,8 +1,8 @@
 resource "aws_lb_target_group_attachment" "aws_lb_target_group_attachment" {
+  availability_zone = var.availability_zone
   port              = var.port
   target_group_arn  = var.target_group_arn
   target_id         = var.target_id
-  availability_zone = var.availability_zone
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

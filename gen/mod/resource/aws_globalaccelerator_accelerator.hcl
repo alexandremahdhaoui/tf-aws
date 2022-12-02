@@ -1,27 +1,41 @@
 resource "aws_globalaccelerator_accelerator" "aws_globalaccelerator_accelerator" {
-  name                = var.name
   enabled             = var.enabled
-  id                  = var.id
-  ip_sets             = var.ip_sets
-  dns_name            = var.dns_name
-  ip_addresses        = var.ip_addresses
-  flow_logs_s3_prefix = var.flow_logs_s3_prefix
-  ip_family           = var.ip_family
-  create              = var.create
-  flow_logs_enabled   = var.flow_logs_enabled
-  hosted_zone_id      = var.hosted_zone_id
-  ip_address_type     = var.ip_address_type
-  tags                = var.tags
-  tags_all            = var.tags_all
-  attributes          = var.attributes
   flow_logs_s3_bucket = var.flow_logs_s3_bucket
+  hosted_zone_id      = var.hosted_zone_id
+  name                = var.name
+  create              = var.create
+  flow_logs_s3_prefix = var.flow_logs_s3_prefix
+  ip_addresses        = var.ip_addresses
+  ip_family           = var.ip_family
+  tags                = var.tags
+  attributes          = var.attributes
+  dns_name            = var.dns_name
+  id                  = var.id
+  ip_address_type     = var.ip_address_type
+  flow_logs_enabled   = var.flow_logs_enabled
+  ip_sets             = var.ip_sets
+  tags_all            = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "create" {
-  description = "(Default 30m)"
+variable "ip_address_type" {
+  description = "(Optional) The value for the address type. Defaults to IPV4. Valid values: IPV4, DUAL_STACK."
+  type        = string
+  default     = ""
+}
+variable "attributes" {
+  description = "(Optional) The attributes of the accelerator. Fields documented below."
+  type        = string
+  default     = ""
+}
+variable "dns_name" {
+  description = "The DNS name of the accelerator. For example, a5d53ff5ee6bca4ce.awsglobalaccelerator.com."
+  type        = string
+}
+variable "id" {
+  description = "The Amazon Resource Name (ARN) of the accelerator."
   type        = string
 }
 variable "flow_logs_enabled" {
@@ -29,21 +43,20 @@ variable "flow_logs_enabled" {
   type        = string
   default     = ""
 }
-variable "flow_logs_s3_prefix" {
-  description = "(Optional) The prefix for the location in the Amazon S3 bucket for the flow logs. Required if flow_logs_enabled is true.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "ip_family" {
-  description = "The type of IP addresses included in this IP set.TimeoutsConfiguration options:"
+variable "ip_sets" {
+  description = "IP address set associated with the accelerator."
   type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.strongip_sets exports the following attributes:"
   type        = string
 }
-variable "attributes" {
-  description = "(Optional) The attributes of the accelerator. Fields documented below."
+variable "name" {
+  description = "(Required) The name of the accelerator."
+  type        = string
+}
+variable "enabled" {
+  description = "(Optional) Indicates whether the accelerator is enabled. Defaults to true. Valid values: true, false."
   type        = string
   default     = ""
 }
@@ -56,39 +69,26 @@ variable "hosted_zone_id" {
   description = "Alias Resource Record SetZ2BJ6XQ5FK7U4H."
   type        = string
 }
-variable "ip_address_type" {
-  description = "(Optional) The value for the address type. Defaults to IPV4. Valid values: IPV4, DUAL_STACK."
+variable "ip_family" {
+  description = "The type of IP addresses included in this IP set.TimeoutsConfiguration options:"
   type        = string
-  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongattributes supports the following attributes:"
   type        = string
   default     = ""
 }
-variable "enabled" {
-  description = "(Optional) Indicates whether the accelerator is enabled. Defaults to true. Valid values: true, false."
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+}
+variable "flow_logs_s3_prefix" {
+  description = "(Optional) The prefix for the location in the Amazon S3 bucket for the flow logs. Required if flow_logs_enabled is true.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The Amazon Resource Name (ARN) of the accelerator."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the accelerator."
-  type        = string
-}
-variable "dns_name" {
-  description = "The DNS name of the accelerator. For example, a5d53ff5ee6bca4ce.awsglobalaccelerator.com."
-  type        = string
-}
 variable "ip_addresses" {
   description = "A list of IP addresses in the IP address set."
-  type        = string
-}
-variable "ip_sets" {
-  description = "IP address set associated with the accelerator."
   type        = string
 }
 variable "tag_instance_id" {
@@ -211,81 +211,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.create
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.strongip_sets exports the following attributes:"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.tags_all
 }
 output "flow_logs_enabled" {
   description = "(Optional) Indicates whether flow logs are enabled. Defaults to false. Valid values: true, false."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.flow_logs_enabled
 }
-output "flow_logs_s3_prefix" {
-  description = "(Optional) The prefix for the location in the Amazon S3 bucket for the flow logs. Required if flow_logs_enabled is true.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.flow_logs_s3_prefix
-}
-output "ip_family" {
-  description = "The type of IP addresses included in this IP set.TimeoutsConfiguration options:"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_family
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.strongip_sets exports the following attributes:"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.tags_all
-}
-output "attributes" {
-  description = "(Optional) The attributes of the accelerator. Fields documented below."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.attributes
-}
-output "flow_logs_s3_bucket" {
-  description = "(Optional) The name of the Amazon S3 bucket for the flow logs. Required if flow_logs_enabled is true."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.flow_logs_s3_bucket
+output "ip_sets" {
+  description = "IP address set associated with the accelerator."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_sets
 }
 output "hosted_zone_id" {
   description = "Alias Resource Record SetZ2BJ6XQ5FK7U4H."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.hosted_zone_id
 }
-output "ip_address_type" {
-  description = "(Optional) The value for the address type. Defaults to IPV4. Valid values: IPV4, DUAL_STACK."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_address_type
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongattributes supports the following attributes:"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.tags
+output "name" {
+  description = "(Required) The name of the accelerator."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.name
 }
 output "enabled" {
   description = "(Optional) Indicates whether the accelerator is enabled. Defaults to true. Valid values: true, false."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.enabled
 }
+output "flow_logs_s3_bucket" {
+  description = "(Optional) The name of the Amazon S3 bucket for the flow logs. Required if flow_logs_enabled is true."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.flow_logs_s3_bucket
+}
+output "ip_addresses" {
+  description = "A list of IP addresses in the IP address set."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_addresses
+}
+output "ip_family" {
+  description = "The type of IP addresses included in this IP set.TimeoutsConfiguration options:"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_family
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongattributes supports the following attributes:"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.tags
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.create
+}
+output "flow_logs_s3_prefix" {
+  description = "(Optional) The prefix for the location in the Amazon S3 bucket for the flow logs. Required if flow_logs_enabled is true.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.flow_logs_s3_prefix
+}
 output "id" {
   description = "The Amazon Resource Name (ARN) of the accelerator."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.id
 }
-output "name" {
-  description = "(Required) The name of the accelerator."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.name
+output "ip_address_type" {
+  description = "(Optional) The value for the address type. Defaults to IPV4. Valid values: IPV4, DUAL_STACK."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_address_type
+}
+output "attributes" {
+  description = "(Optional) The attributes of the accelerator. Fields documented below."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.attributes
 }
 output "dns_name" {
   description = "The DNS name of the accelerator. For example, a5d53ff5ee6bca4ce.awsglobalaccelerator.com."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.dns_name
-}
-output "ip_addresses" {
-  description = "A list of IP addresses in the IP address set."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_addresses
-}
-output "ip_sets" {
-  description = "IP address set associated with the accelerator."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_sets
-}
-output "ip_addresses" {
-  description = "A list of IP addresses in the IP address set."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_addresses
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.strongip_sets exports the following attributes:"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.tags_all
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.update
 }
 output "create" {
   description = "(Default 30m)"
@@ -295,13 +283,13 @@ output "id" {
   description = "The Amazon Resource Name (ARN) of the accelerator."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.id
 }
-output "ip_family" {
-  description = "The type of IP addresses included in this IP set.TimeoutsConfiguration options:"
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_family
+output "ip_addresses" {
+  description = "A list of IP addresses in the IP address set."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_addresses
 }
-output "ip_sets" {
-  description = "IP address set associated with the accelerator."
-  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_sets
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.update
 }
 output "dns_name" {
   description = "The DNS name of the accelerator. For example, a5d53ff5ee6bca4ce.awsglobalaccelerator.com."
@@ -310,6 +298,18 @@ output "dns_name" {
 output "hosted_zone_id" {
   description = "Alias Resource Record SetZ2BJ6XQ5FK7U4H."
   value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.hosted_zone_id
+}
+output "ip_family" {
+  description = "The type of IP addresses included in this IP set.TimeoutsConfiguration options:"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_family
+}
+output "ip_sets" {
+  description = "IP address set associated with the accelerator."
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.ip_sets
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.strongip_sets exports the following attributes:"
+  value       = aws_globalaccelerator_accelerator.aws_globalaccelerator_accelerator.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,17 +1,25 @@
 resource "aws_s3_bucket_public_access_block" "aws_s3_bucket_public_access_block" {
-  Ignore public ACLs on this bucket and any objects that it contains.                          = var.Ignore public ACLs on this bucket and any objects that it contains.
-  block_public_acls                                                                            = var.block_public_acls
-  restrict_public_buckets                                                                      = var.restrict_public_buckets
-  Only the bucket owner and AWS Services can access this buckets if it has a public policy.    = var.Only the bucket owner and AWS Services can access this buckets if it has a public policy.
   PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access. = var.PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access.
+  block_public_acls                                                                            = var.block_public_acls
+  ignore_public_acls                                                                           = var.ignore_public_acls
+  Ignore public ACLs on this bucket and any objects that it contains.                          = var.Ignore public ACLs on this bucket and any objects that it contains.
   PUT Object calls will fail if the request includes an object ACL.                            = var.PUT Object calls will fail if the request includes an object ACL.
   Reject calls to PUT Bucket policy if the specified bucket policy allows public access.       = var.Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
   block_public_policy                                                                          = var.block_public_policy
   bucket                                                                                       = var.bucket
-  ignore_public_acls                                                                           = var.ignore_public_acls
+  restrict_public_buckets                                                                      = var.restrict_public_buckets
+  Only the bucket owner and AWS Services can access this buckets if it has a public policy.    = var.Only the bucket owner and AWS Services can access this buckets if it has a public policy.
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "PUT Object calls will fail if the request includes an object ACL." {
+  description = ""
+  type        = string
+}
+variable "Reject calls to PUT Bucket policy if the specified bucket policy allows public access." {
+  description = ""
   type        = string
 }
 variable "block_public_policy" {
@@ -23,8 +31,8 @@ variable "bucket" {
   description = "(Required) S3 Bucket to which this Public Access Block configuration should be applied."
   type        = string
 }
-variable "ignore_public_acls" {
-  description = "(Optional) Whether Amazon S3 should ignore public ACLs for this bucket. Defaults to false. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
+variable "restrict_public_buckets" {
+  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false. Enabling this setting does not affect the previously stored bucket policy, except that public and cross-account access within the public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
   type        = string
   default     = ""
 }
@@ -36,27 +44,19 @@ variable "PUT Bucket acl and PUT Object acl calls will fail if the specified ACL
   description = ""
   type        = string
 }
-variable "PUT Object calls will fail if the request includes an object ACL." {
-  description = ""
-  type        = string
-}
-variable "Reject calls to PUT Bucket policy if the specified bucket policy allows public access." {
-  description = ""
-  type        = string
-}
-variable "Ignore public ACLs on this bucket and any objects that it contains." {
-  description = ""
-  type        = string
-}
 variable "block_public_acls" {
   description = "(Optional) Whether Amazon S3 should block public ACLs for this bucket. Defaults to false. Enabling this setting does not affect existing policies or ACLs. When set to true"
   type        = string
   default     = ""
 }
-variable "restrict_public_buckets" {
-  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false. Enabling this setting does not affect the previously stored bucket policy, except that public and cross-account access within the public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
+variable "ignore_public_acls" {
+  description = "(Optional) Whether Amazon S3 should ignore public ACLs for this bucket. Defaults to false. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
   type        = string
   default     = ""
+}
+variable "Ignore public ACLs on this bucket and any objects that it contains." {
+  description = ""
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -178,17 +178,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "ignore_public_acls" {
-  description = "(Optional) Whether Amazon S3 should ignore public ACLs for this bucket. Defaults to false. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
-  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.ignore_public_acls
+output "bucket" {
+  description = "(Required) S3 Bucket to which this Public Access Block configuration should be applied."
+  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.bucket
+}
+output "restrict_public_buckets" {
+  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false. Enabling this setting does not affect the previously stored bucket policy, except that public and cross-account access within the public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
+  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.restrict_public_buckets
 }
 output "Only the bucket owner and AWS Services can access this buckets if it has a public policy." {
   description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.Only the bucket owner and AWS Services can access this buckets if it has a public policy.
-}
-output "PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access." {
-  description = ""
-  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access.
 }
 output "PUT Object calls will fail if the request includes an object ACL." {
   description = ""
@@ -202,21 +202,21 @@ output "block_public_policy" {
   description = "(Optional) Whether Amazon S3 should block public bucket policies for this bucket. Defaults to false. Enabling this setting does not affect the existing bucket policy. When set to true"
   value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.block_public_policy
 }
-output "bucket" {
-  description = "(Required) S3 Bucket to which this Public Access Block configuration should be applied."
-  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.bucket
-}
 output "Ignore public ACLs on this bucket and any objects that it contains." {
   description = ""
   value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.Ignore public ACLs on this bucket and any objects that it contains.
+}
+output "PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access." {
+  description = ""
+  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.PUT Bucket acl and PUT Object acl calls will fail if the specified ACL allows public access.
 }
 output "block_public_acls" {
   description = "(Optional) Whether Amazon S3 should block public ACLs for this bucket. Defaults to false. Enabling this setting does not affect existing policies or ACLs. When set to true"
   value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.block_public_acls
 }
-output "restrict_public_buckets" {
-  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for this bucket. Defaults to false. Enabling this setting does not affect the previously stored bucket policy, except that public and cross-account access within the public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
-  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.restrict_public_buckets
+output "ignore_public_acls" {
+  description = "(Optional) Whether Amazon S3 should ignore public ACLs for this bucket. Defaults to false. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
+  value       = aws_s3_bucket_public_access_block.aws_s3_bucket_public_access_block.ignore_public_acls
 }
 output "id" {
   description = "Name of the S3 bucket the configuration is attached to"

@@ -1,14 +1,18 @@
 resource "aws_eip_association" "aws_eip_association" {
-  allow_reassociation  = var.allow_reassociation
-  association_id       = var.association_id
-  instance_id          = var.instance_id
   network_interface_id = var.network_interface_id
   private_ip_address   = var.private_ip_address
   public_ip            = var.public_ip
   allocation_id        = var.allocation_id
+  allow_reassociation  = var.allow_reassociation
+  association_id       = var.association_id
+  instance_id          = var.instance_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "association_id" {
+  description = "The ID that represents the association of the Elastic IP\naddress with an instance."
   type        = string
 }
 variable "instance_id" {
@@ -34,10 +38,6 @@ variable "allocation_id" {
 }
 variable "allow_reassociation" {
   description = "true in VPC."
-  type        = string
-}
-variable "association_id" {
-  description = "The ID that represents the association of the Elastic IP\naddress with an instance."
   type        = string
 }
 variable "tag_instance_id" {
@@ -160,6 +160,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "association_id" {
+  description = "The ID that represents the association of the Elastic IP\naddress with an instance."
+  value       = aws_eip_association.aws_eip_association.association_id
+}
 output "instance_id" {
   description = "As above"
   value       = aws_eip_association.aws_eip_association.instance_id
@@ -184,6 +188,10 @@ output "allow_reassociation" {
   description = "true in VPC."
   value       = aws_eip_association.aws_eip_association.allow_reassociation
 }
+output "allocation_id" {
+  description = "As above"
+  value       = aws_eip_association.aws_eip_association.allocation_id
+}
 output "association_id" {
   description = "The ID that represents the association of the Elastic IP\naddress with an instance."
   value       = aws_eip_association.aws_eip_association.association_id
@@ -203,14 +211,6 @@ output "private_ip_address" {
 output "public_ip" {
   description = "As above"
   value       = aws_eip_association.aws_eip_association.public_ip
-}
-output "allocation_id" {
-  description = "As above"
-  value       = aws_eip_association.aws_eip_association.allocation_id
-}
-output "association_id" {
-  description = "The ID that represents the association of the Elastic IP\naddress with an instance."
-  value       = aws_eip_association.aws_eip_association.association_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,37 +1,21 @@
 datasource "aws_batch_job_queue" "aws_batch_job_queue" {
-  name                              = var.name
+  compute_environment_order.#.order = var.compute_environment_order.#.order
+  scheduling_policy_arn             = var.scheduling_policy_arn
   state                             = var.state
-  tags                              = var.tags
   arn                               = var.arn
   compute_environment_order         = var.compute_environment_order
-  scheduling_policy_arn             = var.scheduling_policy_arn
   status                            = var.status
   status_reason                     = var.status_reason
-  compute_environment_order.#.order = var.compute_environment_order.#.order
+  tags                              = var.tags
+  name                              = var.name
   priority                          = var.priority
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "compute_environment_order.#.order" {
-  description = "The order of the compute environment."
-  type        = string
-}
-variable "priority" {
-  description = ""
-  type        = string
-}
-variable "scheduling_policy_arn" {
-  description = "The ARN of the fair share scheduling policy. If this attribute has a value, the job queue uses a fair share scheduling policy. If this attribute does not have a value, the job queue uses a first in, first out (FIFO) scheduling policy."
-  type        = string
-}
-variable "status" {
-  description = "Current status of the job queue (for example, CREATING or VALID)."
-  type        = string
-}
-variable "status_reason" {
-  description = "Short, human-readable string to provide additional details about the current status\nof the job queue."
+variable "state" {
+  description = "Describes the ability of the queue to accept new jobs (for example, ENABLED or DISABLED)."
   type        = string
 }
 variable "arn" {
@@ -42,69 +26,81 @@ variable "compute_environment_order" {
   description = "The compute environments that are attached to the job queue and the order in\nwhich job placement is preferred. Compute environments are selected for job placement in ascending order.\n"
   type        = string
 }
-variable "name" {
-  description = "(Required) Name of the job queue.In addition to all arguments above, the following attributes are exported:"
+variable "compute_environment_order.#.order" {
+  description = "The order of the compute environment."
   type        = string
 }
-variable "state" {
-  description = "Describes the ability of the queue to accept new jobs (for example, ENABLED or DISABLED)."
+variable "scheduling_policy_arn" {
+  description = "The ARN of the fair share scheduling policy. If this attribute has a value, the job queue uses a fair share scheduling policy. If this attribute does not have a value, the job queue uses a first in, first out (FIFO) scheduling policy."
   type        = string
 }
 variable "tags" {
   description = "Key-value map of resource tags"
   type        = string
 }
-output "arn" {
-  description = "ARN of the job queue."
-  value       = aws_batch_job_queue.aws_batch_job_queue.arn
+variable "name" {
+  description = "(Required) Name of the job queue.In addition to all arguments above, the following attributes are exported:"
+  type        = string
 }
-output "compute_environment_order" {
-  description = "The compute environments that are attached to the job queue and the order in\nwhich job placement is preferred. Compute environments are selected for job placement in ascending order.\n"
-  value       = aws_batch_job_queue.aws_batch_job_queue.compute_environment_order
+variable "priority" {
+  description = ""
+  type        = string
+}
+variable "status" {
+  description = "Current status of the job queue (for example, CREATING or VALID)."
+  type        = string
+}
+variable "status_reason" {
+  description = "Short, human-readable string to provide additional details about the current status\nof the job queue."
+  type        = string
+}
+output "status_reason" {
+  description = "Short, human-readable string to provide additional details about the current status\nof the job queue."
+  value       = aws_batch_job_queue.aws_batch_job_queue.status_reason
+}
+output "tags" {
+  description = "Key-value map of resource tags"
+  value       = aws_batch_job_queue.aws_batch_job_queue.tags
 }
 output "name" {
   description = "(Required) Name of the job queue.In addition to all arguments above, the following attributes are exported:"
   value       = aws_batch_job_queue.aws_batch_job_queue.name
 }
-output "state" {
-  description = "Describes the ability of the queue to accept new jobs (for example, ENABLED or DISABLED)."
-  value       = aws_batch_job_queue.aws_batch_job_queue.state
-}
-output "tags" {
-  description = "Key-value map of resource tags"
-  value       = aws_batch_job_queue.aws_batch_job_queue.tags
-}
-output "compute_environment_order.#.order" {
-  description = "The order of the compute environment."
-  value       = aws_batch_job_queue.aws_batch_job_queue.compute_environment_order.#.order
-}
 output "priority" {
   description = ""
   value       = aws_batch_job_queue.aws_batch_job_queue.priority
+}
+output "status" {
+  description = "Current status of the job queue (for example, CREATING or VALID)."
+  value       = aws_batch_job_queue.aws_batch_job_queue.status
 }
 output "scheduling_policy_arn" {
   description = "The ARN of the fair share scheduling policy. If this attribute has a value, the job queue uses a fair share scheduling policy. If this attribute does not have a value, the job queue uses a first in, first out (FIFO) scheduling policy."
   value       = aws_batch_job_queue.aws_batch_job_queue.scheduling_policy_arn
 }
-output "status" {
-  description = "Current status of the job queue (for example, CREATING or VALID)."
-  value       = aws_batch_job_queue.aws_batch_job_queue.status
+output "state" {
+  description = "Describes the ability of the queue to accept new jobs (for example, ENABLED or DISABLED)."
+  value       = aws_batch_job_queue.aws_batch_job_queue.state
 }
-output "status_reason" {
-  description = "Short, human-readable string to provide additional details about the current status\nof the job queue."
-  value       = aws_batch_job_queue.aws_batch_job_queue.status_reason
+output "arn" {
+  description = "ARN of the job queue."
+  value       = aws_batch_job_queue.aws_batch_job_queue.arn
 }
 output "compute_environment_order" {
   description = "The compute environments that are attached to the job queue and the order in\nwhich job placement is preferred. Compute environments are selected for job placement in ascending order.\n"
   value       = aws_batch_job_queue.aws_batch_job_queue.compute_environment_order
 }
-output "status" {
-  description = "Current status of the job queue (for example, CREATING or VALID)."
-  value       = aws_batch_job_queue.aws_batch_job_queue.status
+output "compute_environment_order.#.order" {
+  description = "The order of the compute environment."
+  value       = aws_batch_job_queue.aws_batch_job_queue.compute_environment_order.#.order
 }
-output "tags" {
-  description = "Key-value map of resource tags"
-  value       = aws_batch_job_queue.aws_batch_job_queue.tags
+output "scheduling_policy_arn" {
+  description = "The ARN of the fair share scheduling policy. If this attribute has a value, the job queue uses a fair share scheduling policy. If this attribute does not have a value, the job queue uses a first in, first out (FIFO) scheduling policy."
+  value       = aws_batch_job_queue.aws_batch_job_queue.scheduling_policy_arn
+}
+output "status_reason" {
+  description = "Short, human-readable string to provide additional details about the current status\nof the job queue."
+  value       = aws_batch_job_queue.aws_batch_job_queue.status_reason
 }
 output "arn" {
   description = "ARN of the job queue."
@@ -114,21 +110,25 @@ output "compute_environment_order.#.order" {
   description = "The order of the compute environment."
   value       = aws_batch_job_queue.aws_batch_job_queue.compute_environment_order.#.order
 }
-output "priority" {
-  description = ""
-  value       = aws_batch_job_queue.aws_batch_job_queue.priority
-}
-output "scheduling_policy_arn" {
-  description = "The ARN of the fair share scheduling policy. If this attribute has a value, the job queue uses a fair share scheduling policy. If this attribute does not have a value, the job queue uses a first in, first out (FIFO) scheduling policy."
-  value       = aws_batch_job_queue.aws_batch_job_queue.scheduling_policy_arn
-}
 output "state" {
   description = "Describes the ability of the queue to accept new jobs (for example, ENABLED or DISABLED)."
   value       = aws_batch_job_queue.aws_batch_job_queue.state
 }
-output "status_reason" {
-  description = "Short, human-readable string to provide additional details about the current status\nof the job queue."
-  value       = aws_batch_job_queue.aws_batch_job_queue.status_reason
+output "status" {
+  description = "Current status of the job queue (for example, CREATING or VALID)."
+  value       = aws_batch_job_queue.aws_batch_job_queue.status
+}
+output "tags" {
+  description = "Key-value map of resource tags"
+  value       = aws_batch_job_queue.aws_batch_job_queue.tags
+}
+output "compute_environment_order" {
+  description = "The compute environments that are attached to the job queue and the order in\nwhich job placement is preferred. Compute environments are selected for job placement in ascending order.\n"
+  value       = aws_batch_job_queue.aws_batch_job_queue.compute_environment_order
+}
+output "priority" {
+  description = ""
+  value       = aws_batch_job_queue.aws_batch_job_queue.priority
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

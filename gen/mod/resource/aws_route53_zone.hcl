@@ -1,60 +1,29 @@
 resource "aws_route53_zone" "aws_route53_zone" {
-  name_servers        = var.name_servers
-  tags                = var.tags
-  zone_id             = var.zone_id
-  comment             = var.comment
   delegation_set_id   = var.delegation_set_id
   force_destroy       = var.force_destroy
-  name                = var.name
   primary_name_server = var.primary_name_server
   vpc                 = var.vpc
-  vpc_id              = var.vpc_id
   vpc_region          = var.vpc_region
+  zone_id             = var.zone_id
+  comment             = var.comment
+  name                = var.name
+  name_servers        = var.name_servers
+  tags                = var.tags
+  vpc_id              = var.vpc_id
   arn                 = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "comment" {
-  description = "(Optional) A comment for the hosted zone. Defaults to 'Managed by Terraform'."
-  type        = string
-  default     = ""
-}
-variable "name_servers" {
-  description = "A list of name servers in associated (or default) delegation set.\nFind more about delegation sets in AWS docs."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the zone. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
 variable "zone_id" {
   description = "The Hosted Zone ID. This can be referenced by zone records."
   type        = string
 }
-variable "primary_name_server" {
-  description = "The Route 53 name server that created the SOA record."
-  type        = string
-}
-variable "vpc" {
-  description = "(Optional) Configuration block(s) specifying VPC(s) to associate with a private hosted zone. Conflicts with the delegation_set_id argument in this resource and any aws_route53_zone_association resource specifying the same zone ID. Detailed below.vpc Argument Reference"
+variable "comment" {
+  description = "(Optional) A comment for the hosted zone. Defaults to 'Managed by Terraform'."
   type        = string
   default     = ""
-}
-variable "vpc_id" {
-  description = "(Required) ID of the VPC to associate."
-  type        = string
-}
-variable "vpc_region" {
-  description = "(Optional) Region of the VPC to associate. Defaults to AWS provider region.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Hosted Zone."
-  type        = string
 }
 variable "delegation_set_id" {
   description = "(Optional) The ID of the reusable delegation set whose NS records you want to assign to the hosted zone. Conflicts with vpc as delegation sets can only be used for public zones."
@@ -66,8 +35,39 @@ variable "force_destroy" {
   type        = string
   default     = ""
 }
+variable "primary_name_server" {
+  description = "The Route 53 name server that created the SOA record."
+  type        = string
+}
+variable "vpc" {
+  description = "(Optional) Configuration block(s) specifying VPC(s) to associate with a private hosted zone. Conflicts with the delegation_set_id argument in this resource and any aws_route53_zone_association resource specifying the same zone ID. Detailed below.vpc Argument Reference"
+  type        = string
+  default     = ""
+}
+variable "vpc_region" {
+  description = "(Optional) Region of the VPC to associate. Defaults to AWS provider region.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Hosted Zone."
+  type        = string
+}
 variable "name" {
   description = "(Required) This is the name of the hosted zone."
+  type        = string
+}
+variable "name_servers" {
+  description = "A list of name servers in associated (or default) delegation set.\nFind more about delegation sets in AWS docs."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the zone. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "vpc_id" {
+  description = "(Required) ID of the VPC to associate."
   type        = string
 }
 variable "tag_instance_id" {
@@ -190,25 +190,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "zone_id" {
-  description = "The Hosted Zone ID. This can be referenced by zone records."
-  value       = aws_route53_zone.aws_route53_zone.zone_id
-}
-output "comment" {
-  description = "(Optional) A comment for the hosted zone. Defaults to 'Managed by Terraform'."
-  value       = aws_route53_zone.aws_route53_zone.comment
-}
-output "name_servers" {
-  description = "A list of name servers in associated (or default) delegation set.\nFind more about delegation sets in AWS docs."
-  value       = aws_route53_zone.aws_route53_zone.name_servers
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the zone. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_route53_zone.aws_route53_zone.tags
 }
+output "vpc_id" {
+  description = "(Required) ID of the VPC to associate."
+  value       = aws_route53_zone.aws_route53_zone.vpc_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Hosted Zone."
+  value       = aws_route53_zone.aws_route53_zone.arn
+}
 output "name" {
   description = "(Required) This is the name of the hosted zone."
   value       = aws_route53_zone.aws_route53_zone.name
+}
+output "name_servers" {
+  description = "A list of name servers in associated (or default) delegation set.\nFind more about delegation sets in AWS docs."
+  value       = aws_route53_zone.aws_route53_zone.name_servers
 }
 output "primary_name_server" {
   description = "The Route 53 name server that created the SOA record."
@@ -218,17 +218,17 @@ output "vpc" {
   description = "(Optional) Configuration block(s) specifying VPC(s) to associate with a private hosted zone. Conflicts with the delegation_set_id argument in this resource and any aws_route53_zone_association resource specifying the same zone ID. Detailed below.vpc Argument Reference"
   value       = aws_route53_zone.aws_route53_zone.vpc
 }
-output "vpc_id" {
-  description = "(Required) ID of the VPC to associate."
-  value       = aws_route53_zone.aws_route53_zone.vpc_id
-}
 output "vpc_region" {
   description = "(Optional) Region of the VPC to associate. Defaults to AWS provider region.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_zone.aws_route53_zone.vpc_region
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Hosted Zone."
-  value       = aws_route53_zone.aws_route53_zone.arn
+output "zone_id" {
+  description = "The Hosted Zone ID. This can be referenced by zone records."
+  value       = aws_route53_zone.aws_route53_zone.zone_id
+}
+output "comment" {
+  description = "(Optional) A comment for the hosted zone. Defaults to 'Managed by Terraform'."
+  value       = aws_route53_zone.aws_route53_zone.comment
 }
 output "delegation_set_id" {
   description = "(Optional) The ID of the reusable delegation set whose NS records you want to assign to the hosted zone. Conflicts with vpc as delegation sets can only be used for public zones."
@@ -237,14 +237,6 @@ output "delegation_set_id" {
 output "force_destroy" {
   description = "(Optional) Whether to destroy all records (possibly managed outside of Terraform) in the zone when destroying the zone."
   value       = aws_route53_zone.aws_route53_zone.force_destroy
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Hosted Zone."
-  value       = aws_route53_zone.aws_route53_zone.arn
-}
-output "name_servers" {
-  description = "A list of name servers in associated (or default) delegation set.\nFind more about delegation sets in AWS docs."
-  value       = aws_route53_zone.aws_route53_zone.name_servers
 }
 output "primary_name_server" {
   description = "The Route 53 name server that created the SOA record."
@@ -257,6 +249,14 @@ output "tags_all" {
 output "zone_id" {
   description = "The Hosted Zone ID. This can be referenced by zone records."
   value       = aws_route53_zone.aws_route53_zone.zone_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Hosted Zone."
+  value       = aws_route53_zone.aws_route53_zone.arn
+}
+output "name_servers" {
+  description = "A list of name servers in associated (or default) delegation set.\nFind more about delegation sets in AWS docs."
+  value       = aws_route53_zone.aws_route53_zone.name_servers
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

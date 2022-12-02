@@ -1,5 +1,4 @@
 resource "aws_chime_voice_connector_origination" "aws_chime_voice_connector_origination" {
-  priority           = var.priority
   protocol           = var.protocol
   route              = var.route
   voice_connector_id = var.voice_connector_id
@@ -7,9 +6,14 @@ resource "aws_chime_voice_connector_origination" "aws_chime_voice_connector_orig
   disabled           = var.disabled
   host               = var.host
   port               = var.port
+  priority           = var.priority
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "voice_connector_id" {
+  description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "weight" {
@@ -39,10 +43,6 @@ variable "protocol" {
 }
 variable "route" {
   description = "(Required) Set of call distribution properties defined for your SIP hosts. See route below for more details. Minimum of 1. Maximum of 20."
-  type        = string
-}
-variable "voice_connector_id" {
-  description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "tag_instance_id" {

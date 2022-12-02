@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "principal_tags" {
+  description = ": (Optional: []) - String to string map of variables."
+  type        = string
+}
 variable "identity_pool_id" {
   description = " (Required) - An identity pool ID."
   type        = string
 }
 variable "identity_provider_name" {
   description = " (Required) - The name of the identity provider."
-  type        = string
-}
-variable "principal_tags" {
-  description = ": (Optional: []) - String to string map of variables."
   type        = string
 }
 variable "tag_instance_id" {

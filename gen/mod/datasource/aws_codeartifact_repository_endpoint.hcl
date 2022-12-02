@@ -25,10 +25,6 @@ variable "repository" {
   description = "(Required) Name of the repository."
   type        = string
 }
-output "domain" {
-  description = "(Required) Name of the domain that contains the repository."
-  value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain
-}
 output "domain_owner" {
   description = "(Optional) Account number of the AWS account that owns the domain.In addition to the argument above, the following attributes are exported:"
   value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain_owner
@@ -40,6 +36,10 @@ output "format" {
 output "repository" {
   description = "(Required) Name of the repository."
   value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.repository
+}
+output "domain" {
+  description = "(Required) Name of the domain that contains the repository."
+  value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

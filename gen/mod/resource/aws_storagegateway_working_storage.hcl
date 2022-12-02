@@ -1,6 +1,6 @@
 resource "aws_storagegateway_working_storage" "aws_storagegateway_working_storage" {
-  disk_id     = var.disk_id
   gateway_arn = var.gateway_arn
+  disk_id     = var.disk_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

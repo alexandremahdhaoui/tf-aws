@@ -1,33 +1,37 @@
 resource "aws_s3control_bucket_lifecycle_configuration" "aws_s3control_bucket_lifecycle_configuration" {
-  prefix                            = var.prefix
-  status                            = var.status
+  abort_incomplete_multipart_upload = var.abort_incomplete_multipart_upload
   days                              = var.days
   expiration                        = var.expiration
-  filter                            = var.filter
-  id                                = var.id
   expired_object_delete_marker      = var.expired_object_delete_marker
-  rule                              = var.rule
+  id                                = var.id
   tags                              = var.tags
-  abort_incomplete_multipart_upload = var.abort_incomplete_multipart_upload
   bucket                            = var.bucket
   date                              = var.date
   days_after_initiation             = var.days_after_initiation
+  filter                            = var.filter
+  prefix                            = var.prefix
+  rule                              = var.rule
+  status                            = var.status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "filter" {
+  description = ""
+  type        = string
+}
+variable "prefix" {
+  description = "(Optional) Object prefix for rule filtering."
+  type        = string
+  default     = ""
+}
 variable "rule" {
   description = ""
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of object tags for rule filtering."
-  type        = string
-  default     = ""
-}
-variable "abort_incomplete_multipart_upload" {
-  description = "(Optional) Configuration block containing settings for abort incomplete multipart upload.\n"
+variable "status" {
+  description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -49,8 +53,17 @@ variable "expired_object_delete_marker" {
   type        = string
   default     = ""
 }
-variable "status" {
-  description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
+variable "id" {
+  description = "(Required) Unique identifier for the rule."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of object tags for rule filtering."
+  type        = string
+  default     = ""
+}
+variable "abort_incomplete_multipart_upload" {
+  description = "(Optional) Configuration block containing settings for abort incomplete multipart upload.\n"
   type        = string
   default     = ""
 }
@@ -61,19 +74,6 @@ variable "days" {
 }
 variable "expiration" {
   description = "(Optional) Configuration block containing settings for expiration of objects.\n"
-  type        = string
-  default     = ""
-}
-variable "filter" {
-  description = ""
-  type        = string
-}
-variable "id" {
-  description = "(Required) Unique identifier for the rule."
-  type        = string
-}
-variable "prefix" {
-  description = "(Optional) Object prefix for rule filtering."
   type        = string
   default     = ""
 }
@@ -197,13 +197,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of object tags for rule filtering."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.tags
-}
-output "abort_incomplete_multipart_upload" {
-  description = "(Optional) Configuration block containing settings for abort incomplete multipart upload.\n"
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.abort_incomplete_multipart_upload
+output "status" {
+  description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.status
 }
 output "bucket" {
   description = "(Required) Amazon Resource Name (ARN) of the bucket."
@@ -217,13 +213,21 @@ output "days_after_initiation" {
   description = "(Required) Number of days after which Amazon S3 aborts an incomplete multipart upload."
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.days_after_initiation
 }
-output "expired_object_delete_marker" {
-  description = "(Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.expired_object_delete_marker
+output "filter" {
+  description = ""
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.filter
+}
+output "prefix" {
+  description = "(Optional) Object prefix for rule filtering."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.prefix
 }
 output "rule" {
   description = ""
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.rule
+}
+output "abort_incomplete_multipart_upload" {
+  description = "(Optional) Configuration block containing settings for abort incomplete multipart upload.\n"
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.abort_incomplete_multipart_upload
 }
 output "days" {
   description = "(Optional) Number of days before the object is to be deleted."
@@ -233,21 +237,17 @@ output "expiration" {
   description = "(Optional) Configuration block containing settings for expiration of objects.\n"
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.expiration
 }
-output "filter" {
-  description = ""
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.filter
+output "expired_object_delete_marker" {
+  description = "(Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.expired_object_delete_marker
 }
 output "id" {
   description = "(Required) Unique identifier for the rule."
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.id
 }
-output "prefix" {
-  description = "(Optional) Object prefix for rule filtering."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.prefix
-}
-output "status" {
-  description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.status
+output "tags" {
+  description = "(Optional) Key-value map of object tags for rule filtering."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.tags
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the bucket."

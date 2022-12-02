@@ -1,26 +1,13 @@
 datasource "aws_ec2_transit_gateway_route_tables" "aws_ec2_transit_gateway_route_tables" {
-  id     = var.id
-  ids    = var.ids
-  name   = var.name
   tags   = var.tags
   values = var.values
   filter = var.filter
+  id     = var.id
+  ids    = var.ids
+  name   = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "filter" {
-  description = "(Optional) Custom filter block as described below."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "AWS Region."
-  type        = string
-}
-variable "ids" {
-  description = "Set of Transit Gateway Route Table identifiers.TimeoutsConfiguration options:"
   type        = string
 }
 variable "name" {
@@ -35,13 +22,18 @@ variable "values" {
   description = "(Required) Set of values that are accepted for the given field.\nA Transit Gateway Route Table will be selected if any one of the given values matches.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the field to filter by, as defined by\nthe underlying AWS API."
-  value       = aws_ec2_transit_gateway_route_tables.aws_ec2_transit_gateway_route_tables.name
+variable "filter" {
+  description = "(Optional) Custom filter block as described below."
+  type        = string
+  default     = ""
 }
-output "tags" {
-  description = "More complex filters can be expressed using one or more filter"
-  value       = aws_ec2_transit_gateway_route_tables.aws_ec2_transit_gateway_route_tables.tags
+variable "id" {
+  description = "AWS Region."
+  type        = string
+}
+variable "ids" {
+  description = "Set of Transit Gateway Route Table identifiers.TimeoutsConfiguration options:"
+  type        = string
 }
 output "values" {
   description = "(Required) Set of values that are accepted for the given field.\nA Transit Gateway Route Table will be selected if any one of the given values matches.In addition to all arguments above, the following attributes are exported:"
@@ -58,6 +50,14 @@ output "id" {
 output "ids" {
   description = "Set of Transit Gateway Route Table identifiers.TimeoutsConfiguration options:"
   value       = aws_ec2_transit_gateway_route_tables.aws_ec2_transit_gateway_route_tables.ids
+}
+output "name" {
+  description = "(Required) Name of the field to filter by, as defined by\nthe underlying AWS API."
+  value       = aws_ec2_transit_gateway_route_tables.aws_ec2_transit_gateway_route_tables.name
+}
+output "tags" {
+  description = "More complex filters can be expressed using one or more filter"
+  value       = aws_ec2_transit_gateway_route_tables.aws_ec2_transit_gateway_route_tables.tags
 }
 output "id" {
   description = "AWS Region."

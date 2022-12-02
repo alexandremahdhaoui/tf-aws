@@ -10,6 +10,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "vpc_endpoint_service_id" {
+  description = "(Optional) The ID of the VPC Endpoint Service to receive notifications for."
+  type        = string
+  default     = ""
+}
 variable "connection_events" {
   description = "(Required) One or more endpoint events for which to receive notifications.~> strongNOTE: One of vpc_endpoint_service_id or vpc_endpoint_id must be specified.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -28,11 +33,6 @@ variable "state" {
 }
 variable "vpc_endpoint_id" {
   description = "(Optional) The ID of the VPC Endpoint to receive notifications for."
-  type        = string
-  default     = ""
-}
-variable "vpc_endpoint_service_id" {
-  description = "(Optional) The ID of the VPC Endpoint Service to receive notifications for."
   type        = string
   default     = ""
 }

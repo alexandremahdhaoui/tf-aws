@@ -1,30 +1,35 @@
 resource "aws_codebuild_webhook" "aws_codebuild_webhook" {
+  filter                  = var.filter
+  pattern                 = var.pattern
   payload_url             = var.payload_url
+  type                    = var.type
   branch_filter           = var.branch_filter
   build_type              = var.build_type
   exclude_matched_pattern = var.exclude_matched_pattern
-  filter                  = var.filter
+  secret                  = var.secret
   filter_group            = var.filter_group
   id                      = var.id
-  pattern                 = var.pattern
   project_name            = var.project_name
-  secret                  = var.secret
-  type                    = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "filter_group" {
+  description = "(Optional) Information about the webhook's trigger. Filter group blocks are documented below.filter_group supports the following:"
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "The name of the build project."
   type        = string
 }
-variable "pattern" {
-  description = "(Required) For a filter that uses EVENT type, a comma-separated string that specifies one event: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_REOPENED. PULL_REQUEST_MERGED works with GitHub & GitHub Enterprise only. For a filter that uses any of the other filter types, a regular expression."
+variable "project_name" {
+  description = "(Required) The name of the build project."
   type        = string
 }
-variable "payload_url" {
-  description = "The CodeBuild endpoint where webhook events are sent."
+variable "secret" {
+  description = "The secret token of the associated repository. Not returned by the CodeBuild API for all source types."
   type        = string
 }
 variable "branch_filter" {
@@ -46,17 +51,12 @@ variable "filter" {
   description = "(Required) A webhook filter for the group. Filter blocks are documented below.filter supports the following:"
   type        = string
 }
-variable "filter_group" {
-  description = "(Optional) Information about the webhook's trigger. Filter group blocks are documented below.filter_group supports the following:"
-  type        = string
-  default     = ""
-}
-variable "project_name" {
-  description = "(Required) The name of the build project."
+variable "pattern" {
+  description = "(Required) For a filter that uses EVENT type, a comma-separated string that specifies one event: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_REOPENED. PULL_REQUEST_MERGED works with GitHub & GitHub Enterprise only. For a filter that uses any of the other filter types, a regular expression."
   type        = string
 }
-variable "secret" {
-  description = "The secret token of the associated repository. Not returned by the CodeBuild API for all source types."
+variable "payload_url" {
+  description = "The CodeBuild endpoint where webhook events are sent."
   type        = string
 }
 variable "type" {
@@ -183,34 +183,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "secret" {
-  description = "The secret token of the associated repository. Not returned by the CodeBuild API for all source types."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.secret
-}
-output "type" {
-  description = "(Required) The webhook filter group's type. Valid values for this parameter are: EVENT, BASE_REF, HEAD_REF, ACTOR_ACCOUNT_ID, FILE_PATH, COMMIT_MESSAGE. At least one filter group must specify EVENT as its type."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.type
-}
-output "filter" {
-  description = "(Required) A webhook filter for the group. Filter blocks are documented below.filter supports the following:"
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.filter
-}
-output "filter_group" {
-  description = "(Optional) Information about the webhook's trigger. Filter group blocks are documented below.filter_group supports the following:"
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.filter_group
-}
-output "id" {
-  description = "The name of the build project."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.id
-}
-output "pattern" {
-  description = "(Required) For a filter that uses EVENT type, a comma-separated string that specifies one event: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_REOPENED. PULL_REQUEST_MERGED works with GitHub & GitHub Enterprise only. For a filter that uses any of the other filter types, a regular expression."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.pattern
-}
-output "payload_url" {
-  description = "The CodeBuild endpoint where webhook events are sent."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.payload_url
-}
 output "branch_filter" {
   description = "(Optional) A regular expression used to determine which branches get built. Default is all branches are built. We recommend using filter_group over branch_filter."
   value       = aws_codebuild_webhook.aws_codebuild_webhook.branch_filter
@@ -223,17 +195,37 @@ output "exclude_matched_pattern" {
   description = "(Optional) If set to true, the specified filter does emnot trigger a build. Defaults to false.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codebuild_webhook.aws_codebuild_webhook.exclude_matched_pattern
 }
-output "project_name" {
-  description = "(Required) The name of the build project."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.project_name
+output "filter" {
+  description = "(Required) A webhook filter for the group. Filter blocks are documented below.filter supports the following:"
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.filter
+}
+output "pattern" {
+  description = "(Required) For a filter that uses EVENT type, a comma-separated string that specifies one event: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_REOPENED. PULL_REQUEST_MERGED works with GitHub & GitHub Enterprise only. For a filter that uses any of the other filter types, a regular expression."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.pattern
+}
+output "payload_url" {
+  description = "The CodeBuild endpoint where webhook events are sent."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.payload_url
+}
+output "type" {
+  description = "(Required) The webhook filter group's type. Valid values for this parameter are: EVENT, BASE_REF, HEAD_REF, ACTOR_ACCOUNT_ID, FILE_PATH, COMMIT_MESSAGE. At least one filter group must specify EVENT as its type."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.type
+}
+output "filter_group" {
+  description = "(Optional) Information about the webhook's trigger. Filter group blocks are documented below.filter_group supports the following:"
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.filter_group
 }
 output "id" {
   description = "The name of the build project."
   value       = aws_codebuild_webhook.aws_codebuild_webhook.id
 }
-output "payload_url" {
-  description = "The CodeBuild endpoint where webhook events are sent."
-  value       = aws_codebuild_webhook.aws_codebuild_webhook.payload_url
+output "project_name" {
+  description = "(Required) The name of the build project."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.project_name
+}
+output "secret" {
+  description = "The secret token of the associated repository. Not returned by the CodeBuild API for all source types."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.secret
 }
 output "secret" {
   description = "The secret token of the associated repository. Not returned by the CodeBuild API for all source types."
@@ -242,6 +234,14 @@ output "secret" {
 output "url" {
   description = "The URL to the webhook.~> strongNote: The secret attribute is only set on resource creation, so if the secret is manually rotated, terraform will not pick up the change on subsequent runs.  In that case, the webhook resource should be tainted and re-created to get the secret back in sync."
   value       = aws_codebuild_webhook.aws_codebuild_webhook.url
+}
+output "id" {
+  description = "The name of the build project."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.id
+}
+output "payload_url" {
+  description = "The CodeBuild endpoint where webhook events are sent."
+  value       = aws_codebuild_webhook.aws_codebuild_webhook.payload_url
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

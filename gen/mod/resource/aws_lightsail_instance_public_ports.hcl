@@ -1,14 +1,19 @@
 resource "aws_lightsail_instance_public_ports" "aws_lightsail_instance_public_ports" {
-  cidrs         = var.cidrs
-  from_port     = var.from_port
   instance_name = var.instance_name
   port_info     = var.port_info
   protocol      = var.protocol
   to_port       = var.to_port
+  cidrs         = var.cidrs
+  from_port     = var.from_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "cidrs" {
+  description = "(Optional) Set of CIDR blocks.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "from_port" {
   description = "(Required) First port in a range of open ports on an instance."
@@ -29,11 +34,6 @@ variable "protocol" {
 variable "to_port" {
   description = "(Required) Last port in a range of open ports on an instance."
   type        = string
-}
-variable "cidrs" {
-  description = "(Optional) Set of CIDR blocks.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

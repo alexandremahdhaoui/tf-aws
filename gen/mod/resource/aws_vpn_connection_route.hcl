@@ -1,17 +1,17 @@
 resource "aws_vpn_connection_route" "aws_vpn_connection_route" {
-  destination_cidr_block = var.destination_cidr_block
   vpn_connection_id      = var.vpn_connection_id
+  destination_cidr_block = var.destination_cidr_block
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "destination_cidr_block" {
-  description = "The CIDR block associated with the local subnet of the customer network."
-  type        = string
-}
 variable "vpn_connection_id" {
   description = "(Required) The ID of the VPN connection.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "destination_cidr_block" {
+  description = "The CIDR block associated with the local subnet of the customer network."
   type        = string
 }
 variable "tag_instance_id" {

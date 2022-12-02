@@ -1,11 +1,11 @@
 resource "aws_iam_user" "aws_iam_user" {
-  arn                  = var.arn
   force_destroy        = var.force_destroy
   name                 = var.name
   path                 = var.path
   permissions_boundary = var.permissions_boundary
   tags                 = var.tags
   tags_all             = var.tags_all
+  arn                  = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -160,6 +160,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_user.aws_iam_user.tags_all
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this user."
+  value       = aws_iam_user.aws_iam_user.arn
+}
+output "force_destroy" {
+  description = "force_destroy"
+  value       = aws_iam_user.aws_iam_user.force_destroy
+}
 output "name" {
   description = "The user's name."
   value       = aws_iam_user.aws_iam_user.name
@@ -180,13 +192,9 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_iam_user.aws_iam_user.tags_all
 }
-output "arn" {
-  description = "The ARN assigned by AWS for this user."
-  value       = aws_iam_user.aws_iam_user.arn
-}
-output "force_destroy" {
-  description = "force_destroy"
-  value       = aws_iam_user.aws_iam_user.force_destroy
+output "unique_id" {
+  description = "The unique ID assigned by AWS."
+  value       = aws_iam_user.aws_iam_user.unique_id
 }
 output "arn" {
   description = "The ARN assigned by AWS for this user."
@@ -195,14 +203,6 @@ output "arn" {
 output "name" {
   description = "The user's name."
   value       = aws_iam_user.aws_iam_user.name
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_user.aws_iam_user.tags_all
-}
-output "unique_id" {
-  description = "The unique ID assigned by AWS."
-  value       = aws_iam_user.aws_iam_user.unique_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

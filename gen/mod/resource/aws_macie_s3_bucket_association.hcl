@@ -10,15 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "bucket_name" {
-  description = "(Required) The name of the S3 bucket that you want to associate with Amazon Macie."
-  type        = string
-}
-variable "classification_type" {
-  description = "(Optional) The configuration of how Amazon Macie classifies the S3 objects."
-  type        = string
-  default     = ""
-}
 variable "continuous" {
   description = "(Optional) A string value indicating that Macie perform a one-time classification of all of the existing objects in the bucket.\nThe only valid value is the default value, FULL."
   type        = string
@@ -35,6 +26,15 @@ variable "one_time" {
 }
 variable "prefix" {
   description = "(Optional) Object key prefix identifying one or more S3 objects to which the association applies.The classification_type object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "bucket_name" {
+  description = "(Required) The name of the S3 bucket that you want to associate with Amazon Macie."
+  type        = string
+}
+variable "classification_type" {
+  description = "(Optional) The configuration of how Amazon Macie classifies the S3 objects."
   type        = string
   default     = ""
 }
@@ -158,6 +158,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "bucket_name" {
+  description = "(Required) The name of the S3 bucket that you want to associate with Amazon Macie."
+  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.bucket_name
+}
 output "classification_type" {
   description = "(Optional) The configuration of how Amazon Macie classifies the S3 objects."
   value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.classification_type
@@ -177,10 +181,6 @@ output "one_time" {
 output "prefix" {
   description = "(Optional) Object key prefix identifying one or more S3 objects to which the association applies.The classification_type object supports the following:"
   value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.prefix
-}
-output "bucket_name" {
-  description = "(Required) The name of the S3 bucket that you want to associate with Amazon Macie."
-  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.bucket_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

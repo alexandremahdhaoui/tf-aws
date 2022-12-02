@@ -1,11 +1,11 @@
 resource "aws_swf_domain" "aws_swf_domain" {
-  arn                                         = var.arn
   description                                 = var.description
   id                                          = var.id
   name                                        = var.name
   name_prefix                                 = var.name_prefix
   tags                                        = var.tags
   workflow_execution_retention_period_in_days = var.workflow_execution_retention_period_in_days
+  arn                                         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -160,18 +160,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Optional, Forces new resource) The name of the domain. If omitted, Terraform will assign a random, unique name."
-  value       = aws_swf_domain.aws_swf_domain.name
-}
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_swf_domain.aws_swf_domain.name_prefix
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_swf_domain.aws_swf_domain.tags
-}
 output "workflow_execution_retention_period_in_days" {
   description = "(Required, Forces new resource) Length of time that SWF will continue to retain information about the workflow execution after the workflow execution is complete, must be between 0 and 90 days."
   value       = aws_swf_domain.aws_swf_domain.workflow_execution_retention_period_in_days
@@ -187,6 +175,18 @@ output "description" {
 output "id" {
   description = "The name of the domain."
   value       = aws_swf_domain.aws_swf_domain.id
+}
+output "name" {
+  description = "(Optional, Forces new resource) The name of the domain. If omitted, Terraform will assign a random, unique name."
+  value       = aws_swf_domain.aws_swf_domain.name
+}
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_swf_domain.aws_swf_domain.name_prefix
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_swf_domain.aws_swf_domain.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"

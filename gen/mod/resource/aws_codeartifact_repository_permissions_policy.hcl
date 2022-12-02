@@ -1,14 +1,23 @@
 resource "aws_codeartifact_repository_permissions_policy" "aws_codeartifact_repository_permissions_policy" {
+  repository      = var.repository
+  domain          = var.domain
   domain_owner    = var.domain_owner
   id              = var.id
   policy_document = var.policy_document
   policy_revision = var.policy_revision
-  repository      = var.repository
-  domain          = var.domain
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "domain" {
+  description = "(Required) The name of the domain on which to set the resource policy."
+  type        = string
+}
+variable "domain_owner" {
+  description = "(Optional) The account number of the AWS account that owns the domain."
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ARN of the resource associated with the resource policy."
@@ -26,15 +35,6 @@ variable "policy_revision" {
 variable "repository" {
   description = "(Required) The name of the repository to set the resource policy on."
   type        = string
-}
-variable "domain" {
-  description = "(Required) The name of the domain on which to set the resource policy."
-  type        = string
-}
-variable "domain_owner" {
-  description = "(Optional) The account number of the AWS account that owns the domain."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -180,13 +180,13 @@ output "repository" {
   description = "(Required) The name of the repository to set the resource policy on."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.repository
 }
-output "resource_arn" {
-  description = "The ARN of the resource associated with the resource policy."
-  value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.resource_arn
-}
 output "id" {
   description = "The ARN of the resource associated with the resource policy."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.id
+}
+output "resource_arn" {
+  description = "The ARN of the resource associated with the resource policy."
+  value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.resource_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

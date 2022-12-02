@@ -1,15 +1,23 @@
 resource "aws_s3control_multi_region_access_point_policy" "aws_s3control_multi_region_access_point_policy" {
-  account_id  = var.account_id
-  create      = var.create
-  details     = var.details
   established = var.established
   id          = var.id
   name        = var.name
   policy      = var.policy
   proposed    = var.proposed
+  account_id  = var.account_id
+  create      = var.create
+  details     = var.details
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "established" {
+  description = "The last established policy for the Multi-Region Access Point."
+  type        = string
+}
+variable "id" {
+  description = "The AWS account ID and access point name separated by a colon (:)."
   type        = string
 }
 variable "name" {
@@ -35,14 +43,6 @@ variable "create" {
 }
 variable "details" {
   description = "(Required) A configuration block containing details about the policy for the Multi-Region Access Point. See Details Configuration Block below for more detailsDetails ConfigurationThe details block supports the following:"
-  type        = string
-}
-variable "established" {
-  description = "The last established policy for the Multi-Region Access Point."
-  type        = string
-}
-variable "id" {
-  description = "The AWS account ID and access point name separated by a colon (:)."
   type        = string
 }
 variable "tag_instance_id" {
@@ -165,14 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "details" {
-  description = "(Required) A configuration block containing details about the policy for the Multi-Region Access Point. See Details Configuration Block below for more detailsDetails ConfigurationThe details block supports the following:"
-  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.details
-}
-output "established" {
-  description = "The last established policy for the Multi-Region Access Point."
-  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.established
-}
 output "id" {
   description = "The AWS account ID and access point name separated by a colon (:)."
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.id
@@ -197,6 +189,18 @@ output "create" {
   description = "(Default 15m)"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.create
 }
+output "details" {
+  description = "(Required) A configuration block containing details about the policy for the Multi-Region Access Point. See Details Configuration Block below for more detailsDetails ConfigurationThe details block supports the following:"
+  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.details
+}
+output "established" {
+  description = "The last established policy for the Multi-Region Access Point."
+  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.established
+}
+output "established" {
+  description = "The last established policy for the Multi-Region Access Point."
+  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.established
+}
 output "id" {
   description = "The AWS account ID and access point name separated by a colon (:)."
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.id
@@ -212,10 +216,6 @@ output "update" {
 output "create" {
   description = "(Default 15m)"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.create
-}
-output "established" {
-  description = "The last established policy for the Multi-Region Access Point."
-  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.established
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

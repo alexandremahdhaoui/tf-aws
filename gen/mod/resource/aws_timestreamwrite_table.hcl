@@ -1,31 +1,31 @@
 resource "aws_timestreamwrite_table" "aws_timestreamwrite_table" {
-  encryption_option                       = var.encryption_option
-  magnetic_store_rejected_data_location   = var.magnetic_store_rejected_data_location
-  tags                                    = var.tags
-  kms_key_id                              = var.kms_key_id
-  magnetic_store_retention_period_in_days = var.magnetic_store_retention_period_in_days
-  retention_properties                    = var.retention_properties
-  table_name                              = var.table_name
-  database_name                           = var.database_name
-  enable_magnetic_store_writes            = var.enable_magnetic_store_writes
-  magnetic_store_write_properties         = var.magnetic_store_write_properties
-  memory_store_retention_period_in_hours  = var.memory_store_retention_period_in_hours
-  object_key_prefix                       = var.object_key_prefix
-  s3_configuration                        = var.s3_configuration
   arn                                     = var.arn
-  bucket_name                             = var.bucket_name
+  encryption_option                       = var.encryption_option
+  memory_store_retention_period_in_hours  = var.memory_store_retention_period_in_hours
+  retention_properties                    = var.retention_properties
+  s3_configuration                        = var.s3_configuration
   id                                      = var.id
+  magnetic_store_rejected_data_location   = var.magnetic_store_rejected_data_location
+  magnetic_store_write_properties         = var.magnetic_store_write_properties
+  database_name                           = var.database_name
+  magnetic_store_retention_period_in_days = var.magnetic_store_retention_period_in_days
+  object_key_prefix                       = var.object_key_prefix
+  table_name                              = var.table_name
+  tags                                    = var.tags
+  bucket_name                             = var.bucket_name
+  enable_magnetic_store_writes            = var.enable_magnetic_store_writes
+  kms_key_id                              = var.kms_key_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "enable_magnetic_store_writes" {
-  description = "(Required) A flag to enable magnetic store writes."
+variable "arn" {
+  description = "The ARN that uniquely identifies this table."
   type        = string
 }
-variable "magnetic_store_write_properties" {
-  description = "(Optional) Contains properties to set on the table when enabling magnetic store writes. See Magnetic Store Write Properties below for more details."
+variable "encryption_option" {
+  description = "(Optional) Encryption option for the customer s3 location. Options are S3 server side encryption with an S3-managed key or KMS managed key. Valid values are SSE_KMS and SSE_S3."
   type        = string
   default     = ""
 }
@@ -33,8 +33,8 @@ variable "memory_store_retention_period_in_hours" {
   description = "(Required) The duration for which data must be stored in the memory store. Minimum value of 1. Maximum value of 8766.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "object_key_prefix" {
-  description = "(Optional) Object key prefix for the customer S3 location.Retention PropertiesThe retention_properties block supports the following arguments:"
+variable "retention_properties" {
+  description = "(Optional) The retention duration for the memory store and magnetic store. See Retention Properties below for more details. If not provided, magnetic_store_retention_period_in_days default to 73000 and memory_store_retention_period_in_hours defaults to 6."
   type        = string
   default     = ""
 }
@@ -43,21 +43,8 @@ variable "s3_configuration" {
   type        = string
   default     = ""
 }
-variable "database_name" {
-  description = " – (Required) The name of the Timestream database."
-  type        = string
-}
-variable "bucket_name" {
-  description = "(Optional) Bucket name of the customer S3 bucket."
-  type        = string
-  default     = ""
-}
 variable "id" {
   description = "The table_name and database_name separated by a colon (:)."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN that uniquely identifies this table."
   type        = string
 }
 variable "magnetic_store_rejected_data_location" {
@@ -65,27 +52,40 @@ variable "magnetic_store_rejected_data_location" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Magnetic Store Write PropertiesThe magnetic_store_write_properties block supports the following arguments:"
+variable "magnetic_store_write_properties" {
+  description = "(Optional) Contains properties to set on the table when enabling magnetic store writes. See Magnetic Store Write Properties below for more details."
   type        = string
   default     = ""
 }
-variable "encryption_option" {
-  description = "(Optional) Encryption option for the customer s3 location. Options are S3 server side encryption with an S3-managed key or KMS managed key. Valid values are SSE_KMS and SSE_S3."
+variable "database_name" {
+  description = " – (Required) The name of the Timestream database."
   type        = string
-  default     = ""
 }
 variable "magnetic_store_retention_period_in_days" {
   description = "(Required) The duration for which data must be stored in the magnetic store. Minimum value of 1. Maximum value of 73000."
   type        = string
 }
-variable "retention_properties" {
-  description = "(Optional) The retention duration for the memory store and magnetic store. See Retention Properties below for more details. If not provided, magnetic_store_retention_period_in_days default to 73000 and memory_store_retention_period_in_hours defaults to 6."
+variable "object_key_prefix" {
+  description = "(Optional) Object key prefix for the customer S3 location.Retention PropertiesThe retention_properties block supports the following arguments:"
   type        = string
   default     = ""
 }
 variable "table_name" {
   description = "(Required) The name of the Timestream table."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Magnetic Store Write PropertiesThe magnetic_store_write_properties block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "bucket_name" {
+  description = "(Optional) Bucket name of the customer S3 bucket."
+  type        = string
+  default     = ""
+}
+variable "enable_magnetic_store_writes" {
+  description = "(Required) A flag to enable magnetic store writes."
   type        = string
 }
 variable "kms_key_id" {
@@ -213,69 +213,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "database_name" {
+  description = " – (Required) The name of the Timestream database."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.database_name
+}
 output "magnetic_store_retention_period_in_days" {
   description = "(Required) The duration for which data must be stored in the magnetic store. Minimum value of 1. Maximum value of 73000."
   value       = aws_timestreamwrite_table.aws_timestreamwrite_table.magnetic_store_retention_period_in_days
-}
-output "retention_properties" {
-  description = "(Optional) The retention duration for the memory store and magnetic store. See Retention Properties below for more details. If not provided, magnetic_store_retention_period_in_days default to 73000 and memory_store_retention_period_in_hours defaults to 6."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.retention_properties
-}
-output "table_name" {
-  description = "(Required) The name of the Timestream table."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.table_name
-}
-output "kms_key_id" {
-  description = "(Optional) KMS key arn for the customer s3 location when encrypting with a KMS managed key."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.kms_key_id
-}
-output "enable_magnetic_store_writes" {
-  description = "(Required) A flag to enable magnetic store writes."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.enable_magnetic_store_writes
-}
-output "magnetic_store_write_properties" {
-  description = "(Optional) Contains properties to set on the table when enabling magnetic store writes. See Magnetic Store Write Properties below for more details."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.magnetic_store_write_properties
-}
-output "memory_store_retention_period_in_hours" {
-  description = "(Required) The duration for which data must be stored in the memory store. Minimum value of 1. Maximum value of 8766.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.memory_store_retention_period_in_hours
 }
 output "object_key_prefix" {
   description = "(Optional) Object key prefix for the customer S3 location.Retention PropertiesThe retention_properties block supports the following arguments:"
   value       = aws_timestreamwrite_table.aws_timestreamwrite_table.object_key_prefix
 }
-output "s3_configuration" {
-  description = "(Optional) Configuration of an S3 location to write error reports for records rejected, asynchronously, during magnetic store writes. See S3 Configuration below for more details.S3 ConfigurationThe s3_configuration block supports the following arguments:"
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.s3_configuration
-}
-output "database_name" {
-  description = " – (Required) The name of the Timestream database."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.database_name
-}
-output "bucket_name" {
-  description = "(Optional) Bucket name of the customer S3 bucket."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.bucket_name
-}
-output "id" {
-  description = "The table_name and database_name separated by a colon (:)."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.id
-}
-output "arn" {
-  description = "The ARN that uniquely identifies this table."
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.arn
-}
-output "magnetic_store_rejected_data_location" {
-  description = "(Optional) The location to write error reports for records rejected asynchronously during magnetic store writes. See Magnetic Store Rejected Data Location below for more details.Magnetic Store Rejected Data LocationThe magnetic_store_rejected_data_location block supports the following arguments:"
-  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.magnetic_store_rejected_data_location
+output "table_name" {
+  description = "(Required) The name of the Timestream table."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.table_name
 }
 output "tags" {
   description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Magnetic Store Write PropertiesThe magnetic_store_write_properties block supports the following arguments:"
   value       = aws_timestreamwrite_table.aws_timestreamwrite_table.tags
 }
+output "bucket_name" {
+  description = "(Optional) Bucket name of the customer S3 bucket."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.bucket_name
+}
+output "enable_magnetic_store_writes" {
+  description = "(Required) A flag to enable magnetic store writes."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.enable_magnetic_store_writes
+}
+output "kms_key_id" {
+  description = "(Optional) KMS key arn for the customer s3 location when encrypting with a KMS managed key."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.kms_key_id
+}
+output "arn" {
+  description = "The ARN that uniquely identifies this table."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.arn
+}
 output "encryption_option" {
   description = "(Optional) Encryption option for the customer s3 location. Options are S3 server side encryption with an S3-managed key or KMS managed key. Valid values are SSE_KMS and SSE_S3."
   value       = aws_timestreamwrite_table.aws_timestreamwrite_table.encryption_option
+}
+output "memory_store_retention_period_in_hours" {
+  description = "(Required) The duration for which data must be stored in the memory store. Minimum value of 1. Maximum value of 8766.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.memory_store_retention_period_in_hours
+}
+output "retention_properties" {
+  description = "(Optional) The retention duration for the memory store and magnetic store. See Retention Properties below for more details. If not provided, magnetic_store_retention_period_in_days default to 73000 and memory_store_retention_period_in_hours defaults to 6."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.retention_properties
+}
+output "s3_configuration" {
+  description = "(Optional) Configuration of an S3 location to write error reports for records rejected, asynchronously, during magnetic store writes. See S3 Configuration below for more details.S3 ConfigurationThe s3_configuration block supports the following arguments:"
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.s3_configuration
+}
+output "id" {
+  description = "The table_name and database_name separated by a colon (:)."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.id
+}
+output "magnetic_store_rejected_data_location" {
+  description = "(Optional) The location to write error reports for records rejected asynchronously during magnetic store writes. See Magnetic Store Rejected Data Location below for more details.Magnetic Store Rejected Data LocationThe magnetic_store_rejected_data_location block supports the following arguments:"
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.magnetic_store_rejected_data_location
+}
+output "magnetic_store_write_properties" {
+  description = "(Optional) Contains properties to set on the table when enabling magnetic store writes. See Magnetic Store Write Properties below for more details."
+  value       = aws_timestreamwrite_table.aws_timestreamwrite_table.magnetic_store_write_properties
 }
 output "arn" {
   description = "The ARN that uniquely identifies this table."

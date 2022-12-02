@@ -1,26 +1,22 @@
 resource "aws_api_gateway_deployment" "aws_api_gateway_deployment" {
-  description       = var.description
   execution_arn     = var.execution_arn
-  stage_name        = var.stage_name
-  variables         = var.variables
-  triggers          = var.triggers
   id                = var.id
+  stage_description = var.stage_description
+  triggers          = var.triggers
+  variables         = var.variables
+  description       = var.description
   invoke_url        = var.invoke_url
   rest_api_id       = var.rest_api_id
-  stage_description = var.stage_description
+  stage_name        = var.stage_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "triggers" {
-  description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command."
+variable "description" {
+  description = "(Optional) Description of the deployment"
   type        = string
   default     = ""
-}
-variable "id" {
-  description = "ID of the deployment"
-  type        = string
 }
 variable "invoke_url" {
   description = "URL to invoke the API pointing to the stage,\ne.g., https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
@@ -30,13 +26,8 @@ variable "rest_api_id" {
   description = "(Required) REST API identifier."
   type        = string
 }
-variable "stage_description" {
-  description = "(Optional) Description to set on the stage managed by the stage_name argument."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Description of the deployment"
+variable "stage_name" {
+  description = "(Optional) Name of the stage to create with this deployment. If the specified stage already exists, it will be updated to point to the new deployment. We recommend using the aws_api_gateway_stage resource instead to manage stages."
   type        = string
   default     = ""
 }
@@ -44,8 +35,17 @@ variable "execution_arn" {
   description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
   type        = string
 }
-variable "stage_name" {
-  description = "(Optional) Name of the stage to create with this deployment. If the specified stage already exists, it will be updated to point to the new deployment. We recommend using the aws_api_gateway_stage resource instead to manage stages."
+variable "id" {
+  description = "ID of the deployment"
+  type        = string
+}
+variable "stage_description" {
+  description = "(Optional) Description to set on the stage managed by the stage_name argument."
+  type        = string
+  default     = ""
+}
+variable "triggers" {
+  description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command."
   type        = string
   default     = ""
 }
@@ -174,6 +174,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "execution_arn" {
+  description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
+  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.execution_arn
+}
+output "id" {
+  description = "ID of the deployment"
+  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.id
+}
 output "stage_description" {
   description = "(Optional) Description to set on the stage managed by the stage_name argument."
   value       = aws_api_gateway_deployment.aws_api_gateway_deployment.stage_description
@@ -181,18 +189,6 @@ output "stage_description" {
 output "triggers" {
   description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a redeployment. To force a redeployment without changing these keys/values, use the terraform taint command."
   value       = aws_api_gateway_deployment.aws_api_gateway_deployment.triggers
-}
-output "id" {
-  description = "ID of the deployment"
-  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.id
-}
-output "invoke_url" {
-  description = "URL to invoke the API pointing to the stage,\ne.g., https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
-  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.invoke_url
-}
-output "rest_api_id" {
-  description = "(Required) REST API identifier."
-  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.rest_api_id
 }
 output "variables" {
   description = "(Optional) Map to set on the stage managed by the stage_name argument.In addition to all arguments above, the following attributes are exported:"
@@ -202,9 +198,13 @@ output "description" {
   description = "(Optional) Description of the deployment"
   value       = aws_api_gateway_deployment.aws_api_gateway_deployment.description
 }
-output "execution_arn" {
-  description = "Execution ARN to be used in lambda_permission's source_arnarn:aws:execute-api:eu-west-2:123456789012:z4675bid1j/prod"
-  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.execution_arn
+output "invoke_url" {
+  description = "URL to invoke the API pointing to the stage,\ne.g., https://z4675bid1j.execute-api.eu-west-2.amazonaws.com/prod"
+  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.invoke_url
+}
+output "rest_api_id" {
+  description = "(Required) REST API identifier."
+  value       = aws_api_gateway_deployment.aws_api_gateway_deployment.rest_api_id
 }
 output "stage_name" {
   description = "(Optional) Name of the stage to create with this deployment. If the specified stage already exists, it will be updated to point to the new deployment. We recommend using the aws_api_gateway_stage resource instead to manage stages."

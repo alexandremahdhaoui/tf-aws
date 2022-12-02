@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "vpc_id" {
-  description = "ID of an attached VPC.TimeoutsConfiguration options:"
-  value       = aws_internet_gateway.aws_internet_gateway.vpc_id
-}
 output "arn" {
   description = "ARN of the Internet Gateway.All of the argument attributes except filterattachments"
   value       = aws_internet_gateway.aws_internet_gateway.arn
@@ -19,6 +15,10 @@ output "owner_id" {
 output "state" {
   description = "Current state of the attachment between the gateway and the VPC. Present only if a VPC is attached"
   value       = aws_internet_gateway.aws_internet_gateway.state
+}
+output "vpc_id" {
+  description = "ID of an attached VPC.TimeoutsConfiguration options:"
+  value       = aws_internet_gateway.aws_internet_gateway.vpc_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

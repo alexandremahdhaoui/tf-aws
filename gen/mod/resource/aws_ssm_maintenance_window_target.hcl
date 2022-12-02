@@ -1,24 +1,14 @@
 resource "aws_ssm_maintenance_window_target" "aws_ssm_maintenance_window_target" {
+  window_id         = var.window_id
+  description       = var.description
   name              = var.name
   owner_information = var.owner_information
   resource_type     = var.resource_type
   targets           = var.targets
-  window_id         = var.window_id
-  description       = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "name" {
-  description = "(Optional) The name of the maintenance window target."
-  type        = string
-  default     = ""
-}
-variable "owner_information" {
-  description = "(Optional) User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "resource_type" {
   description = "(Required) The type of target being registered with the Maintenance Window. Possible values are INSTANCE and RESOURCE_GROUP."
@@ -34,6 +24,16 @@ variable "window_id" {
 }
 variable "description" {
   description = "(Optional) The description of the maintenance window target."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) The name of the maintenance window target."
+  type        = string
+  default     = ""
+}
+variable "owner_information" {
+  description = "(Optional) User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -157,10 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "window_id" {
-  description = "(Required) The Id of the maintenance window to register the target with."
-  value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.window_id
-}
 output "description" {
   description = "(Optional) The description of the maintenance window target."
   value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.description
@@ -180,6 +176,10 @@ output "resource_type" {
 output "targets" {
   description = "(Required) The targets to register with the maintenance window. In other words, the instances to run commands on when the maintenance window runs. You can specify targets using instance IDs, resource group names, or tags that have been applied to instances. For more information about these examples formats see\n(https://docs.aws.amazon.com/systems-manager/latest/userguide/mw-cli-tutorial-targets-examples.html)"
   value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.targets
+}
+output "window_id" {
+  description = "(Required) The Id of the maintenance window to register the target with."
+  value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.window_id
 }
 output "id" {
   description = "The ID of the maintenance window target."

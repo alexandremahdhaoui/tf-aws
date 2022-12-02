@@ -1,25 +1,67 @@
 resource "aws_fms_policy" "aws_fms_policy" {
-  delete_unused_fm_managed_resources = var.delete_unused_fm_managed_resources
   name                               = var.name
   orgunit                            = var.orgunit
-  remediation_enabled                = var.remediation_enabled
-  delete_all_policy_resources        = var.delete_all_policy_resources
+  resource_type                      = var.resource_type
+  tags                               = var.tags
+  delete_unused_fm_managed_resources = var.delete_unused_fm_managed_resources
+  exclude_map                        = var.exclude_map
   exclude_resource_tags              = var.exclude_resource_tags
   include_map                        = var.include_map
-  resource_type_list                 = var.resource_type_list
-  type                               = var.type
-  exclude_map                        = var.exclude_map
-  resource_type                      = var.resource_type
-  security_service_policy_data       = var.security_service_policy_data
-  tags                               = var.tags
   resource_tags                      = var.resource_tags
-  account                            = var.account
+  type                               = var.type
   id                                 = var.id
   managed_service_data               = var.managed_service_data
   policy_update_token                = var.policy_update_token
+  remediation_enabled                = var.remediation_enabled
+  account                            = var.account
+  resource_type_list                 = var.resource_type_list
+  security_service_policy_data       = var.security_service_policy_data
+  delete_all_policy_resources        = var.delete_all_policy_resources
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "resource_type" {
+  description = "(Optional) A resource type to protect. Conflicts with resource_type_list. See the FMS API Reference for more information about supported values."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.exclude_map Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "delete_unused_fm_managed_resources" {
+  description = "(Optional) If true, Firewall Manager will automatically remove protections from resources that leave the policy scope. Defaults to false. More information can be found here AWS Firewall Manager policy contents"
+  type        = string
+  default     = ""
+}
+variable "exclude_map" {
+  description = "(Optional) A map of lists of accounts and OU's to exclude from the policy."
+  type        = string
+  default     = ""
+}
+variable "exclude_resource_tags" {
+  description = "(Required, Forces new resource) A boolean value, if true the tags that are specified in the resource_tags are not protected by this policy. If set to false and resource_tags are populated, resources that contain tags will be protected by this policy."
+  type        = string
+}
+variable "include_map" {
+  description = "(Optional) A map of lists of accounts and OU's to include in the policy."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required, Forces new resource) The friendly name of the AWS Firewall Manager Policy."
+  type        = string
+}
+variable "orgunit" {
+  description = "(Optional) A list of AWS Organizational Units that you want to include for this AWS FMS Policy. Specifying an OU is the equivalent of specifying all accounts in the OU and in any of its child OUs, including any child OUs and accounts that are added at a later time.You can specify inclusions or exclusions, but not both. If you specify an include_map, AWS Firewall Manager applies the policy to all accounts specified by the include_map, and does not evaluate any exclude_map specifications. If you do not specify an include_map, then Firewall Manager applies the policy to all accounts except for those specified by the exclude_map.security_service_policy_data Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The AWS account ID of the AWS Firewall Manager administrator account."
   type        = string
 }
 variable "managed_service_data" {
@@ -31,40 +73,21 @@ variable "policy_update_token" {
   description = "A unique identifier for each update to the policy."
   type        = string
 }
+variable "remediation_enabled" {
+  description = "(Required) A boolean value, indicates if the policy should automatically applied to resources that already exist in the account."
+  type        = string
+}
 variable "resource_tags" {
   description = "(Optional) A map of resource tags, that if present will filter protections on resources based on the exclude_resource_tags."
   type        = string
   default     = ""
 }
+variable "type" {
+  description = "(Required, Forces new resource) The service that the policy is using to protect the resources. For the current list of supported types, please refer to the AWS Firewall Manager SecurityServicePolicyData API Type Reference.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "account" {
   description = "(Optional) A list of AWS Organization member Accounts that you want to include for this AWS FMS Policy."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The AWS account ID of the AWS Firewall Manager administrator account."
-  type        = string
-}
-variable "orgunit" {
-  description = "(Optional) A list of AWS Organizational Units that you want to include for this AWS FMS Policy. Specifying an OU is the equivalent of specifying all accounts in the OU and in any of its child OUs, including any child OUs and accounts that are added at a later time.You can specify inclusions or exclusions, but not both. If you specify an include_map, AWS Firewall Manager applies the policy to all accounts specified by the include_map, and does not evaluate any exclude_map specifications. If you do not specify an include_map, then Firewall Manager applies the policy to all accounts except for those specified by the exclude_map.security_service_policy_data Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "remediation_enabled" {
-  description = "(Required) A boolean value, indicates if the policy should automatically applied to resources that already exist in the account."
-  type        = string
-}
-variable "delete_unused_fm_managed_resources" {
-  description = "(Optional) If true, Firewall Manager will automatically remove protections from resources that leave the policy scope. Defaults to false. More information can be found here AWS Firewall Manager policy contents"
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required, Forces new resource) The friendly name of the AWS Firewall Manager Policy."
-  type        = string
-}
-variable "include_map" {
-  description = "(Optional) A map of lists of accounts and OU's to include in the policy."
   type        = string
   default     = ""
 }
@@ -73,35 +96,12 @@ variable "resource_type_list" {
   type        = string
   default     = ""
 }
-variable "delete_all_policy_resources" {
-  description = "(Optional) If true, the request will also perform a clean-up process. Defaults to true. More information can be found here AWS Firewall Manager delete policy"
-  type        = string
-  default     = ""
-}
-variable "exclude_resource_tags" {
-  description = "(Required, Forces new resource) A boolean value, if true the tags that are specified in the resource_tags are not protected by this policy. If set to false and resource_tags are populated, resources that contain tags will be protected by this policy."
-  type        = string
-}
 variable "security_service_policy_data" {
   description = "(Required) The objects to include in Security Service Policy Data. Documented below."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.exclude_map Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required, Forces new resource) The service that the policy is using to protect the resources. For the current list of supported types, please refer to the AWS Firewall Manager SecurityServicePolicyData API Type Reference.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "exclude_map" {
-  description = "(Optional) A map of lists of accounts and OU's to exclude from the policy."
-  type        = string
-  default     = ""
-}
-variable "resource_type" {
-  description = "(Optional) A resource type to protect. Conflicts with resource_type_list. See the FMS API Reference for more information about supported values."
+variable "delete_all_policy_resources" {
+  description = "(Optional) If true, the request will also perform a clean-up process. Defaults to true. More information can be found here AWS Firewall Manager delete policy"
   type        = string
   default     = ""
 }
@@ -225,25 +225,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "delete_unused_fm_managed_resources" {
-  description = "(Optional) If true, Firewall Manager will automatically remove protections from resources that leave the policy scope. Defaults to false. More information can be found here AWS Firewall Manager policy contents"
-  value       = aws_fms_policy.aws_fms_policy.delete_unused_fm_managed_resources
-}
-output "name" {
-  description = "(Required, Forces new resource) The friendly name of the AWS Firewall Manager Policy."
-  value       = aws_fms_policy.aws_fms_policy.name
-}
-output "orgunit" {
-  description = "(Optional) A list of AWS Organizational Units that you want to include for this AWS FMS Policy. Specifying an OU is the equivalent of specifying all accounts in the OU and in any of its child OUs, including any child OUs and accounts that are added at a later time.You can specify inclusions or exclusions, but not both. If you specify an include_map, AWS Firewall Manager applies the policy to all accounts specified by the include_map, and does not evaluate any exclude_map specifications. If you do not specify an include_map, then Firewall Manager applies the policy to all accounts except for those specified by the exclude_map.security_service_policy_data Configuration Block"
-  value       = aws_fms_policy.aws_fms_policy.orgunit
-}
-output "remediation_enabled" {
-  description = "(Required) A boolean value, indicates if the policy should automatically applied to resources that already exist in the account."
-  value       = aws_fms_policy.aws_fms_policy.remediation_enabled
-}
-output "delete_all_policy_resources" {
-  description = "(Optional) If true, the request will also perform a clean-up process. Defaults to true. More information can be found here AWS Firewall Manager delete policy"
-  value       = aws_fms_policy.aws_fms_policy.delete_all_policy_resources
+output "exclude_map" {
+  description = "(Optional) A map of lists of accounts and OU's to exclude from the policy."
+  value       = aws_fms_policy.aws_fms_policy.exclude_map
 }
 output "exclude_resource_tags" {
   description = "(Required, Forces new resource) A boolean value, if true the tags that are specified in the resource_tags are not protected by this policy. If set to false and resource_tags are populated, resources that contain tags will be protected by this policy."
@@ -253,37 +237,25 @@ output "include_map" {
   description = "(Optional) A map of lists of accounts and OU's to include in the policy."
   value       = aws_fms_policy.aws_fms_policy.include_map
 }
-output "resource_type_list" {
-  description = "(Optional) A list of resource types to protect. Conflicts with resource_type. See the FMS API Reference for more information about supported values. Lists with only one element are not supported, instead use resource_type."
-  value       = aws_fms_policy.aws_fms_policy.resource_type_list
+output "name" {
+  description = "(Required, Forces new resource) The friendly name of the AWS Firewall Manager Policy."
+  value       = aws_fms_policy.aws_fms_policy.name
 }
-output "exclude_map" {
-  description = "(Optional) A map of lists of accounts and OU's to exclude from the policy."
-  value       = aws_fms_policy.aws_fms_policy.exclude_map
+output "orgunit" {
+  description = "(Optional) A list of AWS Organizational Units that you want to include for this AWS FMS Policy. Specifying an OU is the equivalent of specifying all accounts in the OU and in any of its child OUs, including any child OUs and accounts that are added at a later time.You can specify inclusions or exclusions, but not both. If you specify an include_map, AWS Firewall Manager applies the policy to all accounts specified by the include_map, and does not evaluate any exclude_map specifications. If you do not specify an include_map, then Firewall Manager applies the policy to all accounts except for those specified by the exclude_map.security_service_policy_data Configuration Block"
+  value       = aws_fms_policy.aws_fms_policy.orgunit
 }
 output "resource_type" {
   description = "(Optional) A resource type to protect. Conflicts with resource_type_list. See the FMS API Reference for more information about supported values."
   value       = aws_fms_policy.aws_fms_policy.resource_type
 }
-output "security_service_policy_data" {
-  description = "(Required) The objects to include in Security Service Policy Data. Documented below."
-  value       = aws_fms_policy.aws_fms_policy.security_service_policy_data
-}
 output "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.exclude_map Configuration Block"
   value       = aws_fms_policy.aws_fms_policy.tags
 }
-output "type" {
-  description = "(Required, Forces new resource) The service that the policy is using to protect the resources. For the current list of supported types, please refer to the AWS Firewall Manager SecurityServicePolicyData API Type Reference.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_fms_policy.aws_fms_policy.type
-}
-output "account" {
-  description = "(Optional) A list of AWS Organization member Accounts that you want to include for this AWS FMS Policy."
-  value       = aws_fms_policy.aws_fms_policy.account
-}
-output "id" {
-  description = "The AWS account ID of the AWS Firewall Manager administrator account."
-  value       = aws_fms_policy.aws_fms_policy.id
+output "delete_unused_fm_managed_resources" {
+  description = "(Optional) If true, Firewall Manager will automatically remove protections from resources that leave the policy scope. Defaults to false. More information can be found here AWS Firewall Manager policy contents"
+  value       = aws_fms_policy.aws_fms_policy.delete_unused_fm_managed_resources
 }
 output "managed_service_data" {
   description = " (Optional) Details about the service that are specific to the service type, in JSON format. For service type SHIELD_ADVANCED, this is an empty string. Examples depending on type can be found in the AWS Firewall Manager SecurityServicePolicyData API Reference."
@@ -293,9 +265,41 @@ output "policy_update_token" {
   description = "A unique identifier for each update to the policy."
   value       = aws_fms_policy.aws_fms_policy.policy_update_token
 }
+output "remediation_enabled" {
+  description = "(Required) A boolean value, indicates if the policy should automatically applied to resources that already exist in the account."
+  value       = aws_fms_policy.aws_fms_policy.remediation_enabled
+}
 output "resource_tags" {
   description = "(Optional) A map of resource tags, that if present will filter protections on resources based on the exclude_resource_tags."
   value       = aws_fms_policy.aws_fms_policy.resource_tags
+}
+output "type" {
+  description = "(Required, Forces new resource) The service that the policy is using to protect the resources. For the current list of supported types, please refer to the AWS Firewall Manager SecurityServicePolicyData API Type Reference.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_fms_policy.aws_fms_policy.type
+}
+output "id" {
+  description = "The AWS account ID of the AWS Firewall Manager administrator account."
+  value       = aws_fms_policy.aws_fms_policy.id
+}
+output "resource_type_list" {
+  description = "(Optional) A list of resource types to protect. Conflicts with resource_type. See the FMS API Reference for more information about supported values. Lists with only one element are not supported, instead use resource_type."
+  value       = aws_fms_policy.aws_fms_policy.resource_type_list
+}
+output "security_service_policy_data" {
+  description = "(Required) The objects to include in Security Service Policy Data. Documented below."
+  value       = aws_fms_policy.aws_fms_policy.security_service_policy_data
+}
+output "account" {
+  description = "(Optional) A list of AWS Organization member Accounts that you want to include for this AWS FMS Policy."
+  value       = aws_fms_policy.aws_fms_policy.account
+}
+output "delete_all_policy_resources" {
+  description = "(Optional) If true, the request will also perform a clean-up process. Defaults to true. More information can be found here AWS Firewall Manager delete policy"
+  value       = aws_fms_policy.aws_fms_policy.delete_all_policy_resources
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_fms_policy.aws_fms_policy.tags_all
 }
 output "id" {
   description = "The AWS account ID of the AWS Firewall Manager administrator account."
@@ -304,10 +308,6 @@ output "id" {
 output "policy_update_token" {
   description = "A unique identifier for each update to the policy."
   value       = aws_fms_policy.aws_fms_policy.policy_update_token
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_fms_policy.aws_fms_policy.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

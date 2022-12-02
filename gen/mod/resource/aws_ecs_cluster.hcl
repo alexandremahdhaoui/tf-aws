@@ -1,106 +1,32 @@
 resource "aws_ecs_cluster" "aws_ecs_cluster" {
+  default_capacity_provider_strategy = var.default_capacity_provider_strategy
   s3_bucket_encryption_enabled       = var.s3_bucket_encryption_enabled
   arn                                = var.arn
-  cloud_watch_encryption_enabled     = var.cloud_watch_encryption_enabled
-  configuration                      = var.configuration
-  log_configuration                  = var.log_configuration
-  tags                               = var.tags
-  value                              = var.value
-  weight                             = var.weight
   base                               = var.base
-  cloud_watch_log_group_name         = var.cloud_watch_log_group_name
-  kms_key_id                         = var.kms_key_id
+  capacity_provider                  = var.capacity_provider
+  configuration                      = var.configuration
   logging                            = var.logging
+  setting                            = var.setting
+  tags                               = var.tags
+  capacity_providers                 = var.capacity_providers
+  execute_command_configuration      = var.execute_command_configuration
+  id                                 = var.id
+  log_configuration                  = var.log_configuration
+  weight                             = var.weight
+  cloud_watch_encryption_enabled     = var.cloud_watch_encryption_enabled
   name                               = var.name
   s3_bucket_name                     = var.s3_bucket_name
+  value                              = var.value
+  cloud_watch_log_group_name         = var.cloud_watch_log_group_name
+  kms_key_id                         = var.kms_key_id
   s3_key_prefix                      = var.s3_key_prefix
-  setting                            = var.setting
-  capacity_providers                 = var.capacity_providers
-  id                                 = var.id
-  execute_command_configuration      = var.execute_command_configuration
-  capacity_provider                  = var.capacity_provider
-  default_capacity_provider_strategy = var.default_capacity_provider_strategy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "capacity_provider" {
-  description = "(Required) The short name of the capacity provider."
-  type        = string
-}
-variable "default_capacity_provider_strategy" {
-  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) Configuration block for capacity provider strategy to use by default for the cluster. Can be one or more. Detailed below."
-  type        = string
-}
-variable "execute_command_configuration" {
-  description = "(Optional) The details of the execute command configuration. Detailed below.execute_command_configuration"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN that identifies the cluster."
-  type        = string
-}
 variable "cloud_watch_encryption_enabled" {
   description = "(Optional) Whether or not to enable encryption on the CloudWatch logs. If not specified, encryption will be disabled."
-  type        = string
-  default     = ""
-}
-variable "s3_bucket_encryption_enabled" {
-  description = "(Optional) Whether or not to enable encryption on the logs sent to S3. If not specified, encryption will be disabled."
-  type        = string
-  default     = ""
-}
-variable "base" {
-  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined.setting"
-  type        = string
-  default     = ""
-}
-variable "cloud_watch_log_group_name" {
-  description = "(Optional) The name of the CloudWatch log group to send logs to."
-  type        = string
-  default     = ""
-}
-variable "configuration" {
-  description = "(Optional) The execute command configuration for the cluster. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "log_configuration" {
-  description = "(Optional) The log configuration for the results of the execute command actions Required when logging is OVERRIDE. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
-  type        = string
-  default     = ""
-}
-variable "value" {
-  description = " (Required) The value to assign to the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "weight" {
-  description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider."
-  type        = string
-  default     = ""
-}
-variable "capacity_providers" {
-  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) List of short names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
-  type        = string
-}
-variable "id" {
-  description = "ARN that identifies the cluster."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) The AWS Key Management Service key ID to encrypt the data between the local client and the container."
-  type        = string
-  default     = ""
-}
-variable "logging" {
-  description = "(Optional) The log setting to use for redirecting logs for your execute command results. Valid values are NONE, DEFAULT, and OVERRIDE.log_configuration"
   type        = string
   default     = ""
 }
@@ -113,13 +39,87 @@ variable "s3_bucket_name" {
   type        = string
   default     = ""
 }
+variable "value" {
+  description = " (Required) The value to assign to the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "weight" {
+  description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider."
+  type        = string
+  default     = ""
+}
+variable "cloud_watch_log_group_name" {
+  description = "(Optional) The name of the CloudWatch log group to send logs to."
+  type        = string
+  default     = ""
+}
+variable "kms_key_id" {
+  description = "(Optional) The AWS Key Management Service key ID to encrypt the data between the local client and the container."
+  type        = string
+  default     = ""
+}
 variable "s3_key_prefix" {
   description = "(Optional) An optional folder in the S3 bucket to place logs in.default_capacity_provider_strategy"
   type        = string
   default     = ""
 }
+variable "arn" {
+  description = "ARN that identifies the cluster."
+  type        = string
+}
+variable "base" {
+  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined.setting"
+  type        = string
+  default     = ""
+}
+variable "capacity_provider" {
+  description = "(Required) The short name of the capacity provider."
+  type        = string
+}
+variable "configuration" {
+  description = "(Optional) The execute command configuration for the cluster. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "default_capacity_provider_strategy" {
+  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) Configuration block for capacity provider strategy to use by default for the cluster. Can be one or more. Detailed below."
+  type        = string
+}
+variable "s3_bucket_encryption_enabled" {
+  description = "(Optional) Whether or not to enable encryption on the logs sent to S3. If not specified, encryption will be disabled."
+  type        = string
+  default     = ""
+}
+variable "capacity_providers" {
+  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) List of short names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
+  type        = string
+}
+variable "execute_command_configuration" {
+  description = "(Optional) The details of the execute command configuration. Detailed below.execute_command_configuration"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "ARN that identifies the cluster."
+  type        = string
+}
+variable "log_configuration" {
+  description = "(Optional) The log configuration for the results of the execute command actions Required when logging is OVERRIDE. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "logging" {
+  description = "(Optional) The log setting to use for redirecting logs for your execute command results. Valid values are NONE, DEFAULT, and OVERRIDE.log_configuration"
+  type        = string
+  default     = ""
+}
 variable "setting" {
   description = "(Optional) Configuration block(s) with cluster settings. For example, this can be used to enable CloudWatch Container Insights for a cluster. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
   type        = string
   default     = ""
 }
@@ -243,29 +243,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "s3_key_prefix" {
-  description = "(Optional) An optional folder in the S3 bucket to place logs in.default_capacity_provider_strategy"
-  value       = aws_ecs_cluster.aws_ecs_cluster.s3_key_prefix
-}
-output "setting" {
-  description = "(Optional) Configuration block(s) with cluster settings. For example, this can be used to enable CloudWatch Container Insights for a cluster. Detailed below."
-  value       = aws_ecs_cluster.aws_ecs_cluster.setting
-}
-output "capacity_providers" {
-  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) List of short names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
-  value       = aws_ecs_cluster.aws_ecs_cluster.capacity_providers
-}
-output "id" {
-  description = "ARN that identifies the cluster."
-  value       = aws_ecs_cluster.aws_ecs_cluster.id
+output "cloud_watch_log_group_name" {
+  description = "(Optional) The name of the CloudWatch log group to send logs to."
+  value       = aws_ecs_cluster.aws_ecs_cluster.cloud_watch_log_group_name
 }
 output "kms_key_id" {
   description = "(Optional) The AWS Key Management Service key ID to encrypt the data between the local client and the container."
   value       = aws_ecs_cluster.aws_ecs_cluster.kms_key_id
 }
+output "s3_key_prefix" {
+  description = "(Optional) An optional folder in the S3 bucket to place logs in.default_capacity_provider_strategy"
+  value       = aws_ecs_cluster.aws_ecs_cluster.s3_key_prefix
+}
+output "s3_bucket_encryption_enabled" {
+  description = "(Optional) Whether or not to enable encryption on the logs sent to S3. If not specified, encryption will be disabled."
+  value       = aws_ecs_cluster.aws_ecs_cluster.s3_bucket_encryption_enabled
+}
+output "arn" {
+  description = "ARN that identifies the cluster."
+  value       = aws_ecs_cluster.aws_ecs_cluster.arn
+}
+output "base" {
+  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined.setting"
+  value       = aws_ecs_cluster.aws_ecs_cluster.base
+}
+output "capacity_provider" {
+  description = "(Required) The short name of the capacity provider."
+  value       = aws_ecs_cluster.aws_ecs_cluster.capacity_provider
+}
+output "configuration" {
+  description = "(Optional) The execute command configuration for the cluster. Detailed below."
+  value       = aws_ecs_cluster.aws_ecs_cluster.configuration
+}
+output "default_capacity_provider_strategy" {
+  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) Configuration block for capacity provider strategy to use by default for the cluster. Can be one or more. Detailed below."
+  value       = aws_ecs_cluster.aws_ecs_cluster.default_capacity_provider_strategy
+}
+output "setting" {
+  description = "(Optional) Configuration block(s) with cluster settings. For example, this can be used to enable CloudWatch Container Insights for a cluster. Detailed below."
+  value       = aws_ecs_cluster.aws_ecs_cluster.setting
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
+  value       = aws_ecs_cluster.aws_ecs_cluster.tags
+}
+output "capacity_providers" {
+  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) List of short names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
+  value       = aws_ecs_cluster.aws_ecs_cluster.capacity_providers
+}
+output "execute_command_configuration" {
+  description = "(Optional) The details of the execute command configuration. Detailed below.execute_command_configuration"
+  value       = aws_ecs_cluster.aws_ecs_cluster.execute_command_configuration
+}
+output "id" {
+  description = "ARN that identifies the cluster."
+  value       = aws_ecs_cluster.aws_ecs_cluster.id
+}
+output "log_configuration" {
+  description = "(Optional) The log configuration for the results of the execute command actions Required when logging is OVERRIDE. Detailed below."
+  value       = aws_ecs_cluster.aws_ecs_cluster.log_configuration
+}
 output "logging" {
   description = "(Optional) The log setting to use for redirecting logs for your execute command results. Valid values are NONE, DEFAULT, and OVERRIDE.log_configuration"
   value       = aws_ecs_cluster.aws_ecs_cluster.logging
+}
+output "cloud_watch_encryption_enabled" {
+  description = "(Optional) Whether or not to enable encryption on the CloudWatch logs. If not specified, encryption will be disabled."
+  value       = aws_ecs_cluster.aws_ecs_cluster.cloud_watch_encryption_enabled
 }
 output "name" {
   description = "(Required) Name of the setting to manage. Valid values: containerInsights."
@@ -275,57 +319,13 @@ output "s3_bucket_name" {
   description = "(Optional) The name of the S3 bucket to send logs to."
   value       = aws_ecs_cluster.aws_ecs_cluster.s3_bucket_name
 }
-output "capacity_provider" {
-  description = "(Required) The short name of the capacity provider."
-  value       = aws_ecs_cluster.aws_ecs_cluster.capacity_provider
-}
-output "default_capacity_provider_strategy" {
-  description = "(Optional, strongDeprecated use the aws_ecs_cluster_capacity_providers resource instead) Configuration block for capacity provider strategy to use by default for the cluster. Can be one or more. Detailed below."
-  value       = aws_ecs_cluster.aws_ecs_cluster.default_capacity_provider_strategy
-}
-output "execute_command_configuration" {
-  description = "(Optional) The details of the execute command configuration. Detailed below.execute_command_configuration"
-  value       = aws_ecs_cluster.aws_ecs_cluster.execute_command_configuration
-}
-output "arn" {
-  description = "ARN that identifies the cluster."
-  value       = aws_ecs_cluster.aws_ecs_cluster.arn
-}
-output "cloud_watch_encryption_enabled" {
-  description = "(Optional) Whether or not to enable encryption on the CloudWatch logs. If not specified, encryption will be disabled."
-  value       = aws_ecs_cluster.aws_ecs_cluster.cloud_watch_encryption_enabled
-}
-output "s3_bucket_encryption_enabled" {
-  description = "(Optional) Whether or not to enable encryption on the logs sent to S3. If not specified, encryption will be disabled."
-  value       = aws_ecs_cluster.aws_ecs_cluster.s3_bucket_encryption_enabled
+output "value" {
+  description = " (Required) The value to assign to the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ecs_cluster.aws_ecs_cluster.value
 }
 output "weight" {
   description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider."
   value       = aws_ecs_cluster.aws_ecs_cluster.weight
-}
-output "base" {
-  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined.setting"
-  value       = aws_ecs_cluster.aws_ecs_cluster.base
-}
-output "cloud_watch_log_group_name" {
-  description = "(Optional) The name of the CloudWatch log group to send logs to."
-  value       = aws_ecs_cluster.aws_ecs_cluster.cloud_watch_log_group_name
-}
-output "configuration" {
-  description = "(Optional) The execute command configuration for the cluster. Detailed below."
-  value       = aws_ecs_cluster.aws_ecs_cluster.configuration
-}
-output "log_configuration" {
-  description = "(Optional) The log configuration for the results of the execute command actions Required when logging is OVERRIDE. Detailed below."
-  value       = aws_ecs_cluster.aws_ecs_cluster.log_configuration
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
-  value       = aws_ecs_cluster.aws_ecs_cluster.tags
-}
-output "value" {
-  description = " (Required) The value to assign to the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ecs_cluster.aws_ecs_cluster.value
 }
 output "arn" {
   description = "ARN that identifies the cluster."

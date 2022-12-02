@@ -1,7 +1,7 @@
 resource "aws_ses_domain_identity_verification" "aws_ses_domain_identity_verification" {
+  arn    = var.arn
   domain = var.domain
   id     = var.id
-  arn    = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The domain name of the domain identity."
+  value       = aws_ses_domain_identity_verification.aws_ses_domain_identity_verification.id
+}
 output "arn" {
   description = "The ARN of the domain identity.TimeoutsConfiguration options:"
   value       = aws_ses_domain_identity_verification.aws_ses_domain_identity_verification.arn
@@ -146,10 +150,6 @@ output "arn" {
 output "domain" {
   description = "(Required) The domain name of the SES domain identity to verify.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_domain_identity_verification.aws_ses_domain_identity_verification.domain
-}
-output "id" {
-  description = "The domain name of the domain identity."
-  value       = aws_ses_domain_identity_verification.aws_ses_domain_identity_verification.id
 }
 output "arn" {
   description = "The ARN of the domain identity.TimeoutsConfiguration options:"

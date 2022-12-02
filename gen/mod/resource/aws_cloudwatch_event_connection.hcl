@@ -1,38 +1,34 @@
 resource "aws_cloudwatch_event_connection" "aws_cloudwatch_event_connection" {
+  header                     = var.header
+  oauth                      = var.oauth
+  authorization_endpoint     = var.authorization_endpoint
+  authorization_type         = var.authorization_type
+  client_secret              = var.client_secret
+  invocation_http_parameters = var.invocation_http_parameters
+  key                        = var.key
+  username                   = var.username
+  name                       = var.name
+  oauth_http_parameters      = var.oauth_http_parameters
+  auth_parameters            = var.auth_parameters
+  body                       = var.body
+  is_value_secret            = var.is_value_secret
+  client_id                  = var.client_id
+  client_parameters          = var.client_parameters
+  description                = var.description
+  http_method                = var.http_method
+  password                   = var.password
+  api_key                    = var.api_key
   arn                        = var.arn
   basic                      = var.basic
-  client_id                  = var.client_id
-  key                        = var.key
   query_string               = var.query_string
-  username                   = var.username
   value                      = var.value
-  auth_parameters            = var.auth_parameters
-  authorization_type         = var.authorization_type
-  http_method                = var.http_method
-  invocation_http_parameters = var.invocation_http_parameters
-  oauth                      = var.oauth
-  client_parameters          = var.client_parameters
-  client_secret              = var.client_secret
-  oauth_http_parameters      = var.oauth_http_parameters
-  password                   = var.password
-  is_value_secret            = var.is_value_secret
-  name                       = var.name
-  api_key                    = var.api_key
-  authorization_endpoint     = var.authorization_endpoint
-  body                       = var.body
-  description                = var.description
-  header                     = var.header
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "http_method" {
-  description = "(Required) A password for the authorization. Created and stored in AWS Secrets Manager."
-  type        = string
-}
-variable "invocation_http_parameters" {
-  description = "(Optional) Invocation Http Parameters are additional credentials used to sign each Invocation of the ApiDestination created from this Connection. If the ApiDestination Rule Target has additional HttpParameters, the values will be merged together, with the Connection Invocation Http Parameters taking precedence. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.auth_parameters support the following:"
+variable "header" {
+  description = "(Optional) Contains additional header parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
   type        = string
   default     = ""
 }
@@ -41,55 +37,45 @@ variable "oauth" {
   type        = string
   default     = ""
 }
-variable "query_string" {
-  description = "(Optional) Contains additional query string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
-  type        = string
-  default     = ""
-}
-variable "username" {
-  description = "(Required) A username for the authorization."
-  type        = string
-}
-variable "value" {
-  description = "(Required) The value associated with the key. Created and stored in AWS Secrets Manager if is secret."
-  type        = string
-}
-variable "auth_parameters" {
-  description = "(Required) Parameters used for authorization. A maximum of 1 are allowed. Documented below."
+variable "authorization_endpoint" {
+  description = "(Required) The URL to the authorization endpoint."
   type        = string
 }
 variable "authorization_type" {
   description = "(Required) Choose the type of authorization to use for the connection. One of API_KEY,BASIC,OAUTH_CLIENT_CREDENTIALS."
   type        = string
 }
-variable "oauth_http_parameters" {
-  description = "(Required) OAuth Http Parameters are additional credentials used to sign the request to the authorization endpoint to exchange the OAuth Client information for an access token. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.invocation_http_parameters and oauth_http_parameters support the following:"
-  type        = string
-}
-variable "password" {
-  description = "(Required) A password for the authorization. Created and stored in AWS Secrets Manager.oauth support the following:"
-  type        = string
-}
-variable "client_parameters" {
-  description = "(Required) Contains the client parameters for OAuth authorization. Contains the following two parameters.\n"
-  type        = string
-}
 variable "client_secret" {
   description = "(Required) The client secret for the credentials to use for authorization. Created and stored in AWS Secrets Manager."
   type        = string
 }
+variable "invocation_http_parameters" {
+  description = "(Optional) Invocation Http Parameters are additional credentials used to sign each Invocation of the ApiDestination created from this Connection. If the ApiDestination Rule Target has additional HttpParameters, the values will be merged together, with the Connection Invocation Http Parameters taking precedence. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.auth_parameters support the following:"
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Required) The key for the parameter."
+  type        = string
+}
+variable "username" {
+  description = "(Required) A username for the authorization."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the new connection. Maximum of 64 characters consisting of numbers, lower/upper case letters, .,-,_."
+  type        = string
+}
+variable "oauth_http_parameters" {
+  description = "(Required) OAuth Http Parameters are additional credentials used to sign the request to the authorization endpoint to exchange the OAuth Client information for an access token. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.invocation_http_parameters and oauth_http_parameters support the following:"
+  type        = string
+}
+variable "auth_parameters" {
+  description = "(Required) Parameters used for authorization. A maximum of 1 are allowed. Documented below."
+  type        = string
+}
 variable "body" {
   description = "(Optional) Contains additional body string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Enter a description for the connection. Maximum of 512 characters."
-  type        = string
-  default     = ""
-}
-variable "header" {
-  description = "(Optional) Contains additional header parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
   type        = string
   default     = ""
 }
@@ -98,26 +84,31 @@ variable "is_value_secret" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) The name of the new connection. Maximum of 64 characters consisting of numbers, lower/upper case letters, .,-,_."
+variable "client_id" {
+  description = "(Required) The client ID for the credentials to use for authorization. Created and stored in AWS Secrets Manager."
+  type        = string
+}
+variable "client_parameters" {
+  description = "(Required) Contains the client parameters for OAuth authorization. Contains the following two parameters.\n"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Enter a description for the connection. Maximum of 512 characters."
+  type        = string
+  default     = ""
+}
+variable "http_method" {
+  description = "(Required) A password for the authorization. Created and stored in AWS Secrets Manager."
+  type        = string
+}
+variable "password" {
+  description = "(Required) A password for the authorization. Created and stored in AWS Secrets Manager.oauth support the following:"
   type        = string
 }
 variable "api_key" {
   description = "(Optional) Parameters used for API_KEY authorization. An API key to include in the header for each authentication request. A maximum of 1 are allowed. Conflicts with basic and oauth. Documented below."
   type        = string
   default     = ""
-}
-variable "authorization_endpoint" {
-  description = "(Required) The URL to the authorization endpoint."
-  type        = string
-}
-variable "client_id" {
-  description = "(Required) The client ID for the credentials to use for authorization. Created and stored in AWS Secrets Manager."
-  type        = string
-}
-variable "key" {
-  description = "(Required) The key for the parameter."
-  type        = string
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."
@@ -127,6 +118,15 @@ variable "basic" {
   description = "(Optional) Parameters used for BASIC authorization. A maximum of 1 are allowed. Conflicts with api_key and oauth. Documented below."
   type        = string
   default     = ""
+}
+variable "query_string" {
+  description = "(Optional) Contains additional query string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
+  type        = string
+  default     = ""
+}
+variable "value" {
+  description = "(Required) The value associated with the key. Created and stored in AWS Secrets Manager if is secret."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -248,45 +248,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "value" {
-  description = "(Required) The value associated with the key. Created and stored in AWS Secrets Manager if is secret."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.value
-}
-output "auth_parameters" {
-  description = "(Required) Parameters used for authorization. A maximum of 1 are allowed. Documented below."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.auth_parameters
+output "authorization_endpoint" {
+  description = "(Required) The URL to the authorization endpoint."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.authorization_endpoint
 }
 output "authorization_type" {
   description = "(Required) Choose the type of authorization to use for the connection. One of API_KEY,BASIC,OAUTH_CLIENT_CREDENTIALS."
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.authorization_type
 }
-output "http_method" {
-  description = "(Required) A password for the authorization. Created and stored in AWS Secrets Manager."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.http_method
+output "client_secret" {
+  description = "(Required) The client secret for the credentials to use for authorization. Created and stored in AWS Secrets Manager."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.client_secret
 }
-output "invocation_http_parameters" {
-  description = "(Optional) Invocation Http Parameters are additional credentials used to sign each Invocation of the ApiDestination created from this Connection. If the ApiDestination Rule Target has additional HttpParameters, the values will be merged together, with the Connection Invocation Http Parameters taking precedence. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.auth_parameters support the following:"
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.invocation_http_parameters
+output "header" {
+  description = "(Optional) Contains additional header parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.header
 }
 output "oauth" {
   description = "(Optional) Parameters used for OAUTH_CLIENT_CREDENTIALS authorization. A maximum of 1 are allowed. Conflicts with basic and api_key. Documented below.api_key support the following:"
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.oauth
 }
-output "query_string" {
-  description = "(Optional) Contains additional query string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.query_string
+output "invocation_http_parameters" {
+  description = "(Optional) Invocation Http Parameters are additional credentials used to sign each Invocation of the ApiDestination created from this Connection. If the ApiDestination Rule Target has additional HttpParameters, the values will be merged together, with the Connection Invocation Http Parameters taking precedence. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.auth_parameters support the following:"
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.invocation_http_parameters
+}
+output "key" {
+  description = "(Required) The key for the parameter."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.key
 }
 output "username" {
   description = "(Required) A username for the authorization."
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.username
 }
-output "client_parameters" {
-  description = "(Required) Contains the client parameters for OAuth authorization. Contains the following two parameters.\n"
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.client_parameters
+output "auth_parameters" {
+  description = "(Required) Parameters used for authorization. A maximum of 1 are allowed. Documented below."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.auth_parameters
 }
-output "client_secret" {
-  description = "(Required) The client secret for the credentials to use for authorization. Created and stored in AWS Secrets Manager."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.client_secret
+output "body" {
+  description = "(Optional) Contains additional body string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.body
+}
+output "is_value_secret" {
+  description = "(Optional) Specified whether the value is secret.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.is_value_secret
+}
+output "name" {
+  description = "(Required) The name of the new connection. Maximum of 64 characters consisting of numbers, lower/upper case letters, .,-,_."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.name
 }
 output "oauth_http_parameters" {
   description = "(Required) OAuth Http Parameters are additional credentials used to sign the request to the authorization endpoint to exchange the OAuth Client information for an access token. Secret values are stored and managed by AWS Secrets Manager. A maximum of 1 are allowed. Documented below.invocation_http_parameters and oauth_http_parameters support the following:"
@@ -300,30 +308,6 @@ output "api_key" {
   description = "(Optional) Parameters used for API_KEY authorization. An API key to include in the header for each authentication request. A maximum of 1 are allowed. Conflicts with basic and oauth. Documented below."
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.api_key
 }
-output "authorization_endpoint" {
-  description = "(Required) The URL to the authorization endpoint."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.authorization_endpoint
-}
-output "body" {
-  description = "(Optional) Contains additional body string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.body
-}
-output "description" {
-  description = "(Optional) Enter a description for the connection. Maximum of 512 characters."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.description
-}
-output "header" {
-  description = "(Optional) Contains additional header parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.header
-}
-output "is_value_secret" {
-  description = "(Optional) Specified whether the value is secret.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.is_value_secret
-}
-output "name" {
-  description = "(Required) The name of the new connection. Maximum of 64 characters consisting of numbers, lower/upper case letters, .,-,_."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.name
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.arn
@@ -336,9 +320,25 @@ output "client_id" {
   description = "(Required) The client ID for the credentials to use for authorization. Created and stored in AWS Secrets Manager."
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.client_id
 }
-output "key" {
-  description = "(Required) The key for the parameter."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.key
+output "client_parameters" {
+  description = "(Required) Contains the client parameters for OAuth authorization. Contains the following two parameters.\n"
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.client_parameters
+}
+output "description" {
+  description = "(Optional) Enter a description for the connection. Maximum of 512 characters."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.description
+}
+output "http_method" {
+  description = "(Required) A password for the authorization. Created and stored in AWS Secrets Manager."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.http_method
+}
+output "query_string" {
+  description = "(Optional) Contains additional query string parameters for the connection. You can include up to 100 additional body string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB. Each parameter can contain the following:"
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.query_string
+}
+output "value" {
+  description = "(Required) The value associated with the key. Created and stored in AWS Secrets Manager if is secret."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.value
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."

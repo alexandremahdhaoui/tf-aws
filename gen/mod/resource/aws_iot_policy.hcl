@@ -160,10 +160,6 @@ output "policy" {
   description = "(Required) The policy document. This is a JSON formatted string. Use the IoT Developer Guide for more information on IoT Policies. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iot_policy.aws_iot_policy.policy
 }
-output "policy" {
-  description = "The policy document."
-  value       = aws_iot_policy.aws_iot_policy.policy
-}
 output "arn" {
   description = "The ARN assigned by AWS to this policy."
   value       = aws_iot_policy.aws_iot_policy.arn
@@ -175,6 +171,10 @@ output "default_version_id" {
 output "name" {
   description = "The name of this policy."
   value       = aws_iot_policy.aws_iot_policy.name
+}
+output "policy" {
+  description = "The policy document."
+  value       = aws_iot_policy.aws_iot_policy.policy
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

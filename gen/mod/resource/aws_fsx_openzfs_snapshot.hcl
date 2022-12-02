@@ -1,12 +1,12 @@
 resource "aws_fsx_openzfs_snapshot" "aws_fsx_openzfs_snapshot" {
+  name      = var.name
+  tags      = var.tags
+  tags_all  = var.tags_all
   volume_id = var.volume_id
   arn       = var.arn
   create    = var.create
   delete    = var.delete
   id        = var.id
-  name      = var.name
-  tags      = var.tags
-  tags_all  = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -198,6 +198,10 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level. If you have set copy_tags_to_backups to true, and you specify one or more tags, no existing file system tags are copied from the file system to the backup."
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.tags
 }
+output "arn" {
+  description = "Amazon Resource Name of the snapshot."
+  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.arn
+}
 output "create" {
   description = "(Default 30m)"
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.create
@@ -217,10 +221,6 @@ output "tags_all" {
 output "update" {
   description = "(Default 30m)"
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.update
-}
-output "arn" {
-  description = "Amazon Resource Name of the snapshot."
-  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

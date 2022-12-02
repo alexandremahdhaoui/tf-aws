@@ -1,19 +1,14 @@
 resource "aws_iam_virtual_mfa_device" "aws_iam_virtual_mfa_device" {
+  virtual_mfa_device_name = var.virtual_mfa_device_name
+  arn                     = var.arn
   base_32_string_seed     = var.base_32_string_seed
   path                    = var.path
   qr_code_png             = var.qr_code_png
   tags                    = var.tags
-  virtual_mfa_device_name = var.virtual_mfa_device_name
-  arn                     = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of resource tags for the virtual mfa device. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "virtual_mfa_device_name" {
   description = "(Required) The name of the virtual MFA device. Use with path to uniquely identify a virtual MFA device."
@@ -35,6 +30,11 @@ variable "path" {
 variable "qr_code_png" {
   description = " A QR code PNG image that encodes otpauth://totp/$virtualMFADeviceName@$AccountName?secret=$Base32String where $virtualMFADeviceName is one of the create call arguments. AccountName is the user name if set (otherwise, the account ID otherwise), and Base32String is the seed in base32 format."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags for the virtual mfa device. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,6 +156,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the virtual mfa device."
+  value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.arn
+}
 output "base_32_string_seed" {
   description = "The base32 seed defined as specified in RFC3548. The base_32_string_seed is base64-encoded."
   value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.base_32_string_seed
@@ -176,9 +180,9 @@ output "virtual_mfa_device_name" {
   description = "(Required) The name of the virtual MFA device. Use with path to uniquely identify a virtual MFA device."
   value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.virtual_mfa_device_name
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the virtual mfa device."
-  value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.arn
+output "base_32_string_seed" {
+  description = "The base32 seed defined as specified in RFC3548. The base_32_string_seed is base64-encoded."
+  value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.base_32_string_seed
 }
 output "qr_code_png" {
   description = " A QR code PNG image that encodes otpauth://totp/$virtualMFADeviceName@$AccountName?secret=$Base32String where $virtualMFADeviceName is one of the create call arguments. AccountName is the user name if set (otherwise, the account ID otherwise), and Base32String is the seed in base32 format."
@@ -191,10 +195,6 @@ output "tags_all" {
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the virtual mfa device."
   value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.arn
-}
-output "base_32_string_seed" {
-  description = "The base32 seed defined as specified in RFC3548. The base_32_string_seed is base64-encoded."
-  value       = aws_iam_virtual_mfa_device.aws_iam_virtual_mfa_device.base_32_string_seed
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,9 +1,9 @@
 datasource "aws_cloudwatch_log_group" "aws_cloudwatch_log_group" {
+  creation_time     = var.creation_time
   kms_key_id        = var.kms_key_id
   name              = var.name
   retention_in_days = var.retention_in_days
   arn               = var.arn
-  creation_time     = var.creation_time
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

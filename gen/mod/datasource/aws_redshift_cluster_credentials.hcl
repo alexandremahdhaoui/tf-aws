@@ -1,29 +1,15 @@
 datasource "aws_redshift_cluster_credentials" "aws_redshift_cluster_credentials" {
-  auto_create        = var.auto_create
   cluster_identifier = var.cluster_identifier
   db_groups          = var.db_groups
   db_name            = var.db_name
   db_password        = var.db_password
   db_user            = var.db_user
   duration_seconds   = var.duration_seconds
+  auto_create        = var.auto_create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "cluster_identifier" {
-  description = "(Required) Unique identifier of the cluster that contains the database for which your are requesting credentials."
-  type        = string
-}
-variable "db_groups" {
-  description = "(Optional) List of the names of existing database groups that the user named in db_user will join for the current session, in addition to any group memberships for an existing user. If not specified, a new user is added only to PUBLIC."
-  type        = string
-  default     = ""
-}
-variable "db_name" {
-  description = "(Optional) Name of a database that DbUser is authorized to log on to. If db_name is not specified, db_user can log on to any existing database."
-  type        = string
-  default     = ""
 }
 variable "db_password" {
   description = "Temporary password that authorizes the user name returned by db_user to log on to the database db_name."
@@ -40,6 +26,20 @@ variable "duration_seconds" {
 }
 variable "auto_create" {
   description = "(Optional)  Create a database user with the name specified for the user named in db_user if one does not exist."
+  type        = string
+  default     = ""
+}
+variable "cluster_identifier" {
+  description = "(Required) Unique identifier of the cluster that contains the database for which your are requesting credentials."
+  type        = string
+}
+variable "db_groups" {
+  description = "(Optional) List of the names of existing database groups that the user named in db_user will join for the current session, in addition to any group memberships for an existing user. If not specified, a new user is added only to PUBLIC."
+  type        = string
+  default     = ""
+}
+variable "db_name" {
+  description = "(Optional) Name of a database that DbUser is authorized to log on to. If db_name is not specified, db_user can log on to any existing database."
   type        = string
   default     = ""
 }

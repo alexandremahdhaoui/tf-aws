@@ -16,13 +16,13 @@ variable "name" {
   type        = string
   default     = ""
 }
-output "metric_name" {
-  description = "(Optional) Name of the WAF rule group.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_wafregional_subscribed_rule_group.aws_wafregional_subscribed_rule_group.metric_name
-}
 output "name" {
   description = "(Optional) Name of the WAF rule group."
   value       = aws_wafregional_subscribed_rule_group.aws_wafregional_subscribed_rule_group.name
+}
+output "metric_name" {
+  description = "(Optional) Name of the WAF rule group.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_wafregional_subscribed_rule_group.aws_wafregional_subscribed_rule_group.metric_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

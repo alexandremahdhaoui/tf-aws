@@ -1,9 +1,9 @@
 resource "aws_opsworks_permission" "aws_opsworks_permission" {
-  allow_ssh  = var.allow_ssh
   allow_sudo = var.allow_sudo
   level      = var.level
   stack_id   = var.stack_id
   user_arn   = var.user_arn
+  allow_ssh  = var.allow_ssh
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -152,10 +152,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "level" {
-  description = "(Optional) The users permission level. Mus be one of deny, show, deploy, manage, iam_only"
-  value       = aws_opsworks_permission.aws_opsworks_permission.level
-}
 output "stack_id" {
   description = "(Required) The stack to set the permissions forIn addition to all arguments above, the following attributes are exported:"
   value       = aws_opsworks_permission.aws_opsworks_permission.stack_id
@@ -171,6 +167,10 @@ output "allow_ssh" {
 output "allow_sudo" {
   description = "(Optional) Whether the user is allowed to use sudo to elevate privileges"
   value       = aws_opsworks_permission.aws_opsworks_permission.allow_sudo
+}
+output "level" {
+  description = "(Optional) The users permission level. Mus be one of deny, show, deploy, manage, iam_only"
+  value       = aws_opsworks_permission.aws_opsworks_permission.level
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

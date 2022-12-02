@@ -11,6 +11,18 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "name" {
+  description = "(Optional, Forces new resource) The name of the docDB subnet group. If omitted, Terraform will assign a random, unique name."
+  type        = string
+}
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+}
+variable "subnet_ids" {
+  description = "(Required) A list of VPC subnet IDs."
+  type        = string
+}
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -27,18 +39,6 @@ variable "description" {
 }
 variable "id" {
   description = "The docDB subnet group name."
-  type        = string
-}
-variable "name" {
-  description = "(Optional, Forces new resource) The name of the docDB subnet group. If omitted, Terraform will assign a random, unique name."
-  type        = string
-}
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Required) A list of VPC subnet IDs."
   type        = string
 }
 variable "tag_instance_id" {
@@ -161,10 +161,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the docDB subnet group."
-  value       = aws_docdb_subnet_group.aws_docdb_subnet_group.arn
-}
 output "description" {
   description = "(Optional) The description of the docDB subnet group. Defaults to \"Managed by Terraform\"."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.description
@@ -188,6 +184,10 @@ output "subnet_ids" {
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.tags
+}
+output "arn" {
+  description = "The ARN of the docDB subnet group."
+  value       = aws_docdb_subnet_group.aws_docdb_subnet_group.arn
 }
 output "arn" {
   description = "The ARN of the docDB subnet group."

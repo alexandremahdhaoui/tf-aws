@@ -1,10 +1,14 @@
 resource "aws_db_instance_role_association" "aws_db_instance_role_association" {
-  db_instance_identifier = var.db_instance_identifier
   feature_name           = var.feature_name
   role_arn               = var.role_arn
+  db_instance_identifier = var.db_instance_identifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "db_instance_identifier" {
+  description = "(Required) DB Instance Identifier to associate with the IAM Role."
   type        = string
 }
 variable "feature_name" {
@@ -13,10 +17,6 @@ variable "feature_name" {
 }
 variable "role_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "db_instance_identifier" {
-  description = "(Required) DB Instance Identifier to associate with the IAM Role."
   type        = string
 }
 variable "tag_instance_id" {

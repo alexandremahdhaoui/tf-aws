@@ -1,6 +1,6 @@
 resource "aws_servicecatalog_organizations_access" "aws_servicecatalog_organizations_access" {
-  enabled = var.enabled
   id      = var.id
+  enabled = var.enabled
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

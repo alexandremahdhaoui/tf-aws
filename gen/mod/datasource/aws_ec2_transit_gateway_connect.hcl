@@ -1,12 +1,12 @@
 datasource "aws_ec2_transit_gateway_connect" "aws_ec2_transit_gateway_connect" {
+  protocol                   = var.protocol
+  tags                       = var.tags
+  transit_gateway_connect_id = var.transit_gateway_connect_id
   transit_gateway_id         = var.transit_gateway_id
   transport_attachment_id    = var.transport_attachment_id
   values                     = var.values
   filter                     = var.filter
   name                       = var.name
-  protocol                   = var.protocol
-  tags                       = var.tags
-  transit_gateway_connect_id = var.transit_gateway_connect_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

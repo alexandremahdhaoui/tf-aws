@@ -1,8 +1,8 @@
 resource "aws_emr_security_configuration" "aws_emr_security_configuration" {
+  id            = var.id
   name          = var.name
   name_prefix   = var.name_prefix
   configuration = var.configuration
-  id            = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -161,10 +161,6 @@ output "name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
   value       = aws_emr_security_configuration.aws_emr_security_configuration.name_prefix
 }
-output "name" {
-  description = "The Name of the EMR Security Configuration"
-  value       = aws_emr_security_configuration.aws_emr_security_configuration.name
-}
 output "configuration" {
   description = "The JSON formatted Security Configuration"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.configuration
@@ -176,6 +172,10 @@ output "creation_date" {
 output "id" {
   description = "The ID of the EMR Security Configuration (Same as the name)"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.id
+}
+output "name" {
+  description = "The Name of the EMR Security Configuration"
+  value       = aws_emr_security_configuration.aws_emr_security_configuration.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

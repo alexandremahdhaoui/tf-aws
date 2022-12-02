@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "authorization_token" {
-  description = "Temporary IAM authentication credentials to access the ECR repository encoded in base64 in the form of user_name:password."
-  value       = aws_ecrpublic_authorization_token.aws_ecrpublic_authorization_token.authorization_token
-}
 output "expires_at" {
   description = "Time in UTC RFC3339 format when the authorization token expires."
   value       = aws_ecrpublic_authorization_token.aws_ecrpublic_authorization_token.expires_at
@@ -19,6 +15,10 @@ output "id" {
 output "password" {
   description = "Password decoded from the authorization token."
   value       = aws_ecrpublic_authorization_token.aws_ecrpublic_authorization_token.password
+}
+output "authorization_token" {
+  description = "Temporary IAM authentication credentials to access the ECR repository encoded in base64 in the form of user_name:password."
+  value       = aws_ecrpublic_authorization_token.aws_ecrpublic_authorization_token.authorization_token
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

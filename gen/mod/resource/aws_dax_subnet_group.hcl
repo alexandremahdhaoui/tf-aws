@@ -1,8 +1,8 @@
 resource "aws_dax_subnet_group" "aws_dax_subnet_group" {
-  id          = var.id
   name        = var.name
   subnet_ids  = var.subnet_ids
   description = var.description
+  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "subnet_ids" {
+  description = " – (Required) A list of VPC subnet IDs for the subnet group.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dax_subnet_group.aws_dax_subnet_group.subnet_ids
+}
 output "description" {
   description = "(Optional) A description of the subnet group."
   value       = aws_dax_subnet_group.aws_dax_subnet_group.description
@@ -156,10 +160,6 @@ output "id" {
 output "name" {
   description = " – (Required) The name of the subnet group."
   value       = aws_dax_subnet_group.aws_dax_subnet_group.name
-}
-output "subnet_ids" {
-  description = " – (Required) A list of VPC subnet IDs for the subnet group.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dax_subnet_group.aws_dax_subnet_group.subnet_ids
 }
 output "id" {
   description = "The name of the subnet group."

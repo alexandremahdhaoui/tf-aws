@@ -1,8 +1,8 @@
 resource "aws_apigatewayv2_api_mapping" "aws_apigatewayv2_api_mapping" {
-  api_mapping_key = var.api_mapping_key
-  domain_name     = var.domain_name
   stage           = var.stage
   api_id          = var.api_id
+  api_mapping_key = var.api_mapping_key
+  domain_name     = var.domain_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

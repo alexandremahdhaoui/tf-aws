@@ -1,18 +1,31 @@
 resource "aws_datasync_location_fsx_windows_file_system" "aws_datasync_location_fsx_windows_file_system" {
+  user                = var.user
+  arn                 = var.arn
   fsx_filesystem_arn  = var.fsx_filesystem_arn
   security_group_arns = var.security_group_arns
+  subdirectory        = var.subdirectory
   tags                = var.tags
-  tags_all            = var.tags_all
-  arn                 = var.arn
+  uri                 = var.uri
+  domain              = var.domain
   id                  = var.id
   password            = var.password
-  subdirectory        = var.subdirectory
-  uri                 = var.uri
-  user                = var.user
-  domain              = var.domain
+  tags_all            = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "uri" {
+  description = "The URL of the FSx for Windows location that was described."
+  type        = string
+}
+variable "user" {
+  description = "(Required) The user who has the permissions to access files and folders in the FSx for Windows file system."
   type        = string
 }
 variable "arn" {
@@ -28,18 +41,10 @@ variable "security_group_arns" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "subdirectory" {
+  description = "(Optional) Subdirectory to perform actions as source or destination."
   type        = string
   default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "user" {
-  description = "(Required) The user who has the permissions to access files and folders in the FSx for Windows file system."
-  type        = string
 }
 variable "domain" {
   description = "(Optional) The name of the Windows domain that the FSx for Windows server belongs to."
@@ -54,13 +59,8 @@ variable "password" {
   description = "(Required) The password of the user who has the permissions to access files and folders in the FSx for Windows file system."
   type        = string
 }
-variable "subdirectory" {
-  description = "(Optional) Subdirectory to perform actions as source or destination."
-  type        = string
-  default     = ""
-}
-variable "uri" {
-  description = "The URL of the FSx for Windows location that was described."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "tag_instance_id" {
@@ -195,9 +195,13 @@ output "password" {
   description = "(Required) The password of the user who has the permissions to access files and folders in the FSx for Windows file system."
   value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.password
 }
-output "subdirectory" {
-  description = "(Optional) Subdirectory to perform actions as source or destination."
-  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.subdirectory
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.tags_all
+}
+output "tags" {
+  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.tags
 }
 output "uri" {
   description = "The URL of the FSx for Windows location that was described."
@@ -219,13 +223,17 @@ output "security_group_arns" {
   description = "(Optional) The Amazon Resource Names (ARNs) of the security groups that are to use to configure the FSx for Windows file system."
   value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.security_group_arns
 }
-output "tags" {
-  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.tags
+output "subdirectory" {
+  description = "(Optional) Subdirectory to perform actions as source or destination."
+  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.subdirectory
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.tags_all
+}
+output "uri" {
+  description = "The URL of the FSx for Windows location that was described."
+  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.uri
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
@@ -238,14 +246,6 @@ output "creation_time" {
 output "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.tags_all
-}
-output "uri" {
-  description = "The URL of the FSx for Windows location that was described."
-  value       = aws_datasync_location_fsx_windows_file_system.aws_datasync_location_fsx_windows_file_system.uri
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

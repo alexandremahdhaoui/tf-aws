@@ -1,15 +1,11 @@
 resource "aws_connect_bot_association.markdown" "aws_connect_bot_association.markdown" {
-  lex_bot     = var.lex_bot
-  lex_region  = var.lex_region
   name        = var.name
   instance_id = var.instance_id
+  lex_bot     = var.lex_bot
+  lex_region  = var.lex_region
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the Amazon Lex (V1) bot."
   type        = string
 }
 variable "instance_id" {
@@ -24,6 +20,10 @@ variable "lex_region" {
   description = "(Optional) The Region that the Amazon Lex (V1) bot was created in. Defaults to current region.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the Amazon Lex (V1) bot."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "instance_id" {
+  description = "(Required) The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance."
+  value       = aws_connect_bot_association.markdown.aws_connect_bot_association.markdown.instance_id
+}
 output "lex_bot" {
   description = "(Required) Configuration information of an Amazon Lex (V1) bot. Detailed below.lex_botThe lex_bot configuration block supports the following:"
   value       = aws_connect_bot_association.markdown.aws_connect_bot_association.markdown.lex_bot
@@ -156,10 +160,6 @@ output "lex_region" {
 output "name" {
   description = "(Required) The name of the Amazon Lex (V1) bot."
   value       = aws_connect_bot_association.markdown.aws_connect_bot_association.markdown.name
-}
-output "instance_id" {
-  description = "(Required) The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance."
-  value       = aws_connect_bot_association.markdown.aws_connect_bot_association.markdown.instance_id
 }
 output "id" {
   description = "The Amazon Connect instance ID, Lex (V1) bot name, and Lex (V1) bot region separated by colons (:)."

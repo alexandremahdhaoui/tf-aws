@@ -1,23 +1,65 @@
 resource "aws_vpc_ipam_pool" "aws_vpc_ipam_pool" {
-  allocation_resource_tags          = var.allocation_resource_tags
-  auto_import                       = var.auto_import
-  address_family                    = var.address_family
   allocation_min_netmask_length     = var.allocation_min_netmask_length
   description                       = var.description
+  publicly_advertisable             = var.publicly_advertisable
+  tags                              = var.tags
+  aws_service                       = var.aws_service
+  ipam_scope_id                     = var.ipam_scope_id
+  locale                            = var.locale
   source_ipam_pool_id               = var.source_ipam_pool_id
+  state                             = var.state
+  address_family                    = var.address_family
+  allocation_resource_tags          = var.allocation_resource_tags
+  auto_import                       = var.auto_import
+  id                                = var.id
   allocation_default_netmask_length = var.allocation_default_netmask_length
   allocation_max_netmask_length     = var.allocation_max_netmask_length
   arn                               = var.arn
-  ipam_scope_id                     = var.ipam_scope_id
-  publicly_advertisable             = var.publicly_advertisable
-  state                             = var.state
-  aws_service                       = var.aws_service
-  id                                = var.id
-  locale                            = var.locale
-  tags                              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "aws_service" {
+  description = "(Optional) Limits which AWS service the pool can be used in. Only useable on public scopes. Valid Values: ec2."
+  type        = string
+  default     = ""
+}
+variable "ipam_scope_id" {
+  description = "(Optional) The ID of the scope in which you would like to create the IPAM pool."
+  type        = string
+  default     = ""
+}
+variable "locale" {
+  description = "(Optional) The locale in which you would like to create the IPAM pool. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. Possible values: Any AWS region, such as us-east-1."
+  type        = string
+  default     = ""
+}
+variable "source_ipam_pool_id" {
+  description = "(Optional) The ID of the source IPAM pool. Use this argument to create a child pool within an existing pool."
+  type        = string
+  default     = ""
+}
+variable "state" {
+  description = "The ID of the IPAM"
+  type        = string
+}
+variable "address_family" {
+  description = "(Optional) The IP protocol assigned to this pool. You must choose either IPv4 or IPv6 protocol for a pool."
+  type        = string
+  default     = ""
+}
+variable "allocation_resource_tags" {
+  description = "(Optional) Tags that are required for resources that use CIDRs from this IPAM pool. Resources that do not have these tags will not be allowed to allocate space from the pool. If the resources have their tags changed after they have allocated space or if the allocation tagging requirements are changed on the pool, the resource may be marked as noncompliant."
+  type        = string
+  default     = ""
+}
+variable "auto_import" {
+  description = ""
+  type        = string
+}
+variable "id" {
+  description = "The ID of the IPAM"
   type        = string
 }
 variable "allocation_default_netmask_length" {
@@ -34,53 +76,6 @@ variable "arn" {
   description = "Amazon Resource Name (ARN) of IPAM"
   type        = string
 }
-variable "ipam_scope_id" {
-  description = "(Optional) The ID of the scope in which you would like to create the IPAM pool."
-  type        = string
-  default     = ""
-}
-variable "publicly_advertisable" {
-  description = "(Optional) Defines whether or not IPv6 pool space is publicly advertisable over the internet. This option is not available for IPv4 pool space."
-  type        = string
-  default     = ""
-}
-variable "state" {
-  description = "The ID of the IPAM"
-  type        = string
-}
-variable "aws_service" {
-  description = "(Optional) Limits which AWS service the pool can be used in. Only useable on public scopes. Valid Values: ec2."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The ID of the IPAM"
-  type        = string
-}
-variable "locale" {
-  description = "(Optional) The locale in which you would like to create the IPAM pool. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. Possible values: Any AWS region, such as us-east-1."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "allocation_resource_tags" {
-  description = "(Optional) Tags that are required for resources that use CIDRs from this IPAM pool. Resources that do not have these tags will not be allowed to allocate space from the pool. If the resources have their tags changed after they have allocated space or if the allocation tagging requirements are changed on the pool, the resource may be marked as noncompliant."
-  type        = string
-  default     = ""
-}
-variable "auto_import" {
-  description = ""
-  type        = string
-}
-variable "address_family" {
-  description = "(Optional) The IP protocol assigned to this pool. You must choose either IPv4 or IPv6 protocol for a pool."
-  type        = string
-  default     = ""
-}
 variable "allocation_min_netmask_length" {
   description = "(Optional) The minimum netmask length that will be required for CIDR allocations in this pool."
   type        = string
@@ -91,8 +86,13 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "source_ipam_pool_id" {
-  description = "(Optional) The ID of the source IPAM pool. Use this argument to create a child pool within an existing pool."
+variable "publicly_advertisable" {
+  description = "(Optional) Defines whether or not IPv6 pool space is publicly advertisable over the internet. This option is not available for IPv4 pool space."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -220,17 +220,25 @@ output "aws_service" {
   description = "(Optional) Limits which AWS service the pool can be used in. Only useable on public scopes. Valid Values: ec2."
   value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.aws_service
 }
-output "id" {
-  description = "The ID of the IPAM"
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.id
+output "ipam_scope_id" {
+  description = "(Optional) The ID of the scope in which you would like to create the IPAM pool."
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.ipam_scope_id
 }
 output "locale" {
   description = "(Optional) The locale in which you would like to create the IPAM pool. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. Possible values: Any AWS region, such as us-east-1."
   value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.locale
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.tags
+output "source_ipam_pool_id" {
+  description = "(Optional) The ID of the source IPAM pool. Use this argument to create a child pool within an existing pool."
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.source_ipam_pool_id
+}
+output "state" {
+  description = "The ID of the IPAM"
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.state
+}
+output "address_family" {
+  description = "(Optional) The IP protocol assigned to this pool. You must choose either IPv4 or IPv6 protocol for a pool."
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.address_family
 }
 output "allocation_resource_tags" {
   description = "(Optional) Tags that are required for resources that use CIDRs from this IPAM pool. Resources that do not have these tags will not be allowed to allocate space from the pool. If the resources have their tags changed after they have allocated space or if the allocation tagging requirements are changed on the pool, the resource may be marked as noncompliant."
@@ -240,25 +248,9 @@ output "auto_import" {
   description = ""
   value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.auto_import
 }
-output "address_family" {
-  description = "(Optional) The IP protocol assigned to this pool. You must choose either IPv4 or IPv6 protocol for a pool."
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.address_family
-}
-output "allocation_min_netmask_length" {
-  description = "(Optional) The minimum netmask length that will be required for CIDR allocations in this pool."
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.allocation_min_netmask_length
-}
-output "description" {
-  description = "(Optional) A description for the IPAM pool."
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.description
-}
-output "source_ipam_pool_id" {
-  description = "(Optional) The ID of the source IPAM pool. Use this argument to create a child pool within an existing pool."
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.source_ipam_pool_id
-}
-output "state" {
+output "id" {
   description = "The ID of the IPAM"
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.state
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.id
 }
 output "allocation_default_netmask_length" {
   description = "(Optional) A default netmask length for allocations added to this pool. If, for example, the CIDR assigned to this pool is 10.0.0.0/8 and you enter 16 here, new allocations will default to 10.0.0.0/16 (unless you provide a different netmask value when you create the new allocation)."
@@ -272,21 +264,21 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of IPAM"
   value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.arn
 }
-output "ipam_scope_id" {
-  description = "(Optional) The ID of the scope in which you would like to create the IPAM pool."
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.ipam_scope_id
+output "allocation_min_netmask_length" {
+  description = "(Optional) The minimum netmask length that will be required for CIDR allocations in this pool."
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.allocation_min_netmask_length
+}
+output "description" {
+  description = "(Optional) A description for the IPAM pool."
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.description
 }
 output "publicly_advertisable" {
   description = "(Optional) Defines whether or not IPv6 pool space is publicly advertisable over the internet. This option is not available for IPv4 pool space."
   value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.publicly_advertisable
 }
-output "state" {
-  description = "The ID of the IPAM"
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.state
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.tags_all
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of IPAM"
@@ -295,6 +287,14 @@ output "arn" {
 output "id" {
   description = "The ID of the IPAM"
   value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.id
+}
+output "state" {
+  description = "The ID of the IPAM"
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.state
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_vpc_ipam_pool.aws_vpc_ipam_pool.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
