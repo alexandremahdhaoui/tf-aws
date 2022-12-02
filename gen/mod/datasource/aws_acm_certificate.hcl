@@ -8,33 +8,17 @@ output "arn" {
   description = "ARN of the found certificate, suitable for referencing in other resources that support ACM certificates."
   value       = aws_acm_certificate.aws_acm_certificate.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "certificate" {
   description = "ACM-issued certificate."
   value       = aws_acm_certificate.aws_acm_certificate.certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "certificate_chain" {
   description = "Certificates forming the requested ACM-issued certificate's chain of trust. The chain consists of the certificate of the issuing CA and the intermediate certificates of any other subordinate CAs."
   value       = aws_acm_certificate.aws_acm_certificate.certificate_chain
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ARN of the found certificate, suitable for referencing in other resources that support ACM certificates."
   value       = aws_acm_certificate.aws_acm_certificate.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "Status of the found certificate."
@@ -42,7 +26,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,7 +1,7 @@
 resource "aws_pinpoint_baidu_channel.markdown" "aws_pinpoint_baidu_channel.markdown" {
-  enabled        = var.enabled
   api_key        = var.api_key
   application_id = var.application_id
+  enabled        = var.enabled
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -18,6 +18,7 @@ variable "application_id" {
 variable "enabled" {
   description = "(Optional) Specifies whether to enable the channel. Defaults to true."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -143,17 +144,9 @@ output "api_key" {
   description = "(Required) Platform credential API key from Baidu."
   value       = aws_pinpoint_baidu_channel.markdown.aws_pinpoint_baidu_channel.markdown.api_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_baidu_channel.markdown.aws_pinpoint_baidu_channel.markdown.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "enabled" {
   description = "(Optional) Specifies whether to enable the channel. Defaults to true."
@@ -161,7 +154,7 @@ output "enabled" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

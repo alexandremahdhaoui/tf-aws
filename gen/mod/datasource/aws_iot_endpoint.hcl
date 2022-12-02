@@ -4,45 +4,29 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "No " {
+  description = "endpoint_type: Either iot:Data or iot:Data-ATS depending on region"
+  value       = aws_iot_endpoint.aws_iot_endpoint.No 
+}
+output "endpoint_address" {
+  description = "Endpoint based on endpoint_type"
+  value       = aws_iot_endpoint.aws_iot_endpoint.endpoint_address
+}
+output "iot:CredentialsProvider" {
+  description = ": IDENTIFIER.credentials.iot.REGION.amazonaws.com"
+  value       = aws_iot_endpoint.aws_iot_endpoint.iot:CredentialsProvider
+}
+output "iot:Data" {
+  description = ": IDENTIFIER.iot.REGION.amazonaws.com"
+  value       = aws_iot_endpoint.aws_iot_endpoint.iot:Data
+}
 output "iot:Data-ATS" {
   description = ": IDENTIFIER-ats.iot.REGION.amazonaws.com"
   value       = aws_iot_endpoint.aws_iot_endpoint.iot:Data-ATS
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "No " {
-  description = "endpoint_type: Either iot:Data or iot:Data-ATS depending on region"
-  value       = aws_iot_endpoint.aws_iot_endpoint.No 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_address" {
-  description = "Endpoint based on endpoint_type"
-  value       = aws_iot_endpoint.aws_iot_endpoint.endpoint_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iot:CredentialsProvider" {
-  description = ": IDENTIFIER.credentials.iot.REGION.amazonaws.com"
-  value       = aws_iot_endpoint.aws_iot_endpoint.iot:CredentialsProvider
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iot:Data" {
-  description = ": IDENTIFIER.iot.REGION.amazonaws.com"
-  value       = aws_iot_endpoint.aws_iot_endpoint.iot:Data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

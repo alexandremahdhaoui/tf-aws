@@ -1,5 +1,4 @@
 resource "aws_elasticache_parameter_group" "aws_elasticache_parameter_group" {
-  arn         = var.arn
   description = var.description
   family      = var.family
   id          = var.id
@@ -7,6 +6,7 @@ resource "aws_elasticache_parameter_group" "aws_elasticache_parameter_group" {
   parameter   = var.parameter
   tags        = var.tags
   value       = var.value
+  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,10 +15,12 @@ variable "provider_region" {
 variable "parameter" {
   description = "(Optional) A list of ElastiCache parameters to apply."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
   type        = string
+  default     = ""
 }
 variable "value" {
   description = "(Required) The value of the ElastiCache parameter.In addition to all arguments above, the following attributes are exported:"
@@ -31,6 +33,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the ElastiCache parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
 variable "family" {
   description = "(Required) The family of the ElastiCache parameter group."
@@ -164,85 +167,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "family" {
-  description = "(Required) The family of the ElastiCache parameter group."
-  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.family
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ElastiCache parameter group name."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the ElastiCache parameter."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parameter" {
   description = "(Optional) A list of ElastiCache parameters to apply."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.parameter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "value" {
   description = "(Required) The value of the ElastiCache parameter.In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The AWS ARN associated with the parameter group."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional) The description of the ElastiCache parameter group. Defaults to \"Managed by Terraform\"."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "family" {
+  description = "(Required) The family of the ElastiCache parameter group."
+  value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.family
 }
 output "arn" {
   description = "The AWS ARN associated with the parameter group."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ElastiCache parameter group name."
   value       = aws_elasticache_parameter_group.aws_elasticache_parameter_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,7 +213,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,17 +1,25 @@
 resource "aws_ec2_transit_gateway_connect" "aws_ec2_transit_gateway_connect" {
-  update                                          = var.update
   create                                          = var.create
+  id                                              = var.id
+  tags_all                                        = var.tags_all
+  transit_gateway_id                              = var.transit_gateway_id
+  transport_attachment_id                         = var.transport_attachment_id
+  update                                          = var.update
   protocol                                        = var.protocol
   tags                                            = var.tags
   transit_gateway_default_route_table_association = var.transit_gateway_default_route_table_association
-  transport_attachment_id                         = var.transport_attachment_id
-  id                                              = var.id
-  tags_all                                        = var.tags_all
   transit_gateway_default_route_table_propagation = var.transit_gateway_default_route_table_propagation
-  transit_gateway_id                              = var.transit_gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "update" {
+  description = "(Default 10m)"
+  type        = string
+}
+variable "create" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "id" {
@@ -22,37 +30,33 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
-variable "transit_gateway_default_route_table_propagation" {
-  description = "(Optional) Boolean whether the Connect should propagate routes with the EC2 Transit Gateway propagation default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
-  type        = string
-}
 variable "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway."
-  type        = string
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "protocol" {
-  description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "transit_gateway_default_route_table_association" {
-  description = "(Optional) Boolean whether the Connect should be associated with the EC2 Transit Gateway association default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
   type        = string
 }
 variable "transport_attachment_id" {
   description = "(Required) The underlaying VPC attachmentIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "update" {
-  description = "(Default 10m)"
+variable "protocol" {
+  description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
   type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_default_route_table_association" {
+  description = "(Optional) Boolean whether the Connect should be associated with the EC2 Transit Gateway association default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_default_route_table_propagation" {
+  description = "(Optional) Boolean whether the Connect should propagate routes with the EC2 Transit Gateway propagation default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,109 +178,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.update
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.create
+}
+output "id" {
+  description = "EC2 Transit Gateway Attachment identifier"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.id
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transit_gateway_default_route_table_propagation" {
-  description = "(Optional) Boolean whether the Connect should propagate routes with the EC2 Transit Gateway propagation default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transit_gateway_default_route_table_propagation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway."
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transit_gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway Attachment identifier"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "transport_attachment_id" {
+  description = "(Required) The underlaying VPC attachmentIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transport_attachment_id
 }
 output "protocol" {
   description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_gateway_default_route_table_association" {
   description = "(Optional) Boolean whether the Connect should be associated with the EC2 Transit Gateway association default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transit_gateway_default_route_table_association
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transport_attachment_id" {
-  description = "(Required) The underlaying VPC attachmentIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transport_attachment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "transit_gateway_default_route_table_propagation" {
+  description = "(Optional) Boolean whether the Connect should propagate routes with the EC2 Transit Gateway propagation default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transit_gateway_default_route_table_propagation
 }
 output "create" {
   description = "(Default 10m)"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Default 10m)"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 10m)"
@@ -284,15 +240,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,7 +1,7 @@
 resource "aws_ec2_transit_gateway_multicast_group_member" "aws_ec2_transit_gateway_multicast_group_member" {
+  transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
   group_ip_address                    = var.group_ip_address
   network_interface_id                = var.network_interface_id
-  transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -143,17 +143,9 @@ output "group_ip_address" {
   description = "(Required) The IP address assigned to the transit gateway multicast group."
   value       = aws_ec2_transit_gateway_multicast_group_member.aws_ec2_transit_gateway_multicast_group_member.group_ip_address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "network_interface_id" {
   description = "(Required) The group members' network interface ID to register with the transit gateway multicast group."
   value       = aws_ec2_transit_gateway_multicast_group_member.aws_ec2_transit_gateway_multicast_group_member.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_gateway_multicast_domain_id" {
   description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
@@ -161,7 +153,7 @@ output "transit_gateway_multicast_domain_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,42 +1,43 @@
 resource "aws_memorydb_parameter_group" "aws_memorydb_parameter_group" {
-  arn         = var.arn
   description = var.description
-  name        = var.name
   name_prefix = var.name_prefix
+  parameter   = var.parameter
   tags        = var.tags
+  tags_all    = var.tags_all
   value       = var.value
+  arn         = var.arn
   family      = var.family
   id          = var.id
-  parameter   = var.parameter
-  tags_all    = var.tags_all
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "value" {
-  description = "(Required) The value of the parameter.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the parameter group."
-  type        = string
-}
 variable "description" {
   description = "(Optional, Forces new resource) Description for the parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
-}
-variable "name" {
-  description = "(Required) The name of the parameter."
-  type        = string
+  default     = ""
 }
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   type        = string
+  default     = ""
+}
+variable "parameter" {
+  description = "(Optional) Set of MemoryDB parameters to apply. Any parameters not specified will fall back to their family defaults. Detailed below."
+  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.parameter Configuration Block"
   type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the parameter group."
+  type        = string
+  default     = ""
 }
 variable "family" {
   description = "(Required, Forces new resource) The engine version that the parameter group can be used with."
@@ -45,13 +46,19 @@ variable "family" {
 variable "id" {
   description = "Same as name."
   type        = string
+  default     = ""
 }
-variable "parameter" {
-  description = "(Optional) Set of MemoryDB parameters to apply. Any parameters not specified will fall back to their family defaults. Detailed below."
+variable "name" {
+  description = "(Required) The name of the parameter."
   type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "value" {
+  description = "(Required) The value of the parameter.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,101 +181,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.parameter Configuration Block"
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "(Required) The value of the parameter.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the parameter group."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional, Forces new resource) Description for the parameter group. Defaults to \"Managed by Terraform\"."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Same as name."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.id
 }
 output "name" {
   description = "(Required) The name of the parameter."
   value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "family" {
-  description = "(Required, Forces new resource) The engine version that the parameter group can be used with."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.family
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Same as name."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "parameter" {
-  description = "(Optional) Set of MemoryDB parameters to apply. Any parameters not specified will fall back to their family defaults. Detailed below."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.parameter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "(Required) The value of the parameter.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.value
 }
 output "arn" {
   description = "The ARN of the parameter group."
   value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "family" {
+  description = "(Required, Forces new resource) The engine version that the parameter group can be used with."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.family
+}
+output "parameter" {
+  description = "(Optional) Set of MemoryDB parameters to apply. Any parameters not specified will fall back to their family defaults. Detailed below."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.parameter
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.parameter Configuration Block"
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.tags
+}
+output "description" {
+  description = "(Optional, Forces new resource) Description for the parameter group. Defaults to \"Managed by Terraform\"."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.description
+}
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.name_prefix
+}
+output "arn" {
+  description = "The ARN of the parameter group."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.arn
 }
 output "id" {
   description = "Same as name."
   value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -276,7 +235,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

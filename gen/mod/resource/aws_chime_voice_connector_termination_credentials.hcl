@@ -1,15 +1,11 @@
 resource "aws_chime_voice_connector_termination_credentials" "aws_chime_voice_connector_termination_credentials" {
-  username           = var.username
-  voice_connector_id = var.voice_connector_id
   credentials        = var.credentials
   password           = var.password
+  username           = var.username
+  voice_connector_id = var.voice_connector_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "voice_connector_id" {
-  description = "(Required) Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "credentials" {
@@ -22,6 +18,10 @@ variable "password" {
 }
 variable "username" {
   description = "(Required) RFC2617 compliant username associated with the SIP credentials."
+  type        = string
+}
+variable "voice_connector_id" {
+  description = "(Required) Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,37 +144,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "voice_connector_id" {
+  description = "(Required) Amazon Chime Voice Connector ID."
+  value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.voice_connector_id
+}
 output "credentials" {
   description = "(Required) List of termination SIP credentials.credentialsThe SIP credentials used to authenticate requests to your Amazon Chime Voice Connector."
   value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.credentials
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "password" {
   description = "(Required) RFC2617 compliant password associated with the SIP credentials.In addition to all arguments above, the following attributes are exported:"
   value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.password
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "username" {
   description = "(Required) RFC2617 compliant username associated with the SIP credentials."
   value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.username
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "voice_connector_id" {
-  description = "(Required) Amazon Chime Voice Connector ID."
-  value       = aws_chime_voice_connector_termination_credentials.aws_chime_voice_connector_termination_credentials.voice_connector_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Chime Voice Connector ID."
@@ -182,7 +166,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

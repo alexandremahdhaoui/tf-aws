@@ -124,21 +124,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "ARN of the table replica."
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.create
+}
+output "delete" {
+  description = "(Default 20m)"
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.delete
+}
 output "id" {
   description = "Name of the table and region of the main global table joined with a semicolon (eme.g., TableName:us-east-1)."
   value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 30m)"
@@ -146,31 +150,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the table replica."
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 20m)"
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

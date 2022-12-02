@@ -9,6 +9,15 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Policy Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_id" {
+  description = "(Required) EC2 Transit Gateway identifier."
+  type        = string
+}
 variable "arn" {
   description = "EC2 Transit Gateway Policy Table Amazon Resource Name (ARN)."
   type        = string
@@ -19,14 +28,6 @@ variable "id" {
 }
 variable "state" {
   description = "The state of the EC2 Transit Gateway Policy Table."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Policy Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "transit_gateway_id" {
-  description = "(Required) EC2 Transit Gateway identifier."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,61 +150,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "EC2 Transit Gateway Policy Table Amazon Resource Name (ARN)."
+  value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.arn
+}
+output "id" {
+  description = "EC2 Transit Gateway Policy Table identifier."
+  value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.id
+}
 output "state" {
   description = "The state of the EC2 Transit Gateway Policy Table."
   value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Policy Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "transit_gateway_id" {
   description = "(Required) EC2 Transit Gateway identifier."
   value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.transit_gateway_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "EC2 Transit Gateway Policy Table Amazon Resource Name (ARN)."
   value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EC2 Transit Gateway Policy Table identifier."
   value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway Policy Table identifier."
-  value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "state" {
   description = "The state of the EC2 Transit Gateway Policy Table."
   value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -211,15 +188,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "EC2 Transit Gateway Policy Table Amazon Resource Name (ARN)."
-  value       = aws_ec2_transit_gateway_policy_table.aws_ec2_transit_gateway_policy_table.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

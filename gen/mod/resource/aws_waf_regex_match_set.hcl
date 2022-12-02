@@ -1,15 +1,24 @@
 resource "aws_waf_regex_match_set" "aws_waf_regex_match_set" {
-  data                 = var.data
-  field_to_match       = var.field_to_match
   id                   = var.id
   name                 = var.name
   regex_match_tuple    = var.regex_match_tuple
   regex_pattern_set_id = var.regex_pattern_set_id
   text_transformation  = var.text_transformation
   type                 = var.type
+  data                 = var.data
+  field_to_match       = var.field_to_match
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  type        = string
+  default     = ""
+}
+variable "field_to_match" {
+  description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
   type        = string
 }
 variable "id" {
@@ -34,14 +43,6 @@ variable "text_transformation" {
 }
 variable "type" {
   description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  type        = string
-}
-variable "field_to_match" {
-  description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +165,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "regex_match_tuple" {
-  description = "(Required) The regular expression pattern that you want AWS WAF to search for in web requests, the location in requests that you want AWS WAF to search, and other settings. See below.Nested Argumentsregex_match_tuple"
-  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.regex_match_tuple
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "regex_pattern_set_id" {
-  description = "(Required) The ID of a Regex Pattern Set."
-  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.regex_pattern_set_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "text_transformation" {
   description = "CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.text_transformation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "field_to_match" {
   description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.field_to_match
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the WAF Regex Match Set."
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name or description of the Regex Match Set."
   value       = aws_waf_regex_match_set.aws_waf_regex_match_set.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "regex_match_tuple" {
+  description = "(Required) The regular expression pattern that you want AWS WAF to search for in web requests, the location in requests that you want AWS WAF to search, and other settings. See below.Nested Argumentsregex_match_tuple"
+  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.regex_match_tuple
+}
+output "regex_pattern_set_id" {
+  description = "(Required) The ID of a Regex Pattern Set."
+  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.regex_pattern_set_id
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN)"
+  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.arn
 }
 output "id" {
   description = "The ID of the WAF Regex Match Set."
@@ -234,15 +207,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN)"
-  value       = aws_waf_regex_match_set.aws_waf_regex_match_set.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

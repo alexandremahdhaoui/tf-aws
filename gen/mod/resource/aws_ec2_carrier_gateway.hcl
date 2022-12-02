@@ -1,9 +1,9 @@
 resource "aws_ec2_carrier_gateway" "aws_ec2_carrier_gateway" {
+  arn      = var.arn
+  id       = var.id
   owner_id = var.owner_id
   tags     = var.tags
   vpc_id   = var.vpc_id
-  arn      = var.arn
-  id       = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -16,6 +16,7 @@ variable "owner_id" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
 variable "vpc_id" {
   description = "(Required) The ID of the VPC to associate with the carrier gateway.In addition to all arguments above, the following attributes are exported:"
@@ -149,77 +150,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ID of the carrier gateway."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_id" {
   description = "The AWS account ID of the owner of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_id" {
   description = "(Required) The ID of the VPC to associate with the carrier gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the carrier gateway."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the carrier gateway."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
 }
 output "owner_id" {
   description = "The AWS account ID of the owner of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.tags_all
 }
+output "arn" {
+  description = "The ARN of the carrier gateway."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.arn
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

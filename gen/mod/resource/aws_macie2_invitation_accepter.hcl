@@ -134,29 +134,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The unique identifier (ID) of the macie invitation accepter."
-  value       = aws_macie2_invitation_accepter.aws_macie2_invitation_accepter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "administrator_account_id" {
   description = "(Required) The AWS account ID for the account that sent the invitation.In addition to all arguments above, the following attributes are exported:"
   value       = aws_macie2_invitation_accepter.aws_macie2_invitation_accepter.administrator_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The unique identifier (ID) of the macie invitation accepter."
   value       = aws_macie2_invitation_accepter.aws_macie2_invitation_accepter.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The unique identifier (ID) of the macie invitation accepter."
+  value       = aws_macie2_invitation_accepter.aws_macie2_invitation_accepter.id
 }
 output "invitation_id" {
   description = "The unique identifier for the invitation."
@@ -164,7 +152,7 @@ output "invitation_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

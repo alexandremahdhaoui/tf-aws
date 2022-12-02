@@ -14,6 +14,7 @@ variable "cidr" {
 variable "description" {
   description = "(Optional) Description of this entry. Due to API limitations, updating only the description of an entry requires recreating the entry."
   type        = string
+  default     = ""
 }
 variable "prefix_list_id" {
   description = "(Required) CIDR block of this entry.In addition to all arguments above, the following attributes are exported:"
@@ -143,25 +144,13 @@ output "cidr" {
   description = "(Required) CIDR block of this entry."
   value       = aws_ec2_managed_prefix_list_entry.aws_ec2_managed_prefix_list_entry.cidr
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) Description of this entry. Due to API limitations, updating only the description of an entry requires recreating the entry."
   value       = aws_ec2_managed_prefix_list_entry.aws_ec2_managed_prefix_list_entry.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "prefix_list_id" {
   description = "(Required) CIDR block of this entry.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_managed_prefix_list_entry.aws_ec2_managed_prefix_list_entry.prefix_list_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "ID of the managed prefix list entry."
@@ -169,7 +158,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

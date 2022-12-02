@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "patch_group" {
-  description = "(Required) The name of the patch group that should be registered with the patch baseline.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "baseline_id" {
   description = "(Required) The ID of the patch baseline to register the patch group with."
+  type        = string
+}
+variable "patch_group" {
+  description = "(Required) The name of the patch group that should be registered with the patch baseline.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +138,13 @@ output "baseline_id" {
   description = "(Required) The ID of the patch baseline to register the patch group with."
   value       = aws_ssm_patch_group.aws_ssm_patch_group.baseline_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "patch_group" {
   description = "(Required) The name of the patch group that should be registered with the patch baseline.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssm_patch_group.aws_ssm_patch_group.patch_group
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

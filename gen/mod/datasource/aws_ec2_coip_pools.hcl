@@ -4,21 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "id" {
+  description = "AWS Region."
+  value       = aws_ec2_coip_pools.aws_ec2_coip_pools.id
+}
 output "pool_ids" {
   description = "Set of COIP Pool IdentifiersTimeoutsConfiguration options:"
   value       = aws_ec2_coip_pools.aws_ec2_coip_pools.pool_ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AWS Region."
-  value       = aws_ec2_coip_pools.aws_ec2_coip_pools.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

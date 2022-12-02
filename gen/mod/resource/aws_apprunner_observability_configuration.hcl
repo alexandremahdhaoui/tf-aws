@@ -124,29 +124,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "latest" {
+  description = "Whether the observability configuration has the highest observability_configuration_revision among all configurations that share the same observability_configuration_name."
+  value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.latest
+}
 output "observability_configuration_revision" {
   description = "The revision of this observability configuration."
   value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.observability_configuration_revision
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "Current state of the observability configuration. An INACTIVE configuration revision has been deleted and can't be used. It is permanently removed some time after deletion."
   value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of this observability configuration."
@@ -154,15 +146,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "latest" {
-  description = "Whether the observability configuration has the highest observability_configuration_revision among all configurations that share the same observability_configuration_name."
-  value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.latest
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -8,25 +8,13 @@ output "arn" {
   description = "ARN of the resource share."
   value       = aws_ram_resource_share.aws_ram_resource_share.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ARN of the resource share."
   value       = aws_ram_resource_share.aws_ram_resource_share.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owning_account_id" {
   description = "ID of the AWS account that owns the resource share."
   value       = aws_ram_resource_share.aws_ram_resource_share.owning_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "Status of the RAM share."
@@ -34,7 +22,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

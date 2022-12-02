@@ -1,8 +1,8 @@
 datasource "aws_cloudcontrolapi_resource" "aws_cloudcontrolapi_resource" {
-  type_name       = var.type_name
   type_version_id = var.type_version_id
   identifier      = var.identifier
   role_arn        = var.role_arn
+  type_name       = var.type_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "identifier" {
 variable "role_arn" {
   description = "(Optional) ARN of the IAM Role to assume for operations."
   type        = string
+  default     = ""
 }
 variable "type_name" {
   description = "(Required) CloudFormation resource type name. For example, AWS::EC2::VPC."
@@ -23,14 +24,19 @@ variable "type_name" {
 variable "type_version_id" {
   description = "(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+output "identifier" {
+  description = "(Required) Identifier of the CloudFormation resource type. For example, vpc-12345678."
+  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.identifier
+}
+output "role_arn" {
+  description = "(Optional) ARN of the IAM Role to assume for operations."
+  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.role_arn
 }
 output "type_name" {
   description = "(Required) CloudFormation resource type name. For example, AWS::EC2::VPC."
   value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type_version_id" {
   description = "(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:"
@@ -38,23 +44,7 @@ output "type_version_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "identifier" {
-  description = "(Required) Identifier of the CloudFormation resource type. For example, vpc-12345678."
-  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Optional) ARN of the IAM Role to assume for operations."
-  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

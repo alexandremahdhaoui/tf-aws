@@ -4,21 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "id" {
+  description = "AWS Region."
+  value       = aws_autoscaling_groups.aws_autoscaling_groups.id
+}
 output "arns" {
   description = "List of the Autoscaling Groups Arns in the current region."
   value       = aws_autoscaling_groups.aws_autoscaling_groups.arns
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AWS Region."
-  value       = aws_autoscaling_groups.aws_autoscaling_groups.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

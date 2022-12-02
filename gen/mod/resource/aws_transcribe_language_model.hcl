@@ -1,34 +1,27 @@
 resource "aws_transcribe_language_model" "aws_transcribe_language_model" {
+  arn                  = var.arn
+  create               = var.create
+  data_access_role_arn = var.data_access_role_arn
+  input_data_config    = var.input_data_config
+  tags                 = var.tags
+  base_model_name      = var.base_model_name
+  id                   = var.id
   language_code        = var.language_code
   model_name           = var.model_name
   s3_uri               = var.s3_uri
-  base_model_name      = var.base_model_name
-  create               = var.create
-  data_access_role_arn = var.data_access_role_arn
-  id                   = var.id
-  input_data_config    = var.input_data_config
-  tags                 = var.tags
   tuning_data_s3_uri   = var.tuning_data_s3_uri
-  arn                  = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
-  type        = string
-}
 variable "create" {
   description = "(Default 600m)"
   type        = string
+  default     = ""
 }
 variable "data_access_role_arn" {
   description = "(Required) IAM role with access to S3 bucket."
-  type        = string
-}
-variable "id" {
-  description = "LanguageModel name."
   type        = string
 }
 variable "input_data_config" {
@@ -38,14 +31,17 @@ variable "input_data_config" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "tuning_data_s3_uri" {
-  description = "(Optional) S3 URI where tuning data is located."
+variable "arn" {
+  description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
 }
-variable "base_model_name" {
-  description = "(Required) Name of reference base model."
+variable "id" {
+  description = "LanguageModel name."
   type        = string
+  default     = ""
 }
 variable "language_code" {
   description = "(Required) The language code you selected for your language model. Refer to the supported languages page for accepted codes."
@@ -57,6 +53,15 @@ variable "model_name" {
 }
 variable "s3_uri" {
   description = "(Required) S3 URI where training data is located."
+  type        = string
+}
+variable "tuning_data_s3_uri" {
+  description = "(Optional) S3 URI where tuning data is located."
+  type        = string
+  default     = ""
+}
+variable "base_model_name" {
+  description = "(Required) Name of reference base model."
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,109 +184,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "s3_uri" {
-  description = "(Required) S3 URI where training data is located."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.s3_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tuning_data_s3_uri" {
+  description = "(Optional) S3 URI where tuning data is located."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.tuning_data_s3_uri
 }
 output "base_model_name" {
   description = "(Required) Name of reference base model."
   value       = aws_transcribe_language_model.aws_transcribe_language_model.base_model_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "LanguageModel name."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.id
 }
 output "language_code" {
   description = "(Required) The language code you selected for your language model. Refer to the supported languages page for accepted codes."
   value       = aws_transcribe_language_model.aws_transcribe_language_model.language_code
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "model_name" {
   description = "(Required) The model name.Input Data Config"
   value       = aws_transcribe_language_model.aws_transcribe_language_model.model_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "LanguageModel name."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "input_data_config" {
-  description = "(Required) The input data config for the LanguageModel. See Input Data Config for more details."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.input_data_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tuning_data_s3_uri" {
-  description = "(Optional) S3 URI where tuning data is located."
-  value       = aws_transcribe_language_model.aws_transcribe_language_model.tuning_data_s3_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "s3_uri" {
+  description = "(Required) S3 URI where training data is located."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.s3_uri
 }
 output "arn" {
   description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
   value       = aws_transcribe_language_model.aws_transcribe_language_model.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 600m)"
   value       = aws_transcribe_language_model.aws_transcribe_language_model.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "data_access_role_arn" {
   description = "(Required) IAM role with access to S3 bucket."
   value       = aws_transcribe_language_model.aws_transcribe_language_model.data_access_role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "input_data_config" {
+  description = "(Required) The input data config for the LanguageModel. See Input Data Config for more details."
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.input_data_config
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the LanguageModel. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_transcribe_language_model.aws_transcribe_language_model.tags
 }
 output "arn" {
   description = "ARN of the LanguageModel.TimeoutsConfiguration options:"
   value       = aws_transcribe_language_model.aws_transcribe_language_model.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 600m)"
   value       = aws_transcribe_language_model.aws_transcribe_language_model.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "LanguageModel name."
@@ -289,7 +242,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -138,17 +138,9 @@ output "resolver_query_log_config_id" {
   description = "(Required) The ID of the Route 53 Resolver query logging configuration that you want to associate a VPC with."
   value       = aws_route53_resolver_query_log_config_association.aws_route53_resolver_query_log_config_association.resolver_query_log_config_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_id" {
   description = "(Required) The ID of a VPC that you want this query logging configuration to log queries for.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_resolver_query_log_config_association.aws_route53_resolver_query_log_config_association.resource_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = " -The ID of the Route 53 Resolver query logging configuration association."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,10 +1,14 @@
 resource "aws_location_tracker_association" "aws_location_tracker_association" {
-  consumer_arn = var.consumer_arn
   create       = var.create
   tracker_name = var.tracker_name
+  consumer_arn = var.consumer_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "consumer_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) for the geofence collection to be associated to tracker resource. Used when you need to specify a resource across all AWS."
   type        = string
 }
 variable "create" {
@@ -13,10 +17,6 @@ variable "create" {
 }
 variable "tracker_name" {
   description = "(Required) The name of the tracker resource to be associated with a geofence collection.No additional attributes are exported.Timeoutsaws_location_tracker_association provides the following Timeouts configuration options:"
-  type        = string
-}
-variable "consumer_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) for the geofence collection to be associated to tracker resource. Used when you need to specify a resource across all AWS."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,37 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tracker_name" {
-  description = "(Required) The name of the tracker resource to be associated with a geofence collection.No additional attributes are exported.Timeoutsaws_location_tracker_association provides the following Timeouts configuration options:"
-  value       = aws_location_tracker_association.aws_location_tracker_association.tracker_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "consumer_arn" {
   description = "(Required) The Amazon Resource Name (ARN) for the geofence collection to be associated to tracker resource. Used when you need to specify a resource across all AWS."
   value       = aws_location_tracker_association.aws_location_tracker_association.consumer_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Optional, Default: 30m)"
   value       = aws_location_tracker_association.aws_location_tracker_association.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tracker_name" {
+  description = "(Required) The name of the tracker resource to be associated with a geofence collection.No additional attributes are exported.Timeoutsaws_location_tracker_association provides the following Timeouts configuration options:"
+  value       = aws_location_tracker_association.aws_location_tracker_association.tracker_name
 }
 output "create" {
   description = "(Optional, Default: 30m)"
   value       = aws_location_tracker_association.aws_location_tracker_association.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Optional, Default: 30m)"
@@ -177,7 +161,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

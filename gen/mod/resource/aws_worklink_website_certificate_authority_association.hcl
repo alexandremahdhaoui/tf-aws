@@ -143,25 +143,13 @@ output "certificate" {
   description = "(Required, ForceNew) The root certificate of the Certificate Authority."
   value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.certificate
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "display_name" {
   description = "(Optional, ForceNew) The certificate name to display.In addition to all arguments above, the following attributes are exported:"
   value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.display_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "fleet_arn" {
   description = "(Required, ForceNew) The ARN of the fleet."
   value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.fleet_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "website_ca_id" {
   description = "A unique identifier for the Certificate Authority."
@@ -169,7 +157,7 @@ output "website_ca_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

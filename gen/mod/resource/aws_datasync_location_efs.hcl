@@ -1,46 +1,18 @@
 resource "aws_datasync_location_efs" "aws_datasync_location_efs" {
   access_point_arn            = var.access_point_arn
   arn                         = var.arn
+  file_system_access_role_arn = var.file_system_access_role_arn
   id                          = var.id
-  security_group_arns         = var.security_group_arns
-  subdirectory                = var.subdirectory
-  subnet_arn                  = var.subnet_arn
   tags                        = var.tags
   ec2_config                  = var.ec2_config
   efs_file_system_arn         = var.efs_file_system_arn
-  file_system_access_role_arn = var.file_system_access_role_arn
   in_transit_encryption       = var.in_transit_encryption
+  security_group_arns         = var.security_group_arns
+  subdirectory                = var.subdirectory
+  subnet_arn                  = var.subnet_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "access_point_arn" {
-  description = "(Optional) Specifies the Amazon Resource Name (ARN) of the access point that DataSync uses to access the Amazon EFS file system."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
-variable "security_group_arns" {
-  description = "(Required) List of Amazon Resource Names (ARNs) of the EC2 Security Groups that are associated with the EFS Mount Target."
-  type        = string
-}
-variable "subdirectory" {
-  description = "(Optional) Subdirectory to perform actions as source or destination. Default /."
-  type        = string
-}
-variable "subnet_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the EC2 Subnet that is associated with the EFS Mount Target.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.ec2_config Argument Referenceec2_config configuration block:"
   type        = string
 }
 variable "ec2_config" {
@@ -51,13 +23,46 @@ variable "efs_file_system_arn" {
   description = "(Required) Amazon Resource Name (ARN) of EFS File System."
   type        = string
 }
-variable "file_system_access_role_arn" {
-  description = "(Optional)  Specifies an Identity and Access Management (IAM) role that DataSync assumes when mounting the Amazon EFS file system."
-  type        = string
-}
 variable "in_transit_encryption" {
   description = "(Optional) Specifies whether you want DataSync to use TLS encryption when transferring data to or from your Amazon EFS file system. Valid values are NONE and TLS1_2."
   type        = string
+  default     = ""
+}
+variable "security_group_arns" {
+  description = "(Required) List of Amazon Resource Names (ARNs) of the EC2 Security Groups that are associated with the EFS Mount Target."
+  type        = string
+}
+variable "subdirectory" {
+  description = "(Optional) Subdirectory to perform actions as source or destination. Default /."
+  type        = string
+  default     = ""
+}
+variable "subnet_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the EC2 Subnet that is associated with the EFS Mount Target.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "access_point_arn" {
+  description = "(Optional) Specifies the Amazon Resource Name (ARN) of the access point that DataSync uses to access the Amazon EFS file system."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "file_system_access_role_arn" {
+  description = "(Optional)  Specifies an Identity and Access Management (IAM) role that DataSync assumes when mounting the Amazon EFS file system."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.ec2_config Argument Referenceec2_config configuration block:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,93 +184,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "efs_file_system_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of EFS File System."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.efs_file_system_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "file_system_access_role_arn" {
   description = "(Optional)  Specifies an Identity and Access Management (IAM) role that DataSync assumes when mounting the Amazon EFS file system."
   value       = aws_datasync_location_efs.aws_datasync_location_efs.file_system_access_role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "in_transit_encryption" {
-  description = "(Optional) Specifies whether you want DataSync to use TLS encryption when transferring data to or from your Amazon EFS file system. Valid values are NONE and TLS1_2."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.in_transit_encryption
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ec2_config" {
-  description = "(Required) Configuration block containing EC2 configurations for connecting to the EFS File System."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.ec2_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_efs.aws_datasync_location_efs.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_arns" {
-  description = "(Required) List of Amazon Resource Names (ARNs) of the EC2 Security Groups that are associated with the EFS Mount Target."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.security_group_arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subdirectory" {
-  description = "(Optional) Subdirectory to perform actions as source or destination. Default /."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.subdirectory
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the EC2 Subnet that is associated with the EFS Mount Target.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.subnet_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.ec2_config Argument Referenceec2_config configuration block:"
   value       = aws_datasync_location_efs.aws_datasync_location_efs.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "access_point_arn" {
   description = "(Optional) Specifies the Amazon Resource Name (ARN) of the access point that DataSync uses to access the Amazon EFS file system."
   value       = aws_datasync_location_efs.aws_datasync_location_efs.access_point_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.arn
+}
+output "in_transit_encryption" {
+  description = "(Optional) Specifies whether you want DataSync to use TLS encryption when transferring data to or from your Amazon EFS file system. Valid values are NONE and TLS1_2."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.in_transit_encryption
+}
+output "security_group_arns" {
+  description = "(Required) List of Amazon Resource Names (ARNs) of the EC2 Security Groups that are associated with the EFS Mount Target."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.security_group_arns
+}
+output "subdirectory" {
+  description = "(Optional) Subdirectory to perform actions as source or destination. Default /."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.subdirectory
+}
+output "subnet_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the EC2 Subnet that is associated with the EFS Mount Target.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.subnet_arn
+}
+output "ec2_config" {
+  description = "(Required) Configuration block containing EC2 configurations for connecting to the EFS File System."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.ec2_config
+}
+output "efs_file_system_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of EFS File System."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.efs_file_system_arn
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_datasync_location_efs.aws_datasync_location_efs.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
@@ -273,23 +242,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_datasync_location_efs.aws_datasync_location_efs.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

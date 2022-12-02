@@ -1,15 +1,11 @@
 resource "aws_opsworks_rds_db_instance" "aws_opsworks_rds_db_instance" {
+  stack_id            = var.stack_id
   db_password         = var.db_password
   db_user             = var.db_user
   rds_db_instance_arn = var.rds_db_instance_arn
-  stack_id            = var.stack_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "stack_id" {
-  description = "(Required) The stack to register a db instance for. Changing this will force a new resource."
   type        = string
 }
 variable "db_password" {
@@ -22,6 +18,10 @@ variable "db_user" {
 }
 variable "rds_db_instance_arn" {
   description = "(Required) The db instance to register for this stack. Changing this will force a new resource."
+  type        = string
+}
+variable "stack_id" {
+  description = "(Required) The stack to register a db instance for. Changing this will force a new resource."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,13 +144,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "db_password" {
+  description = "(Required) A db passwordIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_opsworks_rds_db_instance.aws_opsworks_rds_db_instance.db_password
+}
+output "db_user" {
+  description = "(Required) A db username"
+  value       = aws_opsworks_rds_db_instance.aws_opsworks_rds_db_instance.db_user
+}
 output "rds_db_instance_arn" {
   description = "(Required) The db instance to register for this stack. Changing this will force a new resource."
   value       = aws_opsworks_rds_db_instance.aws_opsworks_rds_db_instance.rds_db_instance_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "stack_id" {
   description = "(Required) The stack to register a db instance for. Changing this will force a new resource."
@@ -158,23 +162,7 @@ output "stack_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "db_password" {
-  description = "(Required) A db passwordIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_opsworks_rds_db_instance.aws_opsworks_rds_db_instance.db_password
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "db_user" {
-  description = "(Required) A db username"
-  value       = aws_opsworks_rds_db_instance.aws_opsworks_rds_db_instance.db_user
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

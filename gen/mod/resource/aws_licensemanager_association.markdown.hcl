@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "license_configuration_arn" {
-  description = "(Required) ARN of the license configuration."
-  type        = string
-}
 variable "resource_arn" {
   description = "(Required) ARN of the resource associated with the license configuration.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "license_configuration_arn" {
+  description = "(Required) ARN of the license configuration."
   type        = string
 }
 variable "tag_instance_id" {
@@ -134,21 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "license_configuration_arn" {
-  description = "(Required) ARN of the license configuration."
-  value       = aws_licensemanager_association.markdown.aws_licensemanager_association.markdown.license_configuration_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_arn" {
   description = "(Required) ARN of the resource associated with the license configuration.In addition to all arguments above, the following attributes are exported:"
   value       = aws_licensemanager_association.markdown.aws_licensemanager_association.markdown.resource_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "license_configuration_arn" {
+  description = "(Required) ARN of the license configuration."
+  value       = aws_licensemanager_association.markdown.aws_licensemanager_association.markdown.license_configuration_arn
 }
 output "id" {
   description = "The license configuration ARN."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

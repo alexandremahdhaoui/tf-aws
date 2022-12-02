@@ -1,10 +1,14 @@
 resource "aws_autoscaling_notification" "aws_autoscaling_notification" {
+  topic_arn     = var.topic_arn
   group_names   = var.group_names
   notifications = var.notifications
-  topic_arn     = var.topic_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "notifications" {
+  description = ""
   type        = string
 }
 variable "topic_arn" {
@@ -12,10 +16,6 @@ variable "topic_arn" {
   type        = string
 }
 variable "group_names" {
-  description = ""
-  type        = string
-}
-variable "notifications" {
   description = ""
   type        = string
 }
@@ -143,25 +143,17 @@ output "group_names" {
   description = ""
   value       = aws_autoscaling_notification.aws_autoscaling_notification.group_names
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "notifications" {
   description = ""
   value       = aws_autoscaling_notification.aws_autoscaling_notification.notifications
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "topic_arn" {
   description = "(Required) Topic ARN for notifications to be sent throughIn addition to all arguments above, the following attributes are exported:"
   value       = aws_autoscaling_notification.aws_autoscaling_notification.topic_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "group_names" {
+  description = ""
+  value       = aws_autoscaling_notification.aws_autoscaling_notification.group_names
 }
 output "notifications" {
   description = ""
@@ -169,15 +161,7 @@ output "notifications" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "group_names" {
-  description = ""
-  value       = aws_autoscaling_notification.aws_autoscaling_notification.group_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

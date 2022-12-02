@@ -1,21 +1,13 @@
 resource "aws_ec2_transit_gateway_route_table" "aws_ec2_transit_gateway_route_table" {
+  id                              = var.id
   tags                            = var.tags
   transit_gateway_id              = var.transit_gateway_id
   arn                             = var.arn
   default_association_route_table = var.default_association_route_table
   default_propagation_route_table = var.default_propagation_route_table
-  id                              = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "transit_gateway_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway."
-  type        = string
-}
-variable "arn" {
-  description = "EC2 Transit Gateway Route Table Amazon Resource Name (ARN)."
   type        = string
 }
 variable "default_association_route_table" {
@@ -32,6 +24,15 @@ variable "id" {
 }
 variable "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Route Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway."
+  type        = string
+}
+variable "arn" {
+  description = "EC2 Transit Gateway Route Table Amazon Resource Name (ARN)."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,69 +155,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "default_propagation_route_table" {
-  description = "Boolean whether this is the default propagation route table for the EC2 Transit Gateway."
-  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.default_propagation_route_table
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway Route Table identifier"
-  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Route Table. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway."
   value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.transit_gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "EC2 Transit Gateway Route Table Amazon Resource Name (ARN)."
   value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "default_association_route_table" {
   description = "Boolean whether this is the default association route table for the EC2 Transit Gateway."
   value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.default_association_route_table
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_propagation_route_table" {
   description = "Boolean whether this is the default propagation route table for the EC2 Transit Gateway."
   value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.default_propagation_route_table
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "EC2 Transit Gateway Route Table identifier"
   value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "EC2 Transit Gateway Route Table Amazon Resource Name (ARN)."
+  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.arn
+}
+output "default_association_route_table" {
+  description = "Boolean whether this is the default association route table for the EC2 Transit Gateway."
+  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.default_association_route_table
+}
+output "default_propagation_route_table" {
+  description = "Boolean whether this is the default propagation route table for the EC2 Transit Gateway."
+  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.default_propagation_route_table
+}
+output "id" {
+  description = "EC2 Transit Gateway Route Table identifier"
+  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -224,23 +201,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "EC2 Transit Gateway Route Table Amazon Resource Name (ARN)."
-  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_association_route_table" {
-  description = "Boolean whether this is the default association route table for the EC2 Transit Gateway."
-  value       = aws_ec2_transit_gateway_route_table.aws_ec2_transit_gateway_route_table.default_association_route_table
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

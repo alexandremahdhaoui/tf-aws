@@ -124,13 +124,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "s3_canonical_user_id" {
+  description = "Using With CloudFrontorigin-access-identity/cloudfront/cloudfront_access_identity_paths3_origin_configaws_cloudfront_distribution resource:Updating your bucket policyNote that the AWS API may translate the s3_canonical_user_id CanonicalUserAWSaws_s3_bucketiam_arn instead:"
+  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.s3_canonical_user_id
+}
+output "caller_reference" {
+  description = "Internal value used by CloudFront to allow future\nupdates to the origin access identity."
+  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.caller_reference
+}
+output "cloudfront_access_identity_path" {
+  description = "A shortcut to the full path for the\norigin access identity to use in CloudFront, see below."
+  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.cloudfront_access_identity_path
+}
+output "etag" {
+  description = "The current version of the origin access identity's information.\nFor example: E2QWRUHAPOMQZL."
+  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.etag
+}
 output "iam_arn" {
   description = "A pre-generated ARN for use in S3 bucket policies (see below).\nExample: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E2QWRUHAPOMQZL."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.iam_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The identifier for the distribution. For example: EDFDVBD632BHDS5."
@@ -138,39 +150,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_canonical_user_id" {
-  description = "Using With CloudFrontorigin-access-identity/cloudfront/cloudfront_access_identity_paths3_origin_configaws_cloudfront_distribution resource:Updating your bucket policyNote that the AWS API may translate the s3_canonical_user_id CanonicalUserAWSaws_s3_bucketiam_arn instead:"
-  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.s3_canonical_user_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "caller_reference" {
-  description = "Internal value used by CloudFront to allow future\nupdates to the origin access identity."
-  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.caller_reference
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cloudfront_access_identity_path" {
-  description = "A shortcut to the full path for the\norigin access identity to use in CloudFront, see below."
-  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.cloudfront_access_identity_path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "etag" {
-  description = "The current version of the origin access identity's information.\nFor example: E2QWRUHAPOMQZL."
-  value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.etag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -138,17 +138,9 @@ output "destination_cidr_block" {
   description = "The CIDR block associated with the local subnet of the customer network."
   value       = aws_vpn_connection_route.aws_vpn_connection_route.destination_cidr_block
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpn_connection_id" {
   description = "(Required) The ID of the VPN connection.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpn_connection_route.aws_vpn_connection_route.vpn_connection_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "destination_cidr_block" {
   description = "The CIDR block associated with the local subnet of the customer network."
@@ -156,7 +148,7 @@ output "destination_cidr_block" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

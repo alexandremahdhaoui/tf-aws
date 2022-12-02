@@ -34,6 +34,7 @@ variable "creation_date" {
 variable "description" {
   description = "(Optional) The description of the approval rule template. Maximum of 1000 characters.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "last_modified_date" {
   description = "The date the approval rule template was most recently changed, in RFC3339 format."
@@ -159,69 +160,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "content" {
-  description = "(Required) The content of the approval rule template. Maximum of 3000 characters."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.content
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "creation_date" {
-  description = "The date the approval rule template was created, in RFC3339 format."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.creation_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the approval rule template. Maximum of 1000 characters.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_modified_date" {
-  description = "The date the approval rule template was most recently changed, in RFC3339 format."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "last_modified_user" {
   description = "The Amazon Resource Name (ARN) of the user who made the most recent changes to the approval rule template."
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_user
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name for the approval rule template. Maximum of 100 characters."
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "approval_rule_template_id" {
   description = "The ID of the approval rule template"
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.approval_rule_template_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "content" {
+  description = "(Required) The content of the approval rule template. Maximum of 3000 characters."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.content
+}
+output "creation_date" {
+  description = "The date the approval rule template was created, in RFC3339 format."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.creation_date
+}
+output "description" {
+  description = "(Optional) The description of the approval rule template. Maximum of 1000 characters.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.description
+}
+output "last_modified_date" {
+  description = "The date the approval rule template was most recently changed, in RFC3339 format."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_date
+}
+output "last_modified_date" {
+  description = "The date the approval rule template was most recently changed, in RFC3339 format."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_date
+}
+output "last_modified_user" {
+  description = "The Amazon Resource Name (ARN) of the user who made the most recent changes to the approval rule template."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_user
+}
+output "rule_content_sha256" {
+  description = "The SHA-256 hash signature for the content of the approval rule template."
+  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.rule_content_sha256
 }
 output "approval_rule_template_id" {
   description = "The ID of the approval rule template"
   value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.approval_rule_template_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "creation_date" {
   description = "The date the approval rule template was created, in RFC3339 format."
@@ -229,31 +210,7 @@ output "creation_date" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_modified_date" {
-  description = "The date the approval rule template was most recently changed, in RFC3339 format."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_modified_user" {
-  description = "The Amazon Resource Name (ARN) of the user who made the most recent changes to the approval rule template."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.last_modified_user
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "rule_content_sha256" {
-  description = "The SHA-256 hash signature for the content of the approval rule template."
-  value       = aws_codecommit_approval_rule_template.aws_codecommit_approval_rule_template.rule_content_sha256
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

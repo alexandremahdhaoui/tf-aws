@@ -1,20 +1,12 @@
 resource "aws_codebuild_source_credential" "aws_codebuild_source_credential" {
+  auth_type   = var.auth_type
   id          = var.id
   server_type = var.server_type
   token       = var.token
   user_name   = var.user_name
-  auth_type   = var.auth_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "token" {
-  description = "(Required) For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is the app password."
-  type        = string
-}
-variable "user_name" {
-  description = "(Optional) The Bitbucket username when the authType is BASIC_AUTH. This parameter is not valid for other types of source providers or connections.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "auth_type" {
@@ -28,6 +20,15 @@ variable "id" {
 variable "server_type" {
   description = "(Required) The source provider used for this project."
   type        = string
+}
+variable "token" {
+  description = "(Required) For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is the app password."
+  type        = string
+}
+variable "user_name" {
+  description = "(Optional) The Bitbucket username when the authType is BASIC_AUTH. This parameter is not valid for other types of source providers or connections.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,53 +150,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "user_name" {
+  description = "(Optional) The Bitbucket username when the authType is BASIC_AUTH. This parameter is not valid for other types of source providers or connections.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codebuild_source_credential.aws_codebuild_source_credential.user_name
+}
 output "auth_type" {
   description = "(Required) The type of authentication used to connect to a GitHub, GitHub Enterprise, or Bitbucket repository. An OAUTH connection is not supported by the API."
   value       = aws_codebuild_source_credential.aws_codebuild_source_credential.auth_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ARN of Source Credential."
   value       = aws_codebuild_source_credential.aws_codebuild_source_credential.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "server_type" {
   description = "(Required) The source provider used for this project."
   value       = aws_codebuild_source_credential.aws_codebuild_source_credential.server_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "token" {
   description = "(Required) For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is the app password."
   value       = aws_codebuild_source_credential.aws_codebuild_source_credential.token
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_name" {
-  description = "(Optional) The Bitbucket username when the authType is BASIC_AUTH. This parameter is not valid for other types of source providers or connections.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codebuild_source_credential.aws_codebuild_source_credential.user_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of Source Credential."
   value       = aws_codebuild_source_credential.aws_codebuild_source_credential.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ARN of Source Credential."
@@ -203,7 +180,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

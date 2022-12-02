@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "cluster_arn" {
-  description = "(Required) ARN of the cluster in which this control panel will reside."
-  type        = string
-}
-variable "default_control_panel" {
-  description = "Whether a control panel is default."
-  type        = string
-}
 variable "name" {
   description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -27,6 +19,14 @@ variable "routing_control_count" {
 }
 variable "arn" {
   description = "ARN of the control panel."
+  type        = string
+}
+variable "cluster_arn" {
+  description = "(Required) ARN of the cluster in which this control panel will reside."
+  type        = string
+}
+variable "default_control_panel" {
+  description = "Whether a control panel is default."
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,57 +153,33 @@ output "name" {
   description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "routing_control_count" {
   description = "Number routing controls in a control panel."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.routing_control_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the control panel."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cluster_arn" {
   description = "(Required) ARN of the cluster in which this control panel will reside."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.cluster_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_control_panel" {
   description = "Whether a control panel is default."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.default_control_panel
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of the control panel."
+  value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.arn
 }
 output "default_control_panel" {
   description = "Whether a control panel is default."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.default_control_panel
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "routing_control_count" {
   description = "Number routing controls in a control panel."
   value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.routing_control_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "Status of control panel: PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
@@ -211,15 +187,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the control panel."
-  value       = aws_route53recoverycontrolconfig_control_panel.aws_route53recoverycontrolconfig_control_panel.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,17 +1,17 @@
 resource "aws_connect_vocabulary" "aws_connect_vocabulary" {
-  language_code      = var.language_code
-  last_modified_time = var.last_modified_time
-  state              = var.state
+  tags_all           = var.tags_all
   content            = var.content
-  id                 = var.id
+  create             = var.create
   delete             = var.delete
   failure_reason     = var.failure_reason
-  instance_id        = var.instance_id
+  language_code      = var.language_code
+  last_modified_time = var.last_modified_time
   name               = var.name
-  tags               = var.tags
-  tags_all           = var.tags_all
   arn                = var.arn
-  create             = var.create
+  id                 = var.id
+  instance_id        = var.instance_id
+  state              = var.state
+  tags               = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -25,30 +25,6 @@ variable "failure_reason" {
   description = "The reason why the custom vocabulary was not created."
   type        = string
 }
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  type        = string
-}
-variable "name" {
-  description = "(Required) A unique name of the custom vocabulary. Must not be more than 140 characters."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the vocabulary. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the vocabulary."
-  type        = string
-}
-variable "create" {
-  description = "(Default 5m)"
-  type        = string
-}
 variable "language_code" {
   description = "(Required) The language code of the vocabulary entries. For a list of languages and their corresponding language codes, see What is Amazon Transcribe?. Valid Values are ar-AE, de-CH, de-DE, en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fr-CA, fr-FR, hi-IN, it-IT, ja-JP, ko-KR, pt-BR, pt-PT, zh-CN."
   type        = string
@@ -57,12 +33,37 @@ variable "last_modified_time" {
   description = "The timestamp when the custom vocabulary was last modified."
   type        = string
 }
-variable "state" {
-  description = "The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS."
+variable "name" {
+  description = "(Required) A unique name of the custom vocabulary. Must not be more than 140 characters."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "content" {
   description = "(Required) The content of the custom vocabulary in plain-text format with a table of values. Each row in the table represents a word or a phrase, described with Phrase, IPA, SoundsLike, and DisplayAs fields. Separate the fields with TAB characters. For more information, see Create a custom vocabulary using a table. Minimum length of 1. Maximum length of 60000."
+  type        = string
+}
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  type        = string
+}
+variable "state" {
+  description = "The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the vocabulary. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the vocabulary."
   type        = string
 }
 variable "id" {
@@ -189,109 +190,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "last_modified_time" {
-  description = "The timestamp when the custom vocabulary was last modified."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.last_modified_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "content" {
   description = "(Required) The content of the custom vocabulary in plain-text format with a table of values. Each row in the table represents a word or a phrase, described with Phrase, IPA, SoundsLike, and DisplayAs fields. Separate the fields with TAB characters. For more information, see Create a custom vocabulary using a table. Minimum length of 1. Maximum length of 60000."
   value       = aws_connect_vocabulary.aws_connect_vocabulary.content
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the vocabulary\nseparated by a colon (:)."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "language_code" {
-  description = "(Required) The language code of the vocabulary entries. For a list of languages and their corresponding language codes, see What is Amazon Transcribe?. Valid Values are ar-AE, de-CH, de-DE, en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fr-CA, fr-FR, hi-IN, it-IT, ja-JP, ko-KR, pt-BR, pt-PT, zh-CN."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.language_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "failure_reason" {
-  description = "The reason why the custom vocabulary was not created."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.failure_reason
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) A unique name of the custom vocabulary. Must not be more than 140 characters."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Tags to apply to the vocabulary. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:"
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the vocabulary."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 5m)"
   value       = aws_connect_vocabulary.aws_connect_vocabulary.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 100m)In addition to all arguments above, the following attributes are exported:"
   value       = aws_connect_vocabulary.aws_connect_vocabulary.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "failure_reason" {
+  description = "The reason why the custom vocabulary was not created."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.failure_reason
+}
+output "language_code" {
+  description = "(Required) The language code of the vocabulary entries. For a list of languages and their corresponding language codes, see What is Amazon Transcribe?. Valid Values are ar-AE, de-CH, de-DE, en-AB, en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fr-CA, fr-FR, hi-IN, it-IT, ja-JP, ko-KR, pt-BR, pt-PT, zh-CN."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.language_code
+}
+output "last_modified_time" {
+  description = "The timestamp when the custom vocabulary was last modified."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.last_modified_time
+}
+output "name" {
+  description = "(Required) A unique name of the custom vocabulary. Must not be more than 140 characters."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.name
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the vocabulary."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.arn
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the vocabulary\nseparated by a colon (:)."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.id
+}
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.instance_id
+}
+output "state" {
+  description = "The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.state
+}
+output "tags" {
+  description = "(Optional) Tags to apply to the vocabulary. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:"
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the vocabulary."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.arn
+}
+output "failure_reason" {
+  description = "The reason why the custom vocabulary was not created."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.failure_reason
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the vocabulary\nseparated by a colon (:)."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.id
+}
+output "last_modified_time" {
+  description = "The timestamp when the custom vocabulary was last modified."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.last_modified_time
+}
+output "state" {
+  description = "The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.state
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_connect_vocabulary.aws_connect_vocabulary.tags_all
 }
 output "vocabulary_id" {
   description = "The identifier of the custom vocabulary."
@@ -299,55 +272,7 @@ output "vocabulary_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the vocabulary."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "failure_reason" {
-  description = "The reason why the custom vocabulary was not created."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.failure_reason
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the vocabulary\nseparated by a colon (:)."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_modified_time" {
-  description = "The timestamp when the custom vocabulary was last modified."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.last_modified_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "The current state of the custom vocabulary. Valid values are CREATION_IN_PROGRESS, ACTIVE, CREATION_FAILED, DELETE_IN_PROGRESS."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_connect_vocabulary.aws_connect_vocabulary.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

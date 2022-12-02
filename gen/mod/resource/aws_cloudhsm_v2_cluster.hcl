@@ -1,21 +1,46 @@
 resource "aws_cloudhsm_v2_cluster" "aws_cloudhsm_v2_cluster" {
-  cluster_certificates.0.hsm_certificate                   = var.cluster_certificates.0.hsm_certificate
-  hsm_type                                                 = var.hsm_type
-  cluster_certificates.0.cluster_csr                       = var.cluster_certificates.0.cluster_csr
-  cluster_certificates.0.manufacturer_hardware_certificate = var.cluster_certificates.0.manufacturer_hardware_certificate
-  cluster_id                                               = var.cluster_id
-  cluster_state                                            = var.cluster_state
-  subnet_ids                                               = var.subnet_ids
   cluster_certificates.0.cluster_certificate               = var.cluster_certificates.0.cluster_certificate
+  cluster_state                                            = var.cluster_state
+  tags                                                     = var.tags
+  cluster_certificates.0.cluster_csr                       = var.cluster_certificates.0.cluster_csr
+  cluster_certificates.0.hsm_certificate                   = var.cluster_certificates.0.hsm_certificate
+  cluster_id                                               = var.cluster_id
+  source_backup_identifier                                 = var.source_backup_identifier
+  hsm_type                                                 = var.hsm_type
   security_group_id                                        = var.security_group_id
+  subnet_ids                                               = var.subnet_ids
+  vpc_id                                                   = var.vpc_id
   cluster_certificates                                     = var.cluster_certificates
   cluster_certificates.0.aws_hardware_certificate          = var.cluster_certificates.0.aws_hardware_certificate
-  source_backup_identifier                                 = var.source_backup_identifier
-  tags                                                     = var.tags
-  vpc_id                                                   = var.vpc_id
+  cluster_certificates.0.manufacturer_hardware_certificate = var.cluster_certificates.0.manufacturer_hardware_certificate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "cluster_certificates.0.hsm_certificate" {
+  description = "The HSM certificate issued (signed) by the HSM hardware."
+  type        = string
+}
+variable "cluster_id" {
+  description = "The id of the CloudHSM cluster."
+  type        = string
+}
+variable "source_backup_identifier" {
+  description = "(Optional) ID of Cloud HSM v2 cluster backup to be restored."
+  type        = string
+  default     = ""
+}
+variable "hsm_type" {
+  description = "(Required) The type of HSM module in the cluster. Currently, only hsm1.medium is supported."
+  type        = string
+}
+variable "security_group_id" {
+  description = "The ID of the security group associated with the CloudHSM cluster."
+  type        = string
+}
+variable "subnet_ids" {
+  description = "(Required) The IDs of subnets in which cluster will operate."
   type        = string
 }
 variable "vpc_id" {
@@ -30,48 +55,25 @@ variable "cluster_certificates.0.aws_hardware_certificate" {
   description = "The HSM hardware certificate issued (signed) by AWS CloudHSM."
   type        = string
 }
-variable "source_backup_identifier" {
-  description = "(Optional) ID of Cloud HSM v2 cluster backup to be restored."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "cluster_certificates.0.hsm_certificate" {
-  description = "The HSM certificate issued (signed) by the HSM hardware."
-  type        = string
-}
-variable "hsm_type" {
-  description = "(Required) The type of HSM module in the cluster. Currently, only hsm1.medium is supported."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Required) The IDs of subnets in which cluster will operate."
-  type        = string
-}
-variable "cluster_certificates.0.cluster_csr" {
-  description = "The certificate signing request (CSR). Available only in UNINITIALIZED state after an HSM instance is added to the cluster."
-  type        = string
-}
 variable "cluster_certificates.0.manufacturer_hardware_certificate" {
   description = "The HSM hardware certificate issued (signed) by the hardware manufacturer."
-  type        = string
-}
-variable "cluster_id" {
-  description = "The id of the CloudHSM cluster."
-  type        = string
-}
-variable "cluster_state" {
-  description = "The state of the CloudHSM cluster."
   type        = string
 }
 variable "cluster_certificates.0.cluster_certificate" {
   description = "The cluster certificate issued (signed) by the issuing certificate authority (CA) of the cluster's owner."
   type        = string
 }
-variable "security_group_id" {
-  description = "The ID of the security group associated with the CloudHSM cluster."
+variable "cluster_state" {
+  description = "The state of the CloudHSM cluster."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "cluster_certificates.0.cluster_csr" {
+  description = "The certificate signing request (CSR). Available only in UNINITIALIZED state after an HSM instance is added to the cluster."
   type        = string
 }
 variable "tag_instance_id" {
@@ -194,173 +196,101 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "hsm_type" {
-  description = "(Required) The type of HSM module in the cluster. Currently, only hsm1.medium is supported."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.hsm_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates.0.hsm_certificate" {
-  description = "The HSM certificate issued (signed) by the HSM hardware."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.hsm_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cluster_certificates.0.manufacturer_hardware_certificate" {
   description = "The HSM hardware certificate issued (signed) by the hardware manufacturer."
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.manufacturer_hardware_certificate
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "hsm_type" {
+  description = "(Required) The type of HSM module in the cluster. Currently, only hsm1.medium is supported."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.hsm_type
 }
-output "cluster_id" {
-  description = "The id of the CloudHSM cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_state" {
-  description = "The state of the CloudHSM cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "security_group_id" {
+  description = "The ID of the security group associated with the CloudHSM cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.security_group_id
 }
 output "subnet_ids" {
   description = "(Required) The IDs of subnets in which cluster will operate."
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "The id of the VPC that the CloudHSM cluster resides in."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.vpc_id
 }
-output "cluster_certificates.0.cluster_csr" {
-  description = "The certificate signing request (CSR). Available only in UNINITIALIZED state after an HSM instance is added to the cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_csr
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_id" {
-  description = "The ID of the security group associated with the CloudHSM cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.security_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates.0.cluster_certificate" {
-  description = "The cluster certificate issued (signed) by the issuing certificate authority (CA) of the cluster's owner."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_certificates" {
+  description = "The list of cluster certificates.\n"
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates
 }
 output "cluster_certificates.0.aws_hardware_certificate" {
   description = "The HSM hardware certificate issued (signed) by AWS CloudHSM."
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.aws_hardware_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_backup_identifier" {
-  description = "(Optional) ID of Cloud HSM v2 cluster backup to be restored."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.source_backup_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The id of the VPC that the CloudHSM cluster resides in."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates" {
-  description = "The list of cluster certificates.\n"
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates.0.hsm_certificate" {
-  description = "The HSM certificate issued (signed) by the HSM hardware."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.hsm_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_certificates.0.cluster_certificate" {
+  description = "The cluster certificate issued (signed) by the issuing certificate authority (CA) of the cluster's owner."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_certificate
 }
 output "cluster_state" {
   description = "The state of the CloudHSM cluster."
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_state
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_certificates.0.cluster_csr" {
+  description = "The certificate signing request (CSR). Available only in UNINITIALIZED state after an HSM instance is added to the cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_csr
+}
+output "source_backup_identifier" {
+  description = "(Optional) ID of Cloud HSM v2 cluster backup to be restored."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.source_backup_identifier
+}
+output "cluster_certificates.0.hsm_certificate" {
+  description = "The HSM certificate issued (signed) by the HSM hardware."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.hsm_certificate
+}
+output "cluster_id" {
+  description = "The id of the CloudHSM cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_id
 }
 output "cluster_certificates" {
   description = "The list of cluster certificates.\n"
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_certificates.0.hsm_certificate" {
+  description = "The HSM certificate issued (signed) by the HSM hardware."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.hsm_certificate
 }
-output "cluster_certificates.0.cluster_certificate" {
-  description = "The cluster certificate issued (signed) by the issuing certificate authority (CA) of the cluster's owner."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates.0.cluster_csr" {
-  description = "The certificate signing request (CSR). Available only in UNINITIALIZED state after an HSM instance is added to the cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_csr
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_id" {
-  description = "The ID of the security group associated with the CloudHSM cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.security_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_state" {
+  description = "The state of the CloudHSM cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_state
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_certificates.0.aws_hardware_certificate" {
+  description = "The HSM hardware certificate issued (signed) by AWS CloudHSM."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.aws_hardware_certificate
+}
+output "cluster_certificates.0.cluster_certificate" {
+  description = "The cluster certificate issued (signed) by the issuing certificate authority (CA) of the cluster's owner."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_certificate
+}
+output "cluster_certificates.0.cluster_csr" {
+  description = "The certificate signing request (CSR). Available only in UNINITIALIZED state after an HSM instance is added to the cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.cluster_csr
+}
+output "cluster_certificates.0.manufacturer_hardware_certificate" {
+  description = "The HSM hardware certificate issued (signed) by the hardware manufacturer."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.manufacturer_hardware_certificate
+}
+output "cluster_id" {
+  description = "The id of the CloudHSM cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_id
+}
+output "security_group_id" {
+  description = "The ID of the security group associated with the CloudHSM cluster."
+  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.security_group_id
 }
 output "vpc_id" {
   description = "The id of the VPC that the CloudHSM cluster resides in."
@@ -368,31 +298,7 @@ output "vpc_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates.0.aws_hardware_certificate" {
-  description = "The HSM hardware certificate issued (signed) by AWS CloudHSM."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.aws_hardware_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_certificates.0.manufacturer_hardware_certificate" {
-  description = "The HSM hardware certificate issued (signed) by the hardware manufacturer."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_certificates.0.manufacturer_hardware_certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_id" {
-  description = "The id of the CloudHSM cluster."
-  value       = aws_cloudhsm_v2_cluster.aws_cloudhsm_v2_cluster.cluster_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

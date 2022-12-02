@@ -12,9 +12,23 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "filter" {
+  description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "AWS Region."
+  type        = string
+}
+variable "instance_types" {
+  description = "List of EC2 Instance Types."
+  type        = string
+}
 variable "location_type" {
   description = "(Optional) Location type. Defaults to region. Valid values: availability-zone, availability-zone-id, and region.filter Argument Reference"
   type        = string
+  default     = ""
 }
 variable "location_types" {
   description = "List of location types.Note that the indexes of Instance Type Offering instance types, locations and location types correspond.TimeoutsConfiguration options:"
@@ -32,49 +46,33 @@ variable "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "filter" {
+output "values" {
+  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.values
+}
+output "filter" {
   description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
-  type        = string
+  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.filter
 }
-variable "id" {
+output "id" {
   description = "AWS Region."
-  type        = string
-}
-variable "instance_types" {
-  description = "List of EC2 Instance Types."
-  type        = string
+  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.id
 }
 output "instance_types" {
   description = "List of EC2 Instance Types."
   value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.instance_types
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "location_type" {
   description = "(Optional) Location type. Defaults to region. Valid values: availability-zone, availability-zone-id, and region.filter Argument Reference"
   value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.location_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "location_types" {
   description = "List of location types.Note that the indexes of Instance Type Offering instance types, locations and location types correspond.TimeoutsConfiguration options:"
   value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.location_types
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "locations" {
   description = "List of locations."
   value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.locations
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the filter. The location filter depends on the top-level location_type argument and if not specified, defaults to the current region."
@@ -82,31 +80,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "values" {
-  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.values
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter" {
-  description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
-  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AWS Region."
-  value       = aws_ec2_instance_type_offerings.aws_ec2_instance_type_offerings.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

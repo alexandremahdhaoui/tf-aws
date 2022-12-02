@@ -1,10 +1,10 @@
 resource "aws_kinesisanalyticsv2_application_snapshot" "aws_kinesisanalyticsv2_application_snapshot" {
+  application_name            = var.application_name
+  application_version_id      = var.application_version_id
   create                      = var.create
   id                          = var.id
   snapshot_creation_timestamp = var.snapshot_creation_timestamp
   snapshot_name               = var.snapshot_name
-  application_name            = var.application_name
-  application_version_id      = var.application_version_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -154,61 +154,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The application snapshot identifier."
-  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "snapshot_creation_timestamp" {
   description = "The timestamp of the application snapshot.TimeoutsConfiguration options:"
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.snapshot_creation_timestamp
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "snapshot_name" {
   description = "(Required) The name of the application snapshot.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.snapshot_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "application_name" {
   description = "(Required) The name of an existing  Kinesis Analytics v2 Application. Note that the application must be running for a snapshot to be created."
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.application_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "application_version_id" {
   description = "The current application version ID when the snapshot was created."
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.application_version_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 10m)"
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The application snapshot identifier."
   value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "application_version_id" {
+  description = "The current application version ID when the snapshot was created."
+  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.application_version_id
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.delete
+}
+output "id" {
+  description = "The application snapshot identifier."
+  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.id
 }
 output "snapshot_creation_timestamp" {
   description = "The timestamp of the application snapshot.TimeoutsConfiguration options:"
@@ -216,31 +200,7 @@ output "snapshot_creation_timestamp" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "application_version_id" {
-  description = "The current application version ID when the snapshot was created."
-  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.application_version_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_kinesisanalyticsv2_application_snapshot.aws_kinesisanalyticsv2_application_snapshot.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

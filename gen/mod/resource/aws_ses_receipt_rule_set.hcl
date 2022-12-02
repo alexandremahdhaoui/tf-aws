@@ -138,25 +138,13 @@ output "arn" {
   description = "SES receipt rule set ARN."
   value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule_set_name" {
   description = "(Required) Name of the rule set.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.rule_set_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "SES receipt rule set ARN."
   value       = aws_ses_receipt_rule_set.aws_ses_receipt_rule_set.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "SES receipt rule set name."
@@ -164,7 +152,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

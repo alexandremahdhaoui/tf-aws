@@ -4,29 +4,21 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "body" {
+  description = "SDK as a string."
+  value       = aws_api_gateway_sdk.aws_api_gateway_sdk.body
+}
+output "content_type" {
+  description = "Content-type header value in the HTTP response."
+  value       = aws_api_gateway_sdk.aws_api_gateway_sdk.content_type
+}
 output "id" {
   description = "The REST-API-ID:STAGE-NAME"
   value       = aws_api_gateway_sdk.aws_api_gateway_sdk.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "body" {
-  description = "SDK as a string."
-  value       = aws_api_gateway_sdk.aws_api_gateway_sdk.body
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content_type" {
-  description = "Content-type header value in the HTTP response."
-  value       = aws_api_gateway_sdk.aws_api_gateway_sdk.content_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,46 +1,26 @@
 resource "aws_codestarnotifications_notification_rule.markdown" "aws_codestarnotifications_notification_rule.markdown" {
+  arn            = var.arn
+  resource       = var.resource
+  target         = var.target
+  type           = var.type
+  tags           = var.tags
+  address        = var.address
+  detail_type    = var.detail_type
   event_type_ids = var.event_type_ids
   id             = var.id
   name           = var.name
   status         = var.status
-  type           = var.type
-  address        = var.address
-  arn            = var.arn
-  detail_type    = var.detail_type
-  resource       = var.resource
-  tags           = var.tags
-  target         = var.target
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "target" {
-  description = "(Optional) Configuration blocks containing notification target information. Can be specified multiple times. At least one target must be specified on creation.An target block supports the following arguments:"
   type        = string
 }
 variable "address" {
   description = "(Required) The ARN of notification rule target. For example, a SNS Topic ARN."
   type        = string
 }
-variable "arn" {
-  description = "The codestar notification rule ARN."
-  type        = string
-}
 variable "detail_type" {
   description = "(Required) The level of detail to include in the notifications for this resource. Possible values are BASIC and FULL."
-  type        = string
-}
-variable "resource" {
-  description = "(Required) The ARN of the resource to associate with the notification rule."
-  type        = string
-}
-variable "type" {
-  description = "(Optional) The type of the notification target. Default value is SNS.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "event_type_ids" {
@@ -58,6 +38,30 @@ variable "name" {
 variable "status" {
   description = "(Optional) The status of the notification rule. Possible values are ENABLED and DISABLED, default is ENABLED."
   type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The codestar notification rule ARN."
+  type        = string
+}
+variable "resource" {
+  description = "(Required) The ARN of the resource to associate with the notification rule."
+  type        = string
+}
+variable "target" {
+  description = "(Optional) Configuration blocks containing notification target information. Can be specified multiple times. At least one target must be specified on creation.An target block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) The type of the notification target. Default value is SNS.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,93 +183,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resource" {
-  description = "(Required) The ARN of the resource to associate with the notification rule."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.resource
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "target" {
-  description = "(Optional) Configuration blocks containing notification target information. Can be specified multiple times. At least one target must be specified on creation.An target block supports the following arguments:"
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.target
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "address" {
-  description = "(Required) The ARN of notification rule target. For example, a SNS Topic ARN."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The codestar notification rule ARN."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "detail_type" {
-  description = "(Required) The level of detail to include in the notifications for this resource. Possible values are BASIC and FULL."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.detail_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "(Optional) The status of the notification rule. Possible values are ENABLED and DISABLED, default is ENABLED."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) The type of the notification target. Default value is SNS.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "event_type_ids" {
-  description = "(Required) A list of event types associated with this notification rule.\nFor list of allowed events see here."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.event_type_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The codestar notification rule ARN."
   value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of notification rule."
   value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "status" {
+  description = "(Optional) The status of the notification rule. Possible values are ENABLED and DISABLED, default is ENABLED."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.status
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.tags
+}
+output "address" {
+  description = "(Required) The ARN of notification rule target. For example, a SNS Topic ARN."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.address
+}
+output "detail_type" {
+  description = "(Required) The level of detail to include in the notifications for this resource. Possible values are BASIC and FULL."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.detail_type
+}
+output "event_type_ids" {
+  description = "(Required) A list of event types associated with this notification rule.\nFor list of allowed events see here."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.event_type_ids
+}
+output "type" {
+  description = "(Optional) The type of the notification target. Default value is SNS.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.type
+}
+output "arn" {
+  description = "The codestar notification rule ARN."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.arn
+}
+output "resource" {
+  description = "(Required) The ARN of the resource to associate with the notification rule."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.resource
+}
+output "target" {
+  description = "(Optional) Configuration blocks containing notification target information. Can be specified multiple times. At least one target must be specified on creation.An target block supports the following arguments:"
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.target
+}
+output "id" {
+  description = "The codestar notification rule ARN."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.tags_all
 }
 output "arn" {
   description = "The codestar notification rule ARN."
@@ -273,23 +241,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The codestar notification rule ARN."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_codestarnotifications_notification_rule.markdown.aws_codestarnotifications_notification_rule.markdown.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

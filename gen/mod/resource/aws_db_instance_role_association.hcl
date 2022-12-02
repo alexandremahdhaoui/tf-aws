@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "db_instance_identifier" {
-  description = "(Required) DB Instance Identifier to associate with the IAM Role."
-  type        = string
-}
 variable "feature_name" {
   description = "(Required) Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions."
   type        = string
 }
 variable "role_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "db_instance_identifier" {
+  description = "(Required) DB Instance Identifier to associate with the IAM Role."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,29 +139,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "db_instance_identifier" {
-  description = "(Required) DB Instance Identifier to associate with the IAM Role."
-  value       = aws_db_instance_role_association.aws_db_instance_role_association.db_instance_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "feature_name" {
-  description = "(Required) Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions."
-  value       = aws_db_instance_role_association.aws_db_instance_role_association.feature_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the IAM Role to associate with the DB Instance.In addition to all arguments above, the following attributes are exported:"
   value       = aws_db_instance_role_association.aws_db_instance_role_association.role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "db_instance_identifier" {
+  description = "(Required) DB Instance Identifier to associate with the IAM Role."
+  value       = aws_db_instance_role_association.aws_db_instance_role_association.db_instance_identifier
+}
+output "feature_name" {
+  description = "(Required) Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions."
+  value       = aws_db_instance_role_association.aws_db_instance_role_association.feature_name
 }
 output "id" {
   description = "DB Instance Identifier and IAM Role ARN separated by a comma (,)"
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

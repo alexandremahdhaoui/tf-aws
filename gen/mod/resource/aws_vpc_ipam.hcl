@@ -1,49 +1,30 @@
 resource "aws_vpc_ipam" "aws_vpc_ipam" {
-  description              = var.description
+  cascade                  = var.cascade
   id                       = var.id
-  operating_regions        = var.operating_regions
+  private_default_scope_id = var.private_default_scope_id
   public_default_scope_id  = var.public_default_scope_id
   tags                     = var.tags
-  cascade                  = var.cascade
-  private_default_scope_id = var.private_default_scope_id
+  arn                      = var.arn
+  description              = var.description
+  operating_regions        = var.operating_regions
   region_name              = var.region_name
   scope_count              = var.scope_count
-  arn                      = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of IPAM"
-  type        = string
-}
-variable "private_default_scope_id" {
-  description = "The ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space."
-  type        = string
-}
-variable "region_name" {
-  description = "(Required) The name of the Region you want to add to the IPAM.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "scope_count" {
-  description = "The number of scopes in the IPAM."
-  type        = string
-}
 variable "cascade" {
   description = "(Optional) Enables you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.operating_regions"
   type        = string
-}
-variable "description" {
-  description = "(Optional) A description for the IPAM."
-  type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ID of the IPAM"
   type        = string
 }
-variable "operating_regions" {
-  description = "(Required) Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You strongmust set your provider block region as an operating_region."
+variable "private_default_scope_id" {
+  description = "The ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space."
   type        = string
 }
 variable "public_default_scope_id" {
@@ -52,6 +33,28 @@ variable "public_default_scope_id" {
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of IPAM"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) A description for the IPAM."
+  type        = string
+  default     = ""
+}
+variable "operating_regions" {
+  description = "(Required) Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You strongmust set your provider block region as an operating_region."
+  type        = string
+}
+variable "region_name" {
+  description = "(Required) The name of the Region you want to add to the IPAM.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "scope_count" {
+  description = "The number of scopes in the IPAM."
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,101 +177,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "Amazon Resource Name (ARN) of IPAM"
+  value       = aws_vpc_ipam.aws_vpc_ipam.arn
+}
 output "description" {
   description = "(Optional) A description for the IPAM."
   value       = aws_vpc_ipam.aws_vpc_ipam.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the IPAM"
-  value       = aws_vpc_ipam.aws_vpc_ipam.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "operating_regions" {
   description = "(Required) Determines which locales can be chosen when you create pools. Locale is the Region where you want to make an IPAM pool available for allocations. You can only create pools with locales that match the operating Regions of the IPAM. You can only create VPCs from a pool whose locale matches the VPC's Region. You specify a region using the region_name parameter. You strongmust set your provider block region as an operating_region."
   value       = aws_vpc_ipam.aws_vpc_ipam.operating_regions
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "region_name" {
+  description = "(Required) The name of the Region you want to add to the IPAM.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipam.aws_vpc_ipam.region_name
 }
-output "public_default_scope_id" {
-  description = ""
-  value       = aws_vpc_ipam.aws_vpc_ipam.public_default_scope_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_vpc_ipam.aws_vpc_ipam.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "scope_count" {
+  description = "The number of scopes in the IPAM."
+  value       = aws_vpc_ipam.aws_vpc_ipam.scope_count
 }
 output "cascade" {
   description = "(Optional) Enables you to quickly delete an IPAM, private scopes, pools in private scopes, and any allocations in the pools in private scopes.operating_regions"
   value       = aws_vpc_ipam.aws_vpc_ipam.cascade
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the IPAM"
+  value       = aws_vpc_ipam.aws_vpc_ipam.id
 }
 output "private_default_scope_id" {
   description = "The ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space."
   value       = aws_vpc_ipam.aws_vpc_ipam.private_default_scope_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "region_name" {
-  description = "(Required) The name of the Region you want to add to the IPAM.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipam.aws_vpc_ipam.region_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "scope_count" {
-  description = "The number of scopes in the IPAM."
-  value       = aws_vpc_ipam.aws_vpc_ipam.scope_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of IPAM"
-  value       = aws_vpc_ipam.aws_vpc_ipam.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_default_scope_id" {
-  description = "The ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space."
-  value       = aws_vpc_ipam.aws_vpc_ipam.private_default_scope_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "public_default_scope_id" {
   description = ""
   value       = aws_vpc_ipam.aws_vpc_ipam.public_default_scope_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_vpc_ipam.aws_vpc_ipam.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_vpc_ipam.aws_vpc_ipam.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of IPAM"
+  value       = aws_vpc_ipam.aws_vpc_ipam.arn
+}
+output "id" {
+  description = "The ID of the IPAM"
+  value       = aws_vpc_ipam.aws_vpc_ipam.id
+}
+output "private_default_scope_id" {
+  description = "The ID of the IPAM's private scope. A scope is a top-level container in IPAM. Each scope represents an IP-independent network. Scopes enable you to represent networks where you have overlapping IP space. When you create an IPAM, IPAM automatically creates two scopes: public and private. The private scope is intended for private IP space. The public scope is intended for all internet-routable IP space."
+  value       = aws_vpc_ipam.aws_vpc_ipam.private_default_scope_id
+}
+output "public_default_scope_id" {
+  description = ""
+  value       = aws_vpc_ipam.aws_vpc_ipam.public_default_scope_id
 }
 output "scope_count" {
   description = "The number of scopes in the IPAM."
@@ -276,31 +243,7 @@ output "scope_count" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_vpc_ipam.aws_vpc_ipam.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of IPAM"
-  value       = aws_vpc_ipam.aws_vpc_ipam.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the IPAM"
-  value       = aws_vpc_ipam.aws_vpc_ipam.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,24 +1,20 @@
 resource "aws_config_configuration_aggregator" "aws_config_configuration_aggregator" {
-  all_regions                     = var.all_regions
+  account_ids                     = var.account_ids
   arn                             = var.arn
   name                            = var.name
   regions                         = var.regions
-  role_arn                        = var.role_arn
   account_aggregation_source      = var.account_aggregation_source
+  all_regions                     = var.all_regions
   organization_aggregation_source = var.organization_aggregation_source
+  role_arn                        = var.role_arn
   tags                            = var.tags
-  account_ids                     = var.account_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "account_aggregation_source" {
-  description = "(Optional) The account(s) to aggregate config data from as documented below."
-  type        = string
-}
-variable "all_regions" {
-  description = "(Optional) If true, aggregate existing AWS Config regions and future regions."
+variable "account_ids" {
+  description = "(Required) List of 12-digit account IDs of the account(s) being aggregated."
   type        = string
 }
 variable "arn" {
@@ -32,22 +28,31 @@ variable "name" {
 variable "regions" {
   description = "(Optional) List of source regions being aggregated."
   type        = string
+  default     = ""
+}
+variable "account_aggregation_source" {
+  description = "(Optional) The account(s) to aggregate config data from as documented below."
+  type        = string
+  default     = ""
+}
+variable "all_regions" {
+  description = "(Optional) If true, aggregate existing AWS Config regions and future regions."
+  type        = string
+  default     = ""
+}
+variable "organization_aggregation_source" {
+  description = "(Optional) The organization to aggregate config data from as documented below."
+  type        = string
+  default     = ""
 }
 variable "role_arn" {
   description = "(Required) ARN of the IAM role used to retrieve AWS Organization details associated with the aggregator account.Either regions or all_regions (as true) must be specified.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "account_ids" {
-  description = "(Required) List of 12-digit account IDs of the account(s) being aggregated."
-  type        = string
-}
-variable "organization_aggregation_source" {
-  description = "(Optional) The organization to aggregate config data from as documented below."
-  type        = string
-}
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Either account_aggregation_source or organization_aggregation_source must be specified.account_aggregation_source"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -173,73 +178,41 @@ output "account_ids" {
   description = "(Required) List of 12-digit account IDs of the account(s) being aggregated."
   value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.account_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "organization_aggregation_source" {
-  description = "(Optional) The organization to aggregate config data from as documented below."
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.organization_aggregation_source
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Either account_aggregation_source or organization_aggregation_source must be specified.account_aggregation_source"
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "regions" {
-  description = "(Optional) List of source regions being aggregated."
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.regions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Required) ARN of the IAM role used to retrieve AWS Organization details associated with the aggregator account.Either regions or all_regions (as true) must be specified.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_aggregation_source" {
-  description = "(Optional) The account(s) to aggregate config data from as documented below."
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.account_aggregation_source
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "all_regions" {
-  description = "(Optional) If true, aggregate existing AWS Config regions and future regions."
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.all_regions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the aggregator"
   value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the configuration aggregator."
   value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "regions" {
+  description = "(Optional) List of source regions being aggregated."
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.regions
+}
+output "account_aggregation_source" {
+  description = "(Optional) The account(s) to aggregate config data from as documented below."
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.account_aggregation_source
+}
+output "all_regions" {
+  description = "(Optional) If true, aggregate existing AWS Config regions and future regions."
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.all_regions
+}
+output "organization_aggregation_source" {
+  description = "(Optional) The organization to aggregate config data from as documented below."
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.organization_aggregation_source
+}
+output "role_arn" {
+  description = "(Required) ARN of the IAM role used to retrieve AWS Organization details associated with the aggregator account.Either regions or all_regions (as true) must be specified.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.role_arn
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Either account_aggregation_source or organization_aggregation_source must be specified.account_aggregation_source"
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.tags
+}
+output "arn" {
+  description = "The ARN of the aggregator"
+  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.arn
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -247,15 +220,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the aggregator"
-  value       = aws_config_configuration_aggregator.aws_config_configuration_aggregator.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

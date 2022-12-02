@@ -7,33 +7,27 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "name" {
+  description = "(Optional) API name."
+  type        = string
+  default     = ""
+}
 variable "protocol_type" {
   description = "(Optional) API protocol."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "name" {
-  description = "(Optional) API name."
   type        = string
 }
 output "name" {
   description = "(Optional) API name."
   value       = aws_apigatewayv2_apis.aws_apigatewayv2_apis.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "protocol_type" {
   description = "(Optional) API protocol."
   value       = aws_apigatewayv2_apis.aws_apigatewayv2_apis.protocol_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "In addition to all arguments above, the following attributes are exported:"
@@ -41,7 +35,7 @@ output "tags" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

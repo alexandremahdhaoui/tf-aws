@@ -12,6 +12,15 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "name" {
+  description = "(Required) The friendly name to identify the IPSet."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "activate" {
   description = "(Required) Specifies whether GuardDuty is to start using the uploaded IPSet."
   type        = string
@@ -34,14 +43,6 @@ variable "id" {
 }
 variable "location" {
   description = "(Required) The URI of the file that contains the IPSet."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The friendly name to identify the IPSet."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -168,81 +169,41 @@ output "location" {
   description = "(Required) The URI of the file that contains the IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.location
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The friendly name to identify the IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_guardduty_ipset.aws_guardduty_ipset.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "activate" {
   description = "(Required) Specifies whether GuardDuty is to start using the uploaded IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.activate
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "detector_id" {
   description = "(Required) The detector ID of the GuardDuty."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.detector_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "format" {
   description = "(Required) The format of the file that contains the IPSet. Valid values: TXT | STIX | OTX_CSV | ALIEN_VAULT | PROOF_POINT | FIRE_EYE"
   value       = aws_guardduty_ipset.aws_guardduty_ipset.format
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the GuardDuty IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the GuardDuty IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,7 +211,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "cidr" {
+  description = "A network CIDR."
+  value       = aws_vpc_ipam_pool_cidrs.aws_vpc_ipam_pool_cidrs.cidr
+}
 output "ipam_pool_cidrs" {
   description = "The CIDRs provisioned into the IPAM pool, described below.ipam_pool_cidrs"
   value       = aws_vpc_ipam_pool_cidrs.aws_vpc_ipam_pool_cidrs.ipam_pool_cidrs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "state" {
   description = "The provisioning state of that CIDR.TimeoutsConfiguration options:"
@@ -18,15 +18,7 @@ output "state" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "cidr" {
-  description = "A network CIDR."
-  value       = aws_vpc_ipam_pool_cidrs.aws_vpc_ipam_pool_cidrs.cidr
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

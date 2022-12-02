@@ -1,14 +1,10 @@
 resource "aws_networkmanager_transit_gateway_connect_peer_association" "aws_networkmanager_transit_gateway_connect_peer_association" {
+  global_network_id = var.global_network_id
   link_id           = var.link_id
   device_id         = var.device_id
-  global_network_id = var.global_network_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "link_id" {
-  description = "(Optional) The ID of the link."
   type        = string
 }
 variable "device_id" {
@@ -18,6 +14,11 @@ variable "device_id" {
 variable "global_network_id" {
   description = "(Required) The ID of the global network."
   type        = string
+}
+variable "link_id" {
+  description = "(Optional) The ID of the link."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -143,17 +144,9 @@ output "device_id" {
   description = "(Required) The ID of the device."
   value       = aws_networkmanager_transit_gateway_connect_peer_association.aws_networkmanager_transit_gateway_connect_peer_association.device_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "global_network_id" {
   description = "(Required) The ID of the global network."
   value       = aws_networkmanager_transit_gateway_connect_peer_association.aws_networkmanager_transit_gateway_connect_peer_association.global_network_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "link_id" {
   description = "(Optional) The ID of the link."
@@ -161,7 +154,7 @@ output "link_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

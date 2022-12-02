@@ -1,19 +1,15 @@
 resource "aws_glue_partition_index" "aws_glue_partition_index" {
+  keys            = var.keys
+  partition_index = var.partition_index
+  table_name      = var.table_name
   catalog_id      = var.catalog_id
   create          = var.create
   database_name   = var.database_name
   id              = var.id
   index_name      = var.index_name
-  keys            = var.keys
-  partition_index = var.partition_index
-  table_name      = var.table_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "index_name" {
-  description = "(Required) Name of the partition index."
   type        = string
 }
 variable "keys" {
@@ -31,6 +27,7 @@ variable "table_name" {
 variable "catalog_id" {
   description = "(Optional) The catalog ID where the table resides.partition_index"
   type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 10m)"
@@ -42,6 +39,10 @@ variable "database_name" {
 }
 variable "id" {
   description = "Catalog ID, Database name, table name, and index name.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "index_name" {
+  description = "(Required) Name of the partition index."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,85 +165,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "index_name" {
-  description = "(Required) Name of the partition index."
-  value       = aws_glue_partition_index.aws_glue_partition_index.index_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "keys" {
-  description = "(Required) Keys for the partition index.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_partition_index.aws_glue_partition_index.keys
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "partition_index" {
-  description = "(Required) Configuration block for a partition index. See partition_index below."
-  value       = aws_glue_partition_index.aws_glue_partition_index.partition_index
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "table_name" {
   description = "(Required) Name of the table. For Hive compatibility, this must be entirely lowercase."
   value       = aws_glue_partition_index.aws_glue_partition_index.table_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "catalog_id" {
   description = "(Optional) The catalog ID where the table resides.partition_index"
   value       = aws_glue_partition_index.aws_glue_partition_index.catalog_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 10m)"
   value       = aws_glue_partition_index.aws_glue_partition_index.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "database_name" {
   description = "(Required) Name of the metadata database where the table metadata resides. For Hive compatibility, this must be all lowercase."
   value       = aws_glue_partition_index.aws_glue_partition_index.database_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Catalog ID, Database name, table name, and index name.TimeoutsConfiguration options:"
   value       = aws_glue_partition_index.aws_glue_partition_index.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "index_name" {
+  description = "(Required) Name of the partition index."
+  value       = aws_glue_partition_index.aws_glue_partition_index.index_name
+}
+output "keys" {
+  description = "(Required) Keys for the partition index.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_partition_index.aws_glue_partition_index.keys
+}
+output "partition_index" {
+  description = "(Required) Configuration block for a partition index. See partition_index below."
+  value       = aws_glue_partition_index.aws_glue_partition_index.partition_index
 }
 output "create" {
   description = "(Default 10m)"
   value       = aws_glue_partition_index.aws_glue_partition_index.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 10m)"
   value       = aws_glue_partition_index.aws_glue_partition_index.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Catalog ID, Database name, table name, and index name.TimeoutsConfiguration options:"
@@ -250,7 +211,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

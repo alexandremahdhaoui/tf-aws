@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "arn" {
+  description = "Amazon Resource Name(ARN) of the key alias."
+  value       = aws_kms_alias.aws_kms_alias.arn
+}
 output "id" {
   description = "Amazon Resource Name(ARN) of the key alias."
   value       = aws_kms_alias.aws_kms_alias.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "target_key_id" {
   description = "Key identifier pointed to by the alias."
@@ -18,15 +18,7 @@ output "target_key_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name(ARN) of the key alias."
-  value       = aws_kms_alias.aws_kms_alias.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

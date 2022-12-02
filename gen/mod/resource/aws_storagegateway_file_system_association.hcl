@@ -1,57 +1,61 @@
 resource "aws_storagegateway_file_system_association" "aws_storagegateway_file_system_association" {
-  audit_destination_arn          = var.audit_destination_arn
-  gateway_arn                    = var.gateway_arn
-  password                       = var.password
-  tags                           = var.tags
-  arn                            = var.arn
-  cache_attributes               = var.cache_attributes
-  cache_stale_timeout_in_seconds = var.cache_stale_timeout_in_seconds
   id                             = var.id
+  tags                           = var.tags
+  cache_stale_timeout_in_seconds = var.cache_stale_timeout_in_seconds
+  gateway_arn                    = var.gateway_arn
+  cache_attributes               = var.cache_attributes
   location_arn                   = var.location_arn
+  password                       = var.password
   username                       = var.username
+  arn                            = var.arn
+  audit_destination_arn          = var.audit_destination_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the newly created file system association."
-  type        = string
-}
-variable "cache_attributes" {
-  description = "(Optional) Refresh cache information. see Cache Attributes for more details."
-  type        = string
-}
 variable "cache_stale_timeout_in_seconds" {
   description = "(Optional) Refreshes a file share's cache by using Time To Live (TTL).\nTTL is the length of time since the last refresh after which access to the directory would cause the file gateway\nto first refresh that directory's contents from the Amazon S3 bucket. Valid Values: 0 or 300 to 2592000 seconds (5 minutes to 30 days). Defaults to 0In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "gateway_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the gateway."
   type        = string
 }
 variable "id" {
   description = "Amazon Resource Name (ARN) of the FSx file system association"
   type        = string
 }
-variable "location_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.cache_attributes"
+  type        = string
+  default     = ""
+}
+variable "password" {
+  description = "(Required, sensitive) The password of the user credential."
   type        = string
 }
 variable "username" {
   description = "(Required) The user name of the user credential that has permission to access the root share of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group."
   type        = string
 }
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the newly created file system association."
+  type        = string
+}
 variable "audit_destination_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) of the storage used for the audit logs."
   type        = string
+  default     = ""
 }
-variable "gateway_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the gateway."
+variable "cache_attributes" {
+  description = "(Optional) Refresh cache information. see Cache Attributes for more details."
   type        = string
+  default     = ""
 }
-variable "password" {
-  description = "(Required, sensitive) The password of the user credential."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.cache_attributes"
+variable "location_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway."
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,101 +178,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Amazon Resource Name (ARN) of the FSx file system association"
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "location_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.location_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "username" {
-  description = "(Required) The user name of the user credential that has permission to access the root share of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.username
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the newly created file system association."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cache_attributes" {
-  description = "(Optional) Refresh cache information. see Cache Attributes for more details."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.cache_attributes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.cache_attributes"
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.tags
 }
 output "cache_stale_timeout_in_seconds" {
   description = "(Optional) Refreshes a file share's cache by using Time To Live (TTL).\nTTL is the length of time since the last refresh after which access to the directory would cause the file gateway\nto first refresh that directory's contents from the Amazon S3 bucket. Valid Values: 0 or 300 to 2592000 seconds (5 minutes to 30 days). Defaults to 0In addition to all arguments above, the following attributes are exported:"
   value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.cache_stale_timeout_in_seconds
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.cache_attributes"
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "audit_destination_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the storage used for the audit logs."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.audit_destination_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the gateway."
   value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.gateway_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "password" {
-  description = "(Required, sensitive) The password of the user credential."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.password
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the newly created file system association."
-  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the FSx file system association"
   value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "location_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the Amazon FSx file system to associate with the FSx File Gateway."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.location_arn
+}
+output "password" {
+  description = "(Required, sensitive) The password of the user credential."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.password
+}
+output "username" {
+  description = "(Required) The user name of the user credential that has permission to access the root share of the Amazon FSx file system. The user account must belong to the Amazon FSx delegated admin user group."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.username
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the newly created file system association."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.arn
+}
+output "audit_destination_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the storage used for the audit logs."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.audit_destination_arn
+}
+output "cache_attributes" {
+  description = "(Optional) Refresh cache information. see Cache Attributes for more details."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.cache_attributes
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the newly created file system association."
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.arn
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the FSx file system association"
+  value       = aws_storagegateway_file_system_association.aws_storagegateway_file_system_association.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -276,7 +232,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

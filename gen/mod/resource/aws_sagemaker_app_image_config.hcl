@@ -1,32 +1,30 @@
 resource "aws_sagemaker_app_image_config" "aws_sagemaker_app_image_config" {
-  tags                        = var.tags
-  arn                         = var.arn
-  default_gid                 = var.default_gid
   default_uid                 = var.default_uid
-  file_system_config          = var.file_system_config
-  id                          = var.id
-  name                        = var.name
-  app_image_config_name       = var.app_image_config_name
-  display_name                = var.display_name
   kernel_gateway_image_config = var.kernel_gateway_image_config
   kernel_spec                 = var.kernel_spec
   mount_path                  = var.mount_path
+  name                        = var.name
+  app_image_config_name       = var.app_image_config_name
+  arn                         = var.arn
+  default_gid                 = var.default_gid
+  display_name                = var.display_name
+  file_system_config          = var.file_system_config
+  id                          = var.id
+  tags                        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "app_image_config_name" {
-  description = "(Required) The name of the App Image Config."
+variable "default_uid" {
+  description = "(Optional) The default POSIX user ID (UID). If not specified, defaults to 1000. Valid values are 0 and 1000."
   type        = string
-}
-variable "display_name" {
-  description = "(Optional) The display name of the kernel.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "kernel_gateway_image_config" {
   description = "(Optional) The configuration for the file system and kernels in a SageMaker image running as a KernelGateway app. See Kernel Gateway Image Config details below."
   type        = string
+  default     = ""
 }
 variable "kernel_spec" {
   description = "(Required) The default branch for the Git repository. See Kernel Spec details below.File System Config"
@@ -35,9 +33,23 @@ variable "kernel_spec" {
 variable "mount_path" {
   description = "(Optional) The path within the image to mount the user's EFS home directory. The directory should be empty. If not specified, defaults to /home/sagemaker-user.~> strongNote: When specifying default_gid and default_uid, Valid value pairs are [0, 0] and [100, 1000].Kernel Spec"
   type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the kernel."
+  type        = string
+}
+variable "id" {
+  description = "The name of the App Image Config."
+  type        = string
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Kernel Gateway Image Config"
+  type        = string
+  default     = ""
+}
+variable "app_image_config_name" {
+  description = "(Required) The name of the App Image Config."
   type        = string
 }
 variable "arn" {
@@ -47,22 +59,17 @@ variable "arn" {
 variable "default_gid" {
   description = "(Optional) The default POSIX group ID (GID). If not specified, defaults to 100. Valid values are 0 and 100."
   type        = string
+  default     = ""
 }
-variable "default_uid" {
-  description = "(Optional) The default POSIX user ID (UID). If not specified, defaults to 1000. Valid values are 0 and 1000."
+variable "display_name" {
+  description = "(Optional) The display name of the kernel.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "file_system_config" {
   description = "(Optional) The URL where the Git repository is located. See File System Config details below."
   type        = string
-}
-variable "id" {
-  description = "The name of the App Image Config."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the kernel."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -184,117 +191,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this App Image Config."
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_gid" {
-  description = "(Optional) The default POSIX group ID (GID). If not specified, defaults to 100. Valid values are 0 and 100."
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.default_gid
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_uid" {
   description = "(Optional) The default POSIX user ID (UID). If not specified, defaults to 1000. Valid values are 0 and 1000."
   value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.default_uid
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "file_system_config" {
-  description = "(Optional) The URL where the Git repository is located. See File System Config details below."
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.file_system_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the App Image Config."
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the kernel."
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Kernel Gateway Image Config"
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "app_image_config_name" {
-  description = "(Required) The name of the App Image Config."
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.app_image_config_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "display_name" {
-  description = "(Optional) The display name of the kernel.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.display_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kernel_gateway_image_config" {
   description = "(Optional) The configuration for the file system and kernels in a SageMaker image running as a KernelGateway app. See Kernel Gateway Image Config details below."
   value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.kernel_gateway_image_config
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "kernel_spec" {
   description = "(Required) The default branch for the Git repository. See Kernel Spec details below.File System Config"
   value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.kernel_spec
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "mount_path" {
   description = "(Optional) The path within the image to mount the user's EFS home directory. The directory should be empty. If not specified, defaults to /home/sagemaker-user.~> strongNote: When specifying default_gid and default_uid, Valid value pairs are [0, 0] and [100, 1000].Kernel Spec"
   value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.mount_path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the kernel."
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.name
+}
+output "app_image_config_name" {
+  description = "(Required) The name of the App Image Config."
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.app_image_config_name
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this App Image Config."
   value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "default_gid" {
+  description = "(Optional) The default POSIX group ID (GID). If not specified, defaults to 100. Valid values are 0 and 100."
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.default_gid
+}
+output "display_name" {
+  description = "(Optional) The display name of the kernel.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.display_name
+}
+output "file_system_config" {
+  description = "(Optional) The URL where the Git repository is located. See File System Config details below."
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.file_system_config
 }
 output "id" {
   description = "The name of the App Image Config."
   value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Kernel Gateway Image Config"
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this App Image Config."
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.arn
+}
+output "id" {
+  description = "The name of the App Image Config."
+  value       = aws_sagemaker_app_image_config.aws_sagemaker_app_image_config.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -302,7 +253,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

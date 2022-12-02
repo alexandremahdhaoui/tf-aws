@@ -1,24 +1,12 @@
 resource "aws_schemas_discoverer" "aws_schemas_discoverer" {
-  id          = var.id
-  source_arn  = var.source_arn
   tags        = var.tags
   arn         = var.arn
   description = var.description
+  id          = var.id
+  source_arn  = var.source_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the discoverer."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the discoverer. Maximum of 256 characters."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the discoverer."
   type        = string
 }
 variable "source_arn" {
@@ -27,6 +15,20 @@ variable "source_arn" {
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the discoverer."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the discoverer. Maximum of 256 characters."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ID of the discoverer."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,61 +151,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "source_arn" {
-  description = "(Required) The ARN of the event bus to discover event schemas on."
-  value       = aws_schemas_discoverer.aws_schemas_discoverer.source_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_schemas_discoverer.aws_schemas_discoverer.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional) The description of the discoverer. Maximum of 256 characters."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the discoverer."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_arn" {
+  description = "(Required) The ARN of the event bus to discover event schemas on."
+  value       = aws_schemas_discoverer.aws_schemas_discoverer.source_arn
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_schemas_discoverer.aws_schemas_discoverer.tags
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the discoverer."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -211,7 +185,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -24,13 +24,17 @@ variable "name" {
   description = "(Required) Name of the worker configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+output "latest_revision" {
+  description = "an ID of the latest successfully created revision of the worker configuration."
+  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.latest_revision
+}
+output "name" {
+  description = "(Required) Name of the worker configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.name
+}
 output "arn" {
   description = "the ARN of the worker configuration."
   value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "a summary description of the worker configuration."
@@ -38,23 +42,7 @@ output "description" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "latest_revision" {
-  description = "an ID of the latest successfully created revision of the worker configuration."
-  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.latest_revision
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Name of the worker configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,29 +1,26 @@
 resource "aws_db_proxy_endpoint" "aws_db_proxy_endpoint" {
-  arn                    = var.arn
+  tags                   = var.tags
+  target_role            = var.target_role
+  update                 = var.update
+  create                 = var.create
+  db_proxy_name          = var.db_proxy_name
   endpoint               = var.endpoint
   id                     = var.id
-  target_role            = var.target_role
   vpc_security_group_ids = var.vpc_security_group_ids
   vpc_subnet_ids         = var.vpc_subnet_ids
-  create                 = var.create
+  arn                    = var.arn
   db_proxy_endpoint_name = var.db_proxy_endpoint_name
-  db_proxy_name          = var.db_proxy_name
   is_default             = var.is_default
-  tags                   = var.tags
-  update                 = var.update
   vpc_id                 = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "target_role" {
-  description = "(Optional) Indicates whether the DB proxy endpoint can be used for read/write or read-only operations. The default is READ_WRITE. Valid values are READ_WRITE and READ_ONLY."
-  type        = string
-}
 variable "vpc_security_group_ids" {
   description = "(Optional) One or more VPC security group IDs to associate with the new proxy."
   type        = string
+  default     = ""
 }
 variable "vpc_subnet_ids" {
   description = "(Required) One or more VPC subnet IDs to associate with the new proxy."
@@ -33,40 +30,46 @@ variable "arn" {
   description = "The Amazon Resource Name (ARN) for the proxy endpoint."
   type        = string
 }
-variable "endpoint" {
-  description = "The endpoint that you can use to connect to the proxy. You include the endpoint value in the connection string for a database client application."
-  type        = string
-}
-variable "id" {
-  description = "The name of the proxy and proxy endpoint separated by /, DB-PROXY-NAME/DB-PROXY-ENDPOINT-NAME."
+variable "db_proxy_endpoint_name" {
+  description = "(Required) The identifier for the proxy endpoint. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it can't end with a hyphen or contain two consecutive hyphens."
   type        = string
 }
 variable "is_default" {
   description = "Indicates whether this endpoint is the default endpoint for the associated DB proxy."
   type        = string
 }
+variable "vpc_id" {
+  description = "The VPC ID of the DB proxy endpoint.TimeoutsConfiguration options:"
+  type        = string
+}
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resource.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "target_role" {
+  description = "(Optional) Indicates whether the DB proxy endpoint can be used for read/write or read-only operations. The default is READ_WRITE. Valid values are READ_WRITE and READ_ONLY."
+  type        = string
+  default     = ""
 }
 variable "update" {
   description = "(Default 30m)"
-  type        = string
-}
-variable "vpc_id" {
-  description = "The VPC ID of the DB proxy endpoint.TimeoutsConfiguration options:"
   type        = string
 }
 variable "create" {
   description = "(Default 30m)"
   type        = string
 }
-variable "db_proxy_endpoint_name" {
-  description = "(Required) The identifier for the proxy endpoint. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it can't end with a hyphen or contain two consecutive hyphens."
-  type        = string
-}
 variable "db_proxy_name" {
   description = "(Required) The name of the DB proxy associated with the DB proxy endpoint that you create."
+  type        = string
+}
+variable "endpoint" {
+  description = "The endpoint that you can use to connect to the proxy. You include the endpoint value in the connection string for a database client application."
+  type        = string
+}
+variable "id" {
+  description = "The name of the proxy and proxy endpoint separated by /, DB-PROXY-NAME/DB-PROXY-ENDPOINT-NAME."
   type        = string
 }
 variable "tag_instance_id" {
@@ -189,125 +192,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "db_proxy_name" {
-  description = "(Required) The name of the DB proxy associated with the DB proxy endpoint that you create."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.db_proxy_name
+output "vpc_subnet_ids" {
+  description = "(Required) One or more VPC subnet IDs to associate with the new proxy."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "is_default" {
-  description = "Indicates whether this endpoint is the default endpoint for the associated DB proxy."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.is_default
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A mapping of tags to assign to the resource.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The VPC ID of the DB proxy endpoint.TimeoutsConfiguration options:"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The Amazon Resource Name (ARN) for the proxy endpoint."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.arn
 }
 output "db_proxy_endpoint_name" {
   description = "(Required) The identifier for the proxy endpoint. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it can't end with a hyphen or contain two consecutive hyphens."
   value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.db_proxy_endpoint_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "is_default" {
+  description = "Indicates whether this endpoint is the default endpoint for the associated DB proxy."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.is_default
 }
-output "id" {
-  description = "The name of the proxy and proxy endpoint separated by /, DB-PROXY-NAME/DB-PROXY-ENDPOINT-NAME."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "target_role" {
-  description = "(Optional) Indicates whether the DB proxy endpoint can be used for read/write or read-only operations. The default is READ_WRITE. Valid values are READ_WRITE and READ_ONLY."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.target_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "The VPC ID of the DB proxy endpoint.TimeoutsConfiguration options:"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_id
 }
 output "vpc_security_group_ids" {
   description = "(Optional) One or more VPC security group IDs to associate with the new proxy."
   value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_security_group_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "target_role" {
+  description = "(Optional) Indicates whether the DB proxy endpoint can be used for read/write or read-only operations. The default is READ_WRITE. Valid values are READ_WRITE and READ_ONLY."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.target_role
 }
-output "vpc_subnet_ids" {
-  description = "(Required) One or more VPC subnet IDs to associate with the new proxy."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_subnet_ids
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.create
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) for the proxy endpoint."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "db_proxy_name" {
+  description = "(Required) The name of the DB proxy associated with the DB proxy endpoint that you create."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.db_proxy_name
 }
 output "endpoint" {
   description = "The endpoint that you can use to connect to the proxy. You include the endpoint value in the connection string for a database client application."
   value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint" {
-  description = "The endpoint that you can use to connect to the proxy. You include the endpoint value in the connection string for a database client application."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the proxy and proxy endpoint separated by /, DB-PROXY-NAME/DB-PROXY-ENDPOINT-NAME."
   value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A mapping of tags to assign to the resource.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.tags
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.update
+}
+output "vpc_id" {
+  description = "The VPC ID of the DB proxy endpoint.TimeoutsConfiguration options:"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) for the proxy endpoint."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.create
+}
+output "delete" {
+  description = "(Default 60m)"
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.delete
+}
+output "endpoint" {
+  description = "The endpoint that you can use to connect to the proxy. You include the endpoint value in the connection string for a database client application."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.endpoint
+}
+output "id" {
+  description = "The name of the proxy and proxy endpoint separated by /, DB-PROXY-NAME/DB-PROXY-ENDPOINT-NAME."
+  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.id
 }
 output "is_default" {
   description = "Indicates whether this endpoint is the default endpoint for the associated DB proxy."
@@ -315,47 +278,7 @@ output "is_default" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The VPC ID of the DB proxy endpoint.TimeoutsConfiguration options:"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) for the proxy endpoint."
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 60m)"
-  value       = aws_db_proxy_endpoint.aws_db_proxy_endpoint.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

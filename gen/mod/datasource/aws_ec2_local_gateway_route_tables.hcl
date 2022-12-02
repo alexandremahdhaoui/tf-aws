@@ -8,17 +8,13 @@ output "id" {
   description = "AWS Region."
   value       = aws_ec2_local_gateway_route_tables.aws_ec2_local_gateway_route_tables.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ids" {
   description = "Set of Local Gateway Route Table identifiersTimeoutsConfiguration options:"
   value       = aws_ec2_local_gateway_route_tables.aws_ec2_local_gateway_route_tables.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,31 +1,15 @@
 resource "aws_cloudfront_field_level_encryption_profile" "aws_cloudfront_field_level_encryption_profile" {
-  encryption_entities = var.encryption_entities
-  etag                = var.etag
-  field_patterns      = var.field_patterns
   name                = var.name
   provider_id         = var.provider_id
   public_key_id       = var.public_key_id
   caller_reference    = var.caller_reference
   comment             = var.comment
+  encryption_entities = var.encryption_entities
+  etag                = var.etag
+  field_patterns      = var.field_patterns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "caller_reference" {
-  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Profile."
-  type        = string
-}
-variable "comment" {
-  description = "(Optional) An optional comment about the Field Level Encryption Profile."
-  type        = string
-}
-variable "encryption_entities" {
-  description = "(Required) The encryption entities config block for field-level encryption profiles that contains an attribute items which includes the encryption key and field pattern specifications.Encryption Entities"
-  type        = string
-}
-variable "etag" {
-  description = "The current version of the Field Level Encryption Profile. For example: E2QWRUHAPOMQZL."
   type        = string
 }
 variable "field_patterns" {
@@ -42,6 +26,23 @@ variable "provider_id" {
 }
 variable "public_key_id" {
   description = "(Required) The public key associated with a set of field-level encryption patterns, to be used when encrypting the fields that match the patterns."
+  type        = string
+}
+variable "caller_reference" {
+  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Profile."
+  type        = string
+}
+variable "comment" {
+  description = "(Optional) An optional comment about the Field Level Encryption Profile."
+  type        = string
+  default     = ""
+}
+variable "encryption_entities" {
+  description = "(Required) The encryption entities config block for field-level encryption profiles that contains an attribute items which includes the encryption key and field pattern specifications.Encryption Entities"
+  type        = string
+}
+variable "etag" {
+  description = "The current version of the Field Level Encryption Profile. For example: E2QWRUHAPOMQZL."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,93 +165,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "field_patterns" {
-  description = "(Required) Object that contains an attribute items that contains the list of field patterns in a field-level encryption content type profile specify the fields that you want to be encrypted.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.field_patterns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the Field Level Encryption Profile."
-  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provider_id" {
-  description = "(Required) The provider associated with the public key being used for encryption."
-  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.provider_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "public_key_id" {
   description = "(Required) The public key associated with a set of field-level encryption patterns, to be used when encrypting the fields that match the patterns."
   value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.public_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "caller_reference" {
   description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Profile."
   value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.caller_reference
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "comment" {
   description = "(Optional) An optional comment about the Field Level Encryption Profile."
   value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.comment
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "encryption_entities" {
   description = "(Required) The encryption entities config block for field-level encryption profiles that contains an attribute items which includes the encryption key and field pattern specifications.Encryption Entities"
   value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.encryption_entities
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "etag" {
   description = "The current version of the Field Level Encryption Profile. For example: E2QWRUHAPOMQZL."
   value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.etag
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "field_patterns" {
+  description = "(Required) Object that contains an attribute items that contains the list of field patterns in a field-level encryption content type profile specify the fields that you want to be encrypted.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.field_patterns
 }
-output "caller_reference" {
-  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Profile."
-  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.caller_reference
+output "name" {
+  description = "(Required) The name of the Field Level Encryption Profile."
+  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "etag" {
-  description = "The current version of the Field Level Encryption Profile. For example: E2QWRUHAPOMQZL."
-  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.etag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "provider_id" {
+  description = "(Required) The provider associated with the public key being used for encryption."
+  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.provider_id
 }
 output "id" {
   description = "The identifier for the Field Level Encryption Profile. For example: K3D5EWEUDCCXON."
   value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.id
 }
+output "caller_reference" {
+  description = "Internal value used by CloudFront to allow future updates to the Field Level Encryption Profile."
+  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.caller_reference
+}
+output "etag" {
+  description = "The current version of the Field Level Encryption Profile. For example: E2QWRUHAPOMQZL."
+  value       = aws_cloudfront_field_level_encryption_profile.aws_cloudfront_field_level_encryption_profile.etag
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

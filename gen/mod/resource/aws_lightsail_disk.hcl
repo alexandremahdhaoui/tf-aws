@@ -1,5 +1,4 @@
 resource "aws_lightsail_disk" "aws_lightsail_disk" {
-  tags              = var.tags
   arn               = var.arn
   availability_zone = var.availability_zone
   created_at        = var.created_at
@@ -7,9 +6,14 @@ resource "aws_lightsail_disk" "aws_lightsail_disk" {
   name              = var.name
   size_in_gb        = var.size_in_gb
   support_code      = var.support_code
+  tags              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "size_in_gb" {
+  description = "(Required) The instance port the load balancer will connect."
   type        = string
 }
 variable "support_code" {
@@ -19,6 +23,7 @@ variable "support_code" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the Lightsail load balancer."
@@ -38,10 +43,6 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) The name of the Lightsail load balancer."
-  type        = string
-}
-variable "size_in_gb" {
-  description = "(Required) The instance port the load balancer will connect."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,85 +165,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "size_in_gb" {
-  description = "(Required) The instance port the load balancer will connect."
-  value       = aws_lightsail_disk.aws_lightsail_disk.size_in_gb
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "support_code" {
   description = "The support code for the disk. Include this code in your email to support when you have questions about a disk in Lightsail. This code enables our support team to look up your Lightsail information more easily."
   value       = aws_lightsail_disk.aws_lightsail_disk.support_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_disk.aws_lightsail_disk.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the Lightsail load balancer."
   value       = aws_lightsail_disk.aws_lightsail_disk.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "availability_zone" {
   description = "(Required) The Availability Zone in which to create your disk."
   value       = aws_lightsail_disk.aws_lightsail_disk.availability_zone
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_at" {
   description = "The timestamp when the load balancer was created."
   value       = aws_lightsail_disk.aws_lightsail_disk.created_at
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the disk  (matches name)."
   value       = aws_lightsail_disk.aws_lightsail_disk.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the Lightsail load balancer."
   value       = aws_lightsail_disk.aws_lightsail_disk.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "size_in_gb" {
+  description = "(Required) The instance port the load balancer will connect."
+  value       = aws_lightsail_disk.aws_lightsail_disk.size_in_gb
+}
+output "support_code" {
+  description = "The support code for the disk. Include this code in your email to support when you have questions about a disk in Lightsail. This code enables our support team to look up your Lightsail information more easily."
+  value       = aws_lightsail_disk.aws_lightsail_disk.support_code
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_lightsail_disk.aws_lightsail_disk.tags_all
 }
 output "arn" {
   description = "The ARN of the Lightsail load balancer."
   value       = aws_lightsail_disk.aws_lightsail_disk.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_at" {
   description = "The timestamp when the load balancer was created."
   value       = aws_lightsail_disk.aws_lightsail_disk.created_at
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the disk  (matches name)."
@@ -250,23 +219,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "support_code" {
-  description = "The support code for the disk. Include this code in your email to support when you have questions about a disk in Lightsail. This code enables our support team to look up your Lightsail information more easily."
-  value       = aws_lightsail_disk.aws_lightsail_disk.support_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_lightsail_disk.aws_lightsail_disk.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

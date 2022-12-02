@@ -1,82 +1,84 @@
 resource "aws_redshift_endpoint_access" "aws_redshift_endpoint_access" {
-  private_ip_address     = var.private_ip_address
-  vpc_endpoint           = var.vpc_endpoint
-  cluster_identifier     = var.cluster_identifier
-  network_interface_id   = var.network_interface_id
-  resource_owner         = var.resource_owner
-  subnet_group_name      = var.subnet_group_name
   availability_zone      = var.availability_zone
+  network_interface_id   = var.network_interface_id
   port                   = var.port
-  vpc_endpoint_id        = var.vpc_endpoint_id
-  vpc_id                 = var.vpc_id
-  address                = var.address
-  endpoint_name          = var.endpoint_name
-  id                     = var.id
-  network_interface      = var.network_interface
   vpc_security_group_ids = var.vpc_security_group_ids
+  endpoint_name          = var.endpoint_name
+  private_ip_address     = var.private_ip_address
+  resource_owner         = var.resource_owner
+  address                = var.address
+  cluster_identifier     = var.cluster_identifier
+  network_interface      = var.network_interface
+  vpc_endpoint_id        = var.vpc_endpoint_id
+  id                     = var.id
+  subnet_group_name      = var.subnet_group_name
+  vpc_endpoint           = var.vpc_endpoint
+  vpc_id                 = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "availability_zone" {
-  description = "The Availability Zone."
-  type        = string
-}
-variable "port" {
-  description = "The port number on which the cluster accepts incoming connections."
-  type        = string
-}
-variable "vpc_endpoint_id" {
-  description = "The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy."
-  type        = string
-}
-variable "vpc_id" {
-  description = "The VPC identifier that the endpoint is associated.Network Interface"
-  type        = string
-}
-variable "address" {
-  description = "The DNS address of the endpoint."
-  type        = string
-}
-variable "endpoint_name" {
-  description = "(Required) The Redshift-managed VPC endpoint name."
   type        = string
 }
 variable "id" {
   description = "The Redshift-managed VPC endpoint name."
   type        = string
 }
-variable "network_interface" {
-  description = "One or more network interfaces of the endpoint. Also known as an interface endpoint. See details below."
-  type        = string
-}
-variable "vpc_security_group_ids" {
-  description = "(Optional) The security group that defines the ports, protocols, and sources for inbound traffic that you are authorizing into your endpoint.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
+variable "subnet_group_name" {
+  description = "(Required) The subnet group from which Amazon Redshift chooses the subnet to deploy the endpoint."
   type        = string
 }
 variable "vpc_endpoint" {
   description = "The connection endpoint for connecting to an Amazon Redshift cluster through the proxy. See details below.VPC Endpoint"
   type        = string
 }
-variable "cluster_identifier" {
-  description = "(Required) The cluster identifier of the cluster to access."
+variable "vpc_id" {
+  description = "The VPC identifier that the endpoint is associated.Network Interface"
+  type        = string
+}
+variable "availability_zone" {
+  description = "The Availability Zone."
   type        = string
 }
 variable "network_interface_id" {
   description = "The network interface identifier."
   type        = string
 }
+variable "port" {
+  description = "The port number on which the cluster accepts incoming connections."
+  type        = string
+}
+variable "vpc_security_group_ids" {
+  description = "(Optional) The security group that defines the ports, protocols, and sources for inbound traffic that you are authorizing into your endpoint.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "endpoint_name" {
+  description = "(Required) The Redshift-managed VPC endpoint name."
+  type        = string
+}
+variable "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
+  type        = string
+}
 variable "resource_owner" {
   description = "(Optional) The Amazon Web Services account ID of the owner of the cluster. This is only required if the cluster is in another Amazon Web Services account."
   type        = string
+  default     = ""
 }
-variable "subnet_group_name" {
-  description = "(Required) The subnet group from which Amazon Redshift chooses the subnet to deploy the endpoint."
+variable "address" {
+  description = "The DNS address of the endpoint."
+  type        = string
+}
+variable "cluster_identifier" {
+  description = "(Required) The cluster identifier of the cluster to access."
+  type        = string
+}
+variable "network_interface" {
+  description = "One or more network interfaces of the endpoint. Also known as an interface endpoint. See details below."
+  type        = string
+}
+variable "vpc_endpoint_id" {
+  description = "The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy."
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,205 +201,105 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cluster_identifier" {
-  description = "(Required) The cluster identifier of the cluster to access."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.cluster_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "availability_zone" {
+  description = "The Availability Zone."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.availability_zone
 }
 output "network_interface_id" {
   description = "The network interface identifier."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.network_interface_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_owner" {
-  description = "(Optional) The Amazon Web Services account ID of the owner of the cluster. This is only required if the cluster is in another Amazon Web Services account."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.resource_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_group_name" {
-  description = "(Required) The subnet group from which Amazon Redshift chooses the subnet to deploy the endpoint."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.subnet_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "availability_zone" {
-  description = "The Availability Zone."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "port" {
   description = "The port number on which the cluster accepts incoming connections."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint_id" {
-  description = "The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The VPC identifier that the endpoint is associated.Network Interface"
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "address" {
-  description = "The DNS address of the endpoint."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_name" {
-  description = "(Required) The Redshift-managed VPC endpoint name."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.endpoint_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Redshift-managed VPC endpoint name."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface" {
-  description = "One or more network interfaces of the endpoint. Also known as an interface endpoint. See details below."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.network_interface
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_security_group_ids" {
   description = "(Optional) The security group that defines the ports, protocols, and sources for inbound traffic that you are authorizing into your endpoint.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_security_group_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "endpoint_name" {
+  description = "(Required) The Redshift-managed VPC endpoint name."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.endpoint_name
 }
 output "private_ip_address" {
   description = "The IPv4 address of the network interface within the subnet."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.private_ip_address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint" {
-  description = "The connection endpoint for connecting to an Amazon Redshift cluster through the proxy. See details below.VPC Endpoint"
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "resource_owner" {
+  description = "(Optional) The Amazon Web Services account ID of the owner of the cluster. This is only required if the cluster is in another Amazon Web Services account."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.resource_owner
 }
 output "address" {
   description = "The DNS address of the endpoint."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_identifier" {
+  description = "(Required) The cluster identifier of the cluster to access."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.cluster_identifier
 }
 output "network_interface" {
   description = "One or more network interfaces of the endpoint. Also known as an interface endpoint. See details below."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.network_interface
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_id" {
-  description = "The network interface identifier."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port" {
-  description = "The port number on which the cluster accepts incoming connections."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.private_ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_id" {
-  description = "The subnet identifier."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.subnet_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_endpoint_id" {
   description = "The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "availability_zone" {
-  description = "The Availability Zone."
-  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Redshift-managed VPC endpoint name."
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "subnet_group_name" {
+  description = "(Required) The subnet group from which Amazon Redshift chooses the subnet to deploy the endpoint."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.subnet_group_name
 }
 output "vpc_endpoint" {
   description = "The connection endpoint for connecting to an Amazon Redshift cluster through the proxy. See details below.VPC Endpoint"
   value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_endpoint
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "The VPC identifier that the endpoint is associated.Network Interface"
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_id
+}
+output "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.private_ip_address
+}
+output "network_interface" {
+  description = "One or more network interfaces of the endpoint. Also known as an interface endpoint. See details below."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.network_interface
+}
+output "network_interface_id" {
+  description = "The network interface identifier."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.network_interface_id
+}
+output "port" {
+  description = "The port number on which the cluster accepts incoming connections."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.port
+}
+output "subnet_id" {
+  description = "The subnet identifier."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.subnet_id
+}
+output "vpc_endpoint" {
+  description = "The connection endpoint for connecting to an Amazon Redshift cluster through the proxy. See details below.VPC Endpoint"
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_endpoint
+}
+output "address" {
+  description = "The DNS address of the endpoint."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.address
+}
+output "availability_zone" {
+  description = "The Availability Zone."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.availability_zone
+}
+output "id" {
+  description = "The Redshift-managed VPC endpoint name."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.id
+}
+output "vpc_endpoint_id" {
+  description = "The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy."
+  value       = aws_redshift_endpoint_access.aws_redshift_endpoint_access.vpc_endpoint_id
 }
 output "vpc_id" {
   description = "The VPC identifier that the endpoint is associated.Network Interface"
@@ -405,7 +307,7 @@ output "vpc_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

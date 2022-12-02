@@ -124,37 +124,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_dynamodb_table.aws_dynamodb_table.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_dynamodb_table.aws_dynamodb_table.delete
+}
+output "id" {
+  description = "Name of the table"
+  value       = aws_dynamodb_table.aws_dynamodb_table.id
+}
 output "stream_arn" {
   description = "ARN of the Table Stream. Only available when stream_enabled = true"
   value       = aws_dynamodb_table.aws_dynamodb_table.stream_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "stream_label" {
   description = "Timestamp, in ISO 8601 format, for this stream. Note that this timestamp is not a unique identifier for the stream on its own. However, the combination of AWS customer ID, table name and this field is guaranteed to be unique. It can be used for creating CloudWatch Alarms. Only available when stream_enabled = true"
   value       = aws_dynamodb_table.aws_dynamodb_table.stream_label
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeouts~> strongNote: There are a variety of default timeouts set internally. If you set a shorter custom timeout than one of the defaults, the custom timeout will not be respected as the longer of the custom or internal default will be used.Configuration options:"
   value       = aws_dynamodb_table.aws_dynamodb_table.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 60m)"
   value       = aws_dynamodb_table.aws_dynamodb_table.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the table"
@@ -162,31 +158,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_dynamodb_table.aws_dynamodb_table.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_dynamodb_table.aws_dynamodb_table.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Name of the table"
-  value       = aws_dynamodb_table.aws_dynamodb_table.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

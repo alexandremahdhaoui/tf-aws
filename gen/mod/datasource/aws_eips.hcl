@@ -4,29 +4,21 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "public_ips" {
+  description = "List of all the Elastic IP addresses.TimeoutsConfiguration options:"
+  value       = aws_eips.aws_eips.public_ips
+}
+output "allocation_ids" {
+  description = "List of all the allocation IDs for address for use with EC2-VPC."
+  value       = aws_eips.aws_eips.allocation_ids
+}
 output "id" {
   description = "AWS Region."
   value       = aws_eips.aws_eips.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "public_ips" {
-  description = "List of all the Elastic IP addresses.TimeoutsConfiguration options:"
-  value       = aws_eips.aws_eips.public_ips
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allocation_ids" {
-  description = "List of all the allocation IDs for address for use with EC2-VPC."
-  value       = aws_eips.aws_eips.allocation_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

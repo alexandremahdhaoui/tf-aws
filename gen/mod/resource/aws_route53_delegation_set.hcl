@@ -7,6 +7,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Delegation Set."
+  type        = string
+}
 variable "id" {
   description = "The delegation set ID"
   type        = string
@@ -14,10 +18,7 @@ variable "id" {
 variable "reference_name" {
   description = "(Optional) This is a reference name used in Caller Reference\n(helpful for identifying single delegation set amongst others)In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Delegation Set."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -143,41 +144,21 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) of the Delegation Set."
   value       = aws_route53_delegation_set.aws_route53_delegation_set.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The delegation set ID"
   value       = aws_route53_delegation_set.aws_route53_delegation_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "reference_name" {
   description = "(Optional) This is a reference name used in Caller Reference\n(helpful for identifying single delegation set amongst others)In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_delegation_set.aws_route53_delegation_set.reference_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The delegation set ID"
   value       = aws_route53_delegation_set.aws_route53_delegation_set.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name_servers" {
   description = "A list of authoritative name servers for the hosted zone\n(effectively a list of NS records)."
   value       = aws_route53_delegation_set.aws_route53_delegation_set.name_servers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Delegation Set."
@@ -185,7 +166,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

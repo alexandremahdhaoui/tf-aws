@@ -1,37 +1,21 @@
 resource "aws_db_security_group" "aws_db_security_group" {
   tags                    = var.tags
-  id                      = var.id
   ingress                 = var.ingress
-  name                    = var.name
   security_group_id       = var.security_group_id
+  security_group_name     = var.security_group_name
+  id                      = var.id
+  name                    = var.name
   security_group_owner_id = var.security_group_owner_id
   arn                     = var.arn
   cidr                    = var.cidr
   description             = var.description
-  security_group_name     = var.security_group_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The db security group ID."
-  type        = string
-}
-variable "ingress" {
-  description = "(Required) A list of ingress rules."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the DB security group."
-  type        = string
-}
-variable "security_group_id" {
-  description = "The ID of the security group to authorize"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Ingress blocks support the following:"
+variable "security_group_owner_id" {
+  description = "The owner Id of the security group provided\nby security_group_name.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -45,14 +29,32 @@ variable "cidr" {
 variable "description" {
   description = "(Optional) The description of the DB security group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The db security group ID."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the DB security group."
+  type        = string
+}
+variable "ingress" {
+  description = "(Required) A list of ingress rules."
+  type        = string
+}
+variable "security_group_id" {
+  description = "The ID of the security group to authorize"
+  type        = string
 }
 variable "security_group_name" {
   description = "The name of the security group to authorize"
   type        = string
 }
-variable "security_group_owner_id" {
-  description = "The owner Id of the security group provided\nby security_group_name.In addition to all arguments above, the following attributes are exported:"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Ingress blocks support the following:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,93 +176,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name of the DB security group."
-  value       = aws_db_security_group.aws_db_security_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_id" {
-  description = "The ID of the security group to authorize"
-  value       = aws_db_security_group.aws_db_security_group.security_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Ingress blocks support the following:"
-  value       = aws_db_security_group.aws_db_security_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The db security group ID."
-  value       = aws_db_security_group.aws_db_security_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ingress" {
-  description = "(Required) A list of ingress rules."
-  value       = aws_db_security_group.aws_db_security_group.ingress
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the DB security group. Defaults to \"Managed by Terraform\"."
-  value       = aws_db_security_group.aws_db_security_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_name" {
-  description = "The name of the security group to authorize"
-  value       = aws_db_security_group.aws_db_security_group.security_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "security_group_owner_id" {
   description = "The owner Id of the security group provided\nby security_group_name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_db_security_group.aws_db_security_group.security_group_owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The arn of the DB security group."
   value       = aws_db_security_group.aws_db_security_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cidr" {
   description = "The CIDR block to accept"
   value       = aws_db_security_group.aws_db_security_group.cidr
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The description of the DB security group. Defaults to \"Managed by Terraform\"."
+  value       = aws_db_security_group.aws_db_security_group.description
+}
+output "id" {
+  description = "The db security group ID."
+  value       = aws_db_security_group.aws_db_security_group.id
+}
+output "name" {
+  description = "(Required) The name of the DB security group."
+  value       = aws_db_security_group.aws_db_security_group.name
+}
+output "ingress" {
+  description = "(Required) A list of ingress rules."
+  value       = aws_db_security_group.aws_db_security_group.ingress
+}
+output "security_group_id" {
+  description = "The ID of the security group to authorize"
+  value       = aws_db_security_group.aws_db_security_group.security_group_id
+}
+output "security_group_name" {
+  description = "The name of the security group to authorize"
+  value       = aws_db_security_group.aws_db_security_group.security_group_name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Ingress blocks support the following:"
+  value       = aws_db_security_group.aws_db_security_group.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_db_security_group.aws_db_security_group.tags_all
 }
 output "arn" {
   description = "The arn of the DB security group."
   value       = aws_db_security_group.aws_db_security_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The db security group ID."
@@ -268,15 +230,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_db_security_group.aws_db_security_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,29 +1,30 @@
 resource "aws_rolesanywhere_profile" "aws_rolesanywhere_profile" {
-  arn                         = var.arn
+  name                        = var.name
+  require_instance_properties = var.require_instance_properties
   enabled                     = var.enabled
   managed_policy_arns         = var.managed_policy_arns
-  require_instance_properties = var.require_instance_properties
-  tags                        = var.tags
-  duration_seconds            = var.duration_seconds
   id                          = var.id
-  name                        = var.name
   role_arns                   = var.role_arns
   session_policy              = var.session_policy
+  tags                        = var.tags
+  arn                         = var.arn
+  duration_seconds            = var.duration_seconds
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Profile"
+  type        = string
+}
 variable "duration_seconds" {
   description = "(Optional) The number of seconds the vended session credentials are valid for. Defaults to 3600."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The Profile ID."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the Profile."
   type        = string
 }
 variable "role_arns" {
@@ -33,26 +34,31 @@ variable "role_arns" {
 variable "session_policy" {
   description = "(Optional) A session policy that applies to the trust boundary of the vended session credentials."
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Profile"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "enabled" {
   description = "(Optional) Whether or not the Profile is enabled."
   type        = string
+  default     = ""
 }
 variable "managed_policy_arns" {
   description = "(Optional) A list of managed policy ARNs that apply to the vended session credentials."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the Profile."
   type        = string
 }
 variable "require_instance_properties" {
   description = "(Optional) Specifies whether instance properties are required in CreateSession requests with this profile."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,101 +180,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Profile"
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "enabled" {
   description = "(Optional) Whether or not the Profile is enabled."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "managed_policy_arns" {
   description = "(Optional) A list of managed policy ARNs that apply to the vended session credentials."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.managed_policy_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the Profile."
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.name
 }
 output "require_instance_properties" {
   description = "(Optional) Specifies whether instance properties are required in CreateSession requests with this profile."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.require_instance_properties
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Profile"
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.arn
 }
 output "duration_seconds" {
   description = "(Optional) The number of seconds the vended session credentials are valid for. Defaults to 3600."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.duration_seconds
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Profile ID."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the Profile."
-  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "role_arns" {
   description = "(Required) A list of IAM roles that this profile can assume"
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.role_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "session_policy" {
   description = "(Optional) A session policy that applies to the trust boundary of the vended session credentials."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.session_policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Profile"
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Profile ID."
   value       = aws_rolesanywhere_profile.aws_rolesanywhere_profile.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -276,7 +234,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

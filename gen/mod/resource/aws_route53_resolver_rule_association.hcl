@@ -1,7 +1,7 @@
 resource "aws_route53_resolver_rule_association" "aws_route53_resolver_rule_association" {
+  name             = var.name
   resolver_rule_id = var.resolver_rule_id
   vpc_id           = var.vpc_id
-  name             = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -10,6 +10,7 @@ variable "provider_region" {
 variable "name" {
   description = "(Optional) A name for the association that you're creating between a resolver rule and a VPC.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "resolver_rule_id" {
   description = "(Required) The ID of the resolver rule that you want to associate with the VPC."
@@ -139,29 +140,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "vpc_id" {
-  description = "(Required) The ID of the VPC that you want to associate the resolver rule with."
-  value       = aws_route53_resolver_rule_association.aws_route53_resolver_rule_association.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Optional) A name for the association that you're creating between a resolver rule and a VPC.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_resolver_rule_association.aws_route53_resolver_rule_association.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resolver_rule_id" {
   description = "(Required) The ID of the resolver rule that you want to associate with the VPC."
   value       = aws_route53_resolver_rule_association.aws_route53_resolver_rule_association.resolver_rule_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "(Required) The ID of the VPC that you want to associate the resolver rule with."
+  value       = aws_route53_resolver_rule_association.aws_route53_resolver_rule_association.vpc_id
 }
 output "id" {
   description = "The ID of the resolver rule association."
@@ -169,7 +158,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,54 +1,18 @@
 resource "aws_datapipeline_pipeline_definition" "aws_datapipeline_pipeline_definition" {
-  id               = var.id
-  pipeline_id      = var.pipeline_id
-  string_value     = var.string_value
-  pipeline_object  = var.pipeline_object
-  ref_value        = var.ref_value
   attribute        = var.attribute
-  field            = var.field
+  id               = var.id
   key              = var.key
   name             = var.name
   parameter_object = var.parameter_object
   parameter_value  = var.parameter_value
+  ref_value        = var.ref_value
+  string_value     = var.string_value
+  field            = var.field
+  pipeline_id      = var.pipeline_id
+  pipeline_object  = var.pipeline_object
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "Unique ID of the datapipeline definition."
-  type        = string
-}
-variable "pipeline_id" {
-  description = "(Required) ID of the pipeline."
-  type        = string
-}
-variable "string_value" {
-  description = "(Required) Field value, expressed as a String.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "parameter_value" {
-  description = "(Optional) Configuration block for the parameter values used in the pipeline definition. See belowpipeline_object"
-  type        = string
-}
-variable "pipeline_object" {
-  description = "(Required) Configuration block for the objects that define the pipeline. See below"
-  type        = string
-}
-variable "ref_value" {
-  description = "(Optional) Field value, expressed as the identifier of another object"
-  type        = string
-}
-variable "attribute" {
-  description = "(Required) Configuration block for attributes of the parameter object. See below"
-  type        = string
-}
-variable "field" {
-  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
-  type        = string
-}
-variable "key" {
-  description = "(Required) Field identifier."
   type        = string
 }
 variable "name" {
@@ -57,6 +21,46 @@ variable "name" {
 }
 variable "parameter_object" {
   description = "(Optional) Configuration block for the parameter objects used in the pipeline definition. See below"
+  type        = string
+  default     = ""
+}
+variable "parameter_value" {
+  description = "(Optional) Configuration block for the parameter values used in the pipeline definition. See belowpipeline_object"
+  type        = string
+  default     = ""
+}
+variable "ref_value" {
+  description = "(Optional) Field value, expressed as the identifier of another object"
+  type        = string
+  default     = ""
+}
+variable "string_value" {
+  description = "(Required) Field value, expressed as a String.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "attribute" {
+  description = "(Required) Configuration block for attributes of the parameter object. See below"
+  type        = string
+}
+variable "id" {
+  description = "Unique ID of the datapipeline definition."
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Required) Field identifier."
+  type        = string
+}
+variable "field" {
+  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
+  type        = string
+}
+variable "pipeline_id" {
+  description = "(Required) ID of the pipeline."
+  type        = string
+}
+variable "pipeline_object" {
+  description = "(Required) Configuration block for the objects that define the pipeline. See below"
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,93 +183,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Unique ID of the datapipeline definition."
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pipeline_id" {
-  description = "(Required) ID of the pipeline."
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.pipeline_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "string_value" {
-  description = "(Required) Field value, expressed as a String.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.string_value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "attribute" {
-  description = "(Required) Configuration block for attributes of the parameter object. See below"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.attribute
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "field" {
-  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.field
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key" {
   description = "(Required) Field identifier."
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) ARN of the storage connector.field"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parameter_object" {
   description = "(Optional) Configuration block for the parameter objects used in the pipeline definition. See below"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.parameter_object
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "parameter_value" {
   description = "(Optional) Configuration block for the parameter values used in the pipeline definition. See belowpipeline_object"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.parameter_value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ref_value" {
+  description = "(Optional) Field value, expressed as the identifier of another object"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.ref_value
+}
+output "string_value" {
+  description = "(Required) Field value, expressed as a String.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.string_value
+}
+output "attribute" {
+  description = "(Required) Configuration block for attributes of the parameter object. See below"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.attribute
+}
+output "id" {
+  description = "Unique ID of the datapipeline definition."
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.id
 }
 output "pipeline_object" {
   description = "(Required) Configuration block for the objects that define the pipeline. See below"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.pipeline_object
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "field" {
+  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.field
 }
-output "ref_value" {
-  description = "(Optional) Field value, expressed as the identifier of another object"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.ref_value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "pipeline_id" {
+  description = "(Required) ID of the pipeline."
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.pipeline_id
 }
 output "id" {
   description = "Unique ID of the datapipeline definition."
@@ -273,7 +233,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

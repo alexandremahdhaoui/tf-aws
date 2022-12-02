@@ -1,16 +1,12 @@
 resource "aws_ses_template" "aws_ses_template" {
-  text    = var.text
   arn     = var.arn
   html    = var.html
   name    = var.name
   subject = var.subject
+  text    = var.text
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "text" {
-  description = "(Optional) The email body that will be visible to recipients whose email clients do not display HTML. Must be less than 500KB in size, including both the text and HTML parts.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -20,6 +16,7 @@ variable "arn" {
 variable "html" {
   description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the template. Cannot exceed 64 characters. You will refer to this name when you send email."
@@ -28,6 +25,12 @@ variable "name" {
 variable "subject" {
   description = "(Optional) The subject line of the email."
   type        = string
+  default     = ""
+}
+variable "text" {
+  description = "(Optional) The email body that will be visible to recipients whose email clients do not display HTML. Must be less than 500KB in size, including both the text and HTML parts.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -153,41 +156,25 @@ output "arn" {
   description = "The ARN of the SES template"
   value       = aws_ses_template.aws_ses_template.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "html" {
   description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
   value       = aws_ses_template.aws_ses_template.html
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the template. Cannot exceed 64 characters. You will refer to this name when you send email."
   value       = aws_ses_template.aws_ses_template.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subject" {
   description = "(Optional) The subject line of the email."
   value       = aws_ses_template.aws_ses_template.subject
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "text" {
   description = "(Optional) The email body that will be visible to recipients whose email clients do not display HTML. Must be less than 500KB in size, including both the text and HTML parts.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_template.aws_ses_template.text
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The ARN of the SES template"
+  value       = aws_ses_template.aws_ses_template.arn
 }
 output "id" {
   description = "The name of the SES template"
@@ -195,15 +182,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the SES template"
-  value       = aws_ses_template.aws_ses_template.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

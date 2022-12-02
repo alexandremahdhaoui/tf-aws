@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "directory_id" {
-  description = "(Required) ID of directory."
-  type        = string
-}
 variable "dns_ips" {
   description = "(Required) A list of forwarder IP addresses."
+  type        = string
+}
+variable "directory_id" {
+  description = "(Required) ID of directory."
   type        = string
 }
 variable "tag_instance_id" {
@@ -134,21 +134,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "directory_id" {
+  description = "(Required) ID of directory."
+  value       = aws_directory_service_conditional_forwarder.aws_directory_service_conditional_forwarder.directory_id
+}
 output "dns_ips" {
   description = "(Required) A list of forwarder IP addresses."
   value       = aws_directory_service_conditional_forwarder.aws_directory_service_conditional_forwarder.dns_ips
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "directory_id" {
-  description = "(Required) ID of directory."
-  value       = aws_directory_service_conditional_forwarder.aws_directory_service_conditional_forwarder.directory_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

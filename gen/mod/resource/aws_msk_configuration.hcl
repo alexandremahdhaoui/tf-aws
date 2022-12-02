@@ -9,6 +9,15 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the configuration."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the configuration.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "kafka_versions" {
   description = "(Required) List of Apache Kafka versions which can use this configuration."
   type        = string
@@ -19,14 +28,6 @@ variable "name" {
 }
 variable "server_properties" {
   description = "(Required) Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the configuration."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the configuration.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,53 +150,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the configuration."
-  value       = aws_msk_configuration.aws_msk_configuration.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the configuration.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_msk_configuration.aws_msk_configuration.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kafka_versions" {
-  description = "(Required) List of Apache Kafka versions which can use this configuration."
-  value       = aws_msk_configuration.aws_msk_configuration.kafka_versions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the configuration."
   value       = aws_msk_configuration.aws_msk_configuration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "server_properties" {
   description = "(Required) Contents of the server.properties file. Supported properties are documented in the MSK Developer Guide."
   value       = aws_msk_configuration.aws_msk_configuration.server_properties
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the configuration."
   value       = aws_msk_configuration.aws_msk_configuration.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the configuration.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_msk_configuration.aws_msk_configuration.description
+}
+output "kafka_versions" {
+  description = "(Required) List of Apache Kafka versions which can use this configuration."
+  value       = aws_msk_configuration.aws_msk_configuration.kafka_versions
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the configuration."
+  value       = aws_msk_configuration.aws_msk_configuration.arn
 }
 output "latest_revision" {
   description = "Latest revision of the configuration."
@@ -203,7 +180,7 @@ output "latest_revision" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

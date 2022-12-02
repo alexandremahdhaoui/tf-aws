@@ -1,30 +1,18 @@
 resource "aws_glue_user_defined_function" "aws_glue_user_defined_function" {
-  database_name = var.database_name
   id            = var.id
-  name          = var.name
-  owner_name    = var.owner_name
+  owner_type    = var.owner_type
   resource_type = var.resource_type
-  arn           = var.arn
+  uri           = var.uri
   catalog_id    = var.catalog_id
   class_name    = var.class_name
+  database_name = var.database_name
   resource_uris = var.resource_uris
-  uri           = var.uri
-  owner_type    = var.owner_type
+  arn           = var.arn
+  name          = var.name
+  owner_name    = var.owner_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "owner_type" {
-  description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."
-  type        = string
-}
-variable "catalog_id" {
-  description = "(Optional) ID of the Glue Catalog to create the function in. If omitted, this defaults to the AWS Account ID."
-  type        = string
-}
-variable "class_name" {
-  description = "(Required) The Java class that contains the function code."
   type        = string
 }
 variable "database_name" {
@@ -35,28 +23,42 @@ variable "id" {
   description = "- The id of the Glue User Defined Function."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the function."
-  type        = string
-}
-variable "owner_name" {
-  description = "(Required) The owner of the function."
+variable "owner_type" {
+  description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."
   type        = string
 }
 variable "resource_type" {
   description = "(Required) The type of the resource. can be one of JAR, FILE, and ARCHIVE."
   type        = string
 }
-variable "arn" {
-  description = "- The ARN of the Glue User Defined Function."
-  type        = string
-}
 variable "uri" {
   description = "(Required) The URI for accessing the resource.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+variable "catalog_id" {
+  description = "(Optional) ID of the Glue Catalog to create the function in. If omitted, this defaults to the AWS Account ID."
+  type        = string
+  default     = ""
+}
+variable "class_name" {
+  description = "(Required) The Java class that contains the function code."
+  type        = string
+}
+variable "owner_name" {
+  description = "(Required) The owner of the function."
+  type        = string
+}
 variable "resource_uris" {
   description = "(Optional) The configuration block for Resource URIs. See resource uris below for more details.Resource URIs"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "- The ARN of the Glue User Defined Function."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the function."
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,109 +181,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "owner_type" {
-  description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.owner_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "database_name" {
-  description = "(Required) The name of the Database to create the Function."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.database_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "- The id of the Glue User Defined Function."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "- The ARN of the Glue User Defined Function."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.arn
 }
 output "name" {
   description = "(Required) The name of the function."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_name" {
   description = "(Required) The owner of the function."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.owner_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_type" {
-  description = "(Required) The type of the resource. can be one of JAR, FILE, and ARCHIVE."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.resource_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "- The ARN of the Glue User Defined Function."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "catalog_id" {
-  description = "(Optional) ID of the Glue Catalog to create the function in. If omitted, this defaults to the AWS Account ID."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.catalog_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "class_name" {
-  description = "(Required) The Java class that contains the function code."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.class_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_uris" {
   description = "(Optional) The configuration block for Resource URIs. See resource uris below for more details.Resource URIs"
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.resource_uris
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "catalog_id" {
+  description = "(Optional) ID of the Glue Catalog to create the function in. If omitted, this defaults to the AWS Account ID."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.catalog_id
+}
+output "class_name" {
+  description = "(Required) The Java class that contains the function code."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.class_name
+}
+output "database_name" {
+  description = "(Required) The name of the Database to create the Function."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.database_name
+}
+output "id" {
+  description = "- The id of the Glue User Defined Function."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.id
+}
+output "owner_type" {
+  description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.owner_type
+}
+output "resource_type" {
+  description = "(Required) The type of the resource. can be one of JAR, FILE, and ARCHIVE."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.resource_type
 }
 output "uri" {
   description = "(Required) The URI for accessing the resource.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.uri
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "- The ARN of the Glue User Defined Function."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create_time" {
   description = "- The time at which the function was created."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.create_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "- The id of the Glue User Defined Function."
@@ -289,7 +239,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,9 +1,9 @@
 resource "aws_iam_user_policy" "aws_iam_user_policy" {
-  user        = var.user
-  id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
   policy      = var.policy
+  user        = var.user
+  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -16,6 +16,7 @@ variable "id" {
 variable "name" {
   description = "(Optional) The name of the policy. If omitted, Terraform will assign a random, unique name."
   type        = string
+  default     = ""
 }
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
@@ -153,49 +154,25 @@ output "id" {
   description = "The user policy ID, in the form of user_name:user_policy_name."
   value       = aws_iam_user_policy.aws_iam_user_policy.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Optional) The name of the policy. If omitted, Terraform will assign a random, unique name."
   value       = aws_iam_user_policy.aws_iam_user_policy.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_iam_user_policy.aws_iam_user_policy.name_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy" {
   description = "(Required) The policy document. This is a JSON formatted string. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
   value       = aws_iam_user_policy.aws_iam_user_policy.policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "user" {
   description = "(Required) IAM user to which to attach this policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_user_policy.aws_iam_user_policy.user
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The user policy ID, in the form of user_name:user_policy_name."
   value       = aws_iam_user_policy.aws_iam_user_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "The name of the policy (always set)."
@@ -203,7 +180,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

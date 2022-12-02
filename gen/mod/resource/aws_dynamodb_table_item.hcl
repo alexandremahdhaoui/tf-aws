@@ -7,16 +7,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "hash_key" {
-  description = "(Required) Hash key to use for lookups and identification of the item"
-  type        = string
-}
 variable "item" {
   description = "(Required) JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item."
   type        = string
 }
 variable "range_key" {
   description = "(Optional) Range key to use for lookups and identification of the item. Required if there is range key defined in the table."
+  type        = string
+  default     = ""
+}
+variable "hash_key" {
+  description = "(Required) Hash key to use for lookups and identification of the item"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,13 +140,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "item" {
+  description = "(Required) JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item."
+  value       = aws_dynamodb_table_item.aws_dynamodb_table_item.item
+}
 output "range_key" {
   description = "(Optional) Range key to use for lookups and identification of the item. Required if there is range key defined in the table."
   value       = aws_dynamodb_table_item.aws_dynamodb_table_item.range_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "hash_key" {
   description = "(Required) Hash key to use for lookups and identification of the item"
@@ -153,15 +154,7 @@ output "hash_key" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "item" {
-  description = "(Required) JSON representation of a map of attribute name/value pairs, one for each attribute. Only the primary key attributes are required; you can optionally provide other attribute name-value pairs for the item."
-  value       = aws_dynamodb_table_item.aws_dynamodb_table_item.item
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

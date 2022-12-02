@@ -1,12 +1,16 @@
 resource "aws_cloudwatch_log_subscription_filter" "aws_cloudwatch_log_subscription_filter" {
+  destination_arn = var.destination_arn
   filter_pattern  = var.filter_pattern
   log_group_name  = var.log_group_name
   name            = var.name
   role_arn        = var.role_arn
-  destination_arn = var.destination_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "destination_arn" {
+  description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
   type        = string
 }
 variable "filter_pattern" {
@@ -24,10 +28,7 @@ variable "name" {
 variable "role_arn" {
   description = "(Optional) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to deliver ingested log events to the destination. If you use Lambda as a destination, you should skip this argument and use aws_lambda_permission resource for granting access from CloudWatch logs to the destination Lambda function."
   type        = string
-}
-variable "destination_arn" {
-  description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,21 +150,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "filter_pattern" {
+  description = "(Required) A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Use empty string \"\" to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
+  value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.filter_pattern
+}
+output "log_group_name" {
+  description = "(Required) The name of the log group to associate the subscription filter with"
+  value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.log_group_name
+}
 output "name" {
   description = "(Required) A name for the subscription filter"
   value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "(Optional) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to deliver ingested log events to the destination. If you use Lambda as a destination, you should skip this argument and use aws_lambda_permission resource for granting access from CloudWatch logs to the destination Lambda function."
   value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "destination_arn" {
   description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
@@ -171,23 +172,7 @@ output "destination_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter_pattern" {
-  description = "(Required) A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Use empty string \"\" to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
-  value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.filter_pattern
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_group_name" {
-  description = "(Required) The name of the log group to associate the subscription filter with"
-  value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.log_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

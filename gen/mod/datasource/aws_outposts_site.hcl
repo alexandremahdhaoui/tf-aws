@@ -1,39 +1,33 @@
 datasource "aws_outposts_site" "aws_outposts_site" {
+  name       = var.name
   account_id = var.account_id
   id         = var.id
-  name       = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "(Optional) Identifier of the Site."
-  type        = string
-}
-variable "name" {
-  description = "(Optional) Name of the Site.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "account_id" {
   description = "AWS Account identifier."
   type        = string
 }
+variable "id" {
+  description = "(Optional) Identifier of the Site."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) Name of the Site.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 output "account_id" {
   description = "AWS Account identifier."
   value       = aws_outposts_site.aws_outposts_site.account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "(Optional) Identifier of the Site."
   value       = aws_outposts_site.aws_outposts_site.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional) Name of the Site.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
@@ -41,7 +35,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

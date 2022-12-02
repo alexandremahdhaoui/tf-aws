@@ -134,21 +134,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name of the rule group namespace"
+  value       = aws_prometheus_rule_group_namespace.aws_prometheus_rule_group_namespace.name
+}
 output "workspace_id" {
   description = "(Required) ID of the prometheus workspace the rule group namespace should be linked to"
   value       = aws_prometheus_rule_group_namespace.aws_prometheus_rule_group_namespace.workspace_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the rule group namespace"
-  value       = aws_prometheus_rule_group_namespace.aws_prometheus_rule_group_namespace.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

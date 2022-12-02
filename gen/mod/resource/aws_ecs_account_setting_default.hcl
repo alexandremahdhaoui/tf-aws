@@ -1,14 +1,10 @@
 resource "aws_ecs_account_setting_default" "aws_ecs_account_setting_default" {
-  name  = var.name
   value = var.value
   id    = var.id
+  name  = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "value" {
-  description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "id" {
@@ -17,6 +13,10 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) Name of the account setting to set. Valid values are serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking and containerInsights."
+  type        = string
+}
+variable "value" {
+  description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,37 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "value" {
-  description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ARN that identifies the account setting."
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the account setting to set. Valid values are serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking and containerInsights."
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.value
 }
 output "id" {
   description = "ARN that identifies the account setting."
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "prinicpal_arn" {
   description = "ARN that identifies the account setting."
@@ -177,7 +161,7 @@ output "prinicpal_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

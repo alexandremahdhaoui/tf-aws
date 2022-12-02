@@ -10,21 +10,15 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "certificate_id" {
-  description = "(Required) The certificate identifier."
-  type        = string
-}
-variable "certificate_pem" {
-  description = "(Optional) The contents of the .pem X.509 certificate file for the certificate. Either certificate_pem or certificate_wallet must be set."
-  type        = string
-}
 variable "certificate_wallet" {
   description = "(Optional) The contents of the Oracle Wallet certificate for use with SSL, provided as a base64-encoded String. Either certificate_pem or certificate_wallet must be set."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "Must contain from 1 to 255 alphanumeric characters and hyphens." {
   description = ""
@@ -33,6 +27,15 @@ variable "Must contain from 1 to 255 alphanumeric characters and hyphens." {
 variable "certificate_arn" {
   description = "The Amazon Resource Name (ARN) for the certificate."
   type        = string
+}
+variable "certificate_id" {
+  description = "(Required) The certificate identifier."
+  type        = string
+}
+variable "certificate_pem" {
+  description = "(Optional) The contents of the .pem X.509 certificate file for the certificate. Either certificate_pem or certificate_wallet must be set."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,53 +157,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dms_certificate.aws_dms_certificate.tags
+}
 output "Must contain from 1 to 255 alphanumeric characters and hyphens." {
   description = ""
   value       = aws_dms_certificate.aws_dms_certificate.Must contain from 1 to 255 alphanumeric characters and hyphens.
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "certificate_arn" {
   description = "The Amazon Resource Name (ARN) for the certificate."
   value       = aws_dms_certificate.aws_dms_certificate.certificate_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "certificate_id" {
   description = "(Required) The certificate identifier."
   value       = aws_dms_certificate.aws_dms_certificate.certificate_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "certificate_pem" {
   description = "(Optional) The contents of the .pem X.509 certificate file for the certificate. Either certificate_pem or certificate_wallet must be set."
   value       = aws_dms_certificate.aws_dms_certificate.certificate_pem
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "certificate_wallet" {
   description = "(Optional) The contents of the Oracle Wallet certificate for use with SSL, provided as a base64-encoded String. Either certificate_pem or certificate_wallet must be set."
   value       = aws_dms_certificate.aws_dms_certificate.certificate_wallet
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dms_certificate.aws_dms_certificate.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_dms_certificate.aws_dms_certificate.tags_all
 }
 output "certificate_arn" {
   description = "The Amazon Resource Name (ARN) for the certificate."
@@ -208,15 +191,7 @@ output "certificate_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_dms_certificate.aws_dms_certificate.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -128,17 +128,9 @@ output "arn" {
   description = "The ARN of the composite alarm."
   value       = aws_cloudwatch_composite_alarm.aws_cloudwatch_composite_alarm.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the composite alarm resource, which is equivalent to its alarm_name."
   value       = aws_cloudwatch_composite_alarm.aws_cloudwatch_composite_alarm.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -146,7 +138,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

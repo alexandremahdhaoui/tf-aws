@@ -1,19 +1,11 @@
 resource "aws_vpc_endpoint_subnet_association" "aws_vpc_endpoint_subnet_association" {
+  create          = var.create
   id              = var.id
   subnet_id       = var.subnet_id
   vpc_endpoint_id = var.vpc_endpoint_id
-  create          = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "id" {
-  description = "The ID of the association.TimeoutsConfiguration options:"
   type        = string
 }
 variable "subnet_id" {
@@ -22,6 +14,14 @@ variable "subnet_id" {
 }
 variable "vpc_endpoint_id" {
   description = "(Required) The ID of the VPC endpoint with which the subnet will be associated."
+  type        = string
+}
+variable "create" {
+  description = "(Default 10m)"
+  type        = string
+}
+variable "id" {
+  description = "The ID of the association.TimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,45 +144,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.create
+}
 output "id" {
   description = "The ID of the association.TimeoutsConfiguration options:"
   value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_id" {
   description = "(Required) The ID of the subnet to be associated with the VPC endpoint.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.subnet_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_endpoint_id" {
   description = "(Required) The ID of the VPC endpoint with which the subnet will be associated."
   value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 10m)"
   value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 10m)"
   value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the association.TimeoutsConfiguration options:"
@@ -190,15 +174,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_vpc_endpoint_subnet_association.aws_vpc_endpoint_subnet_association.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

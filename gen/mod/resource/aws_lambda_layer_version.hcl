@@ -1,98 +1,115 @@
 resource "aws_lambda_layer_version" "aws_lambda_layer_version" {
-  source_code_size            = var.source_code_size
-  arn                         = var.arn
-  compatible_architectures    = var.compatible_architectures
-  compatible_runtimes         = var.compatible_runtimes
-  s3_key                      = var.s3_key
-  created_date                = var.created_date
-  layer_name                  = var.layer_name
-  signing_profile_version_arn = var.signing_profile_version_arn
-  version                     = var.version
-  layer_arn                   = var.layer_arn
-  s3_object_version           = var.s3_object_version
-  signing_job_arn             = var.signing_job_arn
-  skip_destroy                = var.skip_destroy
-  source_code_hash            = var.source_code_hash
-  description                 = var.description
-  filename                    = var.filename
   license_info                = var.license_info
   s3_bucket                   = var.s3_bucket
+  source_code_hash            = var.source_code_hash
+  source_code_size            = var.source_code_size
+  compatible_architectures    = var.compatible_architectures
+  filename                    = var.filename
+  s3_object_version           = var.s3_object_version
+  signing_job_arn             = var.signing_job_arn
+  signing_profile_version_arn = var.signing_profile_version_arn
+  arn                         = var.arn
+  created_date                = var.created_date
+  layer_arn                   = var.layer_arn
+  layer_name                  = var.layer_name
+  skip_destroy                = var.skip_destroy
+  compatible_runtimes         = var.compatible_runtimes
+  description                 = var.description
+  s3_key                      = var.s3_key
+  version                     = var.version
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "signing_profile_version_arn" {
-  description = "ARN for a signing profile version."
+variable "description" {
+  description = "(Optional) Description of what your Lambda Layer does."
   type        = string
+  default     = ""
+}
+variable "s3_key" {
+  description = "(Optional) S3 key of an object containing the function's deployment package. Conflicts with filename."
+  type        = string
+  default     = ""
 }
 variable "version" {
   description = "Lambda Layer version."
   type        = string
+  default     = ""
+}
+variable "compatible_runtimes" {
+  description = "(Optional) List of Runtimes this layer is compatible with. Up to 5 runtimes can be specified."
+  type        = string
+  default     = ""
+}
+variable "s3_bucket" {
+  description = "(Optional) S3 bucket location containing the function's deployment package. Conflicts with filename. This bucket must reside in the same AWS region where you are creating the Lambda function."
+  type        = string
+  default     = ""
+}
+variable "source_code_hash" {
+  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either filename or s3_key. The usual way to set this is $${filebase64sha256(\"file.zip\")} (Terraform 0.11.12 or later) or $${base64sha256(file(\"file.zip\"))} (Terraform 0.11.11 and earlier), where \"file.zip\" is the local filename of the lambda layer source archive.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "license_info" {
+  description = "(Optional) License info for your Lambda Layer. See License Info."
+  type        = string
+  default     = ""
+}
+variable "filename" {
+  description = " (Optional) Path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
+  type        = string
+  default     = ""
+}
+variable "s3_object_version" {
+  description = "(Optional) Object version containing the function's deployment package. Conflicts with filename."
+  type        = string
+  default     = ""
+}
+variable "signing_job_arn" {
+  description = "ARN of a signing job."
+  type        = string
+  default     = ""
+}
+variable "signing_profile_version_arn" {
+  description = "ARN for a signing profile version."
+  type        = string
+  default     = ""
+}
+variable "source_code_size" {
+  description = "Size in bytes of the function .zip file."
+  type        = string
+  default     = ""
+}
+variable "compatible_architectures" {
+  description = "(Optional) List of Architectures this layer is compatible with. Currently x86_64 and arm64 can be specified."
+  type        = string
+  default     = ""
 }
 variable "created_date" {
   description = "Date this resource was created."
   type        = string
+  default     = ""
+}
+variable "layer_arn" {
+  description = "ARN of the Lambda Layer without version."
+  type        = string
+  default     = ""
 }
 variable "layer_name" {
   description = "(Required) Unique name for your Lambda Layer"
   type        = string
 }
-variable "layer_arn" {
-  description = "ARN of the Lambda Layer without version."
-  type        = string
-}
-variable "license_info" {
-  description = "(Optional) License info for your Lambda Layer. See License Info."
-  type        = string
-}
-variable "s3_bucket" {
-  description = "(Optional) S3 bucket location containing the function's deployment package. Conflicts with filename. This bucket must reside in the same AWS region where you are creating the Lambda function."
-  type        = string
-}
-variable "s3_object_version" {
-  description = "(Optional) Object version containing the function's deployment package. Conflicts with filename."
-  type        = string
-}
-variable "signing_job_arn" {
-  description = "ARN of a signing job."
-  type        = string
-}
 variable "skip_destroy" {
   description = "(Optional) Whether to retain the old version of a previously deployed Lambda Layer. Default is false. When this is not set to true, changing any of compatible_architectures, compatible_runtimes, description, filename, layer_name, license_info, s3_bucket, s3_key, s3_object_version, or source_code_hash forces deletion of the existing layer version and creation of a new layer version."
   type        = string
-}
-variable "source_code_hash" {
-  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either filename or s3_key. The usual way to set this is $${filebase64sha256(\"file.zip\")} (Terraform 0.11.12 or later) or $${base64sha256(file(\"file.zip\"))} (Terraform 0.11.11 and earlier), where \"file.zip\" is the local filename of the lambda layer source archive.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of what your Lambda Layer does."
-  type        = string
-}
-variable "filename" {
-  description = " (Optional) Path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
-  type        = string
-}
-variable "compatible_runtimes" {
-  description = "(Optional) List of Runtimes this layer is compatible with. Up to 5 runtimes can be specified."
-  type        = string
-}
-variable "s3_key" {
-  description = "(Optional) S3 key of an object containing the function's deployment package. Conflicts with filename."
-  type        = string
-}
-variable "source_code_size" {
-  description = "Size in bytes of the function .zip file."
-  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "ARN of the Lambda Layer with version."
   type        = string
-}
-variable "compatible_architectures" {
-  description = "(Optional) List of Architectures this layer is compatible with. Currently x86_64 and arm64 can be specified."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -218,169 +235,97 @@ output "created_date" {
   description = "Date this resource was created."
   value       = aws_lambda_layer_version.aws_lambda_layer_version.created_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "layer_arn" {
+  description = "ARN of the Lambda Layer without version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.layer_arn
 }
 output "layer_name" {
   description = "(Required) Unique name for your Lambda Layer"
   value       = aws_lambda_layer_version.aws_lambda_layer_version.layer_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "skip_destroy" {
+  description = "(Optional) Whether to retain the old version of a previously deployed Lambda Layer. Default is false. When this is not set to true, changing any of compatible_architectures, compatible_runtimes, description, filename, layer_name, license_info, s3_bucket, s3_key, s3_object_version, or source_code_hash forces deletion of the existing layer version and creation of a new layer version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.skip_destroy
 }
-output "signing_profile_version_arn" {
-  description = "ARN for a signing profile version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.signing_profile_version_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "Lambda Layer version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "layer_arn" {
-  description = "ARN of the Lambda Layer without version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.layer_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_code_hash" {
-  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either filename or s3_key. The usual way to set this is $${filebase64sha256(\"file.zip\")} (Terraform 0.11.12 or later) or $${base64sha256(file(\"file.zip\"))} (Terraform 0.11.11 and earlier), where \"file.zip\" is the local filename of the lambda layer source archive.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.source_code_hash
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of the Lambda Layer with version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.arn
 }
 output "description" {
   description = "(Optional) Description of what your Lambda Layer does."
   value       = aws_lambda_layer_version.aws_lambda_layer_version.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "s3_key" {
+  description = "(Optional) S3 key of an object containing the function's deployment package. Conflicts with filename."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.s3_key
 }
-output "filename" {
-  description = " (Optional) Path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.filename
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "license_info" {
-  description = "(Optional) License info for your Lambda Layer. See License Info."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.license_info
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_bucket" {
-  description = "(Optional) S3 bucket location containing the function's deployment package. Conflicts with filename. This bucket must reside in the same AWS region where you are creating the Lambda function."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.s3_bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_object_version" {
-  description = "(Optional) Object version containing the function's deployment package. Conflicts with filename."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.s3_object_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "signing_job_arn" {
-  description = "ARN of a signing job."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.signing_job_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "skip_destroy" {
-  description = "(Optional) Whether to retain the old version of a previously deployed Lambda Layer. Default is false. When this is not set to true, changing any of compatible_architectures, compatible_runtimes, description, filename, layer_name, license_info, s3_bucket, s3_key, s3_object_version, or source_code_hash forces deletion of the existing layer version and creation of a new layer version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.skip_destroy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Lambda Layer with version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "compatible_architectures" {
-  description = "(Optional) List of Architectures this layer is compatible with. Currently x86_64 and arm64 can be specified."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.compatible_architectures
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "version" {
+  description = "Lambda Layer version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.version
 }
 output "compatible_runtimes" {
   description = "(Optional) List of Runtimes this layer is compatible with. Up to 5 runtimes can be specified."
   value       = aws_lambda_layer_version.aws_lambda_layer_version.compatible_runtimes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "s3_bucket" {
+  description = "(Optional) S3 bucket location containing the function's deployment package. Conflicts with filename. This bucket must reside in the same AWS region where you are creating the Lambda function."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.s3_bucket
 }
-output "s3_key" {
-  description = "(Optional) S3 key of an object containing the function's deployment package. Conflicts with filename."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.s3_key
+output "source_code_hash" {
+  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file specified with either filename or s3_key. The usual way to set this is $${filebase64sha256(\"file.zip\")} (Terraform 0.11.12 or later) or $${base64sha256(file(\"file.zip\"))} (Terraform 0.11.11 and earlier), where \"file.zip\" is the local filename of the lambda layer source archive.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.source_code_hash
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "license_info" {
+  description = "(Optional) License info for your Lambda Layer. See License Info."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.license_info
 }
-output "source_code_size" {
-  description = "Size in bytes of the function .zip file."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.source_code_size
+output "filename" {
+  description = " (Optional) Path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.filename
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_date" {
-  description = "Date this resource was created."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.created_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "layer_arn" {
-  description = "ARN of the Lambda Layer without version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.layer_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "s3_object_version" {
+  description = "(Optional) Object version containing the function's deployment package. Conflicts with filename."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.s3_object_version
 }
 output "signing_job_arn" {
   description = "ARN of a signing job."
   value       = aws_lambda_layer_version.aws_lambda_layer_version.signing_job_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "signing_profile_version_arn" {
+  description = "ARN for a signing profile version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.signing_profile_version_arn
+}
+output "source_code_size" {
+  description = "Size in bytes of the function .zip file."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.source_code_size
+}
+output "compatible_architectures" {
+  description = "(Optional) List of Architectures this layer is compatible with. Currently x86_64 and arm64 can be specified."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.compatible_architectures
+}
+output "source_code_size" {
+  description = "Size in bytes of the function .zip file."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.source_code_size
+}
+output "version" {
+  description = "Lambda Layer version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.version
+}
+output "arn" {
+  description = "ARN of the Lambda Layer with version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.arn
+}
+output "created_date" {
+  description = "Date this resource was created."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.created_date
+}
+output "layer_arn" {
+  description = "ARN of the Lambda Layer without version."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.layer_arn
+}
+output "signing_job_arn" {
+  description = "ARN of a signing job."
+  value       = aws_lambda_layer_version.aws_lambda_layer_version.signing_job_arn
 }
 output "signing_profile_version_arn" {
   description = "ARN for a signing profile version."
@@ -388,31 +333,7 @@ output "signing_profile_version_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_code_size" {
-  description = "Size in bytes of the function .zip file."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.source_code_size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "Lambda Layer version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Lambda Layer with version."
-  value       = aws_lambda_layer_version.aws_lambda_layer_version.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

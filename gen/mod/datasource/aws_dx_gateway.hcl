@@ -8,17 +8,13 @@ output "amazon_side_asn" {
   description = "ASN on the Amazon side of the connection."
   value       = aws_dx_gateway.aws_dx_gateway.amazon_side_asn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ID of the gateway."
   value       = aws_dx_gateway.aws_dx_gateway.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

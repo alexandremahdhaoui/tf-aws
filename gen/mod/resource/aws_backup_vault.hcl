@@ -1,12 +1,12 @@
 resource "aws_backup_vault" "aws_backup_vault" {
-  name            = var.name
-  recovery_points = var.recovery_points
-  tags            = var.tags
   tags_all        = var.tags_all
   arn             = var.arn
   force_destroy   = var.force_destroy
   id              = var.id
   kms_key_arn     = var.kms_key_arn
+  name            = var.name
+  recovery_points = var.recovery_points
+  tags            = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,6 +23,7 @@ variable "id" {
 variable "kms_key_arn" {
   description = "(Optional) The server-side encryption key that is used to protect your backups."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the backup vault to create."
@@ -35,6 +36,7 @@ variable "recovery_points" {
 variable "tags" {
   description = "(Optional) Metadata that you can assign to help organize the resources that you create. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -164,77 +166,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The name of the vault."
-  value       = aws_backup_vault.aws_backup_vault.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "kms_key_arn" {
   description = "(Optional) The server-side encryption key that is used to protect your backups."
   value       = aws_backup_vault.aws_backup_vault.kms_key_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the backup vault to create."
   value       = aws_backup_vault.aws_backup_vault.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "recovery_points" {
   description = "The number of recovery points that are stored in a backup vault."
   value       = aws_backup_vault.aws_backup_vault.recovery_points
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Metadata that you can assign to help organize the resources that you create. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_vault.aws_backup_vault.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_backup_vault.aws_backup_vault.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the vault."
   value       = aws_backup_vault.aws_backup_vault.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "force_destroy" {
   description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
   value       = aws_backup_vault.aws_backup_vault.force_destroy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The name of the vault."
+  value       = aws_backup_vault.aws_backup_vault.id
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_backup_vault.aws_backup_vault.delete
+}
+output "id" {
+  description = "The name of the vault."
+  value       = aws_backup_vault.aws_backup_vault.id
+}
+output "recovery_points" {
+  description = "The number of recovery points that are stored in a backup vault."
+  value       = aws_backup_vault.aws_backup_vault.recovery_points
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_backup_vault.aws_backup_vault.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN of the vault."
@@ -242,31 +220,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_backup_vault.aws_backup_vault.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the vault."
-  value       = aws_backup_vault.aws_backup_vault.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "recovery_points" {
-  description = "The number of recovery points that are stored in a backup vault."
-  value       = aws_backup_vault.aws_backup_vault.recovery_points
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

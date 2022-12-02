@@ -128,17 +128,13 @@ output "owner_id" {
   description = "The AWS account ID of the owner of the VPC that this resolver configuration applies to."
   value       = aws_route53_resolver_config.aws_route53_resolver_config.owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the resolver configuration."
   value       = aws_route53_resolver_config.aws_route53_resolver_config.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

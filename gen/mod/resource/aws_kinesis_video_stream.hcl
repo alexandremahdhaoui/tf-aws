@@ -1,72 +1,77 @@
 resource "aws_kinesis_video_stream" "aws_kinesis_video_stream" {
+  arn                     = var.arn
+  data_retention_in_hours = var.data_retention_in_hours
   device_name             = var.device_name
-  id                      = var.id
   tags                    = var.tags
   tags_all                = var.tags_all
+  update                  = var.update
   version                 = var.version
-  arn                     = var.arn
   create                  = var.create
+  creation_time           = var.creation_time
+  id                      = var.id
   kms_key_id              = var.kms_key_id
   media_type              = var.media_type
   name                    = var.name
-  update                  = var.update
-  creation_time           = var.creation_time
-  data_retention_in_hours = var.data_retention_in_hours
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
-  type        = string
-}
-variable "create" {
-  description = "(Default 5m)"
-  type        = string
-}
-variable "device_name" {
-  description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
-  type        = string
-}
-variable "id" {
-  description = "The unique Stream id"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "version" {
-  description = "The version of the stream."
-  type        = string
-}
-variable "creation_time" {
-  description = "A time stamp that indicates when the stream was created."
-  type        = string
-}
-variable "data_retention_in_hours" {
-  description = " – (Optional) The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream. The default value is 0, indicating that the stream does not persist data."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) The ID of the AWS Key Management Service (AWS KMS) key that you want Kinesis Video Streams to use to encrypt stream data. If no key ID is specified, the default, Kinesis Video-managed key (aws/kinesisvideo) is used."
-  type        = string
-}
-variable "media_type" {
-  description = "(Optional) The media type of the stream. Consumers of the stream can use this information when processing the stream. For more information about media types, see Media Types. If you choose to specify the MediaType, see Naming Requirements for guidelines."
   type        = string
 }
 variable "name" {
   description = "(Required) A name to identify the stream. This is unique to the\nAWS account and region the Stream is created in."
   type        = string
 }
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "creation_time" {
+  description = "A time stamp that indicates when the stream was created."
+  type        = string
+}
+variable "id" {
+  description = "The unique Stream id"
+  type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional) The ID of the AWS Key Management Service (AWS KMS) key that you want Kinesis Video Streams to use to encrypt stream data. If no key ID is specified, the default, Kinesis Video-managed key (aws/kinesisvideo) is used."
+  type        = string
+  default     = ""
+}
+variable "media_type" {
+  description = "(Optional) The media type of the stream. Consumers of the stream can use this information when processing the stream. For more information about media types, see Media Types. If you choose to specify the MediaType, see Naming Requirements for guidelines."
+  type        = string
+  default     = ""
+}
 variable "update" {
   description = "(Default 120m)"
+  type        = string
+}
+variable "version" {
+  description = "The version of the stream."
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
+  type        = string
+}
+variable "data_retention_in_hours" {
+  description = " – (Optional) The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream. The default value is 0, indicating that the stream does not persist data."
+  type        = string
+  default     = ""
+}
+variable "device_name" {
+  description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -193,169 +198,89 @@ output "kms_key_id" {
   description = "(Optional) The ID of the AWS Key Management Service (AWS KMS) key that you want Kinesis Video Streams to use to encrypt stream data. If no key ID is specified, the default, Kinesis Video-managed key (aws/kinesisvideo) is used."
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.kms_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "media_type" {
   description = "(Optional) The media type of the stream. Consumers of the stream can use this information when processing the stream. For more information about media types, see Media Types. If you choose to specify the MediaType, see Naming Requirements for guidelines."
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.media_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) A name to identify the stream. This is unique to the\nAWS account and region the Stream is created in."
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 120m)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
 }
 output "creation_time" {
   description = "A time stamp that indicates when the stream was created."
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.creation_time
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "data_retention_in_hours" {
-  description = " – (Optional) The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream. The default value is 0, indicating that the stream does not persist data."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.data_retention_in_hours
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "device_name" {
-  description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.device_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The unique Stream id"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "The version of the stream."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "The version of the stream."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "creation_time" {
-  description = "A time stamp that indicates when the stream was created."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.creation_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 120m)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The unique Stream id"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 120m)"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.update
 }
+output "version" {
+  description = "The version of the stream."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.version
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.arn
+}
+output "data_retention_in_hours" {
+  description = " – (Optional) The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream. The default value is 0, indicating that the stream does not persist data."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.data_retention_in_hours
+}
+output "device_name" {
+  description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.device_name
+}
+output "creation_time" {
+  description = "A time stamp that indicates when the stream was created."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.creation_time
+}
+output "delete" {
+  description = "(Default 120m)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.delete
+}
+output "id" {
+  description = "The unique Stream id"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.tags_all
+}
+output "update" {
+  description = "(Default 120m)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.update
+}
+output "version" {
+  description = "The version of the stream."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.version
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.arn
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

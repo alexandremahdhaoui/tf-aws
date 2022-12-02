@@ -1,14 +1,19 @@
 resource "aws_appsync_api_cache" "aws_appsync_api_cache" {
+  api_caching_behavior       = var.api_caching_behavior
+  api_id                     = var.api_id
   at_rest_encryption_enabled = var.at_rest_encryption_enabled
   transit_encryption_enabled = var.transit_encryption_enabled
   ttl                        = var.ttl
   type                       = var.type
-  api_caching_behavior       = var.api_caching_behavior
-  api_id                     = var.api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "transit_encryption_enabled" {
+  description = "(Optional) Transit encryption flag when connecting to cache. You cannot update this setting after creation.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "ttl" {
   description = "(Required) TTL in seconds for cache entries."
@@ -29,10 +34,7 @@ variable "api_id" {
 variable "at_rest_encryption_enabled" {
   description = "(Optional) At-rest encryption flag for cache. You cannot update this setting after creation."
   type        = string
-}
-variable "transit_encryption_enabled" {
-  description = "(Optional) Transit encryption flag when connecting to cache. You cannot update this setting after creation.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,53 +156,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type" {
-  description = "(Required) Cache instance type. Valid values are SMALL, MEDIUM, LARGE, XLARGE, LARGE_2X, LARGE_4X, LARGE_8X, LARGE_12X, T2_SMALL, T2_MEDIUM, R4_LARGE, R4_XLARGE, R4_2XLARGE, R4_4XLARGE, R4_8XLARGE."
-  value       = aws_appsync_api_cache.aws_appsync_api_cache.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "api_caching_behavior" {
   description = "(Required) Caching behavior. Valid values are FULL_REQUEST_CACHING and PER_RESOLVER_CACHING."
   value       = aws_appsync_api_cache.aws_appsync_api_cache.api_caching_behavior
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "api_id" {
   description = "(Required) GraphQL API ID."
   value       = aws_appsync_api_cache.aws_appsync_api_cache.api_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "at_rest_encryption_enabled" {
   description = "(Optional) At-rest encryption flag for cache. You cannot update this setting after creation."
   value       = aws_appsync_api_cache.aws_appsync_api_cache.at_rest_encryption_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_encryption_enabled" {
   description = "(Optional) Transit encryption flag when connecting to cache. You cannot update this setting after creation.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appsync_api_cache.aws_appsync_api_cache.transit_encryption_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ttl" {
   description = "(Required) TTL in seconds for cache entries."
   value       = aws_appsync_api_cache.aws_appsync_api_cache.ttl
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "type" {
+  description = "(Required) Cache instance type. Valid values are SMALL, MEDIUM, LARGE, XLARGE, LARGE_2X, LARGE_4X, LARGE_8X, LARGE_12X, T2_SMALL, T2_MEDIUM, R4_LARGE, R4_XLARGE, R4_2XLARGE, R4_4XLARGE, R4_8XLARGE."
+  value       = aws_appsync_api_cache.aws_appsync_api_cache.type
 }
 output "id" {
   description = "AppSync API ID."
@@ -208,7 +186,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

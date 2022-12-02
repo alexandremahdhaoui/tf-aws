@@ -124,13 +124,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "certificate_validation_records" {
+  description = "A set of certificate CNAME records used for this domain name. See Certificate Validation Records below for more details."
+  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.certificate_validation_records
+}
+output "dns_target" {
+  description = "App Runner subdomain of the App Runner service. The custom domain name is mapped to this target name. Attribute only available if resource created (not imported) with Terraform.Certificate Validation RecordsThe configuration block consists of the following arguments:"
+  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.dns_target
+}
+output "id" {
+  description = "The domain_name and service_arn separated by a comma (,)."
+  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.id
+}
+output "name" {
+  description = "Certificate CNAME record name."
+  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.name
+}
+output "status" {
+  description = "Current state of the certificate CNAME record validation. It should change to SUCCESS after App Runner completes validation with your DNS."
+  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.status
+}
 output "type" {
   description = "Record type, always CNAME."
   value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "value" {
   description = "Certificate CNAME record value."
@@ -138,47 +154,7 @@ output "value" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "certificate_validation_records" {
-  description = "A set of certificate CNAME records used for this domain name. See Certificate Validation Records below for more details."
-  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.certificate_validation_records
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dns_target" {
-  description = "App Runner subdomain of the App Runner service. The custom domain name is mapped to this target name. Attribute only available if resource created (not imported) with Terraform.Certificate Validation RecordsThe configuration block consists of the following arguments:"
-  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.dns_target
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The domain_name and service_arn separated by a comma (,)."
-  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Certificate CNAME record name."
-  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "Current state of the certificate CNAME record validation. It should change to SUCCESS after App Runner completes validation with your DNS."
-  value       = aws_apprunner_custom_domain_association.aws_apprunner_custom_domain_association.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -128,17 +128,13 @@ output "arn" {
   description = "The ARN of the created AWS IoT Thing Type."
   value       = aws_iot_thing_type.aws_iot_thing_type.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_iot_thing_type.aws_iot_thing_type.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,34 +1,37 @@
 resource "aws_transcribe_medical_vocabulary" "aws_transcribe_medical_vocabulary" {
-  update              = var.update
-  vocabulary_file_uri = var.vocabulary_file_uri
-  create              = var.create
+  download_uri        = var.download_uri
   id                  = var.id
   language_code       = var.language_code
   tags                = var.tags
-  arn                 = var.arn
-  delete              = var.delete
-  download_uri        = var.download_uri
+  vocabulary_file_uri = var.vocabulary_file_uri
   vocabulary_name     = var.vocabulary_name
+  delete              = var.delete
+  create              = var.create
+  update              = var.update
+  arn                 = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "update" {
-  description = "(Default 30m)"
+variable "vocabulary_name" {
+  description = "(Required) The name of the Medical Vocabulary."
   type        = string
 }
-variable "vocabulary_file_uri" {
-  description = "(Required) The Amazon S3 location (URI) of the text file that contains your custom medical vocabulary."
-  type        = string
-}
-variable "create" {
+variable "delete" {
   description = "(Default 30m)"
   type        = string
+  default     = ""
+}
+variable "download_uri" {
+  description = "Generated download URI.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "Name of the MedicalVocabulary."
   type        = string
+  default     = ""
 }
 variable "language_code" {
   description = "(Required) The language code you selected for your medical vocabulary. US English (en-US) is the only language supported with Amazon Transcribe Medical."
@@ -37,22 +40,26 @@ variable "language_code" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the MedicalVocabulary. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "vocabulary_file_uri" {
+  description = "(Required) The Amazon S3 location (URI) of the text file that contains your custom medical vocabulary."
+  type        = string
 }
 variable "arn" {
   description = "ARN of the MedicalVocabulary."
   type        = string
+  default     = ""
 }
-variable "delete" {
+variable "create" {
   description = "(Default 30m)"
   type        = string
+  default     = ""
 }
-variable "download_uri" {
-  description = "Generated download URI.TimeoutsConfiguration options:"
+variable "update" {
+  description = "(Default 30m)"
   type        = string
-}
-variable "vocabulary_name" {
-  description = "(Required) The name of the Medical Vocabulary."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,125 +181,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.create
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.update
+}
+output "arn" {
+  description = "ARN of the MedicalVocabulary."
+  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.arn
+}
+output "download_uri" {
+  description = "Generated download URI.TimeoutsConfiguration options:"
+  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.download_uri
+}
 output "id" {
   description = "Name of the MedicalVocabulary."
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "language_code" {
   description = "(Required) The language code you selected for your medical vocabulary. US English (en-US) is the only language supported with Amazon Transcribe Medical."
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.language_code
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the MedicalVocabulary. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vocabulary_file_uri" {
   description = "(Required) The Amazon S3 location (URI) of the text file that contains your custom medical vocabulary."
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.vocabulary_file_uri
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 30m)"
-  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "download_uri" {
-  description = "Generated download URI.TimeoutsConfiguration options:"
-  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.download_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vocabulary_name" {
   description = "(Required) The name of the Medical Vocabulary."
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.vocabulary_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.delete
 }
 output "arn" {
   description = "ARN of the MedicalVocabulary."
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the MedicalVocabulary."
-  value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 30m)"
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "download_uri" {
   description = "Generated download URI.TimeoutsConfiguration options:"
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.download_uri
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Name of the MedicalVocabulary."
   value       = aws_transcribe_medical_vocabulary.aws_transcribe_medical_vocabulary.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 30m)"
@@ -300,7 +247,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

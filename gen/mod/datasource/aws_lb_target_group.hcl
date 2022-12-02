@@ -9,18 +9,16 @@ variable "provider_region" {
 variable "arn" {
   description = "(Optional) Full ARN of the target group."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Optional) Unique name of the target group.~> strongNOTE: When both arn and name are specified, arn takes precedence.See the LB Target Group ResourceTimeoutsConfiguration options:"
   type        = string
+  default     = ""
 }
 output "arn" {
   description = "(Optional) Full ARN of the target group."
   value       = aws_lb_target_group.aws_lb_target_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional) Unique name of the target group.~> strongNOTE: When both arn and name are specified, arn takes precedence.See the LB Target Group ResourceTimeoutsConfiguration options:"
@@ -28,7 +26,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

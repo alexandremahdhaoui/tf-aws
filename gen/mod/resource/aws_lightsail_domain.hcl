@@ -1,6 +1,6 @@
 resource "aws_lightsail_domain" "aws_lightsail_domain" {
-  id          = var.id
   domain_name = var.domain_name
+  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -134,21 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The name used for this domain"
-  value       = aws_lightsail_domain.aws_lightsail_domain.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "domain_name" {
   description = "(Required) The name of the Lightsail domain to manageIn addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_domain.aws_lightsail_domain.domain_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The name used for this domain"
+  value       = aws_lightsail_domain.aws_lightsail_domain.id
 }
 output "id" {
   description = "The name used for this domain"
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

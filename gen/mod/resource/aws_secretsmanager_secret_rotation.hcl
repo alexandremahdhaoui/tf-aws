@@ -1,25 +1,13 @@
 resource "aws_secretsmanager_secret_rotation" "aws_secretsmanager_secret_rotation" {
-  arn                      = var.arn
-  automatically_after_days = var.automatically_after_days
   id                       = var.id
   rotation_lambda_arn      = var.rotation_lambda_arn
   rotation_rules           = var.rotation_rules
   secret_id                = var.secret_id
+  arn                      = var.arn
+  automatically_after_days = var.automatically_after_days
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the secret."
-  type        = string
-}
-variable "automatically_after_days" {
-  description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the secret."
   type        = string
 }
 variable "rotation_lambda_arn" {
@@ -32,6 +20,18 @@ variable "rotation_rules" {
 }
 variable "secret_id" {
   description = "(Required) Specifies the secret to which you want to add a new version. You can specify either the Amazon Resource Name (ARN) or the friendly name of the secret. The secret must already exist."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the secret."
+  type        = string
+}
+variable "automatically_after_days" {
+  description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the secret."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,61 +154,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "secret_id" {
+  description = "(Required) Specifies the secret to which you want to add a new version. You can specify either the Amazon Resource Name (ARN) or the friendly name of the secret. The secret must already exist."
+  value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.secret_id
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the secret."
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "automatically_after_days" {
   description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.automatically_after_days
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Amazon Resource Name (ARN) of the secret."
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "rotation_lambda_arn" {
   description = "(Required) Specifies the ARN of the Lambda function that can rotate the secret."
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.rotation_lambda_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rotation_rules" {
   description = "(Required) A structure that defines the rotation configuration for this secret. Defined below.rotation_rules"
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.rotation_rules
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "secret_id" {
-  description = "(Required) Specifies the secret to which you want to add a new version. You can specify either the Amazon Resource Name (ARN) or the friendly name of the secret. The secret must already exist."
-  value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.secret_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "rotation_enabled" {
+  description = "Specifies whether automatic rotation is enabled for this secret."
+  value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.rotation_enabled
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the secret."
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the secret."
@@ -216,15 +192,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "rotation_enabled" {
-  description = "Specifies whether automatic rotation is enabled for this secret."
-  value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.rotation_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

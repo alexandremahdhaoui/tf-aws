@@ -1,28 +1,26 @@
 resource "aws_api_gateway_integration_response" "aws_api_gateway_integration_response" {
-  rest_api_id         = var.rest_api_id
-  selection_pattern   = var.selection_pattern
-  status_code         = var.status_code
   content_handling    = var.content_handling
   http_method         = var.http_method
   resource_id         = var.resource_id
   response_parameters = var.response_parameters
   response_templates  = var.response_templates
+  rest_api_id         = var.rest_api_id
+  selection_pattern   = var.selection_pattern
+  status_code         = var.status_code
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "resource_id" {
-  description = "(Required) API resource ID."
-  type        = string
-}
 variable "response_parameters" {
   description = "(Optional) Map of response parameters that can be read from the backend response. For example: response_parameters = { \"method.response.header.X-Some-Header\" = \"integration.response.header.X-Some-Other-Header\" }."
   type        = string
+  default     = ""
 }
 variable "response_templates" {
   description = "(Optional) Map of templates used to transform the integration response body."
   type        = string
+  default     = ""
 }
 variable "rest_api_id" {
   description = "(Required) ID of the associated REST API."
@@ -31,6 +29,7 @@ variable "rest_api_id" {
 variable "selection_pattern" {
   description = "(Optional) Regular expression pattern used to choose an integration response based on the response from the backend. Omit configuring this to make the integration the default one. If the backend is an AWS Lambda function, the AWS Lambda function error header is matched. For all other HTTP and AWS backends, the HTTP status code is matched.No additional attributes are exported."
   type        = string
+  default     = ""
 }
 variable "status_code" {
   description = "(Required) HTTP status code."
@@ -39,9 +38,14 @@ variable "status_code" {
 variable "content_handling" {
   description = "(Optional) How to handle request payload content type conversions. Supported values are CONVERT_TO_BINARY and CONVERT_TO_TEXT. If this property is not defined, the response payload will be passed through from the integration response to the method response without modification."
   type        = string
+  default     = ""
 }
 variable "http_method" {
   description = "(Required) HTTP method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)."
+  type        = string
+}
+variable "resource_id" {
+  description = "(Required) API resource ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,37 +168,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "response_parameters" {
+  description = "(Optional) Map of response parameters that can be read from the backend response. For example: response_parameters = { \"method.response.header.X-Some-Header\" = \"integration.response.header.X-Some-Other-Header\" }."
+  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.response_parameters
+}
+output "response_templates" {
+  description = "(Optional) Map of templates used to transform the integration response body."
+  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.response_templates
+}
+output "rest_api_id" {
+  description = "(Required) ID of the associated REST API."
+  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.rest_api_id
+}
 output "selection_pattern" {
   description = "(Optional) Regular expression pattern used to choose an integration response based on the response from the backend. Omit configuring this to make the integration the default one. If the backend is an AWS Lambda function, the AWS Lambda function error header is matched. For all other HTTP and AWS backends, the HTTP status code is matched.No additional attributes are exported."
   value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.selection_pattern
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status_code" {
   description = "(Required) HTTP status code."
   value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.status_code
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "content_handling" {
   description = "(Optional) How to handle request payload content type conversions. Supported values are CONVERT_TO_BINARY and CONVERT_TO_TEXT. If this property is not defined, the response payload will be passed through from the integration response to the method response without modification."
   value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.content_handling
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "http_method" {
   description = "(Required) HTTP method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)."
   value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.http_method
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_id" {
   description = "(Required) API resource ID."
@@ -202,31 +202,7 @@ output "resource_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "response_parameters" {
-  description = "(Optional) Map of response parameters that can be read from the backend response. For example: response_parameters = { \"method.response.header.X-Some-Header\" = \"integration.response.header.X-Some-Other-Header\" }."
-  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.response_parameters
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "response_templates" {
-  description = "(Optional) Map of templates used to transform the integration response body."
-  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.response_templates
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "rest_api_id" {
-  description = "(Required) ID of the associated REST API."
-  value       = aws_api_gateway_integration_response.aws_api_gateway_integration_response.rest_api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

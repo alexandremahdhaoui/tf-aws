@@ -1,40 +1,16 @@
 resource "aws_globalaccelerator_listener" "aws_globalaccelerator_listener" {
+  create          = var.create
   id              = var.id
-  to_port         = var.to_port
+  protocol        = var.protocol
   accelerator_arn = var.accelerator_arn
   client_affinity = var.client_affinity
-  create          = var.create
-  update          = var.update
   from_port       = var.from_port
   port_range      = var.port_range
-  protocol        = var.protocol
+  to_port         = var.to_port
+  update          = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "from_port" {
-  description = "(Optional) The first port in the range of ports, inclusive."
-  type        = string
-}
-variable "port_range" {
-  description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
-  type        = string
-}
-variable "protocol" {
-  description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
-  type        = string
-}
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "accelerator_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of your accelerator."
-  type        = string
-}
-variable "client_affinity" {
-  description = "(Optional) Direct all requests from a user to the same endpoint. Valid values are NONE, SOURCE_IP. Default: NONE. If NONE, Global Accelerator uses the \"five-tuple\" properties of source IP address, source port, destination IP address, destination port, and protocol to select the hash value. If SOURCE_IP, Global Accelerator uses the \"two-tuple\" properties of source (client) IP address and destination IP address to select the hash value."
   type        = string
 }
 variable "create" {
@@ -45,8 +21,37 @@ variable "id" {
   description = "The Amazon Resource Name (ARN) of the listener.TimeoutsConfiguration options:"
   type        = string
 }
+variable "protocol" {
+  description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
+  type        = string
+  default     = ""
+}
+variable "accelerator_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of your accelerator."
+  type        = string
+}
+variable "client_affinity" {
+  description = "(Optional) Direct all requests from a user to the same endpoint. Valid values are NONE, SOURCE_IP. Default: NONE. If NONE, Global Accelerator uses the \"five-tuple\" properties of source IP address, source port, destination IP address, destination port, and protocol to select the hash value. If SOURCE_IP, Global Accelerator uses the \"two-tuple\" properties of source (client) IP address and destination IP address to select the hash value."
+  type        = string
+  default     = ""
+}
+variable "from_port" {
+  description = "(Optional) The first port in the range of ports, inclusive."
+  type        = string
+  default     = ""
+}
+variable "port_range" {
+  description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
+  type        = string
+  default     = ""
+}
 variable "to_port" {
   description = "(Optional) The last port in the range of ports, inclusive.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 30m)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,109 +174,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "accelerator_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of your accelerator."
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.accelerator_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_affinity" {
-  description = "(Optional) Direct all requests from a user to the same endpoint. Valid values are NONE, SOURCE_IP. Default: NONE. If NONE, Global Accelerator uses the \"five-tuple\" properties of source IP address, source port, destination IP address, destination port, and protocol to select the hash value. If SOURCE_IP, Global Accelerator uses the \"two-tuple\" properties of source (client) IP address and destination IP address to select the hash value."
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.client_affinity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Amazon Resource Name (ARN) of the listener.TimeoutsConfiguration options:"
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "to_port" {
-  description = "(Optional) The last port in the range of ports, inclusive.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.to_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "from_port" {
-  description = "(Optional) The first port in the range of ports, inclusive."
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.from_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port_range" {
-  description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.port_range
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "protocol" {
   description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.create
+}
+output "client_affinity" {
+  description = "(Optional) Direct all requests from a user to the same endpoint. Valid values are NONE, SOURCE_IP. Default: NONE. If NONE, Global Accelerator uses the \"five-tuple\" properties of source IP address, source port, destination IP address, destination port, and protocol to select the hash value. If SOURCE_IP, Global Accelerator uses the \"two-tuple\" properties of source (client) IP address and destination IP address to select the hash value."
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.client_affinity
+}
+output "from_port" {
+  description = "(Optional) The first port in the range of ports, inclusive."
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.from_port
+}
+output "port_range" {
+  description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.port_range
+}
+output "to_port" {
+  description = "(Optional) The last port in the range of ports, inclusive.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.to_port
 }
 output "update" {
   description = "(Default 30m)"
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "accelerator_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of your accelerator."
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.accelerator_arn
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 30m)"
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the listener.TimeoutsConfiguration options:"
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.id
 }
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.update
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

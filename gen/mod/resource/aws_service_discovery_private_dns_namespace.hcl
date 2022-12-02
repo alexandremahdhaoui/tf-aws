@@ -1,18 +1,14 @@
 resource "aws_service_discovery_private_dns_namespace" "aws_service_discovery_private_dns_namespace" {
+  name        = var.name
   tags        = var.tags
   vpc         = var.vpc
   arn         = var.arn
   description = var.description
   hosted_zone = var.hosted_zone
   id          = var.id
-  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description that you specify for the namespace when you create it."
   type        = string
 }
 variable "hosted_zone" {
@@ -30,6 +26,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "vpc" {
   description = "(Required) The ID of VPC that you want to associate the namespace with."
@@ -38,6 +35,11 @@ variable "vpc" {
 variable "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   type        = string
+}
+variable "description" {
+  description = "(Optional) The description that you specify for the namespace when you create it."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,93 +161,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name of the namespace."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc" {
-  description = "(Required) The ID of VPC that you want to associate the namespace with."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.vpc
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional) The description that you specify for the namespace when you create it."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "hosted_zone" {
   description = "The ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.hosted_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of a namespace."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the namespace."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.name
 }
-output "arn" {
-  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.arn
+output "tags" {
+  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "hosted_zone" {
-  description = "The ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.hosted_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of a namespace."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc" {
+  description = "(Required) The ID of VPC that you want to associate the namespace with."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.vpc
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.tags_all
 }
+output "arn" {
+  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.arn
+}
+output "hosted_zone" {
+  description = "The ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.hosted_zone
+}
+output "id" {
+  description = "The ID of a namespace."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.id
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

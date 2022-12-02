@@ -9,9 +9,18 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "identifier" {
+  description = "(Required) An identifier for the resource server."
+  type        = string
+}
+variable "name" {
+  description = "(Required) A name for the resource server."
+  type        = string
+}
 variable "scope" {
   description = "(Optional) A list of Authorization Scope.Authorization Scope"
   type        = string
+  default     = ""
 }
 variable "scope_description" {
   description = "(Required) The scope description.In addition to all arguments above, the following attributes are exported:"
@@ -19,14 +28,6 @@ variable "scope_description" {
 }
 variable "scope_name" {
   description = "(Required) The scope name."
-  type        = string
-}
-variable "identifier" {
-  description = "(Required) An identifier for the resource server."
-  type        = string
-}
-variable "name" {
-  description = "(Required) A name for the resource server."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,45 +150,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "identifier" {
-  description = "(Required) An identifier for the resource server."
-  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) A name for the resource server."
-  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "scope" {
-  description = "(Optional) A list of Authorization Scope.Authorization Scope"
-  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "scope_description" {
   description = "(Required) The scope description.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope_description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "scope_name" {
   description = "(Required) The scope name."
   value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "identifier" {
+  description = "(Required) An identifier for the resource server."
+  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.identifier
+}
+output "name" {
+  description = "(Required) A name for the resource server."
+  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.name
+}
+output "scope" {
+  description = "(Optional) A list of Authorization Scope.Authorization Scope"
+  value       = aws_cognito_resource_server.markdown.aws_cognito_resource_server.markdown.scope
 }
 output "scope_identifiers" {
   description = "A list of all scopes configured for this resource server in the format identifier/scope_name."
@@ -195,7 +176,7 @@ output "scope_identifiers" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

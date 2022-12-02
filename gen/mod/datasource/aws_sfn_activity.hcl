@@ -7,33 +7,31 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Optional) Name that identifies the activity."
-  type        = string
-}
-variable "arn" {
-  description = "(Optional) ARN that identifies the activity.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "id" {
   description = "ARN that identifies the activity."
   type        = string
 }
-output "name" {
+variable "name" {
   description = "(Optional) Name that identifies the activity."
-  value       = aws_sfn_activity.aws_sfn_activity.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
   type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "(Optional) ARN that identifies the activity.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 output "arn" {
   description = "(Optional) ARN that identifies the activity.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sfn_activity.aws_sfn_activity.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "ARN that identifies the activity."
+  value       = aws_sfn_activity.aws_sfn_activity.id
+}
+output "name" {
+  description = "(Optional) Name that identifies the activity."
+  value       = aws_sfn_activity.aws_sfn_activity.name
 }
 output "id" {
   description = "ARN that identifies the activity."
@@ -41,15 +39,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ARN that identifies the activity."
-  value       = aws_sfn_activity.aws_sfn_activity.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

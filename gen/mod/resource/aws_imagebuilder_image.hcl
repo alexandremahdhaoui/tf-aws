@@ -1,123 +1,145 @@
 resource "aws_imagebuilder_image" "aws_imagebuilder_image" {
-  region                           = var.region
   account_id                       = var.account_id
-  description                      = var.description
-  image_tests_configuration        = var.image_tests_configuration
-  image_tests_enabled              = var.image_tests_enabled
   infrastructure_configuration_arn = var.infrastructure_configuration_arn
-  tags                             = var.tags
-  timeout_minutes                  = var.timeout_minutes
-  version                          = var.version
-  arn                              = var.arn
-  container_recipe_arn             = var.container_recipe_arn
-  image_recipe_arn                 = var.image_recipe_arn
-  os_version                       = var.os_version
   output_resources                 = var.output_resources
+  version                          = var.version
+  image_tests_configuration        = var.image_tests_configuration
+  os_version                       = var.os_version
   platform                         = var.platform
   amis                             = var.amis
+  arn                              = var.arn
+  date_created                     = var.date_created
+  enhanced_image_metadata_enabled  = var.enhanced_image_metadata_enabled
+  image                            = var.image
+  region                           = var.region
+  tags                             = var.tags
+  tags_all                         = var.tags_all
+  timeout_minutes                  = var.timeout_minutes
+  container_recipe_arn             = var.container_recipe_arn
+  description                      = var.description
+  distribution_configuration_arn   = var.distribution_configuration_arn
+  image_recipe_arn                 = var.image_recipe_arn
+  image_tests_enabled              = var.image_tests_enabled
   create                           = var.create
   name                             = var.name
-  image                            = var.image
-  tags_all                         = var.tags_all
-  date_created                     = var.date_created
-  distribution_configuration_arn   = var.distribution_configuration_arn
-  enhanced_image_metadata_enabled  = var.enhanced_image_metadata_enabled
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "account_id" {
-  description = "Account identifier of the AMI."
+variable "container_recipe_arn" {
+  description = "(Optional) - Amazon Resource Name (ARN) of the container recipe."
   type        = string
+  default     = ""
 }
 variable "description" {
   description = "Description of the AMI."
   type        = string
+  default     = ""
 }
-variable "image_tests_configuration" {
-  description = "(Optional) Configuration block with image tests configuration. Detailed below."
+variable "distribution_configuration_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
   type        = string
-}
-variable "region" {
-  description = "Region of the AMI."
-  type        = string
-}
-variable "version" {
-  description = "Version of the image.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the image."
-  type        = string
-}
-variable "container_recipe_arn" {
-  description = "(Optional) - Amazon Resource Name (ARN) of the container recipe."
-  type        = string
+  default     = ""
 }
 variable "image_recipe_arn" {
   description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
   type        = string
+  default     = ""
 }
 variable "image_tests_enabled" {
   description = "(Optional) Whether image tests are enabled. Defaults to true."
   type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 60m)"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "Name of the AMI."
+  type        = string
+  default     = ""
+}
+variable "account_id" {
+  description = "Account identifier of the AMI."
+  type        = string
+  default     = ""
 }
 variable "infrastructure_configuration_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags for the Image Builder Image. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration"
+variable "output_resources" {
+  description = ""
   type        = string
+  default     = ""
 }
-variable "timeout_minutes" {
-  description = "(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.In addition to all arguments above, the following attributes are exported:"
+variable "version" {
+  description = "Version of the image.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
 }
 variable "amis" {
   description = ""
   type        = string
+  default     = ""
 }
-variable "create" {
-  description = "(Default 60m)"
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the image."
   type        = string
-}
-variable "name" {
-  description = "Name of the AMI."
-  type        = string
-}
-variable "os_version" {
-  description = "Operating System version of the image."
-  type        = string
-}
-variable "output_resources" {
-  description = ""
-  type        = string
-}
-variable "platform" {
-  description = "Platform of the image."
-  type        = string
+  default     = ""
 }
 variable "date_created" {
   description = "Date the image was created."
   type        = string
-}
-variable "distribution_configuration_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
-  type        = string
+  default     = ""
 }
 variable "enhanced_image_metadata_enabled" {
   description = "(Optional) Whether additional information about the image being created is collected. Defaults to true."
   type        = string
+  default     = ""
 }
 variable "image" {
   description = "Identifier of the AMI."
   type        = string
+  default     = ""
+}
+variable "image_tests_configuration" {
+  description = "(Optional) Configuration block with image tests configuration. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "os_version" {
+  description = "Operating System version of the image."
+  type        = string
+  default     = ""
+}
+variable "platform" {
+  description = "Platform of the image."
+  type        = string
+  default     = ""
+}
+variable "region" {
+  description = "Region of the AMI."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags for the Image Builder Image. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration"
+  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
+}
+variable "timeout_minutes" {
+  description = "(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -239,205 +261,149 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "distribution_configuration_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.distribution_configuration_arn
+output "image_tests_configuration" {
+  description = "(Optional) Configuration block with image tests configuration. Detailed below."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.image_tests_configuration
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "os_version" {
+  description = "Operating System version of the image."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.os_version
+}
+output "platform" {
+  description = "Platform of the image."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.platform
+}
+output "amis" {
+  description = ""
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.amis
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the image."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.arn
+}
+output "date_created" {
+  description = "Date the image was created."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.date_created
 }
 output "enhanced_image_metadata_enabled" {
   description = "(Optional) Whether additional information about the image being created is collected. Defaults to true."
   value       = aws_imagebuilder_image.aws_imagebuilder_image.enhanced_image_metadata_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "image" {
   description = "Identifier of the AMI."
   value       = aws_imagebuilder_image.aws_imagebuilder_image.image
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "date_created" {
-  description = "Date the image was created."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.date_created
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "Description of the AMI."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "image_tests_configuration" {
-  description = "(Optional) Configuration block with image tests configuration. Detailed below."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.image_tests_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "region" {
   description = "Region of the AMI."
   value       = aws_imagebuilder_image.aws_imagebuilder_image.region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_id" {
-  description = "Account identifier of the AMI."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "container_recipe_arn" {
-  description = "(Optional) - Amazon Resource Name (ARN) of the container recipe."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.container_recipe_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "image_recipe_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.image_recipe_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "image_tests_enabled" {
-  description = "(Optional) Whether image tests are enabled. Defaults to true."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.image_tests_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "infrastructure_configuration_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.infrastructure_configuration_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags for the Image Builder Image. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration"
   value       = aws_imagebuilder_image.aws_imagebuilder_image.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.tags_all
 }
 output "timeout_minutes" {
   description = "(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.In addition to all arguments above, the following attributes are exported:"
   value       = aws_imagebuilder_image.aws_imagebuilder_image.timeout_minutes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "container_recipe_arn" {
+  description = "(Optional) - Amazon Resource Name (ARN) of the container recipe."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.container_recipe_arn
 }
-output "version" {
-  description = "Version of the image.TimeoutsConfiguration options:"
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.version
+output "description" {
+  description = "Description of the AMI."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "distribution_configuration_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.distribution_configuration_arn
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the image."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.arn
+output "image_recipe_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.image_recipe_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "image_tests_enabled" {
+  description = "(Optional) Whether image tests are enabled. Defaults to true."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.image_tests_enabled
 }
 output "create" {
   description = "(Default 60m)"
   value       = aws_imagebuilder_image.aws_imagebuilder_image.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "Name of the AMI."
   value       = aws_imagebuilder_image.aws_imagebuilder_image.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "account_id" {
+  description = "Account identifier of the AMI."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.account_id
 }
-output "os_version" {
-  description = "Operating System version of the image."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.os_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "infrastructure_configuration_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.infrastructure_configuration_arn
 }
 output "output_resources" {
   description = ""
   value       = aws_imagebuilder_image.aws_imagebuilder_image.output_resources
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "version" {
+  description = "Version of the image.TimeoutsConfiguration options:"
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.version
 }
-output "platform" {
-  description = "Platform of the image."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.platform
+output "date_created" {
+  description = "Date the image was created."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.date_created
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "Name of the AMI."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.name
 }
-output "amis" {
+output "output_resources" {
   description = ""
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.amis
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.output_resources
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "version" {
+  description = "Version of the image.TimeoutsConfiguration options:"
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.version
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the image."
   value       = aws_imagebuilder_image.aws_imagebuilder_image.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "image" {
+  description = "Identifier of the AMI."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.image
+}
+output "os_version" {
+  description = "Operating System version of the image."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.os_version
+}
+output "region" {
+  description = "Region of the AMI."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.region
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.tags_all
+}
+output "account_id" {
+  description = "Account identifier of the AMI."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.account_id
+}
+output "amis" {
+  description = ""
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.amis
 }
 output "create" {
   description = "(Default 60m)"
   value       = aws_imagebuilder_image.aws_imagebuilder_image.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "platform" {
+  description = "Platform of the image."
+  value       = aws_imagebuilder_image.aws_imagebuilder_image.platform
 }
 output "description" {
   description = "Description of the AMI."
@@ -445,95 +411,7 @@ output "description" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "Version of the image.TimeoutsConfiguration options:"
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "os_version" {
-  description = "Operating System version of the image."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.os_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_id" {
-  description = "Account identifier of the AMI."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "image" {
-  description = "Identifier of the AMI."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.image
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Name of the AMI."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "output_resources" {
-  description = ""
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.output_resources
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "region" {
-  description = "Region of the AMI."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "amis" {
-  description = ""
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.amis
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "date_created" {
-  description = "Date the image was created."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.date_created
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "platform" {
-  description = "Platform of the image."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.platform
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_image.aws_imagebuilder_image.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

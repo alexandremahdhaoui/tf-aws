@@ -9,24 +9,27 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "transit_gateway_attachment_id" {
+  description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_route_table_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Route Table."
+  type        = string
+}
 variable "blackhole" {
   description = "(Optional) Indicates whether to drop traffic that matches the Prefix List. Defaults to false."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "EC2 Transit Gateway Route Table identifier and EC2 Prefix List identifier, separated by an underscore (_)"
   type        = string
+  default     = ""
 }
 variable "prefix_list_id" {
   description = "(Required) Identifier of EC2 Prefix List."
-  type        = string
-}
-variable "transit_gateway_attachment_id" {
-  description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "transit_gateway_route_table_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Route Table."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,53 +152,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "blackhole" {
+  description = "(Optional) Indicates whether to drop traffic that matches the Prefix List. Defaults to false."
+  value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.blackhole
+}
+output "id" {
+  description = "EC2 Transit Gateway Route Table identifier and EC2 Prefix List identifier, separated by an underscore (_)"
+  value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.id
+}
 output "prefix_list_id" {
   description = "(Required) Identifier of EC2 Prefix List."
   value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.prefix_list_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_gateway_attachment_id" {
   description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.transit_gateway_attachment_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "transit_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Transit Gateway Route Table."
   value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.transit_gateway_route_table_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "blackhole" {
-  description = "(Optional) Indicates whether to drop traffic that matches the Prefix List. Defaults to false."
-  value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.blackhole
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EC2 Transit Gateway Route Table identifier and EC2 Prefix List identifier, separated by an underscore (_)"
   value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway Route Table identifier and EC2 Prefix List identifier, separated by an underscore (_)"
-  value       = aws_ec2_transit_gateway_prefix_list_reference.aws_ec2_transit_gateway_prefix_list_reference.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

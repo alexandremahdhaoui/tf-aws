@@ -133,17 +133,13 @@ output "domain" {
   description = "(Required) Verified domain name to generate DKIM tokens for.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_domain_dkim.aws_ses_domain_dkim.domain
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "dkim_tokens" {
   description = "AWS SES docs.Example Usage"
   value       = aws_ses_domain_dkim.aws_ses_domain_dkim.dkim_tokens
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

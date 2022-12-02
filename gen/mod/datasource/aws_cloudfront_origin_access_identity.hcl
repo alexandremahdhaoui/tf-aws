@@ -8,33 +8,17 @@ output "caller_reference" {
   description = "Internal value used by CloudFront to allow future\nupdates to the origin access identity."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.caller_reference
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cloudfront_access_identity_path" {
   description = "A shortcut to the full path for the\norigin access identity to use in CloudFront, see below."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.cloudfront_access_identity_path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "comment" {
   description = "An optional comment for the origin access identity."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.comment
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "etag" {
   description = "Current version of the origin access identity's information.\nFor example: E2QWRUHAPOMQZL."
   value       = aws_cloudfront_origin_access_identity.aws_cloudfront_origin_access_identity.etag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "iam_arn" {
   description = "Pre-generated ARN for use in S3 bucket policies (see below).\nExample: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E2QWRUHAPOMQZL."
@@ -42,7 +26,7 @@ output "iam_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

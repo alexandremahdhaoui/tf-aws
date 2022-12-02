@@ -1,19 +1,19 @@
 resource "aws_backup_report_plan" "aws_backup_report_plan" {
-  arn                     = var.arn
-  formats                 = var.formats
-  framework_arns          = var.framework_arns
   report_delivery_channel = var.report_delivery_channel
-  deployment_status       = var.deployment_status
-  number_of_frameworks    = var.number_of_frameworks
   report_setting          = var.report_setting
-  creation_time           = var.creation_time
-  description             = var.description
-  s3_key_prefix           = var.s3_key_prefix
+  arn                     = var.arn
   id                      = var.id
   name                    = var.name
   report_template         = var.report_template
   s3_bucket_name          = var.s3_bucket_name
   tags                    = var.tags
+  deployment_status       = var.deployment_status
+  formats                 = var.formats
+  number_of_frameworks    = var.number_of_frameworks
+  creation_time           = var.creation_time
+  framework_arns          = var.framework_arns
+  description             = var.description
+  s3_key_prefix           = var.s3_key_prefix
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -34,49 +34,55 @@ variable "s3_bucket_name" {
 variable "tags" {
   description = "(Optional) Metadata that you can assign to help organize the report plans you create. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Report Delivery Channel ArgumentsFor strongreport_delivery_channel the following attributes are supported:"
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "The id of the backup report plan."
+variable "deployment_status" {
+  description = "The deployment status of a report plan. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED."
   type        = string
 }
 variable "formats" {
   description = "(Optional) A list of the format of your reports: CSV, JSON, or both. If not specified, the default format is CSV."
   type        = string
+  default     = ""
+}
+variable "number_of_frameworks" {
+  description = "(Optional) Specifies the number of frameworks a report covers."
+  type        = string
+  default     = ""
+}
+variable "creation_time" {
+  description = "The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC)."
+  type        = string
 }
 variable "framework_arns" {
   description = "(Optional) Specifies the Amazon Resource Names (ARNs) of the frameworks a report covers."
   type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The description of the report plan with a maximum of 1,024 characters"
+  type        = string
+  default     = ""
+}
+variable "s3_key_prefix" {
+  description = "(Optional) The prefix for where Backup Audit Manager delivers your reports to Amazon S3. The prefix is this part of the following path: s3://your-bucket-name/prefix/Backup/us-west-2/year/month/day/report-name. If not specified, there is no prefix.Report Setting ArgumentsFor strongreport_setting the following attributes are supported:"
+  type        = string
+  default     = ""
 }
 variable "report_delivery_channel" {
   description = "(Required) An object that contains information about where and how to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports. Detailed below."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the backup report plan."
-  type        = string
-}
-variable "number_of_frameworks" {
-  description = "(Optional) Specifies the number of frameworks a report covers."
   type        = string
 }
 variable "report_setting" {
   description = "(Required) An object that identifies the report template for the report. Reports are built using a report template. Detailed below."
   type        = string
 }
-variable "deployment_status" {
-  description = "The deployment status of a report plan. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED."
+variable "arn" {
+  description = "The ARN of the backup report plan."
   type        = string
 }
-variable "description" {
-  description = "(Optional) The description of the report plan with a maximum of 1,024 characters"
-  type        = string
-}
-variable "s3_key_prefix" {
-  description = "(Optional) The prefix for where Backup Audit Manager delivers your reports to Amazon S3. The prefix is this part of the following path: s3://your-bucket-name/prefix/Backup/us-west-2/year/month/day/report-name. If not specified, there is no prefix.Report Setting ArgumentsFor strongreport_setting the following attributes are supported:"
-  type        = string
-}
-variable "creation_time" {
-  description = "The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC)."
+variable "id" {
+  description = "The id of the backup report plan."
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,149 +205,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the backup report plan."
-  value       = aws_backup_report_plan.aws_backup_report_plan.arn
+output "number_of_frameworks" {
+  description = "(Optional) Specifies the number of frameworks a report covers."
+  value       = aws_backup_report_plan.aws_backup_report_plan.number_of_frameworks
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "formats" {
-  description = "(Optional) A list of the format of your reports: CSV, JSON, or both. If not specified, the default format is CSV."
-  value       = aws_backup_report_plan.aws_backup_report_plan.formats
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "creation_time" {
+  description = "The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC)."
+  value       = aws_backup_report_plan.aws_backup_report_plan.creation_time
 }
 output "framework_arns" {
   description = "(Optional) Specifies the Amazon Resource Names (ARNs) of the frameworks a report covers."
   value       = aws_backup_report_plan.aws_backup_report_plan.framework_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "report_delivery_channel" {
-  description = "(Required) An object that contains information about where and how to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports. Detailed below."
-  value       = aws_backup_report_plan.aws_backup_report_plan.report_delivery_channel
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "deployment_status" {
-  description = "The deployment status of a report plan. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED."
-  value       = aws_backup_report_plan.aws_backup_report_plan.deployment_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "number_of_frameworks" {
-  description = "(Optional) Specifies the number of frameworks a report covers."
-  value       = aws_backup_report_plan.aws_backup_report_plan.number_of_frameworks
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "report_setting" {
-  description = "(Required) An object that identifies the report template for the report. Reports are built using a report template. Detailed below."
-  value       = aws_backup_report_plan.aws_backup_report_plan.report_setting
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "creation_time" {
-  description = "The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC)."
-  value       = aws_backup_report_plan.aws_backup_report_plan.creation_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the report plan with a maximum of 1,024 characters"
   value       = aws_backup_report_plan.aws_backup_report_plan.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "s3_key_prefix" {
   description = "(Optional) The prefix for where Backup Audit Manager delivers your reports to Amazon S3. The prefix is this part of the following path: s3://your-bucket-name/prefix/Backup/us-west-2/year/month/day/report-name. If not specified, there is no prefix.Report Setting ArgumentsFor strongreport_setting the following attributes are supported:"
   value       = aws_backup_report_plan.aws_backup_report_plan.s3_key_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "report_delivery_channel" {
+  description = "(Required) An object that contains information about where and how to deliver your reports, specifically your Amazon S3 bucket name, S3 key prefix, and the formats of your reports. Detailed below."
+  value       = aws_backup_report_plan.aws_backup_report_plan.report_delivery_channel
 }
-output "id" {
-  description = "The id of the backup report plan."
-  value       = aws_backup_report_plan.aws_backup_report_plan.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The unique name of the report plan. The name must be between 1 and 256 characters, starting with a letter, and consisting of letters, numbers, and underscores."
-  value       = aws_backup_report_plan.aws_backup_report_plan.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "report_template" {
-  description = "(Required) Identifies the report template for the report. Reports are built using a report template. The report templates are: RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_backup_report_plan.aws_backup_report_plan.report_template
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_bucket_name" {
-  description = "(Required) The unique name of the S3 bucket that receives your reports."
-  value       = aws_backup_report_plan.aws_backup_report_plan.s3_bucket_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Metadata that you can assign to help organize the report plans you create. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Report Delivery Channel ArgumentsFor strongreport_delivery_channel the following attributes are supported:"
-  value       = aws_backup_report_plan.aws_backup_report_plan.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "report_setting" {
+  description = "(Required) An object that identifies the report template for the report. Reports are built using a report template. Detailed below."
+  value       = aws_backup_report_plan.aws_backup_report_plan.report_setting
 }
 output "arn" {
   description = "The ARN of the backup report plan."
   value       = aws_backup_report_plan.aws_backup_report_plan.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The id of the backup report plan."
+  value       = aws_backup_report_plan.aws_backup_report_plan.id
 }
-output "creation_time" {
-  description = "The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC)."
-  value       = aws_backup_report_plan.aws_backup_report_plan.creation_time
+output "name" {
+  description = "(Required) The unique name of the report plan. The name must be between 1 and 256 characters, starting with a letter, and consisting of letters, numbers, and underscores."
+  value       = aws_backup_report_plan.aws_backup_report_plan.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "report_template" {
+  description = "(Required) Identifies the report template for the report. Reports are built using a report template. The report templates are: RESOURCE_COMPLIANCE_REPORT | CONTROL_COMPLIANCE_REPORT | BACKUP_JOB_REPORT | COPY_JOB_REPORT | RESTORE_JOB_REPORT.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_backup_report_plan.aws_backup_report_plan.report_template
+}
+output "s3_bucket_name" {
+  description = "(Required) The unique name of the S3 bucket that receives your reports."
+  value       = aws_backup_report_plan.aws_backup_report_plan.s3_bucket_name
+}
+output "tags" {
+  description = "(Optional) Metadata that you can assign to help organize the report plans you create. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Report Delivery Channel ArgumentsFor strongreport_delivery_channel the following attributes are supported:"
+  value       = aws_backup_report_plan.aws_backup_report_plan.tags
 }
 output "deployment_status" {
   description = "The deployment status of a report plan. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED."
   value       = aws_backup_report_plan.aws_backup_report_plan.deployment_status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "formats" {
+  description = "(Optional) A list of the format of your reports: CSV, JSON, or both. If not specified, the default format is CSV."
+  value       = aws_backup_report_plan.aws_backup_report_plan.formats
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_backup_report_plan.aws_backup_report_plan.tags_all
+}
+output "arn" {
+  description = "The ARN of the backup report plan."
+  value       = aws_backup_report_plan.aws_backup_report_plan.arn
+}
+output "creation_time" {
+  description = "The date and time that a report plan is created, in Unix format and Coordinated Universal Time (UTC)."
+  value       = aws_backup_report_plan.aws_backup_report_plan.creation_time
+}
+output "deployment_status" {
+  description = "The deployment status of a report plan. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED."
+  value       = aws_backup_report_plan.aws_backup_report_plan.deployment_status
 }
 output "id" {
   description = "The id of the backup report plan."
@@ -349,15 +287,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_backup_report_plan.aws_backup_report_plan.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

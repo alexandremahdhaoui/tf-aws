@@ -1,5 +1,11 @@
 [[_TOC_]]
 
+# Disclaimer
+
+This project is a personal fun project aiming to provide singleton terraform modules by parsing markdown documentation.
+To effectively achieve the same goal we should directly use the internals of the terraform provider or at least parse
+their content.
+
 # Repository structure
 
 | Path          | Description                                                                                                          |
@@ -18,10 +24,13 @@
 
 # TODO
 
+- [ ] please **snake_case** strings in file names to avoid unconventional naming schemas.  
+- [ ] add logger.
+
 ## cmd/gen_mod/
-- [ ] Deserialize both data in `gen/src/` & `customize/`.
-- [ ] Overwrite values of `gen/src/` by the one in `customize/` if applicable.
-- [ ] Using `hcl` library, write a `Serializer` that takes a `TerraformModuleDefinition` as input and outputs a valid
+- [x] Deserialize both data in `gen/src/` & `customize/`.
+- [x] Overwrite values of `gen/src/` by the one in `customize/` if applicable.
+- [x] Using `hcl` library, write a `Serializer` that takes a `TerraformModuleDefinition` as input and outputs a valid
 Terraform module.
 - [ ] Once it is done, outsource this module into [template-mod-tf](https://gitlab.com/alexandre.mahdhaoui/template-mod-tf).
   - [ ] Rename the repository of the outsourced module to: `go-lib-gen-tf` (better respects the naming convention).
@@ -34,18 +43,6 @@ Terraform module.
 
 Maybe in the future:
 - Don't store `gen/` in this repo but rather in `s3` ?
-
-# Modules
-
-<!-- PLACEHOLDER BEGIN modules -->
-
-| Modules | Description |
-|---------|-------------|
-|         |             |
-|         |             |
-|         |             |
-
-<!-- PLACEHOLDER END modules -->
 
 # Considerations
 

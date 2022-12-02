@@ -1,6 +1,6 @@
 resource "aws_vpn_gateway_attachment" "aws_vpn_gateway_attachment" {
-  vpn_gateway_id = var.vpn_gateway_id
   vpc_id         = var.vpc_id
+  vpn_gateway_id = var.vpn_gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,25 +138,13 @@ output "vpc_id" {
   description = "The ID of the VPC that Virtual Private Gateway is attached to."
   value       = aws_vpn_gateway_attachment.aws_vpn_gateway_attachment.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpn_gateway_id" {
   description = "(Required) The ID of the Virtual Private Gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpn_gateway_attachment.aws_vpn_gateway_attachment.vpn_gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_id" {
   description = "The ID of the VPC that Virtual Private Gateway is attached to."
   value       = aws_vpn_gateway_attachment.aws_vpn_gateway_attachment.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpn_gateway_id" {
   description = "The ID of the Virtual Private Gateway."
@@ -164,7 +152,7 @@ output "vpn_gateway_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

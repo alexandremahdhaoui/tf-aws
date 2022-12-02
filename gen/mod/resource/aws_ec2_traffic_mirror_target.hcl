@@ -1,15 +1,19 @@
 resource "aws_ec2_traffic_mirror_target" "aws_ec2_traffic_mirror_target" {
+  id                                = var.id
+  network_interface_id              = var.network_interface_id
+  network_load_balancer_arn         = var.network_load_balancer_arn
   tags                              = var.tags
   tags_all                          = var.tags_all
   arn                               = var.arn
   description                       = var.description
   gateway_load_balancer_endpoint_id = var.gateway_load_balancer_endpoint_id
-  id                                = var.id
-  network_interface_id              = var.network_interface_id
-  network_load_balancer_arn         = var.network_load_balancer_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "gateway_load_balancer_endpoint_id" {
+  description = "(Optional, Forces new) The VPC Endpoint Id of the Gateway Load Balancer that is associated with the target."
   type        = string
 }
 variable "id" {
@@ -27,6 +31,7 @@ variable "network_load_balancer_arn" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongNOTE: Either network_interface_id or network_load_balancer_arn should be specified and both should not be specified togetherIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -38,10 +43,6 @@ variable "arn" {
 }
 variable "description" {
   description = "(Optional, Forces new) A description of the traffic mirror session."
-  type        = string
-}
-variable "gateway_load_balancer_endpoint_id" {
-  description = "(Optional, Forces new) The VPC Endpoint Id of the Gateway Load Balancer that is associated with the target."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,93 +165,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ID of the Traffic Mirror target."
-  value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_id" {
-  description = "(Optional, Forces new) The network interface ID that is associated with the target."
-  value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "network_load_balancer_arn" {
   description = "(Optional, Forces new) The Amazon Resource Name (ARN) of the Network Load Balancer that is associated with the target."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.network_load_balancer_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongNOTE: Either network_interface_id or network_load_balancer_arn should be specified and both should not be specified togetherIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the traffic mirror target."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional, Forces new) A description of the traffic mirror session."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "gateway_load_balancer_endpoint_id" {
   description = "(Optional, Forces new) The VPC Endpoint Id of the Gateway Load Balancer that is associated with the target."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.gateway_load_balancer_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the traffic mirror target."
-  value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the Traffic Mirror target."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "network_interface_id" {
+  description = "(Optional, Forces new) The network interface ID that is associated with the target."
+  value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.network_interface_id
+}
+output "arn" {
+  description = "The ARN of the traffic mirror target."
+  value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.arn
+}
+output "id" {
+  description = "The ID of the Traffic Mirror target."
+  value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.id
 }
 output "owner_id" {
   description = "The ID of the AWS account that owns the traffic mirror target."
   value       = aws_ec2_traffic_mirror_target.aws_ec2_traffic_mirror_target.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -258,7 +215,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,8 +1,8 @@
 resource "aws_api_gateway_gateway_response.markdown" "aws_api_gateway_gateway_response.markdown" {
+  response_type      = var.response_type
   rest_api_id        = var.rest_api_id
   status_code        = var.status_code
   response_templates = var.response_templates
-  response_type      = var.response_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -11,6 +11,7 @@ variable "provider_region" {
 variable "response_templates" {
   description = "(Optional) Map of templates used to transform the response body."
   type        = string
+  default     = ""
 }
 variable "response_type" {
   description = "(Required) Response type of the associated GatewayResponse."
@@ -23,6 +24,7 @@ variable "rest_api_id" {
 variable "status_code" {
   description = "(Optional) HTTP status code of the Gateway Response."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -148,25 +150,13 @@ output "response_templates" {
   description = "(Optional) Map of templates used to transform the response body."
   value       = aws_api_gateway_gateway_response.markdown.aws_api_gateway_gateway_response.markdown.response_templates
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "response_type" {
   description = "(Required) Response type of the associated GatewayResponse."
   value       = aws_api_gateway_gateway_response.markdown.aws_api_gateway_gateway_response.markdown.response_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rest_api_id" {
   description = "(Required) String identifier of the associated REST API."
   value       = aws_api_gateway_gateway_response.markdown.aws_api_gateway_gateway_response.markdown.rest_api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status_code" {
   description = "(Optional) HTTP status code of the Gateway Response."
@@ -174,7 +164,7 @@ output "status_code" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

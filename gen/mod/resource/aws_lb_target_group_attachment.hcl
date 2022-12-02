@@ -1,8 +1,8 @@
 resource "aws_lb_target_group_attachment" "aws_lb_target_group_attachment" {
-  availability_zone = var.availability_zone
   port              = var.port
   target_group_arn  = var.target_group_arn
   target_id         = var.target_id
+  availability_zone = var.availability_zone
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -11,10 +11,12 @@ variable "provider_region" {
 variable "availability_zone" {
   description = "(Optional) The Availability Zone where the IP address of the target is to be registered. If the private ip address is outside of the VPC scope, this value must be set to 'all'.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "port" {
   description = "(Optional) The port on which targets receive traffic."
   type        = string
+  default     = ""
 }
 variable "target_group_arn" {
   description = "(Required) The ARN of the target group with which to register targets"
@@ -148,33 +150,17 @@ output "availability_zone" {
   description = "(Optional) The Availability Zone where the IP address of the target is to be registered. If the private ip address is outside of the VPC scope, this value must be set to 'all'.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.availability_zone
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "port" {
   description = "(Optional) The port on which targets receive traffic."
   value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "target_group_arn" {
   description = "(Required) The ARN of the target group with which to register targets"
   value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.target_group_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "target_id" {
   description = " (Required) The ID of the target. This is the Instance ID for an instance, or the container ID for an ECS container. If the target type is ip, specify an IP address. If the target type is lambda, specify the arn of lambda. If the target type is alb, specify the arn of alb."
   value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.target_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "A unique identifier for the attachment"
@@ -182,7 +168,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

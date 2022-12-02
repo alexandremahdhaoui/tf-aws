@@ -133,17 +133,13 @@ output "policy" {
   description = "(Required) The policy document. This is a JSON formatted string. For more information about building IAM policy documents with Terraform, see the AWS IAM Policy Document GuideIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ecr_registry_policy.aws_ecr_registry_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "registry_id" {
   description = "The registry ID where the registry was created."
   value       = aws_ecr_registry_policy.aws_ecr_registry_policy.registry_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

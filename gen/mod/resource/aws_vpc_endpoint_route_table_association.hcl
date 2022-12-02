@@ -1,6 +1,6 @@
 resource "aws_vpc_endpoint_route_table_association" "aws_vpc_endpoint_route_table_association" {
-  vpc_endpoint_id = var.vpc_endpoint_id
   route_table_id  = var.route_table_id
+  vpc_endpoint_id = var.vpc_endpoint_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,17 +138,9 @@ output "route_table_id" {
   description = "(Required) Identifier of the EC2 Route Table to be associated with the VPC Endpoint."
   value       = aws_vpc_endpoint_route_table_association.aws_vpc_endpoint_route_table_association.route_table_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_endpoint_id" {
   description = "(Required) Identifier of the VPC Endpoint with which the EC2 Route Table will be associated.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_endpoint_route_table_association.aws_vpc_endpoint_route_table_association.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "A hash of the EC2 Route Table and VPC Endpoint identifiers."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

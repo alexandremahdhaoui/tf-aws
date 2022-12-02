@@ -1,56 +1,20 @@
 resource "aws_servicecatalog_service_action" "aws_servicecatalog_service_action" {
-  version         = var.version
-  assume_role     = var.assume_role
-  definition      = var.definition
-  description     = var.description
-  id              = var.id
   type            = var.type
   update          = var.update
-  accept_language = var.accept_language
+  version         = var.version
   create          = var.create
   delete          = var.delete
   name            = var.name
   parameters      = var.parameters
+  id              = var.id
   read            = var.read
+  accept_language = var.accept_language
+  assume_role     = var.assume_role
+  definition      = var.definition
+  description     = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "read" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "accept_language" {
-  description = "(Optional) Language code. Valid values are en (English), jp (Japanese), and zh (Chinese). Default is en."
-  type        = string
-}
-variable "create" {
-  description = "(Default 3m)"
-  type        = string
-}
-variable "delete" {
-  description = "(Default 3m)"
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the SSM document. For example, AWS-RestartEC2Instance. If you are using a shared SSM document, you must provide the ARN instead of the name."
-  type        = string
-}
-variable "parameters" {
-  description = "(Optional) List of parameters in JSON format. For example: [{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TARGET\\\"}] or [{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TEXT_VALUE\\\"}]."
-  type        = string
-}
-variable "update" {
-  description = "(Default 3m)"
-  type        = string
-}
-variable "version" {
-  description = "(Required) SSM document version. For example, 1.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "assume_role" {
-  description = "(Optional) ARN of the role that performs the self-service actions on your behalf. For example, arn:aws:iam::12345678910:role/ActionRole. To reuse the provisioned product launch role, set to LAUNCH_ROLE."
   type        = string
 }
 variable "definition" {
@@ -60,14 +24,60 @@ variable "definition" {
 variable "description" {
   description = "(Optional) Self-service action description.definitionThe definition configuration block supports the following attributes:"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "Identifier of the service action.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
+}
+variable "read" {
+  description = "(Default 10m)"
+  type        = string
+  default     = ""
+}
+variable "accept_language" {
+  description = "(Optional) Language code. Valid values are en (English), jp (Japanese), and zh (Chinese). Default is en."
+  type        = string
+  default     = ""
+}
+variable "assume_role" {
+  description = "(Optional) ARN of the role that performs the self-service actions on your behalf. For example, arn:aws:iam::12345678910:role/ActionRole. To reuse the provisioned product launch role, set to LAUNCH_ROLE."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name of the SSM document. For example, AWS-RestartEC2Instance. If you are using a shared SSM document, you must provide the ARN instead of the name."
+  type        = string
+}
+variable "parameters" {
+  description = "(Optional) List of parameters in JSON format. For example: [{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TARGET\\\"}] or [{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TEXT_VALUE\\\"}]."
+  type        = string
+  default     = ""
 }
 variable "type" {
   description = "(Optional) Service action definition type. Valid value is SSM_AUTOMATION. Default is SSM_AUTOMATION."
   type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
+}
+variable "version" {
+  description = "(Required) SSM document version. For example, 1.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "create" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,141 +199,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "accept_language" {
-  description = "(Optional) Language code. Valid values are en (English), jp (Japanese), and zh (Chinese). Default is en."
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.accept_language
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the SSM document. For example, AWS-RestartEC2Instance. If you are using a shared SSM document, you must provide the ARN instead of the name."
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parameters" {
   description = "(Optional) List of parameters in JSON format. For example: [{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TARGET\\\"}] or [{\\\"Name\\\":\\\"InstanceId\\\",\\\"Type\\\":\\\"TEXT_VALUE\\\"}]."
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.parameters
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.read
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "assume_role" {
-  description = "(Optional) ARN of the role that performs the self-service actions on your behalf. For example, arn:aws:iam::12345678910:role/ActionRole. To reuse the provisioned product launch role, set to LAUNCH_ROLE."
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.assume_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "definition" {
-  description = "(Required) Self-service action definition configuration block. Detailed below."
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.definition
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Self-service action description.definitionThe definition configuration block supports the following attributes:"
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Identifier of the service action.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "(Optional) Service action definition type. Valid value is SSM_AUTOMATION. Default is SSM_AUTOMATION."
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "version" {
   description = "(Required) SSM document version. For example, 1.In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "accept_language" {
+  description = "(Optional) Language code. Valid values are en (English), jp (Japanese), and zh (Chinese). Default is en."
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.accept_language
 }
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.create
+output "assume_role" {
+  description = "(Optional) ARN of the role that performs the self-service actions on your behalf. For example, arn:aws:iam::12345678910:role/ActionRole. To reuse the provisioned product launch role, set to LAUNCH_ROLE."
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.assume_role
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "definition" {
+  description = "(Required) Self-service action definition configuration block. Detailed below."
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.definition
 }
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Self-service action description.definitionThe definition configuration block supports the following attributes:"
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.description
 }
 output "id" {
   description = "Identifier of the service action.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.read
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.create
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.delete
+}
+output "id" {
+  description = "Identifier of the service action.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_service_action.aws_servicecatalog_service_action.read
 }
 output "update" {
   description = "(Default 3m)"
@@ -331,7 +273,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

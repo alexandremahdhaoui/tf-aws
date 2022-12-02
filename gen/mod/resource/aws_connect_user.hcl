@@ -1,35 +1,90 @@
 resource "aws_connect_user" "aws_connect_user" {
-  email                         = var.email
-  instance_id                   = var.instance_id
-  routing_profile_id            = var.routing_profile_id
-  arn                           = var.arn
+  after_contact_work_time_limit = var.after_contact_work_time_limit
   auto_accept                   = var.auto_accept
-  directory_user_id             = var.directory_user_id
-  identity_info                 = var.identity_info
-  phone_config                  = var.phone_config
-  security_profile_ids          = var.security_profile_ids
-  tags_all                      = var.tags_all
-  id                            = var.id
+  desk_phone_number             = var.desk_phone_number
   last_name                     = var.last_name
   name                          = var.name
-  password                      = var.password
+  security_profile_ids          = var.security_profile_ids
   tags                          = var.tags
-  after_contact_work_time_limit = var.after_contact_work_time_limit
-  desk_phone_number             = var.desk_phone_number
+  directory_user_id             = var.directory_user_id
+  instance_id                   = var.instance_id
+  phone_config                  = var.phone_config
+  email                         = var.email
   first_name                    = var.first_name
-  hierarchy_group_id            = var.hierarchy_group_id
+  id                            = var.id
   phone_type                    = var.phone_type
+  tags_all                      = var.tags_all
+  arn                           = var.arn
+  hierarchy_group_id            = var.hierarchy_group_id
+  identity_info                 = var.identity_info
+  password                      = var.password
+  routing_profile_id            = var.routing_profile_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "after_contact_work_time_limit" {
+  description = "(Optional) The After Call Work (ACW) timeout setting, in seconds. Minimum value of 0."
+  type        = string
+  default     = ""
+}
+variable "auto_accept" {
+  description = "(Optional) When Auto-Accept Call is enabled for an available agent, the agent connects to contacts automatically."
+  type        = string
+  default     = ""
+}
+variable "desk_phone_number" {
+  description = "(Optional) The phone number for the user's desk phone. Required if phone_type is set as DESK_PHONE."
+  type        = string
+  default     = ""
+}
+variable "last_name" {
+  description = "(Optional) The last name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100.A phone_config block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The user name for the account. For instances not using SAML for identity management, the user name can include up to 20 characters. If you are using SAML for identity management, the user name can include up to 64 characters from [a-zA-Z0-9_-.\\@]+."
+  type        = string
+}
+variable "security_profile_ids" {
+  description = "(Required) A list of identifiers for the security profiles for the user. Specify a minimum of 1 and maximum of 10 security profile ids. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
+  type        = string
+}
+variable "tags" {
+  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A identity_info block supports the following arguments:"
+  type        = string
+}
+variable "directory_user_id" {
+  description = "(Optional) The identifier of the user account in the directory used for identity management. If Amazon Connect cannot access the directory, you can specify this identifier to authenticate users. If you include the identifier, we assume that Amazon Connect cannot access the directory. Otherwise, the identity information is used to authenticate users from your directory. This parameter is required if you are using an existing directory for identity management in Amazon Connect when Amazon Connect cannot access your directory to authenticate users. If you are using SAML for identity management and include this parameter, an error is returned."
+  type        = string
+  default     = ""
+}
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   type        = string
 }
 variable "phone_config" {
   description = "(Required) A block that contains information about the phone settings for the user. Documented below."
   type        = string
 }
-variable "security_profile_ids" {
-  description = "(Required) A list of identifiers for the security profiles for the user. Specify a minimum of 1 and maximum of 10 security profile ids. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
+variable "email" {
+  description = "(Optional) The email address. If you are using SAML for identity management and include this parameter, an error is returned. Note that updates to the email is supported. From the UpdateUserIdentityInfo API documentation it is strongly recommended to limit who has the ability to invoke UpdateUserIdentityInfo. Someone with that ability can change the login credentials of other users by changing their email address. This poses a security risk to your organization. They can change the email address of a user to the attacker's email address, and then reset the password through email. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
+  type        = string
+  default     = ""
+}
+variable "first_name" {
+  description = "(Optional) The first name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = ":)."
+  type        = string
+}
+variable "phone_type" {
+  description = "(Required) The phone type. Valid values are DESK_PHONE and SOFT_PHONE.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tags_all" {
@@ -40,65 +95,20 @@ variable "arn" {
   description = "The Amazon Resource Name (ARN) of the user."
   type        = string
 }
-variable "auto_accept" {
-  description = "(Optional) When Auto-Accept Call is enabled for an available agent, the agent connects to contacts automatically."
+variable "hierarchy_group_id" {
+  description = "(Optional) The identifier of the hierarchy group for the user."
   type        = string
-}
-variable "directory_user_id" {
-  description = "(Optional) The identifier of the user account in the directory used for identity management. If Amazon Connect cannot access the directory, you can specify this identifier to authenticate users. If you include the identifier, we assume that Amazon Connect cannot access the directory. Otherwise, the identity information is used to authenticate users from your directory. This parameter is required if you are using an existing directory for identity management in Amazon Connect when Amazon Connect cannot access your directory to authenticate users. If you are using SAML for identity management and include this parameter, an error is returned."
-  type        = string
+  default     = ""
 }
 variable "identity_info" {
   description = "(Optional) A block that contains information about the identity of the user. Documented below."
   type        = string
-}
-variable "tags" {
-  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A identity_info block supports the following arguments:"
-  type        = string
-}
-variable "id" {
-  description = ":)."
-  type        = string
-}
-variable "last_name" {
-  description = "(Optional) The last name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100.A phone_config block supports the following arguments:"
-  type        = string
-}
-variable "name" {
-  description = "(Required) The user name for the account. For instances not using SAML for identity management, the user name can include up to 20 characters. If you are using SAML for identity management, the user name can include up to 64 characters from [a-zA-Z0-9_-.\\@]+."
-  type        = string
+  default     = ""
 }
 variable "password" {
   description = "(Optional) The password for the user account. A password is required if you are using Amazon Connect for identity management. Otherwise, it is an error to include a password."
   type        = string
-}
-variable "phone_type" {
-  description = "(Required) The phone type. Valid values are DESK_PHONE and SOFT_PHONE.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "after_contact_work_time_limit" {
-  description = "(Optional) The After Call Work (ACW) timeout setting, in seconds. Minimum value of 0."
-  type        = string
-}
-variable "desk_phone_number" {
-  description = "(Optional) The phone number for the user's desk phone. Required if phone_type is set as DESK_PHONE."
-  type        = string
-}
-variable "first_name" {
-  description = "(Optional) The first name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100."
-  type        = string
-}
-variable "hierarchy_group_id" {
-  description = "(Optional) The identifier of the hierarchy group for the user."
-  type        = string
-}
-variable "email" {
-  description = "(Optional) The email address. If you are using SAML for identity management and include this parameter, an error is returned. Note that updates to the email is supported. From the UpdateUserIdentityInfo API documentation it is strongly recommended to limit who has the ability to invoke UpdateUserIdentityInfo. Someone with that ability can change the login credentials of other users by changing their email address. This poses a security risk to your organization. They can change the email address of a user to the attacker's email address, and then reset the password through email. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
-  type        = string
-}
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  type        = string
+  default     = ""
 }
 variable "routing_profile_id" {
   description = "(Required) The identifier of the routing profile for the user."
@@ -224,189 +234,97 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = ":)."
-  value       = aws_connect_user.aws_connect_user.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_name" {
-  description = "(Optional) The last name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100.A phone_config block supports the following arguments:"
-  value       = aws_connect_user.aws_connect_user.last_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The user name for the account. For instances not using SAML for identity management, the user name can include up to 20 characters. If you are using SAML for identity management, the user name can include up to 64 characters from [a-zA-Z0-9_-.\\@]+."
-  value       = aws_connect_user.aws_connect_user.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "password" {
-  description = "(Optional) The password for the user account. A password is required if you are using Amazon Connect for identity management. Otherwise, it is an error to include a password."
-  value       = aws_connect_user.aws_connect_user.password
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A identity_info block supports the following arguments:"
-  value       = aws_connect_user.aws_connect_user.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "after_contact_work_time_limit" {
-  description = "(Optional) The After Call Work (ACW) timeout setting, in seconds. Minimum value of 0."
-  value       = aws_connect_user.aws_connect_user.after_contact_work_time_limit
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "desk_phone_number" {
-  description = "(Optional) The phone number for the user's desk phone. Required if phone_type is set as DESK_PHONE."
-  value       = aws_connect_user.aws_connect_user.desk_phone_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "first_name" {
-  description = "(Optional) The first name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100."
-  value       = aws_connect_user.aws_connect_user.first_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "hierarchy_group_id" {
-  description = "(Optional) The identifier of the hierarchy group for the user."
-  value       = aws_connect_user.aws_connect_user.hierarchy_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "phone_type" {
-  description = "(Required) The phone type. Valid values are DESK_PHONE and SOFT_PHONE.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_user.aws_connect_user.phone_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "email" {
-  description = "(Optional) The email address. If you are using SAML for identity management and include this parameter, an error is returned. Note that updates to the email is supported. From the UpdateUserIdentityInfo API documentation it is strongly recommended to limit who has the ability to invoke UpdateUserIdentityInfo. Someone with that ability can change the login credentials of other users by changing their email address. This poses a security risk to your organization. They can change the email address of a user to the attacker's email address, and then reset the password through email. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
-  value       = aws_connect_user.aws_connect_user.email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "directory_user_id" {
+  description = "(Optional) The identifier of the user account in the directory used for identity management. If Amazon Connect cannot access the directory, you can specify this identifier to authenticate users. If you include the identifier, we assume that Amazon Connect cannot access the directory. Otherwise, the identity information is used to authenticate users from your directory. This parameter is required if you are using an existing directory for identity management in Amazon Connect when Amazon Connect cannot access your directory to authenticate users. If you are using SAML for identity management and include this parameter, an error is returned."
+  value       = aws_connect_user.aws_connect_user.directory_user_id
 }
 output "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   value       = aws_connect_user.aws_connect_user.instance_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "routing_profile_id" {
-  description = "(Required) The identifier of the routing profile for the user."
-  value       = aws_connect_user.aws_connect_user.routing_profile_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the user."
-  value       = aws_connect_user.aws_connect_user.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_accept" {
-  description = "(Optional) When Auto-Accept Call is enabled for an available agent, the agent connects to contacts automatically."
-  value       = aws_connect_user.aws_connect_user.auto_accept
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "directory_user_id" {
-  description = "(Optional) The identifier of the user account in the directory used for identity management. If Amazon Connect cannot access the directory, you can specify this identifier to authenticate users. If you include the identifier, we assume that Amazon Connect cannot access the directory. Otherwise, the identity information is used to authenticate users from your directory. This parameter is required if you are using an existing directory for identity management in Amazon Connect when Amazon Connect cannot access your directory to authenticate users. If you are using SAML for identity management and include this parameter, an error is returned."
-  value       = aws_connect_user.aws_connect_user.directory_user_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "identity_info" {
-  description = "(Optional) A block that contains information about the identity of the user. Documented below."
-  value       = aws_connect_user.aws_connect_user.identity_info
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "phone_config" {
   description = "(Required) A block that contains information about the phone settings for the user. Documented below."
   value       = aws_connect_user.aws_connect_user.phone_config
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "email" {
+  description = "(Optional) The email address. If you are using SAML for identity management and include this parameter, an error is returned. Note that updates to the email is supported. From the UpdateUserIdentityInfo API documentation it is strongly recommended to limit who has the ability to invoke UpdateUserIdentityInfo. Someone with that ability can change the login credentials of other users by changing their email address. This poses a security risk to your organization. They can change the email address of a user to the attacker's email address, and then reset the password through email. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
+  value       = aws_connect_user.aws_connect_user.email
 }
-output "security_profile_ids" {
-  description = "(Required) A list of identifiers for the security profiles for the user. Specify a minimum of 1 and maximum of 10 security profile ids. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
-  value       = aws_connect_user.aws_connect_user.security_profile_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_connect_user.aws_connect_user.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the user."
-  value       = aws_connect_user.aws_connect_user.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "first_name" {
+  description = "(Optional) The first name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100."
+  value       = aws_connect_user.aws_connect_user.first_name
 }
 output "id" {
   description = ":)."
   value       = aws_connect_user.aws_connect_user.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "phone_type" {
+  description = "(Required) The phone type. Valid values are DESK_PHONE and SOFT_PHONE.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_user.aws_connect_user.phone_type
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_connect_user.aws_connect_user.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the user."
+  value       = aws_connect_user.aws_connect_user.arn
+}
+output "hierarchy_group_id" {
+  description = "(Optional) The identifier of the hierarchy group for the user."
+  value       = aws_connect_user.aws_connect_user.hierarchy_group_id
+}
+output "identity_info" {
+  description = "(Optional) A block that contains information about the identity of the user. Documented below."
+  value       = aws_connect_user.aws_connect_user.identity_info
+}
+output "password" {
+  description = "(Optional) The password for the user account. A password is required if you are using Amazon Connect for identity management. Otherwise, it is an error to include a password."
+  value       = aws_connect_user.aws_connect_user.password
+}
+output "routing_profile_id" {
+  description = "(Required) The identifier of the routing profile for the user."
+  value       = aws_connect_user.aws_connect_user.routing_profile_id
+}
+output "after_contact_work_time_limit" {
+  description = "(Optional) The After Call Work (ACW) timeout setting, in seconds. Minimum value of 0."
+  value       = aws_connect_user.aws_connect_user.after_contact_work_time_limit
+}
+output "auto_accept" {
+  description = "(Optional) When Auto-Accept Call is enabled for an available agent, the agent connects to contacts automatically."
+  value       = aws_connect_user.aws_connect_user.auto_accept
+}
+output "desk_phone_number" {
+  description = "(Optional) The phone number for the user's desk phone. Required if phone_type is set as DESK_PHONE."
+  value       = aws_connect_user.aws_connect_user.desk_phone_number
+}
+output "last_name" {
+  description = "(Optional) The last name. This is required if you are using Amazon Connect or SAML for identity management. Minimum length of 1. Maximum length of 100.A phone_config block supports the following arguments:"
+  value       = aws_connect_user.aws_connect_user.last_name
+}
+output "name" {
+  description = "(Required) The user name for the account. For instances not using SAML for identity management, the user name can include up to 20 characters. If you are using SAML for identity management, the user name can include up to 64 characters from [a-zA-Z0-9_-.\\@]+."
+  value       = aws_connect_user.aws_connect_user.name
+}
+output "security_profile_ids" {
+  description = "(Required) A list of identifiers for the security profiles for the user. Specify a minimum of 1 and maximum of 10 security profile ids. For more information, see Best Practices for Security Profiles in the Amazon Connect Administrator Guide."
+  value       = aws_connect_user.aws_connect_user.security_profile_ids
+}
+output "tags" {
+  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A identity_info block supports the following arguments:"
+  value       = aws_connect_user.aws_connect_user.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the user."
+  value       = aws_connect_user.aws_connect_user.arn
+}
+output "id" {
+  description = ":)."
+  value       = aws_connect_user.aws_connect_user.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_connect_user.aws_connect_user.tags_all
 }
 output "user_id" {
   description = "The identifier for the user."
@@ -414,7 +332,7 @@ output "user_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

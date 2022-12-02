@@ -1,128 +1,148 @@
 resource "aws_sns_topic_subscription" "aws_sns_topic_subscription" {
-  protocol                        = var.protocol
-  raw_message_delivery            = var.raw_message_delivery
-  email-json                      = var.email-json
-  http                            = var.http
-  https                           = var.https
-  id                              = var.id
-  filter_policy                   = var.filter_policy
-  firehose                        = var.firehose
-  pending_confirmation            = var.pending_confirmation
-  sqs                             = var.sqs
-  application                     = var.application
-  confirmation_was_authenticated  = var.confirmation_was_authenticated
-  email                           = var.email
-  endpoint                        = var.endpoint
   subscription_role_arn           = var.subscription_role_arn
-  topic_arn                       = var.topic_arn
-  confirmation_timeout_in_minutes = var.confirmation_timeout_in_minutes
-  endpoint_auto_confirms          = var.endpoint_auto_confirms
-  lambda                          = var.lambda
-  sms                             = var.sms
+  email-json                      = var.email-json
+  endpoint                        = var.endpoint
+  firehose                        = var.firehose
+  http                            = var.http
+  owner_id                        = var.owner_id
+  pending_confirmation            = var.pending_confirmation
+  protocol                        = var.protocol
+  application                     = var.application
   arn                             = var.arn
   delivery_policy                 = var.delivery_policy
-  owner_id                        = var.owner_id
+  email                           = var.email
+  filter_policy                   = var.filter_policy
   redrive_policy                  = var.redrive_policy
+  sms                             = var.sms
+  https                           = var.https
+  lambda                          = var.lambda
+  sqs                             = var.sqs
+  confirmation_timeout_in_minutes = var.confirmation_timeout_in_minutes
+  confirmation_was_authenticated  = var.confirmation_was_authenticated
+  endpoint_auto_confirms          = var.endpoint_auto_confirms
+  id                              = var.id
+  raw_message_delivery            = var.raw_message_delivery
+  topic_arn                       = var.topic_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "lambda" {
-  description = "Delivers JSON-encoded messages. endpoint is the ARN of an AWS Lambda function."
+variable "id" {
+  description = "ARN of the subscription."
+  type        = string
+  default     = ""
+}
+variable "raw_message_delivery" {
+  description = "(Optional) Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property). Default is false."
+  type        = string
+  default     = ""
+}
+variable "topic_arn" {
+  description = "(Required) ARN of the SNS topic to subscribe to."
   type        = string
 }
 variable "confirmation_timeout_in_minutes" {
   description = "(Optional) Integer indicating number of minutes to wait in retrying mode for fetching subscription arn before marking it as failure. Only applicable for http and https protocols. Default is 1."
   type        = string
+  default     = ""
+}
+variable "confirmation_was_authenticated" {
+  description = "Whether the subscription confirmation request was authenticated."
+  type        = string
+  default     = ""
 }
 variable "endpoint_auto_confirms" {
   description = "(Optional) Whether the endpoint is capable of auto confirming subscription (e.g., PagerDuty). Default is false."
   type        = string
-}
-variable "owner_id" {
-  description = "AWS account ID of the subscription's owner."
-  type        = string
-}
-variable "redrive_policy" {
-  description = "(Optional) JSON String with the redrive policy that will be used in the subscription. Refer to the SNS docs for more details.Protocol supportSupported values for protocol include:"
-  type        = string
-}
-variable "sms" {
-  description = "Delivers text messages via SMS. endpoint is the phone number of an SMS-enabled device."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the subscription."
-  type        = string
-}
-variable "delivery_policy" {
-  description = "(Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details."
-  type        = string
-}
-variable "https" {
-  description = " -- Delivers JSON-encoded messages via HTTPS POST. endpoint is a URL beginning with https://.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "ARN of the subscription."
-  type        = string
-}
-variable "protocol" {
-  description = "(Required) Protocol to use. Valid values are: sqs, sms, lambda, firehose, and application. Protocols email, email-json, http and https are also valid but partially supported. See details below."
-  type        = string
-}
-variable "raw_message_delivery" {
-  description = "(Optional) Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property). Default is false."
-  type        = string
-}
-variable "email-json" {
-  description = "Delivers JSON-encoded messages via SMTP. endpoint is an email address."
-  type        = string
+  default     = ""
 }
 variable "http" {
   description = " -- Delivers JSON-encoded messages via HTTP POST. endpoint is a URL beginning with http://."
   type        = string
+  default     = ""
 }
-variable "email" {
-  description = "Delivers messages via SMTP. endpoint is an email address."
+variable "owner_id" {
+  description = "AWS account ID of the subscription's owner."
   type        = string
-}
-variable "endpoint" {
-  description = "(Required) Endpoint to send data to. The contents vary with the protocol. See details below."
-  type        = string
-}
-variable "filter_policy" {
-  description = "(Optional) JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource. Refer to the SNS docs for more details."
-  type        = string
-}
-variable "firehose" {
-  description = "Delivers JSON-encoded messages. endpointarn:aws:firehose:us-east-1:123456789012:deliverystream/ticketUploadStream)."
-  type        = string
+  default     = ""
 }
 variable "pending_confirmation" {
   description = "Whether the subscription has not been confirmed."
   type        = string
+  default     = ""
 }
-variable "sqs" {
-  description = "Delivers JSON-encoded messages. endpoint is the ARN of an Amazon SQS queue (e.g., arn:aws:sqs:us-west-2:123456789012:terraform-queue-too).Partially supported values for protocol include:~> strongNOTE: If an aws_sns_topic_subscription uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of Terraform (e.g., clicking on a \"Confirm Subscription\" link in an email), Terraform cannot delete / unsubscribe the subscription. Attempting to destroy an unconfirmed subscription will remove the aws_sns_topic_subscription from Terraform's state but strongemwill not remove the subscription from AWS. The pending_confirmation attribute provides confirmation status."
-  type        = string
-}
-variable "application" {
-  description = "Delivers JSON-encoded messages. endpoint is the endpoint ARN of a mobile app and device."
-  type        = string
-}
-variable "confirmation_was_authenticated" {
-  description = "Whether the subscription confirmation request was authenticated."
+variable "protocol" {
+  description = "(Required) Protocol to use. Valid values are: sqs, sms, lambda, firehose, and application. Protocols email, email-json, http and https are also valid but partially supported. See details below."
   type        = string
 }
 variable "subscription_role_arn" {
   description = "(Required if protocol is firehose) ARN of the IAM role to publish to Kinesis Data Firehose delivery stream. Refer to SNS docs."
   type        = string
 }
-variable "topic_arn" {
-  description = "(Required) ARN of the SNS topic to subscribe to."
+variable "email-json" {
+  description = "Delivers JSON-encoded messages via SMTP. endpoint is an email address."
   type        = string
+  default     = ""
+}
+variable "endpoint" {
+  description = "(Required) Endpoint to send data to. The contents vary with the protocol. See details below."
+  type        = string
+}
+variable "firehose" {
+  description = "Delivers JSON-encoded messages. endpointarn:aws:firehose:us-east-1:123456789012:deliverystream/ticketUploadStream)."
+  type        = string
+  default     = ""
+}
+variable "email" {
+  description = "Delivers messages via SMTP. endpoint is an email address."
+  type        = string
+  default     = ""
+}
+variable "filter_policy" {
+  description = "(Optional) JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource. Refer to the SNS docs for more details."
+  type        = string
+  default     = ""
+}
+variable "redrive_policy" {
+  description = "(Optional) JSON String with the redrive policy that will be used in the subscription. Refer to the SNS docs for more details.Protocol supportSupported values for protocol include:"
+  type        = string
+  default     = ""
+}
+variable "sms" {
+  description = "Delivers text messages via SMS. endpoint is the phone number of an SMS-enabled device."
+  type        = string
+  default     = ""
+}
+variable "application" {
+  description = "Delivers JSON-encoded messages. endpoint is the endpoint ARN of a mobile app and device."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the subscription."
+  type        = string
+  default     = ""
+}
+variable "delivery_policy" {
+  description = "(Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details."
+  type        = string
+  default     = ""
+}
+variable "https" {
+  description = " -- Delivers JSON-encoded messages via HTTPS POST. endpoint is a URL beginning with https://.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "lambda" {
+  description = "Delivers JSON-encoded messages. endpoint is the ARN of an AWS Lambda function."
+  type        = string
+  default     = ""
+}
+variable "sqs" {
+  description = "Delivers JSON-encoded messages. endpoint is the ARN of an Amazon SQS queue (e.g., arn:aws:sqs:us-west-2:123456789012:terraform-queue-too).Partially supported values for protocol include:~> strongNOTE: If an aws_sns_topic_subscription uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of Terraform (e.g., clicking on a \"Confirm Subscription\" link in an email), Terraform cannot delete / unsubscribe the subscription. Attempting to destroy an unconfirmed subscription will remove the aws_sns_topic_subscription from Terraform's state but strongemwill not remove the subscription from AWS. The pending_confirmation attribute provides confirmation status."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -244,221 +264,117 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "application" {
-  description = "Delivers JSON-encoded messages. endpoint is the endpoint ARN of a mobile app and device."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.application
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "confirmation_was_authenticated" {
-  description = "Whether the subscription confirmation request was authenticated."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.confirmation_was_authenticated
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "email" {
-  description = "Delivers messages via SMTP. endpoint is an email address."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint" {
-  description = "(Required) Endpoint to send data to. The contents vary with the protocol. See details below."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter_policy" {
-  description = "(Optional) JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource. Refer to the SNS docs for more details."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.filter_policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "firehose" {
   description = "Delivers JSON-encoded messages. endpointarn:aws:firehose:us-east-1:123456789012:deliverystream/ticketUploadStream)."
   value       = aws_sns_topic_subscription.aws_sns_topic_subscription.firehose
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pending_confirmation" {
-  description = "Whether the subscription has not been confirmed."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.pending_confirmation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "sqs" {
-  description = "Delivers JSON-encoded messages. endpoint is the ARN of an Amazon SQS queue (e.g., arn:aws:sqs:us-west-2:123456789012:terraform-queue-too).Partially supported values for protocol include:~> strongNOTE: If an aws_sns_topic_subscription uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of Terraform (e.g., clicking on a \"Confirm Subscription\" link in an email), Terraform cannot delete / unsubscribe the subscription. Attempting to destroy an unconfirmed subscription will remove the aws_sns_topic_subscription from Terraform's state but strongemwill not remove the subscription from AWS. The pending_confirmation attribute provides confirmation status."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.sqs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subscription_role_arn" {
-  description = "(Required if protocol is firehose) ARN of the IAM role to publish to Kinesis Data Firehose delivery stream. Refer to SNS docs."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.subscription_role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "topic_arn" {
-  description = "(Required) ARN of the SNS topic to subscribe to."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.topic_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "confirmation_timeout_in_minutes" {
-  description = "(Optional) Integer indicating number of minutes to wait in retrying mode for fetching subscription arn before marking it as failure. Only applicable for http and https protocols. Default is 1."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.confirmation_timeout_in_minutes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_auto_confirms" {
-  description = "(Optional) Whether the endpoint is capable of auto confirming subscription (e.g., PagerDuty). Default is false."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.endpoint_auto_confirms
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lambda" {
-  description = "Delivers JSON-encoded messages. endpoint is the ARN of an AWS Lambda function."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.lambda
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the subscription."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delivery_policy" {
-  description = "(Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.delivery_policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "AWS account ID of the subscription's owner."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "redrive_policy" {
-  description = "(Optional) JSON String with the redrive policy that will be used in the subscription. Refer to the SNS docs for more details.Protocol supportSupported values for protocol include:"
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.redrive_policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "sms" {
-  description = "Delivers text messages via SMS. endpoint is the phone number of an SMS-enabled device."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.sms
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "email-json" {
-  description = "Delivers JSON-encoded messages via SMTP. endpoint is an email address."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.email-json
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "http" {
   description = " -- Delivers JSON-encoded messages via HTTP POST. endpoint is a URL beginning with http://."
   value       = aws_sns_topic_subscription.aws_sns_topic_subscription.http
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "owner_id" {
+  description = "AWS account ID of the subscription's owner."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.owner_id
 }
-output "https" {
-  description = " -- Delivers JSON-encoded messages via HTTPS POST. endpoint is a URL beginning with https://.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.https
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ARN of the subscription."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "pending_confirmation" {
+  description = "Whether the subscription has not been confirmed."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.pending_confirmation
 }
 output "protocol" {
   description = "(Required) Protocol to use. Valid values are: sqs, sms, lambda, firehose, and application. Protocols email, email-json, http and https are also valid but partially supported. See details below."
   value       = aws_sns_topic_subscription.aws_sns_topic_subscription.protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "subscription_role_arn" {
+  description = "(Required if protocol is firehose) ARN of the IAM role to publish to Kinesis Data Firehose delivery stream. Refer to SNS docs."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.subscription_role_arn
 }
-output "raw_message_delivery" {
-  description = "(Optional) Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property). Default is false."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.raw_message_delivery
+output "email-json" {
+  description = "Delivers JSON-encoded messages via SMTP. endpoint is an email address."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.email-json
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "endpoint" {
+  description = "(Required) Endpoint to send data to. The contents vary with the protocol. See details below."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.endpoint
 }
-output "confirmation_was_authenticated" {
-  description = "Whether the subscription confirmation request was authenticated."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.confirmation_was_authenticated
+output "delivery_policy" {
+  description = "(Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.delivery_policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "email" {
+  description = "Delivers messages via SMTP. endpoint is an email address."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.email
+}
+output "filter_policy" {
+  description = "(Optional) JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource. Refer to the SNS docs for more details."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.filter_policy
+}
+output "redrive_policy" {
+  description = "(Optional) JSON String with the redrive policy that will be used in the subscription. Refer to the SNS docs for more details.Protocol supportSupported values for protocol include:"
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.redrive_policy
+}
+output "sms" {
+  description = "Delivers text messages via SMS. endpoint is the phone number of an SMS-enabled device."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.sms
+}
+output "application" {
+  description = "Delivers JSON-encoded messages. endpoint is the endpoint ARN of a mobile app and device."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.application
+}
+output "arn" {
+  description = "ARN of the subscription."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.arn
+}
+output "sqs" {
+  description = "Delivers JSON-encoded messages. endpoint is the ARN of an Amazon SQS queue (e.g., arn:aws:sqs:us-west-2:123456789012:terraform-queue-too).Partially supported values for protocol include:~> strongNOTE: If an aws_sns_topic_subscription uses a partially-supported protocol and the subscription is not confirmed, either through automatic confirmation or means outside of Terraform (e.g., clicking on a \"Confirm Subscription\" link in an email), Terraform cannot delete / unsubscribe the subscription. Attempting to destroy an unconfirmed subscription will remove the aws_sns_topic_subscription from Terraform's state but strongemwill not remove the subscription from AWS. The pending_confirmation attribute provides confirmation status."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.sqs
+}
+output "https" {
+  description = " -- Delivers JSON-encoded messages via HTTPS POST. endpoint is a URL beginning with https://.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.https
+}
+output "lambda" {
+  description = "Delivers JSON-encoded messages. endpoint is the ARN of an AWS Lambda function."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.lambda
+}
+output "endpoint_auto_confirms" {
+  description = "(Optional) Whether the endpoint is capable of auto confirming subscription (e.g., PagerDuty). Default is false."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.endpoint_auto_confirms
 }
 output "id" {
   description = "ARN of the subscription."
   value       = aws_sns_topic_subscription.aws_sns_topic_subscription.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "raw_message_delivery" {
+  description = "(Optional) Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property). Default is false."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.raw_message_delivery
+}
+output "topic_arn" {
+  description = "(Required) ARN of the SNS topic to subscribe to."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.topic_arn
+}
+output "confirmation_timeout_in_minutes" {
+  description = "(Optional) Integer indicating number of minutes to wait in retrying mode for fetching subscription arn before marking it as failure. Only applicable for http and https protocols. Default is 1."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.confirmation_timeout_in_minutes
+}
+output "confirmation_was_authenticated" {
+  description = "Whether the subscription confirmation request was authenticated."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.confirmation_was_authenticated
+}
+output "arn" {
+  description = "ARN of the subscription."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.arn
+}
+output "confirmation_was_authenticated" {
+  description = "Whether the subscription confirmation request was authenticated."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.confirmation_was_authenticated
+}
+output "id" {
+  description = "ARN of the subscription."
+  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.id
 }
 output "owner_id" {
   description = "AWS account ID of the subscription's owner."
   value       = aws_sns_topic_subscription.aws_sns_topic_subscription.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "pending_confirmation" {
   description = "Whether the subscription has not been confirmed."
@@ -466,15 +382,7 @@ output "pending_confirmation" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the subscription."
-  value       = aws_sns_topic_subscription.aws_sns_topic_subscription.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

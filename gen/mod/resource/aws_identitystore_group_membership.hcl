@@ -1,7 +1,7 @@
 resource "aws_identitystore_group_membership" "aws_identitystore_group_membership" {
+  group_id          = var.group_id
   identity_store_id = var.identity_store_id
   member_id         = var.member_id
-  group_id          = var.group_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,29 +139,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "identity_store_id" {
-  description = "(Required) Identity Store ID associated with the Single Sign-On Instance.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_identitystore_group_membership.aws_identitystore_group_membership.identity_store_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "member_id" {
-  description = "(Required) The identifier for a user in the Identity Store."
-  value       = aws_identitystore_group_membership.aws_identitystore_group_membership.member_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "group_id" {
   description = "(Required)  The identifier for a group in the Identity Store."
   value       = aws_identitystore_group_membership.aws_identitystore_group_membership.group_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "identity_store_id" {
+  description = "(Required) Identity Store ID associated with the Single Sign-On Instance.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_identitystore_group_membership.aws_identitystore_group_membership.identity_store_id
+}
+output "member_id" {
+  description = "(Required) The identifier for a user in the Identity Store."
+  value       = aws_identitystore_group_membership.aws_identitystore_group_membership.member_id
 }
 output "membership_id" {
   description = "The identifier of the newly created group membership in the Identity Store."
@@ -169,7 +157,7 @@ output "membership_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,12 +1,20 @@
 resource "aws_ec2_transit_gateway_multicast_domain_association" "aws_ec2_transit_gateway_multicast_domain_association" {
-  transit_gateway_attachment_id       = var.transit_gateway_attachment_id
-  transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
   create                              = var.create
   id                                  = var.id
   subnet_id                           = var.subnet_id
+  transit_gateway_attachment_id       = var.transit_gateway_attachment_id
+  transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "transit_gateway_attachment_id" {
+  description = "(Required) The ID of the transit gateway attachment."
+  type        = string
+}
+variable "transit_gateway_multicast_domain_id" {
+  description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create" {
@@ -19,14 +27,6 @@ variable "id" {
 }
 variable "subnet_id" {
   description = "(Required) The ID of the subnet to associate with the transit gateway multicast domain."
-  type        = string
-}
-variable "transit_gateway_attachment_id" {
-  description = "(Required) The ID of the transit gateway attachment."
-  type        = string
-}
-variable "transit_gateway_multicast_domain_id" {
-  description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,53 +149,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "transit_gateway_attachment_id" {
-  description = "(Required) The ID of the transit gateway attachment."
-  value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.transit_gateway_attachment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transit_gateway_multicast_domain_id" {
-  description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.transit_gateway_multicast_domain_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 10m)"
   value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EC2 Transit Gateway Multicast Domain Association identifier.TimeoutsConfiguration options:"
   value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_id" {
   description = "(Required) The ID of the subnet to associate with the transit gateway multicast domain."
   value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.subnet_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "transit_gateway_attachment_id" {
+  description = "(Required) The ID of the transit gateway attachment."
+  value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.transit_gateway_attachment_id
+}
+output "transit_gateway_multicast_domain_id" {
+  description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.transit_gateway_multicast_domain_id
 }
 output "create" {
   description = "(Default 10m)"
   value       = aws_ec2_transit_gateway_multicast_domain_association.aws_ec2_transit_gateway_multicast_domain_association.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "EC2 Transit Gateway Multicast Domain Association identifier.TimeoutsConfiguration options:"
@@ -203,7 +179,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

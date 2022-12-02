@@ -138,17 +138,9 @@ output "health_check_arn" {
   description = "(Required) The ARN (Amazon Resource Name) of the Route53 Health Check resource which will be associated to the protected resource."
   value       = aws_shield_protection_health_check_association.aws_shield_protection_health_check_association.health_check_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "shield_protection_id" {
   description = "(Required) The ID of the protected resource.In addition to all arguments above, the following attributes are exported:"
   value       = aws_shield_protection_health_check_association.aws_shield_protection_health_check_association.shield_protection_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The unique identifier (ID) for the Protection object that is created."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

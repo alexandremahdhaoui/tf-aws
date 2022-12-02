@@ -1,134 +1,93 @@
 resource "aws_ec2_client_vpn_endpoint" "aws_ec2_client_vpn_endpoint" {
+  cloudwatch_log_stream          = var.cloudwatch_log_stream
+  session_timeout_hours          = var.session_timeout_hours
+  vpn_port                       = var.vpn_port
+  security_group_ids             = var.security_group_ids
   tags                           = var.tags
-  type                           = var.type
-  dns_servers                    = var.dns_servers
+  banner_text                    = var.banner_text
+  client_login_banner_options    = var.client_login_banner_options
+  enabled                        = var.enabled
+  id                             = var.id
   lambda_function_arn            = var.lambda_function_arn
   saml_provider_arn              = var.saml_provider_arn
-  vpn_port                       = var.vpn_port
-  banner_text                    = var.banner_text
-  root_certificate_chain_arn     = var.root_certificate_chain_arn
-  self_service_saml_provider_arn = var.self_service_saml_provider_arn
-  id                             = var.id
-  split_tunnel                   = var.split_tunnel
-  arn                            = var.arn
-  dns_name                       = var.dns_name
-  enabled                        = var.enabled
-  description                    = var.description
-  server_certificate_arn         = var.server_certificate_arn
-  authentication_options         = var.authentication_options
-  cloudwatch_log_group           = var.cloudwatch_log_group
-  connection_log_options         = var.connection_log_options
-  vpc_id                         = var.vpc_id
-  active_directory_id            = var.active_directory_id
   transport_protocol             = var.transport_protocol
-  client_login_banner_options    = var.client_login_banner_options
-  cloudwatch_log_stream          = var.cloudwatch_log_stream
-  status                         = var.status
-  self_service_portal            = var.self_service_portal
-  session_timeout_hours          = var.session_timeout_hours
-  client_cidr_block              = var.client_cidr_block
+  active_directory_id            = var.active_directory_id
   client_connect_options         = var.client_connect_options
-  security_group_ids             = var.security_group_ids
+  cloudwatch_log_group           = var.cloudwatch_log_group
+  client_cidr_block              = var.client_cidr_block
+  root_certificate_chain_arn     = var.root_certificate_chain_arn
+  self_service_portal            = var.self_service_portal
+  self_service_saml_provider_arn = var.self_service_saml_provider_arn
+  vpc_id                         = var.vpc_id
+  description                    = var.description
+  type                           = var.type
+  arn                            = var.arn
+  connection_log_options         = var.connection_log_options
+  dns_servers                    = var.dns_servers
+  server_certificate_arn         = var.server_certificate_arn
+  split_tunnel                   = var.split_tunnel
+  status                         = var.status
+  authentication_options         = var.authentication_options
+  dns_name                       = var.dns_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "status" {
-  description = "strongDeprecated The current state of the Client VPN endpoint."
+variable "vpc_id" {
+  description = "(Optional) The ID of the VPC to associate with the Client VPN endpoint. If no security group IDs are specified in the request, the default security group for the VPC is applied."
   type        = string
-}
-variable "client_login_banner_options" {
-  description = "(Optional) Options for enabling a customizable text banner that will be displayed on AWS provided clients when a VPN session is established."
-  type        = string
-}
-variable "cloudwatch_log_stream" {
-  description = "(Optional) The name of the CloudWatch Logs log stream to which the connection data is published."
-  type        = string
-}
-variable "security_group_ids" {
-  description = "(Optional) The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups."
-  type        = string
-}
-variable "self_service_portal" {
-  description = "(Optional) Specify whether to enable the self-service portal for the Client VPN endpoint. Values can be enabled or disabled. Default value is disabled."
-  type        = string
-}
-variable "session_timeout_hours" {
-  description = "(Optional) The maximum session duration is a trigger by which end-users are required to re-authenticate prior to establishing a VPN session. Default value is 24Valid values: 8 | 10 | 12 | 24"
-  type        = string
+  default     = ""
 }
 variable "client_cidr_block" {
   description = "(Required) The IPv4 address range, in CIDR notation, from which to assign client IP addresses. The address range cannot overlap with the local CIDR of the VPC in which the associated subnet is located, or the routes that you add manually. The address range cannot be changed after the Client VPN endpoint has been created. The CIDR block should be /22 or greater."
   type        = string
 }
-variable "client_connect_options" {
-  description = "(Optional) The options for managing connection authorization for new client connections."
+variable "root_certificate_chain_arn" {
+  description = "(Optional) The ARN of the client certificate. The certificate must be signed by a certificate authority (CA) and it must be provisioned in AWS Certificate Manager (ACM). Only necessary when type is set to certificate-authentication."
   type        = string
+  default     = ""
 }
-variable "saml_provider_arn" {
-  description = "(Optional) The ARN of the IAM SAML identity provider if type is federated-authentication."
+variable "self_service_portal" {
+  description = "(Optional) Specify whether to enable the self-service portal for the Client VPN endpoint. Values can be enabled or disabled. Default value is disabled."
   type        = string
+  default     = ""
 }
-variable "tags" {
-  description = "(Optional) A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+variable "self_service_saml_provider_arn" {
+  description = "(Optional) The ARN of the IAM SAML identity provider for the self service portal if type is federated-authentication."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) A brief description of the Client VPN endpoint."
+  type        = string
+  default     = ""
+}
+variable "split_tunnel" {
+  description = "(Optional) Indicates whether split-tunnel is enabled on VPN endpoint. Default value is false."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "strongDeprecated The current state of the Client VPN endpoint."
   type        = string
 }
 variable "type" {
   description = "(Required) The type of client authentication to be used. Specify certificate-authentication to use certificate-based authentication, directory-service-authentication to use Active Directory authentication, or federated-authentication to use Federated Authentication via SAML 2.0.client_connect_options Argument reference"
   type        = string
 }
-variable "dns_servers" {
-  description = "(Optional) Information about the DNS servers to be used for DNS resolution. A Client VPN endpoint can have up to two DNS servers. If no DNS server is specified, the DNS address of the connecting device is used."
-  type        = string
-}
-variable "lambda_function_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Lambda function used for connection authorization.client_login_banner_options Argument reference"
-  type        = string
-}
-variable "self_service_saml_provider_arn" {
-  description = "(Optional) The ARN of the IAM SAML identity provider for the self service portal if type is federated-authentication."
-  type        = string
-}
-variable "vpn_port" {
-  description = "(Optional) The port number for the Client VPN endpoint. Valid values are 443 and 1194. Default value is 443.authentication_options Argument ReferenceOne of the following arguments must be supplied:"
-  type        = string
-}
-variable "banner_text" {
-  description = "(Optional) Customizable text that will be displayed in a banner on AWS provided clients when a VPN session is established. UTF-8 encoded characters only. Maximum of 1400 characters."
-  type        = string
-}
-variable "root_certificate_chain_arn" {
-  description = "(Optional) The ARN of the client certificate. The certificate must be signed by a certificate authority (CA) and it must be provisioned in AWS Certificate Manager (ACM). Only necessary when type is set to certificate-authentication."
-  type        = string
-}
-variable "enabled" {
-  description = "(Required) Indicates whether connection logging is enabled.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "The ID of the Client VPN endpoint."
-  type        = string
-}
-variable "split_tunnel" {
-  description = "(Optional) Indicates whether split-tunnel is enabled on VPN endpoint. Default value is false."
-  type        = string
-}
 variable "arn" {
   description = "The ARN of the Client VPN endpoint."
-  type        = string
-}
-variable "dns_name" {
-  description = "The DNS name to be used by clients when establishing their VPN session."
   type        = string
 }
 variable "connection_log_options" {
   description = "(Required) Information about the client connection logging options."
   type        = string
 }
-variable "description" {
-  description = "(Optional) A brief description of the Client VPN endpoint."
+variable "dns_servers" {
+  description = "(Optional) Information about the DNS servers to be used for DNS resolution. A Client VPN endpoint can have up to two DNS servers. If no DNS server is specified, the DNS address of the connecting device is used."
   type        = string
+  default     = ""
 }
 variable "server_certificate_arn" {
   description = "(Required) The ARN of the ACM server certificate."
@@ -138,21 +97,82 @@ variable "authentication_options" {
   description = "(Required) Information about the authentication method to be used to authenticate clients."
   type        = string
 }
-variable "cloudwatch_log_group" {
-  description = "(Optional) The name of the CloudWatch Logs log group."
+variable "dns_name" {
+  description = "The DNS name to be used by clients when establishing their VPN session."
   type        = string
 }
-variable "vpc_id" {
-  description = "(Optional) The ID of the VPC to associate with the Client VPN endpoint. If no security group IDs are specified in the request, the default security group for the VPC is applied."
+variable "cloudwatch_log_stream" {
+  description = "(Optional) The name of the CloudWatch Logs log stream to which the connection data is published."
+  type        = string
+  default     = ""
+}
+variable "session_timeout_hours" {
+  description = "(Optional) The maximum session duration is a trigger by which end-users are required to re-authenticate prior to establishing a VPN session. Default value is 24Valid values: 8 | 10 | 12 | 24"
+  type        = string
+  default     = ""
+}
+variable "vpn_port" {
+  description = "(Optional) The port number for the Client VPN endpoint. Valid values are 443 and 1194. Default value is 443.authentication_options Argument ReferenceOne of the following arguments must be supplied:"
+  type        = string
+  default     = ""
+}
+variable "lambda_function_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Lambda function used for connection authorization.client_login_banner_options Argument reference"
+  type        = string
+  default     = ""
+}
+variable "saml_provider_arn" {
+  description = "(Optional) The ARN of the IAM SAML identity provider if type is federated-authentication."
+  type        = string
+  default     = ""
+}
+variable "security_group_ids" {
+  description = "(Optional) The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "banner_text" {
+  description = "(Optional) Customizable text that will be displayed in a banner on AWS provided clients when a VPN session is established. UTF-8 encoded characters only. Maximum of 1400 characters."
+  type        = string
+  default     = ""
+}
+variable "client_login_banner_options" {
+  description = "(Optional) Options for enabling a customizable text banner that will be displayed on AWS provided clients when a VPN session is established."
+  type        = string
+  default     = ""
+}
+variable "enabled" {
+  description = "(Required) Indicates whether connection logging is enabled.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "active_directory_id" {
-  description = "(Optional) The ID of the Active Directory to be used for authentication if type is directory-service-authentication."
+variable "id" {
+  description = "The ID of the Client VPN endpoint."
   type        = string
 }
 variable "transport_protocol" {
   description = "(Optional) The transport protocol to be used by the VPN session. Default value is udp."
   type        = string
+  default     = ""
+}
+variable "active_directory_id" {
+  description = "(Optional) The ID of the Active Directory to be used for authentication if type is directory-service-authentication."
+  type        = string
+  default     = ""
+}
+variable "client_connect_options" {
+  description = "(Optional) The options for managing connection authorization for new client connections."
+  type        = string
+  default     = ""
+}
+variable "cloudwatch_log_group" {
+  description = "(Optional) The name of the CloudWatch Logs log group."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -274,245 +294,141 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "enabled" {
-  description = "(Required) Indicates whether connection logging is enabled.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "split_tunnel" {
-  description = "(Optional) Indicates whether split-tunnel is enabled on VPN endpoint. Default value is false."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.split_tunnel
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dns_name" {
-  description = "The DNS name to be used by clients when establishing their VPN session."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.dns_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "connection_log_options" {
-  description = "(Required) Information about the client connection logging options."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.connection_log_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) A brief description of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "server_certificate_arn" {
-  description = "(Required) The ARN of the ACM server certificate."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.server_certificate_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authentication_options" {
-  description = "(Required) Information about the authentication method to be used to authenticate clients."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.authentication_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cloudwatch_log_group" {
-  description = "(Optional) The name of the CloudWatch Logs log group."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.cloudwatch_log_group
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "(Optional) The ID of the VPC to associate with the Client VPN endpoint. If no security group IDs are specified in the request, the default security group for the VPC is applied."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "active_directory_id" {
-  description = "(Optional) The ID of the Active Directory to be used for authentication if type is directory-service-authentication."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.active_directory_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transport_protocol" {
-  description = "(Optional) The transport protocol to be used by the VPN session. Default value is udp."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.transport_protocol
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "strongDeprecated The current state of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_login_banner_options" {
-  description = "(Optional) Options for enabling a customizable text banner that will be displayed on AWS provided clients when a VPN session is established."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.client_login_banner_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpn_port" {
+  description = "(Optional) The port number for the Client VPN endpoint. Valid values are 443 and 1194. Default value is 443.authentication_options Argument ReferenceOne of the following arguments must be supplied:"
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.vpn_port
 }
 output "cloudwatch_log_stream" {
   description = "(Optional) The name of the CloudWatch Logs log stream to which the connection data is published."
   value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.cloudwatch_log_stream
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_ids" {
-  description = "(Optional) The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "self_service_portal" {
-  description = "(Optional) Specify whether to enable the self-service portal for the Client VPN endpoint. Values can be enabled or disabled. Default value is disabled."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.self_service_portal
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "session_timeout_hours" {
   description = "(Optional) The maximum session duration is a trigger by which end-users are required to re-authenticate prior to establishing a VPN session. Default value is 24Valid values: 8 | 10 | 12 | 24"
   value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.session_timeout_hours
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "enabled" {
+  description = "(Required) Indicates whether connection logging is enabled.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.enabled
 }
-output "client_cidr_block" {
-  description = "(Required) The IPv4 address range, in CIDR notation, from which to assign client IP addresses. The address range cannot overlap with the local CIDR of the VPC in which the associated subnet is located, or the routes that you add manually. The address range cannot be changed after the Client VPN endpoint has been created. The CIDR block should be /22 or greater."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.client_cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_connect_options" {
-  description = "(Optional) The options for managing connection authorization for new client connections."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.client_connect_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "saml_provider_arn" {
-  description = "(Optional) The ARN of the IAM SAML identity provider if type is federated-authentication."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.saml_provider_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Required) The type of client authentication to be used. Specify certificate-authentication to use certificate-based authentication, directory-service-authentication to use Active Directory authentication, or federated-authentication to use Federated Authentication via SAML 2.0.client_connect_options Argument reference"
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dns_servers" {
-  description = "(Optional) Information about the DNS servers to be used for DNS resolution. A Client VPN endpoint can have up to two DNS servers. If no DNS server is specified, the DNS address of the connecting device is used."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.dns_servers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.id
 }
 output "lambda_function_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) of the Lambda function used for connection authorization.client_login_banner_options Argument reference"
   value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.lambda_function_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "saml_provider_arn" {
+  description = "(Optional) The ARN of the IAM SAML identity provider if type is federated-authentication."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.saml_provider_arn
 }
-output "self_service_saml_provider_arn" {
-  description = "(Optional) The ARN of the IAM SAML identity provider for the self service portal if type is federated-authentication."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.self_service_saml_provider_arn
+output "security_group_ids" {
+  description = "(Optional) The IDs of one or more security groups to apply to the target network. You must also specify the ID of the VPC that contains the security groups."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.security_group_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpn_port" {
-  description = "(Optional) The port number for the Client VPN endpoint. Valid values are 443 and 1194. Default value is 443.authentication_options Argument ReferenceOne of the following arguments must be supplied:"
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.vpn_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A mapping of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.tags
 }
 output "banner_text" {
   description = "(Optional) Customizable text that will be displayed in a banner on AWS provided clients when a VPN session is established. UTF-8 encoded characters only. Maximum of 1400 characters."
   value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.banner_text
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "client_login_banner_options" {
+  description = "(Optional) Options for enabling a customizable text banner that will be displayed on AWS provided clients when a VPN session is established."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.client_login_banner_options
+}
+output "transport_protocol" {
+  description = "(Optional) The transport protocol to be used by the VPN session. Default value is udp."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.transport_protocol
+}
+output "cloudwatch_log_group" {
+  description = "(Optional) The name of the CloudWatch Logs log group."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.cloudwatch_log_group
+}
+output "active_directory_id" {
+  description = "(Optional) The ID of the Active Directory to be used for authentication if type is directory-service-authentication."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.active_directory_id
+}
+output "client_connect_options" {
+  description = "(Optional) The options for managing connection authorization for new client connections."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.client_connect_options
+}
+output "self_service_portal" {
+  description = "(Optional) Specify whether to enable the self-service portal for the Client VPN endpoint. Values can be enabled or disabled. Default value is disabled."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.self_service_portal
+}
+output "self_service_saml_provider_arn" {
+  description = "(Optional) The ARN of the IAM SAML identity provider for the self service portal if type is federated-authentication."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.self_service_saml_provider_arn
+}
+output "vpc_id" {
+  description = "(Optional) The ID of the VPC to associate with the Client VPN endpoint. If no security group IDs are specified in the request, the default security group for the VPC is applied."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.vpc_id
+}
+output "client_cidr_block" {
+  description = "(Required) The IPv4 address range, in CIDR notation, from which to assign client IP addresses. The address range cannot overlap with the local CIDR of the VPC in which the associated subnet is located, or the routes that you add manually. The address range cannot be changed after the Client VPN endpoint has been created. The CIDR block should be /22 or greater."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.client_cidr_block
 }
 output "root_certificate_chain_arn" {
   description = "(Optional) The ARN of the client certificate. The certificate must be signed by a certificate authority (CA) and it must be provisioned in AWS Certificate Manager (ACM). Only necessary when type is set to certificate-authentication."
   value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.root_certificate_chain_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) A brief description of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.description
+}
+output "dns_servers" {
+  description = "(Optional) Information about the DNS servers to be used for DNS resolution. A Client VPN endpoint can have up to two DNS servers. If no DNS server is specified, the DNS address of the connecting device is used."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.dns_servers
+}
+output "server_certificate_arn" {
+  description = "(Required) The ARN of the ACM server certificate."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.server_certificate_arn
+}
+output "split_tunnel" {
+  description = "(Optional) Indicates whether split-tunnel is enabled on VPN endpoint. Default value is false."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.split_tunnel
+}
+output "status" {
+  description = "strongDeprecated The current state of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.status
+}
+output "type" {
+  description = "(Required) The type of client authentication to be used. Specify certificate-authentication to use certificate-based authentication, directory-service-authentication to use Active Directory authentication, or federated-authentication to use Federated Authentication via SAML 2.0.client_connect_options Argument reference"
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.type
+}
+output "arn" {
+  description = "The ARN of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.arn
+}
+output "connection_log_options" {
+  description = "(Required) Information about the client connection logging options."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.connection_log_options
+}
+output "authentication_options" {
+  description = "(Required) Information about the authentication method to be used to authenticate clients."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.authentication_options
+}
+output "dns_name" {
+  description = "The DNS name to be used by clients when establishing their VPN session."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.dns_name
+}
+output "dns_name" {
+  description = "The DNS name to be used by clients when establishing their VPN session."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.dns_name
+}
+output "id" {
+  description = "The ID of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.id
+}
+output "status" {
+  description = "strongDeprecated The current state of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.status
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.tags_all
 }
 output "arn" {
   description = "The ARN of the Client VPN endpoint."
@@ -520,39 +436,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "dns_name" {
-  description = "The DNS name to be used by clients when establishing their VPN session."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.dns_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "strongDeprecated The current state of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_client_vpn_endpoint.aws_ec2_client_vpn_endpoint.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

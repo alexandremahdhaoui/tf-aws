@@ -7,17 +7,19 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "subnet_id" {
-  description = "(Optional) The subnet ID to create an association. Conflicts with gateway_id."
-  type        = string
-}
 variable "gateway_id" {
   description = "(Optional) The gateway ID to create an association. Conflicts with subnet_id."
   type        = string
+  default     = ""
 }
 variable "route_table_id" {
   description = "(Required) The ID of the routing table to associate with.In addition to all arguments above, the following attributes are exported:"
   type        = string
+}
+variable "subnet_id" {
+  description = "(Optional) The subnet ID to create an association. Conflicts with gateway_id."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -139,29 +141,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "route_table_id" {
-  description = "(Required) The ID of the routing table to associate with.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route_table_association.aws_route_table_association.route_table_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_id" {
-  description = "(Optional) The subnet ID to create an association. Conflicts with gateway_id."
-  value       = aws_route_table_association.aws_route_table_association.subnet_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "gateway_id" {
   description = "(Optional) The gateway ID to create an association. Conflicts with subnet_id."
   value       = aws_route_table_association.aws_route_table_association.gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "route_table_id" {
+  description = "(Required) The ID of the routing table to associate with.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route_table_association.aws_route_table_association.route_table_id
+}
+output "subnet_id" {
+  description = "(Optional) The subnet ID to create an association. Conflicts with gateway_id."
+  value       = aws_route_table_association.aws_route_table_association.subnet_id
 }
 output "id" {
   description = "The ID of the association"
@@ -169,7 +159,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

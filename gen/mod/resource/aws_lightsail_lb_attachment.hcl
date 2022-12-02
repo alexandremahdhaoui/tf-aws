@@ -1,6 +1,6 @@
 resource "aws_lightsail_lb_attachment" "aws_lightsail_lb_attachment" {
-  lb_name       = var.lb_name
   instance_name = var.instance_name
+  lb_name       = var.lb_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -134,21 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "lb_name" {
-  description = "(Required) The name of the Lightsail load balancer."
-  value       = aws_lightsail_lb_attachment.aws_lightsail_lb_attachment.lb_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_name" {
   description = "(Required) The name of the instance to attach to the load balancer.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_lb_attachment.aws_lightsail_lb_attachment.instance_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "lb_name" {
+  description = "(Required) The name of the Lightsail load balancer."
+  value       = aws_lightsail_lb_attachment.aws_lightsail_lb_attachment.lb_name
 }
 output "id" {
   description = "A combination of attributes to create a unique id: lb_name,instance_name"
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

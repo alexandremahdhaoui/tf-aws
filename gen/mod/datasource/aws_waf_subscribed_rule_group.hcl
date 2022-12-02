@@ -1,6 +1,6 @@
 datasource "aws_waf_subscribed_rule_group" "aws_waf_subscribed_rule_group" {
-  metric_name = var.metric_name
   name        = var.name
+  metric_name = var.metric_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -9,18 +9,16 @@ variable "provider_region" {
 variable "metric_name" {
   description = "(Optional) Name of the WAF rule group.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Optional) Name of the WAF rule group."
   type        = string
+  default     = ""
 }
 output "metric_name" {
   description = "(Optional) Name of the WAF rule group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_subscribed_rule_group.aws_waf_subscribed_rule_group.metric_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional) Name of the WAF rule group."
@@ -28,7 +26,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

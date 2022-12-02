@@ -1,21 +1,27 @@
 resource "aws_servicecatalog_tag_option" "aws_servicecatalog_tag_option" {
-  active   = var.active
-  delete   = var.delete
-  id       = var.id
-  owner_id = var.owner_id
-  read     = var.read
-  create   = var.create
-  key      = var.key
   update   = var.update
+  active   = var.active
+  id       = var.id
+  key      = var.key
+  read     = var.read
   value    = var.value
+  create   = var.create
+  delete   = var.delete
+  owner_id = var.owner_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "create" {
-  description = "(Default 3m)"
+variable "active" {
+  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Identifier (e.g., tag-pjtvagohlyo3m)."
+  type        = string
+  default     = ""
 }
 variable "key" {
   description = "(Required) Tag option key."
@@ -24,29 +30,30 @@ variable "key" {
 variable "update" {
   description = "(Default 3m)"
   type        = string
+  default     = ""
 }
-variable "value" {
-  description = "(Required) Tag option value."
+variable "create" {
+  description = "(Default 3m)"
   type        = string
-}
-variable "active" {
-  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 3m)"
   type        = string
-}
-variable "id" {
-  description = "Identifier (e.g., tag-pjtvagohlyo3m)."
-  type        = string
+  default     = ""
 }
 variable "owner_id" {
   description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
 }
 variable "read" {
   description = "(Default 10m)"
+  type        = string
+  default     = ""
+}
+variable "value" {
+  description = "(Required) Tag option value."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,109 +176,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.create
+output "active" {
+  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.active
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Identifier (e.g., tag-pjtvagohlyo3m)."
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.id
 }
 output "key" {
   description = "(Required) Tag option key."
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "(Required) Tag option value."
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "active" {
-  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.active
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.create
 }
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Identifier (e.g., tag-pjtvagohlyo3m)."
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_id" {
   description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.read
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "(Required) Tag option value."
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.value
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.delete
 }
 output "id" {
   description = "Identifier (e.g., tag-pjtvagohlyo3m)."
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_id" {
   description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.read
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 3m)"
@@ -279,15 +238,7 @@ output "create" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

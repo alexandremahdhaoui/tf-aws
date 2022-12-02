@@ -1,16 +1,21 @@
 datasource "aws_codeartifact_repository_endpoint" "aws_codeartifact_repository_endpoint" {
+  domain       = var.domain
   domain_owner = var.domain_owner
   format       = var.format
   repository   = var.repository
-  domain       = var.domain
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "domain" {
+  description = "(Required) Name of the domain that contains the repository."
+  type        = string
+}
 variable "domain_owner" {
   description = "(Optional) Account number of the AWS account that owns the domain.In addition to the argument above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "format" {
   description = "(Required) Which endpoint of a repository to return. A repository has one endpoint for each package format: npm, pypi, maven, and nuget."
@@ -20,17 +25,17 @@ variable "repository" {
   description = "(Required) Name of the repository."
   type        = string
 }
-variable "domain" {
+output "domain" {
   description = "(Required) Name of the domain that contains the repository."
-  type        = string
+  value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain
+}
+output "domain_owner" {
+  description = "(Optional) Account number of the AWS account that owns the domain.In addition to the argument above, the following attributes are exported:"
+  value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain_owner
 }
 output "format" {
   description = "(Required) Which endpoint of a repository to return. A repository has one endpoint for each package format: npm, pypi, maven, and nuget."
   value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.format
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "repository" {
   description = "(Required) Name of the repository."
@@ -38,23 +43,7 @@ output "repository" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "domain" {
-  description = "(Required) Name of the domain that contains the repository."
-  value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "domain_owner" {
-  description = "(Optional) Account number of the AWS account that owns the domain.In addition to the argument above, the following attributes are exported:"
-  value       = aws_codeartifact_repository_endpoint.aws_codeartifact_repository_endpoint.domain_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

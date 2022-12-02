@@ -12,6 +12,19 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "strategy" {
+  description = "(Required) The placement strategy. Can be \"cluster\", \"partition\" or \"spread\"."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the placement group."
+  type        = string
+}
 variable "id" {
   description = "The name of the placement group."
   type        = string
@@ -31,18 +44,7 @@ variable "placement_group_id" {
 variable "spread_level" {
   description = "(Optional) Determines how placement groups spread instances. Can only be used\nwhen the strategy is set to \"spread\". Can be \"host\" or \"rack\". \"host\" can only be used for Outpost placement groups."
   type        = string
-}
-variable "strategy" {
-  description = "(Required) The placement strategy. Can be \"cluster\", \"partition\" or \"spread\"."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the placement group."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,69 +166,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The name of the placement group."
+  value       = aws_placement_group.aws_placement_group.id
+}
 output "name" {
   description = "(Required) The name of the placement group."
   value       = aws_placement_group.aws_placement_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "partition_count" {
   description = "strategy\"partition\".  Valid values are 1 - 7 (default is 2)."
   value       = aws_placement_group.aws_placement_group.partition_count
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "placement_group_id" {
   description = "The ID of the placement group."
   value       = aws_placement_group.aws_placement_group.placement_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "spread_level" {
   description = "(Optional) Determines how placement groups spread instances. Can only be used\nwhen the strategy is set to \"spread\". Can be \"host\" or \"rack\". \"host\" can only be used for Outpost placement groups."
   value       = aws_placement_group.aws_placement_group.spread_level
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "strategy" {
   description = "(Required) The placement strategy. Can be \"cluster\", \"partition\" or \"spread\"."
   value       = aws_placement_group.aws_placement_group.strategy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_placement_group.aws_placement_group.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the placement group."
+  value       = aws_placement_group.aws_placement_group.arn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the placement group."
   value       = aws_placement_group.aws_placement_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the placement group."
   value       = aws_placement_group.aws_placement_group.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "placement_group_id" {
+  description = "The ID of the placement group."
+  value       = aws_placement_group.aws_placement_group.placement_group_id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -234,31 +216,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the placement group."
-  value       = aws_placement_group.aws_placement_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the placement group."
-  value       = aws_placement_group.aws_placement_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "placement_group_id" {
-  description = "The ID of the placement group."
-  value       = aws_placement_group.aws_placement_group.placement_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

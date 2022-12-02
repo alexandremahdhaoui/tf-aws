@@ -1,8 +1,8 @@
 resource "aws_ec2_transit_gateway_route" "aws_ec2_transit_gateway_route" {
+  transit_gateway_attachment_id  = var.transit_gateway_attachment_id
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
   blackhole                      = var.blackhole
   destination_cidr_block         = var.destination_cidr_block
-  transit_gateway_attachment_id  = var.transit_gateway_attachment_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -11,6 +11,7 @@ variable "provider_region" {
 variable "blackhole" {
   description = "(Optional) Indicates whether to drop traffic that matches this route (default to false)."
   type        = string
+  default     = ""
 }
 variable "destination_cidr_block" {
   description = "(Required) IPv4 or IPv6 RFC1924 CIDR used for destination matches. Routing decisions are based on the most specific match."
@@ -19,6 +20,7 @@ variable "destination_cidr_block" {
 variable "transit_gateway_attachment_id" {
   description = "(Optional) Identifier of EC2 Transit Gateway Attachment (required if blackhole is set to false)."
   type        = string
+  default     = ""
 }
 variable "transit_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
@@ -144,37 +146,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "transit_gateway_attachment_id" {
-  description = "(Optional) Identifier of EC2 Transit Gateway Attachment (required if blackhole is set to false)."
-  value       = aws_ec2_transit_gateway_route.aws_ec2_transit_gateway_route.transit_gateway_attachment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transit_gateway_route_table_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_route.aws_ec2_transit_gateway_route.transit_gateway_route_table_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "blackhole" {
   description = "(Optional) Indicates whether to drop traffic that matches this route (default to false)."
   value       = aws_ec2_transit_gateway_route.aws_ec2_transit_gateway_route.blackhole
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "destination_cidr_block" {
   description = "(Required) IPv4 or IPv6 RFC1924 CIDR used for destination matches. Routing decisions are based on the most specific match."
   value       = aws_ec2_transit_gateway_route.aws_ec2_transit_gateway_route.destination_cidr_block
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "transit_gateway_attachment_id" {
+  description = "(Optional) Identifier of EC2 Transit Gateway Attachment (required if blackhole is set to false)."
+  value       = aws_ec2_transit_gateway_route.aws_ec2_transit_gateway_route.transit_gateway_attachment_id
+}
+output "transit_gateway_route_table_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_route.aws_ec2_transit_gateway_route.transit_gateway_route_table_id
 }
 output "id" {
   description = "EC2 Transit Gateway Route Table identifier combined with destination"
@@ -182,7 +168,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

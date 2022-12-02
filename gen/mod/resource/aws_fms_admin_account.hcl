@@ -8,6 +8,7 @@ variable "provider_region" {
 variable "account_id" {
   description = "(Optional) The AWS account ID to associate with AWS Firewall Manager as the AWS Firewall Manager administrator account. This can be an AWS Organizations master account or a member account. Defaults to the current account. Must be configured to perform drift detection.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -133,17 +134,13 @@ output "account_id" {
   description = "(Optional) The AWS account ID to associate with AWS Firewall Manager as the AWS Firewall Manager administrator account. This can be an AWS Organizations master account or a member account. Defaults to the current account. Must be configured to perform drift detection.In addition to all arguments above, the following attributes are exported:"
   value       = aws_fms_admin_account.aws_fms_admin_account.account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The AWS account ID of the AWS Firewall Manager administrator account."
   value       = aws_fms_admin_account.aws_fms_admin_account.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

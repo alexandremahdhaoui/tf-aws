@@ -8,17 +8,13 @@ output "arn" {
   description = "ARN of the queue."
   value       = aws_sqs_queue.aws_sqs_queue.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "url" {
   description = "URL of the queue."
   value       = aws_sqs_queue.aws_sqs_queue.url
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

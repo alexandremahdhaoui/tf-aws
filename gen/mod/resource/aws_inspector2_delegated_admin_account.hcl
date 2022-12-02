@@ -1,7 +1,7 @@
 resource "aws_inspector2_delegated_admin_account" "aws_inspector2_delegated_admin_account" {
+  relationship_status = var.relationship_status
   account_id          = var.account_id
   create              = var.create
-  relationship_status = var.relationship_status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,53 +139,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "account_id" {
-  description = "(Required) Account to enable as delegated admin account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 15m)"
   value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "relationship_status" {
   description = "Status of this delegated admin account.TimeoutsConfiguration options:"
   value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.relationship_status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "account_id" {
+  description = "(Required) Account to enable as delegated admin account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.account_id
+}
+output "create" {
+  description = "(Default 15m)"
+  value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.create
 }
 output "delete" {
   description = "(Default 15m)"
   value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "relationship_status" {
   description = "Status of this delegated admin account.TimeoutsConfiguration options:"
   value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.relationship_status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 15m)"
-  value       = aws_inspector2_delegated_admin_account.aws_inspector2_delegated_admin_account.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

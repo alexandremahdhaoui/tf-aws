@@ -1,52 +1,54 @@
 resource "aws_s3_bucket_object_lock_configuration" "aws_s3_bucket_object_lock_configuration" {
-  default_retention     = var.default_retention
-  mode                  = var.mode
+  object_lock_enabled   = var.object_lock_enabled
   rule                  = var.rule
   token                 = var.token
   bucket                = var.bucket
-  days                  = var.days
+  default_retention     = var.default_retention
   expected_bucket_owner = var.expected_bucket_owner
-  object_lock_enabled   = var.object_lock_enabled
+  days                  = var.days
+  mode                  = var.mode
   years                 = var.years
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "default_retention" {
-  description = "(Required) A configuration block for specifying the default Object Lock retention settings for new objects placed in the specified bucket detailed below.default_retentionThe default_retention configuration block supports the following arguments:"
+variable "days" {
+  description = "(Optional, Required if years is not specified) The number of days that you want to specify for the default retention period."
   type        = string
 }
 variable "mode" {
   description = "(Required) The default Object Lock retention mode you want to apply to new objects placed in the specified bucket. Valid values: COMPLIANCE, GOVERNANCE."
   type        = string
 }
+variable "years" {
+  description = "(Optional, Required if days is not specified) The number of years that you want to specify for the default retention period.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "object_lock_enabled" {
+  description = "(Optional, Forces new resource) Indicates whether this bucket has an Object Lock configuration enabled. Defaults to Enabled. Valid values: Enabled."
+  type        = string
+}
 variable "rule" {
   description = "(Optional) Configuration block for specifying the Object Lock rule for the specified object detailed below."
   type        = string
+  default     = ""
 }
 variable "token" {
   description = "(Optional) A token to allow Object Lock to be enabled for an existing bucket. You must contact AWS support for the bucket's \"Object Lock token\".\nThe token is generated in the back-end when versioning is enabled on a bucket. For more details on versioning, see the aws_s3_bucket_versioning resource.ruleThe rule configuration block supports the following arguments:"
   type        = string
-}
-variable "years" {
-  description = "(Optional, Required if days is not specified) The number of years that you want to specify for the default retention period.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "bucket" {
   description = "(Required, Forces new resource) The name of the bucket."
   type        = string
 }
-variable "days" {
-  description = "(Optional, Required if years is not specified) The number of days that you want to specify for the default retention period."
+variable "default_retention" {
+  description = "(Required) A configuration block for specifying the default Object Lock retention settings for new objects placed in the specified bucket detailed below.default_retentionThe default_retention configuration block supports the following arguments:"
   type        = string
 }
 variable "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  type        = string
-}
-variable "object_lock_enabled" {
-  description = "(Optional, Forces new resource) Indicates whether this bucket has an Object Lock configuration enabled. Defaults to Enabled. Valid values: Enabled."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,77 +171,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "object_lock_enabled" {
+  description = "(Optional, Forces new resource) Indicates whether this bucket has an Object Lock configuration enabled. Defaults to Enabled. Valid values: Enabled."
+  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.object_lock_enabled
+}
 output "rule" {
   description = "(Optional) Configuration block for specifying the Object Lock rule for the specified object detailed below."
   value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.rule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "token" {
   description = "(Optional) A token to allow Object Lock to be enabled for an existing bucket. You must contact AWS support for the bucket's \"Object Lock token\".\nThe token is generated in the back-end when versioning is enabled on a bucket. For more details on versioning, see the aws_s3_bucket_versioning resource.ruleThe rule configuration block supports the following arguments:"
   value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.token
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.bucket
 }
 output "default_retention" {
   description = "(Required) A configuration block for specifying the default Object Lock retention settings for new objects placed in the specified bucket detailed below.default_retentionThe default_retention configuration block supports the following arguments:"
   value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.default_retention
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "mode" {
-  description = "(Required) The default Object Lock retention mode you want to apply to new objects placed in the specified bucket. Valid values: COMPLIANCE, GOVERNANCE."
-  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.mode
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.expected_bucket_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "object_lock_enabled" {
-  description = "(Optional, Forces new resource) Indicates whether this bucket has an Object Lock configuration enabled. Defaults to Enabled. Valid values: Enabled."
-  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.object_lock_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "years" {
-  description = "(Optional, Required if days is not specified) The number of years that you want to specify for the default retention period.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.years
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "days" {
   description = "(Optional, Required if years is not specified) The number of days that you want to specify for the default retention period."
   value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.days
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "mode" {
+  description = "(Required) The default Object Lock retention mode you want to apply to new objects placed in the specified bucket. Valid values: COMPLIANCE, GOVERNANCE."
+  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.mode
+}
+output "years" {
+  description = "(Optional, Required if days is not specified) The number of years that you want to specify for the default retention period.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3_bucket_object_lock_configuration.aws_s3_bucket_object_lock_configuration.years
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
@@ -247,7 +213,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

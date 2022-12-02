@@ -1,17 +1,17 @@
 resource "aws_route53_resolver_endpoint" "aws_route53_resolver_endpoint" {
+  arn                = var.arn
+  create             = var.create
   host_vpc_id        = var.host_vpc_id
-  ip_address         = var.ip_address
   name               = var.name
+  security_group_ids = var.security_group_ids
   subnet_id          = var.subnet_id
   tags               = var.tags
-  arn                = var.arn
+  tags_all           = var.tags_all
   direction          = var.direction
   id                 = var.id
   ip                 = var.ip
-  security_group_ids = var.security_group_ids
-  tags_all           = var.tags_all
+  ip_address         = var.ip_address
   update             = var.update
-  create             = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -21,16 +21,21 @@ variable "arn" {
   description = "The ARN of the Route 53 Resolver endpoint."
   type        = string
 }
+variable "create" {
+  description = "(Default 10m)"
+  type        = string
+}
 variable "host_vpc_id" {
   description = "The ID of the VPC that you want to create the resolver endpoint in."
   type        = string
 }
-variable "ip_address" {
-  description = ""
-  type        = string
-}
 variable "name" {
   description = "(Optional) The friendly name of the Route 53 Resolver endpoint."
+  type        = string
+  default     = ""
+}
+variable "security_group_ids" {
+  description = "(Required) The ID of one or more security groups that you want to use to control access to this VPC."
   type        = string
 }
 variable "subnet_id" {
@@ -40,13 +45,10 @@ variable "subnet_id" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The ip_address object supports the following:"
   type        = string
+  default     = ""
 }
-variable "update" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "create" {
-  description = "(Default 10m)"
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
 variable "direction" {
@@ -60,13 +62,14 @@ variable "id" {
 variable "ip" {
   description = "(Optional) The IP address in the subnet that you want to use for DNS queries.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "security_group_ids" {
-  description = "(Required) The ID of one or more security groups that you want to use to control access to this VPC."
+variable "ip_address" {
+  description = ""
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "update" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -189,165 +192,89 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
+}
 output "arn" {
   description = "The ARN of the Route 53 Resolver endpoint."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.create
 }
 output "host_vpc_id" {
   description = "The ID of the VPC that you want to create the resolver endpoint in."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.host_vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ip_address" {
-  description = ""
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional) The friendly name of the Route 53 Resolver endpoint."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "security_group_ids" {
+  description = "(Required) The ID of one or more security groups that you want to use to control access to this VPC."
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.security_group_ids
 }
 output "subnet_id" {
   description = "(Required) The ID of the subnet that contains the IP address."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.subnet_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The ip_address object supports the following:"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "direction" {
   description = "(Required) The direction of DNS queries to or from the Route 53 Resolver endpoint.\nValid values are INBOUNDOUTBOUND (resolver forwards DNS queries from the DNS service for a VPC to your network or another VPC)."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.direction
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the Route 53 Resolver endpoint."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ip" {
   description = "(Optional) The IP address in the subnet that you want to use for DNS queries.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_ids" {
-  description = "(Required) The ID of one or more security groups that you want to use to control access to this VPC."
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ip_address" {
+  description = ""
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.ip_address
 }
 output "update" {
   description = "(Default 10m)"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "host_vpc_id" {
-  description = "The ID of the VPC that you want to create the resolver endpoint in."
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.host_vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the Route 53 Resolver endpoint."
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 10m)"
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN of the Route 53 Resolver endpoint."
   value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.arn
 }
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.delete
+}
+output "host_vpc_id" {
+  description = "The ID of the VPC that you want to create the resolver endpoint in."
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.host_vpc_id
+}
+output "id" {
+  description = "The ID of the Route 53 Resolver endpoint."
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_route53_resolver_endpoint.aws_route53_resolver_endpoint.tags_all
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

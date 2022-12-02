@@ -139,13 +139,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "client_secret" {
+  description = "(Required) Client Secret (part of OAuth Credentials) obtained via Amazon Developer Account."
+  value       = aws_pinpoint_adm_channel.markdown.aws_pinpoint_adm_channel.markdown.client_secret
+}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_adm_channel.markdown.aws_pinpoint_adm_channel.markdown.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "client_id" {
   description = "(Required) Client ID (part of OAuth Credentials) obtained via Amazon Developer Account."
@@ -153,15 +153,7 @@ output "client_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_secret" {
-  description = "(Required) Client Secret (part of OAuth Credentials) obtained via Amazon Developer Account."
-  value       = aws_pinpoint_adm_channel.markdown.aws_pinpoint_adm_channel.markdown.client_secret
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

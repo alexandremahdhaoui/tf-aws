@@ -124,21 +124,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "cidr_block" {
+  description = "The primary IPv4 CIDR block for the VPC"
+  value       = aws_default_vpc.aws_default_vpc.cidr_block
+}
 output "instance_tenancy" {
   description = "The allowed tenancy of instances launched into the VPC"
   value       = aws_default_vpc.aws_default_vpc.instance_tenancy
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "cidr_block" {
-  description = "The primary IPv4 CIDR block for the VPC"
-  value       = aws_default_vpc.aws_default_vpc.cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -7,16 +7,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "catalog_id" {
+  description = "(Optional) ID of the Data Catalog to create the tag in. If omitted, this defaults to the AWS Account ID."
+  type        = string
+  default     = ""
+}
 variable "key" {
   description = "(Required) Key-name for the tag."
   type        = string
 }
 variable "values" {
   description = "(Required) List of possible values an attribute can take.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "catalog_id" {
-  description = "(Optional) ID of the Data Catalog to create the tag in. If omitted, this defaults to the AWS Account ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,25 +144,13 @@ output "catalog_id" {
   description = "(Optional) ID of the Data Catalog to create the tag in. If omitted, this defaults to the AWS Account ID."
   value       = aws_lakeformation_lf_tag.aws_lakeformation_lf_tag.catalog_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key" {
   description = "(Required) Key-name for the tag."
   value       = aws_lakeformation_lf_tag.aws_lakeformation_lf_tag.key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "values" {
   description = "(Required) List of possible values an attribute can take.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lakeformation_lf_tag.aws_lakeformation_lf_tag.values
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Catalog ID and key-name of the tag"
@@ -169,7 +158,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

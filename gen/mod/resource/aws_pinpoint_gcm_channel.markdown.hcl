@@ -138,17 +138,13 @@ output "api_key" {
   description = "(Required) Platform credential API key from Google."
   value       = aws_pinpoint_gcm_channel.markdown.aws_pinpoint_gcm_channel.markdown.api_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_gcm_channel.markdown.aws_pinpoint_gcm_channel.markdown.application_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

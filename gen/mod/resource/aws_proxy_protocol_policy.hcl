@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "load_balancer" {
-  description = ""
-  type        = string
-}
 variable "id" {
   description = "The ID of the policy."
   type        = string
 }
 variable "instance_ports" {
   description = "(Required) List of instance ports to which the policy\nshould be applied. This can be specified if the protocol is SSL or TCP.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "load_balancer" {
+  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,25 +143,13 @@ output "id" {
   description = "The ID of the policy."
   value       = aws_proxy_protocol_policy.aws_proxy_protocol_policy.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_ports" {
   description = "(Required) List of instance ports to which the policy\nshould be applied. This can be specified if the protocol is SSL or TCP.In addition to all arguments above, the following attributes are exported:"
   value       = aws_proxy_protocol_policy.aws_proxy_protocol_policy.instance_ports
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "load_balancer" {
   description = ""
   value       = aws_proxy_protocol_policy.aws_proxy_protocol_policy.load_balancer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the policy."
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

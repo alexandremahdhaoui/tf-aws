@@ -11,6 +11,7 @@ variable "provider_region" {
 variable "connector" {
   description = "(Optional) The Amazon Chime Voice Connectors to route inbound calls to.connectorFor Amazon Chime Voice Connector groups, the Amazon Chime Voice Connectors to which to route inbound calls. Includes priority configuration settings. Limit: 3 VoiceConnectorItems per Amazon Chime Voice Connector group."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the Amazon Chime Voice Connector group."
@@ -144,37 +145,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name of the Amazon Chime Voice Connector group."
+  value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.name
+}
 output "priority" {
   description = "(Required) The priority associated with the Amazon Chime Voice Connector, with 1 being the highest priority. Higher priority Amazon Chime Voice Connectors are attempted first.In addition to all arguments above, the following attributes are exported:"
   value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.priority
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.voice_connector_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "connector" {
   description = "(Optional) The Amazon Chime Voice Connectors to route inbound calls to.connectorFor Amazon Chime Voice Connector groups, the Amazon Chime Voice Connectors to which to route inbound calls. Includes priority configuration settings. Limit: 3 VoiceConnectorItems per Amazon Chime Voice Connector group."
   value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.connector
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the Amazon Chime Voice Connector group."
-  value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Chime Voice Connector group ID."
@@ -182,7 +167,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

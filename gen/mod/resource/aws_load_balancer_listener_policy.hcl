@@ -148,41 +148,21 @@ output "id" {
   description = "The ID of the policy."
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "load_balancer_name" {
   description = "The load balancer on which the policy is defined."
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.load_balancer_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "load_balancer_port" {
   description = "(Required) The load balancer listener port to apply the policy to."
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.load_balancer_port
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_names" {
   description = "(Required) List of Policy Names to apply to the backend server.In addition to all arguments above, the following attributes are exported:"
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.policy_names
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the policy."
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "load_balancer_name" {
   description = "The load balancer on which the policy is defined."
@@ -190,7 +170,7 @@ output "load_balancer_name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

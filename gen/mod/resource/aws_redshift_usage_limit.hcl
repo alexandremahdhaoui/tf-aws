@@ -1,36 +1,24 @@
 resource "aws_redshift_usage_limit" "aws_redshift_usage_limit" {
-  period             = var.period
-  amount             = var.amount
-  limit_type         = var.limit_type
+  arn                = var.arn
   cluster_identifier = var.cluster_identifier
-  feature_type       = var.feature_type
   id                 = var.id
   tags               = var.tags
-  arn                = var.arn
+  amount             = var.amount
   breach_action      = var.breach_action
+  feature_type       = var.feature_type
+  limit_type         = var.limit_type
+  period             = var.period
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "amount" {
-  description = "(Required) The limit amount. If time-based, this amount is in minutes. If data-based, this amount is in terabytes (TB). The value must be a positive number."
-  type        = string
-}
-variable "limit_type" {
-  description = "(Required) The type of limit. Depending on the feature type, this can be based on a time duration or data size. If FeatureType is spectrum, then LimitType must be data-scanned. If FeatureType is concurrency-scaling, then LimitType must be time. If FeatureType is cross-region-datasharing, then LimitType must be data-scanned. Valid values are data-scanned, and time."
-  type        = string
-}
-variable "period" {
-  description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. The default is monthly. Valid values are daily, weekly, and monthly."
+variable "id" {
+  description = "The Redshift Usage Limit ID."
   type        = string
 }
 variable "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Usage Limit."
-  type        = string
-}
-variable "breach_action" {
-  description = "(Optional) The action that Amazon Redshift takes when the limit is reached. The default is log. Valid values are log, emit-metric, and disable."
   type        = string
 }
 variable "cluster_identifier" {
@@ -41,13 +29,28 @@ variable "feature_type" {
   description = "(Required) The Amazon Redshift feature that you want to limit. Valid values are spectrum, concurrency-scaling, and cross-region-datasharing."
   type        = string
 }
-variable "id" {
-  description = "The Redshift Usage Limit ID."
+variable "limit_type" {
+  description = "(Required) The type of limit. Depending on the feature type, this can be based on a time duration or data size. If FeatureType is spectrum, then LimitType must be data-scanned. If FeatureType is concurrency-scaling, then LimitType must be time. If FeatureType is cross-region-datasharing, then LimitType must be data-scanned. Valid values are data-scanned, and time."
   type        = string
+}
+variable "period" {
+  description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. The default is monthly. Valid values are daily, weekly, and monthly."
+  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "amount" {
+  description = "(Required) The limit amount. If time-based, this amount is in minutes. If data-based, this amount is in terabytes (TB). The value must be a positive number."
+  type        = string
+}
+variable "breach_action" {
+  description = "(Optional) The action that Amazon Redshift takes when the limit is reached. The default is log. Valid values are log, emit-metric, and disable."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,93 +172,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "cluster_identifier" {
+  description = "(Required) The identifier of the cluster that you want to limit usage."
+  value       = aws_redshift_usage_limit.aws_redshift_usage_limit.cluster_identifier
+}
 output "id" {
   description = "The Redshift Usage Limit ID."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_usage_limit.aws_redshift_usage_limit.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Usage Limit."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "breach_action" {
   description = "(Optional) The action that Amazon Redshift takes when the limit is reached. The default is log. Valid values are log, emit-metric, and disable."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.breach_action
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_identifier" {
-  description = "(Required) The identifier of the cluster that you want to limit usage."
-  value       = aws_redshift_usage_limit.aws_redshift_usage_limit.cluster_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "feature_type" {
   description = "(Required) The Amazon Redshift feature that you want to limit. Valid values are spectrum, concurrency-scaling, and cross-region-datasharing."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.feature_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "amount" {
-  description = "(Required) The limit amount. If time-based, this amount is in minutes. If data-based, this amount is in terabytes (TB). The value must be a positive number."
-  value       = aws_redshift_usage_limit.aws_redshift_usage_limit.amount
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "limit_type" {
   description = "(Required) The type of limit. Depending on the feature type, this can be based on a time duration or data size. If FeatureType is spectrum, then LimitType must be data-scanned. If FeatureType is concurrency-scaling, then LimitType must be time. If FeatureType is cross-region-datasharing, then LimitType must be data-scanned. Valid values are data-scanned, and time."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.limit_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "period" {
   description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. The default is monthly. Valid values are daily, weekly, and monthly."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.period
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_usage_limit.aws_redshift_usage_limit.tags
+}
+output "amount" {
+  description = "(Required) The limit amount. If time-based, this amount is in minutes. If data-based, this amount is in terabytes (TB). The value must be a positive number."
+  value       = aws_redshift_usage_limit.aws_redshift_usage_limit.amount
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Usage Limit."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Redshift Usage Limit ID."
   value       = aws_redshift_usage_limit.aws_redshift_usage_limit.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -263,7 +222,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

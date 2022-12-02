@@ -128,17 +128,9 @@ output "arn" {
   description = "The ARN (Amazon Resource Name) of the firewall rule group association."
   value       = aws_route53_resolver_firewall_rule_group_association.markdown.aws_route53_resolver_firewall_rule_group_association.markdown.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The identifier for the association."
   value       = aws_route53_resolver_firewall_rule_group_association.markdown.aws_route53_resolver_firewall_rule_group_association.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -146,7 +138,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

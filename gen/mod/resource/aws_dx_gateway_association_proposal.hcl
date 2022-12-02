@@ -1,18 +1,23 @@
 resource "aws_dx_gateway_association_proposal" "aws_dx_gateway_association_proposal" {
-  allowed_prefixes                    = var.allowed_prefixes
   associated_gateway_id               = var.associated_gateway_id
   associated_gateway_owner_account_id = var.associated_gateway_owner_account_id
   dx_gateway_id                       = var.dx_gateway_id
   dx_gateway_owner_account_id         = var.dx_gateway_owner_account_id
   id                                  = var.id
+  allowed_prefixes                    = var.allowed_prefixes
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "id" {
+  description = "Direct Connect Gateway Association Proposal identifier."
+  type        = string
+}
 variable "allowed_prefixes" {
   description = "(Optional) VPC prefixes (CIDRs) to advertise to the Direct Connect gateway. Defaults to the CIDR block of the VPC associated with the Virtual Gateway. To enable drift detection, must be configured.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "associated_gateway_id" {
   description = "(Required) The ID of the VGW or transit gateway with which to associate the Direct Connect gateway."
@@ -28,10 +33,6 @@ variable "dx_gateway_id" {
 }
 variable "dx_gateway_owner_account_id" {
   description = "(Required) AWS Account identifier of the Direct Connect Gateway's owner."
-  type        = string
-}
-variable "id" {
-  description = "Direct Connect Gateway Association Proposal identifier."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,77 +155,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "dx_gateway_owner_account_id" {
+  description = "(Required) AWS Account identifier of the Direct Connect Gateway's owner."
+  value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.dx_gateway_owner_account_id
+}
+output "id" {
+  description = "Direct Connect Gateway Association Proposal identifier."
+  value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.id
+}
 output "allowed_prefixes" {
   description = "(Optional) VPC prefixes (CIDRs) to advertise to the Direct Connect gateway. Defaults to the CIDR block of the VPC associated with the Virtual Gateway. To enable drift detection, must be configured.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.allowed_prefixes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "associated_gateway_id" {
   description = "(Required) The ID of the VGW or transit gateway with which to associate the Direct Connect gateway."
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.associated_gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "associated_gateway_owner_account_id" {
   description = "The ID of the AWS account that owns the VGW or transit gateway with which to associate the Direct Connect gateway."
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.associated_gateway_owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "dx_gateway_id" {
   description = "(Required) Direct Connect Gateway identifier."
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.dx_gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dx_gateway_owner_account_id" {
-  description = "(Required) AWS Account identifier of the Direct Connect Gateway's owner."
-  value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.dx_gateway_owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Direct Connect Gateway Association Proposal identifier."
-  value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "associated_gateway_owner_account_id" {
   description = "The ID of the AWS account that owns the VGW or transit gateway with which to associate the Direct Connect gateway."
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.associated_gateway_owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "associated_gateway_type" {
   description = "The type of the associated gateway, transitGateway or virtualPrivateGateway."
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.associated_gateway_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Direct Connect Gateway Association Proposal identifier."
   value       = aws_dx_gateway_association_proposal.aws_dx_gateway_association_proposal.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

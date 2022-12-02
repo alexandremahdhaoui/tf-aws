@@ -1,26 +1,31 @@
 resource "aws_connect_instance" "aws_connect_instance" {
-  directory_id                     = var.directory_id
-  early_media_enabled              = var.early_media_enabled
-  identity_management_type         = var.identity_management_type
-  outbound_calls_enabled           = var.outbound_calls_enabled
-  contact_flow_logs_enabled        = var.contact_flow_logs_enabled
-  create                           = var.create
-  created_time                     = var.created_time
+  arn                              = var.arn
   auto_resolve_best_voices_enabled = var.auto_resolve_best_voices_enabled
+  contact_flow_logs_enabled        = var.contact_flow_logs_enabled
+  outbound_calls_enabled           = var.outbound_calls_enabled
+  contact_lens_enabled             = var.contact_lens_enabled
+  create                           = var.create
+  early_media_enabled              = var.early_media_enabled
   inbound_calls_enabled            = var.inbound_calls_enabled
+  created_time                     = var.created_time
+  id                               = var.id
   instance_alias                   = var.instance_alias
   service_role                     = var.service_role
+  directory_id                     = var.directory_id
+  identity_management_type         = var.identity_management_type
   status                           = var.status
-  arn                              = var.arn
-  contact_lens_enabled             = var.contact_lens_enabled
-  id                               = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "service_role" {
-  description = "The service role of the instance."
+variable "directory_id" {
+  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
+  type        = string
+  default     = ""
+}
+variable "identity_management_type" {
+  description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
   type        = string
 }
 variable "status" {
@@ -31,52 +36,53 @@ variable "arn" {
   description = "Amazon Resource Name (ARN) of the instance."
   type        = string
 }
-variable "contact_lens_enabled" {
-  description = "(Optional) Specifies whether contact lens is enabled. Defaults to true."
+variable "auto_resolve_best_voices_enabled" {
+  description = "(Optional) Specifies whether auto resolve best voices is enabled. Defaults to true."
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "The identifier of the instance."
+variable "contact_flow_logs_enabled" {
+  description = "(Optional) Specifies whether contact flow logs are enabled. Defaults to false."
   type        = string
-}
-variable "directory_id" {
-  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
-  type        = string
-}
-variable "early_media_enabled" {
-  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
-  type        = string
-}
-variable "identity_management_type" {
-  description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
-  type        = string
+  default     = ""
 }
 variable "outbound_calls_enabled" {
   description = "(Required) Specifies whether outbound calls are enabled. raw HTML omitted In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "contact_flow_logs_enabled" {
-  description = "(Optional) Specifies whether contact flow logs are enabled. Defaults to false."
+variable "contact_lens_enabled" {
+  description = "(Optional) Specifies whether contact lens is enabled. Defaults to true."
   type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 5m)"
+  type        = string
+}
+variable "early_media_enabled" {
+  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
+  type        = string
+  default     = ""
+}
+variable "inbound_calls_enabled" {
+  description = "(Required) Specifies whether inbound calls are enabled."
   type        = string
 }
 variable "created_time" {
   description = "When the instance was created."
   type        = string
 }
-variable "auto_resolve_best_voices_enabled" {
-  description = "(Optional) Specifies whether auto resolve best voices is enabled. Defaults to true."
-  type        = string
-}
-variable "inbound_calls_enabled" {
-  description = "(Required) Specifies whether inbound calls are enabled."
+variable "id" {
+  description = "The identifier of the instance."
   type        = string
 }
 variable "instance_alias" {
   description = "(Optional) Specifies the name of the instance. Required if directory_id not specified."
+  type        = string
+  default     = ""
+}
+variable "service_role" {
+  description = "The service role of the instance."
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,149 +205,89 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "auto_resolve_best_voices_enabled" {
-  description = "(Optional) Specifies whether auto resolve best voices is enabled. Defaults to true."
-  value       = aws_connect_instance.aws_connect_instance.auto_resolve_best_voices_enabled
+output "service_role" {
+  description = "The service role of the instance."
+  value       = aws_connect_instance.aws_connect_instance.service_role
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "created_time" {
+  description = "When the instance was created."
+  value       = aws_connect_instance.aws_connect_instance.created_time
 }
-output "inbound_calls_enabled" {
-  description = "(Required) Specifies whether inbound calls are enabled."
-  value       = aws_connect_instance.aws_connect_instance.inbound_calls_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The identifier of the instance."
+  value       = aws_connect_instance.aws_connect_instance.id
 }
 output "instance_alias" {
   description = "(Optional) Specifies the name of the instance. Required if directory_id not specified."
   value       = aws_connect_instance.aws_connect_instance.instance_alias
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "The state of the instance.TimeoutsConfiguration options:"
-  value       = aws_connect_instance.aws_connect_instance.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the instance."
-  value       = aws_connect_instance.aws_connect_instance.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "contact_lens_enabled" {
-  description = "(Optional) Specifies whether contact lens is enabled. Defaults to true."
-  value       = aws_connect_instance.aws_connect_instance.contact_lens_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The identifier of the instance."
-  value       = aws_connect_instance.aws_connect_instance.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "service_role" {
-  description = "The service role of the instance."
-  value       = aws_connect_instance.aws_connect_instance.service_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "early_media_enabled" {
-  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
-  value       = aws_connect_instance.aws_connect_instance.early_media_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "directory_id" {
+  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
+  value       = aws_connect_instance.aws_connect_instance.directory_id
 }
 output "identity_management_type" {
   description = "(Required) Specifies the identity management type attached to the instance. Allowed Values are: SAML, CONNECT_MANAGED, EXISTING_DIRECTORY."
   value       = aws_connect_instance.aws_connect_instance.identity_management_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "status" {
+  description = "The state of the instance.TimeoutsConfiguration options:"
+  value       = aws_connect_instance.aws_connect_instance.status
 }
 output "outbound_calls_enabled" {
   description = "(Required) Specifies whether outbound calls are enabled. raw HTML omitted In addition to all arguments above, the following attributes are exported:"
   value       = aws_connect_instance.aws_connect_instance.outbound_calls_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the instance."
+  value       = aws_connect_instance.aws_connect_instance.arn
+}
+output "auto_resolve_best_voices_enabled" {
+  description = "(Optional) Specifies whether auto resolve best voices is enabled. Defaults to true."
+  value       = aws_connect_instance.aws_connect_instance.auto_resolve_best_voices_enabled
 }
 output "contact_flow_logs_enabled" {
   description = "(Optional) Specifies whether contact flow logs are enabled. Defaults to false."
   value       = aws_connect_instance.aws_connect_instance.contact_flow_logs_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "inbound_calls_enabled" {
+  description = "(Required) Specifies whether inbound calls are enabled."
+  value       = aws_connect_instance.aws_connect_instance.inbound_calls_enabled
+}
+output "contact_lens_enabled" {
+  description = "(Optional) Specifies whether contact lens is enabled. Defaults to true."
+  value       = aws_connect_instance.aws_connect_instance.contact_lens_enabled
 }
 output "create" {
   description = "(Default 5m)"
   value       = aws_connect_instance.aws_connect_instance.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "early_media_enabled" {
+  description = "(Optional) Specifies whether early media for outbound calls is enabled . Defaults to true if outbound calls is enabled."
+  value       = aws_connect_instance.aws_connect_instance.early_media_enabled
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_connect_instance.aws_connect_instance.create
 }
 output "created_time" {
   description = "When the instance was created."
   value       = aws_connect_instance.aws_connect_instance.created_time
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "directory_id" {
-  description = "(Optional) The identifier for the directory if identity_management_type is EXISTING_DIRECTORY."
-  value       = aws_connect_instance.aws_connect_instance.directory_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "delete" {
+  description = "(Default 5m)"
+  value       = aws_connect_instance.aws_connect_instance.delete
 }
 output "id" {
   description = "The identifier of the instance."
   value       = aws_connect_instance.aws_connect_instance.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "service_role" {
   description = "The service role of the instance."
   value       = aws_connect_instance.aws_connect_instance.service_role
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "status" {
   description = "The state of the instance.TimeoutsConfiguration options:"
   value       = aws_connect_instance.aws_connect_instance.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the instance."
@@ -349,31 +295,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_connect_instance.aws_connect_instance.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_time" {
-  description = "When the instance was created."
-  value       = aws_connect_instance.aws_connect_instance.created_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 5m)"
-  value       = aws_connect_instance.aws_connect_instance.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,10 +1,10 @@
 resource "aws_vpc_endpoint_connection_notification" "aws_vpc_endpoint_connection_notification" {
-  state                       = var.state
-  vpc_endpoint_id             = var.vpc_endpoint_id
-  vpc_endpoint_service_id     = var.vpc_endpoint_service_id
   connection_events           = var.connection_events
   connection_notification_arn = var.connection_notification_arn
   id                          = var.id
+  state                       = var.state
+  vpc_endpoint_id             = var.vpc_endpoint_id
+  vpc_endpoint_service_id     = var.vpc_endpoint_service_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -29,10 +29,12 @@ variable "state" {
 variable "vpc_endpoint_id" {
   description = "(Optional) The ID of the VPC Endpoint to receive notifications for."
   type        = string
+  default     = ""
 }
 variable "vpc_endpoint_service_id" {
   description = "(Optional) The ID of the VPC Endpoint Service to receive notifications for."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,61 +156,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "state" {
-  description = "The state of the notification."
-  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint_id" {
-  description = "(Optional) The ID of the VPC Endpoint to receive notifications for."
-  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint_service_id" {
-  description = "(Optional) The ID of the VPC Endpoint Service to receive notifications for."
-  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.vpc_endpoint_service_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "connection_events" {
   description = "(Required) One or more endpoint events for which to receive notifications.~> strongNOTE: One of vpc_endpoint_service_id or vpc_endpoint_id must be specified.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.connection_events
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "connection_notification_arn" {
   description = "(Required) The ARN of the SNS topic for the notifications."
   value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.connection_notification_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the VPC connection notification."
+  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.id
+}
+output "state" {
+  description = "The state of the notification."
+  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.state
+}
+output "vpc_endpoint_id" {
+  description = "(Optional) The ID of the VPC Endpoint to receive notifications for."
+  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.vpc_endpoint_id
+}
+output "vpc_endpoint_service_id" {
+  description = "(Optional) The ID of the VPC Endpoint Service to receive notifications for."
+  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.vpc_endpoint_service_id
 }
 output "id" {
   description = "The ID of the VPC connection notification."
   value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "notification_type" {
   description = "The type of notification."
   value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.notification_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "state" {
   description = "The state of the notification."
@@ -216,15 +194,7 @@ output "state" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the VPC connection notification."
-  value       = aws_vpc_endpoint_connection_notification.aws_vpc_endpoint_connection_notification.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

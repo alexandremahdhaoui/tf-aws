@@ -10,6 +10,7 @@ variable "provider_region" {
 variable "access_policies" {
   description = "(Optional) IAM policy document specifying the access policies for the domain"
   type        = string
+  default     = ""
 }
 variable "domain_name" {
   description = "(Required) Name of the domain.No additional attributes are exported.TimeoutsConfiguration options:"
@@ -143,25 +144,13 @@ output "update" {
   description = "(Default 180m)"
   value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "access_policies" {
   description = "(Optional) IAM policy document specifying the access policies for the domain"
   value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.access_policies
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "domain_name" {
   description = "(Required) Name of the domain.No additional attributes are exported.TimeoutsConfiguration options:"
   value       = aws_opensearch_domain_policy.aws_opensearch_domain_policy.domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 180m)"
@@ -169,7 +158,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

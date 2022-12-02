@@ -1,28 +1,24 @@
 resource "aws_medialive_multiplex_program" "aws_medialive_multiplex_program" {
-  constant_bitrate           = var.constant_bitrate
   preferred_channel_pipeline = var.preferred_channel_pipeline
-  priority                   = var.priority
-  program_name               = var.program_name
-  example_attribute          = var.example_attribute
-  multiplex_id               = var.multiplex_id
-  multiplex_program_settings = var.multiplex_program_settings
+  statmux_settings           = var.statmux_settings
   maximum_bitrate            = var.maximum_bitrate
+  priority                   = var.priority
+  statemux_settings          = var.statemux_settings
+  constant_bitrate           = var.constant_bitrate
+  example_attribute          = var.example_attribute
+  provider_name              = var.provider_name
+  video_settings             = var.video_settings
   minimum_bitrate            = var.minimum_bitrate
   program_number             = var.program_number
-  provider_name              = var.provider_name
-  statemux_settings          = var.statemux_settings
-  video_settings             = var.video_settings
-  id                         = var.id
+  multiplex_program_settings = var.multiplex_program_settings
+  program_name               = var.program_name
   service_descriptor         = var.service_descriptor
   service_name               = var.service_name
-  statmux_settings           = var.statmux_settings
+  id                         = var.id
+  multiplex_id               = var.multiplex_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "minimum_bitrate" {
-  description = "(Optional) Minimum bitrate."
   type        = string
 }
 variable "program_number" {
@@ -33,49 +29,15 @@ variable "provider_name" {
   description = "(Required) Unique provider name."
   type        = string
 }
-variable "statemux_settings" {
-  description = "(Optional, strongDeprecated) Statemux settings. See Statmux Settings for more details. Settings from this attribute will apply to statmux_settings. Conflicts with statmux_settings."
-  type        = string
-}
 variable "video_settings" {
   description = "(Optional) Video settings. See Video Settings for more details.Service Descriptor"
   type        = string
+  default     = ""
 }
-variable "maximum_bitrate" {
-  description = "(Optional) Maximum bitrate."
+variable "minimum_bitrate" {
+  description = "(Optional) Minimum bitrate."
   type        = string
-}
-variable "service_descriptor" {
-  description = "(Optional) Service Descriptor. See Service Descriptor for more details."
-  type        = string
-}
-variable "service_name" {
-  description = "(Required) Unique service name.Video Settings"
-  type        = string
-}
-variable "statmux_settings" {
-  description = "(Optional) Statmux settings. See Statmux Settings for more details Conflicts with statemux_settings.Statmux Settings"
-  type        = string
-}
-variable "id" {
-  description = "ID of the MultiplexProgram."
-  type        = string
-}
-variable "preferred_channel_pipeline" {
-  description = "(Required) Enum for preferred channel pipeline. Options are CURRENTLY_ACTIVE, PIPELINE_0, or PIPELINE_1."
-  type        = string
-}
-variable "priority" {
-  description = "(Optional) Priority value.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "program_name" {
-  description = "(Required) Unique program name."
-  type        = string
-}
-variable "constant_bitrate" {
-  description = "(Optional) Constant bitrate value."
-  type        = string
+  default     = ""
 }
 variable "multiplex_id" {
   description = "(Required) Multiplex ID."
@@ -85,9 +47,57 @@ variable "multiplex_program_settings" {
   description = "(Required) MultiplexProgram settings. See Multiplex Program Settings for more details.Multiple Program Settings"
   type        = string
 }
+variable "program_name" {
+  description = "(Required) Unique program name."
+  type        = string
+}
+variable "service_descriptor" {
+  description = "(Optional) Service Descriptor. See Service Descriptor for more details."
+  type        = string
+  default     = ""
+}
+variable "service_name" {
+  description = "(Required) Unique service name.Video Settings"
+  type        = string
+}
+variable "id" {
+  description = "ID of the MultiplexProgram."
+  type        = string
+  default     = ""
+}
+variable "statmux_settings" {
+  description = "(Optional) Statmux settings. See Statmux Settings for more details Conflicts with statemux_settings.Statmux Settings"
+  type        = string
+  default     = ""
+}
+variable "preferred_channel_pipeline" {
+  description = "(Required) Enum for preferred channel pipeline. Options are CURRENTLY_ACTIVE, PIPELINE_0, or PIPELINE_1."
+  type        = string
+}
 variable "example_attribute" {
   description = "Concise description."
   type        = string
+  default     = ""
+}
+variable "maximum_bitrate" {
+  description = "(Optional) Maximum bitrate."
+  type        = string
+  default     = ""
+}
+variable "priority" {
+  description = "(Optional) Priority value.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "statemux_settings" {
+  description = "(Optional, strongDeprecated) Statemux settings. See Statmux Settings for more details. Settings from this attribute will apply to statmux_settings. Conflicts with statmux_settings."
+  type        = string
+  default     = ""
+}
+variable "constant_bitrate" {
+  description = "(Optional) Constant bitrate value."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -209,149 +219,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "constant_bitrate" {
-  description = "(Optional) Constant bitrate value."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.constant_bitrate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "preferred_channel_pipeline" {
-  description = "(Required) Enum for preferred channel pipeline. Options are CURRENTLY_ACTIVE, PIPELINE_0, or PIPELINE_1."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.preferred_channel_pipeline
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "priority" {
-  description = "(Optional) Priority value.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.priority
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "program_name" {
-  description = "(Required) Unique program name."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.program_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "example_attribute" {
-  description = "Concise description."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.example_attribute
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "ID of the MultiplexProgram."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.id
 }
 output "multiplex_id" {
   description = "(Required) Multiplex ID."
   value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.multiplex_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "multiplex_program_settings" {
   description = "(Required) MultiplexProgram settings. See Multiplex Program Settings for more details.Multiple Program Settings"
   value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.multiplex_program_settings
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "maximum_bitrate" {
-  description = "(Optional) Maximum bitrate."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.maximum_bitrate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "minimum_bitrate" {
-  description = "(Optional) Minimum bitrate."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.minimum_bitrate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "program_number" {
-  description = "(Required) Unique program number."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.program_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provider_name" {
-  description = "(Required) Unique provider name."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.provider_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "statemux_settings" {
-  description = "(Optional, strongDeprecated) Statemux settings. See Statmux Settings for more details. Settings from this attribute will apply to statmux_settings. Conflicts with statmux_settings."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.statemux_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "video_settings" {
-  description = "(Optional) Video settings. See Video Settings for more details.Service Descriptor"
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.video_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the MultiplexProgram."
-  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "program_name" {
+  description = "(Required) Unique program name."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.program_name
 }
 output "service_descriptor" {
   description = "(Optional) Service Descriptor. See Service Descriptor for more details."
   value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.service_descriptor
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "service_name" {
   description = "(Required) Unique service name.Video Settings"
   value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.service_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "preferred_channel_pipeline" {
+  description = "(Required) Enum for preferred channel pipeline. Options are CURRENTLY_ACTIVE, PIPELINE_0, or PIPELINE_1."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.preferred_channel_pipeline
 }
 output "statmux_settings" {
   description = "(Optional) Statmux settings. See Statmux Settings for more details Conflicts with statemux_settings.Statmux Settings"
   value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.statmux_settings
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "constant_bitrate" {
+  description = "(Optional) Constant bitrate value."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.constant_bitrate
 }
 output "example_attribute" {
   description = "Concise description."
   value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.example_attribute
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "maximum_bitrate" {
+  description = "(Optional) Maximum bitrate."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.maximum_bitrate
+}
+output "priority" {
+  description = "(Optional) Priority value.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.priority
+}
+output "statemux_settings" {
+  description = "(Optional, strongDeprecated) Statemux settings. See Statmux Settings for more details. Settings from this attribute will apply to statmux_settings. Conflicts with statmux_settings."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.statemux_settings
+}
+output "minimum_bitrate" {
+  description = "(Optional) Minimum bitrate."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.minimum_bitrate
+}
+output "program_number" {
+  description = "(Required) Unique program number."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.program_number
+}
+output "provider_name" {
+  description = "(Required) Unique provider name."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.provider_name
+}
+output "video_settings" {
+  description = "(Optional) Video settings. See Video Settings for more details.Service Descriptor"
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.video_settings
+}
+output "example_attribute" {
+  description = "Concise description."
+  value       = aws_medialive_multiplex_program.aws_medialive_multiplex_program.example_attribute
 }
 output "id" {
   description = "ID of the MultiplexProgram."
@@ -359,7 +297,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

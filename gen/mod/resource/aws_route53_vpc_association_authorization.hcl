@@ -1,7 +1,7 @@
 resource "aws_route53_vpc_association_authorization" "aws_route53_vpc_association_authorization" {
-  zone_id    = var.zone_id
   vpc_id     = var.vpc_id
   vpc_region = var.vpc_region
+  zone_id    = var.zone_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -14,6 +14,7 @@ variable "vpc_id" {
 variable "vpc_region" {
   description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "zone_id" {
   description = "(Required) The ID of the private hosted zone that you want to authorize associating a VPC with."
@@ -139,29 +140,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "vpc_region" {
-  description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_vpc_association_authorization.aws_route53_vpc_association_authorization.vpc_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "zone_id" {
-  description = "(Required) The ID of the private hosted zone that you want to authorize associating a VPC with."
-  value       = aws_route53_vpc_association_authorization.aws_route53_vpc_association_authorization.zone_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_id" {
   description = "(Required) The VPC to authorize for association with the private hosted zone."
   value       = aws_route53_vpc_association_authorization.aws_route53_vpc_association_authorization.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_region" {
+  description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_vpc_association_authorization.aws_route53_vpc_association_authorization.vpc_region
+}
+output "zone_id" {
+  description = "(Required) The ID of the private hosted zone that you want to authorize associating a VPC with."
+  value       = aws_route53_vpc_association_authorization.aws_route53_vpc_association_authorization.zone_id
 }
 output "id" {
   description = "The calculated unique identifier for the association."
@@ -169,7 +158,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,34 +1,18 @@
 resource "aws_servicecatalog_portfolio_share" "aws_servicecatalog_portfolio_share" {
-  read                = var.read
+  type                = var.type
   update              = var.update
   accept_language     = var.accept_language
-  accepted            = var.accepted
-  create              = var.create
-  share_tag_options   = var.share_tag_options
-  type                = var.type
-  wait_for_acceptance = var.wait_for_acceptance
-  delete              = var.delete
   portfolio_id        = var.portfolio_id
   principal_id        = var.principal_id
+  read                = var.read
+  wait_for_acceptance = var.wait_for_acceptance
+  accepted            = var.accepted
+  create              = var.create
+  delete              = var.delete
+  share_tag_options   = var.share_tag_options
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "share_tag_options" {
-  description = "(Optional) Whether to enable sharing of aws_servicecatalog_tag_option resources when creating the portfolio share."
-  type        = string
-}
-variable "type" {
-  description = "(Required) Type of portfolio share. Valid values are ACCOUNT (an external account), ORGANIZATION (a share to every account in an organization), ORGANIZATIONAL_UNIT, ORGANIZATION_MEMBER_ACCOUNT (a share to an account in an organization)."
-  type        = string
-}
-variable "wait_for_acceptance" {
-  description = "(Optional) Whether to wait (up to the timeout) for the share to be accepted. Organizational shares are automatically accepted.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "delete" {
-  description = "(Default 3m)"
   type        = string
 }
 variable "portfolio_id" {
@@ -42,22 +26,46 @@ variable "principal_id" {
 variable "read" {
   description = "(Default 10m)"
   type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) Type of portfolio share. Valid values are ACCOUNT (an external account), ORGANIZATION (a share to every account in an organization), ORGANIZATIONAL_UNIT, ORGANIZATION_MEMBER_ACCOUNT (a share to an account in an organization)."
+  type        = string
 }
 variable "update" {
   description = "(Default 3m)"
   type        = string
+  default     = ""
 }
 variable "accept_language" {
   description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
   type        = string
-}
-variable "accepted" {
-  description = "Whether the shared portfolio is imported by the recipient account. If the recipient is organizational, the share is automatically imported, and the field is always set to true.TimeoutsConfiguration options:"
-  type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 3m)"
   type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
+}
+variable "share_tag_options" {
+  description = "(Optional) Whether to enable sharing of aws_servicecatalog_tag_option resources when creating the portfolio share."
+  type        = string
+  default     = ""
+}
+variable "wait_for_acceptance" {
+  description = "(Optional) Whether to wait (up to the timeout) for the share to be accepted. Organizational shares are automatically accepted.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "accepted" {
+  description = "Whether the shared portfolio is imported by the recipient account. If the recipient is organizational, the share is automatically imported, and the field is always set to true.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,117 +187,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.read
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
+output "delete" {
   description = "(Default 3m)"
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.accept_language
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accepted" {
-  description = "Whether the shared portfolio is imported by the recipient account. If the recipient is organizational, the share is automatically imported, and the field is always set to true.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.accepted
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.delete
 }
 output "share_tag_options" {
   description = "(Optional) Whether to enable sharing of aws_servicecatalog_tag_option resources when creating the portfolio share."
   value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.share_tag_options
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Required) Type of portfolio share. Valid values are ACCOUNT (an external account), ORGANIZATION (a share to every account in an organization), ORGANIZATIONAL_UNIT, ORGANIZATION_MEMBER_ACCOUNT (a share to an account in an organization)."
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "wait_for_acceptance" {
   description = "(Optional) Whether to wait (up to the timeout) for the share to be accepted. Organizational shares are automatically accepted.In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.wait_for_acceptance
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "portfolio_id" {
-  description = "(Required) Portfolio identifier."
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.portfolio_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "principal_id" {
-  description = "(Required) Identifier of the principal with whom you will share the portfolio. Valid values AWS account IDs and ARNs of AWS Organizations and organizational units."
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.principal_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "accepted" {
   description = "Whether the shared portfolio is imported by the recipient account. If the recipient is organizational, the share is automatically imported, and the field is always set to true.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.accepted
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.create
+}
+output "principal_id" {
+  description = "(Required) Identifier of the principal with whom you will share the portfolio. Valid values AWS account IDs and ARNs of AWS Organizations and organizational units."
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.principal_id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.read
+}
+output "type" {
+  description = "(Required) Type of portfolio share. Valid values are ACCOUNT (an external account), ORGANIZATION (a share to every account in an organization), ORGANIZATIONAL_UNIT, ORGANIZATION_MEMBER_ACCOUNT (a share to an account in an organization)."
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.type
+}
+output "update" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.update
+}
+output "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.accept_language
+}
+output "portfolio_id" {
+  description = "(Required) Portfolio identifier."
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.portfolio_id
+}
+output "update" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.update
+}
+output "accepted" {
+  description = "Whether the shared portfolio is imported by the recipient account. If the recipient is organizational, the share is automatically imported, and the field is always set to true.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.accepted
 }
 output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "read" {
   description = "(Default 10m)"
@@ -297,15 +253,7 @@ output "read" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_portfolio_share.aws_servicecatalog_portfolio_share.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

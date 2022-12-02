@@ -1,8 +1,8 @@
 resource "aws_schemas_registry" "aws_schemas_registry" {
-  arn         = var.arn
   description = var.description
   name        = var.name
   tags        = var.tags
+  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the discoverer. Maximum of 256 characters."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the custom event schema registry. Maximum of 64 characters consisting of lower case letters, upper case letters, 0-9, ., -, _."
@@ -23,6 +24,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -148,41 +150,21 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."
   value       = aws_schemas_registry.aws_schemas_registry.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the discoverer. Maximum of 256 characters."
   value       = aws_schemas_registry.aws_schemas_registry.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the custom event schema registry. Maximum of 64 characters consisting of lower case letters, upper case letters, 0-9, ., -, _."
   value       = aws_schemas_registry.aws_schemas_registry.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_schemas_registry.aws_schemas_registry.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the discoverer."
   value       = aws_schemas_registry.aws_schemas_registry.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -190,7 +172,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

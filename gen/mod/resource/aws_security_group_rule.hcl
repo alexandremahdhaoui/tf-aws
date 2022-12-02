@@ -1,64 +1,62 @@
 resource "aws_security_group_rule" "aws_security_group_rule" {
-  prefix_list_ids          = var.prefix_list_ids
-  security_group_id        = var.security_group_id
-  self                     = var.self
-  source_security_group_id = var.source_security_group_id
-  to_port                  = var.to_port
-  type                     = var.type
-  create                   = var.create
-  id                       = var.id
   from_port                = var.from_port
   ipv6_cidr_blocks         = var.ipv6_cidr_blocks
-  protocol                 = var.protocol
+  source_security_group_id = var.source_security_group_id
+  type                     = var.type
+  self                     = var.self
   cidr_blocks              = var.cidr_blocks
+  create                   = var.create
   description              = var.description
+  id                       = var.id
+  prefix_list_ids          = var.prefix_list_ids
+  protocol                 = var.protocol
+  security_group_id        = var.security_group_id
+  to_port                  = var.to_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "self" {
-  description = "(Optional) Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id."
-  type        = string
-}
-variable "source_security_group_id" {
-  description = "(Optional) Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "to_port" {
-  description = "(Required) End port (or ICMP code if protocol is \"icmp\")."
-  type        = string
-}
-variable "type" {
-  description = "(Required) Type of rule being created. Valid options are ingressegress (outbound)."
-  type        = string
-}
-variable "create" {
-  description = "(Default 5m)"
-  type        = string
-}
-variable "id" {
-  description = "ID of the security group rule.TimeoutsConfiguration options:"
-  type        = string
-}
 variable "prefix_list_ids" {
   description = "(Optional) List of Prefix List IDs."
+  type        = string
+  default     = ""
+}
+variable "protocol" {
+  description = "(Required) Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number"
   type        = string
 }
 variable "security_group_id" {
   description = "(Required) Security group to apply this rule to."
   type        = string
 }
-variable "protocol" {
-  description = "(Required) Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number"
+variable "self" {
+  description = "(Optional) Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id."
   type        = string
+  default     = ""
 }
 variable "cidr_blocks" {
   description = "(Optional) List of CIDR blocks. Cannot be specified with source_security_group_id or self."
   type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Optional) Description of the rule."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "ID of the security group rule.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "to_port" {
+  description = "(Required) End port (or ICMP code if protocol is \"icmp\")."
   type        = string
 }
 variable "from_port" {
@@ -67,6 +65,16 @@ variable "from_port" {
 }
 variable "ipv6_cidr_blocks" {
   description = "(Optional) List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self."
+  type        = string
+  default     = ""
+}
+variable "source_security_group_id" {
+  description = "(Optional) Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) Type of rule being created. Valid options are ingressegress (outbound)."
   type        = string
 }
 variable "tag_instance_id" {
@@ -189,117 +197,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "to_port" {
-  description = "(Required) End port (or ICMP code if protocol is \"icmp\")."
-  value       = aws_security_group_rule.aws_security_group_rule.to_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Required) Type of rule being created. Valid options are ingressegress (outbound)."
-  value       = aws_security_group_rule.aws_security_group_rule.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_security_group_rule.aws_security_group_rule.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the security group rule.TimeoutsConfiguration options:"
-  value       = aws_security_group_rule.aws_security_group_rule.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "prefix_list_ids" {
-  description = "(Optional) List of Prefix List IDs."
-  value       = aws_security_group_rule.aws_security_group_rule.prefix_list_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_id" {
-  description = "(Required) Security group to apply this rule to."
-  value       = aws_security_group_rule.aws_security_group_rule.security_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "self" {
-  description = "(Optional) Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id."
-  value       = aws_security_group_rule.aws_security_group_rule.self
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_security_group_id" {
-  description = "(Optional) Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_security_group_rule.aws_security_group_rule.source_security_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cidr_blocks" {
-  description = "(Optional) List of CIDR blocks. Cannot be specified with source_security_group_id or self."
-  value       = aws_security_group_rule.aws_security_group_rule.cidr_blocks
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the rule."
-  value       = aws_security_group_rule.aws_security_group_rule.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "from_port" {
   description = "(Required) Start port (or ICMP type number if protocol is \"icmp\" or \"icmpv6\")."
   value       = aws_security_group_rule.aws_security_group_rule.from_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ipv6_cidr_blocks" {
   description = "(Optional) List of IPv6 CIDR blocks. Cannot be specified with source_security_group_id or self."
   value       = aws_security_group_rule.aws_security_group_rule.ipv6_cidr_blocks
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_security_group_id" {
+  description = "(Optional) Security group id to allow access to/from, depending on the type. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or self.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_security_group_rule.aws_security_group_rule.source_security_group_id
 }
-output "protocol" {
-  description = "(Required) Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number"
-  value       = aws_security_group_rule.aws_security_group_rule.protocol
+output "type" {
+  description = "(Required) Type of rule being created. Valid options are ingressegress (outbound)."
+  value       = aws_security_group_rule.aws_security_group_rule.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cidr_blocks" {
+  description = "(Optional) List of CIDR blocks. Cannot be specified with source_security_group_id or self."
+  value       = aws_security_group_rule.aws_security_group_rule.cidr_blocks
 }
 output "create" {
   description = "(Default 5m)"
   value       = aws_security_group_rule.aws_security_group_rule.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the rule."
+  value       = aws_security_group_rule.aws_security_group_rule.description
+}
+output "id" {
+  description = "ID of the security group rule.TimeoutsConfiguration options:"
+  value       = aws_security_group_rule.aws_security_group_rule.id
+}
+output "prefix_list_ids" {
+  description = "(Optional) List of Prefix List IDs."
+  value       = aws_security_group_rule.aws_security_group_rule.prefix_list_ids
+}
+output "protocol" {
+  description = "(Required) Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number"
+  value       = aws_security_group_rule.aws_security_group_rule.protocol
+}
+output "security_group_id" {
+  description = "(Required) Security group to apply this rule to."
+  value       = aws_security_group_rule.aws_security_group_rule.security_group_id
+}
+output "self" {
+  description = "(Optional) Whether the security group itself will be added as a source to this ingress rule. Cannot be specified with cidr_blocks, ipv6_cidr_blocks, or source_security_group_id."
+  value       = aws_security_group_rule.aws_security_group_rule.self
+}
+output "to_port" {
+  description = "(Required) End port (or ICMP code if protocol is \"icmp\")."
+  value       = aws_security_group_rule.aws_security_group_rule.to_port
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_security_group_rule.aws_security_group_rule.create
 }
 output "id" {
   description = "ID of the security group rule.TimeoutsConfiguration options:"
@@ -307,7 +259,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

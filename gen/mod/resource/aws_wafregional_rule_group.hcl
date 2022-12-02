@@ -1,14 +1,14 @@
 resource "aws_wafregional_rule_group" "aws_wafregional_rule_group" {
-  rule_id        = var.rule_id
-  action         = var.action
-  id             = var.id
-  metric_name    = var.metric_name
-  name           = var.name
-  type           = var.type
   activated_rule = var.activated_rule
   arn            = var.arn
-  priority       = var.priority
+  id             = var.id
+  name           = var.name
+  rule_id        = var.rule_id
   tags           = var.tags
+  action         = var.action
+  metric_name    = var.metric_name
+  priority       = var.priority
+  type           = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -17,33 +17,14 @@ variable "provider_region" {
 variable "activated_rule" {
   description = "(Optional) A list of activated rules, see below"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the WAF Regional Rule Group."
   type        = string
 }
-variable "priority" {
-  description = "(Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blocksactivated_ruleArguments"
-  type        = string
-}
-variable "type" {
-  description = "(Optional) The rule type, either REGULAR, RATE_BASED, or GROUP. Defaults to REGULAR.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "action" {
-  description = ""
-  type        = string
-}
 variable "id" {
   description = "The ID of the WAF Regional Rule Group."
-  type        = string
-}
-variable "metric_name" {
-  description = "(Required) A friendly name for the metrics from the rule group"
   type        = string
 }
 variable "name" {
@@ -53,6 +34,28 @@ variable "name" {
 variable "rule_id" {
   description = "(Required) The ID of a rule"
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blocksactivated_ruleArguments"
+  type        = string
+  default     = ""
+}
+variable "action" {
+  description = ""
+  type        = string
+}
+variable "metric_name" {
+  description = "(Required) A friendly name for the metrics from the rule group"
+  type        = string
+}
+variable "priority" {
+  description = "(Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value."
+  type        = string
+}
+variable "type" {
+  description = "(Optional) The rule type, either REGULAR, RATE_BASED, or GROUP. Defaults to REGULAR.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,93 +177,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blocksactivated_ruleArguments"
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) The rule type, either REGULAR, RATE_BASED, or GROUP. Defaults to REGULAR.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "activated_rule" {
-  description = "(Optional) A list of activated rules, see below"
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.activated_rule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the WAF Regional Rule Group."
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "priority" {
-  description = "(Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value."
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.priority
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) A friendly name of the rule group"
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "rule_id" {
-  description = "(Required) The ID of a rule"
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.rule_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "action" {
   description = ""
   value       = aws_wafregional_rule_group.aws_wafregional_rule_group.action
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the WAF Regional Rule Group."
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "metric_name" {
   description = "(Required) A friendly name for the metrics from the rule group"
   value       = aws_wafregional_rule_group.aws_wafregional_rule_group.metric_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "priority" {
+  description = "(Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value."
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.priority
+}
+output "type" {
+  description = "(Optional) The rule type, either REGULAR, RATE_BASED, or GROUP. Defaults to REGULAR.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.type
+}
+output "activated_rule" {
+  description = "(Optional) A list of activated rules, see below"
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.activated_rule
 }
 output "arn" {
   description = "The ARN of the WAF Regional Rule Group."
   value       = aws_wafregional_rule_group.aws_wafregional_rule_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the WAF Regional Rule Group."
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.id
+}
+output "name" {
+  description = "(Required) A friendly name of the rule group"
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.name
+}
+output "rule_id" {
+  description = "(Required) The ID of a rule"
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.rule_id
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blocksactivated_ruleArguments"
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.tags_all
+}
+output "arn" {
+  description = "The ARN of the WAF Regional Rule Group."
+  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.arn
 }
 output "id" {
   description = "The ID of the WAF Regional Rule Group."
@@ -268,15 +231,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_wafregional_rule_group.aws_wafregional_rule_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

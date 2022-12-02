@@ -1,14 +1,19 @@
 resource "aws_ecs_cluster_capacity_providers" "aws_ecs_cluster_capacity_providers" {
-  default_capacity_provider_strategy = var.default_capacity_provider_strategy
-  weight                             = var.weight
   base                               = var.base
   capacity_provider                  = var.capacity_provider
   capacity_providers                 = var.capacity_providers
   cluster_name                       = var.cluster_name
+  default_capacity_provider_strategy = var.default_capacity_provider_strategy
+  weight                             = var.weight
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "base" {
+  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. Defaults to 0.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "capacity_provider" {
   description = "(Required) Name of the capacity provider."
@@ -17,6 +22,7 @@ variable "capacity_provider" {
 variable "capacity_providers" {
   description = "(Optional) Set of names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
   type        = string
+  default     = ""
 }
 variable "cluster_name" {
   description = "(Required, Forces new resource) Name of the ECS cluster to manage capacity providers for."
@@ -25,14 +31,12 @@ variable "cluster_name" {
 variable "default_capacity_provider_strategy" {
   description = "(Optional) Set of capacity provider strategies to use by default for the cluster. Detailed below.default_capacity_provider_strategy Configuration Block"
   type        = string
+  default     = ""
 }
 variable "weight" {
   description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider. The weight value is taken into consideration after the base count of tasks has been satisfied. Defaults to 0."
   type        = string
-}
-variable "base" {
-  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. Defaults to 0.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,53 +158,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "base" {
-  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. Defaults to 0.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.base
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "capacity_provider" {
-  description = "(Required) Name of the capacity provider."
-  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.capacity_provider
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "capacity_providers" {
-  description = "(Optional) Set of names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
-  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.capacity_providers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_name" {
-  description = "(Required, Forces new resource) Name of the ECS cluster to manage capacity providers for."
-  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.cluster_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_capacity_provider_strategy" {
   description = "(Optional) Set of capacity provider strategies to use by default for the cluster. Detailed below.default_capacity_provider_strategy Configuration Block"
   value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.default_capacity_provider_strategy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "weight" {
   description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider. The weight value is taken into consideration after the base count of tasks has been satisfied. Defaults to 0."
   value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.weight
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "base" {
+  description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. Defaults to 0.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.base
+}
+output "capacity_provider" {
+  description = "(Required) Name of the capacity provider."
+  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.capacity_provider
+}
+output "capacity_providers" {
+  description = "(Optional) Set of names of one or more capacity providers to associate with the cluster. Valid values also include FARGATE and FARGATE_SPOT."
+  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.capacity_providers
+}
+output "cluster_name" {
+  description = "(Required, Forces new resource) Name of the ECS cluster to manage capacity providers for."
+  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.cluster_name
 }
 output "id" {
   description = "Same as cluster_name."
@@ -208,7 +188,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,14 +1,18 @@
 resource "aws_directory_service_shared_directory_accepter" "aws_directory_service_shared_directory_accepter" {
+  owner_account_id    = var.owner_account_id
+  owner_directory_id  = var.owner_directory_id
   shared_directory_id = var.shared_directory_id
   create              = var.create
   id                  = var.id
   method              = var.method
   notes               = var.notes
-  owner_account_id    = var.owner_account_id
-  owner_directory_id  = var.owner_directory_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "shared_directory_id" {
+  description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create" {
@@ -33,10 +37,6 @@ variable "owner_account_id" {
 }
 variable "owner_directory_id" {
   description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
-  type        = string
-}
-variable "shared_directory_id" {
-  description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,69 +159,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Identifier of the shared directory."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "method" {
-  description = "Method used when sharing a directory (i.e., ORGANIZATIONS or HANDSHAKE)."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.method
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "notes" {
-  description = "Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.notes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_account_id" {
-  description = "Account identifier of the directory owner."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_directory_id" {
   description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_directory_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "shared_directory_id" {
   description = "(Required) Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.In addition to all arguments above, the following attributes are exported:"
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.shared_directory_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 60 minutes) Used for directory creation"
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Identifier of the shared directory."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.id
+}
+output "method" {
+  description = "Method used when sharing a directory (i.e., ORGANIZATIONS or HANDSHAKE)."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.method
+}
+output "notes" {
+  description = "Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.notes
 }
 output "owner_account_id" {
   description = "Account identifier of the directory owner."
   value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 60 minutes) Used for directory creation"
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.create
+}
+output "delete" {
+  description = "(Default 60 minutes) Used for directory deletion"
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.delete
+}
+output "id" {
+  description = "Identifier of the shared directory."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.id
+}
+output "method" {
+  description = "Method used when sharing a directory (i.e., ORGANIZATIONS or HANDSHAKE)."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.method
+}
+output "notes" {
+  description = "Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.notes
+}
+output "owner_account_id" {
+  description = "Account identifier of the directory owner."
+  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.owner_account_id
 }
 output "owner_directory_id" {
   description = "Identifier of the Managed Microsoft AD directory from the perspective of the directory owner.Timeoutsaws_directory_service_shared_directory_accepter provides the following Timeouts configuration options:"
@@ -229,47 +217,7 @@ output "owner_directory_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 60 minutes) Used for directory creation"
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 60 minutes) Used for directory deletion"
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Identifier of the shared directory."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "method" {
-  description = "Method used when sharing a directory (i.e., ORGANIZATIONS or HANDSHAKE)."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.method
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "notes" {
-  description = "Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation."
-  value       = aws_directory_service_shared_directory_accepter.aws_directory_service_shared_directory_accepter.notes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

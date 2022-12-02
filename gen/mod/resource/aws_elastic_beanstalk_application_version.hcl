@@ -12,14 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "force_delete" {
-  description = "(Optional) On delete, force an Application Version to be deleted when it may be in use by multiple Elastic Beanstalk Environments."
-  type        = string
-}
-variable "key" {
-  description = "(Required) S3 object that is the Application Version source bundle."
-  type        = string
-}
 variable "name" {
   description = "(Required) Unique name for the this Application Version."
   type        = string
@@ -27,6 +19,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application Version. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "application" {
   description = "(Required) Name of the Beanstalk Application the version is associated with."
@@ -35,6 +28,7 @@ variable "application" {
 variable "arn" {
   description = "ARN assigned by AWS for this Elastic Beanstalk Application."
   type        = string
+  default     = ""
 }
 variable "bucket" {
   description = "(Required) S3 bucket that contains the Application Version source bundle."
@@ -42,6 +36,16 @@ variable "bucket" {
 }
 variable "description" {
   description = "(Optional) Short description of the Application Version."
+  type        = string
+  default     = ""
+}
+variable "force_delete" {
+  description = "(Optional) On delete, force an Application Version to be deleted when it may be in use by multiple Elastic Beanstalk Environments."
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Required) S3 object that is the Application Version source bundle."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +168,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Unique name for the this Application Version."
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application Version. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "application" {
-  description = "(Required) Name of the Beanstalk Application the version is associated with."
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.application
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN assigned by AWS for this Elastic Beanstalk Application."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bucket" {
   description = "(Required) S3 bucket that contains the Application Version source bundle."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.bucket
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) Short description of the Application Version."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "force_delete" {
   description = "(Optional) On delete, force an Application Version to be deleted when it may be in use by multiple Elastic Beanstalk Environments."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.force_delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key" {
   description = "(Required) S3 object that is the Application Version source bundle."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) Unique name for the this Application Version."
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.name
+}
+output "tags" {
+  description = "(Optional) Key-value map of tags for the Elastic Beanstalk Application Version. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.tags
+}
+output "application" {
+  description = "(Required) Name of the Beanstalk Application the version is associated with."
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.application
 }
 output "arn" {
   description = "ARN assigned by AWS for this Elastic Beanstalk Application."
@@ -234,7 +206,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

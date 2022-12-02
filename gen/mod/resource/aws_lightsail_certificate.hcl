@@ -1,4 +1,5 @@
 resource "aws_lightsail_certificate" "aws_lightsail_certificate" {
+  created_at                = var.created_at
   domain_name               = var.domain_name
   domain_validation_options = var.domain_validation_options
   id                        = var.id
@@ -6,18 +7,9 @@ resource "aws_lightsail_certificate" "aws_lightsail_certificate" {
   subject_alternative_names = var.subject_alternative_names
   tags                      = var.tags
   arn                       = var.arn
-  created_at                = var.created_at
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the lightsail certificate."
-  type        = string
-}
-variable "created_at" {
-  description = "The timestamp when the instance was created."
   type        = string
 }
 variable "domain_name" {
@@ -39,9 +31,19 @@ variable "name" {
 variable "subject_alternative_names" {
   description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the lightsail certificate."
+  type        = string
+}
+variable "created_at" {
+  description = "The timestamp when the instance was created."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +166,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name of the Lightsail load balancer."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subject_alternative_names" {
-  description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.subject_alternative_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the lightsail certificate."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_at" {
   description = "The timestamp when the instance was created."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "domain_name" {
   description = "(Required) A domain name for which the certificate should be issued."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "domain_validation_options" {
   description = "Set of domain validation objects which can be used to complete certificate validation. Can have more than one element, e.g., if SANs are defined."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_validation_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the lightsail certificate (matches name)."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the Lightsail load balancer."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.name
+}
+output "subject_alternative_names" {
+  description = "(Optional) Set of domains that should be SANs in the issued certificate. domain_name attribute is automatically added as a Subject Alternative Name."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.subject_alternative_names
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.tags
+}
+output "created_at" {
+  description = "The timestamp when the instance was created."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
+}
+output "domain_validation_options" {
+  description = "Set of domain validation objects which can be used to complete certificate validation. Can have more than one element, e.g., if SANs are defined."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_validation_options
+}
+output "id" {
+  description = "The name of the lightsail certificate (matches name)."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.tags_all
 }
 output "arn" {
   description = "The ARN of the lightsail certificate."
@@ -234,39 +220,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_at" {
-  description = "The timestamp when the instance was created."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "domain_validation_options" {
-  description = "Set of domain validation objects which can be used to complete certificate validation. Can have more than one element, e.g., if SANs are defined."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.domain_validation_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the lightsail certificate (matches name)."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

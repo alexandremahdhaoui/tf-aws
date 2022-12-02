@@ -133,17 +133,13 @@ output "master_id" {
   description = "(Required) The account ID of the master Security Hub account whose invitation you're accepting.In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_invite_accepter.markdown.aws_securityhub_invite_accepter.markdown.master_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "invitation_id" {
   description = "The ID of the invitation."
   value       = aws_securityhub_invite_accepter.markdown.aws_securityhub_invite_accepter.markdown.invitation_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

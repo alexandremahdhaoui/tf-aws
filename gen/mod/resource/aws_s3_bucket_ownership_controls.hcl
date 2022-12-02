@@ -1,10 +1,10 @@
 resource "aws_s3_bucket_ownership_controls" "aws_s3_bucket_ownership_controls" {
-  object_ownership     = var.object_ownership
   rule                 = var.rule
   BucketOwnerEnforced  = var.BucketOwnerEnforced
   BucketOwnerPreferred = var.BucketOwnerPreferred
   ObjectWriter         = var.ObjectWriter
   bucket               = var.bucket
+  object_ownership     = var.object_ownership
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -154,53 +154,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bucket" {
-  description = "(Required) The name of the bucket that you want to associate this access point with."
-  value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "object_ownership" {
-  description = "(Required) Object ownership. Valid values: BucketOwnerPreferred, ObjectWriter or BucketOwnerEnforced"
-  value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.object_ownership
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule" {
   description = "(Required) Configuration block(s) with Ownership Controls rules. Detailed below.rule Configuration Block"
   value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.rule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "BucketOwnerEnforced" {
   description = "The bucket owner automatically owns and has full control over every object in the bucket. ACLs no longer affect permissions to data in the S3 bucket.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.BucketOwnerEnforced
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "BucketOwnerPreferred" {
   description = "Objects uploaded to the bucket change ownership to the bucket owner if the objects are uploaded with the bucket-owner-full-control canned ACL."
   value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.BucketOwnerPreferred
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ObjectWriter" {
   description = "The uploading account will own the object if the object is uploaded with the bucket-owner-full-control canned ACL."
   value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.ObjectWriter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "bucket" {
+  description = "(Required) The name of the bucket that you want to associate this access point with."
+  value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.bucket
+}
+output "object_ownership" {
+  description = "(Required) Object ownership. Valid values: BucketOwnerPreferred, ObjectWriter or BucketOwnerEnforced"
+  value       = aws_s3_bucket_ownership_controls.aws_s3_bucket_ownership_controls.object_ownership
 }
 output "id" {
   description = "S3 Bucket name."
@@ -208,7 +184,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

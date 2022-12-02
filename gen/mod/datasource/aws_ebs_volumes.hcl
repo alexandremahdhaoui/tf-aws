@@ -8,17 +8,13 @@ output "id" {
   description = "AWS Region."
   value       = aws_ebs_volumes.aws_ebs_volumes.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ids" {
   description = "Set of all the EBS Volume IDs found. This data source will fail if\nno volumes match the provided criteria.TimeoutsConfiguration options:"
   value       = aws_ebs_volumes.aws_ebs_volumes.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

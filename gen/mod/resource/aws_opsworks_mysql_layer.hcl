@@ -1,137 +1,69 @@
 resource "aws_opsworks_mysql_layer" "aws_opsworks_mysql_layer" {
-  elastic_load_balancer          = var.elastic_load_balancer
-  number_of_disks                = var.number_of_disks
-  root_password                  = var.root_password
-  tags                           = var.tags
-  id                             = var.id
-  custom_security_group_ids      = var.custom_security_group_ids
-  mount_point                    = var.mount_point
-  root_password_on_all_instances = var.root_password_on_all_instances
+  drain_elb_on_shutdown          = var.drain_elb_on_shutdown
+  ebs_volume                     = var.ebs_volume
+  instance_shutdown_timeout      = var.instance_shutdown_timeout
+  name                           = var.name
   type                           = var.type
   arn                            = var.arn
+  auto_healing                   = var.auto_healing
+  custom_shutdown_recipes        = var.custom_shutdown_recipes
+  custom_instance_profile_arn    = var.custom_instance_profile_arn
+  custom_json                    = var.custom_json
+  custom_security_group_ids      = var.custom_security_group_ids
+  custom_setup_recipes           = var.custom_setup_recipes
+  custom_undeploy_recipes        = var.custom_undeploy_recipes
   auto_assign_elastic_ips        = var.auto_assign_elastic_ips
   auto_assign_public_ips         = var.auto_assign_public_ips
-  custom_instance_profile_arn    = var.custom_instance_profile_arn
-  custom_deploy_recipes          = var.custom_deploy_recipes
-  custom_undeploy_recipes        = var.custom_undeploy_recipes
   stack_id                       = var.stack_id
-  auto_healing                   = var.auto_healing
-  custom_setup_recipes           = var.custom_setup_recipes
-  drain_elb_on_shutdown          = var.drain_elb_on_shutdown
-  system_packages                = var.system_packages
+  elastic_load_balancer          = var.elastic_load_balancer
+  id                             = var.id
   size                           = var.size
-  use_ebs_optimized_instances    = var.use_ebs_optimized_instances
+  tags                           = var.tags
   custom_configure_recipes       = var.custom_configure_recipes
-  custom_json                    = var.custom_json
-  instance_shutdown_timeout      = var.instance_shutdown_timeout
-  iops                           = var.iops
-  raid_level                     = var.raid_level
-  custom_shutdown_recipes        = var.custom_shutdown_recipes
-  ebs_volume                     = var.ebs_volume
+  custom_deploy_recipes          = var.custom_deploy_recipes
   install_updates_on_boot        = var.install_updates_on_boot
-  name                           = var.name
+  root_password                  = var.root_password
+  iops                           = var.iops
+  number_of_disks                = var.number_of_disks
+  root_password_on_all_instances = var.root_password_on_all_instances
+  mount_point                    = var.mount_point
+  raid_level                     = var.raid_level
+  system_packages                = var.system_packages
+  use_ebs_optimized_instances    = var.use_ebs_optimized_instances
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "size" {
-  description = "(Required) The size of the volume in gigabytes."
-  type        = string
-}
-variable "use_ebs_optimized_instances" {
-  description = "(Optional) Whether to use EBS-optimized instances."
-  type        = string
-}
-variable "iops" {
-  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "custom_configure_recipes" {
-  description = ""
-  type        = string
-}
-variable "custom_json" {
-  description = "(Optional) Custom JSON attributes to apply to the layer."
-  type        = string
-}
-variable "instance_shutdown_timeout" {
-  description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
-  type        = string
-}
-variable "name" {
-  description = "(Optional) A human-readable name for the layer."
-  type        = string
-}
-variable "raid_level" {
-  description = "(Required) The RAID level to use for the volume."
-  type        = string
-}
-variable "custom_shutdown_recipes" {
-  description = ""
-  type        = string
-}
-variable "ebs_volume" {
-  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
-  type        = string
-}
-variable "install_updates_on_boot" {
-  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "elastic_load_balancer" {
-  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
-  type        = string
-}
-variable "number_of_disks" {
-  description = "(Required) The number of disks to use for the EBS volume."
-  type        = string
-}
-variable "root_password" {
-  description = "(Optional) Root password to use for MySQL."
-  type        = string
-}
-variable "id" {
-  description = "The id of the layer."
-  type        = string
-}
-variable "custom_instance_profile_arn" {
-  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
-  type        = string
-}
-variable "custom_security_group_ids" {
-  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
-  type        = string
-}
-variable "mount_point" {
-  description = "(Required) The path to mount the EBS volume on the layer's instances."
-  type        = string
-}
-variable "root_password_on_all_instances" {
-  description = "(Optional) Whether to set the root user password to all instances in the stack so they can access the instances in this layer."
-  type        = string
-}
-variable "type" {
-  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
   type        = string
 }
 variable "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."
   type        = string
 }
-variable "auto_assign_elastic_ips" {
-  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
+variable "auto_healing" {
+  description = "(Optional) Whether to enable auto-healing for the layer."
+  type        = string
+  default     = ""
+}
+variable "custom_shutdown_recipes" {
+  description = ""
   type        = string
 }
-variable "auto_assign_public_ips" {
-  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
+variable "custom_instance_profile_arn" {
+  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
   type        = string
+  default     = ""
 }
-variable "custom_deploy_recipes" {
+variable "custom_json" {
+  description = "(Optional) Custom JSON attributes to apply to the layer."
+  type        = string
+  default     = ""
+}
+variable "custom_security_group_ids" {
+  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "custom_setup_recipes" {
   description = ""
   type        = string
 }
@@ -139,25 +71,112 @@ variable "custom_undeploy_recipes" {
   description = "An ebs_volume block supports the following arguments:"
   type        = string
 }
+variable "auto_assign_elastic_ips" {
+  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "auto_assign_public_ips" {
+  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
+  type        = string
+  default     = ""
+}
 variable "stack_id" {
   description = "(Required) ID of the stack the layer will belong to."
+  type        = string
+}
+variable "elastic_load_balancer" {
+  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The id of the layer."
+  type        = string
+}
+variable "size" {
+  description = "(Required) The size of the volume in gigabytes."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "custom_configure_recipes" {
+  description = ""
+  type        = string
+}
+variable "custom_deploy_recipes" {
+  description = ""
+  type        = string
+}
+variable "install_updates_on_boot" {
+  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
+  type        = string
+  default     = ""
+}
+variable "root_password" {
+  description = "(Optional) Root password to use for MySQL."
+  type        = string
+  default     = ""
+}
+variable "iops" {
+  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "number_of_disks" {
+  description = "(Required) The number of disks to use for the EBS volume."
+  type        = string
+}
+variable "root_password_on_all_instances" {
+  description = "(Optional) Whether to set the root user password to all instances in the stack so they can access the instances in this layer."
+  type        = string
+  default     = ""
+}
+variable "mount_point" {
+  description = "(Required) The path to mount the EBS volume on the layer's instances."
+  type        = string
+}
+variable "raid_level" {
+  description = "(Required) The RAID level to use for the volume."
   type        = string
 }
 variable "system_packages" {
   description = "(Optional) Names of a set of system packages to install on the layer's instances."
   type        = string
+  default     = ""
 }
-variable "auto_healing" {
-  description = "(Optional) Whether to enable auto-healing for the layer."
+variable "use_ebs_optimized_instances" {
+  description = "(Optional) Whether to use EBS-optimized instances."
   type        = string
-}
-variable "custom_setup_recipes" {
-  description = ""
-  type        = string
+  default     = ""
 }
 variable "drain_elb_on_shutdown" {
   description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
   type        = string
+  default     = ""
+}
+variable "ebs_volume" {
+  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "instance_shutdown_timeout" {
+  description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) A human-readable name for the layer."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -279,253 +298,133 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "custom_configure_recipes" {
-  description = ""
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_configure_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_json" {
-  description = "(Optional) Custom JSON attributes to apply to the layer."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_json
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_shutdown_timeout" {
-  description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.instance_shutdown_timeout
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iops" {
-  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.iops
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_shutdown_recipes" {
-  description = ""
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_shutdown_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ebs_volume" {
-  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.ebs_volume
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "install_updates_on_boot" {
-  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.install_updates_on_boot
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional) A human-readable name for the layer."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "raid_level" {
-  description = "(Required) The RAID level to use for the volume."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.raid_level
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "elastic_load_balancer" {
-  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.elastic_load_balancer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "number_of_disks" {
-  description = "(Required) The number of disks to use for the EBS volume."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.number_of_disks
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "root_password" {
-  description = "(Optional) Root password to use for MySQL."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.root_password
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "size" {
+  description = "(Required) The size of the volume in gigabytes."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.size
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "elastic_load_balancer" {
+  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.elastic_load_balancer
 }
 output "id" {
   description = "The id of the layer."
   value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "install_updates_on_boot" {
+  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.install_updates_on_boot
 }
-output "root_password_on_all_instances" {
-  description = "(Optional) Whether to set the root user password to all instances in the stack so they can access the instances in this layer."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.root_password_on_all_instances
+output "root_password" {
+  description = "(Optional) Root password to use for MySQL."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.root_password
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name(ARN) of the layer."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_assign_elastic_ips" {
-  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.auto_assign_elastic_ips
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_assign_public_ips" {
-  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.auto_assign_public_ips
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_instance_profile_arn" {
-  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_instance_profile_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_security_group_ids" {
-  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "mount_point" {
-  description = "(Required) The path to mount the EBS volume on the layer's instances."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.mount_point
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "custom_configure_recipes" {
+  description = ""
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_configure_recipes
 }
 output "custom_deploy_recipes" {
   description = ""
   value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_deploy_recipes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "root_password_on_all_instances" {
+  description = "(Optional) Whether to set the root user password to all instances in the stack so they can access the instances in this layer."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.root_password_on_all_instances
 }
-output "custom_undeploy_recipes" {
-  description = "An ebs_volume block supports the following arguments:"
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_undeploy_recipes
+output "iops" {
+  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.iops
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "stack_id" {
-  description = "(Required) ID of the stack the layer will belong to."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.stack_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_healing" {
-  description = "(Optional) Whether to enable auto-healing for the layer."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.auto_healing
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_setup_recipes" {
-  description = ""
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_setup_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "drain_elb_on_shutdown" {
-  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.drain_elb_on_shutdown
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "number_of_disks" {
+  description = "(Required) The number of disks to use for the EBS volume."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.number_of_disks
 }
 output "system_packages" {
   description = "(Optional) Names of a set of system packages to install on the layer's instances."
   value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.system_packages
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "size" {
-  description = "(Required) The size of the volume in gigabytes."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "use_ebs_optimized_instances" {
   description = "(Optional) Whether to use EBS-optimized instances."
   value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.use_ebs_optimized_instances
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "mount_point" {
+  description = "(Required) The path to mount the EBS volume on the layer's instances."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.mount_point
+}
+output "raid_level" {
+  description = "(Required) The RAID level to use for the volume."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.raid_level
+}
+output "instance_shutdown_timeout" {
+  description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.instance_shutdown_timeout
+}
+output "name" {
+  description = "(Optional) A human-readable name for the layer."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.name
+}
+output "type" {
+  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.type
+}
+output "drain_elb_on_shutdown" {
+  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.drain_elb_on_shutdown
+}
+output "ebs_volume" {
+  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.ebs_volume
+}
+output "custom_shutdown_recipes" {
+  description = ""
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_shutdown_recipes
+}
+output "arn" {
+  description = "The Amazon Resource Name(ARN) of the layer."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.arn
+}
+output "auto_healing" {
+  description = "(Optional) Whether to enable auto-healing for the layer."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.auto_healing
+}
+output "custom_security_group_ids" {
+  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_security_group_ids
+}
+output "custom_setup_recipes" {
+  description = ""
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_setup_recipes
+}
+output "custom_undeploy_recipes" {
+  description = "An ebs_volume block supports the following arguments:"
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_undeploy_recipes
+}
+output "custom_instance_profile_arn" {
+  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_instance_profile_arn
+}
+output "custom_json" {
+  description = "(Optional) Custom JSON attributes to apply to the layer."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.custom_json
+}
+output "stack_id" {
+  description = "(Required) ID of the stack the layer will belong to."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.stack_id
+}
+output "auto_assign_elastic_ips" {
+  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.auto_assign_elastic_ips
+}
+output "auto_assign_public_ips" {
+  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.auto_assign_public_ips
+}
+output "id" {
+  description = "The id of the layer."
+  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.id
 }
 output "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."
@@ -533,15 +432,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The id of the layer."
-  value       = aws_opsworks_mysql_layer.aws_opsworks_mysql_layer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

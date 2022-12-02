@@ -1,62 +1,72 @@
 resource "aws_applicationinsights_application" "aws_applicationinsights_application" {
-  ops_item_sns_topic_arn = var.ops_item_sns_topic_arn
-  tags                   = var.tags
-  arn                    = var.arn
+  auto_config_enabled    = var.auto_config_enabled
+  grouping_type          = var.grouping_type
   id                     = var.id
   ops_center_enabled     = var.ops_center_enabled
-  grouping_type          = var.grouping_type
-  resource_group_name    = var.resource_group_name
+  ops_item_sns_topic_arn = var.ops_item_sns_topic_arn
+  tags                   = var.tags
   tags_all               = var.tags_all
-  auto_config_enabled    = var.auto_config_enabled
+  arn                    = var.arn
   auto_create            = var.auto_create
   cwe_monitor_enabled    = var.cwe_monitor_enabled
+  resource_group_name    = var.resource_group_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "auto_config_enabled" {
-  description = "(Optional)  Indicates whether Application Insights automatically configures unmonitored resources in the resource group."
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "auto_create" {
-  description = "(Optional) Configures all of the resources in the resource group by applying the recommended configurations."
-  type        = string
-}
-variable "cwe_monitor_enabled" {
-  description = "(Optional)  Indicates whether Application Insights can listen to CloudWatch events for the application resources, such as instance terminated, failed deployment, and others."
-  type        = string
-}
-variable "grouping_type" {
-  description = "(Optional) Application Insights can create applications based on a resource group or on an account. To create an account-based application using all of the resources in the account, set this parameter to ACCOUNT_BASED."
-  type        = string
-}
-variable "resource_group_name" {
-  description = "(Required) Name of the resource group."
-  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "ARN of the Application."
+variable "auto_config_enabled" {
+  description = "(Optional)  Indicates whether Application Insights automatically configures unmonitored resources in the resource group."
   type        = string
+  default     = ""
+}
+variable "grouping_type" {
+  description = "(Optional) Application Insights can create applications based on a resource group or on an account. To create an account-based application using all of the resources in the account, set this parameter to ACCOUNT_BASED."
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "Name of the resource group."
   type        = string
+  default     = ""
 }
 variable "ops_center_enabled" {
   description = "(Optional) When set to true, creates opsItems for any problems detected on an application."
   type        = string
+  default     = ""
 }
 variable "ops_item_sns_topic_arn" {
   description = "(Optional) SNS topic provided to Application Insights that is associated to the created opsItem. Allows you to receive notifications for updates to the opsItem."
   type        = string
+  default     = ""
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "arn" {
+  description = "ARN of the Application."
+  type        = string
+  default     = ""
+}
+variable "auto_create" {
+  description = "(Optional) Configures all of the resources in the resource group by applying the recommended configurations."
+  type        = string
+  default     = ""
+}
+variable "cwe_monitor_enabled" {
+  description = "(Optional)  Indicates whether Application Insights can listen to CloudWatch events for the application resources, such as instance terminated, failed deployment, and others."
+  type        = string
+  default     = ""
+}
+variable "resource_group_name" {
+  description = "(Required) Name of the resource group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,101 +189,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Name of the resource group."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ops_center_enabled" {
-  description = "(Optional) When set to true, creates opsItems for any problems detected on an application."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.ops_center_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ops_item_sns_topic_arn" {
-  description = "(Optional) SNS topic provided to Application Insights that is associated to the created opsItem. Allows you to receive notifications for updates to the opsItem."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.ops_item_sns_topic_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Application."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_create" {
-  description = "(Optional) Configures all of the resources in the resource group by applying the recommended configurations."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.auto_create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cwe_monitor_enabled" {
   description = "(Optional)  Indicates whether Application Insights can listen to CloudWatch events for the application resources, such as instance terminated, failed deployment, and others."
   value       = aws_applicationinsights_application.aws_applicationinsights_application.cwe_monitor_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "grouping_type" {
-  description = "(Optional) Application Insights can create applications based on a resource group or on an account. To create an account-based application using all of the resources in the account, set this parameter to ACCOUNT_BASED."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.grouping_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_group_name" {
   description = "(Required) Name of the resource group."
   value       = aws_applicationinsights_application.aws_applicationinsights_application.resource_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of the Application."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.arn
+}
+output "auto_create" {
+  description = "(Optional) Configures all of the resources in the resource group by applying the recommended configurations."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.auto_create
+}
+output "id" {
+  description = "Name of the resource group."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.id
+}
+output "ops_center_enabled" {
+  description = "(Optional) When set to true, creates opsItems for any problems detected on an application."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.ops_center_enabled
+}
+output "ops_item_sns_topic_arn" {
+  description = "(Optional) SNS topic provided to Application Insights that is associated to the created opsItem. Allows you to receive notifications for updates to the opsItem."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.ops_item_sns_topic_arn
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.tags
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_applicationinsights_application.aws_applicationinsights_application.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "auto_config_enabled" {
   description = "(Optional)  Indicates whether Application Insights automatically configures unmonitored resources in the resource group."
   value       = aws_applicationinsights_application.aws_applicationinsights_application.auto_config_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "grouping_type" {
+  description = "(Optional) Application Insights can create applications based on a resource group or on an account. To create an account-based application using all of the resources in the account, set this parameter to ACCOUNT_BASED."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.grouping_type
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_applicationinsights_application.aws_applicationinsights_application.tags_all
 }
 output "arn" {
   description = "ARN of the Application."
   value       = aws_applicationinsights_application.aws_applicationinsights_application.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Name of the resource group."
@@ -281,15 +247,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_applicationinsights_application.aws_applicationinsights_application.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

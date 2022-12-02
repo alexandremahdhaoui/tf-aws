@@ -1,23 +1,15 @@
 resource "aws_s3outposts_endpoint" "aws_s3outposts_endpoint" {
+  arn                = var.arn
+  cidr_block         = var.cidr_block
   creation_time      = var.creation_time
   id                 = var.id
   network_interfaces = var.network_interfaces
   outpost_id         = var.outpost_id
   security_group_id  = var.security_group_id
   subnet_id          = var.subnet_id
-  arn                = var.arn
-  cidr_block         = var.cidr_block
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the endpoint."
-  type        = string
-}
-variable "network_interfaces" {
-  description = ""
   type        = string
 }
 variable "outpost_id" {
@@ -42,6 +34,14 @@ variable "cidr_block" {
 }
 variable "creation_time" {
   description = "UTC creation time in RFC3339 format."
+  type        = string
+}
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the endpoint."
+  type        = string
+}
+variable "network_interfaces" {
+  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,77 +164,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cidr_block" {
-  description = "VPC CIDR block of the endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "creation_time" {
   description = "UTC creation time in RFC3339 format."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.creation_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the endpoint."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "network_interfaces" {
   description = ""
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interfaces
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "outpost_id" {
   description = "(Required) Identifier of the Outpost to contain this endpoint."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.outpost_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "security_group_id" {
   description = "(Required) Identifier of the EC2 Security Group."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.security_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_id" {
   description = "(Required) Identifier of the EC2 Subnet.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.subnet_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.arn
+}
+output "cidr_block" {
+  description = "VPC CIDR block of the endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.cidr_block
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.arn
+}
+output "cidr_block" {
+  description = "VPC CIDR block of the endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.cidr_block
+}
+output "creation_time" {
+  description = "UTC creation time in RFC3339 format."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.creation_time
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.id
 }
 output "network_interface_id" {
   description = "Identifier of the Elastic Network Interface (ENI)."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "network_interfaces" {
   description = ""
@@ -242,39 +222,7 @@ output "network_interfaces" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cidr_block" {
-  description = "VPC CIDR block of the endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "creation_time" {
-  description = "UTC creation time in RFC3339 format."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.creation_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -139,29 +139,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "payer" {
-  description = "(Required) Specifies who pays for the download and request fees. Valid values: BucketOwner, Requester.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3_bucket_request_payment_configuration.aws_s3_bucket_request_payment_configuration.payer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "bucket" {
   description = "(Required, Forces new resource) The name of the bucket."
   value       = aws_s3_bucket_request_payment_configuration.aws_s3_bucket_request_payment_configuration.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   value       = aws_s3_bucket_request_payment_configuration.aws_s3_bucket_request_payment_configuration.expected_bucket_owner
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "payer" {
+  description = "(Required) Specifies who pays for the download and request fees. Valid values: BucketOwner, Requester.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3_bucket_request_payment_configuration.aws_s3_bucket_request_payment_configuration.payer
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

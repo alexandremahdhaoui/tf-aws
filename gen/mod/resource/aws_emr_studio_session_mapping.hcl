@@ -1,13 +1,23 @@
 resource "aws_emr_studio_session_mapping" "aws_emr_studio_session_mapping" {
-  identity_id        = var.identity_id
-  identity_name      = var.identity_name
   identity_type      = var.identity_type
   session_policy_arn = var.session_policy_arn
   studio_id          = var.studio_id
+  identity_id        = var.identity_id
+  identity_name      = var.identity_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "identity_id" {
+  description = "- (Optional) The globally unique identifier (GUID) of the user or group from the Amazon Web Services SSO Identity Store."
+  type        = string
+  default     = ""
+}
+variable "identity_name" {
+  description = "(Optional) The name of the user or group from the Amazon Web Services SSO Identity Store."
+  type        = string
+  default     = ""
 }
 variable "identity_type" {
   description = "(Required) Specifies whether the identity to map to the Amazon EMR Studio is a USER or a GROUP."
@@ -19,14 +29,6 @@ variable "session_policy_arn" {
 }
 variable "studio_id" {
   description = "(Required) The ID of the Amazon EMR Studio to which the user or group will be mapped.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "identity_id" {
-  description = "- (Optional) The globally unique identifier (GUID) of the user or group from the Amazon Web Services SSO Identity Store."
-  type        = string
-}
-variable "identity_name" {
-  description = "(Optional) The name of the user or group from the Amazon Web Services SSO Identity Store."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,45 +151,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "identity_id" {
-  description = "- (Optional) The globally unique identifier (GUID) of the user or group from the Amazon Web Services SSO Identity Store."
-  value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "identity_name" {
-  description = "(Optional) The name of the user or group from the Amazon Web Services SSO Identity Store."
-  value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "identity_type" {
   description = "(Required) Specifies whether the identity to map to the Amazon EMR Studio is a USER or a GROUP."
   value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "session_policy_arn" {
   description = "(Required) The Amazon Resource Name (ARN) for the session policy that will be applied to the user or group. You should specify the ARN for the session policy that you want to apply, not the ARN of your user role."
   value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.session_policy_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "studio_id" {
   description = "(Required) The ID of the Amazon EMR Studio to which the user or group will be mapped.In addition to all arguments above, the following attributes are exported:"
   value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.studio_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "identity_id" {
+  description = "- (Optional) The globally unique identifier (GUID) of the user or group from the Amazon Web Services SSO Identity Store."
+  value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_id
+}
+output "identity_name" {
+  description = "(Optional) The name of the user or group from the Amazon Web Services SSO Identity Store."
+  value       = aws_emr_studio_session_mapping.aws_emr_studio_session_mapping.identity_name
 }
 output "id" {
   description = "- The id of the Elastic MapReduce Studio Session Mapping."
@@ -195,7 +177,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

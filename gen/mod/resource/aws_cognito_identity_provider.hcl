@@ -9,24 +9,26 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "attribute_mapping" {
+  description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
+  type        = string
+  default     = ""
+}
+variable "idp_identifiers" {
+  description = " (Optional) - The list of identity providers."
+  type        = string
+  default     = ""
+}
+variable "provider_name" {
+  description = " (Required) - The provider name"
+  type        = string
+}
 variable "provider_type" {
   description = " (Required) - The provider type.  See AWS API for valid values"
   type        = string
 }
 variable "user_pool_id" {
   description = " (Required) - The user pool id"
-  type        = string
-}
-variable "attribute_mapping" {
-  description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
-  type        = string
-}
-variable "idp_identifiers" {
-  description = " (Optional) - The list of identity providers."
-  type        = string
-}
-variable "provider_name" {
-  description = " (Required) - The provider name"
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,29 +151,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "attribute_mapping" {
+  description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
+  value       = aws_cognito_identity_provider.aws_cognito_identity_provider.attribute_mapping
+}
 output "idp_identifiers" {
   description = " (Optional) - The list of identity providers."
   value       = aws_cognito_identity_provider.aws_cognito_identity_provider.idp_identifiers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "provider_name" {
   description = " (Required) - The provider name"
   value       = aws_cognito_identity_provider.aws_cognito_identity_provider.provider_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "provider_type" {
   description = " (Required) - The provider type.  See AWS API for valid values"
   value       = aws_cognito_identity_provider.aws_cognito_identity_provider.provider_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "user_pool_id" {
   description = " (Required) - The user pool id"
@@ -179,15 +173,7 @@ output "user_pool_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "attribute_mapping" {
-  description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
-  value       = aws_cognito_identity_provider.aws_cognito_identity_provider.attribute_mapping
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

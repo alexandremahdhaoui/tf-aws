@@ -1,5 +1,4 @@
 resource "aws_codecommit_repository" "aws_codecommit_repository" {
-  clone_url_ssh   = var.clone_url_ssh
   default_branch  = var.default_branch
   description     = var.description
   repository_id   = var.repository_id
@@ -7,17 +6,10 @@ resource "aws_codecommit_repository" "aws_codecommit_repository" {
   tags            = var.tags
   arn             = var.arn
   clone_url_http  = var.clone_url_http
+  clone_url_ssh   = var.clone_url_ssh
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "default_branch" {
-  description = "(Optional) The default branch of the repository. The branch specified here needs to exist."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the repository. This needs to be less than 1000 characters"
   type        = string
 }
 variable "repository_id" {
@@ -31,6 +23,7 @@ variable "repository_name" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the repository"
@@ -43,6 +36,16 @@ variable "clone_url_http" {
 variable "clone_url_ssh" {
   description = "The URL to use for cloning the repository over SSH."
   type        = string
+}
+variable "default_branch" {
+  description = "(Optional) The default branch of the repository. The branch specified here needs to exist."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The description of the repository. This needs to be less than 1000 characters"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -168,65 +171,49 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codecommit_repository.aws_codecommit_repository.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the repository"
   value       = aws_codecommit_repository.aws_codecommit_repository.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "clone_url_http" {
   description = "The URL to use for cloning the repository over HTTPS."
   value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_http
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "clone_url_ssh" {
   description = "The URL to use for cloning the repository over SSH."
   value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_ssh
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "default_branch" {
   description = "(Optional) The default branch of the repository. The branch specified here needs to exist."
   value       = aws_codecommit_repository.aws_codecommit_repository.default_branch
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the repository. This needs to be less than 1000 characters"
   value       = aws_codecommit_repository.aws_codecommit_repository.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "repository_id" {
   description = "The ID of the repository"
   value       = aws_codecommit_repository.aws_codecommit_repository.repository_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "repository_name" {
   description = "(Required) The name for the repository. This needs to be less than 100 characters."
   value       = aws_codecommit_repository.aws_codecommit_repository.repository_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "clone_url_http" {
+  description = "The URL to use for cloning the repository over HTTPS."
+  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_http
+}
+output "clone_url_ssh" {
+  description = "The URL to use for cloning the repository over SSH."
+  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_ssh
+}
+output "repository_id" {
+  description = "The ID of the repository"
+  value       = aws_codecommit_repository.aws_codecommit_repository.repository_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_codecommit_repository.aws_codecommit_repository.tags_all
 }
 output "arn" {
   description = "The ARN of the repository"
@@ -234,39 +221,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "clone_url_http" {
-  description = "The URL to use for cloning the repository over HTTPS."
-  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_http
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "clone_url_ssh" {
-  description = "The URL to use for cloning the repository over SSH."
-  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_ssh
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "repository_id" {
-  description = "The ID of the repository"
-  value       = aws_codecommit_repository.aws_codecommit_repository.repository_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_codecommit_repository.aws_codecommit_repository.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {
