@@ -1,23 +1,15 @@
 resource "aws_serverlessapplicationrepository_cloudformation_stack" "aws_serverlessapplicationrepository_cloudformation_stack" {
+  name             = var.name
+  outputs          = var.outputs
   parameters       = var.parameters
   semantic_version = var.semantic_version
   tags             = var.tags
   application_id   = var.application_id
   capabilities     = var.capabilities
   id               = var.id
-  name             = var.name
-  outputs          = var.outputs
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "application_id" {
-  description = "(Required) The ARN of the application from the Serverless Application Repository."
-  type        = string
-}
-variable "capabilities" {
-  description = "(Required) A list of capabilities. Valid values are CAPABILITY_IAM, CAPABILITY_NAMED_IAM, CAPABILITY_RESOURCE_POLICY, or CAPABILITY_AUTO_EXPAND"
   type        = string
 }
 variable "id" {
@@ -35,13 +27,24 @@ variable "outputs" {
 variable "parameters" {
   description = "(Optional) A map of Parameter structures that specify input parameters for the stack."
   type        = string
+  default     = ""
 }
 variable "semantic_version" {
   description = "(Optional) The version of the application to deploy. If not supplied, deploys the latest version."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A list of tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "application_id" {
+  description = "(Required) The ARN of the application from the Serverless Application Repository."
+  type        = string
+}
+variable "capabilities" {
+  description = "(Required) A list of capabilities. Valid values are CAPABILITY_IAM, CAPABILITY_NAMED_IAM, CAPABILITY_RESOURCE_POLICY, or CAPABILITY_AUTO_EXPAND"
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,85 +167,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "semantic_version" {
-  description = "(Optional) The version of the application to deploy. If not supplied, deploys the latest version."
-  value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.semantic_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A list of tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "application_id" {
   description = "(Required) The ARN of the application from the Serverless Application Repository."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.application_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "capabilities" {
   description = "(Required) A list of capabilities. Valid values are CAPABILITY_IAM, CAPABILITY_NAMED_IAM, CAPABILITY_RESOURCE_POLICY, or CAPABILITY_AUTO_EXPAND"
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.capabilities
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "A unique identifier of the stack."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the stack to create. The resource deployed in AWS will be prefixed with serverlessrepo-"
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "outputs" {
   description = "A map of outputs from the stack."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.outputs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "parameters" {
   description = "(Optional) A map of Parameter structures that specify input parameters for the stack."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.parameters
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "semantic_version" {
+  description = "(Optional) The version of the application to deploy. If not supplied, deploys the latest version."
+  value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.semantic_version
 }
 output "id" {
   description = "A unique identifier of the stack."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "outputs" {
   description = "A map of outputs from the stack."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.outputs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,7 +213,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,22 +1,24 @@
 resource "aws_redshift_cluster_iam_roles" "aws_redshift_cluster_iam_roles" {
+  iam_role_arns        = var.iam_role_arns
   cluster_identifier   = var.cluster_identifier
   default_iam_role_arn = var.default_iam_role_arn
-  iam_role_arns        = var.iam_role_arns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "cluster_identifier" {
-  description = "(Required) The name of the Redshift Cluster IAM Roles."
-  type        = string
-}
 variable "default_iam_role_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) for the IAM role that was set as default for the cluster when the cluster was created.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "iam_role_arns" {
   description = "(Optional) A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time."
+  type        = string
+  default     = ""
+}
+variable "cluster_identifier" {
+  description = "(Required) The name of the Redshift Cluster IAM Roles."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,29 +141,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "default_iam_role_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) for the IAM role that was set as default for the cluster when the cluster was created.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_cluster_iam_roles.aws_redshift_cluster_iam_roles.default_iam_role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iam_role_arns" {
-  description = "(Optional) A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time."
-  value       = aws_redshift_cluster_iam_roles.aws_redshift_cluster_iam_roles.iam_role_arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cluster_identifier" {
   description = "(Required) The name of the Redshift Cluster IAM Roles."
   value       = aws_redshift_cluster_iam_roles.aws_redshift_cluster_iam_roles.cluster_identifier
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "default_iam_role_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) for the IAM role that was set as default for the cluster when the cluster was created.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_cluster_iam_roles.aws_redshift_cluster_iam_roles.default_iam_role_arn
+}
+output "iam_role_arns" {
+  description = "(Optional) A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time."
+  value       = aws_redshift_cluster_iam_roles.aws_redshift_cluster_iam_roles.iam_role_arns
 }
 output "id" {
   description = "The Redshift Cluster ID."
@@ -169,7 +159,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

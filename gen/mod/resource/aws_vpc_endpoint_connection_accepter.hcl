@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The ID of the VPC Endpoint Connection."
-  type        = string
-}
 variable "vpc_endpoint_id" {
   description = "(Required) AWS VPC Endpoint ID."
   type        = string
 }
 variable "vpc_endpoint_service_id" {
   description = "(Required) AWS VPC Endpoint Service ID.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "The ID of the VPC Endpoint Connection."
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,33 +143,17 @@ output "id" {
   description = "The ID of the VPC Endpoint Connection."
   value       = aws_vpc_endpoint_connection_accepter.aws_vpc_endpoint_connection_accepter.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_endpoint_id" {
   description = "(Required) AWS VPC Endpoint ID."
   value       = aws_vpc_endpoint_connection_accepter.aws_vpc_endpoint_connection_accepter.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_endpoint_service_id" {
   description = "(Required) AWS VPC Endpoint Service ID.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_endpoint_connection_accepter.aws_vpc_endpoint_connection_accepter.vpc_endpoint_service_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the VPC Endpoint Connection."
   value       = aws_vpc_endpoint_connection_accepter.aws_vpc_endpoint_connection_accepter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_endpoint_state" {
   description = "State of the VPC Endpoint."
@@ -177,7 +161,7 @@ output "vpc_endpoint_state" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

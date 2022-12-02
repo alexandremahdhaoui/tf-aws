@@ -124,13 +124,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "SES configuration set ARN."
+  value       = aws_ses_configuration_set.aws_ses_configuration_set.arn
+}
 output "id" {
   description = "SES configuration set name."
   value       = aws_ses_configuration_set.aws_ses_configuration_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "last_fresh_start" {
   description = "Date and time at which the reputation metrics for the configuration set were last reset. Resetting these metrics is known as a fresh start."
@@ -138,15 +138,7 @@ output "last_fresh_start" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "SES configuration set ARN."
-  value       = aws_ses_configuration_set.aws_ses_configuration_set.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

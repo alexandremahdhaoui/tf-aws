@@ -143,25 +143,13 @@ output "db_cluster_identifier" {
   description = "(Required) DB Cluster Identifier to associate with the IAM Role."
   value       = aws_rds_cluster_role_association.aws_rds_cluster_role_association.db_cluster_identifier
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "feature_name" {
   description = "(Required) Name of the feature for association. This can be found in the AWS documentation relevant to the integration or a full list is available in the SupportedFeatureNames list returned by AWS CLI rds describe-db-engine-versions."
   value       = aws_rds_cluster_role_association.aws_rds_cluster_role_association.feature_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the IAM Role to associate with the DB Cluster.In addition to all arguments above, the following attributes are exported:"
   value       = aws_rds_cluster_role_association.aws_rds_cluster_role_association.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "DB Cluster Identifier and IAM Role ARN separated by a comma (,)"
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

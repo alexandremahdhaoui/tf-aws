@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "scalable_dimension" {
-  description = "(Required) Scalable dimension of the scalable target. Documentation can be found in the ScalableDimension parameter at: AWS Application Auto Scaling API Reference"
-  type        = string
-}
-variable "max_capacity" {
-  description = "(Required) Max capacity of the scalable target."
-  type        = string
-}
 variable "min_capacity" {
   description = "(Required) Min capacity of the scalable target."
   type        = string
@@ -27,6 +19,15 @@ variable "resource_id" {
 }
 variable "role_arn" {
   description = "(Optional) ARN of the IAM role that allows Application AutoScaling to modify your scalable target on your behalf. This defaults to an IAM Service-Linked Role for most services and custom IAM Roles are ignored by the API for those namespaces. See the AWS Application Auto Scaling documentation for more information about how this service interacts with IAM."
+  type        = string
+  default     = ""
+}
+variable "scalable_dimension" {
+  description = "(Required) Scalable dimension of the scalable target. Documentation can be found in the ScalableDimension parameter at: AWS Application Auto Scaling API Reference"
+  type        = string
+}
+variable "max_capacity" {
+  description = "(Required) Max capacity of the scalable target."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,29 +150,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "max_capacity" {
+  description = "(Required) Max capacity of the scalable target."
+  value       = aws_appautoscaling_target.aws_appautoscaling_target.max_capacity
+}
 output "min_capacity" {
   description = "(Required) Min capacity of the scalable target."
   value       = aws_appautoscaling_target.aws_appautoscaling_target.min_capacity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_id" {
   description = "(Required) Resource type and unique identifier string for the resource associated with the scaling policy. Documentation can be found in the ResourceId parameter at: AWS Application Auto Scaling API Reference"
   value       = aws_appautoscaling_target.aws_appautoscaling_target.resource_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "(Optional) ARN of the IAM role that allows Application AutoScaling to modify your scalable target on your behalf. This defaults to an IAM Service-Linked Role for most services and custom IAM Roles are ignored by the API for those namespaces. See the AWS Application Auto Scaling documentation for more information about how this service interacts with IAM."
   value       = aws_appautoscaling_target.aws_appautoscaling_target.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "scalable_dimension" {
   description = "(Required) Scalable dimension of the scalable target. Documentation can be found in the ScalableDimension parameter at: AWS Application Auto Scaling API Reference"
@@ -179,15 +172,7 @@ output "scalable_dimension" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_capacity" {
-  description = "(Required) Max capacity of the scalable target."
-  value       = aws_appautoscaling_target.aws_appautoscaling_target.max_capacity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

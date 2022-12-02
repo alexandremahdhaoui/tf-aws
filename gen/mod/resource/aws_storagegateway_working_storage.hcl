@@ -138,17 +138,9 @@ output "disk_id" {
   description = "(Required) Local disk identifier. For example, pci-0000:03:00.0-scsi-0:0:0:0."
   value       = aws_storagegateway_working_storage.aws_storagegateway_working_storage.disk_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_storagegateway_working_storage.aws_storagegateway_working_storage.gateway_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Combined gateway Amazon Resource Name (ARN) and local disk identifier."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

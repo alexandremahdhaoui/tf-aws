@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "stage" {
-  description = "(Required) API stage. Use the aws_apigatewayv2_stage resource to configure an API stage."
-  type        = string
-}
 variable "api_id" {
   description = "(Required) API identifier."
   type        = string
@@ -19,9 +15,14 @@ variable "api_id" {
 variable "api_mapping_key" {
   description = "(Optional) The API mapping key.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "domain_name" {
   description = "(Required) Domain name. Use the aws_apigatewayv2_domain_name resource to configure a domain name."
+  type        = string
+}
+variable "stage" {
+  description = "(Required) API stage. Use the aws_apigatewayv2_stage resource to configure an API stage."
   type        = string
 }
 variable "tag_instance_id" {
@@ -148,33 +149,17 @@ output "api_id" {
   description = "(Required) API identifier."
   value       = aws_apigatewayv2_api_mapping.aws_apigatewayv2_api_mapping.api_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "api_mapping_key" {
   description = "(Optional) The API mapping key.In addition to all arguments above, the following attributes are exported:"
   value       = aws_apigatewayv2_api_mapping.aws_apigatewayv2_api_mapping.api_mapping_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "domain_name" {
   description = "(Required) Domain name. Use the aws_apigatewayv2_domain_name resource to configure a domain name."
   value       = aws_apigatewayv2_api_mapping.aws_apigatewayv2_api_mapping.domain_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "stage" {
   description = "(Required) API stage. Use the aws_apigatewayv2_stage resource to configure an API stage."
   value       = aws_apigatewayv2_api_mapping.aws_apigatewayv2_api_mapping.stage
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "API mapping identifier."
@@ -182,7 +167,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,9 +1,9 @@
 resource "aws_load_balancer_policy" "aws_load_balancer_policy" {
+  policy_type_name   = var.policy_type_name
+  id                 = var.id
   load_balancer_name = var.load_balancer_name
   policy_attribute   = var.policy_attribute
   policy_name        = var.policy_name
-  policy_type_name   = var.policy_type_name
-  id                 = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -20,6 +20,7 @@ variable "load_balancer_name" {
 variable "policy_attribute" {
   description = "(Optional) Policy attribute to apply to the policy.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "policy_name" {
   description = "The name of the stickiness policy."
@@ -149,45 +150,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "policy_name" {
+  description = "The name of the stickiness policy."
+  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_name
+}
+output "policy_type_name" {
+  description = "The policy type of the policy."
+  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_type_name
+}
 output "id" {
   description = "The ID of the policy."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "load_balancer_name" {
   description = "(Required) The load balancer on which the policy is defined."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.load_balancer_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_attribute" {
   description = "(Optional) Policy attribute to apply to the policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_attribute
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "policy_name" {
   description = "The name of the stickiness policy."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_type_name" {
   description = "The policy type of the policy."
   value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_type_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the policy."
@@ -195,23 +184,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "policy_name" {
-  description = "The name of the stickiness policy."
-  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "policy_type_name" {
-  description = "The policy type of the policy."
-  value       = aws_load_balancer_policy.aws_load_balancer_policy.policy_type_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

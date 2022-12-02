@@ -7,10 +7,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) Returns information on a specific Prompt by nameIn addition to all of the arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "arn" {
   description = "ARN of the Prompt."
   type        = string
@@ -19,29 +15,21 @@ variable "instance_id" {
   description = "(Required) Reference to the hosting Amazon Connect Instance"
   type        = string
 }
+variable "name" {
+  description = "(Required) Returns information on a specific Prompt by nameIn addition to all of the arguments above, the following attributes are exported:"
+  type        = string
+}
 output "arn" {
   description = "ARN of the Prompt."
   value       = aws_connect_prompt.aws_connect_prompt.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "instance_id" {
   description = "(Required) Reference to the hosting Amazon Connect Instance"
   value       = aws_connect_prompt.aws_connect_prompt.instance_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Returns information on a specific Prompt by nameIn addition to all of the arguments above, the following attributes are exported:"
   value       = aws_connect_prompt.aws_connect_prompt.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the Prompt."
@@ -49,7 +37,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

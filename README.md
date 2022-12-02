@@ -25,6 +25,7 @@ their content.
 # TODO
 
 - [ ] please **snake_case** strings in file names to avoid unconventional naming schemas.  
+- [ ] add logger.
 
 ## cmd/gen_mod/
 - [x] Deserialize both data in `gen/src/` & `customize/`.

@@ -128,17 +128,9 @@ output "burst_limit" {
   description = "Absolute maximum number of times API Gateway allows the API to be called per second (RPS)."
   value       = aws_api_gateway_account.aws_api_gateway_account.burst_limit
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rate_limit" {
   description = "Number of times API Gateway allows the API to be called per second on average (RPS)."
   value       = aws_api_gateway_account.aws_api_gateway_account.rate_limit
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "throttle_settings" {
   description = "Account-Level throttle settings. See exported fields below.throttle_settings block exports the following:"
@@ -146,7 +138,7 @@ output "throttle_settings" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

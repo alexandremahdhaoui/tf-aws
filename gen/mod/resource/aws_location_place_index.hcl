@@ -1,22 +1,23 @@
 resource "aws_location_place_index" "aws_location_place_index" {
-  create_time               = var.create_time
+  intended_use              = var.intended_use
+  tags_all                  = var.tags_all
+  description               = var.description
   index_arn                 = var.index_arn
   index_name                = var.index_name
   tags                      = var.tags
+  update_time               = var.update_time
+  create_time               = var.create_time
   data_source               = var.data_source
   data_source_configuration = var.data_source_configuration
-  description               = var.description
-  intended_use              = var.intended_use
-  tags_all                  = var.tags_all
-  update_time               = var.update_time
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "update_time" {
-  description = "The timestamp for when the place index resource was last update in ISO 8601."
+variable "create_time" {
+  description = "The timestamp for when the place index resource was created in ISO 8601 format."
   type        = string
+  default     = ""
 }
 variable "data_source" {
   description = "(Required) Specifies the geospatial data provider for the new place index."
@@ -25,34 +26,41 @@ variable "data_source" {
 variable "data_source_configuration" {
   description = "(Optional) Configuration block with the data storage option chosen for requesting Places. Detailed below."
   type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the place index. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.data_source_configuration"
+  type        = string
+  default     = ""
+}
+variable "update_time" {
+  description = "The timestamp for when the place index resource was last update in ISO 8601."
+  type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Optional) The optional description for the place index resource."
   type        = string
-}
-variable "intended_use" {
-  description = "(Optional) Specifies how the results of an operation will be stored by the caller. Valid values: SingleUse, Storage. Default: SingleUse.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "create_time" {
-  description = "The timestamp for when the place index resource was created in ISO 8601 format."
-  type        = string
+  default     = ""
 }
 variable "index_arn" {
   description = "The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS."
   type        = string
+  default     = ""
 }
 variable "index_name" {
   description = "(Required) The name of the place index resource."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value tags for the place index. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.data_source_configuration"
+variable "intended_use" {
+  description = "(Optional) Specifies how the results of an operation will be stored by the caller. Valid values: SingleUse, Storage. Default: SingleUse.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,101 +182,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "data_source" {
-  description = "(Required) Specifies the geospatial data provider for the new place index."
-  value       = aws_location_place_index.aws_location_place_index.data_source
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "data_source_configuration" {
-  description = "(Optional) Configuration block with the data storage option chosen for requesting Places. Detailed below."
-  value       = aws_location_place_index.aws_location_place_index.data_source_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The optional description for the place index resource."
   value       = aws_location_place_index.aws_location_place_index.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "intended_use" {
-  description = "(Optional) Specifies how the results of an operation will be stored by the caller. Valid values: SingleUse, Storage. Default: SingleUse.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_location_place_index.aws_location_place_index.intended_use
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_location_place_index.aws_location_place_index.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update_time" {
-  description = "The timestamp for when the place index resource was last update in ISO 8601."
-  value       = aws_location_place_index.aws_location_place_index.update_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create_time" {
-  description = "The timestamp for when the place index resource was created in ISO 8601 format."
-  value       = aws_location_place_index.aws_location_place_index.create_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "index_arn" {
   description = "The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS."
   value       = aws_location_place_index.aws_location_place_index.index_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "index_name" {
   description = "(Required) The name of the place index resource."
   value       = aws_location_place_index.aws_location_place_index.index_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the place index. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.data_source_configuration"
-  value       = aws_location_place_index.aws_location_place_index.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "index_arn" {
-  description = "The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS."
-  value       = aws_location_place_index.aws_location_place_index.index_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "intended_use" {
+  description = "(Optional) Specifies how the results of an operation will be stored by the caller. Valid values: SingleUse, Storage. Default: SingleUse.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_location_place_index.aws_location_place_index.intended_use
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_location_place_index.aws_location_place_index.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create_time" {
+  description = "The timestamp for when the place index resource was created in ISO 8601 format."
+  value       = aws_location_place_index.aws_location_place_index.create_time
+}
+output "data_source" {
+  description = "(Required) Specifies the geospatial data provider for the new place index."
+  value       = aws_location_place_index.aws_location_place_index.data_source
+}
+output "data_source_configuration" {
+  description = "(Optional) Configuration block with the data storage option chosen for requesting Places. Detailed below."
+  value       = aws_location_place_index.aws_location_place_index.data_source_configuration
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the place index. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.data_source_configuration"
+  value       = aws_location_place_index.aws_location_place_index.tags
+}
+output "update_time" {
+  description = "The timestamp for when the place index resource was last update in ISO 8601."
+  value       = aws_location_place_index.aws_location_place_index.update_time
+}
+output "create_time" {
+  description = "The timestamp for when the place index resource was created in ISO 8601 format."
+  value       = aws_location_place_index.aws_location_place_index.create_time
+}
+output "index_arn" {
+  description = "The Amazon Resource Name (ARN) for the place index resource. Used to specify a resource across AWS."
+  value       = aws_location_place_index.aws_location_place_index.index_arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_location_place_index.aws_location_place_index.tags_all
 }
 output "update_time" {
   description = "The timestamp for when the place index resource was last update in ISO 8601."
@@ -276,15 +240,7 @@ output "update_time" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create_time" {
-  description = "The timestamp for when the place index resource was created in ISO 8601 format."
-  value       = aws_location_place_index.aws_location_place_index.create_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

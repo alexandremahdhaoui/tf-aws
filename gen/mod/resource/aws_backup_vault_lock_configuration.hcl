@@ -8,14 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "max_retention_days" {
-  description = "(Optional) The maximum retention period that the vault retains its recovery points."
-  type        = string
-}
-variable "min_retention_days" {
-  description = "(Optional) The minimum retention period that the vault retains its recovery points.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "backup_vault_name" {
   description = "The name of the vault."
   type        = string
@@ -23,6 +15,17 @@ variable "backup_vault_name" {
 variable "changeable_for_days" {
   description = "(Optional) The number of days before the lock date."
   type        = string
+  default     = ""
+}
+variable "max_retention_days" {
+  description = "(Optional) The maximum retention period that the vault retains its recovery points."
+  type        = string
+  default     = ""
+}
+variable "min_retention_days" {
+  description = "(Optional) The minimum retention period that the vault retains its recovery points.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,45 +147,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "backup_vault_name" {
-  description = "The name of the vault."
-  value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.backup_vault_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "changeable_for_days" {
-  description = "(Optional) The number of days before the lock date."
-  value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.changeable_for_days
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "max_retention_days" {
   description = "(Optional) The maximum retention period that the vault retains its recovery points."
   value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.max_retention_days
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "min_retention_days" {
   description = "(Optional) The minimum retention period that the vault retains its recovery points.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.min_retention_days
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "backup_vault_name" {
+  description = "The name of the vault."
+  value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.backup_vault_name
+}
+output "changeable_for_days" {
+  description = "(Optional) The number of days before the lock date."
+  value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.changeable_for_days
 }
 output "backup_vault_arn" {
   description = "The ARN of the vault."
   value       = aws_backup_vault_lock_configuration.aws_backup_vault_lock_configuration.backup_vault_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "backup_vault_name" {
   description = "The name of the vault."
@@ -190,7 +173,7 @@ output "backup_vault_name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

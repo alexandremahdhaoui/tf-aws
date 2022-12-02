@@ -124,37 +124,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "status" {
+  description = "The current status of the VPC Ingress Connection."
+  value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.status
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the VPC Ingress Connection."
+  value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.arn
+}
 output "domain_name" {
   description = "The domain name associated with the VPC Ingress Connection resource."
   value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.domain_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "The current status of the VPC Ingress Connection."
-  value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the VPC Ingress Connection."
-  value       = aws_apprunner_vpc_ingress_connection.aws_apprunner_vpc_ingress_connection.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

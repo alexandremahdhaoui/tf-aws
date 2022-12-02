@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional) Description of the model. Must be between 1 and 128 characters in length.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "name" {
   description = "(Required) Name of the model. Must be alphanumeric. Must be between 1 and 128 characters in length."
   type        = string
@@ -28,6 +24,11 @@ variable "api_id" {
 variable "content_type" {
   description = "(Required)  The content-type for the model, for example, application/json. Must be between 1 and 256 characters in length."
   type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the model. Must be between 1 and 128 characters in length.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,45 +150,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "api_id" {
-  description = "(Required) API identifier."
-  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content_type" {
-  description = "(Required)  The content-type for the model, for example, application/json. Must be between 1 and 256 characters in length."
-  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.content_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the model. Must be between 1 and 128 characters in length.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the model. Must be alphanumeric. Must be between 1 and 128 characters in length."
   value       = aws_apigatewayv2_model.aws_apigatewayv2_model.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "schema" {
   description = "(Required) Schema for the model. This should be a JSON schema draft 4 model. Must be less than or equal to 32768 characters in length."
   value       = aws_apigatewayv2_model.aws_apigatewayv2_model.schema
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "api_id" {
+  description = "(Required) API identifier."
+  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.api_id
+}
+output "content_type" {
+  description = "(Required)  The content-type for the model, for example, application/json. Must be between 1 and 256 characters in length."
+  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.content_type
+}
+output "description" {
+  description = "(Optional) Description of the model. Must be between 1 and 128 characters in length.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.description
 }
 output "id" {
   description = "Model identifier."
@@ -195,7 +176,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

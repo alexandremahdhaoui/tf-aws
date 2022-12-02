@@ -1,18 +1,14 @@
 resource "aws_swf_domain" "aws_swf_domain" {
-  name_prefix                                 = var.name_prefix
-  tags                                        = var.tags
-  workflow_execution_retention_period_in_days = var.workflow_execution_retention_period_in_days
   arn                                         = var.arn
   description                                 = var.description
   id                                          = var.id
   name                                        = var.name
+  name_prefix                                 = var.name_prefix
+  tags                                        = var.tags
+  workflow_execution_retention_period_in_days = var.workflow_execution_retention_period_in_days
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN)"
   type        = string
 }
 variable "description" {
@@ -34,9 +30,14 @@ variable "name_prefix" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "workflow_execution_retention_period_in_days" {
   description = "(Required, Forces new resource) Length of time that SWF will continue to retain information about the workflow execution after the workflow execution is complete, must be between 0 and 90 days."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -163,73 +164,37 @@ output "name" {
   description = "(Optional, Forces new resource) The name of the domain. If omitted, Terraform will assign a random, unique name."
   value       = aws_swf_domain.aws_swf_domain.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_swf_domain.aws_swf_domain.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_swf_domain.aws_swf_domain.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "workflow_execution_retention_period_in_days" {
   description = "(Required, Forces new resource) Length of time that SWF will continue to retain information about the workflow execution after the workflow execution is complete, must be between 0 and 90 days."
   value       = aws_swf_domain.aws_swf_domain.workflow_execution_retention_period_in_days
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN)"
   value       = aws_swf_domain.aws_swf_domain.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional, Forces new resource) The domain description."
   value       = aws_swf_domain.aws_swf_domain.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the domain."
   value       = aws_swf_domain.aws_swf_domain.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"
   value       = aws_swf_domain.aws_swf_domain.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the domain."
   value       = aws_swf_domain.aws_swf_domain.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -237,7 +202,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -138,17 +138,9 @@ output "policy" {
   description = "(Required) JSON formatted policy document that controls access to the Network Firewall resource. The policy must be provided strongwithout whitespaces.  We recommend using jsonencode for formatting as seen in the examples above. For more details, including available policy statement Actions, see the Policy parameter in the AWS API documentation."
   value       = aws_networkfirewall_resource_policy.aws_networkfirewall_resource_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the rule group or firewall policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkfirewall_resource_policy.aws_networkfirewall_resource_policy.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the rule group or firewall policy associated with the resource policy."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

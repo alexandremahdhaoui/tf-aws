@@ -128,17 +128,9 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) of the code signing configuration."
   value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "config_id" {
   description = "Unique identifier for the code signing configuration."
   value       = aws_lambda_code_signing_config.aws_lambda_code_signing_config.config_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "last_modified" {
   description = "The date and time that the code signing configuration was last modified."
@@ -146,7 +138,7 @@ output "last_modified" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

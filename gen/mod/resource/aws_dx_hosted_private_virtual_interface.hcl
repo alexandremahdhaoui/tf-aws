@@ -1,23 +1,27 @@
 resource "aws_dx_hosted_private_virtual_interface" "aws_dx_hosted_private_virtual_interface" {
-  bgp_auth_key        = var.bgp_auth_key
+  connection_id       = var.connection_id
   customer_address    = var.customer_address
   id                  = var.id
-  name                = var.name
+  amazon_address      = var.amazon_address
+  create              = var.create
   mtu                 = var.mtu
+  update              = var.update
+  vlan                = var.vlan
+  address_family      = var.address_family
   arn                 = var.arn
   aws_device          = var.aws_device
   bgp_asn             = var.bgp_asn
-  create              = var.create
-  address_family      = var.address_family
-  owner_account_id    = var.owner_account_id
-  update              = var.update
-  vlan                = var.vlan
-  amazon_address      = var.amazon_address
-  connection_id       = var.connection_id
+  bgp_auth_key        = var.bgp_auth_key
   jumbo_frame_capable = var.jumbo_frame_capable
+  name                = var.name
+  owner_account_id    = var.owner_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "address_family" {
+  description = "(Required) The address family for the BGP peer. ipv4  or ipv6."
   type        = string
 }
 variable "arn" {
@@ -32,21 +36,15 @@ variable "bgp_asn" {
   description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
   type        = string
 }
-variable "create" {
-  description = "(Default 10m)"
+variable "bgp_auth_key" {
+  description = "(Optional) The authentication key for BGP configuration."
   type        = string
+  default     = ""
 }
 variable "mtu" {
   description = "(Optional) The maximum transmission unit (MTU) is the size, in bytes, of the largest permissible packet that can be passed over the connection. The MTU of a virtual private interface can be either 1500 or 9001 (jumbo frames). Default is 1500."
   type        = string
-}
-variable "address_family" {
-  description = "(Required) The address family for the BGP peer. ipv4  or ipv6."
-  type        = string
-}
-variable "owner_account_id" {
-  description = "(Required) The AWS account that will own the new virtual interface."
-  type        = string
+  default     = ""
 }
 variable "update" {
   description = "(Default 10m)"
@@ -56,32 +54,38 @@ variable "vlan" {
   description = "(Required) The VLAN ID."
   type        = string
 }
-variable "amazon_address" {
-  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
+variable "jumbo_frame_capable" {
+  description = "Indicates whether jumbo frames (9001 MTU) are supported."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name for the virtual interface."
+  type        = string
+}
+variable "owner_account_id" {
+  description = "(Required) The AWS account that will own the new virtual interface."
   type        = string
 }
 variable "connection_id" {
   description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
   type        = string
 }
-variable "jumbo_frame_capable" {
-  description = "Indicates whether jumbo frames (9001 MTU) are supported."
-  type        = string
-}
-variable "bgp_auth_key" {
-  description = "(Optional) The authentication key for BGP configuration."
-  type        = string
-}
 variable "customer_address" {
   description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ID of the virtual interface."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name for the virtual interface."
+variable "amazon_address" {
+  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -204,189 +208,101 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "mtu" {
-  description = "(Optional) The maximum transmission unit (MTU) is the size, in bytes, of the largest permissible packet that can be passed over the connection. The MTU of a virtual private interface can be either 1500 or 9001 (jumbo frames). Default is 1500."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.mtu
+output "amazon_address" {
+  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.amazon_address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the virtual interface."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "aws_device" {
-  description = "The Direct Connect endpoint on which the virtual interface terminates.TimeoutsConfiguration options:"
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.aws_device
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.create
 }
 output "bgp_asn" {
   description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
   value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.bgp_asn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "bgp_auth_key" {
+  description = "(Optional) The authentication key for BGP configuration."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.bgp_auth_key
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "address_family" {
-  description = "(Required) The address family for the BGP peer. ipv4  or ipv6."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.address_family
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_account_id" {
-  description = "(Required) The AWS account that will own the new virtual interface."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "mtu" {
+  description = "(Optional) The maximum transmission unit (MTU) is the size, in bytes, of the largest permissible packet that can be passed over the connection. The MTU of a virtual private interface can be either 1500 or 9001 (jumbo frames). Default is 1500."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.mtu
 }
 output "update" {
   description = "(Default 10m)"
   value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vlan" {
   description = "(Required) The VLAN ID."
   value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.vlan
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "amazon_address" {
-  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.amazon_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "connection_id" {
-  description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.connection_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "jumbo_frame_capable" {
-  description = "Indicates whether jumbo frames (9001 MTU) are supported."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.jumbo_frame_capable
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bgp_auth_key" {
-  description = "(Optional) The authentication key for BGP configuration."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.bgp_auth_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "customer_address" {
-  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.customer_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the virtual interface."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name for the virtual interface."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "jumbo_frame_capable" {
-  description = "Indicates whether jumbo frames (9001 MTU) are supported."
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.jumbo_frame_capable
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "address_family" {
+  description = "(Required) The address family for the BGP peer. ipv4  or ipv6."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.address_family
 }
 output "arn" {
   description = "The ARN of the virtual interface."
   value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "aws_device" {
   description = "The Direct Connect endpoint on which the virtual interface terminates.TimeoutsConfiguration options:"
   value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.aws_device
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "jumbo_frame_capable" {
+  description = "Indicates whether jumbo frames (9001 MTU) are supported."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.jumbo_frame_capable
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.create
+output "name" {
+  description = "(Required) The name for the virtual interface."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "owner_account_id" {
+  description = "(Required) The AWS account that will own the new virtual interface."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.owner_account_id
 }
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.delete
+output "connection_id" {
+  description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.connection_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "customer_address" {
+  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.customer_address
 }
 output "id" {
   description = "The ID of the virtual interface."
   value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.id
 }
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.update
+}
+output "arn" {
+  description = "The ARN of the virtual interface."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.arn
+}
+output "aws_device" {
+  description = "The Direct Connect endpoint on which the virtual interface terminates.TimeoutsConfiguration options:"
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.aws_device
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.delete
+}
+output "id" {
+  description = "The ID of the virtual interface."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.id
+}
+output "jumbo_frame_capable" {
+  description = "Indicates whether jumbo frames (9001 MTU) are supported."
+  value       = aws_dx_hosted_private_virtual_interface.aws_dx_hosted_private_virtual_interface.jumbo_frame_capable
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

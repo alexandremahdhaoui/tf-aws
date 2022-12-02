@@ -1,19 +1,15 @@
 resource "aws_cloudwatch_event_permission" "aws_cloudwatch_event_permission" {
-  event_bus_name = var.event_bus_name
-  key            = var.key
   principal      = var.principal
   statement_id   = var.statement_id
   type           = var.type
   value          = var.value
   action         = var.action
   condition      = var.condition
+  event_bus_name = var.event_bus_name
+  key            = var.key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "event_bus_name" {
-  description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.condition"
   type        = string
 }
 variable "key" {
@@ -39,10 +35,17 @@ variable "value" {
 variable "action" {
   description = "(Optional) The action that you are enabling the other account to perform. Defaults to events:PutEvents."
   type        = string
+  default     = ""
 }
 variable "condition" {
   description = "(Optional) Configuration block to limit the event bus permissions you are granting to only accounts that fulfill the condition. Specified below."
   type        = string
+  default     = ""
+}
+variable "event_bus_name" {
+  description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.condition"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,69 +167,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "statement_id" {
-  description = "(Required) An identifier string for the external account that you are granting permissions to."
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.statement_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Required) Type of condition. Value values: StringEquals."
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "(Required) Value for the key.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "action" {
-  description = "(Optional) The action that you are enabling the other account to perform. Defaults to events:PutEvents."
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.action
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "condition" {
-  description = "(Optional) Configuration block to limit the event bus permissions you are granting to only accounts that fulfill the condition. Specified below."
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.condition
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "event_bus_name" {
   description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.condition"
   value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.event_bus_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "key" {
   description = "(Required) Key for the condition. Valid values: aws:PrincipalOrgID."
   value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "principal" {
   description = "(Required) The 12-digit AWS account ID that you are permitting to put events to your default event bus. Specify * to permit any account to put events to your default event bus, optionally limited by condition."
   value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.principal
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "statement_id" {
+  description = "(Required) An identifier string for the external account that you are granting permissions to."
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.statement_id
+}
+output "type" {
+  description = "(Required) Type of condition. Value values: StringEquals."
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.type
+}
+output "value" {
+  description = "(Required) Value for the key.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.value
+}
+output "action" {
+  description = "(Optional) The action that you are enabling the other account to perform. Defaults to events:PutEvents."
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.action
+}
+output "condition" {
+  description = "(Optional) Configuration block to limit the event bus permissions you are granting to only accounts that fulfill the condition. Specified below."
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.condition
 }
 output "id" {
   description = "The statement ID of the EventBridge permission."
@@ -234,7 +205,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

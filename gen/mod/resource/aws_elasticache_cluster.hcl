@@ -1,183 +1,213 @@
 resource "aws_elasticache_cluster" "aws_elasticache_cluster" {
-  arn                          = var.arn
-  security_group_names         = var.security_group_names
-  engine                       = var.engine
-  notification_topic_arn       = var.notification_topic_arn
-  parameter_group_name         = var.parameter_group_name
-  engine_version_actual        = var.engine_version_actual
-  log_type                     = var.log_type
-  node_type                    = var.node_type
-  num_cache_nodes              = var.num_cache_nodes
-  maintenance_window           = var.maintenance_window
-  security_group_ids           = var.security_group_ids
-  snapshot_name                = var.snapshot_name
-  apply_immediately            = var.apply_immediately
-  az_mode                      = var.az_mode
-  cluster_id                   = var.cluster_id
-  destination                  = var.destination
-  engine_version               = var.engine_version
-  subnet_group_name            = var.subnet_group_name
-  tags_all                     = var.tags_all
-  tags                         = var.tags
-  auto_minor_version_upgrade   = var.auto_minor_version_upgrade
-  cache_nodes                  = var.cache_nodes
-  destination_type             = var.destination_type
-  final_snapshot_identifier    = var.final_snapshot_identifier
-  snapshot_window              = var.snapshot_window
   configuration_endpoint       = var.configuration_endpoint
-  port                         = var.port
-  preferred_availability_zones = var.preferred_availability_zones
-  replication_group_id         = var.replication_group_id
+  log_format                   = var.log_format
   snapshot_retention_limit     = var.snapshot_retention_limit
   availability_zone            = var.availability_zone
-  cluster_address              = var.cluster_address
-  log_delivery_configuration   = var.log_delivery_configuration
-  log_format                   = var.log_format
   snapshot_arns                = var.snapshot_arns
+  notification_topic_arn       = var.notification_topic_arn
+  cluster_address              = var.cluster_address
+  destination                  = var.destination
+  engine                       = var.engine
+  engine_version               = var.engine_version
+  parameter_group_name         = var.parameter_group_name
+  snapshot_name                = var.snapshot_name
+  snapshot_window              = var.snapshot_window
+  apply_immediately            = var.apply_immediately
+  destination_type             = var.destination_type
+  preferred_availability_zones = var.preferred_availability_zones
+  arn                          = var.arn
+  cluster_id                   = var.cluster_id
+  final_snapshot_identifier    = var.final_snapshot_identifier
+  maintenance_window           = var.maintenance_window
+  node_type                    = var.node_type
+  replication_group_id         = var.replication_group_id
+  auto_minor_version_upgrade   = var.auto_minor_version_upgrade
+  num_cache_nodes              = var.num_cache_nodes
+  subnet_group_name            = var.subnet_group_name
+  log_delivery_configuration   = var.log_delivery_configuration
+  engine_version_actual        = var.engine_version_actual
+  port                         = var.port
+  security_group_names         = var.security_group_names
+  tags                         = var.tags
+  cache_nodes                  = var.cache_nodes
+  log_type                     = var.log_type
+  security_group_ids           = var.security_group_ids
+  tags_all                     = var.tags_all
+  az_mode                      = var.az_mode
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "auto_minor_version_upgrade" {
-  description = "\"redis\"true."
-  type        = string
-}
-variable "cache_nodes" {
-  description = "List of node objects including id, address, port and availability_zone."
-  type        = string
-}
-variable "destination_type" {
-  description = "For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose."
-  type        = string
-}
-variable "final_snapshot_identifier" {
-  description = "(Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made."
-  type        = string
-}
-variable "snapshot_window" {
-  description = "(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "configuration_endpoint" {
-  description = "(Memcached only) Configuration endpoint to allow host discovery."
-  type        = string
-}
-variable "port" {
-  description = " – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource."
-  type        = string
-}
-variable "preferred_availability_zones" {
-  description = "(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference."
-  type        = string
-}
-variable "replication_group_id" {
-  description = "(Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group."
-  type        = string
-}
-variable "snapshot_retention_limit" {
-  description = "(Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes"
-  type        = string
-}
-variable "availability_zone" {
-  description = "(Optional) Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource."
-  type        = string
-}
-variable "cluster_address" {
-  description = "(Memcached only) DNS name of the cache cluster without the port appended."
-  type        = string
-}
-variable "log_delivery_configuration" {
-  description = "(Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details."
-  type        = string
-}
-variable "log_format" {
-  description = "Valid values are json or text"
-  type        = string
-}
-variable "snapshot_arns" {
-  description = " – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the created ElastiCache Cluster."
-  type        = string
-}
-variable "security_group_names" {
-  description = " – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource."
   type        = string
 }
 variable "engine" {
   description = " – (Optional, Required if replication_group_id is not specified) Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis."
   type        = string
 }
-variable "notification_topic_arn" {
-  description = " – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic."
+variable "engine_version" {
+  description = "Describe Cache Engine Versionsengine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.26.x5.0.6engine_version_actual, see  below."
   type        = string
+  default     = ""
 }
 variable "parameter_group_name" {
   description = " – (Required unless replication_group_id is provided) The name of the parameter group to associate with this cache cluster."
   type        = string
 }
-variable "engine_version_actual" {
-  description = "Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine."
+variable "snapshot_name" {
+  description = "(Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource."
   type        = string
+  default     = ""
 }
-variable "log_type" {
-  description = "Valid values are  slow-log or engine-log. Max 1 of each."
+variable "snapshot_window" {
+  description = "(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00"
   type        = string
+  default     = ""
+}
+variable "apply_immediately" {
+  description = "(Optional) Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information.."
+  type        = string
+  default     = ""
+}
+variable "cluster_address" {
+  description = "(Memcached only) DNS name of the cache cluster without the port appended."
+  type        = string
+  default     = ""
+}
+variable "destination" {
+  description = "Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the created ElastiCache Cluster."
+  type        = string
+  default     = ""
+}
+variable "destination_type" {
+  description = "For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose."
+  type        = string
+  default     = ""
+}
+variable "preferred_availability_zones" {
+  description = "(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference."
+  type        = string
+  default     = ""
+}
+variable "maintenance_window" {
+  description = "ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00."
+  type        = string
+  default     = ""
 }
 variable "node_type" {
   description = " – (Required unless replication_group_id is provided) The instance class used. See AWS documentation for information on supported node types for Redis and guidance on selecting node types for Redis. See AWS documentation for information on supported node types for Memcached and guidance on selecting node types for Memcached. For Memcached, changing this value will re-create the resource."
   type        = string
 }
-variable "num_cache_nodes" {
-  description = " – (Required unless replication_group_id is provided) The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed."
+variable "replication_group_id" {
+  description = "(Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group."
   type        = string
+  default     = ""
 }
-variable "snapshot_name" {
-  description = "(Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource."
+variable "auto_minor_version_upgrade" {
+  description = "\"redis\"true."
   type        = string
-}
-variable "apply_immediately" {
-  description = "(Optional) Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information.."
-  type        = string
-}
-variable "az_mode" {
-  description = "(Optional, Memcached only) Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1."
-  type        = string
+  default     = ""
 }
 variable "cluster_id" {
   description = " – (Required) Group identifier. ElastiCache converts this name to lowercase. Changing this value will re-create the resource."
   type        = string
 }
-variable "destination" {
-  description = "Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource."
+variable "final_snapshot_identifier" {
+  description = "(Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made."
   type        = string
+  default     = ""
 }
-variable "engine_version" {
-  description = "Describe Cache Engine Versionsengine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.26.x5.0.6engine_version_actual, see  below."
+variable "log_delivery_configuration" {
+  description = "(Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details."
   type        = string
+  default     = ""
 }
-variable "maintenance_window" {
-  description = "ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00."
-  type        = string
-}
-variable "security_group_ids" {
-  description = " – (Optional, VPC only) One or more VPC security groups associated with the cache cluster"
+variable "num_cache_nodes" {
+  description = " – (Required unless replication_group_id is provided) The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed."
   type        = string
 }
 variable "subnet_group_name" {
   description = " – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource."
   type        = string
+  default     = ""
+}
+variable "security_group_names" {
+  description = " – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "cache_nodes" {
+  description = "List of node objects including id, address, port and availability_zone."
+  type        = string
+  default     = ""
+}
+variable "engine_version_actual" {
+  description = "Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine."
+  type        = string
+  default     = ""
+}
+variable "port" {
+  description = " – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource."
+  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks."
   type        = string
+  default     = ""
+}
+variable "az_mode" {
+  description = "(Optional, Memcached only) Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1."
+  type        = string
+  default     = ""
+}
+variable "log_type" {
+  description = "Valid values are  slow-log or engine-log. Max 1 of each."
+  type        = string
+  default     = ""
+}
+variable "security_group_ids" {
+  description = " – (Optional, VPC only) One or more VPC security groups associated with the cache cluster"
+  type        = string
+  default     = ""
+}
+variable "snapshot_retention_limit" {
+  description = "(Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes"
+  type        = string
+  default     = ""
+}
+variable "availability_zone" {
+  description = "(Optional) Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource."
+  type        = string
+  default     = ""
+}
+variable "configuration_endpoint" {
+  description = "(Memcached only) Configuration endpoint to allow host discovery."
+  type        = string
+  default     = ""
+}
+variable "log_format" {
+  description = "Valid values are json or text"
+  type        = string
+  default     = ""
+}
+variable "notification_topic_arn" {
+  description = " – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic."
+  type        = string
+  default     = ""
+}
+variable "snapshot_arns" {
+  description = " – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -299,317 +329,241 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "auto_minor_version_upgrade" {
-  description = "\"redis\"true."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.auto_minor_version_upgrade
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cache_nodes" {
-  description = "List of node objects including id, address, port and availability_zone."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.cache_nodes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination_type" {
-  description = "For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "final_snapshot_identifier" {
-  description = "(Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.final_snapshot_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_window" {
-  description = "(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_window
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "configuration_endpoint" {
-  description = "(Memcached only) Configuration endpoint to allow host discovery."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.configuration_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port" {
-  description = " – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "preferred_availability_zones" {
-  description = "(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.preferred_availability_zones
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "replication_group_id" {
-  description = "(Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.replication_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_retention_limit" {
-  description = "(Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_retention_limit
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "availability_zone" {
-  description = "(Optional) Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_address" {
-  description = "(Memcached only) DNS name of the cache cluster without the port appended."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.cluster_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "log_delivery_configuration" {
   description = "(Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details."
   value       = aws_elasticache_cluster.aws_elasticache_cluster.log_delivery_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_format" {
-  description = "Valid values are json or text"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_format
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_arns" {
-  description = " – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the created ElastiCache Cluster."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_names" {
-  description = " – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.security_group_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "engine" {
-  description = " – (Optional, Required if replication_group_id is not specified) Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "notification_topic_arn" {
-  description = " – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.notification_topic_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "parameter_group_name" {
-  description = " – (Required unless replication_group_id is provided) The name of the parameter group to associate with this cache cluster."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.parameter_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "engine_version_actual" {
-  description = "Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine_version_actual
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_type" {
-  description = "Valid values are  slow-log or engine-log. Max 1 of each."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "node_type" {
-  description = " – (Required unless replication_group_id is provided) The instance class used. See AWS documentation for information on supported node types for Redis and guidance on selecting node types for Redis. See AWS documentation for information on supported node types for Memcached and guidance on selecting node types for Memcached. For Memcached, changing this value will re-create the resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.node_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "num_cache_nodes" {
   description = " – (Required unless replication_group_id is provided) The initial number of cache nodes that the cache cluster will have. For Redis, this value must be 1. For Memcached, this value must be between 1 and 40. If this number is reduced on subsequent runs, the highest numbered nodes will be removed."
   value       = aws_elasticache_cluster.aws_elasticache_cluster.num_cache_nodes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_name" {
-  description = "(Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "apply_immediately" {
-  description = "(Optional) Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information.."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.apply_immediately
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "az_mode" {
-  description = "(Optional, Memcached only) Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.az_mode
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_id" {
-  description = " – (Required) Group identifier. ElastiCache converts this name to lowercase. Changing this value will re-create the resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.cluster_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination" {
-  description = "Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "engine_version" {
-  description = "Describe Cache Engine Versionsengine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.26.x5.0.6engine_version_actual, see  below."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "maintenance_window" {
-  description = "ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.maintenance_window
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_ids" {
-  description = " – (Optional, VPC only) One or more VPC security groups associated with the cache cluster"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subnet_group_name" {
   description = " – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource."
   value       = aws_elasticache_cluster.aws_elasticache_cluster.subnet_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cache_nodes" {
+  description = "List of node objects including id, address, port and availability_zone."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.cache_nodes
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "maintenance_window" {
-  description = "ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.maintenance_window
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "replication_group_id" {
-  description = "(Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.replication_group_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_ids" {
-  description = " – (Optional, VPC only) One or more VPC security groups associated with the cache cluster"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "engine_version_actual" {
+  description = "Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine_version_actual
 }
 output "port" {
   description = " – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource."
   value       = aws_elasticache_cluster.aws_elasticache_cluster.port
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "security_group_names" {
+  description = " – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.security_group_names
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags
+}
+output "az_mode" {
+  description = "(Optional, Memcached only) Whether the nodes in this Memcached node group are created in a single Availability Zone or created across multiple Availability Zones in the cluster's region. Valid values for this parameter are single-az or cross-az, default is single-az. If you want to choose cross-az, num_cache_nodes must be greater than 1."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.az_mode
+}
+output "log_type" {
+  description = "Valid values are  slow-log or engine-log. Max 1 of each."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_type
+}
+output "security_group_ids" {
+  description = " – (Optional, VPC only) One or more VPC security groups associated with the cache cluster"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.security_group_ids
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags_all
+}
+output "availability_zone" {
+  description = "(Optional) Availability Zone for the cache cluster. If you want to create cache nodes in multi-az, use preferred_availability_zones instead. Default: System chosen Availability Zone. Changing this value will re-create the resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.availability_zone
+}
+output "configuration_endpoint" {
+  description = "(Memcached only) Configuration endpoint to allow host discovery."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.configuration_endpoint
+}
+output "log_format" {
+  description = "Valid values are json or text"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_format
+}
+output "snapshot_retention_limit" {
+  description = "(Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_retention_limit
+}
+output "notification_topic_arn" {
+  description = " – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.notification_topic_arn
+}
+output "snapshot_arns" {
+  description = " – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_arns
+}
+output "parameter_group_name" {
+  description = " – (Required unless replication_group_id is provided) The name of the parameter group to associate with this cache cluster."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.parameter_group_name
+}
+output "snapshot_name" {
+  description = "(Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_name
+}
+output "snapshot_window" {
+  description = "(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_window
+}
+output "apply_immediately" {
+  description = "(Optional) Whether any database modifications are applied immediately, or during the next maintenance window. Default is false. See Amazon ElastiCache Documentation for more information.."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.apply_immediately
+}
+output "cluster_address" {
+  description = "(Memcached only) DNS name of the cache cluster without the port appended."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.cluster_address
+}
+output "destination" {
+  description = "Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination
+}
+output "engine" {
+  description = " – (Optional, Required if replication_group_id is not specified) Name of the cache engine to be used for this cache cluster. Valid values are memcached or redis."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine
+}
+output "engine_version" {
+  description = "Describe Cache Engine Versionsengine is redis and the version is 6 or higher, the major and minor version can be set, e.g., 6.26.x5.0.6engine_version_actual, see  below."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine_version
+}
+output "arn" {
+  description = "The ARN of the created ElastiCache Cluster."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.arn
+}
+output "destination_type" {
+  description = "For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination_type
+}
+output "preferred_availability_zones" {
+  description = "(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.preferred_availability_zones
+}
+output "replication_group_id" {
+  description = "(Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.replication_group_id
+}
+output "auto_minor_version_upgrade" {
+  description = "\"redis\"true."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.auto_minor_version_upgrade
+}
+output "cluster_id" {
+  description = " – (Required) Group identifier. ElastiCache converts this name to lowercase. Changing this value will re-create the resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.cluster_id
+}
+output "final_snapshot_identifier" {
+  description = "(Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.final_snapshot_identifier
+}
+output "maintenance_window" {
+  description = "ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.maintenance_window
+}
+output "node_type" {
+  description = " – (Required unless replication_group_id is provided) The instance class used. See AWS documentation for information on supported node types for Redis and guidance on selecting node types for Redis. See AWS documentation for information on supported node types for Memcached and guidance on selecting node types for Memcached. For Memcached, changing this value will re-create the resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.node_type
+}
+output "security_group_ids" {
+  description = " – (Optional, VPC only) One or more VPC security groups associated with the cache cluster"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.security_group_ids
+}
+output "snapshot_retention_limit" {
+  description = "(Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_retention_limit
+}
+output "snapshot_window" {
+  description = "(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_window
+}
+output "engine_version_actual" {
+  description = "Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine_version_actual
+}
+output "log_delivery_configuration" {
+  description = "(Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_delivery_configuration
+}
+output "log_type" {
+  description = "Valid values are  slow-log or engine-log. Max 1 of each."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_type
+}
+output "maintenance_window" {
+  description = "ddd:hh24:mi-ddd:hh24:misun:05:00-sun:09:00."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.maintenance_window
+}
+output "port" {
+  description = " – (Optional) The port number on which each of the cache nodes will accept connections. For Memcached the default is 11211, and for Redis the default port is 6379. Cannot be provided with replication_group_id. Changing this value will re-create the resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.port
+}
+output "subnet_group_name" {
+  description = " – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.subnet_group_name
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags
+}
+output "destination_type" {
+  description = "For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination_type
+}
+output "final_snapshot_identifier" {
+  description = "(Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.final_snapshot_identifier
+}
+output "log_format" {
+  description = "Valid values are json or text"
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_format
+}
+output "snapshot_name" {
+  description = "(Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_name
+}
+output "cluster_address" {
+  description = "(Memcached only) DNS name of the cache cluster without the port appended."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.cluster_address
+}
+output "destination" {
+  description = "Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination
+}
+output "preferred_availability_zones" {
+  description = "(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.preferred_availability_zones
+}
+output "replication_group_id" {
+  description = "(Optional, Required if engine is not specified) ID of the replication group to which this cluster should belong. If this parameter is specified, the cluster is added to the specified replication group as a read replica; otherwise, the cluster is a standalone primary that is not part of any replication group."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.replication_group_id
+}
+output "snapshot_arns" {
+  description = " – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_arns
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags_all
+}
+output "arn" {
+  description = "The ARN of the created ElastiCache Cluster."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.arn
+}
+output "cache_nodes" {
+  description = "List of node objects including id, address, port and availability_zone."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.cache_nodes
+}
+output "configuration_endpoint" {
+  description = "(Memcached only) Configuration endpoint to allow host discovery."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.configuration_endpoint
+}
+output "notification_topic_arn" {
+  description = " – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic."
+  value       = aws_elasticache_cluster.aws_elasticache_cluster.notification_topic_arn
 }
 output "security_group_names" {
   description = " – (Optional, EC2 Classic only) List of security group names to associate with this cache cluster. Changing this value will re-create the resource."
@@ -617,167 +571,7 @@ output "security_group_names" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_window" {
-  description = "(Optional, Redis only) Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. Example: 05:00-09:00"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_window
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the created ElastiCache Cluster."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cache_nodes" {
-  description = "List of node objects including id, address, port and availability_zone."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.cache_nodes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "final_snapshot_identifier" {
-  description = "(Optional, Redis only) Name of your final cluster snapshot. If omitted, no final snapshot will be made."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.final_snapshot_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_delivery_configuration" {
-  description = "(Optional, Redis only) Specifies the destination and format of Redis SLOWLOG or Redis Engine Log. See the documentation on Amazon ElastiCache. See Log Delivery Configuration below for more details."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_delivery_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_type" {
-  description = "Valid values are  slow-log or engine-log. Max 1 of each."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "preferred_availability_zones" {
-  description = "(Optional, Memcached only) List of the Availability Zones in which cache nodes are created. If you are creating your cluster in an Amazon VPC you can only locate nodes in Availability Zones that are associated with the subnets in the selected subnet group. The number of Availability Zones listed must equal the value of num_cache_nodes. If you want all the nodes in the same Availability Zone, use availability_zone instead, or repeat the Availability Zone multiple times in the list. Default: System chosen Availability Zones. Detecting drift of existing node availability zone is not currently supported. Updating this argument by itself to migrate existing node availability zones is not currently supported and will show a perpetual difference."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.preferred_availability_zones
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_group_name" {
-  description = " – (Optional, VPC only) Name of the subnet group to be used for the cache cluster. Changing this value will re-create the resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.subnet_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination" {
-  description = "Name of either the CloudWatch Logs LogGroup or Kinesis Data Firehose resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination_type" {
-  description = "For CloudWatch Logs use cloudwatch-logs or for Kinesis Data Firehose use kinesis-firehose."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.destination_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "engine_version_actual" {
-  description = "Because ElastiCache pulls the latest minor or patch for a version, this attribute returns the running version of the cache engine."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.engine_version_actual
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_format" {
-  description = "Valid values are json or text"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.log_format
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_name" {
-  description = "(Optional, Redis only) Name of a snapshot from which to restore data into the new node group. Changing snapshot_name forces a new resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_retention_limit" {
-  description = "(Optional, Redis only) Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, then a snapshot that was taken today will be retained for 5 days before being deleted. If the value of SnapshotRetentionLimit is set to zero (0), backups are turned off. Please note that setting a snapshot_retention_limit is not supported on cache.t1.micro cache nodes"
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_retention_limit
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Log Delivery ConfigurationThe log_delivery_configuration block allows the streaming of Redis SLOWLOG or Redis Engine Log to CloudWatch Logs or Kinesis Data Firehose. Max of 2 blocks."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_address" {
-  description = "(Memcached only) DNS name of the cache cluster without the port appended."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.cluster_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "configuration_endpoint" {
-  description = "(Memcached only) Configuration endpoint to allow host discovery."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.configuration_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "notification_topic_arn" {
-  description = " – (Optional) ARN of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.notification_topic_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_arns" {
-  description = " – (Optional, Redis only) Single-element string list containing an Amazon Resource Name (ARN) of a Redis RDB snapshot file stored in Amazon S3. The object name cannot contain any commas. Changing snapshot_arns forces a new resource."
-  value       = aws_elasticache_cluster.aws_elasticache_cluster.snapshot_arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

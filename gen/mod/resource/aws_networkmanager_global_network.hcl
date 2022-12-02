@@ -1,7 +1,7 @@
 resource "aws_networkmanager_global_network" "aws_networkmanager_global_network" {
-  tags        = var.tags
   arn         = var.arn
   description = var.description
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -14,10 +14,12 @@ variable "arn" {
 variable "description" {
   description = "(Optional) Description of the Global Network."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value tags for the Global Network. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -143,33 +145,17 @@ output "arn" {
   description = "Global Network Amazon Resource Name (ARN)"
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) Description of the Global Network."
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value tags for the Global Network. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Global Network Amazon Resource Name (ARN)"
   value       = aws_networkmanager_global_network.aws_networkmanager_global_network.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -177,7 +163,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

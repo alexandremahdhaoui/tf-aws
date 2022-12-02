@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "rest_api_id" {
-  description = "(Required) ID of the REST API."
-  type        = string
-}
 variable "policy" {
   description = "(Required) JSON formatted policy document that controls access to the API Gateway. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document GuideIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "rest_api_id" {
+  description = "(Required) ID of the REST API."
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +138,9 @@ output "policy" {
   description = "(Required) JSON formatted policy document that controls access to the API Gateway. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document GuideIn addition to all arguments above, the following attributes are exported:"
   value       = aws_api_gateway_rest_api_policy.aws_api_gateway_rest_api_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rest_api_id" {
   description = "(Required) ID of the REST API."
   value       = aws_api_gateway_rest_api_policy.aws_api_gateway_rest_api_policy.rest_api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "ID of the REST API"
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

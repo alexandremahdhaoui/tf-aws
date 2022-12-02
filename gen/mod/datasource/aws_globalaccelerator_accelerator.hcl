@@ -8,6 +8,7 @@ variable "provider_region" {
 variable "arn" {
   description = "(Optional) Full ARN of the Global Accelerator."
   type        = string
+  default     = ""
 }
 output "arn" {
   description = "(Optional) Full ARN of the Global Accelerator."
@@ -15,7 +16,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

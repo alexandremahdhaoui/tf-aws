@@ -1,15 +1,23 @@
 resource "aws_db_subnet_group" "aws_db_subnet_group" {
+  id                      = var.id
+  name                    = var.name
   name_prefix             = var.name_prefix
   subnet_ids              = var.subnet_ids
   supported_network_types = var.supported_network_types
   tags                    = var.tags
   arn                     = var.arn
   description             = var.description
-  id                      = var.id
-  name                    = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Optional, Forces new resource) The name of the DB subnet group. If omitted, Terraform will assign a random, unique name."
+  type        = string
+}
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   type        = string
 }
 variable "subnet_ids" {
@@ -23,6 +31,7 @@ variable "supported_network_types" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the db subnet group."
@@ -31,17 +40,10 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the DB subnet group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The db subnet group name."
-  type        = string
-}
-variable "name" {
-  description = "(Optional, Forces new resource) The name of the DB subnet group. If omitted, Terraform will assign a random, unique name."
-  type        = string
-}
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +166,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "subnet_ids" {
-  description = "(Required) A list of VPC subnet IDs."
-  value       = aws_db_subnet_group.aws_db_subnet_group.subnet_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "supported_network_types" {
-  description = "The network type of the db subnet group."
-  value       = aws_db_subnet_group.aws_db_subnet_group.supported_network_types
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_db_subnet_group.aws_db_subnet_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the db subnet group."
-  value       = aws_db_subnet_group.aws_db_subnet_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the DB subnet group. Defaults to \"Managed by Terraform\"."
   value       = aws_db_subnet_group.aws_db_subnet_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The db subnet group name."
   value       = aws_db_subnet_group.aws_db_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional, Forces new resource) The name of the DB subnet group. If omitted, Terraform will assign a random, unique name."
   value       = aws_db_subnet_group.aws_db_subnet_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_db_subnet_group.aws_db_subnet_group.name_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "subnet_ids" {
+  description = "(Required) A list of VPC subnet IDs."
+  value       = aws_db_subnet_group.aws_db_subnet_group.subnet_ids
+}
+output "supported_network_types" {
+  description = "The network type of the db subnet group."
+  value       = aws_db_subnet_group.aws_db_subnet_group.supported_network_types
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_db_subnet_group.aws_db_subnet_group.tags
+}
+output "arn" {
+  description = "The ARN of the db subnet group."
+  value       = aws_db_subnet_group.aws_db_subnet_group.arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_db_subnet_group.aws_db_subnet_group.tags_all
+}
+output "arn" {
+  description = "The ARN of the db subnet group."
+  value       = aws_db_subnet_group.aws_db_subnet_group.arn
+}
+output "id" {
+  description = "The db subnet group name."
+  value       = aws_db_subnet_group.aws_db_subnet_group.id
 }
 output "supported_network_types" {
   description = "The network type of the db subnet group."
@@ -234,31 +216,7 @@ output "supported_network_types" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_db_subnet_group.aws_db_subnet_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the db subnet group."
-  value       = aws_db_subnet_group.aws_db_subnet_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The db subnet group name."
-  value       = aws_db_subnet_group.aws_db_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

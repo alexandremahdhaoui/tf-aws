@@ -11,18 +11,22 @@ variable "provider_region" {
 variable "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."
   type        = string
+  default     = ""
 }
 variable "graph_arn" {
   description = "ARN of the Detective Graph."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "ARN of the Detective Graph."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = " (Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -148,49 +152,25 @@ output "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."
   value       = aws_detective_graph.aws_detective_graph.created_time
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "graph_arn" {
   description = "ARN of the Detective Graph."
   value       = aws_detective_graph.aws_detective_graph.graph_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ARN of the Detective Graph."
   value       = aws_detective_graph.aws_detective_graph.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = " (Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_detective_graph.aws_detective_graph.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."
   value       = aws_detective_graph.aws_detective_graph.created_time
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "graph_arn" {
   description = "ARN of the Detective Graph."
   value       = aws_detective_graph.aws_detective_graph.graph_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "ARN of the Detective Graph."
@@ -198,7 +178,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

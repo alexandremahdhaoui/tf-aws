@@ -1,21 +1,13 @@
 resource "aws_volume_attachment" "aws_volume_attachment" {
-  device_name                    = var.device_name
-  force_detach                   = var.force_detach
-  instance_id                    = var.instance_id
   skip_destroy                   = var.skip_destroy
   stop_instance_before_detaching = var.stop_instance_before_detaching
   volume_id                      = var.volume_id
+  device_name                    = var.device_name
+  force_detach                   = var.force_detach
+  instance_id                    = var.instance_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "device_name" {
-  description = "The device name exposed to the instance"
-  type        = string
-}
-variable "force_detach" {
-  description = "(Optional, Boolean) Set to truestrongdata lossDetaching an Amazon EBS Volume from an Instance for more information."
   type        = string
 }
 variable "instance_id" {
@@ -32,6 +24,14 @@ variable "stop_instance_before_detaching" {
 }
 variable "volume_id" {
   description = "(Required) ID of the Volume to be attached"
+  type        = string
+}
+variable "device_name" {
+  description = "The device name exposed to the instance"
+  type        = string
+}
+variable "force_detach" {
+  description = "(Optional, Boolean) Set to truestrongdata lossDetaching an Amazon EBS Volume from an Instance for more information."
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,65 +158,33 @@ output "instance_id" {
   description = "ID of the Instance"
   value       = aws_volume_attachment.aws_volume_attachment.instance_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "skip_destroy" {
   description = ""
   value       = aws_volume_attachment.aws_volume_attachment.skip_destroy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "stop_instance_before_detaching" {
   description = "(Optional, Boolean) Set this to true to ensure that the target instance is stopped\nbefore trying to detach the volume. Stops the instance, if it is not already stopped.In addition to all arguments above, the following attributes are exported:"
   value       = aws_volume_attachment.aws_volume_attachment.stop_instance_before_detaching
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "volume_id" {
   description = "(Required) ID of the Volume to be attached"
   value       = aws_volume_attachment.aws_volume_attachment.volume_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "device_name" {
   description = "The device name exposed to the instance"
   value       = aws_volume_attachment.aws_volume_attachment.device_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "force_detach" {
   description = "(Optional, Boolean) Set to truestrongdata lossDetaching an Amazon EBS Volume from an Instance for more information."
   value       = aws_volume_attachment.aws_volume_attachment.force_detach
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "device_name" {
   description = "The device name exposed to the instance"
   value       = aws_volume_attachment.aws_volume_attachment.device_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_id" {
   description = "ID of the Instance"
   value       = aws_volume_attachment.aws_volume_attachment.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "volume_id" {
   description = "ID of the Volume"
@@ -224,7 +192,7 @@ output "volume_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

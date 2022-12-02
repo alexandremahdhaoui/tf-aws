@@ -8,13 +8,12 @@ import (
 type Kind string
 
 const (
-	Resource   Kind = "TerraformResource"
-	Datasource      = "TerraformDatasource"
-
-	Api                = "aws.terraform"
-	Issuer             = "alexandre.mahdhaoui.com"
-	ApiVersionTemplate = "%s.%s/%s"
-	CurrentVersion     = "v0.1.0"
+	Resource           Kind = "TerraformResource"
+	Datasource              = "TerraformDatasource"
+	Api                     = "aws.terraform"
+	Issuer                  = "alexandre.mahdhaoui.com"
+	ApiVersionTemplate      = "%s.%s/%s"
+	CurrentVersion          = "v0.1.0"
 )
 
 type ResourceDefinition interface {

@@ -1,7 +1,7 @@
 resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "aws_sagemaker_notebook_instance_lifecycle_configuration" {
-  on_start  = var.on_start
   name      = var.name
   on_create = var.on_create
+  on_start  = var.on_start
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -10,14 +10,17 @@ variable "provider_region" {
 variable "name" {
   description = "(Optional) The name of the lifecycle configuration (must be unique). If omitted, Terraform will assign a random, unique name."
   type        = string
+  default     = ""
 }
 variable "on_create" {
   description = "(Optional) A shell script (base64-encoded) that runs only once when the SageMaker Notebook Instance is created."
   type        = string
+  default     = ""
 }
 variable "on_start" {
   description = "(Optional) A shell script (base64-encoded) that runs every time the SageMaker Notebook Instance is started including the time it's created.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -143,25 +146,13 @@ output "name" {
   description = "(Optional) The name of the lifecycle configuration (must be unique). If omitted, Terraform will assign a random, unique name."
   value       = aws_sagemaker_notebook_instance_lifecycle_configuration.aws_sagemaker_notebook_instance_lifecycle_configuration.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "on_create" {
   description = "(Optional) A shell script (base64-encoded) that runs only once when the SageMaker Notebook Instance is created."
   value       = aws_sagemaker_notebook_instance_lifecycle_configuration.aws_sagemaker_notebook_instance_lifecycle_configuration.on_create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "on_start" {
   description = "(Optional) A shell script (base64-encoded) that runs every time the SageMaker Notebook Instance is started including the time it's created.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_notebook_instance_lifecycle_configuration.aws_sagemaker_notebook_instance_lifecycle_configuration.on_start
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this lifecycle configuration."
@@ -169,7 +160,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

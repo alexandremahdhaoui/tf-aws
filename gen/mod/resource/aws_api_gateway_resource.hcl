@@ -8,20 +8,20 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "parent_id" {
-  description = "(Required) ID of the parent API resource"
-  type        = string
-}
-variable "path_part" {
-  description = "(Required) Last path segment of this API resource.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   type        = string
 }
 variable "id" {
   description = "Resource's identifier."
+  type        = string
+}
+variable "parent_id" {
+  description = "(Required) ID of the parent API resource"
+  type        = string
+}
+variable "path_part" {
+  description = "(Required) Last path segment of this API resource.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,45 +144,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Resource's identifier."
-  value       = aws_api_gateway_resource.aws_api_gateway_resource.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "parent_id" {
-  description = "(Required) ID of the parent API resource"
-  value       = aws_api_gateway_resource.aws_api_gateway_resource.parent_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "path_part" {
   description = "(Required) Last path segment of this API resource.In addition to all arguments above, the following attributes are exported:"
   value       = aws_api_gateway_resource.aws_api_gateway_resource.path_part
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   value       = aws_api_gateway_resource.aws_api_gateway_resource.rest_api_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Resource's identifier."
   value       = aws_api_gateway_resource.aws_api_gateway_resource.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "parent_id" {
+  description = "(Required) ID of the parent API resource"
+  value       = aws_api_gateway_resource.aws_api_gateway_resource.parent_id
+}
+output "id" {
+  description = "Resource's identifier."
+  value       = aws_api_gateway_resource.aws_api_gateway_resource.id
 }
 output "path" {
   description = "Complete path for this API resource, including all parent paths."
@@ -190,7 +170,7 @@ output "path" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

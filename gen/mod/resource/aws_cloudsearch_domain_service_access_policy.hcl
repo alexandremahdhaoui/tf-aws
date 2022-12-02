@@ -1,7 +1,7 @@
 resource "aws_cloudsearch_domain_service_access_policy" "aws_cloudsearch_domain_service_access_policy" {
+  update        = var.update
   access_policy = var.access_policy
   domain_name   = var.domain_name
-  update        = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,29 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "access_policy" {
+  description = "(Required) The access rules you want to configure. These rules replace any existing rules. See the AWS documentation for details."
+  value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.access_policy
+}
 output "domain_name" {
   description = "(Required) The CloudSearch domain name the policy applies to.No additional attributes are exported.TimeoutsConfiguration options:"
   value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 20m)"
   value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "access_policy" {
-  description = "(Required) The access rules you want to configure. These rules replace any existing rules. See the AWS documentation for details."
-  value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.access_policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "update" {
+  description = "(Default 20m)"
+  value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.update
 }
 output "delete" {
   description = "(Default 20m)"
@@ -169,15 +161,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 20m)"
-  value       = aws_cloudsearch_domain_service_access_policy.aws_cloudsearch_domain_service_access_policy.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,8 +1,8 @@
 resource "aws_ecr_registry_scanning_configuration" "aws_ecr_registry_scanning_configuration" {
-  repository_filter = var.repository_filter
-  rule              = var.rule
   scan_frequency    = var.scan_frequency
   scan_type         = var.scan_type
+  repository_filter = var.repository_filter
+  rule              = var.rule
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "repository_filter" {
 variable "rule" {
   description = "(Optional) One or multiple blocks specifying scanning rules to determine which repository filters are used and at what frequency scanning will occur. See below for schema.rule"
   type        = string
+  default     = ""
 }
 variable "scan_frequency" {
   description = "(Required) The frequency that scans are performed at for a private registry. Can be SCAN_ON_PUSH, CONTINUOUS_SCAN, or MANUAL.In addition to all arguments above, the following attributes are exported:"
@@ -144,37 +145,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "scan_type" {
-  description = "(Required) the scanning type to set for the registry. Can be either ENHANCED or BASIC."
-  value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.scan_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "repository_filter" {
-  description = "(Required) One or more repository filter blocks, containing a filter (required string filtering repositories, see pattern regex here) and a filter_type (required string, currently only WILDCARD is supported)."
-  value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.repository_filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule" {
   description = "(Optional) One or multiple blocks specifying scanning rules to determine which repository filters are used and at what frequency scanning will occur. See below for schema.rule"
   value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.rule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "scan_frequency" {
   description = "(Required) The frequency that scans are performed at for a private registry. Can be SCAN_ON_PUSH, CONTINUOUS_SCAN, or MANUAL.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.scan_frequency
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "scan_type" {
+  description = "(Required) the scanning type to set for the registry. Can be either ENHANCED or BASIC."
+  value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.scan_type
+}
+output "repository_filter" {
+  description = "(Required) One or more repository filter blocks, containing a filter (required string filtering repositories, see pattern regex here) and a filter_type (required string, currently only WILDCARD is supported)."
+  value       = aws_ecr_registry_scanning_configuration.aws_ecr_registry_scanning_configuration.repository_filter
 }
 output "registry_id" {
   description = "The registry ID the scanning configuration applies to."
@@ -182,7 +167,7 @@ output "registry_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

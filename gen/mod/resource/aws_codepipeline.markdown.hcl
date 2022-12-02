@@ -1,113 +1,122 @@
 resource "aws_codepipeline.markdown" "aws_codepipeline.markdown" {
-  arn              = var.arn
+  version          = var.version
+  artifact_store   = var.artifact_store
   encryption_key   = var.encryption_key
-  input_artifacts  = var.input_artifacts
-  location         = var.location
-  owner            = var.owner
-  type             = var.type
+  output_artifacts = var.output_artifacts
+  role_arn         = var.role_arn
   stage            = var.stage
   category         = var.category
-  configuration    = var.configuration
-  namespace        = var.namespace
-  provider         = var.provider
-  role_arn         = var.role_arn
-  run_order        = var.run_order
-  artifact_store   = var.artifact_store
-  id               = var.id
+  location         = var.location
   name             = var.name
-  region           = var.region
+  provider         = var.provider
+  run_order        = var.run_order
   tags             = var.tags
-  version          = var.version
+  type             = var.type
+  configuration    = var.configuration
+  input_artifacts  = var.input_artifacts
+  id               = var.id
+  namespace        = var.namespace
+  owner            = var.owner
+  region           = var.region
   action           = var.action
-  output_artifacts = var.output_artifacts
+  arn              = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "encryption_key" {
-  description = "(Optional) The encryption key block AWS CodePipeline uses to encrypt the data in the artifact store, such as an AWS Key Management Service (AWS KMS) key. If you don't specify a key, AWS CodePipeline uses the default key for Amazon Simple Storage Service (Amazon S3). An encryption_key block is documented below."
-  type        = string
-}
-variable "input_artifacts" {
-  description = "(Optional) A list of artifact names to be worked on."
-  type        = string
-}
-variable "location" {
-  description = "(Required) The location where AWS CodePipeline stores artifacts for a pipeline; currently only S3 is supported."
-  type        = string
-}
-variable "owner" {
-  description = "(Required) The creator of the action being called. Possible values are AWS, Custom and ThirdParty."
-  type        = string
-}
-variable "type" {
-  description = "(Required) The type of key; currently only KMS is supportedA stage block supports the following arguments:"
-  type        = string
-}
-variable "arn" {
-  description = "The codepipeline ARN."
-  type        = string
-}
-variable "configuration" {
-  description = "(Optional) A map of the action declaration's configuration. Configurations options for action types and providers can be found in the Pipeline Structure Reference and Action Structure Reference documentation."
-  type        = string
-}
-variable "namespace" {
-  description = "(Optional) The namespace all output variables will be accessed from.~> strongNote: The input artifact of an action must exactly match the output artifact declared in a preceding action, but the input artifact does not have to be the next action in strict sequence from the action that provided the output artifact. Actions in parallel can declare different output artifacts, which are in turn consumed by different following actions.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "provider" {
-  description = "(Required) The provider of the service being called by the action. Valid providers are determined by the action category. Provider names are listed in the Action Structure Reference documentation."
-  type        = string
-}
-variable "role_arn" {
-  description = "(Optional) The ARN of the IAM service role that will perform the declared action. This is assumed through the roleArn for the pipeline."
-  type        = string
-}
-variable "run_order" {
-  description = "(Optional) The order in which actions are run."
-  type        = string
-}
-variable "stage" {
-  description = " (Minimum of at least two stage blocks is required) A stage block. Stages are documented below."
-  type        = string
-}
-variable "category" {
-  description = "(Required) A category defines what kind of action can be taken in the stage, and constrains the provider type for the action. Possible values are Approval, Build, Deploy, Invoke, Source and Test."
-  type        = string
-}
-variable "id" {
-  description = "The codepipeline ID."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The action declaration's name."
-  type        = string
-}
-variable "region" {
-  description = "(Optional) The region in which to run the action."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An artifact_store block supports the following arguments:"
-  type        = string
-}
-variable "version" {
-  description = "(Required) A string that identifies the action type."
   type        = string
 }
 variable "artifact_store" {
   description = " (Required) One or more artifact_store blocks. Artifact stores are documented below."
   type        = string
 }
+variable "encryption_key" {
+  description = "(Optional) The encryption key block AWS CodePipeline uses to encrypt the data in the artifact store, such as an AWS Key Management Service (AWS KMS) key. If you don't specify a key, AWS CodePipeline uses the default key for Amazon Simple Storage Service (Amazon S3). An encryption_key block is documented below."
+  type        = string
+  default     = ""
+}
+variable "version" {
+  description = "(Required) A string that identifies the action type."
+  type        = string
+}
+variable "category" {
+  description = "(Required) A category defines what kind of action can be taken in the stage, and constrains the provider type for the action. Possible values are Approval, Build, Deploy, Invoke, Source and Test."
+  type        = string
+}
+variable "location" {
+  description = "(Required) The location where AWS CodePipeline stores artifacts for a pipeline; currently only S3 is supported."
+  type        = string
+}
 variable "output_artifacts" {
   description = "(Optional) A list of artifact names to output. Output artifact names must be unique within a pipeline."
+  type        = string
+  default     = ""
+}
+variable "role_arn" {
+  description = "(Optional) The ARN of the IAM service role that will perform the declared action. This is assumed through the roleArn for the pipeline."
+  type        = string
+  default     = ""
+}
+variable "stage" {
+  description = " (Minimum of at least two stage blocks is required) A stage block. Stages are documented below."
+  type        = string
+}
+variable "configuration" {
+  description = "(Optional) A map of the action declaration's configuration. Configurations options for action types and providers can be found in the Pipeline Structure Reference and Action Structure Reference documentation."
+  type        = string
+  default     = ""
+}
+variable "input_artifacts" {
+  description = "(Optional) A list of artifact names to be worked on."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The action declaration's name."
+  type        = string
+}
+variable "provider" {
+  description = "(Required) The provider of the service being called by the action. Valid providers are determined by the action category. Provider names are listed in the Action Structure Reference documentation."
+  type        = string
+}
+variable "run_order" {
+  description = "(Optional) The order in which actions are run."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An artifact_store block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) The type of key; currently only KMS is supportedA stage block supports the following arguments:"
   type        = string
 }
 variable "action" {
   description = "(Required) The action(s) to include in the stage. Defined as an action block belowAn action block supports the following arguments:"
   type        = string
+}
+variable "arn" {
+  description = "The codepipeline ARN."
+  type        = string
+}
+variable "id" {
+  description = "The codepipeline ID."
+  type        = string
+}
+variable "namespace" {
+  description = "(Optional) The namespace all output variables will be accessed from.~> strongNote: The input artifact of an action must exactly match the output artifact declared in a preceding action, but the input artifact does not have to be the next action in strict sequence from the action that provided the output artifact. Actions in parallel can declare different output artifacts, which are in turn consumed by different following actions.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "owner" {
+  description = "(Required) The creator of the action being called. Possible values are AWS, Custom and ThirdParty."
+  type        = string
+}
+variable "region" {
+  description = "(Optional) The region in which to run the action."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -229,181 +238,97 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "stage" {
-  description = " (Minimum of at least two stage blocks is required) A stage block. Stages are documented below."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.stage
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "category" {
   description = "(Required) A category defines what kind of action can be taken in the stage, and constrains the provider type for the action. Possible values are Approval, Build, Deploy, Invoke, Source and Test."
   value       = aws_codepipeline.markdown.aws_codepipeline.markdown.category
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "configuration" {
-  description = "(Optional) A map of the action declaration's configuration. Configurations options for action types and providers can be found in the Pipeline Structure Reference and Action Structure Reference documentation."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "namespace" {
-  description = "(Optional) The namespace all output variables will be accessed from.~> strongNote: The input artifact of an action must exactly match the output artifact declared in a preceding action, but the input artifact does not have to be the next action in strict sequence from the action that provided the output artifact. Actions in parallel can declare different output artifacts, which are in turn consumed by different following actions.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.namespace
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provider" {
-  description = "(Required) The provider of the service being called by the action. Valid providers are determined by the action category. Provider names are listed in the Action Structure Reference documentation."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.provider
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Optional) The ARN of the IAM service role that will perform the declared action. This is assumed through the roleArn for the pipeline."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "run_order" {
-  description = "(Optional) The order in which actions are run."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.run_order
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "artifact_store" {
-  description = " (Required) One or more artifact_store blocks. Artifact stores are documented below."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.artifact_store
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The codepipeline ID."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The action declaration's name."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "region" {
-  description = "(Optional) The region in which to run the action."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An artifact_store block supports the following arguments:"
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "(Required) A string that identifies the action type."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "action" {
-  description = "(Required) The action(s) to include in the stage. Defined as an action block belowAn action block supports the following arguments:"
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.action
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "output_artifacts" {
-  description = "(Optional) A list of artifact names to output. Output artifact names must be unique within a pipeline."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.output_artifacts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The codepipeline ARN."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encryption_key" {
-  description = "(Optional) The encryption key block AWS CodePipeline uses to encrypt the data in the artifact store, such as an AWS Key Management Service (AWS KMS) key. If you don't specify a key, AWS CodePipeline uses the default key for Amazon Simple Storage Service (Amazon S3). An encryption_key block is documented below."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.encryption_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "input_artifacts" {
-  description = "(Optional) A list of artifact names to be worked on."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.input_artifacts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "location" {
   description = "(Required) The location where AWS CodePipeline stores artifacts for a pipeline; currently only S3 is supported."
   value       = aws_codepipeline.markdown.aws_codepipeline.markdown.location
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "output_artifacts" {
+  description = "(Optional) A list of artifact names to output. Output artifact names must be unique within a pipeline."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.output_artifacts
 }
-output "owner" {
-  description = "(Required) The creator of the action being called. Possible values are AWS, Custom and ThirdParty."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.owner
+output "role_arn" {
+  description = "(Optional) The ARN of the IAM service role that will perform the declared action. This is assumed through the roleArn for the pipeline."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "stage" {
+  description = " (Minimum of at least two stage blocks is required) A stage block. Stages are documented below."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.stage
+}
+output "configuration" {
+  description = "(Optional) A map of the action declaration's configuration. Configurations options for action types and providers can be found in the Pipeline Structure Reference and Action Structure Reference documentation."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.configuration
+}
+output "input_artifacts" {
+  description = "(Optional) A list of artifact names to be worked on."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.input_artifacts
+}
+output "name" {
+  description = "(Required) The action declaration's name."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.name
+}
+output "provider" {
+  description = "(Required) The provider of the service being called by the action. Valid providers are determined by the action category. Provider names are listed in the Action Structure Reference documentation."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.provider
+}
+output "run_order" {
+  description = "(Optional) The order in which actions are run."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.run_order
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.An artifact_store block supports the following arguments:"
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.tags
 }
 output "type" {
   description = "(Required) The type of key; currently only KMS is supportedA stage block supports the following arguments:"
   value       = aws_codepipeline.markdown.aws_codepipeline.markdown.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "action" {
+  description = "(Required) The action(s) to include in the stage. Defined as an action block belowAn action block supports the following arguments:"
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.action
+}
+output "arn" {
+  description = "The codepipeline ARN."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.arn
 }
 output "id" {
   description = "The codepipeline ID."
   value       = aws_codepipeline.markdown.aws_codepipeline.markdown.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "namespace" {
+  description = "(Optional) The namespace all output variables will be accessed from.~> strongNote: The input artifact of an action must exactly match the output artifact declared in a preceding action, but the input artifact does not have to be the next action in strict sequence from the action that provided the output artifact. Actions in parallel can declare different output artifacts, which are in turn consumed by different following actions.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.namespace
+}
+output "owner" {
+  description = "(Required) The creator of the action being called. Possible values are AWS, Custom and ThirdParty."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.owner
+}
+output "region" {
+  description = "(Optional) The region in which to run the action."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.region
+}
+output "artifact_store" {
+  description = " (Required) One or more artifact_store blocks. Artifact stores are documented below."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.artifact_store
+}
+output "encryption_key" {
+  description = "(Optional) The encryption key block AWS CodePipeline uses to encrypt the data in the artifact store, such as an AWS Key Management Service (AWS KMS) key. If you don't specify a key, AWS CodePipeline uses the default key for Amazon Simple Storage Service (Amazon S3). An encryption_key block is documented below."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.encryption_key
+}
+output "version" {
+  description = "(Required) A string that identifies the action type."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.version
+}
+output "arn" {
+  description = "The codepipeline ARN."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.arn
+}
+output "id" {
+  description = "The codepipeline ID."
+  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -411,15 +336,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The codepipeline ARN."
-  value       = aws_codepipeline.markdown.aws_codepipeline.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -128,17 +128,13 @@ output "id" {
   description = "The ID of the firewall configuration."
   value       = aws_route53_resolver_firewall_config.markdown.aws_route53_resolver_firewall_config.markdown.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_id" {
   description = "The AWS account ID of the owner of the VPC that this firewall configuration applies to."
   value       = aws_route53_resolver_firewall_config.markdown.aws_route53_resolver_firewall_config.markdown.owner_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

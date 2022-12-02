@@ -1,143 +1,167 @@
 resource "aws_network_interface.markdown" "aws_network_interface.markdown" {
-  instance                  = var.instance
-  ipv6_address_count        = var.ipv6_address_count
+  tags_all                  = var.tags_all
   arn                       = var.arn
-  ipv6_address_list         = var.ipv6_address_list
-  ipv6_prefixes             = var.ipv6_prefixes
+  description               = var.description
+  mac_address               = var.mac_address
+  private_ip_list           = var.private_ip_list
   private_ips               = var.private_ips
   attachment                = var.attachment
+  ipv4_prefixes             = var.ipv4_prefixes
+  ipv6_prefix_count         = var.ipv6_prefix_count
+  private_ips_count         = var.private_ips_count
+  tags                      = var.tags
+  source_dest_check         = var.source_dest_check
+  instance                  = var.instance
+  ipv6_addresses            = var.ipv6_addresses
+  ipv6_address_list         = var.ipv6_address_list
   ipv6_address_list_enabled = var.ipv6_address_list_enabled
+  private_dns_name          = var.private_dns_name
+  private_ip_list_enabled   = var.private_ip_list_enabled
+  subnet_id                 = var.subnet_id
+  ipv6_prefixes             = var.ipv6_prefixes
+  device_index              = var.device_index
+  interface_type            = var.interface_type
+  security_groups           = var.security_groups
   owner_id                  = var.owner_id
   id                        = var.id
-  ipv6_addresses            = var.ipv6_addresses
-  private_ip_list           = var.private_ip_list
-  private_ip_list_enabled   = var.private_ip_list_enabled
-  source_dest_check         = var.source_dest_check
   ipv4_prefix_count         = var.ipv4_prefix_count
-  security_groups           = var.security_groups
-  device_index              = var.device_index
-  subnet_id                 = var.subnet_id
-  tags                      = var.tags
-  tags_all                  = var.tags_all
-  ipv6_prefix_count         = var.ipv6_prefix_count
-  interface_type            = var.interface_type
-  ipv4_prefixes             = var.ipv4_prefixes
-  mac_address               = var.mac_address
-  private_dns_name          = var.private_dns_name
-  private_ips_count         = var.private_ips_count
-  description               = var.description
+  ipv6_address_count        = var.ipv6_address_count
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "ipv6_prefixes" {
-  description = "(Optional) One or more IPv6 prefixes assigned to the network interface."
+variable "arn" {
+  description = "ARN of the network interface."
   type        = string
+  default     = ""
 }
-variable "private_ips" {
-  description = "(Optional) List of private IPs to assign to the ENI without regard to order."
+variable "description" {
+  description = "(Optional) Description for the network interface."
   type        = string
+  default     = ""
 }
-variable "attachment" {
-  description = "(Optional) Configuration block to define the attachment of the ENI. See Attachment below for more details!"
+variable "mac_address" {
+  description = "MAC address of the network interface."
   type        = string
-}
-variable "ipv6_address_list" {
-  description = "(Optional) List of private IPs to assign to the ENI in sequential order."
-  type        = string
-}
-variable "ipv6_address_list_enabled" {
-  description = "(Optional) Whether ipv6_address_list is allowed and controls the IPs to assign to the ENI and ipv6_addresses and ipv6_address_count become read-only. Default false."
-  type        = string
-}
-variable "owner_id" {
-  description = "AWS account ID of the owner of the network interface."
-  type        = string
-}
-variable "id" {
-  description = "ID of the network interface."
-  type        = string
+  default     = ""
 }
 variable "private_ip_list" {
   description = "(Optional) List of private IPs to assign to the ENI in sequential order. Requires setting private_ip_list_enabled to true."
   type        = string
+  default     = ""
 }
-variable "private_ip_list_enabled" {
-  description = "(Optional) Whether private_ip_list is allowed and controls the IPs to assign to the ENI and private_ips and private_ips_count become read-only. Default false."
+variable "private_ips" {
+  description = "(Optional) List of private IPs to assign to the ENI without regard to order."
   type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "attachment" {
+  description = "(Optional) Configuration block to define the attachment of the ENI. See Attachment below for more details!"
+  type        = string
+  default     = ""
+}
+variable "ipv4_prefixes" {
+  description = "(Optional) One or more IPv4 prefixes assigned to the network interface."
+  type        = string
+  default     = ""
+}
+variable "ipv6_prefix_count" {
+  description = "(Optional) Number of IPv6 prefixes that AWS automatically assigns to the network interface."
+  type        = string
+  default     = ""
+}
+variable "private_ips_count" {
+  description = "(Optional) Number of secondary private IPs to assign to the ENI. The total number of private IPs will be 1 + private_ips_count, as a primary private IP will be assiged to an ENI by default."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.AttachmentThe attachment block supports the following:"
+  type        = string
+  default     = ""
 }
 variable "source_dest_check" {
   description = "(Optional) Whether to enable source destination checking for the ENI. Default true."
+  type        = string
+  default     = ""
+}
+variable "instance" {
+  description = "(Required) ID of the instance to attach to."
   type        = string
 }
 variable "ipv6_addresses" {
   description = "(Optional) One or more specific IPv6 addresses from the IPv6 CIDR block range of your subnet. Addresses are assigned without regard to order. You can't use this option if you're specifying ipv6_address_count."
   type        = string
+  default     = ""
 }
-variable "security_groups" {
-  description = "(Optional) List of security group IDs to assign to the ENI."
+variable "ipv6_address_list" {
+  description = "(Optional) List of private IPs to assign to the ENI in sequential order."
   type        = string
+  default     = ""
 }
-variable "device_index" {
-  description = "(Required) Integer to define the devices index.In addition to all arguments above, the following attributes are exported:"
+variable "ipv6_address_list_enabled" {
+  description = "(Optional) Whether ipv6_address_list is allowed and controls the IPs to assign to the ENI and ipv6_addresses and ipv6_address_count become read-only. Default false."
   type        = string
+  default     = ""
 }
-variable "ipv4_prefix_count" {
-  description = "(Optional) Number of IPv4 prefixes that AWS automatically assigns to the network interface."
+variable "private_dns_name" {
+  description = "Private DNS name of the network interface (IPv4)."
   type        = string
+  default     = ""
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.AttachmentThe attachment block supports the following:"
+variable "private_ip_list_enabled" {
+  description = "(Optional) Whether private_ip_list is allowed and controls the IPs to assign to the ENI and private_ips and private_ips_count become read-only. Default false."
   type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "ipv6_prefix_count" {
-  description = "(Optional) Number of IPv6 prefixes that AWS automatically assigns to the network interface."
-  type        = string
+  default     = ""
 }
 variable "subnet_id" {
   description = "(Required) Subnet ID to create the ENI in."
   type        = string
 }
-variable "ipv4_prefixes" {
-  description = "(Optional) One or more IPv4 prefixes assigned to the network interface."
+variable "ipv6_prefixes" {
+  description = "(Optional) One or more IPv6 prefixes assigned to the network interface."
   type        = string
+  default     = ""
 }
-variable "mac_address" {
-  description = "MAC address of the network interface."
-  type        = string
-}
-variable "private_dns_name" {
-  description = "Private DNS name of the network interface (IPv4)."
-  type        = string
-}
-variable "private_ips_count" {
-  description = "(Optional) Number of secondary private IPs to assign to the ENI. The total number of private IPs will be 1 + private_ips_count, as a primary private IP will be assiged to an ENI by default."
+variable "device_index" {
+  description = "(Required) Integer to define the devices index.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "interface_type" {
   description = "(Optional) Type of network interface to create. Set to efa for Elastic Fabric Adapter. Changing interface_type will cause the resource to be destroyed and re-created."
   type        = string
+  default     = ""
 }
-variable "description" {
-  description = "(Optional) Description for the network interface."
+variable "security_groups" {
+  description = "(Optional) List of security group IDs to assign to the ENI."
   type        = string
+  default     = ""
+}
+variable "id" {
+  description = "ID of the network interface."
+  type        = string
+  default     = ""
+}
+variable "ipv4_prefix_count" {
+  description = "(Optional) Number of IPv4 prefixes that AWS automatically assigns to the network interface."
+  type        = string
+  default     = ""
 }
 variable "ipv6_address_count" {
   description = "(Optional) Number of IPv6 addresses to assign to a network interface. You can't use this option if specifying specific ipv6_addresses. If your subnet has the AssignIpv6AddressOnCreation attribute set to true, you can specify 0 to override this setting."
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "ARN of the network interface."
+variable "owner_id" {
+  description = "AWS account ID of the owner of the network interface."
   type        = string
-}
-variable "instance" {
-  description = "(Required) ID of the instance to attach to."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -259,245 +283,133 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "attachment" {
-  description = "(Optional) Configuration block to define the attachment of the ENI. See Attachment below for more details!"
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.attachment
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv6_address_list" {
-  description = "(Optional) List of private IPs to assign to the ENI in sequential order."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_address_list
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv6_prefixes" {
-  description = "(Optional) One or more IPv6 prefixes assigned to the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_prefixes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ips" {
-  description = "(Optional) List of private IPs to assign to the ENI without regard to order."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ips
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "AWS account ID of the owner of the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv6_address_list_enabled" {
-  description = "(Optional) Whether ipv6_address_list is allowed and controls the IPs to assign to the ENI and ipv6_addresses and ipv6_address_count become read-only. Default false."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_address_list_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv6_addresses" {
-  description = "(Optional) One or more specific IPv6 addresses from the IPv6 CIDR block range of your subnet. Addresses are assigned without regard to order. You can't use this option if you're specifying ipv6_address_count."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_addresses
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ip_list" {
-  description = "(Optional) List of private IPs to assign to the ENI in sequential order. Requires setting private_ip_list_enabled to true."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ip_list
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ip_list_enabled" {
-  description = "(Optional) Whether private_ip_list is allowed and controls the IPs to assign to the ENI and private_ips and private_ips_count become read-only. Default false."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ip_list_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_dest_check" {
-  description = "(Optional) Whether to enable source destination checking for the ENI. Default true."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.source_dest_check
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "device_index" {
-  description = "(Required) Integer to define the devices index.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.device_index
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv4_prefix_count" {
-  description = "(Optional) Number of IPv4 prefixes that AWS automatically assigns to the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv4_prefix_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_groups" {
-  description = "(Optional) List of security group IDs to assign to the ENI."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.security_groups
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv6_prefix_count" {
-  description = "(Optional) Number of IPv6 prefixes that AWS automatically assigns to the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_prefix_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_id" {
-  description = "(Required) Subnet ID to create the ENI in."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.subnet_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.AttachmentThe attachment block supports the following:"
   value       = aws_network_interface.markdown.aws_network_interface.markdown.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_dns_name" {
-  description = "Private DNS name of the network interface (IPv4)."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_dns_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "private_ips_count" {
   description = "(Optional) Number of secondary private IPs to assign to the ENI. The total number of private IPs will be 1 + private_ips_count, as a primary private IP will be assiged to an ENI by default."
   value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ips_count
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ipv6_addresses" {
+  description = "(Optional) One or more specific IPv6 addresses from the IPv6 CIDR block range of your subnet. Addresses are assigned without regard to order. You can't use this option if you're specifying ipv6_address_count."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_addresses
 }
-output "interface_type" {
-  description = "(Optional) Type of network interface to create. Set to efa for Elastic Fabric Adapter. Changing interface_type will cause the resource to be destroyed and re-created."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.interface_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv4_prefixes" {
-  description = "(Optional) One or more IPv4 prefixes assigned to the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv4_prefixes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "mac_address" {
-  description = "MAC address of the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.mac_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description for the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_dest_check" {
+  description = "(Optional) Whether to enable source destination checking for the ENI. Default true."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.source_dest_check
 }
 output "instance" {
   description = "(Required) ID of the instance to attach to."
   value       = aws_network_interface.markdown.aws_network_interface.markdown.instance
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "private_ip_list_enabled" {
+  description = "(Optional) Whether private_ip_list is allowed and controls the IPs to assign to the ENI and private_ips and private_ips_count become read-only. Default false."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ip_list_enabled
+}
+output "subnet_id" {
+  description = "(Required) Subnet ID to create the ENI in."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.subnet_id
+}
+output "ipv6_address_list" {
+  description = "(Optional) List of private IPs to assign to the ENI in sequential order."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_address_list
+}
+output "ipv6_address_list_enabled" {
+  description = "(Optional) Whether ipv6_address_list is allowed and controls the IPs to assign to the ENI and ipv6_addresses and ipv6_address_count become read-only. Default false."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_address_list_enabled
+}
+output "private_dns_name" {
+  description = "Private DNS name of the network interface (IPv4)."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_dns_name
+}
+output "ipv6_prefixes" {
+  description = "(Optional) One or more IPv6 prefixes assigned to the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_prefixes
+}
+output "security_groups" {
+  description = "(Optional) List of security group IDs to assign to the ENI."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.security_groups
+}
+output "device_index" {
+  description = "(Required) Integer to define the devices index.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.device_index
+}
+output "interface_type" {
+  description = "(Optional) Type of network interface to create. Set to efa for Elastic Fabric Adapter. Changing interface_type will cause the resource to be destroyed and re-created."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.interface_type
 }
 output "ipv6_address_count" {
   description = "(Optional) Number of IPv6 addresses to assign to a network interface. You can't use this option if specifying specific ipv6_addresses. If your subnet has the AssignIpv6AddressOnCreation attribute set to true, you can specify 0 to override this setting."
   value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_address_count
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the network interface."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "owner_id" {
+  description = "AWS account ID of the owner of the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.owner_id
 }
 output "id" {
   description = "ID of the network interface."
   value       = aws_network_interface.markdown.aws_network_interface.markdown.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ipv4_prefix_count" {
+  description = "(Optional) Number of IPv4 prefixes that AWS automatically assigns to the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv4_prefix_count
+}
+output "private_ip_list" {
+  description = "(Optional) List of private IPs to assign to the ENI in sequential order. Requires setting private_ip_list_enabled to true."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ip_list
+}
+output "private_ips" {
+  description = "(Optional) List of private IPs to assign to the ENI without regard to order."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_ips
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.tags_all
+}
+output "arn" {
+  description = "ARN of the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.arn
+}
+output "description" {
+  description = "(Optional) Description for the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.description
 }
 output "mac_address" {
   description = "MAC address of the network interface."
   value       = aws_network_interface.markdown.aws_network_interface.markdown.mac_address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "attachment" {
+  description = "(Optional) Configuration block to define the attachment of the ENI. See Attachment below for more details!"
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.attachment
+}
+output "ipv4_prefixes" {
+  description = "(Optional) One or more IPv4 prefixes assigned to the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv4_prefixes
+}
+output "ipv6_prefix_count" {
+  description = "(Optional) Number of IPv6 prefixes that AWS automatically assigns to the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.ipv6_prefix_count
+}
+output "private_dns_name" {
+  description = "Private DNS name of the network interface (IPv4)."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_dns_name
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.tags_all
+}
+output "arn" {
+  description = "ARN of the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.arn
+}
+output "id" {
+  description = "ID of the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.id
+}
+output "mac_address" {
+  description = "MAC address of the network interface."
+  value       = aws_network_interface.markdown.aws_network_interface.markdown.mac_address
 }
 output "owner_id" {
   description = "AWS account ID of the owner of the network interface."
@@ -505,23 +417,7 @@ output "owner_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_dns_name" {
-  description = "Private DNS name of the network interface (IPv4)."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.private_dns_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_network_interface.markdown.aws_network_interface.markdown.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

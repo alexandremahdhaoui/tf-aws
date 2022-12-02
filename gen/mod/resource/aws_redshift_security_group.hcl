@@ -1,13 +1,27 @@
 resource "aws_redshift_security_group" "aws_redshift_security_group" {
-  security_group_name     = var.security_group_name
-  security_group_owner_id = var.security_group_owner_id
-  cidr                    = var.cidr
   description             = var.description
   ingress                 = var.ingress
   name                    = var.name
+  security_group_name     = var.security_group_name
+  security_group_owner_id = var.security_group_owner_id
+  cidr                    = var.cidr
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the Redshift security group. Defaults to \"Managed by Terraform\"."
+  type        = string
+  default     = ""
+}
+variable "ingress" {
+  description = "(Optional) A list of ingress rules.Ingress blocks support the following:"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the Redshift security group."
   type        = string
 }
 variable "security_group_name" {
@@ -20,18 +34,6 @@ variable "security_group_owner_id" {
 }
 variable "cidr" {
   description = "The CIDR block to accept"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the Redshift security group. Defaults to \"Managed by Terraform\"."
-  type        = string
-}
-variable "ingress" {
-  description = "(Optional) A list of ingress rules.Ingress blocks support the following:"
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the Redshift security group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,53 +156,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "ingress" {
+  description = "(Optional) A list of ingress rules.Ingress blocks support the following:"
+  value       = aws_redshift_security_group.aws_redshift_security_group.ingress
+}
 output "name" {
   description = "(Required) The name of the Redshift security group."
   value       = aws_redshift_security_group.aws_redshift_security_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "security_group_name" {
   description = "The name of the security group to authorize"
   value       = aws_redshift_security_group.aws_redshift_security_group.security_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "security_group_owner_id" {
   description = "The owner Id of the security group provided\nby security_group_name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshift_security_group.aws_redshift_security_group.security_group_owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cidr" {
   description = "The CIDR block to accept"
   value       = aws_redshift_security_group.aws_redshift_security_group.cidr
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the Redshift security group. Defaults to \"Managed by Terraform\"."
   value       = aws_redshift_security_group.aws_redshift_security_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ingress" {
-  description = "(Optional) A list of ingress rules.Ingress blocks support the following:"
-  value       = aws_redshift_security_group.aws_redshift_security_group.ingress
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Redshift security group ID."
@@ -208,7 +186,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

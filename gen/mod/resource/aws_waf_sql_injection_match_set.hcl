@@ -1,18 +1,23 @@
 resource "aws_waf_sql_injection_match_set" "aws_waf_sql_injection_match_set" {
-  text_transformation        = var.text_transformation
-  type                       = var.type
   data                       = var.data
   field_to_match             = var.field_to_match
   name                       = var.name
   sql_injection_match_tuples = var.sql_injection_match_tuples
+  text_transformation        = var.text_transformation
+  type                       = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "name" {
+  description = "(Required) The name or description of the SQL Injection Match Set."
+  type        = string
+}
 variable "sql_injection_match_tuples" {
   description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested Blockssql_injection_match_tuples"
   type        = string
+  default     = ""
 }
 variable "text_transformation" {
   description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
@@ -25,13 +30,10 @@ variable "type" {
 variable "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   type        = string
+  default     = ""
 }
 variable "field_to_match" {
   description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name or description of the SQL Injection Match Set."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,53 +156,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
-  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.field_to_match
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name or description of the SQL Injection Match Set."
-  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "sql_injection_match_tuples" {
-  description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested Blockssql_injection_match_tuples"
-  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.sql_injection_match_tuples
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "text_transformation" {
-  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
-  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.text_transformation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "type" {
   description = "HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.data
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
+  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.field_to_match
+}
+output "name" {
+  description = "(Required) The name or description of the SQL Injection Match Set."
+  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.name
+}
+output "sql_injection_match_tuples" {
+  description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested Blockssql_injection_match_tuples"
+  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.sql_injection_match_tuples
+}
+output "text_transformation" {
+  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
+  value       = aws_waf_sql_injection_match_set.aws_waf_sql_injection_match_set.text_transformation
 }
 output "id" {
   description = "The ID of the WAF SQL Injection Match Set."
@@ -208,7 +186,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

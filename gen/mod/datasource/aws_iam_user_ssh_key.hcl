@@ -4,21 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "public_key" {
+  description = "SSH public key."
+  value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.public_key
+}
 output "fingerprint" {
   description = "MD5 message digest of the SSH public key."
   value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.fingerprint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "public_key" {
-  description = "SSH public key."
-  value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.public_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

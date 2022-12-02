@@ -2,25 +2,35 @@ resource "aws_eks_fargate_profile" "aws_eks_fargate_profile" {
   create                 = var.create
   delete                 = var.delete
   status                 = var.status
-  subnet_ids             = var.subnet_ids
-  tags                   = var.tags
-  tags_all               = var.tags_all
-  id                     = var.id
-  labels                 = var.labels
-  namespace              = var.namespace
+  pod_execution_role_arn = var.pod_execution_role_arn
   selector               = var.selector
+  subnet_ids             = var.subnet_ids
+  tags_all               = var.tags_all
+  namespace              = var.namespace
+  tags                   = var.tags
   arn                    = var.arn
   cluster_name           = var.cluster_name
   fargate_profile_name   = var.fargate_profile_name
-  pod_execution_role_arn = var.pod_execution_role_arn
+  id                     = var.id
+  labels                 = var.labels
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "namespace" {
+  description = "(Required) Kubernetes namespace for selection."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.selector Configuration Block"
+  type        = string
+  default     = ""
+}
 variable "arn" {
   description = "Amazon Resource Name (ARN) of the EKS Fargate Profile."
   type        = string
+  default     = ""
 }
 variable "cluster_name" {
   description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
@@ -30,49 +40,47 @@ variable "fargate_profile_name" {
   description = " – (Required) Name of the EKS Fargate Profile."
   type        = string
 }
-variable "pod_execution_role_arn" {
-  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Fargate Profile."
+variable "id" {
+  description = "EKS Cluster name and EKS Fargate Profile name separated by a colon (:)."
   type        = string
+  default     = ""
+}
+variable "labels" {
+  description = "(Optional) Key-value map of Kubernetes labels for selection.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 10m)"
   type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 10m)"
   type        = string
+  default     = ""
 }
 variable "status" {
   description = "Status of the EKS Fargate Profile."
+  type        = string
+  default     = ""
+}
+variable "pod_execution_role_arn" {
+  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Fargate Profile."
+  type        = string
+}
+variable "selector" {
+  description = "(Required) Configuration block(s) for selecting Kubernetes Pods to execute with this EKS Fargate Profile. Detailed below."
   type        = string
 }
 variable "subnet_ids" {
   description = " – (Required) Identifiers of private EC2 Subnets to associate with the EKS Fargate Profile. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster)."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.selector Configuration Block"
-  type        = string
-}
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
-}
-variable "id" {
-  description = "EKS Cluster name and EKS Fargate Profile name separated by a colon (:)."
-  type        = string
-}
-variable "labels" {
-  description = "(Optional) Key-value map of Kubernetes labels for selection.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "namespace" {
-  description = "(Required) Kubernetes namespace for selection."
-  type        = string
-}
-variable "selector" {
-  description = "(Required) Configuration block(s) for selecting Kubernetes Pods to execute with this EKS Fargate Profile. Detailed below."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -194,133 +202,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "selector" {
-  description = "(Required) Configuration block(s) for selecting Kubernetes Pods to execute with this EKS Fargate Profile. Detailed below."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.selector
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "fargate_profile_name" {
-  description = " – (Required) Name of the EKS Fargate Profile."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.fargate_profile_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pod_execution_role_arn" {
-  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Fargate Profile."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.pod_execution_role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the EKS Fargate Profile."
   value       = aws_eks_fargate_profile.aws_eks_fargate_profile.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cluster_name" {
   description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
   value       = aws_eks_fargate_profile.aws_eks_fargate_profile.cluster_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "Status of the EKS Fargate Profile."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_ids" {
-  description = " – (Required) Identifiers of private EC2 Subnets to associate with the EKS Fargate Profile. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster)."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.subnet_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.selector Configuration Block"
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "namespace" {
-  description = "(Required) Kubernetes namespace for selection."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.namespace
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "fargate_profile_name" {
+  description = " – (Required) Name of the EKS Fargate Profile."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.fargate_profile_name
 }
 output "id" {
   description = "EKS Cluster name and EKS Fargate Profile name separated by a colon (:)."
   value       = aws_eks_fargate_profile.aws_eks_fargate_profile.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "labels" {
   description = "(Optional) Key-value map of Kubernetes labels for selection.In addition to all arguments above, the following attributes are exported:"
   value       = aws_eks_fargate_profile.aws_eks_fargate_profile.labels
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.delete
+}
+output "status" {
+  description = "Status of the EKS Fargate Profile."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.status
+}
+output "pod_execution_role_arn" {
+  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Fargate Profile."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.pod_execution_role_arn
+}
+output "selector" {
+  description = "(Required) Configuration block(s) for selecting Kubernetes Pods to execute with this EKS Fargate Profile. Detailed below."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.selector
+}
+output "subnet_ids" {
+  description = " – (Required) Identifiers of private EC2 Subnets to associate with the EKS Fargate Profile. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster)."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.subnet_ids
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.tags_all
+}
+output "namespace" {
+  description = "(Required) Kubernetes namespace for selection."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.namespace
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.selector Configuration Block"
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.tags
+}
+output "id" {
+  description = "EKS Cluster name and EKS Fargate Profile name separated by a colon (:)."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.id
+}
+output "status" {
+  description = "Status of the EKS Fargate Profile."
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.status
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the EKS Fargate Profile."
   value       = aws_eks_fargate_profile.aws_eks_fargate_profile.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 10m)"
   value       = aws_eks_fargate_profile.aws_eks_fargate_profile.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Default 10m)"
@@ -328,31 +284,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EKS Cluster name and EKS Fargate Profile name separated by a colon (:)."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "Status of the EKS Fargate Profile."
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_eks_fargate_profile.aws_eks_fargate_profile.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,7 +1,7 @@
 datasource "aws_efs_access_points" "aws_efs_access_points" {
-  file_system_id = var.file_system_id
   id             = var.id
   arns           = var.arns
+  file_system_id = var.file_system_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,41 +23,25 @@ output "arns" {
   description = "Set of Amazon Resource Names (ARNs)."
   value       = aws_efs_access_points.aws_efs_access_points.arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "file_system_id" {
   description = "(Required) EFS File System identifier.In addition to all arguments above, the following attributes are exported:"
   value       = aws_efs_access_points.aws_efs_access_points.file_system_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EFS File System identifier."
   value       = aws_efs_access_points.aws_efs_access_points.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arns" {
   description = "Set of Amazon Resource Names (ARNs)."
   value       = aws_efs_access_points.aws_efs_access_points.arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EFS File System identifier."
   value       = aws_efs_access_points.aws_efs_access_points.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,6 +1,6 @@
 resource "aws_s3control_bucket_policy" "aws_s3control_bucket_policy" {
-  policy = var.policy
   bucket = var.bucket
+  policy = var.policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,17 +138,9 @@ output "bucket" {
   description = "(Required) Amazon Resource Name (ARN) of the bucket."
   value       = aws_s3control_bucket_policy.aws_s3control_bucket_policy.bucket
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy" {
   description = "(Required) JSON string of the resource policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3control_bucket_policy.aws_s3control_bucket_policy.policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the bucket."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

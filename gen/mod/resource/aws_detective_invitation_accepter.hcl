@@ -133,17 +133,13 @@ output "graph_arn" {
   description = "(Required) ARN of the behavior graph that the member account is accepting the invitation for.In addition to all arguments above, the following attributes are exported:"
   value       = aws_detective_invitation_accepter.aws_detective_invitation_accepter.graph_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Unique identifier (ID) of the Detective invitation accepter."
   value       = aws_detective_invitation_accepter.aws_detective_invitation_accepter.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

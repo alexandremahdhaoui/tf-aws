@@ -133,17 +133,13 @@ output "model_package_group_name" {
   description = "(Required) The name of the model package group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_model_package_group_policy.aws_sagemaker_model_package_group_policy.model_package_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the Model Package Package Group."
   value       = aws_sagemaker_model_package_group_policy.aws_sagemaker_model_package_group_policy.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

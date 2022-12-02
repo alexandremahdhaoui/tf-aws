@@ -9,24 +9,27 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "user_arn" {
-  description = "(Required) The user's IAM ARN to set permissions for"
-  type        = string
-}
 variable "allow_ssh" {
   description = "(Optional) Whether the user is allowed to use SSH to communicate with the instance"
   type        = string
+  default     = ""
 }
 variable "allow_sudo" {
   description = "(Optional) Whether the user is allowed to use sudo to elevate privileges"
   type        = string
+  default     = ""
 }
 variable "level" {
   description = "(Optional) The users permission level. Mus be one of deny, show, deploy, manage, iam_only"
   type        = string
+  default     = ""
 }
 variable "stack_id" {
   description = "(Required) The stack to set the permissions forIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "user_arn" {
+  description = "(Required) The user's IAM ARN to set permissions for"
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,33 +156,17 @@ output "level" {
   description = "(Optional) The users permission level. Mus be one of deny, show, deploy, manage, iam_only"
   value       = aws_opsworks_permission.aws_opsworks_permission.level
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "stack_id" {
   description = "(Required) The stack to set the permissions forIn addition to all arguments above, the following attributes are exported:"
   value       = aws_opsworks_permission.aws_opsworks_permission.stack_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "user_arn" {
   description = "(Required) The user's IAM ARN to set permissions for"
   value       = aws_opsworks_permission.aws_opsworks_permission.user_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "allow_ssh" {
   description = "(Optional) Whether the user is allowed to use SSH to communicate with the instance"
   value       = aws_opsworks_permission.aws_opsworks_permission.allow_ssh
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "allow_sudo" {
   description = "(Optional) Whether the user is allowed to use sudo to elevate privileges"
@@ -187,7 +174,7 @@ output "allow_sudo" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

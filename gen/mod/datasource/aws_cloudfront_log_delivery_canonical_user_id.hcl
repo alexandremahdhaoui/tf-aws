@@ -8,6 +8,7 @@ variable "provider_region" {
 variable "region" {
   description = "(Optional) Region you'd like the zone for. By default, fetches the current region.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 output "region" {
   description = "(Optional) Region you'd like the zone for. By default, fetches the current region.In addition to all arguments above, the following attributes are exported:"
@@ -15,7 +16,7 @@ output "region" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

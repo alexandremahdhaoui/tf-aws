@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "Appsync Domain Name."
-  type        = string
-}
 variable "appsync_domain_name" {
   description = "Domain name that AppSync provides."
   type        = string
@@ -24,9 +20,14 @@ variable "certificate_arn" {
 variable "description" {
   description = "(Optional)  A description of the Domain Name."
   type        = string
+  default     = ""
 }
 variable "domain_name" {
   description = "(Required) Domain name.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "Appsync Domain Name."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,61 +150,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional)  A description of the Domain Name."
-  value       = aws_appsync_domain_name.aws_appsync_domain_name.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "domain_name" {
-  description = "(Required) Domain name.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appsync_domain_name.aws_appsync_domain_name.domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Appsync Domain Name."
-  value       = aws_appsync_domain_name.aws_appsync_domain_name.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "appsync_domain_name" {
   description = "Domain name that AppSync provides."
   value       = aws_appsync_domain_name.aws_appsync_domain_name.appsync_domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "certificate_arn" {
   description = "(Required) ARN of the certificate. This can be an Certificate Manager (ACM) certificate or an Identity and Access Management (IAM) server certificate. The certifiacte must reside in us-east-1."
   value       = aws_appsync_domain_name.aws_appsync_domain_name.certificate_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional)  A description of the Domain Name."
+  value       = aws_appsync_domain_name.aws_appsync_domain_name.description
+}
+output "domain_name" {
+  description = "(Required) Domain name.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appsync_domain_name.aws_appsync_domain_name.domain_name
+}
+output "id" {
+  description = "Appsync Domain Name."
+  value       = aws_appsync_domain_name.aws_appsync_domain_name.id
 }
 output "appsync_domain_name" {
   description = "Domain name that AppSync provides."
   value       = aws_appsync_domain_name.aws_appsync_domain_name.appsync_domain_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "hosted_zone_id" {
   description = "ID of your Amazon Route 53 hosted zone."
   value       = aws_appsync_domain_name.aws_appsync_domain_name.hosted_zone_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Appsync Domain Name."
@@ -211,7 +184,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

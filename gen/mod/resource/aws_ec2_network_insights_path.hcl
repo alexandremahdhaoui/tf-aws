@@ -1,14 +1,14 @@
 resource "aws_ec2_network_insights_path" "aws_ec2_network_insights_path" {
-  tags             = var.tags
+  source_ip        = var.source_ip
   tags_all         = var.tags_all
+  destination      = var.destination
   destination_ip   = var.destination_ip
   destination_port = var.destination_port
   id               = var.id
+  arn              = var.arn
   protocol         = var.protocol
   source           = var.source
-  source_ip        = var.source_ip
-  arn              = var.arn
-  destination      = var.destination
+  tags             = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -17,34 +17,12 @@ variable "provider_region" {
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "source_ip" {
-  description = "(Optional) IP address of the source resource."
-  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "ARN of the Network Insights Path."
   type        = string
-}
-variable "destination" {
-  description = "(Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway."
-  type        = string
-}
-variable "destination_ip" {
-  description = "(Optional) IP address of the destination resource."
-  type        = string
-}
-variable "destination_port" {
-  description = "(Optional) Destination port to analyze access to."
-  type        = string
-}
-variable "id" {
-  description = "ID of the Network Insights Path."
-  type        = string
+  default     = ""
 }
 variable "protocol" {
   description = "(Required) Protocol to use for analysis. Valid options are tcp or udp."
@@ -53,6 +31,35 @@ variable "protocol" {
 variable "source" {
   description = "(Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway."
   type        = string
+}
+variable "id" {
+  description = "ID of the Network Insights Path."
+  type        = string
+  default     = ""
+}
+variable "source_ip" {
+  description = "(Optional) IP address of the source resource."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "destination" {
+  description = "(Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway."
+  type        = string
+}
+variable "destination_ip" {
+  description = "(Optional) IP address of the destination resource."
+  type        = string
+  default     = ""
+}
+variable "destination_port" {
+  description = "(Optional) Destination port to analyze access to."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,101 +181,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Network Insights Path."
-  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "destination" {
   description = "(Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "destination_ip" {
   description = "(Optional) IP address of the destination resource."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.destination_ip
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "destination_port" {
   description = "(Optional) Destination port to analyze access to."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.destination_port
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ID of the Network Insights Path."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "protocol" {
-  description = "(Required) Protocol to use for analysis. Valid options are tcp or udp."
-  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.protocol
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source" {
-  description = "(Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway."
-  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.source
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "source_ip" {
   description = "(Optional) IP address of the source resource."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.source_ip
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.tags_all
 }
 output "arn" {
   description = "ARN of the Network Insights Path."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "protocol" {
+  description = "(Required) Protocol to use for analysis. Valid options are tcp or udp."
+  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.protocol
+}
+output "source" {
+  description = "(Required) ID of the resource which is the source of the path. Can be an Instance, Internet Gateway, Network Interface, Transit Gateway, VPC Endpoint, VPC Peering Connection or VPN Gateway."
+  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.source
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.tags
+}
+output "arn" {
+  description = "ARN of the Network Insights Path."
+  value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.arn
 }
 output "id" {
   description = "ID of the Network Insights Path."
   value       = aws_ec2_network_insights_path.aws_ec2_network_insights_path.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -276,7 +235,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

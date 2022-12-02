@@ -1,46 +1,18 @@
 resource "aws_athena_database" "aws_athena_database" {
-  encryption_configuration = var.encryption_configuration
-  force_destroy            = var.force_destroy
-  kms_key                  = var.kms_key
-  properties               = var.properties
   acl_configuration        = var.acl_configuration
   bucket                   = var.bucket
+  encryption_configuration = var.encryption_configuration
+  force_destroy            = var.force_destroy
+  name                     = var.name
+  properties               = var.properties
   comment                  = var.comment
-  s3_acl_option            = var.s3_acl_option
   encryption_option        = var.encryption_option
   expected_bucket_owner    = var.expected_bucket_owner
-  name                     = var.name
+  kms_key                  = var.kms_key
+  s3_acl_option            = var.s3_acl_option
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "acl_configuration" {
-  description = "(Optional) That an Amazon S3 canned ACL should be set to control ownership of stored query results. See ACL Configuration below."
-  type        = string
-}
-variable "bucket" {
-  description = "(Required) Name of S3 bucket to save the results of the query execution."
-  type        = string
-}
-variable "comment" {
-  description = "(Optional) Description of the database."
-  type        = string
-}
-variable "encryption_configuration" {
-  description = "(Optional) Encryption key block AWS Athena uses to decrypt the data in S3, such as an AWS Key Management Service (AWS KMS) key. See Encryption Configuration below."
-  type        = string
-}
-variable "force_destroy" {
-  description = "(Optional, Default: false) Boolean that indicates all tables should be deleted from the database so that the database can be destroyed without error. The tables are emnot recoverable."
-  type        = string
-}
-variable "kms_key" {
-  description = "(Optional) KMS key ARN or ID; required for key types SSE_KMS and CSE_KMS.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "properties" {
-  description = "(Optional) Key-value map of custom metadata properties for the database definition.ACL Configuration"
   type        = string
 }
 variable "encryption_option" {
@@ -50,14 +22,48 @@ variable "encryption_option" {
 variable "expected_bucket_owner" {
   description = "(Optional) AWS account ID that you expect to be the owner of the Amazon S3 bucket."
   type        = string
+  default     = ""
+}
+variable "kms_key" {
+  description = "(Optional) KMS key ARN or ID; required for key types SSE_KMS and CSE_KMS.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "s3_acl_option" {
+  description = "(Required) Amazon S3 canned ACL that Athena should specify when storing query results. Valid value is BUCKET_OWNER_FULL_CONTROL.~> strongNOTE: When Athena queries are executed, result files may be created in the specified bucket. Consider using force_destroy on the bucket too in order to avoid any problems when destroying the bucket.Encryption Configuration"
+  type        = string
+}
+variable "comment" {
+  description = "(Optional) Description of the database."
+  type        = string
+  default     = ""
+}
+variable "bucket" {
+  description = "(Required) Name of S3 bucket to save the results of the query execution."
+  type        = string
+}
+variable "encryption_configuration" {
+  description = "(Optional) Encryption key block AWS Athena uses to decrypt the data in S3, such as an AWS Key Management Service (AWS KMS) key. See Encryption Configuration below."
+  type        = string
+  default     = ""
+}
+variable "force_destroy" {
+  description = "(Optional, Default: false) Boolean that indicates all tables should be deleted from the database so that the database can be destroyed without error. The tables are emnot recoverable."
+  type        = string
 }
 variable "name" {
   description = "(Required) Name of the database to create."
   type        = string
 }
-variable "s3_acl_option" {
-  description = "(Required) Amazon S3 canned ACL that Athena should specify when storing query results. Valid value is BUCKET_OWNER_FULL_CONTROL.~> strongNOTE: When Athena queries are executed, result files may be created in the specified bucket. Consider using force_destroy on the bucket too in order to avoid any problems when destroying the bucket.Encryption Configuration"
+variable "properties" {
+  description = "(Optional) Key-value map of custom metadata properties for the database definition.ACL Configuration"
   type        = string
+  default     = ""
+}
+variable "acl_configuration" {
+  description = "(Optional) That an Amazon S3 canned ACL should be set to control ownership of stored query results. See ACL Configuration below."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,93 +185,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "encryption_option" {
-  description = "(Required) Type of key; one of SSE_S3, SSE_KMS, CSE_KMS"
-  value       = aws_athena_database.aws_athena_database.encryption_option
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "expected_bucket_owner" {
-  description = "(Optional) AWS account ID that you expect to be the owner of the Amazon S3 bucket."
-  value       = aws_athena_database.aws_athena_database.expected_bucket_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Name of the database to create."
-  value       = aws_athena_database.aws_athena_database.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_acl_option" {
-  description = "(Required) Amazon S3 canned ACL that Athena should specify when storing query results. Valid value is BUCKET_OWNER_FULL_CONTROL.~> strongNOTE: When Athena queries are executed, result files may be created in the specified bucket. Consider using force_destroy on the bucket too in order to avoid any problems when destroying the bucket.Encryption Configuration"
-  value       = aws_athena_database.aws_athena_database.s3_acl_option
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "acl_configuration" {
   description = "(Optional) That an Amazon S3 canned ACL should be set to control ownership of stored query results. See ACL Configuration below."
   value       = aws_athena_database.aws_athena_database.acl_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bucket" {
   description = "(Required) Name of S3 bucket to save the results of the query execution."
   value       = aws_athena_database.aws_athena_database.bucket
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "comment" {
-  description = "(Optional) Description of the database."
-  value       = aws_athena_database.aws_athena_database.comment
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "encryption_configuration" {
   description = "(Optional) Encryption key block AWS Athena uses to decrypt the data in S3, such as an AWS Key Management Service (AWS KMS) key. See Encryption Configuration below."
   value       = aws_athena_database.aws_athena_database.encryption_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "force_destroy" {
   description = "(Optional, Default: false) Boolean that indicates all tables should be deleted from the database so that the database can be destroyed without error. The tables are emnot recoverable."
   value       = aws_athena_database.aws_athena_database.force_destroy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key" {
-  description = "(Optional) KMS key ARN or ID; required for key types SSE_KMS and CSE_KMS.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_athena_database.aws_athena_database.kms_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) Name of the database to create."
+  value       = aws_athena_database.aws_athena_database.name
 }
 output "properties" {
   description = "(Optional) Key-value map of custom metadata properties for the database definition.ACL Configuration"
   value       = aws_athena_database.aws_athena_database.properties
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "comment" {
+  description = "(Optional) Description of the database."
+  value       = aws_athena_database.aws_athena_database.comment
+}
+output "encryption_option" {
+  description = "(Required) Type of key; one of SSE_S3, SSE_KMS, CSE_KMS"
+  value       = aws_athena_database.aws_athena_database.encryption_option
+}
+output "expected_bucket_owner" {
+  description = "(Optional) AWS account ID that you expect to be the owner of the Amazon S3 bucket."
+  value       = aws_athena_database.aws_athena_database.expected_bucket_owner
+}
+output "kms_key" {
+  description = "(Optional) KMS key ARN or ID; required for key types SSE_KMS and CSE_KMS.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_athena_database.aws_athena_database.kms_key
+}
+output "s3_acl_option" {
+  description = "(Required) Amazon S3 canned ACL that Athena should specify when storing query results. Valid value is BUCKET_OWNER_FULL_CONTROL.~> strongNOTE: When Athena queries are executed, result files may be created in the specified bucket. Consider using force_destroy on the bucket too in order to avoid any problems when destroying the bucket.Encryption Configuration"
+  value       = aws_athena_database.aws_athena_database.s3_acl_option
 }
 output "id" {
   description = "Database name"
@@ -273,7 +235,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

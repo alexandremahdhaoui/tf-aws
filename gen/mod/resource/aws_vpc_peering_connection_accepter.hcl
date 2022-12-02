@@ -1,53 +1,42 @@
 resource "aws_vpc_peering_connection_accepter" "aws_vpc_peering_connection_accepter" {
+  peer_region                      = var.peer_region
+  accept_status                    = var.accept_status
+  peer_owner_id                    = var.peer_owner_id
+  auto_accept                      = var.auto_accept
+  allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
   allow_classic_link_to_remote_vpc = var.allow_classic_link_to_remote_vpc
   id                               = var.id
   peer_vpc_id                      = var.peer_vpc_id
   requester                        = var.requester
-  accepter                         = var.accepter
-  auto_accept                      = var.auto_accept
-  vpc_id                           = var.vpc_id
-  vpc_peering_connection_id        = var.vpc_peering_connection_id
-  allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
-  peer_region                      = var.peer_region
   tags                             = var.tags
   tags_all                         = var.tags_all
-  accept_status                    = var.accept_status
-  peer_owner_id                    = var.peer_owner_id
+  vpc_id                           = var.vpc_id
+  accepter                         = var.accepter
+  vpc_peering_connection_id        = var.vpc_peering_connection_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "vpc_id" {
-  description = "The ID of the accepter VPC."
-  type        = string
-}
-variable "vpc_peering_connection_id" {
-  description = "(Required) The VPC Peering Connection ID to manage."
   type        = string
 }
 variable "allow_remote_vpc_dns_resolution" {
   description = ""
   type        = string
 }
-variable "peer_region" {
-  description = "The region of the accepter VPC."
+variable "auto_accept" {
+  description = "(Optional) Whether or not to accept the peering request. Defaults to false."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Removing aws_vpc_peering_connection_accepter from your configurationaws_vpc_peering_connectionaws_vpc_peering_connection_accepterstrongbut will not destroy the VPC Peering Connection.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
   type        = string
 }
-variable "accept_status" {
-  description = "The status of the VPC Peering Connection request."
+variable "vpc_id" {
+  description = "The ID of the accepter VPC."
   type        = string
 }
-variable "peer_owner_id" {
-  description = "The AWS account ID of the owner of the requester VPC."
+variable "accepter" {
+  description = ""
   type        = string
 }
 variable "allow_classic_link_to_remote_vpc" {
@@ -66,12 +55,25 @@ variable "requester" {
   description = ""
   type        = string
 }
-variable "accepter" {
-  description = ""
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Removing aws_vpc_peering_connection_accepter from your configurationaws_vpc_peering_connectionaws_vpc_peering_connection_accepterstrongbut will not destroy the VPC Peering Connection.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "vpc_peering_connection_id" {
+  description = "(Required) The VPC Peering Connection ID to manage."
   type        = string
 }
-variable "auto_accept" {
-  description = "(Optional) Whether or not to accept the peering request. Defaults to false."
+variable "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  type        = string
+}
+variable "peer_region" {
+  description = "The region of the accepter VPC."
+  type        = string
+}
+variable "peer_owner_id" {
+  description = "The AWS account ID of the owner of the requester VPC."
   type        = string
 }
 variable "tag_instance_id" {
@@ -194,141 +196,105 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allow_classic_link_to_remote_vpc" {
+output "peer_owner_id" {
+  description = "The AWS account ID of the owner of the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
+}
+output "allow_remote_vpc_dns_resolution" {
   description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the VPC Peering Connection."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "peer_vpc_id" {
-  description = "The ID of the requester VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "requester" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accepter" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
 }
 output "auto_accept" {
   description = "(Optional) Whether or not to accept the peering request. Defaults to false."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.auto_accept
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The ID of the accepter VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_peering_connection_id" {
-  description = "(Required) The VPC Peering Connection ID to manage."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.vpc_peering_connection_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allow_remote_vpc_dns_resolution" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "peer_region" {
-  description = "The region of the accepter VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Removing aws_vpc_peering_connection_accepter from your configurationaws_vpc_peering_connectionaws_vpc_peering_connection_accepterstrongbut will not destroy the VPC Peering Connection.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "peer_owner_id" {
-  description = "The AWS account ID of the owner of the requester VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "The ID of the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.vpc_id
 }
 output "accepter" {
   description = ""
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "allow_classic_link_to_remote_vpc" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
 }
-output "peer_owner_id" {
-  description = "The AWS account ID of the owner of the requester VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the VPC Peering Connection."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
 }
 output "peer_vpc_id" {
   description = "The ID of the requester VPC."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "requester" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
+}
+output "vpc_peering_connection_id" {
+  description = "(Required) The VPC Peering Connection ID to manage."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.vpc_peering_connection_id
+}
+output "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
+}
+output "peer_region" {
+  description = "The region of the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
+}
+output "peer_vpc_id" {
+  description = "The ID of the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_vpc_id
+}
+output "requester" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
+}
+output "accepter" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
+}
+output "allow_remote_vpc_dns_resolution" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
+}
+output "allow_vpc_to_remote_classic_link" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_vpc_to_remote_classic_link
+}
+output "id" {
+  description = "The ID of the VPC Peering Connection."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
+}
+output "peer_region" {
+  description = "The region of the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
+}
+output "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
+}
+output "allow_classic_link_to_remote_vpc" {
+  description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
+}
+output "peer_owner_id" {
+  description = "The AWS account ID of the owner of the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
 }
 output "vpc_id" {
   description = "The ID of the accepter VPC."
@@ -336,71 +302,7 @@ output "vpc_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allow_remote_vpc_dns_resolution" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allow_vpc_to_remote_classic_link" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_vpc_to_remote_classic_link
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the VPC Peering Connection."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "peer_region" {
-  description = "The region of the accepter VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "requester" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allow_classic_link_to_remote_vpc" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

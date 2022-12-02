@@ -1,12 +1,16 @@
 resource "aws_vpc_ipam_organization_admin_account" "aws_vpc_ipam_organization_admin_account" {
+  arn                        = var.arn
+  delegated_admin_account_id = var.delegated_admin_account_id
   email                      = var.email
   id                         = var.id
   name                       = var.name
-  arn                        = var.arn
-  delegated_admin_account_id = var.delegated_admin_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The Organizations ARN for the delegate account."
   type        = string
 }
 variable "delegated_admin_account_id" {
@@ -23,10 +27,6 @@ variable "id" {
 }
 variable "name" {
   description = "The Organizations name for the delegate account."
-  type        = string
-}
-variable "arn" {
-  description = "The Organizations ARN for the delegate account."
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,81 +153,45 @@ output "delegated_admin_account_id" {
   description = "(Required)In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.delegated_admin_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "email" {
   description = "The Organizations email for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.email
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Organizations member account ID that you want to enable as the IPAM account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The Organizations name for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Organizations ARN for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Organizations member account ID that you want to enable as the IPAM account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The Organizations name for the delegate account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "service_principal" {
   description = "The AWS service principal."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.service_principal
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Organizations ARN for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "email" {
   description = "The Organizations email for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.email
 }
+output "id" {
+  description = "The Organizations member account ID that you want to enable as the IPAM account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.id
+}
+output "name" {
+  description = "The Organizations name for the delegate account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

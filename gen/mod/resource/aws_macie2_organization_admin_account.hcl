@@ -133,17 +133,13 @@ output "admin_account_id" {
   description = "(Required) The AWS account ID for the account to designate as the delegated Amazon Macie administrator account for the organization.In addition to all arguments above, the following attributes are exported:"
   value       = aws_macie2_organization_admin_account.aws_macie2_organization_admin_account.admin_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The unique identifier (ID) of the macie organization admin account."
   value       = aws_macie2_organization_admin_account.aws_macie2_organization_admin_account.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

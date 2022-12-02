@@ -1,27 +1,59 @@
 resource "aws_appconfig_configuration_profile" "aws_appconfig_configuration_profile" {
-  name                     = var.name
-  tags                     = var.tags
   type                     = var.type
-  configuration_profile_id = var.configuration_profile_id
-  arn                      = var.arn
+  validator                = var.validator
   content                  = var.content
-  description              = var.description
   id                       = var.id
   location_uri             = var.location_uri
+  description              = var.description
+  name                     = var.name
   retrieval_role_arn       = var.retrieval_role_arn
-  validator                = var.validator
+  tags                     = var.tags
   application_id           = var.application_id
+  arn                      = var.arn
+  configuration_profile_id = var.configuration_profile_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "content" {
-  description = "(Optional, Required when type is LAMBDA) Either the JSON Schema content or the ARN of an AWS Lambda function."
+variable "name" {
+  description = "(Required) Name for the configuration profile. Must be between 1 and 64 characters in length."
+  type        = string
+}
+variable "retrieval_role_arn" {
+  description = "(Optional) ARN of an IAM role with permission to access the configuration at the specified location_uri. A retrieval role ARN is not required for configurations stored in the AWS AppConfig hosted configuration store. It is required for all other sources that store your configuration."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "application_id" {
+  description = "(Required, Forces new resource) Application ID. Must be between 4 and 7 characters in length."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the AppConfig Configuration Profile."
+  type        = string
+}
+variable "configuration_profile_id" {
+  description = "The configuration profile ID."
   type        = string
 }
 variable "description" {
   description = "(Optional) Description of the configuration profile. Can be at most 1024 characters."
+  type        = string
+  default     = ""
+}
+variable "validator" {
+  description = "(Optional) Set of methods for validating the configuration. Maximum of 2. See Validator below for more details.ValidatorThe validator block supports the following:"
+  type        = string
+  default     = ""
+}
+variable "content" {
+  description = "(Optional, Required when type is LAMBDA) Either the JSON Schema content or the ARN of an AWS Lambda function."
   type        = string
 }
 variable "id" {
@@ -32,37 +64,10 @@ variable "location_uri" {
   description = "(Required, Forces new resource) URI to locate the configuration. You can specify the AWS AppConfig hosted configuration store, Systems Manager (SSM) document, an SSM Parameter Store parameter, or an Amazon S3 object. For the hosted configuration store, specify hosted. For an SSM document, specify either the document name in the format ssm-document://<Document_name> or the ARN. For a parameter, specify either the parameter name in the format ssm-parameter://<Parameter_name> or the ARN. For an Amazon S3 object, specify the URI in the following format: s3://<bucket>/<objectKey>."
   type        = string
 }
-variable "retrieval_role_arn" {
-  description = "(Optional) ARN of an IAM role with permission to access the configuration at the specified location_uri. A retrieval role ARN is not required for configurations stored in the AWS AppConfig hosted configuration store. It is required for all other sources that store your configuration."
-  type        = string
-}
-variable "validator" {
-  description = "(Optional) Set of methods for validating the configuration. Maximum of 2. See Validator below for more details.ValidatorThe validator block supports the following:"
-  type        = string
-}
-variable "application_id" {
-  description = "(Required, Forces new resource) Application ID. Must be between 4 and 7 characters in length."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the AppConfig Configuration Profile."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
 variable "type" {
   description = "(Optional) Type of validator. Valid values: JSON_SCHEMA and LAMBDA.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "configuration_profile_id" {
-  description = "The configuration profile ID."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name for the configuration profile. Must be between 1 and 64 characters in length."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -184,133 +189,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "validator" {
-  description = "(Optional) Set of methods for validating the configuration. Maximum of 2. See Validator below for more details.ValidatorThe validator block supports the following:"
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.validator
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.tags
 }
 output "application_id" {
   description = "(Required, Forces new resource) Application ID. Must be between 4 and 7 characters in length."
   value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.application_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the AppConfig Configuration Profile."
   value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content" {
-  description = "(Optional, Required when type is LAMBDA) Either the JSON Schema content or the ARN of an AWS Lambda function."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.content
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "configuration_profile_id" {
+  description = "The configuration profile ID."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.configuration_profile_id
 }
 output "description" {
   description = "(Optional) Description of the configuration profile. Can be at most 1024 characters."
   value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AppConfig configuration profile ID and application ID separated by a colon (:)."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "location_uri" {
-  description = "(Required, Forces new resource) URI to locate the configuration. You can specify the AWS AppConfig hosted configuration store, Systems Manager (SSM) document, an SSM Parameter Store parameter, or an Amazon S3 object. For the hosted configuration store, specify hosted. For an SSM document, specify either the document name in the format ssm-document://<Document_name> or the ARN. For a parameter, specify either the parameter name in the format ssm-parameter://<Parameter_name> or the ARN. For an Amazon S3 object, specify the URI in the following format: s3://<bucket>/<objectKey>."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.location_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) Name for the configuration profile. Must be between 1 and 64 characters in length."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.name
 }
 output "retrieval_role_arn" {
   description = "(Optional) ARN of an IAM role with permission to access the configuration at the specified location_uri. A retrieval role ARN is not required for configurations stored in the AWS AppConfig hosted configuration store. It is required for all other sources that store your configuration."
   value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.retrieval_role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "configuration_profile_id" {
-  description = "The configuration profile ID."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.configuration_profile_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Name for the configuration profile. Must be between 1 and 64 characters in length."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) Type of validator. Valid values: JSON_SCHEMA and LAMBDA.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the AppConfig Configuration Profile."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "configuration_profile_id" {
-  description = "The configuration profile ID."
-  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.configuration_profile_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "content" {
+  description = "(Optional, Required when type is LAMBDA) Either the JSON Schema content or the ARN of an AWS Lambda function."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.content
 }
 output "id" {
   description = "AppConfig configuration profile ID and application ID separated by a colon (:)."
   value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "location_uri" {
+  description = "(Required, Forces new resource) URI to locate the configuration. You can specify the AWS AppConfig hosted configuration store, Systems Manager (SSM) document, an SSM Parameter Store parameter, or an Amazon S3 object. For the hosted configuration store, specify hosted. For an SSM document, specify either the document name in the format ssm-document://<Document_name> or the ARN. For a parameter, specify either the parameter name in the format ssm-parameter://<Parameter_name> or the ARN. For an Amazon S3 object, specify the URI in the following format: s3://<bucket>/<objectKey>."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.location_uri
+}
+output "type" {
+  description = "(Optional) Type of validator. Valid values: JSON_SCHEMA and LAMBDA.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.type
+}
+output "validator" {
+  description = "(Optional) Set of methods for validating the configuration. Maximum of 2. See Validator below for more details.ValidatorThe validator block supports the following:"
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.validator
+}
+output "id" {
+  description = "AppConfig configuration profile ID and application ID separated by a colon (:)."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.id
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.tags_all
 }
+output "arn" {
+  description = "ARN of the AppConfig Configuration Profile."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.arn
+}
+output "configuration_profile_id" {
+  description = "The configuration profile ID."
+  value       = aws_appconfig_configuration_profile.aws_appconfig_configuration_profile.configuration_profile_id
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,6 +1,6 @@
 datasource "aws_db_event_categories" "aws_db_event_categories" {
-  event_categories = var.event_categories
   source_type      = var.source_type
+  event_categories = var.event_categories
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -13,30 +13,23 @@ variable "event_categories" {
 variable "source_type" {
   description = "(Optional) Type of source that will be generating the events. Valid options are db-instance, db-security-group, db-parameter-group, db-snapshot, db-cluster or db-cluster-snapshot.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+output "event_categories" {
+  description = "List of the event categories."
+  value       = aws_db_event_categories.aws_db_event_categories.event_categories
 }
 output "source_type" {
   description = "(Optional) Type of source that will be generating the events. Valid options are db-instance, db-security-group, db-parameter-group, db-snapshot, db-cluster or db-cluster-snapshot.In addition to all arguments above, the following attributes are exported:"
   value       = aws_db_event_categories.aws_db_event_categories.source_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "event_categories" {
   description = "List of the event categories."
   value       = aws_db_event_categories.aws_db_event_categories.event_categories
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "event_categories" {
-  description = "List of the event categories."
-  value       = aws_db_event_categories.aws_db_event_categories.event_categories
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

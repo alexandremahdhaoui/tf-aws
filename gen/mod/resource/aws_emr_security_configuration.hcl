@@ -1,8 +1,8 @@
 resource "aws_emr_security_configuration" "aws_emr_security_configuration" {
-  configuration = var.configuration
-  id            = var.id
   name          = var.name
   name_prefix   = var.name_prefix
+  configuration = var.configuration
+  id            = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,6 +23,7 @@ variable "name" {
 variable "name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -148,57 +149,29 @@ output "configuration" {
   description = "The JSON formatted Security Configuration"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.configuration
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the EMR Security Configuration (Same as the name)"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The Name of the EMR Security Configuration"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
   value       = aws_emr_security_configuration.aws_emr_security_configuration.name_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The Name of the EMR Security Configuration"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "configuration" {
   description = "The JSON formatted Security Configuration"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.configuration
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "creation_date" {
   description = "Date the Security Configuration was created"
   value       = aws_emr_security_configuration.aws_emr_security_configuration.creation_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the EMR Security Configuration (Same as the name)"
@@ -206,7 +179,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,17 +1,13 @@
 resource "aws_apigatewayv2_vpc_link" "aws_apigatewayv2_vpc_link" {
-  security_group_ids = var.security_group_ids
   subnet_ids         = var.subnet_ids
   tags               = var.tags
   arn                = var.arn
   id                 = var.id
   name               = var.name
+  security_group_ids = var.security_group_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "VPC Link ARN."
   type        = string
 }
 variable "id" {
@@ -32,6 +28,11 @@ variable "subnet_ids" {
 }
 variable "tags" {
   description = "(Optional) Map of tags to assign to the VPC Link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "VPC Link ARN."
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,65 +159,33 @@ output "arn" {
   description = "VPC Link ARN."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "VPC Link identifier."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the VPC Link. Must be between 1 and 128 characters in length."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "security_group_ids" {
   description = "(Required) Security group IDs for the VPC Link."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_ids" {
   description = "(Required) Subnet IDs for the VPC Link."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Map of tags to assign to the VPC Link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "VPC Link ARN."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "VPC Link identifier."
   value       = aws_apigatewayv2_vpc_link.aws_apigatewayv2_vpc_link.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -224,7 +193,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

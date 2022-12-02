@@ -143,25 +143,13 @@ output "attributes" {
   description = "(Required) A map contains the attributes of the instance. Check the doc for the supported attributes and syntax.In addition to all arguments above, the following attributes are exported:"
   value       = aws_service_discovery_instance.aws_service_discovery_instance.attributes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_id" {
   description = "(Required, ForceNew) The ID of the service instance."
   value       = aws_service_discovery_instance.aws_service_discovery_instance.instance_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "service_id" {
   description = "(Required, ForceNew) The ID of the service that you want to use to create the instance."
   value       = aws_service_discovery_instance.aws_service_discovery_instance.service_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the instance."
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

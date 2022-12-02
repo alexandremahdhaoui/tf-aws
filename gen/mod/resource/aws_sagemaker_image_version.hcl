@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The name of the Image."
-  type        = string
-}
-variable "image_arn" {
-  description = "- The Amazon Resource Name (ARN) of the image the version is based on."
-  type        = string
-}
 variable "image_name" {
   description = "(Required) The name of the image. Must be unique to your account."
   type        = string
@@ -27,6 +19,14 @@ variable "arn" {
 }
 variable "base_image" {
   description = "(Required) The registry path of the container image on which this image version is based.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "The name of the Image."
+  type        = string
+}
+variable "image_arn" {
+  description = "- The Amazon Resource Name (ARN) of the image the version is based on."
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,65 +153,33 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image Version."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "base_image" {
   description = "(Required) The registry path of the container image on which this image version is based.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.base_image
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the Image."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "image_arn" {
   description = "- The Amazon Resource Name (ARN) of the image the version is based on."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.image_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "image_name" {
   description = "(Required) The name of the image. Must be unique to your account."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.image_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image Version."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "container_image" {
   description = "The registry path of the container image that contains this image version."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.container_image
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the Image."
   value       = aws_sagemaker_image_version.aws_sagemaker_image_version.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "image_arn" {
   description = "- The Amazon Resource Name (ARN) of the image the version is based on."
@@ -219,7 +187,7 @@ output "image_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

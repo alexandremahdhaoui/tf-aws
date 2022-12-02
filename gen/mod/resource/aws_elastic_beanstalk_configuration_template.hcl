@@ -1,14 +1,14 @@
 resource "aws_elastic_beanstalk_configuration_template" "aws_elastic_beanstalk_configuration_template" {
-  namespace           = var.namespace
-  option_settings     = var.option_settings
-  setting             = var.setting
-  solution_stack_name = var.solution_stack_name
   value               = var.value
-  application         = var.application
   description         = var.description
   environment_id      = var.environment_id
   name                = var.name
+  namespace           = var.namespace
+  solution_stack_name = var.solution_stack_name
+  application         = var.application
+  option_settings     = var.option_settings
   resource            = var.resource
+  setting             = var.setting
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -16,6 +16,23 @@ variable "provider_region" {
 }
 variable "application" {
   description = ""
+  type        = string
+}
+variable "option_settings" {
+  description = ""
+  type        = string
+}
+variable "resource" {
+  description = "(Optional) resource name for scheduled actionIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "setting" {
+  description = "Option Settings"
+  type        = string
+}
+variable "solution_stack_name" {
+  description = "Amazon API documentationOption SettingsThe setting field supports the following format:"
   type        = string
 }
 variable "description" {
@@ -30,24 +47,8 @@ variable "name" {
   description = ""
   type        = string
 }
-variable "resource" {
-  description = "(Optional) resource name for scheduled actionIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "namespace" {
   description = "unique namespace identifying the option's associated AWS resource"
-  type        = string
-}
-variable "option_settings" {
-  description = ""
-  type        = string
-}
-variable "setting" {
-  description = "Option Settings"
-  type        = string
-}
-variable "solution_stack_name" {
-  description = "Amazon API documentationOption SettingsThe setting field supports the following format:"
   type        = string
 }
 variable "value" {
@@ -174,117 +175,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resource" {
-  description = "(Optional) resource name for scheduled actionIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.resource
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "application" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.application
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "environment_id" {
   description = ""
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.environment_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = ""
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "value for the configuration option"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "namespace" {
   description = "unique namespace identifying the option's associated AWS resource"
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.namespace
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "option_settings" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.option_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "setting" {
-  description = "Option Settings"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.setting
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "solution_stack_name" {
-  description = "Amazon API documentationOption SettingsThe setting field supports the following format:"
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.solution_stack_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "option_settings" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.option_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "application" {
-  description = ""
-  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.application
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "value for the configuration option"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.value
 }
 output "description" {
   description = ""
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "option_settings" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.option_settings
+}
+output "resource" {
+  description = "(Optional) resource name for scheduled actionIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.resource
+}
+output "setting" {
+  description = "Option Settings"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.setting
+}
+output "solution_stack_name" {
+  description = "Amazon API documentationOption SettingsThe setting field supports the following format:"
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.solution_stack_name
+}
+output "application" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.application
+}
+output "option_settings" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.option_settings
+}
+output "application" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.application
+}
+output "description" {
+  description = ""
+  value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.description
 }
 output "environment_id" {
   description = ""
   value       = aws_elastic_beanstalk_configuration_template.aws_elastic_beanstalk_configuration_template.environment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = ""
@@ -292,7 +237,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

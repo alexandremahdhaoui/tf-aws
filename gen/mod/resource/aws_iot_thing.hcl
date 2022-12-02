@@ -128,17 +128,9 @@ output "arn" {
   description = "The ARN of the thing."
   value       = aws_iot_thing.aws_iot_thing.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_client_id" {
   description = "The default client ID."
   value       = aws_iot_thing.aws_iot_thing.default_client_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "version" {
   description = "The current version of the thing record in the registry."
@@ -146,7 +138,7 @@ output "version" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

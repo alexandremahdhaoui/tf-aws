@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The ARN of the authorization"
-  type        = string
-}
 variable "region" {
   description = "(Required) Region"
   type        = string
@@ -19,9 +15,14 @@ variable "region" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "account_id" {
   description = "(Required) Account ID"
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the authorization"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,45 +145,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "account_id" {
+  description = "(Required) Account ID"
+  value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.account_id
+}
+output "arn" {
+  description = "The ARN of the authorization"
+  value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.arn
+}
 output "region" {
   description = "(Required) Region"
   value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_id" {
-  description = "(Required) Account ID"
-  value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the authorization"
   value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the authorization"
-  value       = aws_config_aggregate_authorization.markdown.aws_config_aggregate_authorization.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -190,7 +171,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,17 +1,13 @@
 resource "aws_cognito_user_pool_domain.markdown" "aws_cognito_user_pool_domain.markdown" {
-  certificate_arn             = var.certificate_arn
   cloudfront_distribution_arn = var.cloudfront_distribution_arn
   domain                      = var.domain
   s3_bucket                   = var.s3_bucket
   user_pool_id                = var.user_pool_id
   aws_account_id              = var.aws_account_id
+  certificate_arn             = var.certificate_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "user_pool_id" {
-  description = "(Required) The user pool ID."
   type        = string
 }
 variable "aws_account_id" {
@@ -21,6 +17,7 @@ variable "aws_account_id" {
 variable "certificate_arn" {
   description = "(Optional) The ARN of an ISSUED ACM certificate in us-east-1 for a custom domain.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "cloudfront_distribution_arn" {
   description = "The URL of the CloudFront distribution. This is required to generate the ALIAS aws_route53_record"
@@ -32,6 +29,10 @@ variable "domain" {
 }
 variable "s3_bucket" {
   description = "The S3 bucket where the static files for this domain are stored."
+  type        = string
+}
+variable "user_pool_id" {
+  description = "(Required) The user pool ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,69 +155,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "s3_bucket" {
-  description = "The S3 bucket where the static files for this domain are stored."
-  value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.s3_bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_pool_id" {
-  description = "(Required) The user pool ID."
-  value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.user_pool_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "aws_account_id" {
   description = "The AWS account ID for the user pool owner."
   value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.aws_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "certificate_arn" {
   description = "(Optional) The ARN of an ISSUED ACM certificate in us-east-1 for a custom domain.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.certificate_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cloudfront_distribution_arn" {
   description = "The URL of the CloudFront distribution. This is required to generate the ALIAS aws_route53_record"
   value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.cloudfront_distribution_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "domain" {
   description = "(Required) For custom domains, this is the fully-qualified domain name, such as auth.example.com. For Amazon Cognito prefix domains, this is the prefix alone, such as auth."
   value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.domain
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "s3_bucket" {
+  description = "The S3 bucket where the static files for this domain are stored."
+  value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.s3_bucket
+}
+output "user_pool_id" {
+  description = "(Required) The user pool ID."
+  value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.user_pool_id
+}
+output "aws_account_id" {
+  description = "The AWS account ID for the user pool owner."
+  value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.aws_account_id
 }
 output "cloudfront_distribution_arn" {
   description = "The URL of the CloudFront distribution. This is required to generate the ALIAS aws_route53_record"
   value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.cloudfront_distribution_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "s3_bucket" {
   description = "The S3 bucket where the static files for this domain are stored."
   value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.s3_bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "version" {
   description = "The app version."
@@ -224,15 +197,7 @@ output "version" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "aws_account_id" {
-  description = "The AWS account ID for the user pool owner."
-  value       = aws_cognito_user_pool_domain.markdown.aws_cognito_user_pool_domain.markdown.aws_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

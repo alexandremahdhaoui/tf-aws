@@ -1,19 +1,15 @@
 resource "aws_ecr_replication_configuration" "aws_ecr_replication_configuration" {
+  repository_filter         = var.repository_filter
+  rule                      = var.rule
+  destination               = var.destination
   filter                    = var.filter
   filter_type               = var.filter_type
   region                    = var.region
   registry_id               = var.registry_id
   replication_configuration = var.replication_configuration
-  repository_filter         = var.repository_filter
-  rule                      = var.rule
-  destination               = var.destination
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "region" {
-  description = "(Required) A Region to replicate to."
   type        = string
 }
 variable "registry_id" {
@@ -27,6 +23,7 @@ variable "replication_configuration" {
 variable "repository_filter" {
   description = "(Optional) filters for a replication rule. See Repository Filter.Destination"
   type        = string
+  default     = ""
 }
 variable "rule" {
   description = "(Required) The replication rules for a replication configuration. A maximum of 10 are allowed per replication_configuration. See RuleRule"
@@ -42,6 +39,10 @@ variable "filter" {
 }
 variable "filter_type" {
   description = "(Required) The repository filter type. The only supported value is PREFIX_MATCH, which is a repository name prefix specified with the filter parameter.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "region" {
+  description = "(Required) A Region to replicate to."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +165,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "region" {
-  description = "(Required) A Region to replicate to."
-  value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "registry_id" {
-  description = "(Required) The account ID of the destination registry to replicate to.Repository Filter"
-  value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.registry_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "replication_configuration" {
   description = "(Required) Replication configuration for a registry. See Replication Configuration.Replication Configuration"
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.replication_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "repository_filter" {
   description = "(Optional) filters for a replication rule. See Repository Filter.Destination"
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.repository_filter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule" {
   description = "(Required) The replication rules for a replication configuration. A maximum of 10 are allowed per replication_configuration. See RuleRule"
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.rule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "destination" {
   description = "(Required) the details of a replication destination. A maximum of 25 are allowed per rule. See Destination."
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.destination
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "filter" {
   description = "(Required) The repository filter details."
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "filter_type" {
   description = "(Required) The repository filter type. The only supported value is PREFIX_MATCH, which is a repository name prefix specified with the filter parameter.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.filter_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "region" {
+  description = "(Required) A Region to replicate to."
+  value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.region
+}
+output "registry_id" {
+  description = "(Required) The account ID of the destination registry to replicate to.Repository Filter"
+  value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.registry_id
 }
 output "registry_id" {
   description = "The registry ID where the replication configuration was created."
@@ -234,7 +203,7 @@ output "registry_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

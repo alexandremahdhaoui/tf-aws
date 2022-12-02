@@ -1,11 +1,15 @@
 resource "aws_network_interface_attachment" "aws_network_interface_attachment" {
-  attachment_id        = var.attachment_id
   device_index         = var.device_index
   instance_id          = var.instance_id
   network_interface_id = var.network_interface_id
+  attachment_id        = var.attachment_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "attachment_id" {
+  description = "The ENI Attachment ID."
   type        = string
 }
 variable "device_index" {
@@ -18,10 +22,6 @@ variable "instance_id" {
 }
 variable "network_interface_id" {
   description = "Network interface ID."
-  type        = string
-}
-variable "attachment_id" {
-  description = "The ENI Attachment ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,53 +144,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "instance_id" {
+  description = "Instance ID."
+  value       = aws_network_interface_attachment.aws_network_interface_attachment.instance_id
+}
+output "network_interface_id" {
+  description = "Network interface ID."
+  value       = aws_network_interface_attachment.aws_network_interface_attachment.network_interface_id
+}
 output "attachment_id" {
   description = "The ENI Attachment ID."
   value       = aws_network_interface_attachment.aws_network_interface_attachment.attachment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "device_index" {
   description = "(Required) Network interface index (int).In addition to all arguments above, the following attributes are exported:"
   value       = aws_network_interface_attachment.aws_network_interface_attachment.device_index
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "attachment_id" {
+  description = "The ENI Attachment ID."
+  value       = aws_network_interface_attachment.aws_network_interface_attachment.attachment_id
 }
 output "instance_id" {
   description = "Instance ID."
   value       = aws_network_interface_attachment.aws_network_interface_attachment.instance_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "network_interface_id" {
   description = "Network interface ID."
   value       = aws_network_interface_attachment.aws_network_interface_attachment.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_id" {
-  description = "Instance ID."
-  value       = aws_network_interface_attachment.aws_network_interface_attachment.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_id" {
-  description = "Network interface ID."
-  value       = aws_network_interface_attachment.aws_network_interface_attachment.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "The status of the Network Interface Attachment."
@@ -198,15 +178,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "attachment_id" {
-  description = "The ENI Attachment ID."
-  value       = aws_network_interface_attachment.aws_network_interface_attachment.attachment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

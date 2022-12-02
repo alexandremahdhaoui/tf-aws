@@ -133,17 +133,13 @@ output "standards_arn" {
   description = "(Required) The ARN of a standard - see below.Currently available standards:arn:aws:securityhub:us-east-1::standards/aws-foundational-security-best-practices/v/1.0.0arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0arn:aws:securityhub:us-east-1::standards/pci-dss/v/3.2.1                                  |In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_standards_subscription.markdown.aws_securityhub_standards_subscription.markdown.standards_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ARN of a resource that represents your subscription to a supported standard."
   value       = aws_securityhub_standards_subscription.markdown.aws_securityhub_standards_subscription.markdown.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

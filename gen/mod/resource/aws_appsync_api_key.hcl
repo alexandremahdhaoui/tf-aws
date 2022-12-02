@@ -15,10 +15,12 @@ variable "api_id" {
 variable "description" {
   description = "(Optional) API key description. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
 variable "expires" {
   description = "(Optional) RFC3339 string representation of the expiry date. Rounded down to nearest hour. By default, it is 7 days from the date of creation.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "API Key ID (Formatted as ApiId:Key)"
@@ -144,45 +146,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "api_id" {
-  description = "(Required) ID of the associated AppSync API"
-  value       = aws_appsync_api_key.aws_appsync_api_key.api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) API key description. Defaults to \"Managed by Terraform\"."
   value       = aws_appsync_api_key.aws_appsync_api_key.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "expires" {
   description = "(Optional) RFC3339 string representation of the expiry date. Rounded down to nearest hour. By default, it is 7 days from the date of creation.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appsync_api_key.aws_appsync_api_key.expires
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "API Key ID (Formatted as ApiId:Key)"
   value       = aws_appsync_api_key.aws_appsync_api_key.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "api_id" {
+  description = "(Required) ID of the associated AppSync API"
+  value       = aws_appsync_api_key.aws_appsync_api_key.api_id
 }
 output "id" {
   description = "API Key ID (Formatted as ApiId:Key)"
   value       = aws_appsync_api_key.aws_appsync_api_key.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "key" {
   description = "API key"
@@ -190,7 +172,7 @@ output "key" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

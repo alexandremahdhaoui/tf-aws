@@ -1,27 +1,15 @@
 resource "aws_customer_gateway" "aws_customer_gateway" {
-  tags            = var.tags
-  type            = var.type
-  arn             = var.arn
-  bgp_asn         = var.bgp_asn
   certificate_arn = var.certificate_arn
   device_name     = var.device_name
   id              = var.id
   ip_address      = var.ip_address
+  tags            = var.tags
+  type            = var.type
+  arn             = var.arn
+  bgp_asn         = var.bgp_asn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "type" {
-  description = "(Required) The type of customer gateway. The only type AWS\nsupports at this time is \"ipsec.1\"."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the customer gateway."
   type        = string
 }
 variable "bgp_asn" {
@@ -31,10 +19,12 @@ variable "bgp_asn" {
 variable "certificate_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) for the customer gateway certificate."
   type        = string
+  default     = ""
 }
 variable "device_name" {
   description = "(Optional) A name for the customer gateway device."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The amazon-assigned ID of the gateway."
@@ -42,6 +32,19 @@ variable "id" {
 }
 variable "ip_address" {
   description = "(Required) The IPv4 address for the customer gateway device's outside interface."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) The type of customer gateway. The only type AWS\nsupports at this time is \"ipsec.1\"."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the customer gateway."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,85 +167,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "device_name" {
-  description = "(Optional) A name for the customer gateway device."
-  value       = aws_customer_gateway.aws_customer_gateway.device_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The amazon-assigned ID of the gateway."
   value       = aws_customer_gateway.aws_customer_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ip_address" {
   description = "(Required) The IPv4 address for the customer gateway device's outside interface."
   value       = aws_customer_gateway.aws_customer_gateway.ip_address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Tags to apply to the gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_customer_gateway.aws_customer_gateway.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "(Required) The type of customer gateway. The only type AWS\nsupports at this time is \"ipsec.1\"."
   value       = aws_customer_gateway.aws_customer_gateway.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the customer gateway."
   value       = aws_customer_gateway.aws_customer_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bgp_asn" {
   description = "(Required) The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
   value       = aws_customer_gateway.aws_customer_gateway.bgp_asn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "certificate_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) for the customer gateway certificate."
   value       = aws_customer_gateway.aws_customer_gateway.certificate_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "device_name" {
+  description = "(Optional) A name for the customer gateway device."
+  value       = aws_customer_gateway.aws_customer_gateway.device_name
 }
 output "arn" {
   description = "The ARN of the customer gateway."
   value       = aws_customer_gateway.aws_customer_gateway.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The amazon-assigned ID of the gateway."
   value       = aws_customer_gateway.aws_customer_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,7 +213,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

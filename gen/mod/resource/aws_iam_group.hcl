@@ -1,8 +1,8 @@
 resource "aws_iam_group" "aws_iam_group" {
-  name = var.name
-  path = var.path
   arn  = var.arn
   id   = var.id
+  name = var.name
+  path = var.path
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -148,65 +148,33 @@ output "arn" {
   description = "The ARN assigned by AWS for this group."
   value       = aws_iam_group.aws_iam_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The group's ID."
   value       = aws_iam_group.aws_iam_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "The group's name."
   value       = aws_iam_group.aws_iam_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "path" {
   description = "The path of the group in IAM."
   value       = aws_iam_group.aws_iam_group.path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The group's ID."
   value       = aws_iam_group.aws_iam_group.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The group's name."
   value       = aws_iam_group.aws_iam_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "path" {
   description = "The path of the group in IAM."
   value       = aws_iam_group.aws_iam_group.path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "unique_id" {
   description = "The unique ID assigned by AWS."
   value       = aws_iam_group.aws_iam_group.unique_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN assigned by AWS for this group."
@@ -214,7 +182,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

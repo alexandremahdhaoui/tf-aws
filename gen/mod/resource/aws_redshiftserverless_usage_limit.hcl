@@ -1,14 +1,24 @@
 resource "aws_redshiftserverless_usage_limit" "aws_redshiftserverless_usage_limit" {
-  period        = var.period
-  resource_arn  = var.resource_arn
   usage_type    = var.usage_type
   amount        = var.amount
   arn           = var.arn
   breach_action = var.breach_action
+  period        = var.period
+  resource_arn  = var.resource_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "breach_action" {
+  description = "(Optional) The action that Amazon Redshift Serverless takes when the limit is reached. Valid values are log, emit-metric, and deactivate. The default is log."
+  type        = string
+  default     = ""
+}
+variable "period" {
+  description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. Valid values are daily, weekly, and monthly. The default is monthly."
+  type        = string
+  default     = ""
 }
 variable "resource_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the Amazon Redshift Serverless resource to create the usage limit for."
@@ -24,14 +34,6 @@ variable "amount" {
 }
 variable "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
-  type        = string
-}
-variable "breach_action" {
-  description = "(Optional) The action that Amazon Redshift Serverless takes when the limit is reached. Valid values are log, emit-metric, and deactivate. The default is log."
-  type        = string
-}
-variable "period" {
-  description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. Valid values are daily, weekly, and monthly. The default is monthly."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,61 +156,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "amount" {
+  description = "(Required) The limit amount. If time-based, this amount is in Redshift Processing Units (RPU) consumed per hour. If data-based, this amount is in terabytes (TB) of data transferred between Regions in cross-account sharing. The value must be a positive number."
+  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.amount
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
+  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.arn
+}
 output "breach_action" {
   description = "(Optional) The action that Amazon Redshift Serverless takes when the limit is reached. Valid values are log, emit-metric, and deactivate. The default is log."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.breach_action
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "period" {
   description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. Valid values are daily, weekly, and monthly. The default is monthly."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.period
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the Amazon Redshift Serverless resource to create the usage limit for."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "usage_type" {
   description = "(Required) The type of Amazon Redshift Serverless usage to create a usage limit for. Valid values are serverless-compute or cross-region-datasharing.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.usage_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "amount" {
-  description = "(Required) The limit amount. If time-based, this amount is in Redshift Processing Units (RPU) consumed per hour. If data-based, this amount is in terabytes (TB) of data transferred between Regions in cross-account sharing. The value must be a positive number."
-  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.amount
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
-  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Redshift Usage Limit id."
@@ -216,7 +190,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

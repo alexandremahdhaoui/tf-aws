@@ -124,6 +124,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "provider_region" {
+  description = "Region where the provider should be executed."
+  value       = var.provider_region
+}
 terraform {
   backend "local" {
   }

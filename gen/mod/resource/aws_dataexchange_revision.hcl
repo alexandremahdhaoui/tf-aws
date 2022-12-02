@@ -124,13 +124,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "revision_id" {
+  description = "The Id of the revision."
+  value       = aws_dataexchange_revision.aws_dataexchange_revision.revision_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_dataexchange_revision.aws_dataexchange_revision.tags_all
+}
 output "arn" {
   description = "The Amazon Resource Name of this data set."
   value       = aws_dataexchange_revision.aws_dataexchange_revision.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Id of the data set."
@@ -138,23 +142,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "revision_id" {
-  description = "The Id of the revision."
-  value       = aws_dataexchange_revision.aws_dataexchange_revision.revision_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_dataexchange_revision.aws_dataexchange_revision.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

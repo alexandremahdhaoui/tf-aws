@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_stream" "aws_cloudwatch_log_stream" {
-  log_group_name = var.log_group_name
   name           = var.name
+  log_group_name = var.log_group_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,17 +138,9 @@ output "log_group_name" {
   description = "(Required) The name of the log group under which the log stream is to be created.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_log_stream.aws_cloudwatch_log_stream.log_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The name of the log stream. Must not be longer than 512 characters and must not contain :"
   value       = aws_cloudwatch_log_stream.aws_cloudwatch_log_stream.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the log stream."
@@ -156,7 +148,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

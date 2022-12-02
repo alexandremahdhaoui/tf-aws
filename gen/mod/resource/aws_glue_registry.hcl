@@ -1,20 +1,12 @@
 resource "aws_glue_registry" "aws_glue_registry" {
-  arn           = var.arn
   description   = var.description
   id            = var.id
   registry_name = var.registry_name
   tags          = var.tags
+  arn           = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "registry_name" {
-  description = " – (Required) The Name of the registry."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -24,10 +16,20 @@ variable "arn" {
 variable "description" {
   description = " – (Optional) A description of the registry."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   type        = string
+}
+variable "registry_name" {
+  description = " – (Required) The Name of the registry."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,61 +151,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_registry.aws_glue_registry.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue Registry."
-  value       = aws_glue_registry.aws_glue_registry.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = " – (Optional) A description of the registry."
-  value       = aws_glue_registry.aws_glue_registry.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   value       = aws_glue_registry.aws_glue_registry.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "registry_name" {
   description = " – (Required) The Name of the registry."
   value       = aws_glue_registry.aws_glue_registry.registry_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_registry.aws_glue_registry.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   value       = aws_glue_registry.aws_glue_registry.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = " – (Optional) A description of the registry."
+  value       = aws_glue_registry.aws_glue_registry.description
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue Registry."
+  value       = aws_glue_registry.aws_glue_registry.arn
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of Glue Registry."
   value       = aws_glue_registry.aws_glue_registry.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -211,7 +185,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,7 +1,7 @@
 resource "aws_storagegateway_upload_buffer" "aws_storagegateway_upload_buffer" {
+  disk_id     = var.disk_id
   disk_path   = var.disk_path
   gateway_arn = var.gateway_arn
-  disk_id     = var.disk_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -10,10 +10,12 @@ variable "provider_region" {
 variable "disk_id" {
   description = "(Optional) Local disk identifier. For example, pci-0000:03:00.0-scsi-0:0:0:0."
   type        = string
+  default     = ""
 }
 variable "disk_path" {
   description = "(Optional) Local disk path. For example, /dev/nvme1n1."
   type        = string
+  default     = ""
 }
 variable "gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the gateway.In addition to all arguments above, the following attributes are exported:"
@@ -143,25 +145,13 @@ output "disk_id" {
   description = "(Optional) Local disk identifier. For example, pci-0000:03:00.0-scsi-0:0:0:0."
   value       = aws_storagegateway_upload_buffer.aws_storagegateway_upload_buffer.disk_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "disk_path" {
   description = "(Optional) Local disk path. For example, /dev/nvme1n1."
   value       = aws_storagegateway_upload_buffer.aws_storagegateway_upload_buffer.disk_path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_storagegateway_upload_buffer.aws_storagegateway_upload_buffer.gateway_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Combined gateway Amazon Resource Name (ARN) and local disk identifier."
@@ -169,7 +159,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -6,12 +6,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "vpc_endpoint_id" {
-  description = "(Required) The VPC Endpoint ID."
-  type        = string
-}
 variable "policy" {
   description = "(Optional) A policy to attach to the endpoint that controls access to the service. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "vpc_endpoint_id" {
+  description = "(Required) The VPC Endpoint ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +139,9 @@ output "policy" {
   description = "(Optional) A policy to attach to the endpoint that controls access to the service. Defaults to full access. All Gateway and some Interface endpoints support policies - see the relevant AWS documentation for more details. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_endpoint_policy.aws_vpc_endpoint_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_endpoint_id" {
   description = "(Required) The VPC Endpoint ID."
   value       = aws_vpc_endpoint_policy.aws_vpc_endpoint_policy.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the VPC endpoint."
@@ -156,7 +149,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

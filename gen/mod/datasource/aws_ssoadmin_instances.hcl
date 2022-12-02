@@ -4,21 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "arns" {
+  description = "Set of Amazon Resource Names (ARNs) of the SSO Instances."
+  value       = aws_ssoadmin_instances.aws_ssoadmin_instances.arns
+}
 output "id" {
   description = "AWS Region."
   value       = aws_ssoadmin_instances.aws_ssoadmin_instances.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arns" {
-  description = "Set of Amazon Resource Names (ARNs) of the SSO Instances."
-  value       = aws_ssoadmin_instances.aws_ssoadmin_instances.arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

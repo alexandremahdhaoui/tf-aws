@@ -19,6 +19,7 @@ variable "name" {
 variable "parameters" {
   description = " – (Optional) The parameters of the parameter group.parametersparameters supports the following:"
   type        = string
+  default     = ""
 }
 variable "value" {
   description = "(Required) The value for the parameter.In addition to all arguments above, the following attributes are exported:"
@@ -144,37 +145,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "value" {
-  description = "(Required) The value for the parameter.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dax_parameter_group.aws_dax_parameter_group.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional, ForceNew) A description of the parameter group."
   value       = aws_dax_parameter_group.aws_dax_parameter_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the parameter."
   value       = aws_dax_parameter_group.aws_dax_parameter_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parameters" {
   description = " – (Optional) The parameters of the parameter group.parametersparameters supports the following:"
   value       = aws_dax_parameter_group.aws_dax_parameter_group.parameters
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "(Required) The value for the parameter.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dax_parameter_group.aws_dax_parameter_group.value
 }
 output "id" {
   description = "The name of the parameter group."
@@ -182,7 +167,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

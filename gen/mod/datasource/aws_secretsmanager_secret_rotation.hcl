@@ -8,17 +8,13 @@ output "rotation_enabled" {
   description = "ARN of the secret."
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.rotation_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rotation_lambda_arn" {
   description = "Decrypted part of the protected secret information that was originally provided as a string."
   value       = aws_secretsmanager_secret_rotation.aws_secretsmanager_secret_rotation.rotation_lambda_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

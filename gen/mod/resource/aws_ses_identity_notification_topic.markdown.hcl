@@ -7,16 +7,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "topic_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Amazon SNS topic. Can be set to \"\" (an empty string) to disable publishing."
+  type        = string
+  default     = ""
+}
 variable "identity" {
   description = "(Required) The identity for which the Amazon SNS topic will be set. You can specify an identity by using its name or by using its Amazon Resource Name (ARN)."
   type        = string
 }
 variable "notification_type" {
   description = "(Required) The type of notifications that will be published to the specified Amazon SNS topic. Valid Values: Bounce, Complaint or Delivery."
-  type        = string
-}
-variable "topic_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Amazon SNS topic. Can be set to \"\" (an empty string) to disable publishing."
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,17 +144,9 @@ output "identity" {
   description = "(Required) The identity for which the Amazon SNS topic will be set. You can specify an identity by using its name or by using its Amazon Resource Name (ARN)."
   value       = aws_ses_identity_notification_topic.markdown.aws_ses_identity_notification_topic.markdown.identity
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "notification_type" {
   description = "(Required) The type of notifications that will be published to the specified Amazon SNS topic. Valid Values: Bounce, Complaint or Delivery."
   value       = aws_ses_identity_notification_topic.markdown.aws_ses_identity_notification_topic.markdown.notification_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "topic_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) of the Amazon SNS topic. Can be set to \"\" (an empty string) to disable publishing."
@@ -161,7 +154,7 @@ output "topic_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

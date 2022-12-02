@@ -1,11 +1,11 @@
 resource "aws_waf_size_constraint_set" "aws_waf_size_constraint_set" {
-  text_transformation = var.text_transformation
-  type                = var.type
-  comparison_operator = var.comparison_operator
-  size                = var.size
-  size_constraints    = var.size_constraints
-  name                = var.name
   data                = var.data
+  size                = var.size
+  type                = var.type
+  name                = var.name
+  size_constraints    = var.size_constraints
+  text_transformation = var.text_transformation
+  comparison_operator = var.comparison_operator
   field_to_match      = var.field_to_match
   id                  = var.id
 }
@@ -13,28 +13,21 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "comparison_operator" {
-  description = "(Required) The type of comparison you want to perform.\ne.g., EQ, NE, LT, GTdocs for all supported values."
+variable "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   type        = string
+  default     = ""
 }
 variable "size" {
   description = "(Required) The size in bytes that you want to compare against the size of the specified field_to_match"
-  type        = string
-}
-variable "size_constraints" {
-  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
-  type        = string
-}
-variable "text_transformation" {
-  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
   type        = string
 }
 variable "type" {
   description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+variable "comparison_operator" {
+  description = "(Required) The type of comparison you want to perform.\ne.g., EQ, NE, LT, GTdocs for all supported values."
   type        = string
 }
 variable "field_to_match" {
@@ -47,6 +40,15 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) The name or description of the Size Constraint Set."
+  type        = string
+}
+variable "size_constraints" {
+  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
+  type        = string
+  default     = ""
+}
+variable "text_transformation" {
+  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
   type        = string
 }
 variable "tag_instance_id" {
@@ -173,81 +175,41 @@ output "comparison_operator" {
   description = "(Required) The type of comparison you want to perform.\ne.g., EQ, NE, LT, GTdocs for all supported values."
   value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.comparison_operator
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "size" {
-  description = "(Required) The size in bytes that you want to compare against the size of the specified field_to_match"
-  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "size_constraints" {
-  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
-  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.size_constraints
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "text_transformation" {
-  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
-  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.text_transformation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "field_to_match" {
   description = "(Required) Specifies where in a web request to look for the size constraint."
   value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.field_to_match
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the WAF Size Constraint Set."
   value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name or description of the Size Constraint Set."
   value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "size_constraints" {
+  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
+  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.size_constraints
+}
+output "text_transformation" {
+  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
+  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.text_transformation
+}
+output "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.data
+}
+output "size" {
+  description = "(Required) The size in bytes that you want to compare against the size of the specified field_to_match"
+  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.size
+}
+output "type" {
+  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.type
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"
   value       = aws_waf_size_constraint_set.aws_waf_size_constraint_set.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the WAF Size Constraint Set."
@@ -255,7 +217,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

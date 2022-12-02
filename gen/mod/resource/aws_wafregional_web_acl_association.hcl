@@ -138,17 +138,9 @@ output "resource_arn" {
   description = "(Required) ARN of the resource to associate with. For example, an Application Load Balancer or API Gateway Stage.In addition to all arguments above, the following attributes are exported:"
   value       = aws_wafregional_web_acl_association.aws_wafregional_web_acl_association.resource_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "web_acl_id" {
   description = "(Required) The ID of the WAF Regional WebACL to create an association."
   value       = aws_wafregional_web_acl_association.aws_wafregional_web_acl_association.web_acl_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the association"
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

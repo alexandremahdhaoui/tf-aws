@@ -1,22 +1,14 @@
 resource "aws_organizations_organizational_unit" "aws_organizations_organizational_unit" {
-  arn       = var.arn
   email     = var.email
   id        = var.id
   name      = var.name
   parent_id = var.parent_id
   tags      = var.tags
   accounts  = var.accounts
+  arn       = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "parent_id" {
-  description = "ID of the parent organizational unit, which may be the root"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "accounts" {
@@ -38,6 +30,15 @@ variable "id" {
 variable "name" {
   description = "Name of the account"
   type        = string
+}
+variable "parent_id" {
+  description = "ID of the parent organizational unit, which may be the root"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -163,105 +164,57 @@ output "id" {
   description = "Identifier of the organization unit"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "Name of the account"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "parent_id" {
   description = "ID of the parent organizational unit, which may be the root"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.parent_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "accounts" {
   description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.accounts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the organizational unit"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "email" {
   description = "Email of the account"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accounts" {
-  description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.accounts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the organizational unit"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "email" {
-  description = "Email of the account"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Identifier of the organization unit"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "Name of the account"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.tags_all
 }
+output "accounts" {
+  description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.accounts
+}
+output "arn" {
+  description = "ARN of the organizational unit"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.arn
+}
+output "email" {
+  description = "Email of the account"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.email
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

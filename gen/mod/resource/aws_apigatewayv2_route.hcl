@@ -1,77 +1,87 @@
 resource "aws_apigatewayv2_route" "aws_apigatewayv2_route" {
-  authorizer_id                       = var.authorizer_id
-  route_key                           = var.route_key
+  request_models                      = var.request_models
   api_id                              = var.api_id
+  authorizer_id                       = var.authorizer_id
+  operation_name                      = var.operation_name
+  route_response_selection_expression = var.route_response_selection_expression
   api_key_required                    = var.api_key_required
-  model_selection_expression          = var.model_selection_expression
+  authorization_type                  = var.authorization_type
+  request_parameter                   = var.request_parameter
+  route_key                           = var.route_key
   target                              = var.target
   authorization_scopes                = var.authorization_scopes
-  authorization_type                  = var.authorization_type
-  required                            = var.required
-  operation_name                      = var.operation_name
-  request_models                      = var.request_models
-  request_parameter                   = var.request_parameter
+  model_selection_expression          = var.model_selection_expression
   request_parameter_key               = var.request_parameter_key
-  route_response_selection_expression = var.route_response_selection_expression
+  required                            = var.required
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "authorizer_id" {
-  description = "(Optional) Identifier of the aws_apigatewayv2_authorizer resource to be associated with this route."
-  type        = string
-}
-variable "route_key" {
-  description = "(Required) Route key for the route. For HTTP APIs, the route key can be either $default, or a combination of an HTTP method and resource path, for example, GET /pets."
-  type        = string
-}
-variable "api_id" {
-  description = "(Required) API identifier."
-  type        = string
-}
-variable "api_key_required" {
-  description = "(Optional) Boolean whether an API key is required for the route. Defaults to false. Supported only for WebSocket APIs."
-  type        = string
-}
-variable "model_selection_expression" {
-  description = "(Optional) The model selection expression for the route. Supported only for WebSocket APIs."
-  type        = string
-}
-variable "target" {
-  description = "(Optional) Target for the route, of the form integrations/emIntegrationID, where emIntegrationID is the identifier of an aws_apigatewayv2_integration resource.The request_parameter object supports the following:"
-  type        = string
-}
-variable "authorization_scopes" {
-  description = "(Optional) Authorization scopes supported by this route. The scopes are used with a JWT authorizer to authorize the method invocation."
-  type        = string
-}
-variable "authorization_type" {
-  description = "(Optional) Authorization type for the route.\nFor WebSocket APIs, valid values are NONE for open access, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE for open access, JWT for using JSON Web Tokens, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE."
   type        = string
 }
 variable "required" {
   description = "(Required) Boolean whether or not the parameter is required.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "operation_name" {
-  description = "(Optional) Operation name for the route. Must be between 1 and 64 characters in length."
-  type        = string
-}
 variable "request_models" {
   description = "(Optional) Request models for the route. Supported only for WebSocket APIs."
   type        = string
+  default     = ""
+}
+variable "api_id" {
+  description = "(Required) API identifier."
+  type        = string
+}
+variable "authorizer_id" {
+  description = "(Optional) Identifier of the aws_apigatewayv2_authorizer resource to be associated with this route."
+  type        = string
+  default     = ""
+}
+variable "operation_name" {
+  description = "(Optional) Operation name for the route. Must be between 1 and 64 characters in length."
+  type        = string
+  default     = ""
+}
+variable "route_response_selection_expression" {
+  description = "(Optional) The route response selection expression for the route. Supported only for WebSocket APIs."
+  type        = string
+  default     = ""
+}
+variable "api_key_required" {
+  description = "(Optional) Boolean whether an API key is required for the route. Defaults to false. Supported only for WebSocket APIs."
+  type        = string
+  default     = ""
+}
+variable "authorization_type" {
+  description = "(Optional) Authorization type for the route.\nFor WebSocket APIs, valid values are NONE for open access, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE for open access, JWT for using JSON Web Tokens, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE."
+  type        = string
+  default     = ""
 }
 variable "request_parameter" {
   description = "(Optional) Request parameters for the route. Supported only for WebSocket APIs."
   type        = string
+  default     = ""
+}
+variable "route_key" {
+  description = "(Required) Route key for the route. For HTTP APIs, the route key can be either $default, or a combination of an HTTP method and resource path, for example, GET /pets."
+  type        = string
+}
+variable "target" {
+  description = "(Optional) Target for the route, of the form integrations/emIntegrationID, where emIntegrationID is the identifier of an aws_apigatewayv2_integration resource.The request_parameter object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "authorization_scopes" {
+  description = "(Optional) Authorization scopes supported by this route. The scopes are used with a JWT authorizer to authorize the method invocation."
+  type        = string
+  default     = ""
+}
+variable "model_selection_expression" {
+  description = "(Optional) The model selection expression for the route. Supported only for WebSocket APIs."
+  type        = string
+  default     = ""
 }
 variable "request_parameter_key" {
   description = "(Required) Request parameter key. This is a request data mapping parameter."
-  type        = string
-}
-variable "route_response_selection_expression" {
-  description = "(Optional) The route response selection expression for the route. Supported only for WebSocket APIs."
   type        = string
 }
 variable "tag_instance_id" {
@@ -194,117 +204,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "target" {
-  description = "(Optional) Target for the route, of the form integrations/emIntegrationID, where emIntegrationID is the identifier of an aws_apigatewayv2_integration resource.The request_parameter object supports the following:"
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.target
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "api_id" {
   description = "(Required) API identifier."
   value       = aws_apigatewayv2_route.aws_apigatewayv2_route.api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "api_key_required" {
-  description = "(Optional) Boolean whether an API key is required for the route. Defaults to false. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.api_key_required
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "model_selection_expression" {
-  description = "(Optional) The model selection expression for the route. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.model_selection_expression
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorization_scopes" {
-  description = "(Optional) Authorization scopes supported by this route. The scopes are used with a JWT authorizer to authorize the method invocation."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.authorization_scopes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorization_type" {
-  description = "(Optional) Authorization type for the route.\nFor WebSocket APIs, valid values are NONE for open access, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE for open access, JWT for using JSON Web Tokens, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.authorization_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "required" {
-  description = "(Required) Boolean whether or not the parameter is required.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.required
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "request_parameter_key" {
-  description = "(Required) Request parameter key. This is a request data mapping parameter."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.request_parameter_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "route_response_selection_expression" {
-  description = "(Optional) The route response selection expression for the route. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.route_response_selection_expression
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "operation_name" {
-  description = "(Optional) Operation name for the route. Must be between 1 and 64 characters in length."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.operation_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "request_models" {
-  description = "(Optional) Request models for the route. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.request_models
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "request_parameter" {
-  description = "(Optional) Request parameters for the route. Supported only for WebSocket APIs."
-  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.request_parameter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "authorizer_id" {
   description = "(Optional) Identifier of the aws_apigatewayv2_authorizer resource to be associated with this route."
   value       = aws_apigatewayv2_route.aws_apigatewayv2_route.authorizer_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "operation_name" {
+  description = "(Optional) Operation name for the route. Must be between 1 and 64 characters in length."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.operation_name
+}
+output "request_models" {
+  description = "(Optional) Request models for the route. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.request_models
+}
+output "api_key_required" {
+  description = "(Optional) Boolean whether an API key is required for the route. Defaults to false. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.api_key_required
+}
+output "authorization_type" {
+  description = "(Optional) Authorization type for the route.\nFor WebSocket APIs, valid values are NONE for open access, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE for open access, JWT for using JSON Web Tokens, AWS_IAM for using AWS IAM permissions, and CUSTOMNONE."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.authorization_type
+}
+output "request_parameter" {
+  description = "(Optional) Request parameters for the route. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.request_parameter
+}
+output "route_response_selection_expression" {
+  description = "(Optional) The route response selection expression for the route. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.route_response_selection_expression
+}
+output "target" {
+  description = "(Optional) Target for the route, of the form integrations/emIntegrationID, where emIntegrationID is the identifier of an aws_apigatewayv2_integration resource.The request_parameter object supports the following:"
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.target
+}
+output "authorization_scopes" {
+  description = "(Optional) Authorization scopes supported by this route. The scopes are used with a JWT authorizer to authorize the method invocation."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.authorization_scopes
+}
+output "model_selection_expression" {
+  description = "(Optional) The model selection expression for the route. Supported only for WebSocket APIs."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.model_selection_expression
+}
+output "request_parameter_key" {
+  description = "(Required) Request parameter key. This is a request data mapping parameter."
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.request_parameter_key
 }
 output "route_key" {
   description = "(Required) Route key for the route. For HTTP APIs, the route key can be either $default, or a combination of an HTTP method and resource path, for example, GET /pets."
   value       = aws_apigatewayv2_route.aws_apigatewayv2_route.route_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "required" {
+  description = "(Required) Boolean whether or not the parameter is required.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_route.aws_apigatewayv2_route.required
 }
 output "id" {
   description = "Route identifier."
@@ -312,7 +266,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

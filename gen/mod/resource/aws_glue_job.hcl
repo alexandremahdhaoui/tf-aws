@@ -1,75 +1,54 @@
 resource "aws_glue_job" "aws_glue_job" {
-  python_version            = var.python_version
-  security_configuration    = var.security_configuration
   command                   = var.command
-  default_arguments         = var.default_arguments
-  description               = var.description
-  execution_class           = var.execution_class
   execution_property        = var.execution_property
-  arn                       = var.arn
-  max_retries               = var.max_retries
-  notify_delay_after        = var.notify_delay_after
-  number_of_workers         = var.number_of_workers
-  script_location           = var.script_location
-  non_overridable_arguments = var.non_overridable_arguments
-  notification_property     = var.notification_property
-  tags                      = var.tags
-  glue_version              = var.glue_version
   id                        = var.id
+  number_of_workers         = var.number_of_workers
+  security_configuration    = var.security_configuration
+  description               = var.description
+  glue_version              = var.glue_version
   max_capacity              = var.max_capacity
-  max_concurrent_runs       = var.max_concurrent_runs
-  name                      = var.name
+  role_arn                  = var.role_arn
+  tags                      = var.tags
+  arn                       = var.arn
+  connections               = var.connections
+  default_arguments         = var.default_arguments
+  execution_class           = var.execution_class
+  non_overridable_arguments = var.non_overridable_arguments
+  notify_delay_after        = var.notify_delay_after
+  python_version            = var.python_version
   timeout                   = var.timeout
   worker_type               = var.worker_type
-  connections               = var.connections
-  role_arn                  = var.role_arn
+  max_concurrent_runs       = var.max_concurrent_runs
+  max_retries               = var.max_retries
+  name                      = var.name
+  notification_property     = var.notification_property
+  script_location           = var.script_location
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "max_capacity" {
-  description = " – (Optional) The maximum number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. Required when pythonshell is set, accept either 0.0625 or 1.0. Use number_of_workers and worker_type arguments instead with glue_version 2.0 and above."
+variable "number_of_workers" {
+  description = "(Optional) The number of workers of a defined workerType that are allocated when a job runs.command Argument Reference"
+  type        = string
+  default     = ""
+}
+variable "security_configuration" {
+  description = "(Optional) The name of the Security Configuration to be associated with the job."
+  type        = string
+  default     = ""
+}
+variable "command" {
+  description = " – (Required) The command of the job. Defined below."
   type        = string
 }
-variable "max_concurrent_runs" {
-  description = "(Optional) The maximum number of concurrent runs allowed for a job. The default is 1.notification_property Argument Reference"
+variable "execution_property" {
+  description = " – (Optional) Execution property of the job. Defined below."
   type        = string
-}
-variable "name" {
-  description = "(Optional) The name of the job command. Defaults to glueetl. Use pythonshell for Python Shell Job Type, or gluestreaming for Streaming Job Type. max_capacity needs to be set if pythonshell is chosen."
-  type        = string
-}
-variable "non_overridable_arguments" {
-  description = " – (Optional) Non-overridable arguments for this job, specified as name-value pairs."
-  type        = string
-}
-variable "notification_property" {
-  description = "(Optional) Notification property of the job. Defined below."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "glue_version" {
-  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
-  type        = string
+  default     = ""
 }
 variable "id" {
   description = "Job name"
-  type        = string
-}
-variable "timeout" {
-  description = " – (Optional) The job timeout in minutes. The default is 2880 minutes (48 hours) for glueetl and pythonshell jobs, and null (unlimited) for gluestreaming jobs."
-  type        = string
-}
-variable "worker_type" {
-  description = "(Optional) The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, or G.2X."
-  type        = string
-}
-variable "connections" {
-  description = " – (Optional) The list of connections used for this job."
   type        = string
 }
 variable "role_arn" {
@@ -79,50 +58,90 @@ variable "role_arn" {
 variable "description" {
   description = " – (Optional) Description of the job."
   type        = string
+  default     = ""
+}
+variable "glue_version" {
+  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
+  type        = string
+  default     = ""
+}
+variable "max_capacity" {
+  description = " – (Optional) The maximum number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. Required when pythonshell is set, accept either 0.0625 or 1.0. Use number_of_workers and worker_type arguments instead with glue_version 2.0 and above."
+  type        = string
+  default     = ""
 }
 variable "execution_class" {
   description = "(Optional) Indicates whether the job is run with a standard or flexible execution class. The standard execution class is ideal for time-sensitive workloads that require fast job startup and dedicated resources. Valid value: FLEX, STANDARD."
   type        = string
+  default     = ""
 }
-variable "execution_property" {
-  description = " – (Optional) Execution property of the job. Defined below."
+variable "non_overridable_arguments" {
+  description = " – (Optional) Non-overridable arguments for this job, specified as name-value pairs."
   type        = string
-}
-variable "python_version" {
-  description = "(Optional) The Python version being used to execute a Python shell job. Allowed values are 2, 3 or 3.9. Version 3 refers to Python 3.6.execution_property Argument Reference"
-  type        = string
-}
-variable "security_configuration" {
-  description = "(Optional) The name of the Security Configuration to be associated with the job."
-  type        = string
-}
-variable "command" {
-  description = " – (Required) The command of the job. Defined below."
-  type        = string
-}
-variable "default_arguments" {
-  description = " – (Optional) The map of default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the Calling AWS Glue APIs in Python topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the Special Parameters Used by AWS Glue topic in the developer guide."
-  type        = string
+  default     = ""
 }
 variable "notify_delay_after" {
   description = "(Optional) After a job run starts, the number of minutes to wait before sending a job run delay notification.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "number_of_workers" {
-  description = "(Optional) The number of workers of a defined workerType that are allocated when a job runs.command Argument Reference"
+variable "python_version" {
+  description = "(Optional) The Python version being used to execute a Python shell job. Allowed values are 2, 3 or 3.9. Version 3 refers to Python 3.6.execution_property Argument Reference"
   type        = string
+  default     = ""
 }
-variable "script_location" {
-  description = "(Required) Specifies the S3 path to a script that executes a job."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "Amazon Resource Name (ARN) of Glue Job"
   type        = string
 }
+variable "connections" {
+  description = " – (Optional) The list of connections used for this job."
+  type        = string
+  default     = ""
+}
+variable "default_arguments" {
+  description = " – (Optional) The map of default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the Calling AWS Glue APIs in Python topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the Special Parameters Used by AWS Glue topic in the developer guide."
+  type        = string
+  default     = ""
+}
+variable "timeout" {
+  description = " – (Optional) The job timeout in minutes. The default is 2880 minutes (48 hours) for glueetl and pythonshell jobs, and null (unlimited) for gluestreaming jobs."
+  type        = string
+  default     = ""
+}
+variable "worker_type" {
+  description = "(Optional) The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, or G.2X."
+  type        = string
+  default     = ""
+}
+variable "notification_property" {
+  description = "(Optional) Notification property of the job. Defined below."
+  type        = string
+  default     = ""
+}
+variable "script_location" {
+  description = "(Required) Specifies the S3 path to a script that executes a job."
+  type        = string
+}
+variable "max_concurrent_runs" {
+  description = "(Optional) The maximum number of concurrent runs allowed for a job. The default is 1.notification_property Argument Reference"
+  type        = string
+  default     = ""
+}
 variable "max_retries" {
   description = " – (Optional) The maximum number of times to retry this job if it fails."
   type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) The name of the job command. Defaults to glueetl. Use pythonshell for Python Shell Job Type, or gluestreaming for Streaming Job Type. max_capacity needs to be set if pythonshell is chosen."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -244,205 +263,109 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "python_version" {
-  description = "(Optional) The Python version being used to execute a Python shell job. Allowed values are 2, 3 or 3.9. Version 3 refers to Python 3.6.execution_property Argument Reference"
-  value       = aws_glue_job.aws_glue_job.python_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_configuration" {
-  description = "(Optional) The name of the Security Configuration to be associated with the job."
-  value       = aws_glue_job.aws_glue_job.security_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "command" {
-  description = " – (Required) The command of the job. Defined below."
-  value       = aws_glue_job.aws_glue_job.command
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_arguments" {
-  description = " – (Optional) The map of default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the Calling AWS Glue APIs in Python topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the Special Parameters Used by AWS Glue topic in the developer guide."
-  value       = aws_glue_job.aws_glue_job.default_arguments
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = " – (Optional) Description of the job."
-  value       = aws_glue_job.aws_glue_job.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "execution_class" {
-  description = "(Optional) Indicates whether the job is run with a standard or flexible execution class. The standard execution class is ideal for time-sensitive workloads that require fast job startup and dedicated resources. Valid value: FLEX, STANDARD."
-  value       = aws_glue_job.aws_glue_job.execution_class
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "execution_property" {
-  description = " – (Optional) Execution property of the job. Defined below."
-  value       = aws_glue_job.aws_glue_job.execution_property
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue Job"
-  value       = aws_glue_job.aws_glue_job.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_retries" {
-  description = " – (Optional) The maximum number of times to retry this job if it fails."
-  value       = aws_glue_job.aws_glue_job.max_retries
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "non_overridable_arguments" {
+  description = " – (Optional) Non-overridable arguments for this job, specified as name-value pairs."
+  value       = aws_glue_job.aws_glue_job.non_overridable_arguments
 }
 output "notify_delay_after" {
   description = "(Optional) After a job run starts, the number of minutes to wait before sending a job run delay notification.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glue_job.aws_glue_job.notify_delay_after
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "number_of_workers" {
-  description = "(Optional) The number of workers of a defined workerType that are allocated when a job runs.command Argument Reference"
-  value       = aws_glue_job.aws_glue_job.number_of_workers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "script_location" {
-  description = "(Required) Specifies the S3 path to a script that executes a job."
-  value       = aws_glue_job.aws_glue_job.script_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "non_overridable_arguments" {
-  description = " – (Optional) Non-overridable arguments for this job, specified as name-value pairs."
-  value       = aws_glue_job.aws_glue_job.non_overridable_arguments
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "notification_property" {
-  description = "(Optional) Notification property of the job. Defined below."
-  value       = aws_glue_job.aws_glue_job.notification_property
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "python_version" {
+  description = "(Optional) The Python version being used to execute a Python shell job. Allowed values are 2, 3 or 3.9. Version 3 refers to Python 3.6.execution_property Argument Reference"
+  value       = aws_glue_job.aws_glue_job.python_version
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_glue_job.aws_glue_job.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "glue_version" {
-  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
-  value       = aws_glue_job.aws_glue_job.glue_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Job name"
-  value       = aws_glue_job.aws_glue_job.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_capacity" {
-  description = " – (Optional) The maximum number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. Required when pythonshell is set, accept either 0.0625 or 1.0. Use number_of_workers and worker_type arguments instead with glue_version 2.0 and above."
-  value       = aws_glue_job.aws_glue_job.max_capacity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_concurrent_runs" {
-  description = "(Optional) The maximum number of concurrent runs allowed for a job. The default is 1.notification_property Argument Reference"
-  value       = aws_glue_job.aws_glue_job.max_concurrent_runs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional) The name of the job command. Defaults to glueetl. Use pythonshell for Python Shell Job Type, or gluestreaming for Streaming Job Type. max_capacity needs to be set if pythonshell is chosen."
-  value       = aws_glue_job.aws_glue_job.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "timeout" {
-  description = " – (Optional) The job timeout in minutes. The default is 2880 minutes (48 hours) for glueetl and pythonshell jobs, and null (unlimited) for gluestreaming jobs."
-  value       = aws_glue_job.aws_glue_job.timeout
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "worker_type" {
-  description = "(Optional) The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, or G.2X."
-  value       = aws_glue_job.aws_glue_job.worker_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue Job"
+  value       = aws_glue_job.aws_glue_job.arn
 }
 output "connections" {
   description = " – (Optional) The list of connections used for this job."
   value       = aws_glue_job.aws_glue_job.connections
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "default_arguments" {
+  description = " – (Optional) The map of default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the Calling AWS Glue APIs in Python topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the Special Parameters Used by AWS Glue topic in the developer guide."
+  value       = aws_glue_job.aws_glue_job.default_arguments
 }
-output "role_arn" {
-  description = " – (Required) The ARN of the IAM role associated with this job."
-  value       = aws_glue_job.aws_glue_job.role_arn
+output "execution_class" {
+  description = "(Optional) Indicates whether the job is run with a standard or flexible execution class. The standard execution class is ideal for time-sensitive workloads that require fast job startup and dedicated resources. Valid value: FLEX, STANDARD."
+  value       = aws_glue_job.aws_glue_job.execution_class
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "timeout" {
+  description = " – (Optional) The job timeout in minutes. The default is 2880 minutes (48 hours) for glueetl and pythonshell jobs, and null (unlimited) for gluestreaming jobs."
+  value       = aws_glue_job.aws_glue_job.timeout
+}
+output "worker_type" {
+  description = "(Optional) The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, or G.2X."
+  value       = aws_glue_job.aws_glue_job.worker_type
+}
+output "script_location" {
+  description = "(Required) Specifies the S3 path to a script that executes a job."
+  value       = aws_glue_job.aws_glue_job.script_location
+}
+output "max_concurrent_runs" {
+  description = "(Optional) The maximum number of concurrent runs allowed for a job. The default is 1.notification_property Argument Reference"
+  value       = aws_glue_job.aws_glue_job.max_concurrent_runs
+}
+output "max_retries" {
+  description = " – (Optional) The maximum number of times to retry this job if it fails."
+  value       = aws_glue_job.aws_glue_job.max_retries
+}
+output "name" {
+  description = "(Optional) The name of the job command. Defaults to glueetl. Use pythonshell for Python Shell Job Type, or gluestreaming for Streaming Job Type. max_capacity needs to be set if pythonshell is chosen."
+  value       = aws_glue_job.aws_glue_job.name
+}
+output "notification_property" {
+  description = "(Optional) Notification property of the job. Defined below."
+  value       = aws_glue_job.aws_glue_job.notification_property
+}
+output "security_configuration" {
+  description = "(Optional) The name of the Security Configuration to be associated with the job."
+  value       = aws_glue_job.aws_glue_job.security_configuration
+}
+output "command" {
+  description = " – (Required) The command of the job. Defined below."
+  value       = aws_glue_job.aws_glue_job.command
+}
+output "execution_property" {
+  description = " – (Optional) Execution property of the job. Defined below."
+  value       = aws_glue_job.aws_glue_job.execution_property
 }
 output "id" {
   description = "Job name"
   value       = aws_glue_job.aws_glue_job.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "number_of_workers" {
+  description = "(Optional) The number of workers of a defined workerType that are allocated when a job runs.command Argument Reference"
+  value       = aws_glue_job.aws_glue_job.number_of_workers
+}
+output "description" {
+  description = " – (Optional) Description of the job."
+  value       = aws_glue_job.aws_glue_job.description
+}
+output "glue_version" {
+  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
+  value       = aws_glue_job.aws_glue_job.glue_version
+}
+output "max_capacity" {
+  description = " – (Optional) The maximum number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. Required when pythonshell is set, accept either 0.0625 or 1.0. Use number_of_workers and worker_type arguments instead with glue_version 2.0 and above."
+  value       = aws_glue_job.aws_glue_job.max_capacity
+}
+output "role_arn" {
+  description = " – (Required) The ARN of the IAM role associated with this job."
+  value       = aws_glue_job.aws_glue_job.role_arn
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue Job"
+  value       = aws_glue_job.aws_glue_job.arn
+}
+output "id" {
+  description = "Job name"
+  value       = aws_glue_job.aws_glue_job.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -450,15 +373,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue Job"
-  value       = aws_glue_job.aws_glue_job.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

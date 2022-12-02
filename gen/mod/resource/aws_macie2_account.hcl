@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "status" {
-  description = "(Optional) Specifies the status for the account. To enable Amazon Macie and start all Macie activities for the account, set this value to ENABLED. Valid values are ENABLED or PAUSED.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "created_at" {
   description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
   type        = string
@@ -20,6 +16,7 @@ variable "created_at" {
 variable "finding_publishing_frequency" {
   description = " (Optional) Specifies how often to publish updates to policy findings for the account. This includes publishing updates to AWS Security Hub and Amazon EventBridge (formerly called Amazon CloudWatch Events). Valid values are FIFTEEN_MINUTES, ONE_HOUR or SIX_HOURS."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The unique identifier (ID) of the macie account."
@@ -28,6 +25,11 @@ variable "id" {
 variable "service_role" {
   description = "The Amazon Resource Name (ARN) of the service-linked role that allows Macie to monitor and analyze data in AWS resources for the account."
   type        = string
+}
+variable "status" {
+  description = "(Optional) Specifies the status for the account. To enable Amazon Macie and start all Macie activities for the account, set this value to ENABLED. Valid values are ENABLED or PAUSED.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -153,65 +155,33 @@ output "created_at" {
   description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
   value       = aws_macie2_account.aws_macie2_account.created_at
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "finding_publishing_frequency" {
   description = " (Optional) Specifies how often to publish updates to policy findings for the account. This includes publishing updates to AWS Security Hub and Amazon EventBridge (formerly called Amazon CloudWatch Events). Valid values are FIFTEEN_MINUTES, ONE_HOUR or SIX_HOURS."
   value       = aws_macie2_account.aws_macie2_account.finding_publishing_frequency
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The unique identifier (ID) of the macie account."
   value       = aws_macie2_account.aws_macie2_account.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "service_role" {
   description = "The Amazon Resource Name (ARN) of the service-linked role that allows Macie to monitor and analyze data in AWS resources for the account."
   value       = aws_macie2_account.aws_macie2_account.service_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "(Optional) Specifies the status for the account. To enable Amazon Macie and start all Macie activities for the account, set this value to ENABLED. Valid values are ENABLED or PAUSED.In addition to all arguments above, the following attributes are exported:"
   value       = aws_macie2_account.aws_macie2_account.status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_at" {
   description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
   value       = aws_macie2_account.aws_macie2_account.created_at
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The unique identifier (ID) of the macie account."
   value       = aws_macie2_account.aws_macie2_account.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "service_role" {
   description = "The Amazon Resource Name (ARN) of the service-linked role that allows Macie to monitor and analyze data in AWS resources for the account."
   value       = aws_macie2_account.aws_macie2_account.service_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "updated_at" {
   description = "The date and time, in UTC and extended RFC 3339 format, of the most recent change to the status of the Macie account."
@@ -219,7 +189,7 @@ output "updated_at" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

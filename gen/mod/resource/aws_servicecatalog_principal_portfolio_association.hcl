@@ -1,5 +1,4 @@
 resource "aws_servicecatalog_principal_portfolio_association" "aws_servicecatalog_principal_portfolio_association" {
-  delete          = var.delete
   id              = var.id
   portfolio_id    = var.portfolio_id
   principal_arn   = var.principal_arn
@@ -7,21 +6,10 @@ resource "aws_servicecatalog_principal_portfolio_association" "aws_servicecatalo
   read            = var.read
   accept_language = var.accept_language
   create          = var.create
+  delete          = var.delete
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "delete" {
-  description = "(Default 3m)"
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the association.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "portfolio_id" {
-  description = "(Required) Portfolio identifier."
   type        = string
 }
 variable "principal_arn" {
@@ -31,17 +19,35 @@ variable "principal_arn" {
 variable "principal_type" {
   description = "(Optional) Principal type. Setting this argument empty (e.g., principal_type = \"\") will result in an error. Valid value is IAM. Default is IAM.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "read" {
   description = "(Default 10m)"
   type        = string
+  default     = ""
 }
 variable "accept_language" {
   description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
   type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 3m)"
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Identifier of the association.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "portfolio_id" {
+  description = "(Required) Portfolio identifier."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +170,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.accept_language
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Identifier of the association.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "portfolio_id" {
   description = "(Required) Portfolio identifier."
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.portfolio_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "principal_arn" {
   description = "(Required) Principal ARN."
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.principal_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "principal_type" {
   description = "(Optional) Principal type. Setting this argument empty (e.g., principal_type = \"\") will result in an error. Valid value is IAM. Default is IAM.In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.principal_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.read
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.accept_language
+}
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
+}
+output "id" {
+  description = "Identifier of the association.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.read
 }
 output "create" {
   description = "(Default 3m)"
@@ -234,31 +220,7 @@ output "create" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Identifier of the association.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.read
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,53 +1,25 @@
 resource "aws_cloud9_environment_ec2" "aws_cloud9_environment_ec2" {
-  amazonlinux-2-x86_64                                      = var.amazonlinux-2-x86_64
-  arn                                                       = var.arn
+  name                                                      = var.name
+  automatic_stop_time_minutes                               = var.automatic_stop_time_minutes
   id                                                        = var.id
   instance_type                                             = var.instance_type
+  amazonlinux-2-x86_64                                      = var.amazonlinux-2-x86_64
+  resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64  = var.resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64
   subnet_id                                                 = var.subnet_id
-  amazonlinux-1-x86_64                                      = var.amazonlinux-1-x86_64
+  resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64 = var.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64
+  ubuntu-18.04-x86_64                                       = var.ubuntu-18.04-x86_64
+  arn                                                       = var.arn
+  description                                               = var.description
   image_id                                                  = var.image_id
-  name                                                      = var.name
   resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64 = var.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64
   tags                                                      = var.tags
-  automatic_stop_time_minutes                               = var.automatic_stop_time_minutes
-  connection_type                                           = var.connection_type
-  ubuntu-18.04-x86_64                                       = var.ubuntu-18.04-x86_64
-  description                                               = var.description
-  owner_arn                                                 = var.owner_arn
-  resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64 = var.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64
-  resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64  = var.resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64
   tags_all                                                  = var.tags_all
+  amazonlinux-1-x86_64                                      = var.amazonlinux-1-x86_64
+  connection_type                                           = var.connection_type
+  owner_arn                                                 = var.owner_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "automatic_stop_time_minutes" {
-  description = "(Optional) The number of minutes until the running instance is shut down after the environment has last been used."
-  type        = string
-}
-variable "connection_type" {
-  description = "(Optional) The connection type used for connecting to an Amazon EC2 environment. Valid values are CONNECT_SSH and CONNECT_SSM. For more information please refer AWS documentation for Cloud9."
-  type        = string
-}
-variable "ubuntu-18.04-x86_64" {
-  description = ""
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the environment."
-  type        = string
-}
-variable "owner_arn" {
-  description = "(Optional) The ARN of the environment owner. This can be ARN of any AWS IAM principal. Defaults to the environment's creator."
-  type        = string
-}
-variable "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64" {
-  description = ""
   type        = string
 }
 variable "resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64" {
@@ -57,13 +29,59 @@ variable "resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64" {
 variable "subnet_id" {
   description = "(Optional) The ID of the subnet in Amazon VPC that AWS Cloud9 will use to communicate with the Amazon EC2 instance."
   type        = string
+  default     = ""
 }
 variable "amazonlinux-2-x86_64" {
   description = ""
   type        = string
 }
+variable "description" {
+  description = "(Optional) The description of the environment."
+  type        = string
+  default     = ""
+}
+variable "image_id" {
+  description = "(Optional) The identifier for the Amazon Machine Image (AMI) that's used to create the EC2 instance. Valid values are\n"
+  type        = string
+  default     = ""
+}
+variable "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64" {
+  description = ""
+  type        = string
+}
+variable "ubuntu-18.04-x86_64" {
+  description = ""
+  type        = string
+}
 variable "arn" {
   description = "The ARN of the environment."
+  type        = string
+}
+variable "connection_type" {
+  description = "(Optional) The connection type used for connecting to an Amazon EC2 environment. Valid values are CONNECT_SSH and CONNECT_SSM. For more information please refer AWS documentation for Cloud9."
+  type        = string
+  default     = ""
+}
+variable "owner_arn" {
+  description = "(Optional) The ARN of the environment owner. This can be ARN of any AWS IAM principal. Defaults to the environment's creator."
+  type        = string
+  default     = ""
+}
+variable "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64" {
+  description = ""
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "amazonlinux-1-x86_64" {
+  description = ""
   type        = string
 }
 variable "id" {
@@ -74,25 +92,14 @@ variable "instance_type" {
   description = "(Required) The type of instance to connect to the environment, e.g., t2.micro."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "amazonlinux-1-x86_64" {
-  description = ""
-  type        = string
-}
-variable "image_id" {
-  description = "(Optional) The identifier for the Amazon Machine Image (AMI) that's used to create the EC2 instance. Valid values are\n"
-  type        = string
-}
 variable "name" {
   description = "(Required) The name of the environment."
   type        = string
 }
-variable "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64" {
-  description = ""
+variable "automatic_stop_time_minutes" {
+  description = "(Optional) The number of minutes until the running instance is shut down after the environment has last been used."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -214,165 +221,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64" {
-  description = ""
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64" {
-  description = ""
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the environment."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_arn" {
-  description = "(Optional) The ARN of the environment owner. This can be ARN of any AWS IAM principal. Defaults to the environment's creator."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.owner_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the environment."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_type" {
-  description = "(Required) The type of instance to connect to the environment, e.g., t2.micro."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.instance_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_id" {
-  description = "(Optional) The ID of the subnet in Amazon VPC that AWS Cloud9 will use to communicate with the Amazon EC2 instance."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.subnet_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "amazonlinux-2-x86_64" {
-  description = ""
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.amazonlinux-2-x86_64
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the environment."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the environment."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64" {
-  description = ""
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "amazonlinux-1-x86_64" {
   description = ""
   value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.amazonlinux-1-x86_64
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "image_id" {
-  description = "(Optional) The identifier for the Amazon Machine Image (AMI) that's used to create the EC2 instance. Valid values are\n"
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.image_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ubuntu-18.04-x86_64" {
-  description = ""
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.ubuntu-18.04-x86_64
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "automatic_stop_time_minutes" {
-  description = "(Optional) The number of minutes until the running instance is shut down after the environment has last been used."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.automatic_stop_time_minutes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "connection_type" {
   description = "(Optional) The connection type used for connecting to an Amazon EC2 environment. Valid values are CONNECT_SSH and CONNECT_SSM. For more information please refer AWS documentation for Cloud9."
   value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.connection_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "owner_arn" {
+  description = "(Optional) The ARN of the environment owner. This can be ARN of any AWS IAM principal. Defaults to the environment's creator."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.owner_arn
 }
-output "arn" {
-  description = "The ARN of the environment."
-  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.arn
+output "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64" {
+  description = ""
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.tags_all
+}
+output "automatic_stop_time_minutes" {
+  description = "(Optional) The number of minutes until the running instance is shut down after the environment has last been used."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.automatic_stop_time_minutes
 }
 output "id" {
   description = "The ID of the environment."
   value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_type" {
+  description = "(Required) The type of instance to connect to the environment, e.g., t2.micro."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.instance_type
+}
+output "name" {
+  description = "(Required) The name of the environment."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.name
+}
+output "amazonlinux-2-x86_64" {
+  description = ""
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.amazonlinux-2-x86_64
+}
+output "resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64" {
+  description = ""
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64
+}
+output "subnet_id" {
+  description = "(Optional) The ID of the subnet in Amazon VPC that AWS Cloud9 will use to communicate with the Amazon EC2 instance."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.subnet_id
+}
+output "arn" {
+  description = "The ARN of the environment."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.arn
+}
+output "description" {
+  description = "(Optional) The description of the environment."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.description
+}
+output "image_id" {
+  description = "(Optional) The identifier for the Amazon Machine Image (AMI) that's used to create the EC2 instance. Valid values are\n"
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.image_id
+}
+output "resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64" {
+  description = ""
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64
+}
+output "ubuntu-18.04-x86_64" {
+  description = ""
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.ubuntu-18.04-x86_64
+}
+output "arn" {
+  description = "The ARN of the environment."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.arn
+}
+output "id" {
+  description = "The ID of the environment."
+  value       = aws_cloud9_environment_ec2.aws_cloud9_environment_ec2.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -380,7 +307,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

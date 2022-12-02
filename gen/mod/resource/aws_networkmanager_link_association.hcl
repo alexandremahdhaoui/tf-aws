@@ -138,17 +138,13 @@ output "device_id" {
   description = "(Required) The ID of the device."
   value       = aws_networkmanager_link_association.aws_networkmanager_link_association.device_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "global_network_id" {
   description = "(Required) The ID of the global network."
   value       = aws_networkmanager_link_association.aws_networkmanager_link_association.global_network_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

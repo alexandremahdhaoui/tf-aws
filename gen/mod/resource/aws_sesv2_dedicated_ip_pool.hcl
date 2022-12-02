@@ -1,31 +1,20 @@
 resource "aws_sesv2_dedicated_ip_pool" "aws_sesv2_dedicated_ip_pool" {
+  arn          = var.arn
+  create       = var.create
+  delete       = var.delete
   pool_name    = var.pool_name
   scaling_mode = var.scaling_mode
   tags         = var.tags
   update       = var.update
-  arn          = var.arn
-  create       = var.create
-  delete       = var.delete
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the Dedicated IP Pool.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-}
 variable "delete" {
   description = "(Default 30m)"
   type        = string
+  default     = ""
 }
 variable "pool_name" {
   description = "(Required) Name of the dedicated IP pool."
@@ -34,10 +23,27 @@ variable "pool_name" {
 variable "scaling_mode" {
   description = "(Optional) IP pool scaling mode. Valid values: STANDARD, MANAGED. If omitted, the AWS API will default to a standard pool."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the pool. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the Dedicated IP Pool.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,77 +165,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the pool. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the Dedicated IP Pool.TimeoutsConfiguration options:"
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "pool_name" {
   description = "(Required) Name of the dedicated IP pool."
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.pool_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "scaling_mode" {
   description = "(Optional) IP pool scaling mode. Valid values: STANDARD, MANAGED. If omitted, the AWS API will default to a standard pool."
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.scaling_mode
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the pool. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.tags
+}
+output "arn" {
+  description = "ARN of the Dedicated IP Pool.TimeoutsConfiguration options:"
+  value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.arn
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 30m)"
@@ -237,15 +211,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Dedicated IP Pool.TimeoutsConfiguration options:"
-  value       = aws_sesv2_dedicated_ip_pool.aws_sesv2_dedicated_ip_pool.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

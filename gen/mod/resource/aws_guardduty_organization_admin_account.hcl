@@ -133,17 +133,13 @@ output "admin_account_id" {
   description = "(Required) AWS account identifier to designate as a delegated administrator for GuardDuty.In addition to all arguments above, the following attributes are exported:"
   value       = aws_guardduty_organization_admin_account.aws_guardduty_organization_admin_account.admin_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "AWS account identifier."
   value       = aws_guardduty_organization_admin_account.aws_guardduty_organization_admin_account.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

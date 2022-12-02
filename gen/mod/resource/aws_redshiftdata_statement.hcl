@@ -1,18 +1,14 @@
 resource "aws_redshiftdata_statement" "aws_redshiftdata_statement" {
+  statement_name     = var.statement_name
+  with_event         = var.with_event
   cluster_identifier = var.cluster_identifier
   database           = var.database
   db_user            = var.db_user
   secret_arn         = var.secret_arn
   sql                = var.sql
-  statement_name     = var.statement_name
-  with_event         = var.with_event
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "with_event" {
-  description = "(Optional) A value that indicates whether to send an event to the Amazon EventBridge event bus after the SQL statement runs.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "cluster_identifier" {
@@ -26,10 +22,12 @@ variable "database" {
 variable "db_user" {
   description = "(Optional) The database user name."
   type        = string
+  default     = ""
 }
 variable "secret_arn" {
   description = "(Optional) The name or ARN of the secret that enables access to the database."
   type        = string
+  default     = ""
 }
 variable "sql" {
   description = "(Required) The SQL statement text to run."
@@ -38,6 +36,12 @@ variable "sql" {
 variable "statement_name" {
   description = "(Optional) The name of the SQL statement. You can name the SQL statement when you create it to identify the query."
   type        = string
+  default     = ""
+}
+variable "with_event" {
+  description = "(Optional) A value that indicates whether to send an event to the Amazon EventBridge event bus after the SQL statement runs.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,61 +163,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cluster_identifier" {
-  description = "(Required) The cluster identifier."
-  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.cluster_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "database" {
-  description = "(Required) The name of the database."
-  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.database
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "db_user" {
-  description = "(Optional) The database user name."
-  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.db_user
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "secret_arn" {
   description = "(Optional) The name or ARN of the secret that enables access to the database."
   value       = aws_redshiftdata_statement.aws_redshiftdata_statement.secret_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "sql" {
   description = "(Required) The SQL statement text to run."
   value       = aws_redshiftdata_statement.aws_redshiftdata_statement.sql
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "statement_name" {
   description = "(Optional) The name of the SQL statement. You can name the SQL statement when you create it to identify the query."
   value       = aws_redshiftdata_statement.aws_redshiftdata_statement.statement_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "with_event" {
   description = "(Optional) A value that indicates whether to send an event to the Amazon EventBridge event bus after the SQL statement runs.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshiftdata_statement.aws_redshiftdata_statement.with_event
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cluster_identifier" {
+  description = "(Required) The cluster identifier."
+  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.cluster_identifier
+}
+output "database" {
+  description = "(Required) The name of the database."
+  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.database
+}
+output "db_user" {
+  description = "(Optional) The database user name."
+  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.db_user
 }
 output "id" {
   description = "The Redshift Data Statement ID."
@@ -221,7 +197,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

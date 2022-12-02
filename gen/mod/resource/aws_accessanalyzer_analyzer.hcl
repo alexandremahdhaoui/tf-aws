@@ -1,38 +1,44 @@
 resource "aws_accessanalyzer_analyzer" "aws_accessanalyzer_analyzer" {
-  type          = var.type
   analyzer_name = var.analyzer_name
   arn           = var.arn
   id            = var.id
   tags          = var.tags
   tags_all      = var.tags_all
+  type          = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
 variable "analyzer_name" {
-  description = "(Required) Name of the Analyzer."
+  description = "(NOW ITS OPTIONAL) Name of the Analyzer."
   type        = string
+  default     = "HEY_HEY"
 }
 variable "arn" {
   description = "ARN of the Analyzer."
   type        = string
+  default     = ""
 }
 variable "id" {
-  description = "Analyzer name."
+  description = "yolo."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
 }
 variable "type" {
   description = "(Optional) Type of Analyzer. Valid values are ACCOUNT or ORGANIZATION. Defaults to ACCOUNT.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,69 +160,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "analyzer_name" {
-  description = "(Required) Name of the Analyzer."
-  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.analyzer_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Analyzer."
-  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Analyzer name."
-  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "(Optional) Type of Analyzer. Valid values are ACCOUNT or ORGANIZATION. Defaults to ACCOUNT.In addition to all arguments above, the following attributes are exported:"
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "analyzer_name" {
+  description = "(NOW ITS OPTIONAL) Name of the Analyzer."
+  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.analyzer_name
 }
 output "arn" {
   description = "ARN of the Analyzer."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "yolo."
+  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.id
+}
+output "arn" {
+  description = "ARN of the Analyzer."
+  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.arn
 }
 output "id" {
   description = "Analyzer name."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -224,7 +198,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {
@@ -234,7 +208,7 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 4.38.0"
     }
-    required_version = ">= 1.3.4"
+    required_version = ">= 6.6.6"
   }
 }
 provider "aws" {

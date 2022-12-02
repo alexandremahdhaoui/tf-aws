@@ -16,6 +16,7 @@ variable "application_id" {
 variable "enabled" {
   description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
   type        = string
+  default     = ""
 }
 variable "promotional_messages_per_second" {
   description = "Promotional messages per second that can be sent."
@@ -24,10 +25,12 @@ variable "promotional_messages_per_second" {
 variable "sender_id" {
   description = "(Optional) Sender identifier of your messages."
   type        = string
+  default     = ""
 }
 variable "short_code" {
   description = "(Optional) The Short Code registered with the phone provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,53 +152,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "application_id" {
-  description = "(Required) The application ID."
-  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled" {
-  description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
-  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "promotional_messages_per_second" {
-  description = "Promotional messages per second that can be sent."
-  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.promotional_messages_per_second
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "sender_id" {
   description = "(Optional) Sender identifier of your messages."
   value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.sender_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "short_code" {
   description = "(Optional) The Short Code registered with the phone provider.In addition to all arguments above, the following attributes are exported:"
   value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.short_code
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "application_id" {
+  description = "(Required) The application ID."
+  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.application_id
+}
+output "enabled" {
+  description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
+  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.enabled
 }
 output "promotional_messages_per_second" {
   description = "Promotional messages per second that can be sent."
   value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.promotional_messages_per_second
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "promotional_messages_per_second" {
+  description = "Promotional messages per second that can be sent."
+  value       = aws_pinpoint_sms_channel.markdown.aws_pinpoint_sms_channel.markdown.promotional_messages_per_second
 }
 output "transactional_messages_per_second" {
   description = "Transactional messages per second that can be sent."
@@ -203,7 +182,7 @@ output "transactional_messages_per_second" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,57 +1,63 @@
 resource "aws_networkmanager_link" "aws_networkmanager_link" {
-  bandwidth         = var.bandwidth
+  global_network_id = var.global_network_id
+  tags              = var.tags
   type              = var.type
   upload_speed      = var.upload_speed
-  global_network_id = var.global_network_id
+  description       = var.description
+  bandwidth         = var.bandwidth
+  download_speed    = var.download_speed
   provider_name     = var.provider_name
   site_id           = var.site_id
-  tags              = var.tags
   arn               = var.arn
-  description       = var.description
-  download_speed    = var.download_speed
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "site_id" {
-  description = "(Required) The ID of the site."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "arn" {
-  description = "Link Amazon Resource Name (ARN)."
-  type        = string
-}
 variable "description" {
   description = "(Optional) A description of the link."
   type        = string
-}
-variable "download_speed" {
-  description = "(Optional) Download speed in Mbps."
-  type        = string
+  default     = ""
 }
 variable "global_network_id" {
   description = "(Required) The ID of the global network."
   type        = string
 }
-variable "provider_name" {
-  description = "(Optional) The provider of the link."
+variable "tags" {
+  description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) The type of the link.The bandwidth object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "upload_speed" {
+  description = "(Optional) Upload speed in Mbps.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Link Amazon Resource Name (ARN)."
   type        = string
 }
 variable "bandwidth" {
   description = "(Required) The upload speed and download speed in Mbps. Documented below."
   type        = string
 }
-variable "type" {
-  description = "(Optional) The type of the link.The bandwidth object supports the following:"
+variable "download_speed" {
+  description = "(Optional) Download speed in Mbps."
   type        = string
+  default     = ""
 }
-variable "upload_speed" {
-  description = "(Optional) Upload speed in Mbps.In addition to all arguments above, the following attributes are exported:"
+variable "provider_name" {
+  description = "(Optional) The provider of the link."
+  type        = string
+  default     = ""
+}
+variable "site_id" {
+  description = "(Required) The ID of the site."
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,85 +180,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "site_id" {
-  description = "(Required) The ID of the site."
-  value       = aws_networkmanager_link.aws_networkmanager_link.site_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_networkmanager_link.aws_networkmanager_link.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Link Amazon Resource Name (ARN)."
-  value       = aws_networkmanager_link.aws_networkmanager_link.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) A description of the link."
   value       = aws_networkmanager_link.aws_networkmanager_link.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "download_speed" {
-  description = "(Optional) Download speed in Mbps."
-  value       = aws_networkmanager_link.aws_networkmanager_link.download_speed
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "global_network_id" {
   description = "(Required) The ID of the global network."
   value       = aws_networkmanager_link.aws_networkmanager_link.global_network_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provider_name" {
-  description = "(Optional) The provider of the link."
-  value       = aws_networkmanager_link.aws_networkmanager_link.provider_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bandwidth" {
-  description = "(Required) The upload speed and download speed in Mbps. Documented below."
-  value       = aws_networkmanager_link.aws_networkmanager_link.bandwidth
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_networkmanager_link.aws_networkmanager_link.tags
 }
 output "type" {
   description = "(Optional) The type of the link.The bandwidth object supports the following:"
   value       = aws_networkmanager_link.aws_networkmanager_link.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "upload_speed" {
   description = "(Optional) Upload speed in Mbps.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_link.aws_networkmanager_link.upload_speed
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Link Amazon Resource Name (ARN)."
+  value       = aws_networkmanager_link.aws_networkmanager_link.arn
+}
+output "bandwidth" {
+  description = "(Required) The upload speed and download speed in Mbps. Documented below."
+  value       = aws_networkmanager_link.aws_networkmanager_link.bandwidth
+}
+output "download_speed" {
+  description = "(Optional) Download speed in Mbps."
+  value       = aws_networkmanager_link.aws_networkmanager_link.download_speed
+}
+output "provider_name" {
+  description = "(Optional) The provider of the link."
+  value       = aws_networkmanager_link.aws_networkmanager_link.provider_name
+}
+output "site_id" {
+  description = "(Required) The ID of the site."
+  value       = aws_networkmanager_link.aws_networkmanager_link.site_id
+}
+output "arn" {
+  description = "Link Amazon Resource Name (ARN)."
+  value       = aws_networkmanager_link.aws_networkmanager_link.arn
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -260,15 +230,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Link Amazon Resource Name (ARN)."
-  value       = aws_networkmanager_link.aws_networkmanager_link.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

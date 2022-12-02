@@ -1,4 +1,5 @@
 resource "aws_waf_byte_match_set" "aws_waf_byte_match_set" {
+  name                  = var.name
   positional_constraint = var.positional_constraint
   target_string         = var.target_string
   text_transformation   = var.text_transformation
@@ -6,22 +7,9 @@ resource "aws_waf_byte_match_set" "aws_waf_byte_match_set" {
   byte_match_tuples     = var.byte_match_tuples
   data                  = var.data
   field_to_match        = var.field_to_match
-  name                  = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "positional_constraint" {
-  description = "(Required) Within the portion of a web request that you want to search\n(for example, in the query string, if any), specify where you want to search.\ne.g., CONTAINS, CONTAINS_WORD or EXACTLYdocs"
-  type        = string
-}
-variable "target_string" {
-  description = "(Optional) The value that you want to search for within the field specified by field_to_match, e.g., badrefer1docs"
-  type        = string
-}
-variable "text_transformation" {
-  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
   type        = string
 }
 variable "type" {
@@ -35,6 +23,7 @@ variable "byte_match_tuples" {
 variable "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   type        = string
+  default     = ""
 }
 variable "field_to_match" {
   description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
@@ -42,6 +31,19 @@ variable "field_to_match" {
 }
 variable "name" {
   description = "(Required) The name or description of the Byte Match Set."
+  type        = string
+}
+variable "positional_constraint" {
+  description = "(Required) Within the portion of a web request that you want to search\n(for example, in the query string, if any), specify where you want to search.\ne.g., CONTAINS, CONTAINS_WORD or EXACTLYdocs"
+  type        = string
+}
+variable "target_string" {
+  description = "(Optional) The value that you want to search for within the field specified by field_to_match, e.g., badrefer1docs"
+  type        = string
+  default     = ""
+}
+variable "text_transformation" {
+  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +166,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "byte_match_tuples" {
+  description = "Nested blocksbyte_match_tuplesArguments"
+  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.byte_match_tuples
+}
 output "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "field_to_match" {
   description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.field_to_match
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The name or description of the Byte Match Set."
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "positional_constraint" {
   description = "(Required) Within the portion of a web request that you want to search\n(for example, in the query string, if any), specify where you want to search.\ne.g., CONTAINS, CONTAINS_WORD or EXACTLYdocs"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.positional_constraint
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "target_string" {
   description = "(Optional) The value that you want to search for within the field specified by field_to_match, e.g., badrefer1docs"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.target_string
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "text_transformation" {
   description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.text_transformation
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "type" {
   description = "HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "byte_match_tuples" {
-  description = "Nested blocksbyte_match_tuplesArguments"
-  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.byte_match_tuples
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the WAF Byte Match Set."
@@ -234,7 +204,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

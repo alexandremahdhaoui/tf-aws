@@ -1,23 +1,15 @@
 resource "aws_chime_voice_connector_origination" "aws_chime_voice_connector_origination" {
-  weight             = var.weight
-  disabled           = var.disabled
-  host               = var.host
-  port               = var.port
   priority           = var.priority
   protocol           = var.protocol
   route              = var.route
   voice_connector_id = var.voice_connector_id
+  weight             = var.weight
+  disabled           = var.disabled
+  host               = var.host
+  port               = var.port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "route" {
-  description = "(Required) Set of call distribution properties defined for your SIP hosts. See route below for more details. Minimum of 1. Maximum of 20."
-  type        = string
-}
-variable "voice_connector_id" {
-  description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "weight" {
@@ -27,6 +19,7 @@ variable "weight" {
 variable "disabled" {
   description = "(Optional) When origination settings are disabled, inbound calls are not enabled for your Amazon Chime Voice Connector.routeOrigination routes define call distribution properties for your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector. Limit: Ten origination routes for each Amazon Chime Voice Connector."
   type        = string
+  default     = ""
 }
 variable "host" {
   description = "(Required) The FQDN or IP address to contact for origination traffic."
@@ -42,6 +35,14 @@ variable "priority" {
 }
 variable "protocol" {
   description = "(Required) The protocol to use for the origination route. Encryption-enabled Amazon Chime Voice Connectors use TCP protocol by default."
+  type        = string
+}
+variable "route" {
+  description = "(Required) Set of call distribution properties defined for your SIP hosts. See route below for more details. Minimum of 1. Maximum of 20."
+  type        = string
+}
+variable "voice_connector_id" {
+  description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +165,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "voice_connector_id" {
-  description = "(Required) The Amazon Chime Voice Connector ID."
-  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.voice_connector_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "weight" {
-  description = "(Required) The weight associated with the host. If hosts are equal in priority, calls are redistributed among them based on their relative weight.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.weight
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "disabled" {
-  description = "(Optional) When origination settings are disabled, inbound calls are not enabled for your Amazon Chime Voice Connector.routeOrigination routes define call distribution properties for your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector. Limit: Ten origination routes for each Amazon Chime Voice Connector."
-  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.disabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "host" {
-  description = "(Required) The FQDN or IP address to contact for origination traffic."
-  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.host
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port" {
-  description = "(Required) The designated origination route port. Defaults to 5060."
-  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "priority" {
   description = "(Required) The priority associated with the host, with 1 being the highest priority. Higher priority hosts are attempted first."
   value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.priority
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "protocol" {
   description = "(Required) The protocol to use for the origination route. Encryption-enabled Amazon Chime Voice Connectors use TCP protocol by default."
   value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "route" {
   description = "(Required) Set of call distribution properties defined for your SIP hosts. See route below for more details. Minimum of 1. Maximum of 20."
   value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.route
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "voice_connector_id" {
+  description = "(Required) The Amazon Chime Voice Connector ID."
+  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.voice_connector_id
+}
+output "weight" {
+  description = "(Required) The weight associated with the host. If hosts are equal in priority, calls are redistributed among them based on their relative weight.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.weight
+}
+output "disabled" {
+  description = "(Optional) When origination settings are disabled, inbound calls are not enabled for your Amazon Chime Voice Connector.routeOrigination routes define call distribution properties for your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector. Limit: Ten origination routes for each Amazon Chime Voice Connector."
+  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.disabled
+}
+output "host" {
+  description = "(Required) The FQDN or IP address to contact for origination traffic."
+  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.host
+}
+output "port" {
+  description = "(Required) The designated origination route port. Defaults to 5060."
+  value       = aws_chime_voice_connector_origination.aws_chime_voice_connector_origination.port
 }
 output "id" {
   description = "The Amazon Chime Voice Connector ID."
@@ -234,7 +203,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

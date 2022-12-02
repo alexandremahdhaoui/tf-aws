@@ -128,25 +128,13 @@ output "arn" {
   description = "The ARN for a configuration for DNSSEC validation."
   value       = aws_route53_resolver_dnssec_config.aws_route53_resolver_dnssec_config.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID for a configuration for DNSSEC validation."
   value       = aws_route53_resolver_dnssec_config.aws_route53_resolver_dnssec_config.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_id" {
   description = "The owner account ID of the virtual private cloud (VPC) for a configuration for DNSSEC validation."
   value       = aws_route53_resolver_dnssec_config.aws_route53_resolver_dnssec_config.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "validation_status" {
   description = "The validation status for a DNSSEC configuration. The status can be one of the following: ENABLING, ENABLED, DISABLING and DISABLED."
@@ -154,7 +142,7 @@ output "validation_status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,83 +1,93 @@
 resource "aws_emr_instance_group" "aws_emr_instance_group" {
-  volumes_per_instance   = var.volumes_per_instance
+  cluster_id             = var.cluster_id
   configurations_json    = var.configurations_json
-  instance_count         = var.instance_count
-  instance_type          = var.instance_type
-  iops                   = var.iops
-  ebs_optimized          = var.ebs_optimized
-  id                     = var.id
-  name                   = var.name
   size                   = var.size
   autoscaling_policy     = var.autoscaling_policy
   bid_price              = var.bid_price
-  cluster_id             = var.cluster_id
-  ebs_config             = var.ebs_config
+  ebs_optimized          = var.ebs_optimized
+  instance_count         = var.instance_count
+  instance_type          = var.instance_type
+  name                   = var.name
   running_instance_count = var.running_instance_count
+  volumes_per_instance   = var.volumes_per_instance
+  ebs_config             = var.ebs_config
+  id                     = var.id
+  iops                   = var.iops
   type                   = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "type" {
-  description = "(Optional) The volume type. Valid options are 'gp2', 'io1' and 'standard'."
-  type        = string
-}
 variable "autoscaling_policy" {
   description = "(Optional) The autoscaling policy document. This is a JSON formatted string. See EMR Auto Scaling"
   type        = string
+  default     = ""
 }
 variable "bid_price" {
   description = "(Optional) If set, the bid price for each EC2 instance in the instance group, expressed in USD. By setting this attribute, the instance group is being declared as a Spot Instance, and will implicitly create a Spot request. Leave this blank to use On-Demand Instances."
   type        = string
-}
-variable "cluster_id" {
-  description = " (Required) ID of the EMR Cluster to attach to. Changing this forces a new resource to be created."
-  type        = string
-}
-variable "ebs_config" {
-  description = " (Optional) One or more ebs_config blocks as defined below. Changing this forces a new resource to be created."
-  type        = string
-}
-variable "running_instance_count" {
-  description = " The number of instances currently running in this instance group."
-  type        = string
+  default     = ""
 }
 variable "volumes_per_instance" {
   description = "(Optional) The number of EBS Volumes to attach per instance.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "configurations_json" {
-  description = "(Optional) A JSON string for supplying list of configurations specific to the EMR instance group. Note that this can only be changed when using EMR release 5.21 or later.ebs_config supports the following:"
-  type        = string
-}
-variable "instance_count" {
-  description = " (Optional) target number of instances for the instance group. defaults to 0."
-  type        = string
-}
-variable "instance_type" {
-  description = " (Required) The EC2 instance type for all instances in the instance group. Changing this forces a new resource to be created."
-  type        = string
-}
-variable "iops" {
-  description = "(Optional) The number of I/O operations per second (IOPS) that the volume supports."
-  type        = string
+  default     = ""
 }
 variable "ebs_optimized" {
   description = " (Optional) Indicates whether an Amazon EBS volume is EBS-optimized. Changing this forces a new resource to be created."
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "The EMR Instance ID"
+variable "instance_count" {
+  description = " (Optional) target number of instances for the instance group. defaults to 0."
+  type        = string
+  default     = ""
+}
+variable "instance_type" {
+  description = " (Required) The EC2 instance type for all instances in the instance group. Changing this forces a new resource to be created."
   type        = string
 }
 variable "name" {
   description = " (Required) Human friendly name given to the instance group. Changing this forces a new resource to be created."
   type        = string
 }
+variable "running_instance_count" {
+  description = " The number of instances currently running in this instance group."
+  type        = string
+}
+variable "ebs_config" {
+  description = " (Optional) One or more ebs_config blocks as defined below. Changing this forces a new resource to be created."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The EMR Instance ID"
+  type        = string
+}
+variable "iops" {
+  description = "(Optional) The number of I/O operations per second (IOPS) that the volume supports."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) The volume type. Valid options are 'gp2', 'io1' and 'standard'."
+  type        = string
+  default     = ""
+}
+variable "cluster_id" {
+  description = " (Required) ID of the EMR Cluster to attach to. Changing this forces a new resource to be created."
+  type        = string
+}
+variable "configurations_json" {
+  description = "(Optional) A JSON string for supplying list of configurations specific to the EMR instance group. Note that this can only be changed when using EMR release 5.21 or later.ebs_config supports the following:"
+  type        = string
+  default     = ""
+}
 variable "size" {
   description = "(Optional) The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -199,125 +209,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "cluster_id" {
+  description = " (Required) ID of the EMR Cluster to attach to. Changing this forces a new resource to be created."
+  value       = aws_emr_instance_group.aws_emr_instance_group.cluster_id
+}
 output "configurations_json" {
   description = "(Optional) A JSON string for supplying list of configurations specific to the EMR instance group. Note that this can only be changed when using EMR release 5.21 or later.ebs_config supports the following:"
   value       = aws_emr_instance_group.aws_emr_instance_group.configurations_json
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_count" {
-  description = " (Optional) target number of instances for the instance group. defaults to 0."
-  value       = aws_emr_instance_group.aws_emr_instance_group.instance_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_type" {
-  description = " (Required) The EC2 instance type for all instances in the instance group. Changing this forces a new resource to be created."
-  value       = aws_emr_instance_group.aws_emr_instance_group.instance_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iops" {
-  description = "(Optional) The number of I/O operations per second (IOPS) that the volume supports."
-  value       = aws_emr_instance_group.aws_emr_instance_group.iops
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ebs_optimized" {
-  description = " (Optional) Indicates whether an Amazon EBS volume is EBS-optimized. Changing this forces a new resource to be created."
-  value       = aws_emr_instance_group.aws_emr_instance_group.ebs_optimized
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The EMR Instance ID"
-  value       = aws_emr_instance_group.aws_emr_instance_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = " (Required) Human friendly name given to the instance group. Changing this forces a new resource to be created."
-  value       = aws_emr_instance_group.aws_emr_instance_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "size" {
   description = "(Optional) The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10."
   value       = aws_emr_instance_group.aws_emr_instance_group.size
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) The volume type. Valid options are 'gp2', 'io1' and 'standard'."
-  value       = aws_emr_instance_group.aws_emr_instance_group.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "autoscaling_policy" {
   description = "(Optional) The autoscaling policy document. This is a JSON formatted string. See EMR Auto Scaling"
   value       = aws_emr_instance_group.aws_emr_instance_group.autoscaling_policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bid_price" {
   description = "(Optional) If set, the bid price for each EC2 instance in the instance group, expressed in USD. By setting this attribute, the instance group is being declared as a Spot Instance, and will implicitly create a Spot request. Leave this blank to use On-Demand Instances."
   value       = aws_emr_instance_group.aws_emr_instance_group.bid_price
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ebs_optimized" {
+  description = " (Optional) Indicates whether an Amazon EBS volume is EBS-optimized. Changing this forces a new resource to be created."
+  value       = aws_emr_instance_group.aws_emr_instance_group.ebs_optimized
 }
-output "cluster_id" {
-  description = " (Required) ID of the EMR Cluster to attach to. Changing this forces a new resource to be created."
-  value       = aws_emr_instance_group.aws_emr_instance_group.cluster_id
+output "instance_count" {
+  description = " (Optional) target number of instances for the instance group. defaults to 0."
+  value       = aws_emr_instance_group.aws_emr_instance_group.instance_count
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_type" {
+  description = " (Required) The EC2 instance type for all instances in the instance group. Changing this forces a new resource to be created."
+  value       = aws_emr_instance_group.aws_emr_instance_group.instance_type
 }
-output "ebs_config" {
-  description = " (Optional) One or more ebs_config blocks as defined below. Changing this forces a new resource to be created."
-  value       = aws_emr_instance_group.aws_emr_instance_group.ebs_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = " (Required) Human friendly name given to the instance group. Changing this forces a new resource to be created."
+  value       = aws_emr_instance_group.aws_emr_instance_group.name
 }
 output "running_instance_count" {
   description = " The number of instances currently running in this instance group."
   value       = aws_emr_instance_group.aws_emr_instance_group.running_instance_count
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "volumes_per_instance" {
   description = "(Optional) The number of EBS Volumes to attach per instance.In addition to all arguments above, the following attributes are exported:"
   value       = aws_emr_instance_group.aws_emr_instance_group.volumes_per_instance
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ebs_config" {
+  description = " (Optional) One or more ebs_config blocks as defined below. Changing this forces a new resource to be created."
+  value       = aws_emr_instance_group.aws_emr_instance_group.ebs_config
+}
+output "id" {
+  description = "The EMR Instance ID"
+  value       = aws_emr_instance_group.aws_emr_instance_group.id
+}
+output "iops" {
+  description = "(Optional) The number of I/O operations per second (IOPS) that the volume supports."
+  value       = aws_emr_instance_group.aws_emr_instance_group.iops
+}
+output "type" {
+  description = "(Optional) The volume type. Valid options are 'gp2', 'io1' and 'standard'."
+  value       = aws_emr_instance_group.aws_emr_instance_group.type
+}
+output "id" {
+  description = "The EMR Instance ID"
+  value       = aws_emr_instance_group.aws_emr_instance_group.id
+}
+output "running_instance_count" {
+  description = " The number of instances currently running in this instance group."
+  value       = aws_emr_instance_group.aws_emr_instance_group.running_instance_count
 }
 output "status" {
   description = " The current status of the instance group."
@@ -325,23 +283,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The EMR Instance ID"
-  value       = aws_emr_instance_group.aws_emr_instance_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "running_instance_count" {
-  description = " The number of instances currently running in this instance group."
-  value       = aws_emr_instance_group.aws_emr_instance_group.running_instance_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -128,17 +128,9 @@ output "availability_zone_id" {
   description = "The AZ ID of the subnet"
   value       = aws_default_subnet.aws_default_subnet.availability_zone_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cidr_block" {
   description = "The IPv4 CIDR block assigned to the subnet"
   value       = aws_default_subnet.aws_default_subnet.cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_id" {
   description = "The ID of the VPC the subnet is in"
@@ -146,7 +138,7 @@ output "vpc_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

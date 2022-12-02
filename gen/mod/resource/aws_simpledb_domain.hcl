@@ -133,17 +133,13 @@ output "name" {
   description = "(Required) The name of the SimpleDB domainIn addition to all arguments above, the following attributes are exported:"
   value       = aws_simpledb_domain.aws_simpledb_domain.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the SimpleDB domain"
   value       = aws_simpledb_domain.aws_simpledb_domain.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

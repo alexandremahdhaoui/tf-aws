@@ -1,32 +1,35 @@
 resource "aws_ec2_local_gateway_route_table_vpc_association" "aws_ec2_local_gateway_route_table_vpc_association" {
+  id                           = var.id
+  local_gateway_route_table_id = var.local_gateway_route_table_id
   tags                         = var.tags
   tags_all                     = var.tags_all
   vpc_id                       = var.vpc_id
-  id                           = var.id
-  local_gateway_route_table_id = var.local_gateway_route_table_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "id" {
+  description = "Identifier of EC2 Local Gateway Route Table VPC Association."
+  type        = string
+  default     = ""
+}
+variable "local_gateway_route_table_id" {
+  description = "(Required) Identifier of EC2 Local Gateway Route Table."
+  type        = string
+}
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
 }
 variable "vpc_id" {
   description = "(Required) Identifier of EC2 VPC."
-  type        = string
-}
-variable "id" {
-  description = "Identifier of EC2 Local Gateway Route Table VPC Association."
-  type        = string
-}
-variable "local_gateway_route_table_id" {
-  description = "(Required) Identifier of EC2 Local Gateway Route Table."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,61 +152,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "vpc_id" {
+  description = "(Required) Identifier of EC2 VPC."
+  value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.vpc_id
+}
 output "id" {
   description = "Identifier of EC2 Local Gateway Route Table VPC Association."
   value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "local_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Local Gateway Route Table."
   value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.local_gateway_route_table_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "(Required) Identifier of EC2 VPC."
-  value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Identifier of EC2 Local Gateway Route Table VPC Association."
   value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_local_gateway_route_table_vpc_association.aws_ec2_local_gateway_route_table_vpc_association.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,18 +1,14 @@
 resource "aws_route53_resolver_query_log_config" "aws_route53_resolver_query_log_config" {
-  owner_id        = var.owner_id
-  share_status    = var.share_status
   tags            = var.tags
   arn             = var.arn
   destination_arn = var.destination_arn
   id              = var.id
   name            = var.name
+  owner_id        = var.owner_id
+  share_status    = var.share_status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "owner_id" {
-  description = "The AWS account ID of the account that created the query logging configuration."
   type        = string
 }
 variable "share_status" {
@@ -22,6 +18,7 @@ variable "share_status" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN (Amazon Resource Name) of the Route 53 Resolver query logging configuration."
@@ -37,6 +34,10 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) The name of the Route 53 Resolver query logging configuration."
+  type        = string
+}
+variable "owner_id" {
+  description = "The AWS account ID of the account that created the query logging configuration."
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,85 +160,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "destination_arn" {
+  description = "S3 bucket, a CloudWatch Logs log group, or a Kinesis Data Firehose delivery stream."
+  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.destination_arn
+}
+output "id" {
+  description = "The ID of the Route 53 Resolver query logging configuration."
+  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.id
+}
 output "name" {
   description = "(Required) The name of the Route 53 Resolver query logging configuration."
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "owner_id" {
   description = "The AWS account ID of the account that created the query logging configuration."
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "share_status" {
   description = "NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME"
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.share_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The ARN (Amazon Resource Name) of the Route 53 Resolver query logging configuration."
+  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.tags_all
 }
 output "arn" {
   description = "The ARN (Amazon Resource Name) of the Route 53 Resolver query logging configuration."
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination_arn" {
-  description = "S3 bucket, a CloudWatch Logs log group, or a Kinesis Data Firehose delivery stream."
-  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.destination_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the Route 53 Resolver query logging configuration."
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN (Amazon Resource Name) of the Route 53 Resolver query logging configuration."
-  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the Route 53 Resolver query logging configuration."
-  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "owner_id" {
   description = "The AWS account ID of the account that created the query logging configuration."
   value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "share_status" {
   description = "NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME"
@@ -245,15 +210,7 @@ output "share_status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_route53_resolver_query_log_config.aws_route53_resolver_query_log_config.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

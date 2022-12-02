@@ -1,36 +1,20 @@
 resource "aws_ssm_maintenance_window" "aws_ssm_maintenance_window" {
-  schedule                   = var.schedule
-  schedule_offset            = var.schedule_offset
-  tags                       = var.tags
+  duration                   = var.duration
+  end_date                   = var.end_date
+  start_date                 = var.start_date
+  allow_unassociated_targets = var.allow_unassociated_targets
   cutoff                     = var.cutoff
   description                = var.description
   enabled                    = var.enabled
-  end_date                   = var.end_date
   id                         = var.id
-  allow_unassociated_targets = var.allow_unassociated_targets
-  duration                   = var.duration
   name                       = var.name
+  schedule                   = var.schedule
+  schedule_offset            = var.schedule_offset
   schedule_timezone          = var.schedule_timezone
-  start_date                 = var.start_date
+  tags                       = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A description for the maintenance window."
-  type        = string
-}
-variable "enabled" {
-  description = "(Optional) Whether the maintenance window is enabled. Default: true."
-  type        = string
-}
-variable "end_date" {
-  description = "(Optional) Timestamp in ISO-8601 extended format when to no longer run the maintenance window."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the maintenance window."
   type        = string
 }
 variable "schedule" {
@@ -40,17 +24,29 @@ variable "schedule" {
 variable "schedule_offset" {
   description = "(Optional) The number of days to wait after the date and time specified by a CRON expression before running the maintenance window."
   type        = string
+  default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "allow_unassociated_targets" {
+  description = "(Optional) Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets."
   type        = string
+  default     = ""
 }
 variable "cutoff" {
   description = "(Required) The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution."
   type        = string
 }
-variable "duration" {
-  description = "(Required) The duration of the Maintenance Window in hours."
+variable "description" {
+  description = "(Optional) A description for the maintenance window."
+  type        = string
+  default     = ""
+}
+variable "enabled" {
+  description = "(Optional) Whether the maintenance window is enabled. Default: true."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ID of the maintenance window."
   type        = string
 }
 variable "name" {
@@ -60,14 +56,26 @@ variable "name" {
 variable "schedule_timezone" {
   description = "(Optional) Timezone for schedule in Internet Assigned Numbers Authority (IANA) Time Zone Database format. For example: America/Los_Angeles, etc/UTC, or Asia/Seoul."
   type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "duration" {
+  description = "(Required) The duration of the Maintenance Window in hours."
+  type        = string
+}
+variable "end_date" {
+  description = "(Optional) Timestamp in ISO-8601 extended format when to no longer run the maintenance window."
+  type        = string
+  default     = ""
 }
 variable "start_date" {
   description = "(Optional) Timestamp in ISO-8601 extended format when to begin the maintenance window."
   type        = string
-}
-variable "allow_unassociated_targets" {
-  description = "(Optional) Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,117 +197,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allow_unassociated_targets" {
-  description = "(Optional) Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.allow_unassociated_targets
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "duration" {
   description = "(Required) The duration of the Maintenance Window in hours."
   value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.duration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the maintenance window."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "schedule_timezone" {
-  description = "(Optional) Timezone for schedule in Internet Assigned Numbers Authority (IANA) Time Zone Database format. For example: America/Los_Angeles, etc/UTC, or Asia/Seoul."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.schedule_timezone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "start_date" {
-  description = "(Optional) Timestamp in ISO-8601 extended format when to begin the maintenance window."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.start_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cutoff" {
-  description = "(Required) The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.cutoff
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) A description for the maintenance window."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled" {
-  description = "(Optional) Whether the maintenance window is enabled. Default: true."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "end_date" {
   description = "(Optional) Timestamp in ISO-8601 extended format when to no longer run the maintenance window."
   value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.end_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the maintenance window."
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "start_date" {
+  description = "(Optional) Timestamp in ISO-8601 extended format when to begin the maintenance window."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.start_date
 }
 output "schedule" {
   description = "(Required) The schedule of the Maintenance Window in the form of a cron or rate expression."
   value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.schedule
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "schedule_offset" {
   description = "(Optional) The number of days to wait after the date and time specified by a CRON expression before running the maintenance window."
   value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.schedule_offset
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "allow_unassociated_targets" {
+  description = "(Optional) Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.allow_unassociated_targets
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.tags
+output "cutoff" {
+  description = "(Required) The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.cutoff
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) A description for the maintenance window."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.description
+}
+output "enabled" {
+  description = "(Optional) Whether the maintenance window is enabled. Default: true."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.enabled
 }
 output "id" {
   description = "The ID of the maintenance window."
   value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the maintenance window."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.name
+}
+output "schedule_timezone" {
+  description = "(Optional) Timezone for schedule in Internet Assigned Numbers Authority (IANA) Time Zone Database format. For example: America/Los_Angeles, etc/UTC, or Asia/Seoul."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.schedule_timezone
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.tags
+}
+output "id" {
+  description = "The ID of the maintenance window."
+  value       = aws_ssm_maintenance_window.aws_ssm_maintenance_window.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -307,7 +259,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

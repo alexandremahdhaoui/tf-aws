@@ -138,17 +138,9 @@ output "resource_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the resource to associate with the RAM Resource Share."
   value       = aws_ram_resource_association.aws_ram_resource_association.resource_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_share_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the RAM Resource Share.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ram_resource_association.aws_ram_resource_association.resource_share_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the resource share."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,8 +1,8 @@
 datasource "aws_kms_ciphertext" "aws_kms_ciphertext" {
-  key_id    = var.key_id
-  plaintext = var.plaintext
   context   = var.context
   id        = var.id
+  key_id    = var.key_id
+  plaintext = var.plaintext
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -11,6 +11,7 @@ variable "provider_region" {
 variable "context" {
   description = "(Optional) An optional mapping that makes up the encryption context.All of the argument attributes are also exported as result attributes."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "Globally unique key ID for the customer master key."
@@ -28,33 +29,17 @@ output "id" {
   description = "Globally unique key ID for the customer master key."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key_id" {
   description = "(Required) Globally unique key ID for the customer master key."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "plaintext" {
   description = "(Required) Data to be encrypted. Note that this may show up in logs, and it will be stored in the state file."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.plaintext
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "context" {
   description = "(Optional) An optional mapping that makes up the encryption context.All of the argument attributes are also exported as result attributes."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.context
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Globally unique key ID for the customer master key."
@@ -62,7 +47,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -138,17 +138,13 @@ output "account_id" {
   description = "(Required) An AWS Account ID to add create volume permissions. The AWS Account cannot be the snapshot's ownerIn addition to all arguments above, the following attributes are exported:"
   value       = aws_snapshot_create_volume_permission.aws_snapshot_create_volume_permission.account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "snapshot_id" {
   description = "(Required) A snapshot ID"
   value       = aws_snapshot_create_volume_permission.aws_snapshot_create_volume_permission.snapshot_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

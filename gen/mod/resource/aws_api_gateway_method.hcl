@@ -1,57 +1,62 @@
 resource "aws_api_gateway_method" "aws_api_gateway_method" {
-  api_key_required     = var.api_key_required
-  authorization        = var.authorization
+  authorization_scopes = var.authorization_scopes
+  http_method          = var.http_method
+  resource_id          = var.resource_id
   operation_name       = var.operation_name
   request_models       = var.request_models
-  resource_id          = var.resource_id
-  rest_api_id          = var.rest_api_id
-  authorization_scopes = var.authorization_scopes
-  authorizer_id        = var.authorizer_id
-  http_method          = var.http_method
   request_validator_id = var.request_validator_id
+  rest_api_id          = var.rest_api_id
+  api_key_required     = var.api_key_required
+  authorization        = var.authorization
+  authorizer_id        = var.authorizer_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "api_key_required" {
-  description = "(Optional) Specify if the method requires an API key"
-  type        = string
-}
-variable "authorization" {
-  description = "(Required) Type of authorization used for the method (NONE, CUSTOM, AWS_IAM, COGNITO_USER_POOLS)"
-  type        = string
-}
 variable "operation_name" {
   description = "(Optional) Function name that will be given to the method when generating an SDK through API Gateway. If omitted, API Gateway will generate a function name based on the resource path and HTTP verb."
   type        = string
+  default     = ""
 }
 variable "request_models" {
   description = "application/jsonError, Empty (built-in models) or aws_api_gateway_model's name."
   type        = string
 }
-variable "resource_id" {
-  description = "(Required) API resource ID"
+variable "request_validator_id" {
+  description = "(Optional) ID of a aws_api_gateway_request_validator"
   type        = string
+  default     = ""
 }
 variable "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   type        = string
 }
-variable "authorization_scopes" {
-  description = "(Optional) Authorization scopes used when the authorization is COGNITO_USER_POOLS"
+variable "api_key_required" {
+  description = "(Optional) Specify if the method requires an API key"
+  type        = string
+  default     = ""
+}
+variable "authorization" {
+  description = "(Required) Type of authorization used for the method (NONE, CUSTOM, AWS_IAM, COGNITO_USER_POOLS)"
   type        = string
 }
 variable "authorizer_id" {
   description = "(Optional) Authorizer id to be used when the authorization is CUSTOM or COGNITO_USER_POOLS"
   type        = string
+  default     = ""
+}
+variable "authorization_scopes" {
+  description = "(Optional) Authorization scopes used when the authorization is COGNITO_USER_POOLS"
+  type        = string
+  default     = ""
 }
 variable "http_method" {
   description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
   type        = string
 }
-variable "request_validator_id" {
-  description = "(Optional) ID of a aws_api_gateway_request_validator"
+variable "resource_id" {
+  description = "(Required) API resource ID"
   type        = string
 }
 variable "tag_instance_id" {
@@ -178,25 +183,37 @@ output "resource_id" {
   description = "(Required) API resource ID"
   value       = aws_api_gateway_method.aws_api_gateway_method.resource_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "authorization_scopes" {
+  description = "(Optional) Authorization scopes used when the authorization is COGNITO_USER_POOLS"
+  value       = aws_api_gateway_method.aws_api_gateway_method.authorization_scopes
+}
+output "http_method" {
+  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
+  value       = aws_api_gateway_method.aws_api_gateway_method.http_method
+}
+output "authorizer_id" {
+  description = "(Optional) Authorizer id to be used when the authorization is CUSTOM or COGNITO_USER_POOLS"
+  value       = aws_api_gateway_method.aws_api_gateway_method.authorizer_id
+}
+output "operation_name" {
+  description = "(Optional) Function name that will be given to the method when generating an SDK through API Gateway. If omitted, API Gateway will generate a function name based on the resource path and HTTP verb."
+  value       = aws_api_gateway_method.aws_api_gateway_method.operation_name
+}
+output "request_models" {
+  description = "application/jsonError, Empty (built-in models) or aws_api_gateway_model's name."
+  value       = aws_api_gateway_method.aws_api_gateway_method.request_models
+}
+output "request_validator_id" {
+  description = "(Optional) ID of a aws_api_gateway_request_validator"
+  value       = aws_api_gateway_method.aws_api_gateway_method.request_validator_id
 }
 output "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   value       = aws_api_gateway_method.aws_api_gateway_method.rest_api_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "api_key_required" {
   description = "(Optional) Specify if the method requires an API key"
   value       = aws_api_gateway_method.aws_api_gateway_method.api_key_required
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "authorization" {
   description = "(Required) Type of authorization used for the method (NONE, CUSTOM, AWS_IAM, COGNITO_USER_POOLS)"
@@ -204,55 +221,7 @@ output "authorization" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "operation_name" {
-  description = "(Optional) Function name that will be given to the method when generating an SDK through API Gateway. If omitted, API Gateway will generate a function name based on the resource path and HTTP verb."
-  value       = aws_api_gateway_method.aws_api_gateway_method.operation_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "request_models" {
-  description = "application/jsonError, Empty (built-in models) or aws_api_gateway_model's name."
-  value       = aws_api_gateway_method.aws_api_gateway_method.request_models
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorization_scopes" {
-  description = "(Optional) Authorization scopes used when the authorization is COGNITO_USER_POOLS"
-  value       = aws_api_gateway_method.aws_api_gateway_method.authorization_scopes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorizer_id" {
-  description = "(Optional) Authorizer id to be used when the authorization is CUSTOM or COGNITO_USER_POOLS"
-  value       = aws_api_gateway_method.aws_api_gateway_method.authorizer_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "http_method" {
-  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
-  value       = aws_api_gateway_method.aws_api_gateway_method.http_method
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "request_validator_id" {
-  description = "(Optional) ID of a aws_api_gateway_request_validator"
-  value       = aws_api_gateway_method.aws_api_gateway_method.request_validator_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

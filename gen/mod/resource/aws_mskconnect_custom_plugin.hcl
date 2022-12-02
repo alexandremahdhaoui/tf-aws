@@ -1,28 +1,28 @@
 resource "aws_mskconnect_custom_plugin" "aws_mskconnect_custom_plugin" {
   object_version  = var.object_version
   state           = var.state
+  arn             = var.arn
+  content_type    = var.content_type
+  file_key        = var.file_key
+  name            = var.name
+  latest_revision = var.latest_revision
+  location        = var.location
+  s3              = var.s3
   bucket_arn      = var.bucket_arn
   create          = var.create
   delete          = var.delete
-  file_key        = var.file_key
-  location        = var.location
-  name            = var.name
-  s3              = var.s3
-  arn             = var.arn
-  content_type    = var.content_type
   description     = var.description
-  latest_revision = var.latest_revision
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "object_version" {
-  description = "(Optional) The version of an object in an S3 bucket.In addition to all arguments above, the following attributes are exported:"
+variable "location" {
+  description = "(Required) Information about the location of a custom plugin. See below."
   type        = string
 }
-variable "state" {
-  description = "the state of the custom plugin.TimeoutsConfiguration options:"
+variable "s3" {
+  description = "(Required) Information of the plugin file stored in Amazon S3. See below.location s3 Argument Reference"
   type        = string
 }
 variable "bucket_arn" {
@@ -32,42 +32,49 @@ variable "bucket_arn" {
 variable "create" {
   description = "(Default 10m)"
   type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 10m)"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) A summary description of the custom plugin.location Argument Reference"
+  type        = string
+  default     = ""
+}
+variable "latest_revision" {
+  description = "an ID of the latest successfully created revision of the custom plugin."
+  type        = string
+  default     = ""
+}
+variable "state" {
+  description = "the state of the custom plugin.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "the Amazon Resource Name (ARN) of the custom plugin."
+  type        = string
+  default     = ""
+}
+variable "content_type" {
+  description = "(Required) The type of the plugin file. Allowed values are ZIP and JAR."
   type        = string
 }
 variable "file_key" {
   description = "(Required) The file key for an object in an S3 bucket."
   type        = string
 }
-variable "location" {
-  description = "(Required) Information about the location of a custom plugin. See below."
-  type        = string
-}
 variable "name" {
   description = "(Required) The name of the custom plugin.."
   type        = string
 }
-variable "s3" {
-  description = "(Required) Information of the plugin file stored in Amazon S3. See below.location s3 Argument Reference"
+variable "object_version" {
+  description = "(Optional) The version of an object in an S3 bucket.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "arn" {
-  description = "the Amazon Resource Name (ARN) of the custom plugin."
-  type        = string
-}
-variable "content_type" {
-  description = "(Required) The type of the plugin file. Allowed values are ZIP and JAR."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A summary description of the custom plugin.location Argument Reference"
-  type        = string
-}
-variable "latest_revision" {
-  description = "an ID of the latest successfully created revision of the custom plugin."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,141 +196,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "latest_revision" {
-  description = "an ID of the latest successfully created revision of the custom plugin."
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.latest_revision
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "location" {
-  description = "(Required) Information about the location of a custom plugin. See below."
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The name of the custom plugin.."
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3" {
-  description = "(Required) Information of the plugin file stored in Amazon S3. See below.location s3 Argument Reference"
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.s3
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "the Amazon Resource Name (ARN) of the custom plugin."
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content_type" {
-  description = "(Required) The type of the plugin file. Allowed values are ZIP and JAR."
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.content_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) A summary description of the custom plugin.location Argument Reference"
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "file_key" {
-  description = "(Required) The file key for an object in an S3 bucket."
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.file_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "object_version" {
   description = "(Optional) The version of an object in an S3 bucket.In addition to all arguments above, the following attributes are exported:"
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.object_version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "state" {
   description = "the state of the custom plugin.TimeoutsConfiguration options:"
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bucket_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of an S3 bucket."
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.bucket_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "the Amazon Resource Name (ARN) of the custom plugin."
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "content_type" {
+  description = "(Required) The type of the plugin file. Allowed values are ZIP and JAR."
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.content_type
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.create
+output "file_key" {
+  description = "(Required) The file key for an object in an S3 bucket."
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.file_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) A summary description of the custom plugin.location Argument Reference"
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.description
 }
 output "latest_revision" {
   description = "an ID of the latest successfully created revision of the custom plugin."
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.latest_revision
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "location" {
+  description = "(Required) Information about the location of a custom plugin. See below."
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.location
+}
+output "s3" {
+  description = "(Required) Information of the plugin file stored in Amazon S3. See below.location s3 Argument Reference"
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.s3
+}
+output "bucket_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of an S3 bucket."
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.bucket_arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.delete
+}
+output "arn" {
+  description = "the Amazon Resource Name (ARN) of the custom plugin."
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.delete
+}
+output "latest_revision" {
+  description = "an ID of the latest successfully created revision of the custom plugin."
+  value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.latest_revision
 }
 output "state" {
   description = "the state of the custom plugin.TimeoutsConfiguration options:"
@@ -331,7 +270,7 @@ output "state" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

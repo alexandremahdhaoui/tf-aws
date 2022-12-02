@@ -124,45 +124,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_spot_fleet_request.aws_spot_fleet_request.create
+}
+output "delete" {
+  description = "(Default 15m)"
+  value       = aws_spot_fleet_request.aws_spot_fleet_request.delete
+}
+output "id" {
+  description = "The Spot fleet request ID"
+  value       = aws_spot_fleet_request.aws_spot_fleet_request.id
+}
+output "spot_request_state" {
+  description = "The state of the Spot fleet request."
+  value       = aws_spot_fleet_request.aws_spot_fleet_request.spot_request_state
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_spot_fleet_request.aws_spot_fleet_request.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_spot_fleet_request.aws_spot_fleet_request.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 15m)"
-  value       = aws_spot_fleet_request.aws_spot_fleet_request.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Spot fleet request ID"
-  value       = aws_spot_fleet_request.aws_spot_fleet_request.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "spot_request_state" {
-  description = "The state of the Spot fleet request."
-  value       = aws_spot_fleet_request.aws_spot_fleet_request.spot_request_state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

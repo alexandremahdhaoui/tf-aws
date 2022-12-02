@@ -11,6 +11,7 @@ variable "provider_region" {
 variable "group_ids" {
   description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
   type        = string
+  default     = ""
 }
 variable "role" {
   description = "(Required) The grafana role. Valid values can be found here."
@@ -19,6 +20,7 @@ variable "role" {
 variable "user_ids" {
   description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
   type        = string
+  default     = ""
 }
 variable "workspace_id" {
   description = "(Required) The workspace id."
@@ -144,21 +146,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "user_ids" {
+  description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
+  value       = aws_grafana_role_association.aws_grafana_role_association.user_ids
+}
 output "workspace_id" {
   description = "(Required) The workspace id."
   value       = aws_grafana_role_association.aws_grafana_role_association.workspace_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "group_ids" {
   description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
   value       = aws_grafana_role_association.aws_grafana_role_association.group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "role" {
   description = "(Required) The grafana role. Valid values can be found here."
@@ -166,15 +164,7 @@ output "role" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_ids" {
-  description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
-  value       = aws_grafana_role_association.aws_grafana_role_association.user_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

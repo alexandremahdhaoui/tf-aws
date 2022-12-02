@@ -1,14 +1,27 @@
 resource "aws_sagemaker_image" "aws_sagemaker_image" {
+  display_name = var.display_name
   id           = var.id
   image_name   = var.image_name
   role_arn     = var.role_arn
   tags         = var.tags
   arn          = var.arn
   description  = var.description
-  display_name = var.display_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "display_name" {
+  description = "(Optional) The display name of the image. When the image is added to a domain (must be unique to the domain)."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The name of the Image."
+  type        = string
+}
+variable "image_name" {
+  description = "(Required) The name of the image. Must be unique to your account."
   type        = string
 }
 variable "role_arn" {
@@ -18,6 +31,7 @@ variable "role_arn" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
@@ -26,18 +40,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the image."
   type        = string
-}
-variable "display_name" {
-  description = "(Optional) The display name of the image. When the image is added to a domain (must be unique to the domain)."
-  type        = string
-}
-variable "id" {
-  description = "The name of the Image."
-  type        = string
-}
-variable "image_name" {
-  description = "(Required) The name of the image. Must be unique to your account."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,61 +162,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_image.aws_sagemaker_image.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
-  value       = aws_sagemaker_image.aws_sagemaker_image.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the image."
   value       = aws_sagemaker_image.aws_sagemaker_image.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "display_name" {
   description = "(Optional) The display name of the image. When the image is added to a domain (must be unique to the domain)."
   value       = aws_sagemaker_image.aws_sagemaker_image.display_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the Image."
   value       = aws_sagemaker_image.aws_sagemaker_image.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "image_name" {
   description = "(Required) The name of the image. Must be unique to your account."
   value       = aws_sagemaker_image.aws_sagemaker_image.image_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker to perform tasks on your behalf."
   value       = aws_sagemaker_image.aws_sagemaker_image.role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_image.aws_sagemaker_image.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
+  value       = aws_sagemaker_image.aws_sagemaker_image.arn
+}
+output "id" {
+  description = "The name of the Image."
+  value       = aws_sagemaker_image.aws_sagemaker_image.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_sagemaker_image.aws_sagemaker_image.tags_all
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
@@ -221,23 +204,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the Image."
-  value       = aws_sagemaker_image.aws_sagemaker_image.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_sagemaker_image.aws_sagemaker_image.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

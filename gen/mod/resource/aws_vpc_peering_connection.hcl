@@ -1,87 +1,94 @@
 resource "aws_vpc_peering_connection" "aws_vpc_peering_connection" {
-  id                               = var.id
   accept_status                    = var.accept_status
   allow_classic_link_to_remote_vpc = var.allow_classic_link_to_remote_vpc
-  allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
+  allow_vpc_to_remote_classic_link = var.allow_vpc_to_remote_classic_link
+  id                               = var.id
   auto_accept                      = var.auto_accept
   create                           = var.create
-  peer_owner_id                    = var.peer_owner_id
-  peer_vpc_id                      = var.peer_vpc_id
+  tags_all                         = var.tags_all
   vpc_id                           = var.vpc_id
   accepter                         = var.accepter
+  allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
   requester                        = var.requester
   tags                             = var.tags
-  update                           = var.update
-  allow_vpc_to_remote_classic_link = var.allow_vpc_to_remote_classic_link
-  tags_all                         = var.tags_all
+  peer_owner_id                    = var.peer_owner_id
   peer_region                      = var.peer_region
+  peer_vpc_id                      = var.peer_vpc_id
+  update                           = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "peer_region" {
-  description = "(Optional) The region of the accepter VPC of the VPC Peering Connection. auto_accept must be falseaws_vpc_peering_connection_accepter to manage the accepter side."
+variable "accepter" {
+  description = " (Optional) - An optional configuration block that allows for VPC Peering Connection"
   type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.NotesIf both VPCs are not in the same AWS account and region do not enable the auto_acceptaws_vpc_peering_connection_accepterTimeoutsConfiguration options:"
-  type        = string
-}
-variable "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the VPC Peering Connection."
-  type        = string
+  default     = ""
 }
 variable "allow_remote_vpc_dns_resolution" {
   description = "(Optional) Allow a local VPC to resolve public DNS hostnames to\nprivate IP addresses when queried from instances in the peer VPC."
   type        = string
+  default     = ""
 }
-variable "auto_accept" {
-  description = "(Optional) Accept the peering (both VPCs need to be in the same AWS account and region)."
+variable "requester" {
+  description = " (Optional) - A optional configuration block that allows for VPC Peering Connection"
   type        = string
+  default     = ""
 }
-variable "create" {
-  description = "(Default 1m)"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Accepter and Requester Arguments-> strongNote:enable_dns_hostnames attribute in the aws_vpc resource. See Using DNS with Your VPC user guide for more information."
   type        = string
+  default     = ""
 }
 variable "peer_owner_id" {
   description = "AWS provider is currently connected to."
   type        = string
 }
+variable "peer_region" {
+  description = "(Optional) The region of the accepter VPC of the VPC Peering Connection. auto_accept must be falseaws_vpc_peering_connection_accepter to manage the accepter side."
+  type        = string
+  default     = ""
+}
 variable "peer_vpc_id" {
   description = "(Required) The ID of the VPC with which you are creating the VPC Peering Connection."
-  type        = string
-}
-variable "vpc_id" {
-  description = "(Required) The ID of the requester VPC."
-  type        = string
-}
-variable "accepter" {
-  description = " (Optional) - An optional configuration block that allows for VPC Peering Connection"
-  type        = string
-}
-variable "allow_classic_link_to_remote_vpc" {
-  description = ""
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Accepter and Requester Arguments-> strongNote:enable_dns_hostnames attribute in the aws_vpc resource. See Using DNS with Your VPC user guide for more information."
   type        = string
 }
 variable "update" {
   description = "(Default 1m)"
   type        = string
 }
+variable "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  type        = string
+}
+variable "allow_classic_link_to_remote_vpc" {
+  description = ""
+  type        = string
+}
 variable "allow_vpc_to_remote_classic_link" {
   description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "requester" {
-  description = " (Optional) - A optional configuration block that allows for VPC Peering Connection"
+variable "id" {
+  description = "The ID of the VPC Peering Connection."
+  type        = string
+}
+variable "auto_accept" {
+  description = "(Optional) Accept the peering (both VPCs need to be in the same AWS account and region)."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 1m)"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.NotesIf both VPCs are not in the same AWS account and region do not enable the auto_acceptaws_vpc_peering_connection_accepterTimeoutsConfiguration options:"
+  type        = string
+}
+variable "vpc_id" {
+  description = "(Required) The ID of the requester VPC."
   type        = string
 }
 variable "tag_instance_id" {
@@ -204,133 +211,89 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allow_vpc_to_remote_classic_link" {
-  description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.allow_vpc_to_remote_classic_link
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "requester" {
-  description = " (Optional) - A optional configuration block that allows for VPC Peering Connection"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.requester
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Accepter and Requester Arguments-> strongNote:enable_dns_hostnames attribute in the aws_vpc resource. See Using DNS with Your VPC user guide for more information."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 1m)"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "peer_region" {
   description = "(Optional) The region of the accepter VPC of the VPC Peering Connection. auto_accept must be falseaws_vpc_peering_connection_accepter to manage the accepter side."
   value       = aws_vpc_peering_connection.aws_vpc_peering_connection.peer_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.NotesIf both VPCs are not in the same AWS account and region do not enable the auto_acceptaws_vpc_peering_connection_accepterTimeoutsConfiguration options:"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.accept_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the VPC Peering Connection."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "peer_owner_id" {
-  description = "AWS provider is currently connected to."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.peer_owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "peer_vpc_id" {
   description = "(Required) The ID of the VPC with which you are creating the VPC Peering Connection."
   value       = aws_vpc_peering_connection.aws_vpc_peering_connection.peer_vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "update" {
+  description = "(Default 1m)"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.update
 }
-output "vpc_id" {
-  description = "(Required) The ID of the requester VPC."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accepter" {
-  description = " (Optional) - An optional configuration block that allows for VPC Peering Connection"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.accepter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "peer_owner_id" {
+  description = "AWS provider is currently connected to."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.peer_owner_id
 }
 output "allow_classic_link_to_remote_vpc" {
   description = ""
   value       = aws_vpc_peering_connection.aws_vpc_peering_connection.allow_classic_link_to_remote_vpc
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "allow_vpc_to_remote_classic_link" {
+  description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.allow_vpc_to_remote_classic_link
 }
-output "allow_remote_vpc_dns_resolution" {
-  description = "(Optional) Allow a local VPC to resolve public DNS hostnames to\nprivate IP addresses when queried from instances in the peer VPC."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.allow_remote_vpc_dns_resolution
+output "id" {
+  description = "The ID of the VPC Peering Connection."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_accept" {
-  description = "(Optional) Accept the peering (both VPCs need to be in the same AWS account and region)."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.auto_accept
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.accept_status
 }
 output "create" {
   description = "(Default 1m)"
   value       = aws_vpc_peering_connection.aws_vpc_peering_connection.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.NotesIf both VPCs are not in the same AWS account and region do not enable the auto_acceptaws_vpc_peering_connection_accepterTimeoutsConfiguration options:"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.tags_all
+}
+output "vpc_id" {
+  description = "(Required) The ID of the requester VPC."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.vpc_id
+}
+output "auto_accept" {
+  description = "(Optional) Accept the peering (both VPCs need to be in the same AWS account and region)."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.auto_accept
+}
+output "allow_remote_vpc_dns_resolution" {
+  description = "(Optional) Allow a local VPC to resolve public DNS hostnames to\nprivate IP addresses when queried from instances in the peer VPC."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.allow_remote_vpc_dns_resolution
+}
+output "requester" {
+  description = " (Optional) - A optional configuration block that allows for VPC Peering Connection"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.requester
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Accepter and Requester Arguments-> strongNote:enable_dns_hostnames attribute in the aws_vpc resource. See Using DNS with Your VPC user guide for more information."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.tags
+}
+output "accepter" {
+  description = " (Optional) - An optional configuration block that allows for VPC Peering Connection"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.accepter
+}
+output "id" {
+  description = "The ID of the VPC Peering Connection."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.NotesIf both VPCs are not in the same AWS account and region do not enable the auto_acceptaws_vpc_peering_connection_accepterTimeoutsConfiguration options:"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.tags_all
+}
+output "update" {
+  description = "(Default 1m)"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.update
+}
+output "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.accept_status
+}
+output "create" {
+  description = "(Default 1m)"
+  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.create
 }
 output "delete" {
   description = "(Default 1m)"
@@ -338,47 +301,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the VPC Peering Connection."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.NotesIf both VPCs are not in the same AWS account and region do not enable the auto_acceptaws_vpc_peering_connection_accepterTimeoutsConfiguration options:"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 1m)"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.accept_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 1m)"
-  value       = aws_vpc_peering_connection.aws_vpc_peering_connection.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

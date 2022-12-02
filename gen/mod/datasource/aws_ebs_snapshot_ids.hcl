@@ -9,6 +9,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "owners" {
+  description = "(Optional) Returns the snapshots owned by the specified owner id. Multiple owners can be specified."
+  type        = string
+  default     = ""
+}
+variable "restorable_by_user_ids" {
+  description = "(Optional) One or more AWS accounts IDs that can create volumes from the snapshot."
+  type        = string
+  default     = ""
+}
 variable "filter" {
   description = "describe-volumes in the AWS CLI reference."
   type        = string
@@ -21,37 +31,29 @@ variable "ids" {
   description = "Set of EBS snapshot IDs, sorted by creation time in descending order.TimeoutsConfiguration options:"
   type        = string
 }
-variable "owners" {
+output "owners" {
   description = "(Optional) Returns the snapshots owned by the specified owner id. Multiple owners can be specified."
-  type        = string
-}
-variable "restorable_by_user_ids" {
-  description = "(Optional) One or more AWS accounts IDs that can create volumes from the snapshot."
-  type        = string
+  value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.owners
 }
 output "restorable_by_user_ids" {
   description = "(Optional) One or more AWS accounts IDs that can create volumes from the snapshot."
   value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.restorable_by_user_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "filter" {
   description = "describe-volumes in the AWS CLI reference."
   value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.filter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "AWS Region."
   value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ids" {
+  description = "Set of EBS snapshot IDs, sorted by creation time in descending order.TimeoutsConfiguration options:"
+  value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.ids
+}
+output "id" {
+  description = "AWS Region."
+  value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.id
 }
 output "ids" {
   description = "Set of EBS snapshot IDs, sorted by creation time in descending order.TimeoutsConfiguration options:"
@@ -59,31 +61,7 @@ output "ids" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "owners" {
-  description = "(Optional) Returns the snapshots owned by the specified owner id. Multiple owners can be specified."
-  value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.owners
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AWS Region."
-  value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ids" {
-  description = "Set of EBS snapshot IDs, sorted by creation time in descending order.TimeoutsConfiguration options:"
-  value       = aws_ebs_snapshot_ids.aws_ebs_snapshot_ids.ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

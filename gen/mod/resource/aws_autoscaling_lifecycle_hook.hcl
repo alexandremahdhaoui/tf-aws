@@ -1,22 +1,14 @@
 resource "aws_autoscaling_lifecycle_hook" "aws_autoscaling_lifecycle_hook" {
-  notification_metadata   = var.notification_metadata
   notification_target_arn = var.notification_target_arn
   autoscaling_group_name  = var.autoscaling_group_name
   default_result          = var.default_result
   heartbeat_timeout       = var.heartbeat_timeout
   lifecycle_transition    = var.lifecycle_transition
   name                    = var.name
+  notification_metadata   = var.notification_metadata
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "default_result" {
-  description = "(Optional) Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON. The default value for this parameter is ABANDON."
-  type        = string
-}
-variable "heartbeat_timeout" {
-  description = "(Optional) Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter"
   type        = string
 }
 variable "lifecycle_transition" {
@@ -30,14 +22,26 @@ variable "name" {
 variable "notification_metadata" {
   description = "(Optional) Contains additional information that you want to include any time Auto Scaling sends a message to the notification target."
   type        = string
+  default     = ""
 }
 variable "notification_target_arn" {
   description = "(Optional) ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic."
   type        = string
+  default     = ""
 }
 variable "autoscaling_group_name" {
   description = "(Required) Name of the Auto Scaling group to which you want to assign the lifecycle hook"
   type        = string
+}
+variable "default_result" {
+  description = "(Optional) Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON. The default value for this parameter is ABANDON."
+  type        = string
+  default     = ""
+}
+variable "heartbeat_timeout" {
+  description = "(Optional) Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -163,49 +167,25 @@ output "lifecycle_transition" {
   description = "(Required) Instance state to which you want to attach the lifecycle hook. For a list of lifecycle hook types, see describe-lifecycle-hook-types"
   value       = aws_autoscaling_lifecycle_hook.aws_autoscaling_lifecycle_hook.lifecycle_transition
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the lifecycle hook."
   value       = aws_autoscaling_lifecycle_hook.aws_autoscaling_lifecycle_hook.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "notification_metadata" {
   description = "(Optional) Contains additional information that you want to include any time Auto Scaling sends a message to the notification target."
   value       = aws_autoscaling_lifecycle_hook.aws_autoscaling_lifecycle_hook.notification_metadata
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "notification_target_arn" {
   description = "(Optional) ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic."
   value       = aws_autoscaling_lifecycle_hook.aws_autoscaling_lifecycle_hook.notification_target_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "autoscaling_group_name" {
   description = "(Required) Name of the Auto Scaling group to which you want to assign the lifecycle hook"
   value       = aws_autoscaling_lifecycle_hook.aws_autoscaling_lifecycle_hook.autoscaling_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_result" {
   description = "(Optional) Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON. The default value for this parameter is ABANDON."
   value       = aws_autoscaling_lifecycle_hook.aws_autoscaling_lifecycle_hook.default_result
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "heartbeat_timeout" {
   description = "(Optional) Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter"
@@ -213,7 +193,7 @@ output "heartbeat_timeout" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

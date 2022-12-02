@@ -1,51 +1,61 @@
 resource "aws_s3_bucket_notification" "aws_s3_bucket_notification" {
-  lambda_function_arn = var.lambda_function_arn
+  bucket              = var.bucket
+  events              = var.events
+  id                  = var.id
   queue               = var.queue
+  topic               = var.topic
+  topic_arn           = var.topic_arn
   eventbridge         = var.eventbridge
   filter_prefix       = var.filter_prefix
   filter_suffix       = var.filter_suffix
-  id                  = var.id
   lambda_function     = var.lambda_function
+  lambda_function_arn = var.lambda_function_arn
   queue_arn           = var.queue_arn
-  topic               = var.topic
-  topic_arn           = var.topic_arn
-  bucket              = var.bucket
-  events              = var.events
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "filter_prefix" {
-  description = "(Optional) Object key name prefix."
-  type        = string
-}
-variable "lambda_function_arn" {
-  description = "(Required) Lambda function ARN.queue"
-  type        = string
-}
-variable "queue" {
-  description = "(Optional) Notification configuration to SQS Queue. See below."
-  type        = string
-}
-variable "eventbridge" {
-  description = "(Optional) Whether to enable Amazon EventBridge notifications."
+variable "bucket" {
+  description = "(Required) Name of the bucket for notification configuration."
   type        = string
 }
 variable "events" {
   description = "(Required) Event for which to send notifications."
   type        = string
 }
-variable "filter_suffix" {
-  description = "(Optional) Object key name suffix."
-  type        = string
-}
 variable "id" {
   description = "(Optional) Unique identifier for each of the notification configurations."
   type        = string
+  default     = ""
+}
+variable "queue" {
+  description = "(Optional) Notification configuration to SQS Queue. See below."
+  type        = string
+  default     = ""
+}
+variable "eventbridge" {
+  description = "(Optional) Whether to enable Amazon EventBridge notifications."
+  type        = string
+  default     = ""
+}
+variable "filter_prefix" {
+  description = "(Optional) Object key name prefix."
+  type        = string
+  default     = ""
+}
+variable "filter_suffix" {
+  description = "(Optional) Object key name suffix."
+  type        = string
+  default     = ""
 }
 variable "lambda_function" {
   description = "(Optional, Multiple) Used to configure notifications to a Lambda Function. See below."
+  type        = string
+  default     = ""
+}
+variable "lambda_function_arn" {
+  description = "(Required) Lambda function ARN.queue"
   type        = string
 }
 variable "queue_arn" {
@@ -55,14 +65,12 @@ variable "queue_arn" {
 variable "topic" {
   description = "(Optional) Notification configuration to SNS Topic. See below.lambda_function"
   type        = string
+  default     = ""
 }
 variable "topic_arn" {
   description = "(Required) SNS topic ARN.No additional attributes are exported."
   type        = string
-}
-variable "bucket" {
-  description = "(Required) Name of the bucket for notification configuration."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -184,85 +192,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "topic_arn" {
-  description = "(Required) SNS topic ARN.No additional attributes are exported."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.topic_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "bucket" {
   description = "(Required) Name of the bucket for notification configuration."
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "events" {
   description = "(Required) Event for which to send notifications."
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.events
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter_suffix" {
-  description = "(Optional) Object key name suffix."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.filter_suffix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "(Optional) Unique identifier for each of the notification configurations."
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lambda_function" {
-  description = "(Optional, Multiple) Used to configure notifications to a Lambda Function. See below."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.lambda_function
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "queue" {
+  description = "(Optional) Notification configuration to SQS Queue. See below."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue
 }
 output "queue_arn" {
   description = "(Required) SQS queue ARN.topic"
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "topic" {
   description = "(Optional) Notification configuration to SNS Topic. See below.lambda_function"
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.topic
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "topic_arn" {
+  description = "(Required) SNS topic ARN.No additional attributes are exported."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.topic_arn
 }
 output "eventbridge" {
   description = "(Optional) Whether to enable Amazon EventBridge notifications."
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.eventbridge
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "filter_prefix" {
   description = "(Optional) Object key name prefix."
   value       = aws_s3_bucket_notification.aws_s3_bucket_notification.filter_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "filter_suffix" {
+  description = "(Optional) Object key name suffix."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.filter_suffix
+}
+output "lambda_function" {
+  description = "(Optional, Multiple) Used to configure notifications to a Lambda Function. See below."
+  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.lambda_function
 }
 output "lambda_function_arn" {
   description = "(Required) Lambda function ARN.queue"
@@ -270,15 +242,7 @@ output "lambda_function_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "queue" {
-  description = "(Optional) Notification configuration to SQS Queue. See below."
-  value       = aws_s3_bucket_notification.aws_s3_bucket_notification.queue
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

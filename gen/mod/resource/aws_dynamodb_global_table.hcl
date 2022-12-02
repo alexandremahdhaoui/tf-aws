@@ -1,15 +1,11 @@
 resource "aws_dynamodb_global_table" "aws_dynamodb_global_table" {
-  region_name = var.region_name
   replica     = var.replica
   id          = var.id
   name        = var.name
+  region_name = var.region_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "replica" {
-  description = "(Required) Underlying DynamoDB Table. At least 1 replica must be defined. See below.Nested Fieldsreplica"
   type        = string
 }
 variable "id" {
@@ -22,6 +18,10 @@ variable "name" {
 }
 variable "region_name" {
   description = "(Required) AWS region name of replica DynamoDB TableE.g., us-east-1In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "replica" {
+  description = "(Required) Underlying DynamoDB Table. At least 1 replica must be defined. See below.Nested Fieldsreplica"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,37 +144,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "region_name" {
-  description = "(Required) AWS region name of replica DynamoDB TableE.g., us-east-1In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dynamodb_global_table.aws_dynamodb_global_table.region_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "replica" {
-  description = "(Required) Underlying DynamoDB Table. At least 1 replica must be defined. See below.Nested Fieldsreplica"
-  value       = aws_dynamodb_global_table.aws_dynamodb_global_table.replica
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the DynamoDB Global Table"
   value       = aws_dynamodb_global_table.aws_dynamodb_global_table.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the global table. Must match underlying DynamoDB Table names in all regions."
   value       = aws_dynamodb_global_table.aws_dynamodb_global_table.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "region_name" {
+  description = "(Required) AWS region name of replica DynamoDB TableE.g., us-east-1In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dynamodb_global_table.aws_dynamodb_global_table.region_name
+}
+output "replica" {
+  description = "(Required) Underlying DynamoDB Table. At least 1 replica must be defined. See below.Nested Fieldsreplica"
+  value       = aws_dynamodb_global_table.aws_dynamodb_global_table.replica
+}
+output "arn" {
+  description = "The ARN of the DynamoDB Global Table"
+  value       = aws_dynamodb_global_table.aws_dynamodb_global_table.arn
 }
 output "id" {
   description = "The name of the DynamoDB Global Table"
@@ -182,15 +170,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the DynamoDB Global Table"
-  value       = aws_dynamodb_global_table.aws_dynamodb_global_table.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

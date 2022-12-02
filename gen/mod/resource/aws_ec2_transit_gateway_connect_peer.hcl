@@ -1,22 +1,23 @@
 resource "aws_ec2_transit_gateway_connect_peer" "aws_ec2_transit_gateway_connect_peer" {
   bgp_asn                       = var.bgp_asn
-  id                            = var.id
   inside_cidr_blocks            = var.inside_cidr_blocks
+  peer_address                  = var.peer_address
+  tags                          = var.tags
   transit_gateway_address       = var.transit_gateway_address
   transit_gateway_attachment_id = var.transit_gateway_attachment_id
   arn                           = var.arn
   create                        = var.create
-  peer_address                  = var.peer_address
-  tags                          = var.tags
+  id                            = var.id
   tags_all                      = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "transit_gateway_address" {
+  description = "(Optional) The IP address assigned to Transit Gateway, which will be used as tunnel endpoint. This address must be from associated Transit Gateway CIDR block. The address must be from the same address family as peer_address. If not set explicitly, it will be selected from associated Transit Gateway CIDR blocks"
   type        = string
+  default     = ""
 }
 variable "transit_gateway_attachment_id" {
   description = "(Required) The Transit Gateway ConnectIn addition to all arguments above, the following attributes are exported:"
@@ -30,6 +31,23 @@ variable "create" {
   description = "(Default 10m)"
   type        = string
 }
+variable "id" {
+  description = "EC2 Transit Gateway Connect Peer identifier"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "bgp_asn" {
+  description = "(Optional) The BGP ASN number assigned customer device. If not provided, it will use the same BGP ASN as is associated with Transit Gateway."
+  type        = string
+  default     = ""
+}
+variable "inside_cidr_blocks" {
+  description = "(Required) The CIDR block that will be used for addressing within the tunnel. It must contain exactly one IPv4 CIDR block and up to one IPv6 CIDR block. The IPv4 CIDR block must be /29 size and must be within 169.254.0.0/16 range, with exception of: 169.254.0.0/29, 169.254.1.0/29, 169.254.2.0/29, 169.254.3.0/29, 169.254.4.0/29, 169.254.5.0/29, 169.254.169.248/29. The IPv6 CIDR block must be /125 size and must be within fd00::/8. The first IP from each CIDR block is assigned for customer gateway, the second and third is for Transit Gateway (An example: from range 169.254.100.0/29, .1 is assigned to customer gateway and .2 and .3 are assigned to Transit Gateway)"
+  type        = string
+}
 variable "peer_address" {
   description = "(Required) The IP addressed assigned to customer device, which will be used as tunnel endpoint. It can be IPv4 or IPv6 address, but must be the same address family as transit_gateway_address"
   type        = string
@@ -37,22 +55,7 @@ variable "peer_address" {
 variable "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect Peer. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
-}
-variable "bgp_asn" {
-  description = "(Optional) The BGP ASN number assigned customer device. If not provided, it will use the same BGP ASN as is associated with Transit Gateway."
-  type        = string
-}
-variable "id" {
-  description = "EC2 Transit Gateway Connect Peer identifier"
-  type        = string
-}
-variable "inside_cidr_blocks" {
-  description = "(Required) The CIDR block that will be used for addressing within the tunnel. It must contain exactly one IPv4 CIDR block and up to one IPv6 CIDR block. The IPv4 CIDR block must be /29 size and must be within 169.254.0.0/16 range, with exception of: 169.254.0.0/29, 169.254.1.0/29, 169.254.2.0/29, 169.254.3.0/29, 169.254.4.0/29, 169.254.5.0/29, 169.254.169.248/29. The IPv6 CIDR block must be /125 size and must be within fd00::/8. The first IP from each CIDR block is assigned for customer gateway, the second and third is for Transit Gateway (An example: from range 169.254.100.0/29, .1 is assigned to customer gateway and .2 and .3 are assigned to Transit Gateway)"
-  type        = string
-}
-variable "transit_gateway_address" {
-  description = "(Optional) The IP address assigned to Transit Gateway, which will be used as tunnel endpoint. This address must be from associated Transit Gateway CIDR block. The address must be from the same address family as peer_address. If not set explicitly, it will be selected from associated Transit Gateway CIDR blocks"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,117 +177,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "peer_address" {
-  description = "(Required) The IP addressed assigned to customer device, which will be used as tunnel endpoint. It can be IPv4 or IPv6 address, but must be the same address family as transit_gateway_address"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.peer_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect Peer. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transit_gateway_attachment_id" {
-  description = "(Required) The Transit Gateway ConnectIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.transit_gateway_attachment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "EC2 Transit Gateway Connect Peer ARN"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "bgp_asn" {
+  description = "(Optional) The BGP ASN number assigned customer device. If not provided, it will use the same BGP ASN as is associated with Transit Gateway."
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.bgp_asn
 }
 output "inside_cidr_blocks" {
   description = "(Required) The CIDR block that will be used for addressing within the tunnel. It must contain exactly one IPv4 CIDR block and up to one IPv6 CIDR block. The IPv4 CIDR block must be /29 size and must be within 169.254.0.0/16 range, with exception of: 169.254.0.0/29, 169.254.1.0/29, 169.254.2.0/29, 169.254.3.0/29, 169.254.4.0/29, 169.254.5.0/29, 169.254.169.248/29. The IPv6 CIDR block must be /125 size and must be within fd00::/8. The first IP from each CIDR block is assigned for customer gateway, the second and third is for Transit Gateway (An example: from range 169.254.100.0/29, .1 is assigned to customer gateway and .2 and .3 are assigned to Transit Gateway)"
   value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.inside_cidr_blocks
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "peer_address" {
+  description = "(Required) The IP addressed assigned to customer device, which will be used as tunnel endpoint. It can be IPv4 or IPv6 address, but must be the same address family as transit_gateway_address"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.peer_address
 }
-output "transit_gateway_address" {
-  description = "(Optional) The IP address assigned to Transit Gateway, which will be used as tunnel endpoint. This address must be from associated Transit Gateway CIDR block. The address must be from the same address family as peer_address. If not set explicitly, it will be selected from associated Transit Gateway CIDR blocks"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.transit_gateway_address
+output "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect Peer. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bgp_asn" {
-  description = "(Optional) The BGP ASN number assigned customer device. If not provided, it will use the same BGP ASN as is associated with Transit Gateway."
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.bgp_asn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway Connect Peer identifier"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway Connect Peer identifier"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "transit_gateway_attachment_id" {
+  description = "(Required) The Transit Gateway ConnectIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.transit_gateway_attachment_id
 }
 output "arn" {
   description = "EC2 Transit Gateway Connect Peer ARN"
   value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 10m)"
   value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "EC2 Transit Gateway Connect Peer identifier"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.tags_all
+}
+output "transit_gateway_address" {
+  description = "(Optional) The IP address assigned to Transit Gateway, which will be used as tunnel endpoint. This address must be from associated Transit Gateway CIDR block. The address must be from the same address family as peer_address. If not set explicitly, it will be selected from associated Transit Gateway CIDR blocks"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.transit_gateway_address
+}
+output "id" {
+  description = "EC2 Transit Gateway Connect Peer identifier"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.tags_all
+}
+output "arn" {
+  description = "EC2 Transit Gateway Connect Peer ARN"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_connect_peer.aws_ec2_transit_gateway_connect_peer.create
 }
 output "delete" {
   description = "(Default 10m)"
@@ -292,7 +239,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

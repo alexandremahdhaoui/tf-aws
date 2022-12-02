@@ -1,33 +1,40 @@
 resource "aws_servicecatalog_provisioning_artifact" "aws_servicecatalog_provisioning_artifact" {
-  description                 = var.description
-  guidance                    = var.guidance
+  active                      = var.active
+  update                      = var.update
   template_physical_id        = var.template_physical_id
   type                        = var.type
-  active                      = var.active
-  created_time                = var.created_time
-  status                      = var.status
-  update                      = var.update
-  create                      = var.create
-  delete                      = var.delete
-  id                          = var.id
-  name                        = var.name
-  template_url                = var.template_url
   accept_language             = var.accept_language
-  disable_template_validation = var.disable_template_validation
-  product_id                  = var.product_id
+  create                      = var.create
+  created_time                = var.created_time
+  id                          = var.id
   read                        = var.read
+  template_url                = var.template_url
+  delete                      = var.delete
+  description                 = var.description
+  guidance                    = var.guidance
+  status                      = var.status
+  disable_template_validation = var.disable_template_validation
+  name                        = var.name
+  product_id                  = var.product_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional) Description of the provisioning artifact (i.e., version), including how it differs from the previous provisioning artifact."
+variable "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). The default value is en."
   type        = string
+  default     = ""
 }
-variable "guidance" {
-  description = "(Optional) Information set by the administrator to provide guidance to end users about which provisioning artifacts to use. Valid values are DEFAULT and DEPRECATED. The default is DEFAULT. Users are able to make updates to a provisioned product of a deprecated version but cannot launch new provisioned products using a deprecated version."
+variable "create" {
+  description = "(Default 3m)"
   type        = string
+  default     = ""
+}
+variable "created_time" {
+  description = "Time when the provisioning artifact was created."
+  type        = string
+  default     = ""
 }
 variable "template_physical_id" {
   description = "(Required if template_url is not provided) Template source as the physical ID of the resource that contains the template. Currently only supports CloudFormation stack ARN. Specify the physical ID as arn:[partition]:cloudformation:[region]:[account ID]:stack/[stack name]/[resource ID]."
@@ -36,58 +43,65 @@ variable "template_physical_id" {
 variable "type" {
   description = "(Optional) Type of provisioning artifact. Valid values: CLOUD_FORMATION_TEMPLATE, MARKETPLACE_AMI, MARKETPLACE_CAR (Marketplace Clusters and AWS Resources).In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "active" {
-  description = "(Optional) Whether the product version is active. Inactive provisioning artifacts are invisible to end users. End users cannot launch or update a provisioned product from an inactive provisioning artifact. Default is true."
-  type        = string
-}
-variable "created_time" {
-  description = "Time when the provisioning artifact was created."
-  type        = string
-}
-variable "status" {
-  description = "Status of the provisioning artifact.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "create" {
-  description = "(Default 3m)"
-  type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 3m)"
   type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) Description of the provisioning artifact (i.e., version), including how it differs from the previous provisioning artifact."
+  type        = string
+  default     = ""
+}
+variable "guidance" {
+  description = "(Optional) Information set by the administrator to provide guidance to end users about which provisioning artifacts to use. Valid values are DEFAULT and DEPRECATED. The default is DEFAULT. Users are able to make updates to a provisioned product of a deprecated version but cannot launch new provisioned products using a deprecated version."
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "Provisioning Artifact identifier and product identifier separated by a colon."
   type        = string
+  default     = ""
 }
-variable "name" {
-  description = "(Optional) Name of the provisioning artifact (for example, v1, v2beta). No spaces are allowed."
+variable "read" {
+  description = "(Default 10m)"
   type        = string
+  default     = ""
 }
 variable "template_url" {
   description = "(Required if template_physical_id is not provided) Template source as URL of the CloudFormation template in Amazon S3."
   type        = string
 }
-variable "update" {
-  description = "(Default 3m)"
-  type        = string
-}
-variable "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). The default value is en."
-  type        = string
-}
 variable "disable_template_validation" {
   description = "(Optional) Whether AWS Service Catalog stops validating the specified provisioning artifact template even if it is invalid."
   type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) Name of the provisioning artifact (for example, v1, v2beta). No spaces are allowed."
+  type        = string
+  default     = ""
 }
 variable "product_id" {
   description = "(Required) Identifier of the product."
   type        = string
 }
-variable "read" {
-  description = "(Default 10m)"
+variable "status" {
+  description = "Status of the provisioning artifact.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
+}
+variable "active" {
+  description = "(Optional) Whether the product version is active. Inactive provisioning artifacts are invisible to end users. End users cannot launch or update a provisioned product from an inactive provisioning artifact. Default is true."
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 3m)"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -209,189 +223,97 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "created_time" {
-  description = "Time when the provisioning artifact was created."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.created_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "Status of the provisioning artifact.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "active" {
-  description = "(Optional) Whether the product version is active. Inactive provisioning artifacts are invisible to end users. End users cannot launch or update a provisioned product from an inactive provisioning artifact. Default is true."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.active
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Provisioning Artifact identifier and product identifier separated by a colon."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional) Name of the provisioning artifact (for example, v1, v2beta). No spaces are allowed."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "template_url" {
-  description = "(Required if template_physical_id is not provided) Template source as URL of the CloudFormation template in Amazon S3."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.template_url
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). The default value is en."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.accept_language
 }
 output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "disable_template_validation" {
-  description = "(Optional) Whether AWS Service Catalog stops validating the specified provisioning artifact template even if it is invalid."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.disable_template_validation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "product_id" {
-  description = "(Required) Identifier of the product."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.product_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.read
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). The default value is en."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.accept_language
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "guidance" {
-  description = "(Optional) Information set by the administrator to provide guidance to end users about which provisioning artifacts to use. Valid values are DEFAULT and DEPRECATED. The default is DEFAULT. Users are able to make updates to a provisioned product of a deprecated version but cannot launch new provisioned products using a deprecated version."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.guidance
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "created_time" {
+  description = "Time when the provisioning artifact was created."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.created_time
 }
 output "template_physical_id" {
   description = "(Required if template_url is not provided) Template source as the physical ID of the resource that contains the template. Currently only supports CloudFormation stack ARN. Specify the physical ID as arn:[partition]:cloudformation:[region]:[account ID]:stack/[stack name]/[resource ID]."
   value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.template_physical_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "type" {
   description = "(Optional) Type of provisioning artifact. Valid values: CLOUD_FORMATION_TEMPLATE, MARKETPLACE_AMI, MARKETPLACE_CAR (Marketplace Clusters and AWS Resources).In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the provisioning artifact (i.e., version), including how it differs from the previous provisioning artifact."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_time" {
-  description = "Time when the provisioning artifact was created."
-  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.created_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the provisioning artifact (i.e., version), including how it differs from the previous provisioning artifact."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.description
+}
+output "guidance" {
+  description = "(Optional) Information set by the administrator to provide guidance to end users about which provisioning artifacts to use. Valid values are DEFAULT and DEPRECATED. The default is DEFAULT. Users are able to make updates to a provisioned product of a deprecated version but cannot launch new provisioned products using a deprecated version."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.guidance
 }
 output "id" {
   description = "Provisioning Artifact identifier and product identifier separated by a colon."
   value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "read" {
   description = "(Default 10m)"
   value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.read
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "template_url" {
+  description = "(Required if template_physical_id is not provided) Template source as URL of the CloudFormation template in Amazon S3."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.template_url
+}
+output "disable_template_validation" {
+  description = "(Optional) Whether AWS Service Catalog stops validating the specified provisioning artifact template even if it is invalid."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.disable_template_validation
+}
+output "name" {
+  description = "(Optional) Name of the provisioning artifact (for example, v1, v2beta). No spaces are allowed."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.name
+}
+output "product_id" {
+  description = "(Required) Identifier of the product."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.product_id
+}
+output "status" {
+  description = "Status of the provisioning artifact.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.status
+}
+output "active" {
+  description = "(Optional) Whether the product version is active. Inactive provisioning artifacts are invisible to end users. End users cannot launch or update a provisioned product from an inactive provisioning artifact. Default is true."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.active
+}
+output "update" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.update
+}
+output "update" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.update
+}
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.create
+}
+output "created_time" {
+  description = "Time when the provisioning artifact was created."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.created_time
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.delete
+}
+output "id" {
+  description = "Provisioning Artifact identifier and product identifier separated by a colon."
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_provisioning_artifact.aws_servicecatalog_provisioning_artifact.read
 }
 output "status" {
   description = "Status of the provisioning artifact.TimeoutsConfiguration options:"
@@ -399,7 +321,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

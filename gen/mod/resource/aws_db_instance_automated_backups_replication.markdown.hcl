@@ -1,13 +1,17 @@
 resource "aws_db_instance_automated_backups_replication.markdown" "aws_db_instance_automated_backups_replication.markdown" {
-  create                 = var.create
-  id                     = var.id
-  kms_key_id             = var.kms_key_id
   pre_signed_url         = var.pre_signed_url
   retention_period       = var.retention_period
   source_db_instance_arn = var.source_db_instance_arn
+  create                 = var.create
+  id                     = var.id
+  kms_key_id             = var.kms_key_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "source_db_instance_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the source DB instance for the replicated automated backups, for example, arn:aws:rds:us-west-2:123456789012:db:mydatabase.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create" {
@@ -28,10 +32,6 @@ variable "pre_signed_url" {
 }
 variable "retention_period" {
   description = "(Optional, Forces new resource) The retention period for the replicated automated backups, defaults to 7."
-  type        = string
-}
-variable "source_db_instance_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the source DB instance for the replicated automated backups, for example, arn:aws:rds:us-west-2:123456789012:db:mydatabase.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,65 +158,33 @@ output "create" {
   description = "(Default 75m)"
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Amazon Resource Name (ARN) of the replicated automated backups.TimeoutsConfiguration options:"
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_key_id" {
   description = "(Optional, Forces new resource) The AWS KMS key identifier for encryption of the replicated automated backups. The KMS key ID is the Amazon Resource Name (ARN) for the KMS encryption key in the destination AWS Region, for example, arn:aws:kms:us-east-1:123456789012:key/AKIAIOSFODNN7EXAMPLE."
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.kms_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "pre_signed_url" {
   description = "(Optional, Forces new resource) A URL that contains a Signature Version 4 signed request for the StartDBInstanceAutomatedBackupsReplication action to be called in the AWS Region of the source DB instance."
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.pre_signed_url
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "retention_period" {
   description = "(Optional, Forces new resource) The retention period for the replicated automated backups, defaults to 7."
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.retention_period
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "source_db_instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the source DB instance for the replicated automated backups, for example, arn:aws:rds:us-west-2:123456789012:db:mydatabase.In addition to all arguments above, the following attributes are exported:"
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.source_db_instance_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 75m)"
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 75m)"
   value       = aws_db_instance_automated_backups_replication.markdown.aws_db_instance_automated_backups_replication.markdown.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the replicated automated backups.TimeoutsConfiguration options:"
@@ -224,7 +192,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

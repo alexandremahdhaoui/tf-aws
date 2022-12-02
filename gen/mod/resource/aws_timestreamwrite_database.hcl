@@ -1,21 +1,13 @@
 resource "aws_timestreamwrite_database" "aws_timestreamwrite_database" {
-  arn           = var.arn
-  database_name = var.database_name
-  id            = var.id
   kms_key_id    = var.kms_key_id
   table_count   = var.table_count
   tags          = var.tags
+  arn           = var.arn
+  database_name = var.database_name
+  id            = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "The name of the Timestream database."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "The ARN of the KMS key used to encrypt the data stored in the database."
   type        = string
 }
 variable "table_count" {
@@ -25,6 +17,7 @@ variable "table_count" {
 variable "tags" {
   description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN that uniquely identifies this database."
@@ -32,6 +25,14 @@ variable "arn" {
 }
 variable "database_name" {
   description = " – (Required) The name of the Timestream database. Minimum length of 3. Maximum length of 64."
+  type        = string
+}
+variable "id" {
+  description = "The name of the Timestream database."
+  type        = string
+}
+variable "kms_key_id" {
+  description = "The ARN of the KMS key used to encrypt the data stored in the database."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,85 +155,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_id" {
-  description = "The ARN of the KMS key used to encrypt the data stored in the database."
-  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "table_count" {
-  description = "The total number of tables found within the Timestream database."
-  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.table_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN that uniquely identifies this database."
   value       = aws_timestreamwrite_database.aws_timestreamwrite_database.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "database_name" {
   description = " – (Required) The name of the Timestream database. Minimum length of 3. Maximum length of 64."
   value       = aws_timestreamwrite_database.aws_timestreamwrite_database.database_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the Timestream database."
   value       = aws_timestreamwrite_database.aws_timestreamwrite_database.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN that uniquely identifies this database."
-  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the Timestream database."
-  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_key_id" {
   description = "The ARN of the KMS key used to encrypt the data stored in the database."
   value       = aws_timestreamwrite_database.aws_timestreamwrite_database.kms_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "table_count" {
   description = "The total number of tables found within the Timestream database."
   value       = aws_timestreamwrite_database.aws_timestreamwrite_database.table_count
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.tags
+}
+output "arn" {
+  description = "The ARN that uniquely identifies this database."
+  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.arn
+}
+output "id" {
+  description = "The name of the Timestream database."
+  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.id
+}
+output "kms_key_id" {
+  description = "The ARN of the KMS key used to encrypt the data stored in the database."
+  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.kms_key_id
+}
+output "table_count" {
+  description = "The total number of tables found within the Timestream database."
+  value       = aws_timestreamwrite_database.aws_timestreamwrite_database.table_count
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -240,7 +201,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

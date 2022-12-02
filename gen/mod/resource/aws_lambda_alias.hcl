@@ -128,17 +128,13 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) identifying your Lambda function alias."
   value       = aws_lambda_alias.aws_lambda_alias.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "invoke_arn" {
   description = "The ARN to be used for invoking Lambda Function from API Gateway - to be used in aws_api_gateway_integration's uri"
   value       = aws_lambda_alias.aws_lambda_alias.invoke_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

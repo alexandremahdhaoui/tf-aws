@@ -1,7 +1,7 @@
 resource "aws_backup_vault_policy" "aws_backup_vault_policy" {
+  backup_vault_name = var.backup_vault_name
   id                = var.id
   policy            = var.policy
-  backup_vault_name = var.backup_vault_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,37 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "backup_vault_name" {
+  description = "(Required) Name of the backup vault to add policy for."
+  value       = aws_backup_vault_policy.aws_backup_vault_policy.backup_vault_name
+}
 output "id" {
   description = "The name of the vault."
   value       = aws_backup_vault_policy.aws_backup_vault_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "policy" {
   description = "(Required) The backup vault access policy document in JSON format.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_vault_policy.aws_backup_vault_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "backup_vault_name" {
-  description = "(Required) Name of the backup vault to add policy for."
-  value       = aws_backup_vault_policy.aws_backup_vault_policy.backup_vault_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "backup_vault_arn" {
   description = "The ARN of the vault."
   value       = aws_backup_vault_policy.aws_backup_vault_policy.backup_vault_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the vault."
@@ -177,7 +161,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,23 +1,30 @@
 resource "aws_elasticache_user_group" "aws_elasticache_user_group" {
+  user_ids      = var.user_ids
   arn           = var.arn
   engine        = var.engine
   id            = var.id
   tags          = var.tags
   tags_all      = var.tags_all
   user_group_id = var.user_group_id
-  user_ids      = var.user_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "id" {
+  description = "The user group identifier."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
 }
 variable "user_group_id" {
   description = "(Required) The ID of the user group."
@@ -26,17 +33,15 @@ variable "user_group_id" {
 variable "user_ids" {
   description = "(Optional) The list of user IDs that belong to the user group."
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN that identifies the user group."
   type        = string
+  default     = ""
 }
 variable "engine" {
   description = "(Required) The current supported value is REDIS."
-  type        = string
-}
-variable "id" {
-  description = "The user group identifier."
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,77 +164,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The ARN that identifies the user group."
+  value       = aws_elasticache_user_group.aws_elasticache_user_group.arn
+}
 output "engine" {
   description = "(Required) The current supported value is REDIS."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.engine
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The user group identifier."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_user_group.aws_elasticache_user_group.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "user_group_id" {
   description = "(Required) The ID of the user group."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.user_group_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "user_ids" {
   description = "(Optional) The list of user IDs that belong to the user group."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.user_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN that identifies the user group."
-  value       = aws_elasticache_user_group.aws_elasticache_user_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The user group identifier."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_elasticache_user_group.aws_elasticache_user_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN that identifies the user group."
@@ -237,7 +206,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The key for the cost allocation tag."
-  type        = string
-}
 variable "status" {
   description = "(Required) The status of a cost allocation tag. Valid values are Active and Inactive.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_key" {
   description = "(Required) The key for the cost allocation tag."
+  type        = string
+}
+variable "id" {
+  description = "The key for the cost allocation tag."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,37 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tag_key" {
+  description = "(Required) The key for the cost allocation tag."
+  value       = aws_ce_cost_allocation_tag.aws_ce_cost_allocation_tag.tag_key
+}
 output "id" {
   description = "The key for the cost allocation tag."
   value       = aws_ce_cost_allocation_tag.aws_ce_cost_allocation_tag.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "(Required) The status of a cost allocation tag. Valid values are Active and Inactive.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ce_cost_allocation_tag.aws_ce_cost_allocation_tag.status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tag_key" {
-  description = "(Required) The key for the cost allocation tag."
-  value       = aws_ce_cost_allocation_tag.aws_ce_cost_allocation_tag.tag_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The key for the cost allocation tag."
   value       = aws_ce_cost_allocation_tag.aws_ce_cost_allocation_tag.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "The type of cost allocation tag."
@@ -177,7 +161,7 @@ output "type" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

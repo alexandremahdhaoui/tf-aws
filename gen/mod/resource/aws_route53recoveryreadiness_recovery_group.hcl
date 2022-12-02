@@ -1,25 +1,18 @@
 resource "aws_route53recoveryreadiness_recovery_group" "aws_route53recoveryreadiness_recovery_group" {
+  arn                 = var.arn
   cells               = var.cells
   recovery_group_name = var.recovery_group_name
   tags                = var.tags
   tags_all            = var.tags_all
-  arn                 = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the recovery group"
-  type        = string
-}
 variable "cells" {
   description = "(Optional) List of cell arns to add as nested fault domains within this recovery group"
   type        = string
+  default     = ""
 }
 variable "recovery_group_name" {
   description = "(Required) A unique name describing the recovery group.The following argument are optional:"
@@ -27,6 +20,15 @@ variable "recovery_group_name" {
 }
 variable "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the recovery group"
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,57 +155,29 @@ output "arn" {
   description = "ARN of the recovery group"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cells" {
   description = "(Optional) List of cell arns to add as nested fault domains within this recovery group"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.cells
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "recovery_group_name" {
   description = "(Required) A unique name describing the recovery group.The following argument are optional:"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.recovery_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the recovery group"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 5m)"
   value       = aws_route53recoveryreadiness_recovery_group.aws_route53recoveryreadiness_recovery_group.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -211,7 +185,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

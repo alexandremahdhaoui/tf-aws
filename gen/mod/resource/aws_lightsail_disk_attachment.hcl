@@ -1,7 +1,7 @@
 resource "aws_lightsail_disk_attachment" "aws_lightsail_disk_attachment" {
+  disk_name     = var.disk_name
   disk_path     = var.disk_path
   instance_name = var.instance_name
-  disk_name     = var.disk_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -143,25 +143,13 @@ output "disk_name" {
   description = "(Required) The name of the Lightsail Disk."
   value       = aws_lightsail_disk_attachment.aws_lightsail_disk_attachment.disk_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "disk_path" {
   description = "(Required) The disk path to expose to the instance.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_disk_attachment.aws_lightsail_disk_attachment.disk_path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_name" {
   description = "(Required) The name of the Lightsail Instance to attach to."
   value       = aws_lightsail_disk_attachment.aws_lightsail_disk_attachment.instance_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "A combination of attributes to create a unique id: disk_name,instance_name"
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

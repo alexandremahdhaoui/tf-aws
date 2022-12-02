@@ -128,25 +128,13 @@ output "id" {
   description = "The internal ID assigned to this certificate."
   value       = aws_iot_certificate.aws_iot_certificate.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "public_key" {
   description = "When neither CSR nor certificate is provided, the public key."
   value       = aws_iot_certificate.aws_iot_certificate.public_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the created certificate."
   value       = aws_iot_certificate.aws_iot_certificate.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "certificate_pem" {
   description = "The certificate data, in PEM format."
@@ -154,7 +142,7 @@ output "certificate_pem" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

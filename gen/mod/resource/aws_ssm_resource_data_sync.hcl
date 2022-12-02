@@ -1,29 +1,13 @@
 resource "aws_ssm_resource_data_sync" "aws_ssm_resource_data_sync" {
-  bucket_name    = var.bucket_name
   kms_key_arn    = var.kms_key_arn
   name           = var.name
   prefix         = var.prefix
   region         = var.region
   s3_destination = var.s3_destination
+  bucket_name    = var.bucket_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name for the configuration."
-  type        = string
-}
-variable "prefix" {
-  description = "(Optional) Prefix for the bucket."
-  type        = string
-}
-variable "region" {
-  description = "(Required) Region with the bucket targeted by the Resource Data Sync."
-  type        = string
-}
-variable "s3_destination" {
-  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
   type        = string
 }
 variable "bucket_name" {
@@ -32,6 +16,24 @@ variable "bucket_name" {
 }
 variable "kms_key_arn" {
   description = "(Optional) ARN of an encryption key for a destination in Amazon S3."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name for the configuration."
+  type        = string
+}
+variable "prefix" {
+  description = "(Optional) Prefix for the bucket."
+  type        = string
+  default     = ""
+}
+variable "region" {
+  description = "(Required) Region with the bucket targeted by the Resource Data Sync."
+  type        = string
+}
+variable "s3_destination" {
+  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,37 +156,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "s3_destination" {
+  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
+  value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.s3_destination
+}
 output "bucket_name" {
   description = "(Required) Name of S3 bucket where the aggregated data is stored."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.bucket_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_key_arn" {
   description = "(Optional) ARN of an encryption key for a destination in Amazon S3."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.kms_key_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name for the configuration."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "prefix" {
   description = "(Optional) Prefix for the bucket."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "region" {
   description = "(Required) Region with the bucket targeted by the Resource Data Sync."
@@ -192,15 +182,7 @@ output "region" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_destination" {
-  description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
-  value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.s3_destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,14 +1,10 @@
 resource "aws_quicksight_group_membership" "aws_quicksight_group_membership" {
-  aws_account_id = var.aws_account_id
   group_name     = var.group_name
   member_name    = var.member_name
+  aws_account_id = var.aws_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "aws_account_id" {
-  description = "(Optional) The ID for the AWS account that the group is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account."
   type        = string
 }
 variable "group_name" {
@@ -18,6 +14,11 @@ variable "group_name" {
 variable "member_name" {
   description = "(Required) The name of the member to add to the group."
   type        = string
+}
+variable "aws_account_id" {
+  description = "(Optional) The ID for the AWS account that the group is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -143,17 +144,9 @@ output "aws_account_id" {
   description = "(Optional) The ID for the AWS account that the group is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account."
   value       = aws_quicksight_group_membership.aws_quicksight_group_membership.aws_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "group_name" {
   description = "(Required) The name of the group in which the member will be added."
   value       = aws_quicksight_group_membership.aws_quicksight_group_membership.group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "member_name" {
   description = "(Required) The name of the member to add to the group."
@@ -161,7 +154,7 @@ output "member_name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

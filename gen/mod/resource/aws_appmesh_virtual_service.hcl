@@ -1,42 +1,75 @@
 resource "aws_appmesh_virtual_service" "aws_appmesh_virtual_service" {
-  mesh_owner          = var.mesh_owner
+  arn                 = var.arn
+  last_updated_date   = var.last_updated_date
+  mesh_name           = var.mesh_name
+  spec                = var.spec
   provider            = var.provider
   resource_owner      = var.resource_owner
   virtual_node_name   = var.virtual_node_name
-  virtual_router      = var.virtual_router
+  id                  = var.id
   name                = var.name
+  created_date        = var.created_date
+  mesh_owner          = var.mesh_owner
   tags                = var.tags
   virtual_node        = var.virtual_node
+  virtual_router      = var.virtual_router
   virtual_router_name = var.virtual_router_name
-  mesh_name           = var.mesh_name
-  spec                = var.spec
-  arn                 = var.arn
-  created_date        = var.created_date
-  id                  = var.id
-  last_updated_date   = var.last_updated_date
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "virtual_router" {
-  description = "(Optional) Virtual router associated with a virtual service.The virtual_node object supports the following:"
+variable "provider" {
+  description = "- (Optional) App Mesh object that is acting as the provider for a virtual service. You can specify a single virtual node or virtual router.The provider object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "resource_owner" {
+  description = "Resource owner's AWS account ID."
   type        = string
 }
-variable "virtual_router_name" {
-  description = "(Required) Name of the virtual router that is acting as a service provider. Must be between 1 and 255 characters in length.In addition to all arguments above, the following attributes are exported:"
+variable "virtual_node_name" {
+  description = "(Required) Name of the virtual node that is acting as a service provider. Must be between 1 and 255 characters in length.The virtual_router object supports the following:"
+  type        = string
+}
+variable "id" {
+  description = "ID of the virtual service."
   type        = string
 }
 variable "name" {
   description = "(Required) Name to use for the virtual service. Must be between 1 and 255 characters in length."
   type        = string
 }
+variable "created_date" {
+  description = "Creation date of the virtual service."
+  type        = string
+}
+variable "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
   type        = string
+  default     = ""
 }
 variable "virtual_node" {
   description = "(Optional) Virtual node associated with a virtual service."
+  type        = string
+  default     = ""
+}
+variable "virtual_router" {
+  description = "(Optional) Virtual router associated with a virtual service.The virtual_node object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "virtual_router_name" {
+  description = "(Required) Name of the virtual router that is acting as a service provider. Must be between 1 and 255 characters in length.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the virtual service."
   type        = string
 }
 variable "last_updated_date" {
@@ -49,34 +82,6 @@ variable "mesh_name" {
 }
 variable "spec" {
   description = "(Required) Virtual service specification to apply."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the virtual service."
-  type        = string
-}
-variable "created_date" {
-  description = "Creation date of the virtual service."
-  type        = string
-}
-variable "id" {
-  description = "ID of the virtual service."
-  type        = string
-}
-variable "virtual_node_name" {
-  description = "(Required) Name of the virtual node that is acting as a service provider. Must be between 1 and 255 characters in length.The virtual_router object supports the following:"
-  type        = string
-}
-variable "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
-  type        = string
-}
-variable "provider" {
-  description = "- (Optional) App Mesh object that is acting as the provider for a virtual service. You can specify a single virtual node or virtual router.The provider object supports the following:"
-  type        = string
-}
-variable "resource_owner" {
-  description = "Resource owner's AWS account ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,149 +204,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "virtual_router" {
-  description = "(Optional) Virtual router associated with a virtual service.The virtual_node object supports the following:"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "virtual_node" {
-  description = "(Optional) Virtual node associated with a virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "virtual_router_name" {
-  description = "(Required) Name of the virtual router that is acting as a service provider. Must be between 1 and 255 characters in length.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Name to use for the virtual service. Must be between 1 and 255 characters in length."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_updated_date" {
-  description = "Last update date of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "mesh_name" {
-  description = "(Required) Name of the service mesh in which to create the virtual service. Must be between 1 and 255 characters in length."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "spec" {
-  description = "(Required) Virtual service specification to apply."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.spec
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_date" {
-  description = "Creation date of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.created_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "provider" {
+  description = "- (Optional) App Mesh object that is acting as the provider for a virtual service. You can specify a single virtual node or virtual router.The provider object supports the following:"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.provider
 }
 output "resource_owner" {
   description = "Resource owner's AWS account ID."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.resource_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "virtual_node_name" {
   description = "(Required) Name of the virtual node that is acting as a service provider. Must be between 1 and 255 characters in length.The virtual_router object supports the following:"
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "ID of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.id
 }
-output "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_owner
+output "name" {
+  description = "(Required) Name to use for the virtual service. Must be between 1 and 255 characters in length."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "virtual_node" {
+  description = "(Optional) Virtual node associated with a virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_node
 }
-output "provider" {
-  description = "- (Optional) App Mesh object that is acting as the provider for a virtual service. You can specify a single virtual node or virtual router.The provider object supports the following:"
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.provider
+output "virtual_router" {
+  description = "(Optional) Virtual router associated with a virtual service.The virtual_node object supports the following:"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "virtual_router_name" {
+  description = "(Required) Name of the virtual router that is acting as a service provider. Must be between 1 and 255 characters in length.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.virtual_router_name
 }
 output "created_date" {
   description = "Creation date of the virtual service."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.created_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_owner
 }
-output "id" {
-  description = "ID of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.id
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "spec" {
+  description = "(Required) Virtual service specification to apply."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.spec
+}
+output "arn" {
+  description = "ARN of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
 }
 output "last_updated_date" {
   description = "Last update date of the virtual service."
   value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "mesh_name" {
+  description = "(Required) Name of the service mesh in which to create the virtual service. Must be between 1 and 255 characters in length."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.mesh_name
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags_all
+}
+output "arn" {
+  description = "ARN of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
+}
+output "created_date" {
+  description = "Creation date of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.created_date
+}
+output "id" {
+  description = "ID of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.id
+}
+output "last_updated_date" {
+  description = "Last update date of the virtual service."
+  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.last_updated_date
 }
 output "resource_owner" {
   description = "Resource owner's AWS account ID."
@@ -349,23 +290,7 @@ output "resource_owner" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the virtual service."
-  value       = aws_appmesh_virtual_service.aws_appmesh_virtual_service.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

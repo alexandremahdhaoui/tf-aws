@@ -1,27 +1,15 @@
 resource "aws_ec2_client_vpn_network_association" "aws_ec2_client_vpn_network_association" {
+  client_vpn_endpoint_id = var.client_vpn_endpoint_id
+  create                 = var.create
   id                     = var.id
   security_groups        = var.security_groups
   status                 = var.status
   subnet_id              = var.subnet_id
   vpc_id                 = var.vpc_id
   association_id         = var.association_id
-  client_vpn_endpoint_id = var.client_vpn_endpoint_id
-  create                 = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "status" {
-  description = "strongDeprecated The current state of the target network association."
-  type        = string
-}
-variable "subnet_id" {
-  description = "(Required) The ID of the subnet to associate with the Client VPN endpoint."
-  type        = string
-}
-variable "vpc_id" {
-  description = "The ID of the VPC in which the target subnet is located.TimeoutsConfiguration options:"
   type        = string
 }
 variable "association_id" {
@@ -42,6 +30,18 @@ variable "id" {
 }
 variable "security_groups" {
   description = "(Optional, strongDeprecated use the security_group_ids argument of the aws_ec2_client_vpn_endpoint resource instead) A list of up to five custom security groups to apply to the target network. If not specified, the VPC's default security group is assigned.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "status" {
+  description = "strongDeprecated The current state of the target network association."
+  type        = string
+}
+variable "subnet_id" {
+  description = "(Required) The ID of the subnet to associate with the Client VPN endpoint."
+  type        = string
+}
+variable "vpc_id" {
+  description = "The ID of the VPC in which the target subnet is located.TimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,77 +164,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The unique ID of the target network association."
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_groups" {
-  description = "(Optional, strongDeprecated use the security_group_ids argument of the aws_ec2_client_vpn_endpoint resource instead) A list of up to five custom security groups to apply to the target network. If not specified, the VPC's default security group is assigned.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.security_groups
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "strongDeprecated The current state of the target network association."
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_id" {
-  description = "(Required) The ID of the subnet to associate with the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.subnet_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The ID of the VPC in which the target subnet is located.TimeoutsConfiguration options:"
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "association_id" {
   description = "The unique ID of the target network association."
   value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.association_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "client_vpn_endpoint_id" {
   description = "(Required) The ID of the Client VPN endpoint."
   value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.client_vpn_endpoint_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.create
+}
+output "id" {
+  description = "The unique ID of the target network association."
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.id
+}
+output "security_groups" {
+  description = "(Optional, strongDeprecated use the security_group_ids argument of the aws_ec2_client_vpn_endpoint resource instead) A list of up to five custom security groups to apply to the target network. If not specified, the VPC's default security group is assigned.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.security_groups
 }
 output "status" {
   description = "strongDeprecated The current state of the target network association."
   value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "subnet_id" {
+  description = "(Required) The ID of the subnet to associate with the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.subnet_id
+}
+output "vpc_id" {
+  description = "The ID of the VPC in which the target subnet is located.TimeoutsConfiguration options:"
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.vpc_id
+}
+output "association_id" {
+  description = "The unique ID of the target network association."
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.association_id
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.create
+}
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.delete
+}
+output "id" {
+  description = "The unique ID of the target network association."
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.id
+}
+output "status" {
+  description = "strongDeprecated The current state of the target network association."
+  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.status
 }
 output "vpc_id" {
   description = "The ID of the VPC in which the target subnet is located.TimeoutsConfiguration options:"
@@ -242,39 +222,7 @@ output "vpc_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "association_id" {
-  description = "The unique ID of the target network association."
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.association_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 30m)"
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The unique ID of the target network association."
-  value       = aws_ec2_client_vpn_network_association.aws_ec2_client_vpn_network_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

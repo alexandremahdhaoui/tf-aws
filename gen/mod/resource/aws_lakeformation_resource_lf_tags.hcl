@@ -1,28 +1,29 @@
 resource "aws_lakeformation_resource_lf_tags" "aws_lakeformation_resource_lf_tags" {
-  key                   = var.key
-  lf_tag                = var.lf_tag
-  name                  = var.name
-  table                 = var.table
   catalog_id            = var.catalog_id
-  column_names          = var.column_names
   database              = var.database
   excluded_column_names = var.excluded_column_names
-  database_name         = var.database_name
+  name                  = var.name
   table_with_columns    = var.table_with_columns
   value                 = var.value
   wildcard              = var.wildcard
+  column_names          = var.column_names
+  database_name         = var.database_name
+  key                   = var.key
+  lf_tag                = var.lf_tag
+  table                 = var.table
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "database_name" {
-  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
+variable "name" {
+  description = " – (Required) Name of the table resource."
   type        = string
 }
 variable "table_with_columns" {
   description = "(Optional) Configuration block for a table with columns resource. See below."
   type        = string
+  default     = ""
 }
 variable "value" {
   description = "(Required) Value from the possible values for the LF-tag.The following argument is optional:"
@@ -31,37 +32,43 @@ variable "value" {
 variable "wildcard" {
   description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
   type        = string
+  default     = ""
 }
-variable "name" {
-  description = " – (Required) Name of the table resource."
+variable "catalog_id" {
+  description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
+  type        = string
+  default     = ""
+}
+variable "database" {
+  description = "(Optional) Configuration block for a database resource. See below."
+  type        = string
+  default     = ""
+}
+variable "excluded_column_names" {
+  description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+  type        = string
+  default     = ""
+}
+variable "lf_tag" {
+  description = " – (Required) Set of LF-tags to attach to the resource. See below.Exactly one of the following is required:"
   type        = string
 }
 variable "table" {
   description = "(Optional) Configuration block for a table resource. See below."
   type        = string
-}
-variable "catalog_id" {
-  description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
-  type        = string
+  default     = ""
 }
 variable "column_names" {
   description = "(Required, at least one of column_names or wildcard) Set of column names for the table."
   type        = string
+  default     = ""
 }
-variable "database" {
-  description = "(Optional) Configuration block for a database resource. See below."
-  type        = string
-}
-variable "excluded_column_names" {
-  description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+variable "database_name" {
+  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
   type        = string
 }
 variable "key" {
   description = " – (Required) Key name for an existing LF-tag."
-  type        = string
-}
-variable "lf_tag" {
-  description = " – (Required) Set of LF-tags to attach to the resource. See below.Exactly one of the following is required:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -184,77 +191,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "value" {
-  description = "(Required) Value from the possible values for the LF-tag.The following argument is optional:"
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "wildcard" {
-  description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.wildcard
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "database_name" {
-  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.database_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "table_with_columns" {
-  description = "(Optional) Configuration block for a table with columns resource. See below."
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.table_with_columns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "catalog_id" {
+  description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.catalog_id
 }
 output "database" {
   description = "(Optional) Configuration block for a database resource. See below."
   value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.database
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "excluded_column_names" {
   description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
   value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.excluded_column_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "key" {
-  description = " – (Required) Key name for an existing LF-tag."
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lf_tag" {
-  description = " – (Required) Set of LF-tags to attach to the resource. See below.Exactly one of the following is required:"
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.lf_tag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = " – (Required) Name of the table resource."
   value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "table_with_columns" {
+  description = "(Optional) Configuration block for a table with columns resource. See below."
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.table_with_columns
+}
+output "value" {
+  description = "(Required) Value from the possible values for the LF-tag.The following argument is optional:"
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.value
+}
+output "wildcard" {
+  description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.wildcard
+}
+output "column_names" {
+  description = "(Required, at least one of column_names or wildcard) Set of column names for the table."
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.column_names
+}
+output "database_name" {
+  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.database_name
+}
+output "key" {
+  description = " – (Required) Key name for an existing LF-tag."
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.key
+}
+output "lf_tag" {
+  description = " – (Required) Set of LF-tags to attach to the resource. See below.Exactly one of the following is required:"
+  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.lf_tag
 }
 output "table" {
   description = "(Optional) Configuration block for a table resource. See below."
@@ -262,23 +241,7 @@ output "table" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "catalog_id" {
-  description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.catalog_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "column_names" {
-  description = "(Required, at least one of column_names or wildcard) Set of column names for the table."
-  value       = aws_lakeformation_resource_lf_tags.aws_lakeformation_resource_lf_tags.column_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "master_account_id" {
-  description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "detector_id" {
   description = "(Required) The detector ID of the member GuardDuty account."
   type        = string
 }
 variable "id" {
   description = "GuardDuty member detector IDTimeoutsConfiguration options:"
+  type        = string
+}
+variable "master_account_id" {
+  description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,45 +139,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "master_account_id" {
-  description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.master_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "detector_id" {
   description = "(Required) The detector ID of the member GuardDuty account."
   value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.detector_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "GuardDuty member detector IDTimeoutsConfiguration options:"
   value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "master_account_id" {
+  description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.master_account_id
 }
 output "create" {
   description = "(Default 1m)"
   value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "GuardDuty member detector IDTimeoutsConfiguration options:"
   value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

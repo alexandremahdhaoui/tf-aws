@@ -1,8 +1,8 @@
 resource "aws_elasticache_subnet_group" "aws_elasticache_subnet_group" {
-  subnet_ids  = var.subnet_ids
-  tags        = var.tags
   description = var.description
   name        = var.name
+  subnet_ids  = var.subnet_ids
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,6 +23,7 @@ variable "subnet_ids" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,37 +145,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "The Description of the ElastiCache Subnet Group."
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "The Name of the ElastiCache Subnet Group."
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subnet_ids" {
   description = "The Subnet IDs of the ElastiCache Subnet Group."
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.tags
+}
+output "description" {
+  description = "The Description of the ElastiCache Subnet Group."
+  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.description
+}
+output "name" {
+  description = "The Name of the ElastiCache Subnet Group."
+  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.name
+}
+output "subnet_ids" {
+  description = "The Subnet IDs of the ElastiCache Subnet Group."
+  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.subnet_ids
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -182,31 +179,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "The Description of the ElastiCache Subnet Group."
-  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The Name of the ElastiCache Subnet Group."
-  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_ids" {
-  description = "The Subnet IDs of the ElastiCache Subnet Group."
-  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.subnet_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

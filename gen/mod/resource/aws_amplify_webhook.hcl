@@ -8,14 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "branch_name" {
-  description = "(Required) Name for a branch that is part of the Amplify app."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "app_id" {
   description = "(Required) Unique ID for an Amplify app."
   type        = string
@@ -23,6 +15,15 @@ variable "app_id" {
 variable "arn" {
   description = "ARN for the webhook."
   type        = string
+}
+variable "branch_name" {
+  description = "(Required) Name for a branch that is part of the Amplify app."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -148,41 +149,21 @@ output "description" {
   description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
   value       = aws_amplify_webhook.aws_amplify_webhook.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "app_id" {
   description = "(Required) Unique ID for an Amplify app."
   value       = aws_amplify_webhook.aws_amplify_webhook.app_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN for the webhook."
   value       = aws_amplify_webhook.aws_amplify_webhook.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "branch_name" {
   description = "(Required) Name for a branch that is part of the Amplify app."
   value       = aws_amplify_webhook.aws_amplify_webhook.branch_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN for the webhook."
   value       = aws_amplify_webhook.aws_amplify_webhook.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "url" {
   description = "URL of the webhook."
@@ -190,7 +171,7 @@ output "url" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

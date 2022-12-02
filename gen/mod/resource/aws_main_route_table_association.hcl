@@ -143,33 +143,17 @@ output "id" {
   description = "The ID of the Route Table Association"
   value       = aws_main_route_table_association.aws_main_route_table_association.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "route_table_id" {
   description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_main_route_table_association.aws_main_route_table_association.route_table_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_id" {
   description = "(Required) The ID of the VPC whose main route table should be set"
   value       = aws_main_route_table_association.aws_main_route_table_association.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the Route Table Association"
   value       = aws_main_route_table_association.aws_main_route_table_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "original_route_table_id" {
   description = "Used internally, see strongNotes below"
@@ -177,7 +161,7 @@ output "original_route_table_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

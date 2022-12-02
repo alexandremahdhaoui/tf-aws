@@ -128,17 +128,13 @@ output "arn" {
   description = "The ARN of the DHCP Options Set."
   value       = aws_default_vpc_dhcp_options.aws_default_vpc_dhcp_options.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the DHCP Options Set."
   value       = aws_default_vpc_dhcp_options.aws_default_vpc_dhcp_options.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

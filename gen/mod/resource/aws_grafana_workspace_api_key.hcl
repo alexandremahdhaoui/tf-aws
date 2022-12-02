@@ -1,8 +1,8 @@
 resource "aws_grafana_workspace_api_key" "aws_grafana_workspace_api_key" {
+  key_role        = var.key_role
   seconds_to_live = var.seconds_to_live
   workspace_id    = var.workspace_id
   key_name        = var.key_name
-  key_role        = var.key_role
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -148,25 +148,13 @@ output "key_name" {
   description = "(Required) Specifies the name of the API key. Key names must be unique to the workspace."
   value       = aws_grafana_workspace_api_key.aws_grafana_workspace_api_key.key_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key_role" {
   description = "(Required) Specifies the permission level of the API key. Valid values are VIEWER, EDITOR, or ADMIN."
   value       = aws_grafana_workspace_api_key.aws_grafana_workspace_api_key.key_role
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "seconds_to_live" {
   description = "(Required) Specifies the time in seconds until the API key expires. Keys can be valid for up to 30 days."
   value       = aws_grafana_workspace_api_key.aws_grafana_workspace_api_key.seconds_to_live
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "workspace_id" {
   description = "(Required) The ID of the workspace that the API key is valid for.In addition to all arguments above, the following attributes are exported:"
@@ -174,7 +162,7 @@ output "workspace_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,9 +1,9 @@
 resource "aws_lambda_provisioned_concurrency_config" "aws_lambda_provisioned_concurrency_config" {
+  provisioned_concurrent_executions = var.provisioned_concurrent_executions
+  qualifier                         = var.qualifier
   create                            = var.create
   function_name                     = var.function_name
   id                                = var.id
-  provisioned_concurrent_executions = var.provisioned_concurrent_executions
-  qualifier                         = var.qualifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -149,61 +149,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 15m)"
-  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "function_name" {
   description = "(Required) Name or Amazon Resource Name (ARN) of the Lambda Function."
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.function_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "provisioned_concurrent_executions" {
   description = "(Required) Amount of capacity to allocate. Must be greater than or equal to 1."
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.provisioned_concurrent_executions
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "qualifier" {
   description = "(Required) Lambda Function version or Lambda Alias name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.qualifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 15m)"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 15m)"
+  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
 }
 output "id" {
   description = "Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 15m)"
@@ -211,7 +183,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

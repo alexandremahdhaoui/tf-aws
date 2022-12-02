@@ -15,6 +15,7 @@ variable "cidr" {
 variable "disallowed_cidrs" {
   description = "(Optional) Exclude a particular CIDR range from being returned by the pool."
   type        = string
+  default     = ""
 }
 variable "ipam_pool_id" {
   description = "(Required) The ID of the pool to which you want to assign a CIDR."
@@ -23,6 +24,7 @@ variable "ipam_pool_id" {
 variable "netmask_length" {
   description = "(Optional) The netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -148,33 +150,17 @@ output "netmask_length" {
   description = "(Optional) The netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.netmask_length
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cidr" {
   description = "The previewed CIDR from the pool."
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.cidr
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "disallowed_cidrs" {
   description = "(Optional) Exclude a particular CIDR range from being returned by the pool."
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.disallowed_cidrs
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ipam_pool_id" {
   description = "(Required) The ID of the pool to which you want to assign a CIDR."
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.ipam_pool_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cidr" {
   description = "The previewed CIDR from the pool."
@@ -182,7 +168,7 @@ output "cidr" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

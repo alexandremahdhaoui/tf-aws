@@ -8,33 +8,17 @@ output "creation_date" {
   description = "Date the state machine was created."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.creation_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "definition" {
   description = "Set to the state machine definition."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.definition
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Set to the ARN of the found state machine, suitable for referencing in other resources that support State Machines."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "Set to the role_arn used by the state function."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Set to the arn of the state function."
@@ -42,7 +26,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

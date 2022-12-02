@@ -138,17 +138,9 @@ output "approval_rule_template_name" {
   description = "(Required) The name for the approval rule template."
   value       = aws_codecommit_approval_rule_template_association.aws_codecommit_approval_rule_template_association.approval_rule_template_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "repository_name" {
   description = "(Required) The name of the repository that you want to associate with the template.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codecommit_approval_rule_template_association.aws_codecommit_approval_rule_template_association.repository_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the approval rule template and name of the repository, separated by a comma (,)."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

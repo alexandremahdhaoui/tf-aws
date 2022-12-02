@@ -1,28 +1,77 @@
 resource "aws_sagemaker_workforce" "aws_sagemaker_workforce" {
-  issuer                 = var.issuer
-  subnets                = var.subnets
-  vpc_id                 = var.vpc_id
-  workforce_name         = var.workforce_name
+  subdomain              = var.subdomain
+  user_pool              = var.user_pool
   cidrs                  = var.cidrs
   client_secret          = var.client_secret
-  cognito_config         = var.cognito_config
-  oidc_config            = var.oidc_config
+  issuer                 = var.issuer
   security_group_ids     = var.security_group_ids
-  subdomain              = var.subdomain
+  subnets                = var.subnets
   token_endpoint         = var.token_endpoint
-  user_info_endpoint     = var.user_info_endpoint
-  authorization_endpoint = var.authorization_endpoint
-  jwks_uri               = var.jwks_uri
-  source_ip_config       = var.source_ip_config
-  logout_endpoint        = var.logout_endpoint
-  user_pool              = var.user_pool
-  workforce_vpc_config   = var.workforce_vpc_config
+  vpc_id                 = var.vpc_id
+  workforce_name         = var.workforce_name
   arn                    = var.arn
   client_id              = var.client_id
+  oidc_config            = var.oidc_config
+  jwks_uri               = var.jwks_uri
+  source_ip_config       = var.source_ip_config
+  user_info_endpoint     = var.user_info_endpoint
+  authorization_endpoint = var.authorization_endpoint
+  cognito_config         = var.cognito_config
   id                     = var.id
+  logout_endpoint        = var.logout_endpoint
+  workforce_vpc_config   = var.workforce_vpc_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workforce."
+  type        = string
+}
+variable "client_id" {
+  description = "(Required) The OIDC IdP client ID used to configure your private workforce."
+  type        = string
+}
+variable "oidc_config" {
+  description = "(Optional) Use this parameter to configure a private workforce using your own OIDC Identity Provider. Conflicts with cognito_config. see OIDC Config details below."
+  type        = string
+  default     = ""
+}
+variable "security_group_ids" {
+  description = "(Optional) The VPC security group IDs. The security groups must be for the same VPC as specified in the subnet."
+  type        = string
+  default     = ""
+}
+variable "subnets" {
+  description = "(Optional) The ID of the subnets in the VPC that you want to connect."
+  type        = string
+  default     = ""
+}
+variable "token_endpoint" {
+  description = "(Required) The OIDC IdP token endpoint used to configure your private workforce."
+  type        = string
+}
+variable "vpc_id" {
+  description = "(Optional) The ID of the VPC that the workforce uses for communication.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "workforce_name" {
+  description = "(Required) The name of the Workforce (must be unique)."
+  type        = string
+}
+variable "authorization_endpoint" {
+  description = "(Required) The OIDC IdP authorization endpoint used to configure your private workforce."
+  type        = string
+}
+variable "cognito_config" {
+  description = "(Optional) Use this parameter to configure an Amazon Cognito private workforce. A single Cognito workforce is created using and corresponds to a single Amazon Cognito user pool. Conflicts with oidc_config. see Cognito Config details below."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The name of the Workforce."
   type        = string
 }
 variable "jwks_uri" {
@@ -32,81 +81,39 @@ variable "jwks_uri" {
 variable "source_ip_config" {
   description = "(Optional) A list of IP address ranges Used to create an allow list of IP addresses for a private workforce. By default, a workforce isn't restricted to specific IP addresses. see Source Ip Config details below."
   type        = string
-}
-variable "subdomain" {
-  description = "The subdomain for your OIDC Identity Provider."
-  type        = string
-}
-variable "token_endpoint" {
-  description = "(Required) The OIDC IdP token endpoint used to configure your private workforce."
-  type        = string
+  default     = ""
 }
 variable "user_info_endpoint" {
   description = "(Required) The OIDC IdP user information endpoint used to configure your private workforce.Source Ip Config"
-  type        = string
-}
-variable "authorization_endpoint" {
-  description = "(Required) The OIDC IdP authorization endpoint used to configure your private workforce."
-  type        = string
-}
-variable "client_id" {
-  description = "(Required) The OIDC IdP client ID used to configure your private workforce."
-  type        = string
-}
-variable "id" {
-  description = "The name of the Workforce."
   type        = string
 }
 variable "logout_endpoint" {
   description = "(Required) The OIDC IdP logout endpoint used to configure your private workforce."
   type        = string
 }
-variable "user_pool" {
-  description = "(Required) ID for your Amazon Cognito user pool.Oidc Config"
-  type        = string
-}
 variable "workforce_vpc_config" {
   description = "(Optional) configure a workforce using VPC. see Workforce VPC Config details below.Cognito Config"
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workforce."
+variable "cidrs" {
+  description = "(Required) A list of up to 10 CIDR values.Workforce VPC Config"
   type        = string
 }
 variable "client_secret" {
   description = "(Required) The OIDC IdP client secret used to configure your private workforce."
   type        = string
 }
-variable "cognito_config" {
-  description = "(Optional) Use this parameter to configure an Amazon Cognito private workforce. A single Cognito workforce is created using and corresponds to a single Amazon Cognito user pool. Conflicts with oidc_config. see Cognito Config details below."
-  type        = string
-}
 variable "issuer" {
   description = "(Required) The OIDC IdP issuer used to configure your private workforce."
   type        = string
 }
-variable "subnets" {
-  description = "(Optional) The ID of the subnets in the VPC that you want to connect."
+variable "subdomain" {
+  description = "The subdomain for your OIDC Identity Provider."
   type        = string
 }
-variable "vpc_id" {
-  description = "(Optional) The ID of the VPC that the workforce uses for communication.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "workforce_name" {
-  description = "(Required) The name of the Workforce (must be unique)."
-  type        = string
-}
-variable "cidrs" {
-  description = "(Required) A list of up to 10 CIDR values.Workforce VPC Config"
-  type        = string
-}
-variable "security_group_ids" {
-  description = "(Optional) The VPC security group IDs. The security groups must be for the same VPC as specified in the subnet."
-  type        = string
-}
-variable "oidc_config" {
-  description = "(Optional) Use this parameter to configure a private workforce using your own OIDC Identity Provider. Conflicts with cognito_config. see OIDC Config details below."
+variable "user_pool" {
+  description = "(Required) ID for your Amazon Cognito user pool.Oidc Config"
   type        = string
 }
 variable "tag_instance_id" {
@@ -229,189 +236,101 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_id" {
-  description = "(Required) The OIDC IdP client ID used to configure your private workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.client_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the Workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "logout_endpoint" {
-  description = "(Required) The OIDC IdP logout endpoint used to configure your private workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.logout_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_pool" {
-  description = "(Required) ID for your Amazon Cognito user pool.Oidc Config"
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.user_pool
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "workforce_vpc_config" {
-  description = "(Optional) configure a workforce using VPC. see Workforce VPC Config details below.Cognito Config"
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.workforce_vpc_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "workforce_name" {
-  description = "(Required) The name of the Workforce (must be unique)."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.workforce_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cidrs" {
-  description = "(Required) A list of up to 10 CIDR values.Workforce VPC Config"
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.cidrs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_secret" {
-  description = "(Required) The OIDC IdP client secret used to configure your private workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.client_secret
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cognito_config" {
-  description = "(Optional) Use this parameter to configure an Amazon Cognito private workforce. A single Cognito workforce is created using and corresponds to a single Amazon Cognito user pool. Conflicts with oidc_config. see Cognito Config details below."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.cognito_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "issuer" {
-  description = "(Required) The OIDC IdP issuer used to configure your private workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.issuer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subnets" {
   description = "(Optional) The ID of the subnets in the VPC that you want to connect."
   value       = aws_sagemaker_workforce.aws_sagemaker_workforce.subnets
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "(Optional) The ID of the VPC that the workforce uses for communication.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "oidc_config" {
-  description = "(Optional) Use this parameter to configure a private workforce using your own OIDC Identity Provider. Conflicts with cognito_config. see OIDC Config details below."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.oidc_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "security_group_ids" {
-  description = "(Optional) The VPC security group IDs. The security groups must be for the same VPC as specified in the subnet."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorization_endpoint" {
-  description = "(Required) The OIDC IdP authorization endpoint used to configure your private workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.authorization_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "jwks_uri" {
-  description = "(Required) The OIDC IdP JSON Web Key Set (Jwks) URI used to configure your private workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.jwks_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_ip_config" {
-  description = "(Optional) A list of IP address ranges Used to create an allow list of IP addresses for a private workforce. By default, a workforce isn't restricted to specific IP addresses. see Source Ip Config details below."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.source_ip_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subdomain" {
-  description = "The subdomain for your OIDC Identity Provider."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.subdomain
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "token_endpoint" {
   description = "(Required) The OIDC IdP token endpoint used to configure your private workforce."
   value       = aws_sagemaker_workforce.aws_sagemaker_workforce.token_endpoint
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "(Optional) The ID of the VPC that the workforce uses for communication.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.vpc_id
 }
-output "user_info_endpoint" {
-  description = "(Required) The OIDC IdP user information endpoint used to configure your private workforce.Source Ip Config"
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.user_info_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "workforce_name" {
+  description = "(Required) The name of the Workforce (must be unique)."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.workforce_name
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Workforce."
   value       = aws_sagemaker_workforce.aws_sagemaker_workforce.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "client_id" {
+  description = "(Required) The OIDC IdP client ID used to configure your private workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.client_id
+}
+output "oidc_config" {
+  description = "(Optional) Use this parameter to configure a private workforce using your own OIDC Identity Provider. Conflicts with cognito_config. see OIDC Config details below."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.oidc_config
+}
+output "security_group_ids" {
+  description = "(Optional) The VPC security group IDs. The security groups must be for the same VPC as specified in the subnet."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.security_group_ids
+}
+output "source_ip_config" {
+  description = "(Optional) A list of IP address ranges Used to create an allow list of IP addresses for a private workforce. By default, a workforce isn't restricted to specific IP addresses. see Source Ip Config details below."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.source_ip_config
+}
+output "user_info_endpoint" {
+  description = "(Required) The OIDC IdP user information endpoint used to configure your private workforce.Source Ip Config"
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.user_info_endpoint
+}
+output "authorization_endpoint" {
+  description = "(Required) The OIDC IdP authorization endpoint used to configure your private workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.authorization_endpoint
+}
+output "cognito_config" {
+  description = "(Optional) Use this parameter to configure an Amazon Cognito private workforce. A single Cognito workforce is created using and corresponds to a single Amazon Cognito user pool. Conflicts with oidc_config. see Cognito Config details below."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.cognito_config
 }
 output "id" {
   description = "The name of the Workforce."
   value       = aws_sagemaker_workforce.aws_sagemaker_workforce.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "jwks_uri" {
+  description = "(Required) The OIDC IdP JSON Web Key Set (Jwks) URI used to configure your private workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.jwks_uri
+}
+output "logout_endpoint" {
+  description = "(Required) The OIDC IdP logout endpoint used to configure your private workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.logout_endpoint
+}
+output "workforce_vpc_config" {
+  description = "(Optional) configure a workforce using VPC. see Workforce VPC Config details below.Cognito Config"
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.workforce_vpc_config
+}
+output "user_pool" {
+  description = "(Required) ID for your Amazon Cognito user pool.Oidc Config"
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.user_pool
+}
+output "cidrs" {
+  description = "(Required) A list of up to 10 CIDR values.Workforce VPC Config"
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.cidrs
+}
+output "client_secret" {
+  description = "(Required) The OIDC IdP client secret used to configure your private workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.client_secret
+}
+output "issuer" {
+  description = "(Required) The OIDC IdP issuer used to configure your private workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.issuer
+}
+output "subdomain" {
+  description = "The subdomain for your OIDC Identity Provider."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.subdomain
+}
+output "workforce_vpc_config.0.vpc_endpoint_id" {
+  description = "The IDs for the VPC service endpoints of your VPC workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.workforce_vpc_config.0.vpc_endpoint_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.arn
+}
+output "id" {
+  description = "The name of the Workforce."
+  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.id
 }
 output "subdomain" {
   description = "The subdomain for your OIDC Identity Provider."
@@ -419,15 +338,7 @@ output "subdomain" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "workforce_vpc_config.0.vpc_endpoint_id" {
-  description = "The IDs for the VPC service endpoints of your VPC workforce."
-  value       = aws_sagemaker_workforce.aws_sagemaker_workforce.workforce_vpc_config.0.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

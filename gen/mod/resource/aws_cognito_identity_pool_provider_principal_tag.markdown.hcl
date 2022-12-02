@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "identity_pool_id" {
+  description = " (Required) - An identity pool ID."
+  type        = string
+}
 variable "identity_provider_name" {
   description = " (Required) - The name of the identity provider."
   type        = string
 }
 variable "principal_tags" {
   description = ": (Optional: []) - String to string map of variables."
-  type        = string
-}
-variable "identity_pool_id" {
-  description = " (Required) - An identity pool ID."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,29 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "identity_pool_id" {
+  description = " (Required) - An identity pool ID."
+  value       = aws_cognito_identity_pool_provider_principal_tag.markdown.aws_cognito_identity_pool_provider_principal_tag.markdown.identity_pool_id
+}
+output "identity_provider_name" {
+  description = " (Required) - The name of the identity provider."
+  value       = aws_cognito_identity_pool_provider_principal_tag.markdown.aws_cognito_identity_pool_provider_principal_tag.markdown.identity_provider_name
+}
 output "principal_tags" {
   description = ": (Optional: []) - String to string map of variables."
   value       = aws_cognito_identity_pool_provider_principal_tag.markdown.aws_cognito_identity_pool_provider_principal_tag.markdown.principal_tags
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "identity_pool_id" {
-  description = " (Required) - An identity pool ID."
-  value       = aws_cognito_identity_pool_provider_principal_tag.markdown.aws_cognito_identity_pool_provider_principal_tag.markdown.identity_pool_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "identity_provider_name" {
-  description = " (Required) - The name of the identity provider."
-  value       = aws_cognito_identity_pool_provider_principal_tag.markdown.aws_cognito_identity_pool_provider_principal_tag.markdown.identity_provider_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,25 +1,13 @@
 resource "aws_cloudfront_origin_access_control" "aws_cloudfront_origin_access_control" {
-  id                                = var.id
   name                              = var.name
   origin_access_control_origin_type = var.origin_access_control_origin_type
   signing_behavior                  = var.signing_behavior
   signing_protocol                  = var.signing_protocol
   description                       = var.description
+  id                                = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "origin_access_control_origin_type" {
-  description = "(Required) The type of origin that this Origin Access Control is for. The only valid value is s3."
-  type        = string
-}
-variable "signing_behavior" {
-  description = "(Required) Specifies which requests CloudFront signs. Specify always for the most common use case. Allowed values: always, never, no-override."
-  type        = string
-}
-variable "signing_protocol" {
-  description = "(Required) Determines how CloudFront signs (authenticates) requests. Valid values: sigv4.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "description" {
@@ -32,6 +20,18 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) A name that identifies the Origin Access Control."
+  type        = string
+}
+variable "origin_access_control_origin_type" {
+  description = "(Required) The type of origin that this Origin Access Control is for. The only valid value is s3."
+  type        = string
+}
+variable "signing_behavior" {
+  description = "(Required) Specifies which requests CloudFront signs. Specify always for the most common use case. Allowed values: always, never, no-override."
+  type        = string
+}
+variable "signing_protocol" {
+  description = "(Required) Determines how CloudFront signs (authenticates) requests. Valid values: sigv4.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,57 +158,29 @@ output "origin_access_control_origin_type" {
   description = "(Required) The type of origin that this Origin Access Control is for. The only valid value is s3."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.origin_access_control_origin_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "signing_behavior" {
   description = "(Required) Specifies which requests CloudFront signs. Specify always for the most common use case. Allowed values: always, never, no-override."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.signing_behavior
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "signing_protocol" {
   description = "(Required) Determines how CloudFront signs (authenticates) requests. Valid values: sigv4.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.signing_protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Required) The description of the Origin Access Control. It may be empty."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The unique identifier of this Origin Access Control."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) A name that identifies the Origin Access Control."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "etag" {
   description = "The current version of this Origin Access Control."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.etag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The unique identifier of this Origin Access Control."
@@ -216,7 +188,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

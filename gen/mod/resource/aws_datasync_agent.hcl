@@ -1,63 +1,70 @@
 resource "aws_datasync_agent" "aws_datasync_agent" {
   activation_key        = var.activation_key
-  id                    = var.id
-  private_link_endpoint = var.private_link_endpoint
   subnet_arns           = var.subnet_arns
+  vpc_endpoint_id       = var.vpc_endpoint_id
+  tags_all              = var.tags_all
   arn                   = var.arn
+  id                    = var.id
   ip_address            = var.ip_address
   name                  = var.name
+  private_link_endpoint = var.private_link_endpoint
   security_group_arns   = var.security_group_arns
   tags                  = var.tags
-  tags_all              = var.tags_all
-  vpc_endpoint_id       = var.vpc_endpoint_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "vpc_endpoint_id" {
-  description = "(Optional) The ID of the VPC (virtual private cloud) endpoint that the agent has access to.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Agent."
   type        = string
 }
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Agent."
+  type        = string
+}
 variable "ip_address" {
   description = "(Optional) DataSync Agent IP address to retrieve activation key during resource creation. Conflicts with activation_key. DataSync Agent must be accessible on port 80 from where Terraform is running."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the DataSync Agent."
   type        = string
 }
+variable "private_link_endpoint" {
+  description = "(Optional) The IP address of the VPC endpoint the agent should connect to when retrieving an activation key during resource creation. Conflicts with activation_key."
+  type        = string
+  default     = ""
+}
 variable "security_group_arns" {
   description = "(Optional) The ARNs of the security groups used to protect your data transfer task subnets."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Agent. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
 variable "activation_key" {
   description = "(Optional) DataSync Agent activation key during resource creation. Conflicts with ip_address. If an ip_address is provided instead, Terraform will retrieve the activation_key as part of the resource creation."
   type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Agent."
-  type        = string
-}
-variable "private_link_endpoint" {
-  description = "(Optional) The IP address of the VPC endpoint the agent should connect to when retrieving an activation key during resource creation. Conflicts with activation_key."
-  type        = string
+  default     = ""
 }
 variable "subnet_arns" {
   description = "(Optional) The Amazon Resource Names (ARNs) of the subnets in which DataSync will create elastic network interfaces for each data transfer task."
   type        = string
+  default     = ""
+}
+variable "vpc_endpoint_id" {
+  description = "(Optional) The ID of the VPC (virtual private cloud) endpoint that the agent has access to.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,93 +186,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "vpc_endpoint_id" {
+  description = "(Optional) The ID of the VPC (virtual private cloud) endpoint that the agent has access to.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_datasync_agent.aws_datasync_agent.vpc_endpoint_id
+}
 output "activation_key" {
   description = "(Optional) DataSync Agent activation key during resource creation. Conflicts with ip_address. If an ip_address is provided instead, Terraform will retrieve the activation_key as part of the resource creation."
   value       = aws_datasync_agent.aws_datasync_agent.activation_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Agent."
-  value       = aws_datasync_agent.aws_datasync_agent.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_link_endpoint" {
-  description = "(Optional) The IP address of the VPC endpoint the agent should connect to when retrieving an activation key during resource creation. Conflicts with activation_key."
-  value       = aws_datasync_agent.aws_datasync_agent.private_link_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_arns" {
   description = "(Optional) The Amazon Resource Names (ARNs) of the subnets in which DataSync will create elastic network interfaces for each data transfer task."
   value       = aws_datasync_agent.aws_datasync_agent.subnet_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Agent."
-  value       = aws_datasync_agent.aws_datasync_agent.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ip_address" {
   description = "(Optional) DataSync Agent IP address to retrieve activation key during resource creation. Conflicts with activation_key. DataSync Agent must be accessible on port 80 from where Terraform is running."
   value       = aws_datasync_agent.aws_datasync_agent.ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the DataSync Agent."
   value       = aws_datasync_agent.aws_datasync_agent.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "private_link_endpoint" {
+  description = "(Optional) The IP address of the VPC endpoint the agent should connect to when retrieving an activation key during resource creation. Conflicts with activation_key."
+  value       = aws_datasync_agent.aws_datasync_agent.private_link_endpoint
 }
 output "security_group_arns" {
   description = "(Optional) The ARNs of the security groups used to protect your data transfer task subnets."
   value       = aws_datasync_agent.aws_datasync_agent.security_group_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Agent. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_datasync_agent.aws_datasync_agent.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_datasync_agent.aws_datasync_agent.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Agent."
+  value       = aws_datasync_agent.aws_datasync_agent.arn
 }
-output "vpc_endpoint_id" {
-  description = "(Optional) The ID of the VPC (virtual private cloud) endpoint that the agent has access to.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_datasync_agent.aws_datasync_agent.vpc_endpoint_id
+output "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Agent."
+  value       = aws_datasync_agent.aws_datasync_agent.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_datasync_agent.aws_datasync_agent.create
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Agent."
+  value       = aws_datasync_agent.aws_datasync_agent.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_datasync_agent.aws_datasync_agent.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Agent."
@@ -273,31 +248,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_datasync_agent.aws_datasync_agent.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Agent."
-  value       = aws_datasync_agent.aws_datasync_agent.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_datasync_agent.aws_datasync_agent.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

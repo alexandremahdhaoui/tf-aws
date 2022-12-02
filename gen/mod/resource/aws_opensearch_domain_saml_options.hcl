@@ -1,78 +1,88 @@
 resource "aws_opensearch_domain_saml_options" "aws_opensearch_domain_saml_options" {
-  domain_name             = var.domain_name
-  roles_key               = var.roles_key
+  master_backend_role     = var.master_backend_role
   saml_options            = var.saml_options
   subject_key             = var.subject_key
-  master_user_name        = var.master_user_name
-  session_timeout_minutes = var.session_timeout_minutes
   update                  = var.update
+  domain_name             = var.domain_name
   enabled                 = var.enabled
-  master_backend_role     = var.master_backend_role
-  metadata_content        = var.metadata_content
-  delete                  = var.delete
-  entity_id               = var.entity_id
   id                      = var.id
   idp                     = var.idp
+  metadata_content        = var.metadata_content
+  roles_key               = var.roles_key
+  delete                  = var.delete
+  entity_id               = var.entity_id
+  master_user_name        = var.master_user_name
+  session_timeout_minutes = var.session_timeout_minutes
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "delete" {
+  description = "(Default 90m)"
+  type        = string
+  default     = ""
+}
+variable "entity_id" {
+  description = "(Required) Unique Entity ID of the application in SAML Identity Provider."
+  type        = string
+}
 variable "master_user_name" {
   description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
   type        = string
+  default     = ""
 }
 variable "session_timeout_minutes" {
   description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
   type        = string
+  default     = ""
+}
+variable "master_backend_role" {
+  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  type        = string
+  default     = ""
+}
+variable "saml_options" {
+  description = "(Optional) SAML authentication options for an AWS OpenSearch Domain.saml_options"
+  type        = string
+  default     = ""
+}
+variable "subject_key" {
+  description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
+  type        = string
+  default     = ""
 }
 variable "update" {
   description = "(Default 180m)"
+  type        = string
+  default     = ""
+}
+variable "domain_name" {
+  description = "(Required) Name of the domain."
   type        = string
 }
 variable "enabled" {
   description = "(Required) Whether SAML authentication is enabled."
   type        = string
 }
-variable "master_backend_role" {
-  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+variable "id" {
+  description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
+}
+variable "idp" {
+  description = "(Optional) Information from your identity provider."
+  type        = string
+  default     = ""
 }
 variable "metadata_content" {
   description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "delete" {
-  description = "(Default 90m)"
-  type        = string
-}
-variable "entity_id" {
-  description = "(Required) Unique Entity ID of the application in SAML Identity Provider."
-  type        = string
-}
-variable "id" {
-  description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "idp" {
-  description = "(Optional) Information from your identity provider."
-  type        = string
-}
-variable "domain_name" {
-  description = "(Required) Name of the domain."
-  type        = string
-}
 variable "roles_key" {
   description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
   type        = string
-}
-variable "saml_options" {
-  description = "(Optional) SAML authentication options for an AWS OpenSearch Domain.saml_options"
-  type        = string
-}
-variable "subject_key" {
-  description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -194,117 +204,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "domain_name" {
-  description = "(Required) Name of the domain."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "roles_key" {
-  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.roles_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "saml_options" {
-  description = "(Optional) SAML authentication options for an AWS OpenSearch Domain.saml_options"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.saml_options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subject_key" {
-  description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.subject_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_user_name" {
-  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_user_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "session_timeout_minutes" {
-  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.session_timeout_minutes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 180m)"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled" {
-  description = "(Required) Whether SAML authentication is enabled."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_backend_role" {
-  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_backend_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "metadata_content" {
-  description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.metadata_content
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delete" {
   description = "(Default 90m)"
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "entity_id" {
   description = "(Required) Unique Entity ID of the application in SAML Identity Provider."
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.entity_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "master_user_name" {
+  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_user_name
+}
+output "session_timeout_minutes" {
+  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.session_timeout_minutes
+}
+output "master_backend_role" {
+  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_backend_role
+}
+output "saml_options" {
+  description = "(Optional) SAML authentication options for an AWS OpenSearch Domain.saml_options"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.saml_options
+}
+output "subject_key" {
+  description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.subject_key
+}
+output "update" {
+  description = "(Default 180m)"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.update
+}
+output "metadata_content" {
+  description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.metadata_content
+}
+output "roles_key" {
+  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.roles_key
+}
+output "domain_name" {
+  description = "(Required) Name of the domain."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.domain_name
+}
+output "enabled" {
+  description = "(Required) Whether SAML authentication is enabled."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.enabled
 }
 output "id" {
   description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "idp" {
   description = "(Optional) Information from your identity provider."
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.idp
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "delete" {
+  description = "(Default 90m)"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.delete
+}
+output "id" {
+  description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.id
 }
 output "update" {
   description = "(Default 180m)"
@@ -312,23 +274,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 90m)"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

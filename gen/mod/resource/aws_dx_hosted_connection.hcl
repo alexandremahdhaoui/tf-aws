@@ -1,26 +1,42 @@
 resource "aws_dx_hosted_connection" "aws_dx_hosted_connection" {
+  has_logical_redundancy = var.has_logical_redundancy
   lag_id                 = var.lag_id
-  provider_name          = var.provider_name
+  partner_name           = var.partner_name
   state                  = var.state
+  connection_id          = var.connection_id
+  id                     = var.id
+  owner_account_id       = var.owner_account_id
   aws_device             = var.aws_device
   bandwidth              = var.bandwidth
-  has_logical_redundancy = var.has_logical_redundancy
-  partner_name           = var.partner_name
+  location               = var.location
+  provider_name          = var.provider_name
+  vlan                   = var.vlan
   jumbo_frame_capable    = var.jumbo_frame_capable
   loa_issue_time         = var.loa_issue_time
   name                   = var.name
-  connection_id          = var.connection_id
-  id                     = var.id
-  location               = var.location
-  owner_account_id       = var.owner_account_id
-  vlan                   = var.vlan
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the connection."
+variable "aws_device" {
+  description = "The Direct Connect endpoint on which the physical connection terminates."
+  type        = string
+}
+variable "bandwidth" {
+  description = "(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps and 10Gbps. Case sensitive."
+  type        = string
+}
+variable "location" {
+  description = "The location of the connection."
+  type        = string
+}
+variable "provider_name" {
+  description = "The name of the service provider associated with the connection."
+  type        = string
+}
+variable "vlan" {
+  description = "(Required) The dedicated VLAN provisioned to the hosted connection.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "jumbo_frame_capable" {
@@ -31,16 +47,24 @@ variable "loa_issue_time" {
   description = "The time of the most recent call to DescribeLoa for this connection."
   type        = string
 }
-variable "location" {
-  description = "The location of the connection."
+variable "name" {
+  description = "(Required) The name of the connection."
   type        = string
 }
-variable "owner_account_id" {
-  description = "(Required) The ID of the AWS account of the customer for the connection."
+variable "has_logical_redundancy" {
+  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
   type        = string
 }
-variable "vlan" {
-  description = "(Required) The dedicated VLAN provisioned to the hosted connection.In addition to all arguments above, the following attributes are exported:"
+variable "lag_id" {
+  description = "The ID of the LAG."
+  type        = string
+}
+variable "partner_name" {
+  description = "The name of the AWS Direct Connect service provider associated with the connection."
+  type        = string
+}
+variable "state" {
+  description = "The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state."
   type        = string
 }
 variable "connection_id" {
@@ -51,32 +75,8 @@ variable "id" {
   description = "The ID of the connection."
   type        = string
 }
-variable "state" {
-  description = "The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state."
-  type        = string
-}
-variable "lag_id" {
-  description = "The ID of the LAG."
-  type        = string
-}
-variable "provider_name" {
-  description = "The name of the service provider associated with the connection."
-  type        = string
-}
-variable "has_logical_redundancy" {
-  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
-  type        = string
-}
-variable "partner_name" {
-  description = "The name of the AWS Direct Connect service provider associated with the connection."
-  type        = string
-}
-variable "aws_device" {
-  description = "The Direct Connect endpoint on which the physical connection terminates."
-  type        = string
-}
-variable "bandwidth" {
-  description = "(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps and 10Gbps. Case sensitive."
+variable "owner_account_id" {
+  description = "(Required) The ID of the AWS account of the customer for the connection."
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,205 +199,109 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "jumbo_frame_capable" {
-  description = "Boolean value representing if jumbo frames have been enabled for this connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.jumbo_frame_capable
+output "has_logical_redundancy" {
+  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.has_logical_redundancy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "lag_id" {
+  description = "The ID of the LAG."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.lag_id
 }
-output "loa_issue_time" {
-  description = "The time of the most recent call to DescribeLoa for this connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.loa_issue_time
+output "partner_name" {
+  description = "The name of the AWS Direct Connect service provider associated with the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.partner_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_account_id" {
-  description = "(Required) The ID of the AWS account of the customer for the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vlan" {
-  description = "(Required) The dedicated VLAN provisioned to the hosted connection.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.vlan
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "state" {
+  description = "The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.state
 }
 output "connection_id" {
   description = "(Required) The ID of the interconnect or LAG."
   value       = aws_dx_hosted_connection.aws_dx_hosted_connection.connection_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the connection."
   value       = aws_dx_hosted_connection.aws_dx_hosted_connection.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "location" {
-  description = "The location of the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lag_id" {
-  description = "The ID of the LAG."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.lag_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provider_name" {
-  description = "The name of the service provider associated with the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.provider_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "partner_name" {
-  description = "The name of the AWS Direct Connect service provider associated with the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.partner_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "owner_account_id" {
+  description = "(Required) The ID of the AWS account of the customer for the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.owner_account_id
 }
 output "aws_device" {
   description = "The Direct Connect endpoint on which the physical connection terminates."
   value       = aws_dx_hosted_connection.aws_dx_hosted_connection.aws_device
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bandwidth" {
   description = "(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps and 10Gbps. Case sensitive."
   value       = aws_dx_hosted_connection.aws_dx_hosted_connection.bandwidth
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "has_logical_redundancy" {
-  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.has_logical_redundancy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "aws_device" {
-  description = "The Direct Connect endpoint on which the physical connection terminates."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.aws_device
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lag_id" {
-  description = "The ID of the LAG."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.lag_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "loa_issue_time" {
-  description = "The time of the most recent call to DescribeLoa for this connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.loa_issue_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "partner_name" {
-  description = "The name of the AWS Direct Connect service provider associated with the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.partner_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "has_logical_redundancy" {
-  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.has_logical_redundancy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "jumbo_frame_capable" {
-  description = "Boolean value representing if jumbo frames have been enabled for this connection."
-  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.jumbo_frame_capable
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "location" {
   description = "The location of the connection."
   value       = aws_dx_hosted_connection.aws_dx_hosted_connection.location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "provider_name" {
   description = "The name of the service provider associated with the connection."
   value       = aws_dx_hosted_connection.aws_dx_hosted_connection.provider_name
 }
+output "vlan" {
+  description = "(Required) The dedicated VLAN provisioned to the hosted connection.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.vlan
+}
+output "jumbo_frame_capable" {
+  description = "Boolean value representing if jumbo frames have been enabled for this connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.jumbo_frame_capable
+}
+output "loa_issue_time" {
+  description = "The time of the most recent call to DescribeLoa for this connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.loa_issue_time
+}
+output "name" {
+  description = "(Required) The name of the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.name
+}
+output "jumbo_frame_capable" {
+  description = "Boolean value representing if jumbo frames have been enabled for this connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.jumbo_frame_capable
+}
+output "lag_id" {
+  description = "The ID of the LAG."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.lag_id
+}
+output "location" {
+  description = "The location of the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.location
+}
+output "partner_name" {
+  description = "The name of the AWS Direct Connect service provider associated with the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.partner_name
+}
+output "provider_name" {
+  description = "The name of the service provider associated with the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.provider_name
+}
+output "state" {
+  description = "The state of the connection. Possible values include: ordering, requested, pending, available, down, deleting, deleted, rejected, unknown. See AllocateHostedConnection for a description of each connection state."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.state
+}
+output "aws_device" {
+  description = "The Direct Connect endpoint on which the physical connection terminates."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.aws_device
+}
+output "id" {
+  description = "The ID of the connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.id
+}
+output "loa_issue_time" {
+  description = "The time of the most recent call to DescribeLoa for this connection."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.loa_issue_time
+}
+output "has_logical_redundancy" {
+  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
+  value       = aws_dx_hosted_connection.aws_dx_hosted_connection.has_logical_redundancy
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

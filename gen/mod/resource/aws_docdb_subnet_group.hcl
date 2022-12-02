@@ -1,15 +1,20 @@
 resource "aws_docdb_subnet_group" "aws_docdb_subnet_group" {
-  tags        = var.tags
   arn         = var.arn
   description = var.description
   id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
   subnet_ids  = var.subnet_ids
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the docDB subnet group."
@@ -18,6 +23,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the docDB subnet group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The docDB subnet group name."
@@ -33,10 +39,6 @@ variable "name_prefix" {
 }
 variable "subnet_ids" {
   description = "(Required) A list of VPC subnet IDs."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -163,73 +165,37 @@ output "arn" {
   description = "The ARN of the docDB subnet group."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the docDB subnet group. Defaults to \"Managed by Terraform\"."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The docDB subnet group name."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional, Forces new resource) The name of the docDB subnet group. If omitted, Terraform will assign a random, unique name."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_ids" {
   description = "(Required) A list of VPC subnet IDs."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN of the docDB subnet group."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The docDB subnet group name."
   value       = aws_docdb_subnet_group.aws_docdb_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -237,7 +203,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

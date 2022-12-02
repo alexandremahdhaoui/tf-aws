@@ -133,17 +133,13 @@ output "email" {
   description = "(Required) The email address to assign to SESIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_email_identity.aws_ses_email_identity.email
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the email identity.Example Usage"
   value       = aws_ses_email_identity.aws_ses_email_identity.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "user_pool_id" {
-  description = "(Required) The user pool ID of the user and group."
-  type        = string
-}
 variable "group_name" {
   description = "(Required) The name of the group to which the user is to be added."
+  type        = string
+}
+variable "user_pool_id" {
+  description = "(Required) The user pool ID of the user and group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +138,13 @@ output "group_name" {
   description = "(Required) The name of the group to which the user is to be added."
   value       = aws_cognito_user_in_group.aws_cognito_user_in_group.group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "user_pool_id" {
   description = "(Required) The user pool ID of the user and group."
   value       = aws_cognito_user_in_group.aws_cognito_user_in_group.user_pool_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,15 +1,33 @@
 resource "aws_s3_bucket_server_side_encryption_configuration" "aws_s3_bucket_server_side_encryption_configuration" {
-  expected_bucket_owner                   = var.expected_bucket_owner
-  kms_master_key_id                       = var.kms_master_key_id
-  rule                                    = var.rule
   sse_algorithm                           = var.sse_algorithm
   apply_server_side_encryption_by_default = var.apply_server_side_encryption_by_default
   bucket                                  = var.bucket
   bucket_key_enabled                      = var.bucket_key_enabled
+  expected_bucket_owner                   = var.expected_bucket_owner
+  kms_master_key_id                       = var.kms_master_key_id
+  rule                                    = var.rule
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  type        = string
+}
+variable "bucket_key_enabled" {
+  description = "(Optional) Whether or not to use Amazon S3 Bucket Keys for SSE-KMS.apply_server_side_encryption_by_defaultThe apply_server_side_encryption_by_default configuration block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "expected_bucket_owner" {
+  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
+  type        = string
+}
+variable "kms_master_key_id" {
+  description = "(Optional) The AWS KMS master key ID used for the SSE-KMS encryption. This can only be used when you set the value of sse_algorithm as aws:kms. The default aws/s3 AWS KMS master key is used if this element is absent while the sse_algorithm is aws:kms.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "rule" {
   description = "(Required) Set of server-side encryption configuration rules. documented below. Currently, only a single rule is supported.ruleThe rule configuration block supports the following arguments:"
@@ -22,22 +40,7 @@ variable "sse_algorithm" {
 variable "apply_server_side_encryption_by_default" {
   description = "(Optional) A single object for setting server-side encryption by default documented below"
   type        = string
-}
-variable "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  type        = string
-}
-variable "bucket_key_enabled" {
-  description = "(Optional) Whether or not to use Amazon S3 Bucket Keys for SSE-KMS.apply_server_side_encryption_by_defaultThe apply_server_side_encryption_by_default configuration block supports the following arguments:"
-  type        = string
-}
-variable "expected_bucket_owner" {
-  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  type        = string
-}
-variable "kms_master_key_id" {
-  description = "(Optional) The AWS KMS master key ID used for the SSE-KMS encryption. This can only be used when you set the value of sse_algorithm as aws:kms. The default aws/s3 AWS KMS master key is used if this element is absent while the sse_algorithm is aws:kms.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,61 +162,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "rule" {
-  description = "(Required) Set of server-side encryption configuration rules. documented below. Currently, only a single rule is supported.ruleThe rule configuration block supports the following arguments:"
-  value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.rule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "sse_algorithm" {
   description = "(Required) The server-side encryption algorithm to use. Valid values are AES256 and aws:kms"
   value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.sse_algorithm
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "apply_server_side_encryption_by_default" {
   description = "(Optional) A single object for setting server-side encryption by default documented below"
   value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.apply_server_side_encryption_by_default
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "bucket" {
   description = "(Required, Forces new resource) The name of the bucket."
   value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bucket_key_enabled" {
   description = "(Optional) Whether or not to use Amazon S3 Bucket Keys for SSE-KMS.apply_server_side_encryption_by_defaultThe apply_server_side_encryption_by_default configuration block supports the following arguments:"
   value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.bucket_key_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.expected_bucket_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_master_key_id" {
   description = "(Optional) The AWS KMS master key ID used for the SSE-KMS encryption. This can only be used when you set the value of sse_algorithm as aws:kms. The default aws/s3 AWS KMS master key is used if this element is absent while the sse_algorithm is aws:kms.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.kms_master_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "rule" {
+  description = "(Required) Set of server-side encryption configuration rules. documented below. Currently, only a single rule is supported.ruleThe rule configuration block supports the following arguments:"
+  value       = aws_s3_bucket_server_side_encryption_configuration.aws_s3_bucket_server_side_encryption_configuration.rule
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."
@@ -221,7 +196,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -133,17 +133,13 @@ output "status" {
   description = "(Required) Whether Service Catalog is enabled or disabled in SageMaker. Valid values are Enabled and Disabled.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_servicecatalog_portfolio_status.aws_sagemaker_servicecatalog_portfolio_status.status
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The AWS Region the Servicecatalog portfolio status resides in."
   value       = aws_sagemaker_servicecatalog_portfolio_status.aws_sagemaker_servicecatalog_portfolio_status.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

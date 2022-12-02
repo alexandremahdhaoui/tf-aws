@@ -1,7 +1,7 @@
 datasource "aws_outposts_assets" "aws_outposts_assets" {
+  status_id_filter = var.status_id_filter
   arn              = var.arn
   host_id_filter   = var.host_id_filter
-  status_id_filter = var.status_id_filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -14,26 +14,20 @@ variable "arn" {
 variable "host_id_filter" {
   description = "(Optional) Filters by list of Host IDs of a Dedicated Host."
   type        = string
+  default     = ""
 }
 variable "status_id_filter" {
   description = "(Optional) Filters by list of state status. Valid values: \"ACTIVE\", \"RETIRING\".Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 output "arn" {
   description = "(Required) Outpost ARN."
   value       = aws_outposts_assets.aws_outposts_assets.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "host_id_filter" {
   description = "(Optional) Filters by list of Host IDs of a Dedicated Host."
   value       = aws_outposts_assets.aws_outposts_assets.host_id_filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status_id_filter" {
   description = "(Optional) Filters by list of state status. Valid values: \"ACTIVE\", \"RETIRING\".Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
@@ -41,7 +35,7 @@ output "status_id_filter" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

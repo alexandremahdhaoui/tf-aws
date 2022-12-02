@@ -8,17 +8,13 @@ output "arn" {
   description = "Computed ARN of the security group.~> strongNote: The default security group for a VPC has the name default.TimeoutsConfiguration options:"
   value       = aws_security_group.aws_security_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "Description of the security group."
   value       = aws_security_group.aws_security_group.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

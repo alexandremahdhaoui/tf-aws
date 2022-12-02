@@ -1,20 +1,12 @@
 resource "aws_appstream_user_stack_association" "aws_appstream_user_stack_association" {
-  user_name               = var.user_name
-  authentication_type     = var.authentication_type
   id                      = var.id
   send_email_notification = var.send_email_notification
   stack_name              = var.stack_name
+  user_name               = var.user_name
+  authentication_type     = var.authentication_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "stack_name" {
-  description = " (Required) Name of the stack that is associated with the user."
-  type        = string
-}
-variable "user_name" {
-  description = " (Required) Email address of the user who is associated with the stack."
   type        = string
 }
 variable "authentication_type" {
@@ -24,9 +16,19 @@ variable "authentication_type" {
 variable "id" {
   description = "Unique ID of the appstream User Stack association."
   type        = string
+  default     = ""
 }
 variable "send_email_notification" {
   description = "(Optional) Whether a welcome email is sent to a user after the user is created in the user pool.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "stack_name" {
+  description = " (Required) Name of the stack that is associated with the user."
+  type        = string
+}
+variable "user_name" {
+  description = " (Required) Email address of the user who is associated with the stack."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,45 +151,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "authentication_type" {
+  description = "(Required) Authentication type for the user."
+  value       = aws_appstream_user_stack_association.aws_appstream_user_stack_association.authentication_type
+}
 output "id" {
   description = "Unique ID of the appstream User Stack association."
   value       = aws_appstream_user_stack_association.aws_appstream_user_stack_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "send_email_notification" {
   description = "(Optional) Whether a welcome email is sent to a user after the user is created in the user pool.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appstream_user_stack_association.aws_appstream_user_stack_association.send_email_notification
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "stack_name" {
   description = " (Required) Name of the stack that is associated with the user."
   value       = aws_appstream_user_stack_association.aws_appstream_user_stack_association.stack_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "user_name" {
   description = " (Required) Email address of the user who is associated with the stack."
   value       = aws_appstream_user_stack_association.aws_appstream_user_stack_association.user_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authentication_type" {
-  description = "(Required) Authentication type for the user."
-  value       = aws_appstream_user_stack_association.aws_appstream_user_stack_association.authentication_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Unique ID of the appstream User Stack association."
@@ -195,7 +177,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

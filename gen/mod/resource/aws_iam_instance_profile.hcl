@@ -1,58 +1,68 @@
 resource "aws_iam_instance_profile" "aws_iam_instance_profile" {
-  arn         = var.arn
-  create_date = var.create_date
-  name        = var.name
-  path        = var.path
-  role        = var.role
   tags        = var.tags
+  create_date = var.create_date
   id          = var.id
   name_prefix = var.name_prefix
-  tags_all    = var.tags_all
+  path        = var.path
   unique_id   = var.unique_id
+  arn         = var.arn
+  name        = var.name
+  role        = var.role
+  tags_all    = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "Instance profile's ID."
-  type        = string
-}
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "unique_id" {
-  description = "Unique ID assigned by AWS."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of resource tags for the IAM Instance Profile. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "arn" {
   description = "ARN assigned by AWS to the instance profile."
   type        = string
-}
-variable "create_date" {
-  description = "Creation timestamp of the instance profile."
-  type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
   type        = string
-}
-variable "path" {
-  description = "(Optional, default \"/\") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\\u0021) through the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercase letters."
-  type        = string
+  default     = ""
 }
 variable "role" {
   description = "(Optional) Name of the role to add to the profile."
   type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "unique_id" {
+  description = "Unique ID assigned by AWS."
+  type        = string
+  default     = ""
+}
+variable "create_date" {
+  description = "Creation timestamp of the instance profile."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Instance profile's ID."
+  type        = string
+  default     = ""
+}
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+  default     = ""
+}
+variable "path" {
+  description = "(Optional, default \"/\") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\\u0021) through the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercase letters."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags for the IAM Instance Profile. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -178,105 +188,57 @@ output "id" {
   description = "Instance profile's ID."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "unique_id" {
-  description = "Unique ID assigned by AWS."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.unique_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN assigned by AWS to the instance profile."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create_date" {
-  description = "Creation timestamp of the instance profile."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "path" {
   description = "(Optional, default \"/\") Path to the instance profile. For more information about paths, see IAM Identifiers in the IAM User Guide. Can be a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes. Can include any ASCII character from the ! (\\u0021) through the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercase letters."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role" {
-  description = "(Optional) Name of the role to add to the profile."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Map of resource tags for the IAM Instance Profile. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_instance_profile.aws_iam_instance_profile.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create_date" {
   description = "Creation timestamp of the instance profile."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Optional, Forces new resource) Name of the instance profile. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix. Can be a string of characters consisting of upper and lowercase alphanumeric characters and these special characters: _, +, =, ,, ., @, -. Spaces are not allowed."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.name
 }
-output "id" {
-  description = "Instance profile's ID."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "role" {
+  description = "(Optional) Name of the role to add to the profile."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.role
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "unique_id" {
+  description = "Unique ID assigned by AWS."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.unique_id
+}
+output "arn" {
+  description = "ARN assigned by AWS to the instance profile."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
+}
+output "arn" {
+  description = "ARN assigned by AWS to the instance profile."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
+}
+output "create_date" {
+  description = "Creation timestamp of the instance profile."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
+}
+output "id" {
+  description = "Instance profile's ID."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.tags_all
 }
 output "unique_id" {
   description = "Unique ID assigned by AWS."
@@ -284,15 +246,7 @@ output "unique_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN assigned by AWS to the instance profile."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

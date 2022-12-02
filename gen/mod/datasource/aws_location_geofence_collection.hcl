@@ -1,21 +1,13 @@
 datasource "aws_location_geofence_collection" "aws_location_geofence_collection" {
-  collection_arn  = var.collection_arn
-  collection_name = var.collection_name
   create_time     = var.create_time
   description     = var.description
   kms_key_id      = var.kms_key_id
   tags            = var.tags
+  collection_arn  = var.collection_arn
+  collection_name = var.collection_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "collection_arn" {
-  description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
-  type        = string
-}
-variable "collection_name" {
-  description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create_time" {
@@ -34,69 +26,53 @@ variable "tags" {
   description = "Key-value map of resource tags for the geofence collection."
   type        = string
 }
+variable "collection_arn" {
+  description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
+  type        = string
+}
+variable "collection_name" {
+  description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+output "description" {
+  description = "Optional description of the geofence collection resource."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.description
+}
 output "kms_key_id" {
   description = "Key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "Key-value map of resource tags for the geofence collection."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "collection_arn" {
   description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "collection_name" {
   description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
   value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create_time" {
+  description = "Timestamp for when the geofence collection resource was created in ISO 8601 format."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
+}
+output "collection_arn" {
+  description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_arn
 }
 output "create_time" {
   description = "Timestamp for when the geofence collection resource was created in ISO 8601 format."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "Optional description of the geofence collection resource."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "Optional description of the geofence collection resource."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_key_id" {
   description = "Key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "Key-value map of resource tags for the geofence collection."
@@ -104,23 +80,7 @@ output "tags" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "collection_arn" {
-  description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.collection_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create_time" {
-  description = "Timestamp for when the geofence collection resource was created in ISO 8601 format."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

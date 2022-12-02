@@ -1,20 +1,16 @@
 resource "aws_networkfirewall_logging_configuration" "aws_networkfirewall_logging_configuration" {
   For a CloudWatch log group, specify the key                   = var.For a CloudWatch log group, specify the key 
-  firewall_arn                                                  = var.firewall_arn
-  log_destination_config                                        = var.log_destination_config
+  log_destination                                               = var.log_destination
   log_destination_type                                          = var.log_destination_type
   log_type                                                      = var.log_type
   logging_configuration                                         = var.logging_configuration
   For a Kinesis Data Firehose delivery stream, specify the key  = var.For a Kinesis Data Firehose delivery stream, specify the key 
   For an Amazon S3 bucket, specify the key                      = var.For an Amazon S3 bucket, specify the key 
-  log_destination                                               = var.log_destination
+  firewall_arn                                                  = var.firewall_arn
+  log_destination_config                                        = var.log_destination_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "logging_configuration" {
-  description = "(Required) A configuration block describing how AWS Network Firewall performs logging for a firewall. See Logging Configuration below for details.Logging ConfigurationThe logging_configuration block supports the following arguments:"
   type        = string
 }
 variable "For a Kinesis Data Firehose delivery stream, specify the key " {
@@ -25,12 +21,20 @@ variable "For an Amazon S3 bucket, specify the key " {
   description = "bucketName with the name of the bucket and optionally specify the key prefix with a path."
   type        = string
 }
-variable "log_destination" {
-  description = "(Required) A map describing the logging destination for the chosen log_destination_type."
+variable "firewall_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Network Firewall firewall."
   type        = string
 }
 variable "log_destination_config" {
   description = "(Required) Set of configuration blocks describing the logging details for a firewall. See Log Destination Config below for details. At most, only two blocks can be specified; one for FLOW logs and one for ALERT logs.Log Destination ConfigThe log_destination_config block supports the following arguments:"
+  type        = string
+}
+variable "For a CloudWatch log group, specify the key " {
+  description = "logGroup with the name of the CloudWatch log group."
+  type        = string
+}
+variable "log_destination" {
+  description = "(Required) A map describing the logging destination for the chosen log_destination_type."
   type        = string
 }
 variable "log_destination_type" {
@@ -41,12 +45,8 @@ variable "log_type" {
   description = "(Required) The type of log to send. Valid values: ALERT or FLOW. Alert logs report traffic that matches a StatefulRule with an action setting that sends a log message. Flow logs are standard network traffic flow logs.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "For a CloudWatch log group, specify the key " {
-  description = "logGroup with the name of the CloudWatch log group."
-  type        = string
-}
-variable "firewall_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Network Firewall firewall."
+variable "logging_configuration" {
+  description = "(Required) A configuration block describing how AWS Network Firewall performs logging for a firewall. See Logging Configuration below for details.Logging ConfigurationThe logging_configuration block supports the following arguments:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,77 +169,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "log_destination_type" {
-  description = "(Required) The location to send logs to. Valid values: S3, CloudWatchLogs, KinesisDataFirehose."
-  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_destination_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_type" {
-  description = "(Required) The type of log to send. Valid values: ALERT or FLOW. Alert logs report traffic that matches a StatefulRule with an action setting that sends a log message. Flow logs are standard network traffic flow logs.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "logging_configuration" {
   description = "(Required) A configuration block describing how AWS Network Firewall performs logging for a firewall. See Logging Configuration below for details.Logging ConfigurationThe logging_configuration block supports the following arguments:"
   value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.logging_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "For a Kinesis Data Firehose delivery stream, specify the key " {
-  description = "deliveryStream with the name of the delivery stream."
-  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.For a Kinesis Data Firehose delivery stream, specify the key 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "For an Amazon S3 bucket, specify the key " {
-  description = "bucketName with the name of the bucket and optionally specify the key prefix with a path."
-  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.For an Amazon S3 bucket, specify the key 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_destination" {
-  description = "(Required) A map describing the logging destination for the chosen log_destination_type."
-  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_destination_config" {
-  description = "(Required) Set of configuration blocks describing the logging details for a firewall. See Log Destination Config below for details. At most, only two blocks can be specified; one for FLOW logs and one for ALERT logs.Log Destination ConfigThe log_destination_config block supports the following arguments:"
-  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_destination_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "For a CloudWatch log group, specify the key " {
   description = "logGroup with the name of the CloudWatch log group."
   value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.For a CloudWatch log group, specify the key 
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "log_destination" {
+  description = "(Required) A map describing the logging destination for the chosen log_destination_type."
+  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_destination
+}
+output "log_destination_type" {
+  description = "(Required) The location to send logs to. Valid values: S3, CloudWatchLogs, KinesisDataFirehose."
+  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_destination_type
+}
+output "log_type" {
+  description = "(Required) The type of log to send. Valid values: ALERT or FLOW. Alert logs report traffic that matches a StatefulRule with an action setting that sends a log message. Flow logs are standard network traffic flow logs.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_type
+}
+output "For a Kinesis Data Firehose delivery stream, specify the key " {
+  description = "deliveryStream with the name of the delivery stream."
+  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.For a Kinesis Data Firehose delivery stream, specify the key 
+}
+output "For an Amazon S3 bucket, specify the key " {
+  description = "bucketName with the name of the bucket and optionally specify the key prefix with a path."
+  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.For an Amazon S3 bucket, specify the key 
 }
 output "firewall_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Network Firewall firewall."
   value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.firewall_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "log_destination_config" {
+  description = "(Required) Set of configuration blocks describing the logging details for a firewall. See Log Destination Config below for details. At most, only two blocks can be specified; one for FLOW logs and one for ALERT logs.Log Destination ConfigThe log_destination_config block supports the following arguments:"
+  value       = aws_networkfirewall_logging_configuration.aws_networkfirewall_logging_configuration.log_destination_config
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the associated firewall."
@@ -247,7 +211,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

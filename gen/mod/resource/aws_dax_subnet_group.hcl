@@ -8,6 +8,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "description" {
+  description = "(Optional) A description of the subnet group."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "The name of the subnet group."
   type        = string
@@ -18,10 +23,6 @@ variable "name" {
 }
 variable "subnet_ids" {
   description = " – (Required) A list of VPC subnet IDs for the subnet group.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A description of the subnet group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -148,41 +149,21 @@ output "description" {
   description = "(Optional) A description of the subnet group."
   value       = aws_dax_subnet_group.aws_dax_subnet_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the subnet group."
   value       = aws_dax_subnet_group.aws_dax_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = " – (Required) The name of the subnet group."
   value       = aws_dax_subnet_group.aws_dax_subnet_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subnet_ids" {
   description = " – (Required) A list of VPC subnet IDs for the subnet group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dax_subnet_group.aws_dax_subnet_group.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the subnet group."
   value       = aws_dax_subnet_group.aws_dax_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_id" {
   description = " – VPC ID of the subnet group."
@@ -190,7 +171,7 @@ output "vpc_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

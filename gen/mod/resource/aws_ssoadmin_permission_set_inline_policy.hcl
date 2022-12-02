@@ -1,10 +1,14 @@
 resource "aws_ssoadmin_permission_set_inline_policy" "aws_ssoadmin_permission_set_inline_policy" {
+  inline_policy      = var.inline_policy
   instance_arn       = var.instance_arn
   permission_set_arn = var.permission_set_arn
-  inline_policy      = var.inline_policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "permission_set_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "inline_policy" {
@@ -13,10 +17,6 @@ variable "inline_policy" {
 }
 variable "instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
-  type        = string
-}
-variable "permission_set_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,25 +143,13 @@ output "inline_policy" {
   description = "(Required) The IAM inline policy to attach to a Permission Set."
   value       = aws_ssoadmin_permission_set_inline_policy.aws_ssoadmin_permission_set_inline_policy.inline_policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
   value       = aws_ssoadmin_permission_set_inline_policy.aws_ssoadmin_permission_set_inline_policy.instance_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "permission_set_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssoadmin_permission_set_inline_policy.aws_ssoadmin_permission_set_inline_policy.permission_set_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (,)."
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

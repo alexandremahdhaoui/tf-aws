@@ -1,93 +1,106 @@
 resource "aws_networkmanager_vpc_attachment" "aws_networkmanager_vpc_attachment" {
-  subnet_arns                   = var.subnet_arns
-  tags_all                      = var.tags_all
-  arn                           = var.arn
-  core_network_arn              = var.core_network_arn
-  segment_name                  = var.segment_name
-  attachment_type               = var.attachment_type
-  core_network_id               = var.core_network_id
-  options                       = var.options
-  owner_account_id              = var.owner_account_id
-  resource_arn                  = var.resource_arn
-  attachment_policy_rule_number = var.attachment_policy_rule_number
   edge_location                 = var.edge_location
   id                            = var.id
-  ipv6_support                  = var.ipv6_support
+  segment_name                  = var.segment_name
+  arn                           = var.arn
+  attachment_policy_rule_number = var.attachment_policy_rule_number
+  core_network_id               = var.core_network_id
+  owner_account_id              = var.owner_account_id
+  resource_arn                  = var.resource_arn
   state                         = var.state
-  tags                          = var.tags
+  tags_all                      = var.tags_all
+  attachment_type               = var.attachment_type
+  core_network_arn              = var.core_network_arn
   vpc_arn                       = var.vpc_arn
+  options                       = var.options
+  tags                          = var.tags
+  ipv6_support                  = var.ipv6_support
+  subnet_arns                   = var.subnet_arns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "state" {
+  description = "The state of the attachment."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "attachment_type" {
+  description = "The type of attachment."
+  type        = string
+  default     = ""
+}
+variable "core_network_arn" {
+  description = "The ARN of a core network."
+  type        = string
+  default     = ""
+}
+variable "core_network_id" {
+  description = "(Required) The ID of a core network for the VPC attachment."
+  type        = string
+}
+variable "owner_account_id" {
+  description = "The ID of the attachment account owner."
+  type        = string
+  default     = ""
+}
+variable "resource_arn" {
+  description = "The attachment resource ARN."
+  type        = string
+  default     = ""
+}
+variable "options" {
+  description = "(Optional) Options for the VPC attachment."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Key-value tags for the Global Network. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options"
   type        = string
+  default     = ""
 }
 variable "vpc_arn" {
   description = "(Required) The ARN of the VPC."
-  type        = string
-}
-variable "attachment_policy_rule_number" {
-  description = "The policy rule number associated with the attachment."
-  type        = string
-}
-variable "edge_location" {
-  description = "The Region where the edge is located."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the attachment."
   type        = string
 }
 variable "ipv6_support" {
   description = "(Required) Indicates whether IPv6 is supported.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "state" {
-  description = "The state of the attachment."
-  type        = string
-}
 variable "subnet_arns" {
   description = "(Required) The subnet ARN of the VPC attachment."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "arn" {
   description = "The ARN of the attachment."
   type        = string
+  default     = ""
 }
-variable "core_network_arn" {
-  description = "The ARN of a core network."
+variable "attachment_policy_rule_number" {
+  description = "The policy rule number associated with the attachment."
   type        = string
+  default     = ""
+}
+variable "edge_location" {
+  description = "The Region where the edge is located."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ID of the attachment."
+  type        = string
+  default     = ""
 }
 variable "segment_name" {
   description = "The name of the segment attachment."
   type        = string
-}
-variable "attachment_type" {
-  description = "The type of attachment."
-  type        = string
-}
-variable "core_network_id" {
-  description = "(Required) The ID of a core network for the VPC attachment."
-  type        = string
-}
-variable "options" {
-  description = "(Optional) Options for the VPC attachment."
-  type        = string
-}
-variable "owner_account_id" {
-  description = "The ID of the attachment account owner."
-  type        = string
-}
-variable "resource_arn" {
-  description = "The attachment resource ARN."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -209,157 +222,113 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "core_network_arn" {
-  description = "The ARN of a core network."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.core_network_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "segment_name" {
-  description = "The name of the segment attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.segment_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "attachment_type" {
-  description = "The type of attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "core_network_id" {
-  description = "(Required) The ID of a core network for the VPC attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.core_network_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "options" {
-  description = "(Optional) Options for the VPC attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.options
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_account_id" {
-  description = "The ID of the attachment account owner."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_arn" {
-  description = "The attachment resource ARN."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "attachment_policy_rule_number" {
-  description = "The policy rule number associated with the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_policy_rule_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "edge_location" {
-  description = "The Region where the edge is located."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.edge_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ipv6_support" {
   description = "(Required) Indicates whether IPv6 is supported.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.ipv6_support
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "The state of the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the Global Network. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options"
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_arn" {
-  description = "(Required) The ARN of the VPC."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.vpc_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "subnet_arns" {
   description = "(Required) The subnet ARN of the VPC attachment."
   value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.subnet_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "segment_name" {
+  description = "The name of the segment attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.segment_name
+}
+output "arn" {
+  description = "The ARN of the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.arn
+}
+output "attachment_policy_rule_number" {
+  description = "The policy rule number associated with the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_policy_rule_number
+}
+output "edge_location" {
+  description = "The Region where the edge is located."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.edge_location
+}
+output "id" {
+  description = "The ID of the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.id
+}
+output "resource_arn" {
+  description = "The attachment resource ARN."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.resource_arn
+}
+output "state" {
+  description = "The state of the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.state
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "attachment_type" {
+  description = "The type of attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_type
 }
 output "core_network_arn" {
   description = "The ARN of a core network."
   value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.core_network_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "core_network_id" {
+  description = "(Required) The ID of a core network for the VPC attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.core_network_id
 }
 output "owner_account_id" {
   description = "The ID of the attachment account owner."
   value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.owner_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "options" {
+  description = "(Optional) Options for the VPC attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.options
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the Global Network. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.options"
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.tags
+}
+output "vpc_arn" {
+  description = "(Required) The ARN of the VPC."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.vpc_arn
+}
+output "id" {
+  description = "The ID of the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.id
+}
+output "owner_account_id" {
+  description = "The ID of the attachment account owner."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.owner_account_id
+}
+output "segment_name" {
+  description = "The name of the segment attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.segment_name
+}
+output "arn" {
+  description = "The ARN of the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.arn
+}
+output "attachment_policy_rule_number" {
+  description = "The policy rule number associated with the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_policy_rule_number
+}
+output "edge_location" {
+  description = "The Region where the edge is located."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.edge_location
+}
+output "state" {
+  description = "The state of the attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.state
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.tags_all
+}
+output "attachment_type" {
+  description = "The type of attachment."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_type
+}
+output "core_network_arn" {
+  description = "The ARN of a core network."
+  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.core_network_arn
 }
 output "resource_arn" {
   description = "The attachment resource ARN."
@@ -367,71 +336,7 @@ output "resource_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "The state of the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "segment_name" {
-  description = "The name of the segment attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.segment_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "attachment_policy_rule_number" {
-  description = "The policy rule number associated with the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_policy_rule_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "attachment_type" {
-  description = "The type of attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.attachment_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "edge_location" {
-  description = "The Region where the edge is located."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.edge_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the attachment."
-  value       = aws_networkmanager_vpc_attachment.aws_networkmanager_vpc_attachment.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

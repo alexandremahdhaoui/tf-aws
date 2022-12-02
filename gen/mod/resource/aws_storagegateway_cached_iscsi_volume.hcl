@@ -1,65 +1,30 @@
 resource "aws_storagegateway_cached_iscsi_volume" "aws_storagegateway_cached_iscsi_volume" {
-  gateway_arn            = var.gateway_arn
+  arn                    = var.arn
   kms_encrypted          = var.kms_encrypted
-  lun_number             = var.lun_number
-  source_volume_arn      = var.source_volume_arn
   tags_all               = var.tags_all
   target_arn             = var.target_arn
-  chap_enabled           = var.chap_enabled
-  tags                   = var.tags
   network_interface_port = var.network_interface_port
   target_name            = var.target_name
+  gateway_arn            = var.gateway_arn
   kms_key                = var.kms_key
-  id                     = var.id
-  network_interface_id   = var.network_interface_id
-  snapshot_id            = var.snapshot_id
+  tags                   = var.tags
   volume_arn             = var.volume_arn
+  snapshot_id            = var.snapshot_id
+  source_volume_arn      = var.source_volume_arn
   volume_size_in_bytes   = var.volume_size_in_bytes
-  arn                    = var.arn
+  chap_enabled           = var.chap_enabled
+  id                     = var.id
+  lun_number             = var.lun_number
+  network_interface_id   = var.network_interface_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "network_interface_port" {
-  description = "The port used to communicate with iSCSI targets."
+variable "kms_encrypted" {
+  description = "(Optional) Set to true to use Amazon S3 server side encryption with your own AWS KMS key, or false to use a key managed by Amazon S3."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "kms_key" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the AWS KMS key used for Amazon S3 server side encryption. Is required when kms_encrypted is set."
-  type        = string
-}
-variable "target_name" {
-  description = "(Required) The name of the iSCSI target used by initiators to connect to the target and as a suffix for the target ARN. The target name must be unique across all volumes of a gateway."
-  type        = string
-}
-variable "volume_size_in_bytes" {
-  description = "(Required) The size of the volume in bytes."
-  type        = string
-}
-variable "arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  type        = string
-}
-variable "id" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  type        = string
-}
-variable "network_interface_id" {
-  description = "(Required) The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted."
-  type        = string
-}
-variable "snapshot_id" {
-  description = "(Optional) The snapshot ID of the snapshot to restore as the new cached volumeE.g., snap-1122aabb."
-  type        = string
-}
-variable "volume_arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -69,24 +34,64 @@ variable "target_arn" {
   description = "Target Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/target/iqn.1997-05.com.amazon:TargetName."
   type        = string
 }
-variable "chap_enabled" {
-  description = "Whether mutual CHAP is enabled for the iSCSI target."
+variable "arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
+  type        = string
+}
+variable "target_name" {
+  description = "(Required) The name of the iSCSI target used by initiators to connect to the target and as a suffix for the target ARN. The target name must be unique across all volumes of a gateway."
+  type        = string
+}
+variable "network_interface_port" {
+  description = "The port used to communicate with iSCSI targets."
+  type        = string
+}
+variable "kms_key" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the AWS KMS key used for Amazon S3 server side encryption. Is required when kms_encrypted is set."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "volume_arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
   type        = string
 }
 variable "gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the gateway."
   type        = string
 }
-variable "kms_encrypted" {
-  description = "(Optional) Set to true to use Amazon S3 server side encryption with your own AWS KMS key, or false to use a key managed by Amazon S3."
+variable "id" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
   type        = string
 }
 variable "lun_number" {
   description = "Logical disk number."
   type        = string
 }
+variable "network_interface_id" {
+  description = "(Required) The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted."
+  type        = string
+}
+variable "snapshot_id" {
+  description = "(Optional) The snapshot ID of the snapshot to restore as the new cached volumeE.g., snap-1122aabb."
+  type        = string
+  default     = ""
+}
 variable "source_volume_arn" {
   description = "(Optional) The ARN for an existing volume. Specifying this ARN makes the new volume into an exact copy of the specified existing volume's latest recovery point. The volume_size_in_bytes value for this new volume must be equal to or larger than the size of the existing volume, in bytes."
+  type        = string
+  default     = ""
+}
+variable "volume_size_in_bytes" {
+  description = "(Required) The size of the volume in bytes."
+  type        = string
+}
+variable "chap_enabled" {
+  description = "Whether mutual CHAP is enabled for the iSCSI target."
   type        = string
 }
 variable "tag_instance_id" {
@@ -209,213 +214,113 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "volume_size_in_bytes" {
-  description = "(Required) The size of the volume in bytes."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_size_in_bytes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
   value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_id" {
-  description = "(Required) The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_id" {
-  description = "(Optional) The snapshot ID of the snapshot to restore as the new cached volumeE.g., snap-1122aabb."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.snapshot_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "volume_arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "target_arn" {
-  description = "Target Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/target/iqn.1997-05.com.amazon:TargetName."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.target_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "chap_enabled" {
-  description = "Whether mutual CHAP is enabled for the iSCSI target."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.chap_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "gateway_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the gateway."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.gateway_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_encrypted" {
   description = "(Optional) Set to true to use Amazon S3 server side encryption with your own AWS KMS key, or false to use a key managed by Amazon S3."
   value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.kms_encrypted
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lun_number" {
-  description = "Logical disk number."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.lun_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_volume_arn" {
-  description = "(Optional) The ARN for an existing volume. Specifying this ARN makes the new volume into an exact copy of the specified existing volume's latest recovery point. The volume_size_in_bytes value for this new volume must be equal to or larger than the size of the existing volume, in bytes."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.source_volume_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_port" {
-  description = "The port used to communicate with iSCSI targets."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.network_interface_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the AWS KMS key used for Amazon S3 server side encryption. Is required when kms_encrypted is set."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.kms_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "target_name" {
-  description = "(Required) The name of the iSCSI target used by initiators to connect to the target and as a suffix for the target ARN. The target name must be unique across all volumes of a gateway."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.target_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lun_number" {
-  description = "Logical disk number."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.lun_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "volume_id" {
-  description = "Volume ID, e.g., vol-12345678."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "volume_arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "chap_enabled" {
-  description = "Whether mutual CHAP is enabled for the iSCSI target."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.chap_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_port" {
-  description = "The port used to communicate with iSCSI targets."
-  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.network_interface_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "target_arn" {
   description = "Target Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/target/iqn.1997-05.com.amazon:TargetName."
   value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.target_arn
 }
+output "network_interface_port" {
+  description = "The port used to communicate with iSCSI targets."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.network_interface_port
+}
+output "target_name" {
+  description = "(Required) The name of the iSCSI target used by initiators to connect to the target and as a suffix for the target ARN. The target name must be unique across all volumes of a gateway."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.target_name
+}
+output "gateway_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the gateway."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.gateway_arn
+}
+output "kms_key" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the AWS KMS key used for Amazon S3 server side encryption. Is required when kms_encrypted is set."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.kms_key
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.tags
+}
+output "volume_arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_arn
+}
+output "volume_size_in_bytes" {
+  description = "(Required) The size of the volume in bytes."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_size_in_bytes
+}
+output "chap_enabled" {
+  description = "Whether mutual CHAP is enabled for the iSCSI target."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.chap_enabled
+}
+output "id" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.id
+}
+output "lun_number" {
+  description = "Logical disk number."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.lun_number
+}
+output "network_interface_id" {
+  description = "(Required) The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.network_interface_id
+}
+output "snapshot_id" {
+  description = "(Optional) The snapshot ID of the snapshot to restore as the new cached volumeE.g., snap-1122aabb."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.snapshot_id
+}
+output "source_volume_arn" {
+  description = "(Optional) The ARN for an existing volume. Specifying this ARN makes the new volume into an exact copy of the specified existing volume's latest recovery point. The volume_size_in_bytes value for this new volume must be equal to or larger than the size of the existing volume, in bytes."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.source_volume_arn
+}
+output "volume_id" {
+  description = "Volume ID, e.g., vol-12345678."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_id
+}
+output "arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.arn
+}
+output "chap_enabled" {
+  description = "Whether mutual CHAP is enabled for the iSCSI target."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.chap_enabled
+}
+output "network_interface_port" {
+  description = "The port used to communicate with iSCSI targets."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.network_interface_port
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.tags_all
+}
+output "target_arn" {
+  description = "Target Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/target/iqn.1997-05.com.amazon:TargetName."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.target_arn
+}
+output "volume_arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.volume_arn
+}
+output "id" {
+  description = "Volume Amazon Resource Name (ARN), e.g., arn:aws:storagegateway:us-east-1:123456789012:gateway/sgw-12345678/volume/vol-12345678."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.id
+}
+output "lun_number" {
+  description = "Logical disk number."
+  value       = aws_storagegateway_cached_iscsi_volume.aws_storagegateway_cached_iscsi_volume.lun_number
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "key" {
+  description = "(Required) Tag name."
+  type        = string
+}
 variable "resource_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the ECS resource to tag."
   type        = string
 }
 variable "value" {
   description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "key" {
-  description = "(Required) Tag name."
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,25 +143,13 @@ output "key" {
   description = "(Required) Tag name."
   value       = aws_ecs_tag.aws_ecs_tag.key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the ECS resource to tag."
   value       = aws_ecs_tag.aws_ecs_tag.resource_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "value" {
   description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecs_tag.aws_ecs_tag.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "ECS resource identifier and key, separated by a comma (,)"
@@ -169,7 +157,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

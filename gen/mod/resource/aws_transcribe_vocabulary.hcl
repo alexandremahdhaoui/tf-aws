@@ -1,62 +1,71 @@
 resource "aws_transcribe_vocabulary" "aws_transcribe_vocabulary" {
-  create              = var.create
-  download_uri        = var.download_uri
-  id                  = var.id
-  vocabulary_file_uri = var.vocabulary_file_uri
-  tags                = var.tags
-  update              = var.update
-  vocabulary_name     = var.vocabulary_name
   arn                 = var.arn
+  create              = var.create
   delete              = var.delete
   language_code       = var.language_code
+  update              = var.update
+  vocabulary_name     = var.vocabulary_name
+  download_uri        = var.download_uri
+  id                  = var.id
   phrases             = var.phrases
+  tags                = var.tags
+  vocabulary_file_uri = var.vocabulary_file_uri
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "vocabulary_file_uri" {
-  description = "(Optional) The Amazon S3 location (URI) of the text file that contains your custom vocabulary. Conflicts wth phrases."
-  type        = string
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-}
 variable "download_uri" {
   description = "Generated download URI.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "Name of the Vocabulary."
   type        = string
+  default     = ""
 }
 variable "phrases" {
   description = "(Optional) - A list of terms to include in the vocabulary. Conflicts with vocabulary_file_uri"
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the Vocabulary. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "vocabulary_file_uri" {
+  description = "(Optional) The Amazon S3 location (URI) of the text file that contains your custom vocabulary. Conflicts wth phrases."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the Vocabulary."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "language_code" {
+  description = "(Required) The language code you selected for your vocabulary."
   type        = string
 }
 variable "update" {
   description = "(Default 30m)"
   type        = string
+  default     = ""
 }
 variable "vocabulary_name" {
   description = "(Required) The name of the Vocabulary."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the Vocabulary."
-  type        = string
-}
-variable "delete" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "language_code" {
-  description = "(Required) The language code you selected for your vocabulary."
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,109 +188,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "update" {
+output "create" {
   description = "(Default 30m)"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vocabulary_name" {
-  description = "(Required) The name of the Vocabulary."
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.vocabulary_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Vocabulary."
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.create
 }
 output "delete" {
   description = "(Default 30m)"
   value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "language_code" {
   description = "(Required) The language code you selected for your vocabulary."
   value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.language_code
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "phrases" {
-  description = "(Optional) - A list of terms to include in the vocabulary. Conflicts with vocabulary_file_uri"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.phrases
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the Vocabulary. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
+output "update" {
   description = "(Default 30m)"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.create
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "download_uri" {
-  description = "Generated download URI.TimeoutsConfiguration options:"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.download_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Name of the Vocabulary."
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vocabulary_file_uri" {
-  description = "(Optional) The Amazon S3 location (URI) of the text file that contains your custom vocabulary. Conflicts wth phrases."
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.vocabulary_file_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vocabulary_name" {
+  description = "(Required) The name of the Vocabulary."
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.vocabulary_name
 }
 output "arn" {
   description = "ARN of the Vocabulary."
   value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Name of the Vocabulary."
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.id
+}
+output "phrases" {
+  description = "(Optional) - A list of terms to include in the vocabulary. Conflicts with vocabulary_file_uri"
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.phrases
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the Vocabulary. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.tags
+}
+output "vocabulary_file_uri" {
+  description = "(Optional) The Amazon S3 location (URI) of the text file that contains your custom vocabulary. Conflicts wth phrases."
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.vocabulary_file_uri
+}
+output "download_uri" {
+  description = "Generated download URI.TimeoutsConfiguration options:"
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.download_uri
+}
+output "download_uri" {
+  description = "Generated download URI.TimeoutsConfiguration options:"
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.download_uri
+}
+output "id" {
+  description = "Name of the Vocabulary."
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.id
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.update
+}
+output "arn" {
+  description = "ARN of the Vocabulary."
+  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.arn
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Default 30m)"
@@ -289,31 +258,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "download_uri" {
-  description = "Generated download URI.TimeoutsConfiguration options:"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.download_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Name of the Vocabulary."
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_transcribe_vocabulary.aws_transcribe_vocabulary.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

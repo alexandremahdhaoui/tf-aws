@@ -1,8 +1,8 @@
 datasource "aws_mskconnect_custom_plugin" "aws_mskconnect_custom_plugin" {
-  name            = var.name
   arn             = var.arn
   description     = var.description
   latest_revision = var.latest_revision
+  name            = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -28,25 +28,13 @@ output "arn" {
   description = "the ARN of the custom plugin."
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "a summary description of the custom plugin."
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "latest_revision" {
   description = "an ID of the latest successfully created revision of the custom plugin."
   value       = aws_mskconnect_custom_plugin.aws_mskconnect_custom_plugin.latest_revision
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the custom plugin.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
@@ -54,7 +42,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

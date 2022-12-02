@@ -2,36 +2,16 @@ resource "aws_sagemaker_device_fleet" "aws_sagemaker_device_fleet" {
   enable_iot_role_alias = var.enable_iot_role_alias
   id                    = var.id
   kms_key_id            = var.kms_key_id
+  role_arn              = var.role_arn
+  device_fleet_name     = var.device_fleet_name
+  description           = var.description
   output_config         = var.output_config
   s3_output_location    = var.s3_output_location
   tags                  = var.tags
-  device_fleet_name     = var.device_fleet_name
-  description           = var.description
-  role_arn              = var.role_arn
   arn                   = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "device_fleet_name" {
-  description = "(Required) The name of the Device Fleet (must be unique)."
-  type        = string
-}
-variable "enable_iot_role_alias" {
-  description = "(Optional) Whether to create an AWS IoT Role Alias during device fleet creation. The name of the role alias generated will match this pattern: \"SageMakerEdge-{DeviceFleetName}\"."
-  type        = string
-}
-variable "id" {
-  description = "The name of the Device Fleet."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) The AWS Key Management Service (AWS KMS) key that Amazon SageMaker uses to encrypt data on the storage volume after compilation job. If you don't provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role's account.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "output_config" {
-  description = "(Required) Specifies details about the repository. see Output Config details below."
   type        = string
 }
 variable "s3_output_location" {
@@ -41,6 +21,7 @@ variable "s3_output_location" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Output Config"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Device Fleet."
@@ -49,9 +30,32 @@ variable "arn" {
 variable "description" {
   description = "(Optional) A description of the fleet."
   type        = string
+  default     = ""
+}
+variable "output_config" {
+  description = "(Required) Specifies details about the repository. see Output Config details below."
+  type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional) The AWS Key Management Service (AWS KMS) key that Amazon SageMaker uses to encrypt data on the storage volume after compilation job. If you don't provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role's account.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "role_arn" {
   description = "(Required) The Amazon Resource Name (ARN) that has access to AWS Internet of Things (IoT)."
+  type        = string
+}
+variable "device_fleet_name" {
+  description = "(Required) The name of the Device Fleet (must be unique)."
+  type        = string
+}
+variable "enable_iot_role_alias" {
+  description = "(Optional) Whether to create an AWS IoT Role Alias during device fleet creation. The name of the role alias generated will match this pattern: \"SageMakerEdge-{DeviceFleetName}\"."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The name of the Device Fleet."
   type        = string
 }
 variable "tag_instance_id" {
@@ -178,97 +182,49 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Device Fleet."
   value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) A description of the fleet."
   value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) that has access to AWS Internet of Things (IoT)."
-  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "device_fleet_name" {
-  description = "(Required) The name of the Device Fleet (must be unique)."
-  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.device_fleet_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enable_iot_role_alias" {
-  description = "(Optional) Whether to create an AWS IoT Role Alias during device fleet creation. The name of the role alias generated will match this pattern: \"SageMakerEdge-{DeviceFleetName}\"."
-  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.enable_iot_role_alias
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The name of the Device Fleet."
-  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key_id" {
-  description = "(Optional) The AWS Key Management Service (AWS KMS) key that Amazon SageMaker uses to encrypt data on the storage volume after compilation job. If you don't provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role's account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "output_config" {
   description = "(Required) Specifies details about the repository. see Output Config details below."
   value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.output_config
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "s3_output_location" {
   description = "(Required) The Amazon Simple Storage (S3) bucker URI."
   value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.s3_output_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Output Config"
   value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "device_fleet_name" {
+  description = "(Required) The name of the Device Fleet (must be unique)."
+  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.device_fleet_name
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Device Fleet."
-  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "enable_iot_role_alias" {
+  description = "(Optional) Whether to create an AWS IoT Role Alias during device fleet creation. The name of the role alias generated will match this pattern: \"SageMakerEdge-{DeviceFleetName}\"."
+  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.enable_iot_role_alias
 }
 output "id" {
   description = "The name of the Device Fleet."
   value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "kms_key_id" {
+  description = "(Optional) The AWS Key Management Service (AWS KMS) key that Amazon SageMaker uses to encrypt data on the storage volume after compilation job. If you don't provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role's account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.kms_key_id
+}
+output "role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) that has access to AWS Internet of Things (IoT)."
+  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.role_arn
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Device Fleet."
+  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.arn
+}
+output "id" {
+  description = "The name of the Device Fleet."
+  value       = aws_sagemaker_device_fleet.aws_sagemaker_device_fleet.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -276,7 +232,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

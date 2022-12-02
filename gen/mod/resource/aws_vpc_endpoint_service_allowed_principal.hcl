@@ -138,17 +138,13 @@ output "principal_arn" {
   description = "(Required) The ARN of the principal to allow permissions.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_endpoint_service_allowed_principal.aws_vpc_endpoint_service_allowed_principal.principal_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_endpoint_service_id" {
   description = "(Required) The ID of the VPC endpoint service to allow permission."
   value       = aws_vpc_endpoint_service_allowed_principal.aws_vpc_endpoint_service_allowed_principal.vpc_endpoint_service_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

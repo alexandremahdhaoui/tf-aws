@@ -14,6 +14,7 @@ variable "alias" {
 variable "credential_duration" {
   description = "(Optional) The duration of the credential, in seconds. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 900 seconds (15 minutes) to 43200 seconds (12 hours).In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "role_arn" {
   description = "(Required) The identity of the role to which the alias refers."
@@ -139,29 +140,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "credential_duration" {
-  description = "(Optional) The duration of the credential, in seconds. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 900 seconds (15 minutes) to 43200 seconds (12 hours).In addition to all arguments above, the following attributes are exported:"
-  value       = aws_iot_role_alias.aws_iot_role_alias.credential_duration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Required) The identity of the role to which the alias refers."
-  value       = aws_iot_role_alias.aws_iot_role_alias.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "alias" {
   description = "(Required) The name of the role alias."
   value       = aws_iot_role_alias.aws_iot_role_alias.alias
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "credential_duration" {
+  description = "(Optional) The duration of the credential, in seconds. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 900 seconds (15 minutes) to 43200 seconds (12 hours).In addition to all arguments above, the following attributes are exported:"
+  value       = aws_iot_role_alias.aws_iot_role_alias.credential_duration
+}
+output "role_arn" {
+  description = "(Required) The identity of the role to which the alias refers."
+  value       = aws_iot_role_alias.aws_iot_role_alias.role_arn
 }
 output "arn" {
   description = "The ARN assigned by AWS to this role alias."
@@ -169,7 +158,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

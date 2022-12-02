@@ -1,36 +1,16 @@
 resource "aws_glue_security_configuration" "aws_glue_security_configuration" {
-  s3_encryption_mode            = var.s3_encryption_mode
-  job_bookmarks_encryption_mode = var.job_bookmarks_encryption_mode
+  cloudwatch_encryption         = var.cloudwatch_encryption 
   cloudwatch_encryption_mode    = var.cloudwatch_encryption_mode
-  encryption_configuration      = var.encryption_configuration
   job_bookmarks_encryption      = var.job_bookmarks_encryption 
   kms_key_arn                   = var.kms_key_arn
+  encryption_configuration      = var.encryption_configuration
+  job_bookmarks_encryption_mode = var.job_bookmarks_encryption_mode
   name                          = var.name
   s3_encryption                 = var.s3_encryption
-  cloudwatch_encryption         = var.cloudwatch_encryption 
+  s3_encryption_mode            = var.s3_encryption_mode
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "encryption_configuration" {
-  description = " – (Required) Configuration block containing encryption configuration. Detailed below."
-  type        = string
-}
-variable "job_bookmarks_encryption " {
-  description = "(Required) A job_bookmarks_encryption  block as described below, which contains encryption configuration for job bookmarks."
-  type        = string
-}
-variable "kms_key_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "name" {
-  description = " – (Required) Name of the security configuration.encryption_configuration Argument Reference"
-  type        = string
-}
-variable "s3_encryption" {
-  description = "(Required) A s3_encryption  block as described below, which contains encryption configuration for S3 data.cloudwatch_encryption Argument Reference"
   type        = string
 }
 variable "cloudwatch_encryption " {
@@ -40,14 +20,38 @@ variable "cloudwatch_encryption " {
 variable "cloudwatch_encryption_mode" {
   description = "(Optional) Encryption mode to use for CloudWatch data. Valid values: DISABLED, SSE-KMS. Default value: DISABLED."
   type        = string
+  default     = ""
+}
+variable "job_bookmarks_encryption " {
+  description = "(Required) A job_bookmarks_encryption  block as described below, which contains encryption configuration for job bookmarks."
+  type        = string
+}
+variable "kms_key_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "encryption_configuration" {
+  description = " – (Required) Configuration block containing encryption configuration. Detailed below."
+  type        = string
 }
 variable "job_bookmarks_encryption_mode" {
   description = "(Optional) Encryption mode to use for job bookmarks data. Valid values: CSE-KMS, DISABLED. Default value: DISABLED."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = " – (Required) Name of the security configuration.encryption_configuration Argument Reference"
+  type        = string
+}
+variable "s3_encryption" {
+  description = "(Required) A s3_encryption  block as described below, which contains encryption configuration for S3 data.cloudwatch_encryption Argument Reference"
   type        = string
 }
 variable "s3_encryption_mode" {
   description = "(Optional) Encryption mode to use for S3 data. Valid values: DISABLED, SSE-KMS, SSE-S3. Default value: DISABLED."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,77 +173,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_security_configuration.aws_glue_security_configuration.kms_key_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = " – (Required) Name of the security configuration.encryption_configuration Argument Reference"
-  value       = aws_glue_security_configuration.aws_glue_security_configuration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_encryption" {
-  description = "(Required) A s3_encryption  block as described below, which contains encryption configuration for S3 data.cloudwatch_encryption Argument Reference"
-  value       = aws_glue_security_configuration.aws_glue_security_configuration.s3_encryption
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cloudwatch_encryption " {
-  description = "(Required) A cloudwatch_encryption  block as described below, which contains encryption configuration for CloudWatch."
-  value       = aws_glue_security_configuration.aws_glue_security_configuration.cloudwatch_encryption 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cloudwatch_encryption_mode" {
-  description = "(Optional) Encryption mode to use for CloudWatch data. Valid values: DISABLED, SSE-KMS. Default value: DISABLED."
-  value       = aws_glue_security_configuration.aws_glue_security_configuration.cloudwatch_encryption_mode
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "encryption_configuration" {
   description = " – (Required) Configuration block containing encryption configuration. Detailed below."
   value       = aws_glue_security_configuration.aws_glue_security_configuration.encryption_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "job_bookmarks_encryption " {
-  description = "(Required) A job_bookmarks_encryption  block as described below, which contains encryption configuration for job bookmarks."
-  value       = aws_glue_security_configuration.aws_glue_security_configuration.job_bookmarks_encryption 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "job_bookmarks_encryption_mode" {
   description = "(Optional) Encryption mode to use for job bookmarks data. Valid values: CSE-KMS, DISABLED. Default value: DISABLED."
   value       = aws_glue_security_configuration.aws_glue_security_configuration.job_bookmarks_encryption_mode
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = " – (Required) Name of the security configuration.encryption_configuration Argument Reference"
+  value       = aws_glue_security_configuration.aws_glue_security_configuration.name
+}
+output "s3_encryption" {
+  description = "(Required) A s3_encryption  block as described below, which contains encryption configuration for S3 data.cloudwatch_encryption Argument Reference"
+  value       = aws_glue_security_configuration.aws_glue_security_configuration.s3_encryption
 }
 output "s3_encryption_mode" {
   description = "(Optional) Encryption mode to use for S3 data. Valid values: DISABLED, SSE-KMS, SSE-S3. Default value: DISABLED."
   value       = aws_glue_security_configuration.aws_glue_security_configuration.s3_encryption_mode
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cloudwatch_encryption " {
+  description = "(Required) A cloudwatch_encryption  block as described below, which contains encryption configuration for CloudWatch."
+  value       = aws_glue_security_configuration.aws_glue_security_configuration.cloudwatch_encryption 
+}
+output "cloudwatch_encryption_mode" {
+  description = "(Optional) Encryption mode to use for CloudWatch data. Valid values: DISABLED, SSE-KMS. Default value: DISABLED."
+  value       = aws_glue_security_configuration.aws_glue_security_configuration.cloudwatch_encryption_mode
+}
+output "job_bookmarks_encryption " {
+  description = "(Required) A job_bookmarks_encryption  block as described below, which contains encryption configuration for job bookmarks."
+  value       = aws_glue_security_configuration.aws_glue_security_configuration.job_bookmarks_encryption 
+}
+output "kms_key_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_security_configuration.aws_glue_security_configuration.kms_key_arn
 }
 output "id" {
   description = "Glue security configuration name"
@@ -247,7 +215,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

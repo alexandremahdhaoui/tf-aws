@@ -1,14 +1,22 @@
 resource "aws_athena_data_catalog" "aws_athena_data_catalog" {
-  type        = var.type
   arn         = var.arn
   description = var.description
   id          = var.id
   name        = var.name
   parameters  = var.parameters
   tags        = var.tags
+  type        = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the data catalog."
+  type        = string
+}
+variable "description" {
+  description = "(Required) Description of the data catalog."
   type        = string
 }
 variable "id" {
@@ -26,17 +34,10 @@ variable "parameters" {
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "type" {
   description = "(Required) Type of data catalog: LAMBDA for a federated catalog, GLUE for AWS Glue Catalog, or HIVE for an external hive metastore."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the data catalog."
-  type        = string
-}
-variable "description" {
-  description = "(Required) Description of the data catalog."
   type        = string
 }
 variable "tag_instance_id" {
@@ -163,57 +164,37 @@ output "id" {
   description = "Name of the data catalog."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the data catalog. The catalog name must be unique for the AWS account and can use a maximum of 128 alphanumeric, underscore, at sign, or hyphen characters."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "parameters" {
   description = "(Required) Key value pairs that specifies the Lambda function or functions to use for the data catalog. The mapping used depends on the catalog type."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.parameters
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_athena_data_catalog.aws_athena_data_catalog.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "(Required) Type of data catalog: LAMBDA for a federated catalog, GLUE for AWS Glue Catalog, or HIVE for an external hive metastore."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the data catalog."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Required) Description of the data catalog."
   value       = aws_athena_data_catalog.aws_athena_data_catalog.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Name of the data catalog."
+  value       = aws_athena_data_catalog.aws_athena_data_catalog.id
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_athena_data_catalog.aws_athena_data_catalog.tags_all
 }
 output "arn" {
   description = "ARN of the data catalog."
@@ -221,23 +202,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Name of the data catalog."
-  value       = aws_athena_data_catalog.aws_athena_data_catalog.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_athena_data_catalog.aws_athena_data_catalog.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

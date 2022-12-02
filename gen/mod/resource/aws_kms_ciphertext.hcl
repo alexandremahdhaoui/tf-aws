@@ -1,11 +1,16 @@
 resource "aws_kms_ciphertext" "aws_kms_ciphertext" {
-  plaintext = var.plaintext
   context   = var.context
   key_id    = var.key_id
+  plaintext = var.plaintext
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "context" {
+  description = "(Optional) An optional mapping that makes up the encryption context.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "key_id" {
   description = "(Required) Globally unique key ID for the customer master key."
@@ -13,10 +18,6 @@ variable "key_id" {
 }
 variable "plaintext" {
   description = "(Required) Data to be encrypted. Note that this may show up in logs, and it will be stored in the state file."
-  type        = string
-}
-variable "context" {
-  description = "(Optional) An optional mapping that makes up the encryption context.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,17 +144,9 @@ output "context" {
   description = "(Optional) An optional mapping that makes up the encryption context.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_ciphertext.aws_kms_ciphertext.context
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key_id" {
   description = "(Required) Globally unique key ID for the customer master key."
   value       = aws_kms_ciphertext.aws_kms_ciphertext.key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "plaintext" {
   description = "(Required) Data to be encrypted. Note that this may show up in logs, and it will be stored in the state file."
@@ -161,7 +154,7 @@ output "plaintext" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

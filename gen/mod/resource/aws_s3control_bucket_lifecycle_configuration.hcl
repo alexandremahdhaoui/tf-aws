@@ -1,17 +1,17 @@
 resource "aws_s3control_bucket_lifecycle_configuration" "aws_s3control_bucket_lifecycle_configuration" {
-  bucket                            = var.bucket
-  date                              = var.date
-  days                              = var.days
-  days_after_initiation             = var.days_after_initiation
-  filter                            = var.filter
-  id                                = var.id
-  rule                              = var.rule
-  abort_incomplete_multipart_upload = var.abort_incomplete_multipart_upload
-  tags                              = var.tags
-  expired_object_delete_marker      = var.expired_object_delete_marker
   prefix                            = var.prefix
   status                            = var.status
+  days                              = var.days
   expiration                        = var.expiration
+  filter                            = var.filter
+  id                                = var.id
+  expired_object_delete_marker      = var.expired_object_delete_marker
+  rule                              = var.rule
+  tags                              = var.tags
+  abort_incomplete_multipart_upload = var.abort_incomplete_multipart_upload
+  bucket                            = var.bucket
+  date                              = var.date
+  days_after_initiation             = var.days_after_initiation
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -21,9 +21,15 @@ variable "rule" {
   description = ""
   type        = string
 }
+variable "tags" {
+  description = "(Optional) Key-value map of object tags for rule filtering."
+  type        = string
+  default     = ""
+}
 variable "abort_incomplete_multipart_upload" {
   description = "(Optional) Configuration block containing settings for abort incomplete multipart upload.\n"
   type        = string
+  default     = ""
 }
 variable "bucket" {
   description = "(Required) Amazon Resource Name (ARN) of the bucket."
@@ -32,14 +38,31 @@ variable "bucket" {
 variable "date" {
   description = "(Optional) Date the object is to be deleted. Should be in YYYY-MM-DD date format, e.g., 2020-09-30."
   type        = string
-}
-variable "days" {
-  description = "(Optional) Number of days before the object is to be deleted."
-  type        = string
+  default     = ""
 }
 variable "days_after_initiation" {
   description = "(Required) Number of days after which Amazon S3 aborts an incomplete multipart upload."
   type        = string
+}
+variable "expired_object_delete_marker" {
+  description = "(Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "days" {
+  description = "(Optional) Number of days before the object is to be deleted."
+  type        = string
+  default     = ""
+}
+variable "expiration" {
+  description = "(Optional) Configuration block containing settings for expiration of objects.\n"
+  type        = string
+  default     = ""
 }
 variable "filter" {
   description = ""
@@ -49,25 +72,10 @@ variable "id" {
   description = "(Required) Unique identifier for the rule."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of object tags for rule filtering."
-  type        = string
-}
-variable "expiration" {
-  description = "(Optional) Configuration block containing settings for expiration of objects.\n"
-  type        = string
-}
-variable "expired_object_delete_marker" {
-  description = "(Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days."
-  type        = string
-}
 variable "prefix" {
   description = "(Optional) Object prefix for rule filtering."
   type        = string
-}
-variable "status" {
-  description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,109 +197,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) Key-value map of object tags for rule filtering."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.tags
+}
 output "abort_incomplete_multipart_upload" {
   description = "(Optional) Configuration block containing settings for abort incomplete multipart upload.\n"
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.abort_incomplete_multipart_upload
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bucket" {
   description = "(Required) Amazon Resource Name (ARN) of the bucket."
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.bucket
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "date" {
   description = "(Optional) Date the object is to be deleted. Should be in YYYY-MM-DD date format, e.g., 2020-09-30."
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "days" {
-  description = "(Optional) Number of days before the object is to be deleted."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.days
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "days_after_initiation" {
   description = "(Required) Number of days after which Amazon S3 aborts an incomplete multipart upload."
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.days_after_initiation
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter" {
-  description = ""
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "(Required) Unique identifier for the rule."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "expired_object_delete_marker" {
+  description = "(Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.expired_object_delete_marker
 }
 output "rule" {
   description = ""
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.rule
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of object tags for rule filtering."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "days" {
+  description = "(Optional) Number of days before the object is to be deleted."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.days
 }
 output "expiration" {
   description = "(Optional) Configuration block containing settings for expiration of objects.\n"
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.expiration
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "filter" {
+  description = ""
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.filter
 }
-output "expired_object_delete_marker" {
-  description = "(Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days."
-  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.expired_object_delete_marker
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "(Required) Unique identifier for the rule."
+  value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.id
 }
 output "prefix" {
   description = "(Optional) Object prefix for rule filtering."
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "status" {
   description = "(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3control_bucket_lifecycle_configuration.aws_s3control_bucket_lifecycle_configuration.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the bucket."
@@ -299,7 +255,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

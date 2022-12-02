@@ -1,36 +1,20 @@
 resource "aws_cloudwatch_log_metric_filter" "aws_cloudwatch_log_metric_filter" {
-  dimensions            = var.dimensions
-  name                  = var.name
-  default_value         = var.default_value
-  metric_transformation = var.metric_transformation
   namespace             = var.namespace
   pattern               = var.pattern
-  unit                  = var.unit
   value                 = var.value
   log_group_name        = var.log_group_name
+  name                  = var.name
+  metric_transformation = var.metric_transformation
+  unit                  = var.unit
+  default_value         = var.default_value
+  dimensions            = var.dimensions
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "default_value" {
-  description = "(Optional) The value to emit when a filter pattern does not match a log event. Conflicts with dimensions."
-  type        = string
-}
-variable "dimensions" {
-  description = "(Optional) Map of fields to use as dimensions for the metric. Up to 3 dimensions are allowed. Conflicts with default_value."
-  type        = string
-}
 variable "name" {
   description = "(Required) The name of the CloudWatch metric to which the monitored log information should be published (e.g., ErrorCount)"
-  type        = string
-}
-variable "log_group_name" {
-  description = "(Required) The name of the log group to associate the metric filter with."
-  type        = string
-}
-variable "metric_transformation" {
-  description = "(Required) A block defining collection of information needed to define how metric data gets emitted. See below.The metric_transformation block supports the following arguments:"
   type        = string
 }
 variable "namespace" {
@@ -41,13 +25,32 @@ variable "pattern" {
   description = "(Required) A valid CloudWatch Logs filter pattern"
   type        = string
 }
-variable "unit" {
-  description = "(Optional) The unit to assign to the metric. If you omit this, the unit is set as None.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "value" {
   description = "(Required) What to publish to the metric. For example, if you're counting the occurrences of a particular term like \"Error\", the value will be \"1\" for each occurrence. If you're counting the bytes transferred the published value will be the value in the log event."
   type        = string
+}
+variable "log_group_name" {
+  description = "(Required) The name of the log group to associate the metric filter with."
+  type        = string
+}
+variable "dimensions" {
+  description = "(Optional) Map of fields to use as dimensions for the metric. Up to 3 dimensions are allowed. Conflicts with default_value."
+  type        = string
+  default     = ""
+}
+variable "metric_transformation" {
+  description = "(Required) A block defining collection of information needed to define how metric data gets emitted. See below.The metric_transformation block supports the following arguments:"
+  type        = string
+}
+variable "unit" {
+  description = "(Optional) The unit to assign to the metric. If you omit this, the unit is set as None.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "default_value" {
+  description = "(Optional) The value to emit when a filter pattern does not match a log event. Conflicts with dimensions."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,77 +172,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "default_value" {
-  description = "(Optional) The value to emit when a filter pattern does not match a log event. Conflicts with dimensions."
-  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.default_value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dimensions" {
-  description = "(Optional) Map of fields to use as dimensions for the metric. Up to 3 dimensions are allowed. Conflicts with default_value."
-  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.dimensions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the CloudWatch metric to which the monitored log information should be published (e.g., ErrorCount)"
-  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "pattern" {
+  description = "(Required) A valid CloudWatch Logs filter pattern"
+  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.pattern
 }
 output "value" {
   description = "(Required) What to publish to the metric. For example, if you're counting the occurrences of a particular term like \"Error\", the value will be \"1\" for each occurrence. If you're counting the bytes transferred the published value will be the value in the log event."
   value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "log_group_name" {
   description = "(Required) The name of the log group to associate the metric filter with."
   value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.log_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "metric_transformation" {
-  description = "(Required) A block defining collection of information needed to define how metric data gets emitted. See below.The metric_transformation block supports the following arguments:"
-  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.metric_transformation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the CloudWatch metric to which the monitored log information should be published (e.g., ErrorCount)"
+  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.name
 }
 output "namespace" {
   description = "(Required) The destination namespace of the CloudWatch metric."
   value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.namespace
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pattern" {
-  description = "(Required) A valid CloudWatch Logs filter pattern"
-  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.pattern
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "unit" {
   description = "(Optional) The unit to assign to the metric. If you omit this, the unit is set as None.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.unit
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "default_value" {
+  description = "(Optional) The value to emit when a filter pattern does not match a log event. Conflicts with dimensions."
+  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.default_value
+}
+output "dimensions" {
+  description = "(Optional) Map of fields to use as dimensions for the metric. Up to 3 dimensions are allowed. Conflicts with default_value."
+  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.dimensions
+}
+output "metric_transformation" {
+  description = "(Required) A block defining collection of information needed to define how metric data gets emitted. See below.The metric_transformation block supports the following arguments:"
+  value       = aws_cloudwatch_log_metric_filter.aws_cloudwatch_log_metric_filter.metric_transformation
 }
 output "id" {
   description = "The name of the metric filter."
@@ -247,7 +214,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

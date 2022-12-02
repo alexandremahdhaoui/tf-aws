@@ -1,79 +1,47 @@
 resource "aws_ec2_capacity_reservation" "aws_ec2_capacity_reservation" {
-  end_date_type           = var.end_date_type
-  instance_count          = var.instance_count
-  instance_match_criteria = var.instance_match_criteria
+  instance_platform       = var.instance_platform
   owner_id                = var.owner_id
   tags                    = var.tags
-  ebs_optimized           = var.ebs_optimized
-  end_date                = var.end_date
-  arn                     = var.arn
-  ephemeral_storage       = var.ephemeral_storage
-  instance_platform       = var.instance_platform
-  outpost_arn             = var.outpost_arn
-  tenancy                 = var.tenancy
-  availability_zone       = var.availability_zone
-  instance_type           = var.instance_type
   placement_group_arn     = var.placement_group_arn
+  arn                     = var.arn
   id                      = var.id
+  outpost_arn             = var.outpost_arn
+  instance_match_criteria = var.instance_match_criteria
+  instance_type           = var.instance_type
+  availability_zone       = var.availability_zone
+  ebs_optimized           = var.ebs_optimized
+  instance_count          = var.instance_count
+  tenancy                 = var.tenancy
+  end_date                = var.end_date
+  end_date_type           = var.end_date_type
+  ephemeral_storage       = var.ephemeral_storage
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The ARN of the Capacity Reservation."
-  type        = string
-}
 variable "end_date" {
   description = "(Optional) The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)"
   type        = string
-}
-variable "availability_zone" {
-  description = "(Required) The Availability Zone in which to create the Capacity Reservation."
-  type        = string
-}
-variable "ephemeral_storage" {
-  description = "(Optional) Indicates whether the Capacity Reservation supports instances with temporary, block-level storage."
-  type        = string
-}
-variable "instance_platform" {
-  description = "(Required) The type of operating system for which to reserve capacity. Valid options are Linux/UNIX, Red Hat Enterprise Linux, SUSE Linux, Windows, Windows with SQL Server, Windows with SQL Server Enterprise, Windows with SQL Server Standard or Windows with SQL Server Web."
-  type        = string
-}
-variable "outpost_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create the Capacity Reservation."
-  type        = string
-}
-variable "tenancy" {
-  description = "(Optional) Indicates the tenancy of the Capacity Reservation. Specify either default or dedicated.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "The Capacity Reservation ID."
-  type        = string
-}
-variable "instance_type" {
-  description = "(Required) The instance type for which to reserve capacity."
-  type        = string
-}
-variable "placement_group_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the cluster placement group in which to create the Capacity Reservation."
-  type        = string
-}
-variable "ebs_optimized" {
-  description = "(Optional) Indicates whether the Capacity Reservation supports EBS-optimized instances."
-  type        = string
+  default     = ""
 }
 variable "end_date_type" {
   description = "(Optional) Indicates the way in which the Capacity Reservation ends. Specify either unlimited or limited."
   type        = string
+  default     = ""
 }
-variable "instance_count" {
-  description = "(Required) The number of instances for which to reserve capacity."
+variable "ephemeral_storage" {
+  description = "(Optional) Indicates whether the Capacity Reservation supports instances with temporary, block-level storage."
   type        = string
+  default     = ""
 }
-variable "instance_match_criteria" {
-  description = "(Optional) Indicates the type of instance launches that the Capacity Reservation accepts. Specify either open or targeted."
+variable "tenancy" {
+  description = "(Optional) Indicates the tenancy of the Capacity Reservation. Specify either default or dedicated.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "instance_platform" {
+  description = "(Required) The type of operating system for which to reserve capacity. Valid options are Linux/UNIX, Red Hat Enterprise Linux, SUSE Linux, Windows, Windows with SQL Server, Windows with SQL Server Enterprise, Windows with SQL Server Standard or Windows with SQL Server Web."
   type        = string
 }
 variable "owner_id" {
@@ -82,6 +50,47 @@ variable "owner_id" {
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the Capacity Reservation."
+  type        = string
+}
+variable "id" {
+  description = "The Capacity Reservation ID."
+  type        = string
+}
+variable "outpost_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create the Capacity Reservation."
+  type        = string
+  default     = ""
+}
+variable "placement_group_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the cluster placement group in which to create the Capacity Reservation."
+  type        = string
+  default     = ""
+}
+variable "availability_zone" {
+  description = "(Required) The Availability Zone in which to create the Capacity Reservation."
+  type        = string
+}
+variable "ebs_optimized" {
+  description = "(Optional) Indicates whether the Capacity Reservation supports EBS-optimized instances."
+  type        = string
+  default     = ""
+}
+variable "instance_count" {
+  description = "(Required) The number of instances for which to reserve capacity."
+  type        = string
+}
+variable "instance_match_criteria" {
+  description = "(Optional) Indicates the type of instance launches that the Capacity Reservation accepts. Specify either open or targeted."
+  type        = string
+  default     = ""
+}
+variable "instance_type" {
+  description = "(Required) The instance type for which to reserve capacity."
   type        = string
 }
 variable "tag_instance_id" {
@@ -204,157 +213,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the Capacity Reservation."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "end_date" {
-  description = "(Optional) The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)"
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.end_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "outpost_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create the Capacity Reservation."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.outpost_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tenancy" {
-  description = "(Optional) Indicates the tenancy of the Capacity Reservation. Specify either default or dedicated.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.tenancy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "availability_zone" {
   description = "(Required) The Availability Zone in which to create the Capacity Reservation."
   value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ephemeral_storage" {
-  description = "(Optional) Indicates whether the Capacity Reservation supports instances with temporary, block-level storage."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.ephemeral_storage
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_platform" {
-  description = "(Required) The type of operating system for which to reserve capacity. Valid options are Linux/UNIX, Red Hat Enterprise Linux, SUSE Linux, Windows, Windows with SQL Server, Windows with SQL Server Enterprise, Windows with SQL Server Standard or Windows with SQL Server Web."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_platform
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Capacity Reservation ID."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_type" {
-  description = "(Required) The instance type for which to reserve capacity."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "placement_group_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the cluster placement group in which to create the Capacity Reservation."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.placement_group_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_match_criteria" {
-  description = "(Optional) Indicates the type of instance launches that the Capacity Reservation accepts. Specify either open or targeted."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_match_criteria
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "The ID of the AWS account that owns the Capacity Reservation."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ebs_optimized" {
   description = "(Optional) Indicates whether the Capacity Reservation supports EBS-optimized instances."
   value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.ebs_optimized
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_count" {
+  description = "(Required) The number of instances for which to reserve capacity."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_count
+}
+output "instance_match_criteria" {
+  description = "(Optional) Indicates the type of instance launches that the Capacity Reservation accepts. Specify either open or targeted."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_match_criteria
+}
+output "instance_type" {
+  description = "(Required) The instance type for which to reserve capacity."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_type
+}
+output "end_date" {
+  description = "(Optional) The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)"
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.end_date
 }
 output "end_date_type" {
   description = "(Optional) Indicates the way in which the Capacity Reservation ends. Specify either unlimited or limited."
   value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.end_date_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ephemeral_storage" {
+  description = "(Optional) Indicates whether the Capacity Reservation supports instances with temporary, block-level storage."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.ephemeral_storage
 }
-output "instance_count" {
-  description = "(Required) The number of instances for which to reserve capacity."
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_count
+output "tenancy" {
+  description = "(Optional) Indicates the tenancy of the Capacity Reservation. Specify either default or dedicated.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.tenancy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_platform" {
+  description = "(Required) The type of operating system for which to reserve capacity. Valid options are Linux/UNIX, Red Hat Enterprise Linux, SUSE Linux, Windows, Windows with SQL Server, Windows with SQL Server Enterprise, Windows with SQL Server Standard or Windows with SQL Server Web."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.instance_platform
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
-  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.tags_all
+output "owner_id" {
+  description = "The ID of the AWS account that owns the Capacity Reservation."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.tags
 }
 output "arn" {
   description = "The ARN of the Capacity Reservation."
   value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Capacity Reservation ID."
   value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "outpost_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create the Capacity Reservation."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.outpost_arn
+}
+output "placement_group_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the cluster placement group in which to create the Capacity Reservation."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.placement_group_arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block"
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.tags_all
+}
+output "arn" {
+  description = "The ARN of the Capacity Reservation."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.arn
+}
+output "id" {
+  description = "The Capacity Reservation ID."
+  value       = aws_ec2_capacity_reservation.aws_ec2_capacity_reservation.id
 }
 output "owner_id" {
   description = "The ID of the AWS account that owns the Capacity Reservation."
@@ -362,7 +295,7 @@ output "owner_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

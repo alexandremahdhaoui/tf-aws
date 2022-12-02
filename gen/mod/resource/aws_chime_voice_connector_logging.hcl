@@ -7,16 +7,18 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "enable_media_metric_logs" {
+  description = "(Optional) When true, enables logging of detailed media metrics for Voice Connectors to Amazon CloudWatch logs.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "enable_sip_logs" {
   description = "(Optional) When true, enables SIP message logs for sending to Amazon CloudWatch Logs."
   type        = string
+  default     = ""
 }
 variable "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
-  type        = string
-}
-variable "enable_media_metric_logs" {
-  description = "(Optional) When true, enables logging of detailed media metrics for Voice Connectors to Amazon CloudWatch logs.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -143,25 +145,13 @@ output "enable_media_metric_logs" {
   description = "(Optional) When true, enables logging of detailed media metrics for Voice Connectors to Amazon CloudWatch logs.In addition to all arguments above, the following attributes are exported:"
   value       = aws_chime_voice_connector_logging.aws_chime_voice_connector_logging.enable_media_metric_logs
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "enable_sip_logs" {
   description = "(Optional) When true, enables SIP message logs for sending to Amazon CloudWatch Logs."
   value       = aws_chime_voice_connector_logging.aws_chime_voice_connector_logging.enable_sip_logs
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   value       = aws_chime_voice_connector_logging.aws_chime_voice_connector_logging.voice_connector_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Chime Voice Connector ID."
@@ -169,7 +159,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

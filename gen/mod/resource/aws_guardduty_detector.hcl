@@ -1,49 +1,30 @@
 resource "aws_guardduty_detector" "aws_guardduty_detector" {
-  account_id                      = var.account_id
   arn                             = var.arn
   audit_logs                      = var.audit_logs
+  enable                          = var.enable
+  finding_publishing_frequency    = var.finding_publishing_frequency
+  id                              = var.id
+  tags                            = var.tags
+  account_id                      = var.account_id
+  ebs_volumes                     = var.ebs_volumes
+  kubernetes                      = var.kubernetes
   malware_protection              = var.malware_protection
   s3_logs                         = var.s3_logs
   scan_ec2_instance_with_findings = var.scan_ec2_instance_with_findings
   datasources                     = var.datasources
-  ebs_volumes                     = var.ebs_volumes
-  enable                          = var.enable
-  finding_publishing_frequency    = var.finding_publishing_frequency
-  id                              = var.id
-  kubernetes                      = var.kubernetes
-  tags                            = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Data SourcesThe datasources block supports the following:"
-  type        = string
-}
-variable "datasources" {
-  description = "(Optional) Describes which data sources will be enabled for the detector. See Data Sources below for more details."
-  type        = string
-}
-variable "ebs_volumes" {
-  description = "(Required) Configure whether scanning EBS volumes is enabled as data source for the detector for instances with findings.\nSee EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
-  type        = string
-}
-variable "enable" {
-  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "finding_publishing_frequency" {
-  description = "(Optional) Specifies the frequency of notifications sent for subsequent finding occurrences. If the detector is a GuardDuty member account, the value is determined by the GuardDuty primary account and cannot be modified, otherwise defaults to SIX_HOURS. For standalone and GuardDuty primary accounts, it must be configured in Terraform to enable drift detection. Valid values for standalone and primary accounts: FIFTEEN_MINUTES, ONE_HOUR, SIX_HOURS. See AWS Documentation for more information."
   type        = string
 }
 variable "id" {
   description = "The ID of the GuardDuty detector"
   type        = string
 }
-variable "kubernetes" {
-  description = "(Optional) Configures Kubernetes protectionKubernetes and Kubernetes Audit Logs below for more details."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Data SourcesThe datasources block supports the following:"
   type        = string
+  default     = ""
 }
 variable "account_id" {
   description = "The AWS account ID of the GuardDuty detector"
@@ -57,17 +38,42 @@ variable "audit_logs" {
   description = "(Required) Configures Kubernetes audit logs as a data source for Kubernetes protectionKubernetes Audit Logs below for more details.Kubernetes Audit LogsThe audit_logs block supports the following:"
   type        = string
 }
-variable "malware_protection" {
-  description = "(Optional) Configures Malware ProtectionMalware Protection, Scan EC2 instance with findings and EBS volumes below for more details.S3 LogsThe s3_logs block supports the following:"
+variable "enable" {
+  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "s3_logs" {
-  description = "(Optional) Configures S3 protectionS3 Logs below for more details."
+variable "finding_publishing_frequency" {
+  description = "(Optional) Specifies the frequency of notifications sent for subsequent finding occurrences. If the detector is a GuardDuty member account, the value is determined by the GuardDuty primary account and cannot be modified, otherwise defaults to SIX_HOURS. For standalone and GuardDuty primary accounts, it must be configured in Terraform to enable drift detection. Valid values for standalone and primary accounts: FIFTEEN_MINUTES, ONE_HOUR, SIX_HOURS. See AWS Documentation for more information."
   type        = string
+  default     = ""
 }
 variable "scan_ec2_instance_with_findings" {
   description = "(Required) Configure whether Malware ProtectionScan EC2 instance with findings below for more details.Scan EC2 instance with findingsThe scan_ec2_instance_with_findings block supports the following:"
   type        = string
+}
+variable "datasources" {
+  description = "(Optional) Describes which data sources will be enabled for the detector. See Data Sources below for more details."
+  type        = string
+  default     = ""
+}
+variable "ebs_volumes" {
+  description = "(Required) Configure whether scanning EBS volumes is enabled as data source for the detector for instances with findings.\nSee EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
+  type        = string
+}
+variable "kubernetes" {
+  description = "(Optional) Configures Kubernetes protectionKubernetes and Kubernetes Audit Logs below for more details."
+  type        = string
+  default     = ""
+}
+variable "malware_protection" {
+  description = "(Optional) Configures Malware ProtectionMalware Protection, Scan EC2 instance with findings and EBS volumes below for more details.S3 LogsThe s3_logs block supports the following:"
+  type        = string
+  default     = ""
+}
+variable "s3_logs" {
+  description = "(Optional) Configures S3 protectionS3 Logs below for more details."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,133 +195,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ID of the GuardDuty detector"
-  value       = aws_guardduty_detector.aws_guardduty_detector.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kubernetes" {
-  description = "(Optional) Configures Kubernetes protectionKubernetes and Kubernetes Audit Logs below for more details."
-  value       = aws_guardduty_detector.aws_guardduty_detector.kubernetes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Data SourcesThe datasources block supports the following:"
-  value       = aws_guardduty_detector.aws_guardduty_detector.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "datasources" {
-  description = "(Optional) Describes which data sources will be enabled for the detector. See Data Sources below for more details."
-  value       = aws_guardduty_detector.aws_guardduty_detector.datasources
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ebs_volumes" {
-  description = "(Required) Configure whether scanning EBS volumes is enabled as data source for the detector for instances with findings.\nSee EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
-  value       = aws_guardduty_detector.aws_guardduty_detector.ebs_volumes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enable" {
-  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_guardduty_detector.aws_guardduty_detector.enable
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "finding_publishing_frequency" {
-  description = "(Optional) Specifies the frequency of notifications sent for subsequent finding occurrences. If the detector is a GuardDuty member account, the value is determined by the GuardDuty primary account and cannot be modified, otherwise defaults to SIX_HOURS. For standalone and GuardDuty primary accounts, it must be configured in Terraform to enable drift detection. Valid values for standalone and primary accounts: FIFTEEN_MINUTES, ONE_HOUR, SIX_HOURS. See AWS Documentation for more information."
-  value       = aws_guardduty_detector.aws_guardduty_detector.finding_publishing_frequency
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_logs" {
-  description = "(Optional) Configures S3 protectionS3 Logs below for more details."
-  value       = aws_guardduty_detector.aws_guardduty_detector.s3_logs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "scan_ec2_instance_with_findings" {
-  description = "(Required) Configure whether Malware ProtectionScan EC2 instance with findings below for more details.Scan EC2 instance with findingsThe scan_ec2_instance_with_findings block supports the following:"
-  value       = aws_guardduty_detector.aws_guardduty_detector.scan_ec2_instance_with_findings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_id" {
-  description = "The AWS account ID of the GuardDuty detector"
-  value       = aws_guardduty_detector.aws_guardduty_detector.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty detector"
   value       = aws_guardduty_detector.aws_guardduty_detector.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "audit_logs" {
   description = "(Required) Configures Kubernetes audit logs as a data source for Kubernetes protectionKubernetes Audit Logs below for more details.Kubernetes Audit LogsThe audit_logs block supports the following:"
   value       = aws_guardduty_detector.aws_guardduty_detector.audit_logs
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "enable" {
+  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_guardduty_detector.aws_guardduty_detector.enable
 }
-output "malware_protection" {
-  description = "(Optional) Configures Malware ProtectionMalware Protection, Scan EC2 instance with findings and EBS volumes below for more details.S3 LogsThe s3_logs block supports the following:"
-  value       = aws_guardduty_detector.aws_guardduty_detector.malware_protection
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_id" {
-  description = "The AWS account ID of the GuardDuty detector"
-  value       = aws_guardduty_detector.aws_guardduty_detector.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the GuardDuty detector"
-  value       = aws_guardduty_detector.aws_guardduty_detector.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "finding_publishing_frequency" {
+  description = "(Optional) Specifies the frequency of notifications sent for subsequent finding occurrences. If the detector is a GuardDuty member account, the value is determined by the GuardDuty primary account and cannot be modified, otherwise defaults to SIX_HOURS. For standalone and GuardDuty primary accounts, it must be configured in Terraform to enable drift detection. Valid values for standalone and primary accounts: FIFTEEN_MINUTES, ONE_HOUR, SIX_HOURS. See AWS Documentation for more information."
+  value       = aws_guardduty_detector.aws_guardduty_detector.finding_publishing_frequency
 }
 output "id" {
   description = "The ID of the GuardDuty detector"
   value       = aws_guardduty_detector.aws_guardduty_detector.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Data SourcesThe datasources block supports the following:"
+  value       = aws_guardduty_detector.aws_guardduty_detector.tags
+}
+output "account_id" {
+  description = "The AWS account ID of the GuardDuty detector"
+  value       = aws_guardduty_detector.aws_guardduty_detector.account_id
+}
+output "ebs_volumes" {
+  description = "(Required) Configure whether scanning EBS volumes is enabled as data source for the detector for instances with findings.\nSee EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
+  value       = aws_guardduty_detector.aws_guardduty_detector.ebs_volumes
+}
+output "kubernetes" {
+  description = "(Optional) Configures Kubernetes protectionKubernetes and Kubernetes Audit Logs below for more details."
+  value       = aws_guardduty_detector.aws_guardduty_detector.kubernetes
+}
+output "malware_protection" {
+  description = "(Optional) Configures Malware ProtectionMalware Protection, Scan EC2 instance with findings and EBS volumes below for more details.S3 LogsThe s3_logs block supports the following:"
+  value       = aws_guardduty_detector.aws_guardduty_detector.malware_protection
+}
+output "s3_logs" {
+  description = "(Optional) Configures S3 protectionS3 Logs below for more details."
+  value       = aws_guardduty_detector.aws_guardduty_detector.s3_logs
+}
+output "scan_ec2_instance_with_findings" {
+  description = "(Required) Configure whether Malware ProtectionScan EC2 instance with findings below for more details.Scan EC2 instance with findingsThe scan_ec2_instance_with_findings block supports the following:"
+  value       = aws_guardduty_detector.aws_guardduty_detector.scan_ec2_instance_with_findings
+}
+output "datasources" {
+  description = "(Optional) Describes which data sources will be enabled for the detector. See Data Sources below for more details."
+  value       = aws_guardduty_detector.aws_guardduty_detector.datasources
+}
+output "account_id" {
+  description = "The AWS account ID of the GuardDuty detector"
+  value       = aws_guardduty_detector.aws_guardduty_detector.account_id
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the GuardDuty detector"
+  value       = aws_guardduty_detector.aws_guardduty_detector.arn
+}
+output "id" {
+  description = "The ID of the GuardDuty detector"
+  value       = aws_guardduty_detector.aws_guardduty_detector.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -323,7 +265,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

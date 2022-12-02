@@ -1,17 +1,13 @@
 resource "aws_appstream_directory_config" "aws_appstream_directory_config" {
-  account_password                        = var.account_password
   directory_name                          = var.directory_name
   id                                      = var.id
   organizational_unit_distinguished_names = var.organizational_unit_distinguished_names
   service_account_credentials             = var.service_account_credentials
   account_name                            = var.account_name
+  account_password                        = var.account_password
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "service_account_credentials" {
-  description = "(Required) Configuration block for the name of the directory and organizational unit (OU) to use to join the directory config to a Microsoft Active Directory domain. See service_account_credentials below.service_account_credentials"
   type        = string
 }
 variable "account_name" {
@@ -32,6 +28,10 @@ variable "id" {
 }
 variable "organizational_unit_distinguished_names" {
   description = "(Required) Distinguished names of the organizational units for computer accounts."
+  type        = string
+}
+variable "service_account_credentials" {
+  description = "(Required) Configuration block for the name of the directory and organizational unit (OU) to use to join the directory config to a Microsoft Active Directory domain. See service_account_credentials below.service_account_credentials"
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,53 +154,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "organizational_unit_distinguished_names" {
-  description = "(Required) Distinguished names of the organizational units for computer accounts."
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.organizational_unit_distinguished_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "service_account_credentials" {
-  description = "(Required) Configuration block for the name of the directory and organizational unit (OU) to use to join the directory config to a Microsoft Active Directory domain. See service_account_credentials below.service_account_credentials"
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.service_account_credentials
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_name" {
-  description = "(Required) User name of the account. This account must have the following privileges: create computer objects, join computers to the domain, and change/reset the password on descendant computer objects for the organizational units specified."
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.account_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_password" {
-  description = "(Required) Password for the account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.account_password
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "directory_name" {
   description = "(Required) Fully qualified name of the directory."
   value       = aws_appstream_directory_config.aws_appstream_directory_config.directory_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Unique identifier (ID) of the appstream directory config."
   value       = aws_appstream_directory_config.aws_appstream_directory_config.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "organizational_unit_distinguished_names" {
+  description = "(Required) Distinguished names of the organizational units for computer accounts."
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.organizational_unit_distinguished_names
+}
+output "service_account_credentials" {
+  description = "(Required) Configuration block for the name of the directory and organizational unit (OU) to use to join the directory config to a Microsoft Active Directory domain. See service_account_credentials below.service_account_credentials"
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.service_account_credentials
+}
+output "account_name" {
+  description = "(Required) User name of the account. This account must have the following privileges: create computer objects, join computers to the domain, and change/reset the password on descendant computer objects for the organizational units specified."
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.account_name
+}
+output "account_password" {
+  description = "(Required) Password for the account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.account_password
+}
+output "id" {
+  description = "Unique identifier (ID) of the appstream directory config."
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.id
 }
 output "created_time" {
   description = " Date and time, in UTC and extended RFC 3339 format, when the directory config was created."
@@ -208,15 +188,7 @@ output "created_time" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Unique identifier (ID) of the appstream directory config."
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

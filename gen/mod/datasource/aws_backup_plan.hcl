@@ -1,19 +1,11 @@
 datasource "aws_backup_plan" "aws_backup_plan" {
-  plan_id = var.plan_id
-  tags    = var.tags
   arn     = var.arn
   name    = var.name
+  plan_id = var.plan_id
+  tags    = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "plan_id" {
-  description = "(Required) Backup plan ID.In addition to the arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags" {
-  description = "Metadata that you can assign to help organize the plans you create."
   type        = string
 }
 variable "arn" {
@@ -24,53 +16,37 @@ variable "name" {
   description = "Display name of a backup plan."
   type        = string
 }
-output "tags" {
-  description = "Metadata that you can assign to help organize the plans you create."
-  value       = aws_backup_plan.aws_backup_plan.tags
+variable "plan_id" {
+  description = "(Required) Backup plan ID.In addition to the arguments above, the following attributes are exported:"
+  type        = string
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
+variable "tags" {
+  description = "Metadata that you can assign to help organize the plans you create."
   type        = string
 }
 output "arn" {
   description = "ARN of the backup plan."
   value       = aws_backup_plan.aws_backup_plan.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "Display name of a backup plan."
   value       = aws_backup_plan.aws_backup_plan.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "plan_id" {
   description = "(Required) Backup plan ID.In addition to the arguments above, the following attributes are exported:"
   value       = aws_backup_plan.aws_backup_plan.plan_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "Metadata that you can assign to help organize the plans you create."
+  value       = aws_backup_plan.aws_backup_plan.tags
 }
 output "arn" {
   description = "ARN of the backup plan."
   value       = aws_backup_plan.aws_backup_plan.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "Display name of a backup plan."
   value       = aws_backup_plan.aws_backup_plan.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "Metadata that you can assign to help organize the plans you create."
@@ -78,7 +54,7 @@ output "tags" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

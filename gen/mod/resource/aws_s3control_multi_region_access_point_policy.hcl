@@ -1,15 +1,23 @@
 resource "aws_s3control_multi_region_access_point_policy" "aws_s3control_multi_region_access_point_policy" {
-  policy      = var.policy
-  proposed    = var.proposed
   account_id  = var.account_id
   create      = var.create
   details     = var.details
   established = var.established
   id          = var.id
   name        = var.name
+  policy      = var.policy
+  proposed    = var.proposed
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the Multi-Region Access Point."
+  type        = string
+}
+variable "policy" {
+  description = "(Required) A valid JSON document that specifies the policy that you want to associate with this Multi-Region Access Point. Once applied, the policy can be edited, but not deleted. For more information, see the documentation on Multi-Region Access Point Permissions.-> strongNOTE: When you update the policy, the update is first listed as the proposed policy. After the update is finished and all Regions have been updated, the proposed policy is listed as the established policy. If both policies have the same version number, the proposed policy is the established policy.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "proposed" {
@@ -19,6 +27,7 @@ variable "proposed" {
 variable "account_id" {
   description = "(Optional) The AWS account ID for the owner of the Multi-Region Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
   type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 15m)"
@@ -34,14 +43,6 @@ variable "established" {
 }
 variable "id" {
   description = "The AWS account ID and access point name separated by a colon (:)."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the Multi-Region Access Point."
-  type        = string
-}
-variable "policy" {
-  description = "(Required) A valid JSON document that specifies the policy that you want to associate with this Multi-Region Access Point. Once applied, the policy can be edited, but not deleted. For more information, see the documentation on Multi-Region Access Point Permissions.-> strongNOTE: When you update the policy, the update is first listed as the proposed policy. After the update is finished and all Regions have been updated, the proposed policy is listed as the established policy. If both policies have the same version number, the proposed policy is the established policy.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -168,73 +169,49 @@ output "details" {
   description = "(Required) A configuration block containing details about the policy for the Multi-Region Access Point. See Details Configuration Block below for more detailsDetails ConfigurationThe details block supports the following:"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.details
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "established" {
   description = "The last established policy for the Multi-Region Access Point."
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.established
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The AWS account ID and access point name separated by a colon (:)."
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the Multi-Region Access Point."
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy" {
   description = "(Required) A valid JSON document that specifies the policy that you want to associate with this Multi-Region Access Point. Once applied, the policy can be edited, but not deleted. For more information, see the documentation on Multi-Region Access Point Permissions.-> strongNOTE: When you update the policy, the update is first listed as the proposed policy. After the update is finished and all Regions have been updated, the proposed policy is listed as the established policy. If both policies have the same version number, the proposed policy is the established policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "proposed" {
   description = "The proposed policy for the Multi-Region Access Point.TimeoutsConfiguration options:"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.proposed
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "account_id" {
   description = "(Optional) The AWS account ID for the owner of the Multi-Region Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 15m)"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The AWS account ID and access point name separated by a colon (:)."
+  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.id
+}
+output "proposed" {
+  description = "The proposed policy for the Multi-Region Access Point.TimeoutsConfiguration options:"
+  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.proposed
+}
+output "update" {
+  description = "(Default 15m)"
+  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.update
 }
 output "create" {
   description = "(Default 15m)"
   value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "established" {
   description = "The last established policy for the Multi-Region Access Point."
@@ -242,31 +219,7 @@ output "established" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The AWS account ID and access point name separated by a colon (:)."
-  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "proposed" {
-  description = "The proposed policy for the Multi-Region Access Point.TimeoutsConfiguration options:"
-  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.proposed
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 15m)"
-  value       = aws_s3control_multi_region_access_point_policy.aws_s3control_multi_region_access_point_policy.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

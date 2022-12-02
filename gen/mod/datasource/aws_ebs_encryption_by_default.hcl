@@ -8,17 +8,13 @@ output "enabled" {
   description = "Whether or not default EBS encryption is enabled. Returns as true or false."
   value       = aws_ebs_encryption_by_default.aws_ebs_encryption_by_default.enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Region of default EBS encryption.TimeoutsConfiguration options:"
   value       = aws_ebs_encryption_by_default.aws_ebs_encryption_by_default.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

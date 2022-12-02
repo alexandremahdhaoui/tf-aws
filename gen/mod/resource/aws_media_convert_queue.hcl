@@ -1,30 +1,40 @@
 resource "aws_media_convert_queue" "aws_media_convert_queue" {
-  description               = var.description
-  reservation_plan_settings = var.reservation_plan_settings
-  reserved_slots            = var.reserved_slots
-  tags                      = var.tags
-  status                    = var.status
-  arn                       = var.arn
   commitment                = var.commitment
-  id                        = var.id
-  name                      = var.name
   pricing_plan              = var.pricing_plan
   renewal_type              = var.renewal_type
+  status                    = var.status
+  tags                      = var.tags
+  arn                       = var.arn
+  id                        = var.id
+  name                      = var.name
+  reservation_plan_settings = var.reservation_plan_settings
+  reserved_slots            = var.reserved_slots
+  description               = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "pricing_plan" {
-  description = "(Optional) Specifies whether the pricing plan for the queue is on-demand or reserved. Valid values are ON_DEMAND or RESERVED. Default to ON_DEMAND."
+variable "description" {
+  description = "(Optional) A description of the queue"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The same as name"
   type        = string
 }
-variable "renewal_type" {
-  description = "(Required) Specifies whether the term of your reserved queue pricing plan. Valid values are AUTO_RENEW or EXPIRE."
+variable "name" {
+  description = "(Required) A unique identifier describing the queue"
   type        = string
 }
-variable "status" {
-  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
+variable "reservation_plan_settings" {
+  description = "(Optional) A detail pricing plan of the  reserved queue. See below."
+  type        = string
+  default     = ""
+}
+variable "reserved_slots" {
+  description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -35,29 +45,24 @@ variable "commitment" {
   description = "(Required) The length of the term of your reserved queue pricing plan commitment. Valid value is ONE_YEAR."
   type        = string
 }
-variable "id" {
-  description = "The same as name"
+variable "pricing_plan" {
+  description = "(Optional) Specifies whether the pricing plan for the queue is on-demand or reserved. Valid values are ON_DEMAND or RESERVED. Default to ON_DEMAND."
+  type        = string
+  default     = ""
+}
+variable "renewal_type" {
+  description = "(Required) Specifies whether the term of your reserved queue pricing plan. Valid values are AUTO_RENEW or EXPIRE."
   type        = string
 }
-variable "name" {
-  description = "(Required) A unique identifier describing the queue"
+variable "status" {
+  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
   type        = string
-}
-variable "description" {
-  description = "(Optional) A description of the queue"
-  type        = string
-}
-variable "reservation_plan_settings" {
-  description = "(Optional) A detail pricing plan of the  reserved queue. See below."
-  type        = string
-}
-variable "reserved_slots" {
-  description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsreservation_plan_settings"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,109 +184,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) A unique identifier describing the queue"
-  value       = aws_media_convert_queue.aws_media_convert_queue.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pricing_plan" {
-  description = "(Optional) Specifies whether the pricing plan for the queue is on-demand or reserved. Valid values are ON_DEMAND or RESERVED. Default to ON_DEMAND."
-  value       = aws_media_convert_queue.aws_media_convert_queue.pricing_plan
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "renewal_type" {
-  description = "(Required) Specifies whether the term of your reserved queue pricing plan. Valid values are AUTO_RENEW or EXPIRE."
-  value       = aws_media_convert_queue.aws_media_convert_queue.renewal_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
-  value       = aws_media_convert_queue.aws_media_convert_queue.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Arn of the queue"
   value       = aws_media_convert_queue.aws_media_convert_queue.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "commitment" {
   description = "(Required) The length of the term of your reserved queue pricing plan commitment. Valid value is ONE_YEAR."
   value       = aws_media_convert_queue.aws_media_convert_queue.commitment
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "pricing_plan" {
+  description = "(Optional) Specifies whether the pricing plan for the queue is on-demand or reserved. Valid values are ON_DEMAND or RESERVED. Default to ON_DEMAND."
+  value       = aws_media_convert_queue.aws_media_convert_queue.pricing_plan
 }
-output "id" {
-  description = "The same as name"
-  value       = aws_media_convert_queue.aws_media_convert_queue.id
+output "renewal_type" {
+  description = "(Required) Specifies whether the term of your reserved queue pricing plan. Valid values are AUTO_RENEW or EXPIRE."
+  value       = aws_media_convert_queue.aws_media_convert_queue.renewal_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "status" {
+  description = "(Optional) A status of the queue. Valid values are ACTIVE or RESERVED. Default to PAUSED."
+  value       = aws_media_convert_queue.aws_media_convert_queue.status
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsreservation_plan_settings"
   value       = aws_media_convert_queue.aws_media_convert_queue.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) A description of the queue"
   value       = aws_media_convert_queue.aws_media_convert_queue.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "reservation_plan_settings" {
-  description = "(Optional) A detail pricing plan of the  reserved queue. See below."
-  value       = aws_media_convert_queue.aws_media_convert_queue.reservation_plan_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "reserved_slots" {
-  description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_media_convert_queue.aws_media_convert_queue.reserved_slots
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Arn of the queue"
-  value       = aws_media_convert_queue.aws_media_convert_queue.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The same as name"
   value       = aws_media_convert_queue.aws_media_convert_queue.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) A unique identifier describing the queue"
+  value       = aws_media_convert_queue.aws_media_convert_queue.name
+}
+output "reservation_plan_settings" {
+  description = "(Optional) A detail pricing plan of the  reserved queue. See below."
+  value       = aws_media_convert_queue.aws_media_convert_queue.reservation_plan_settings
+}
+output "reserved_slots" {
+  description = "(Required) Specifies the number of reserved transcode slots (RTS) for queue.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_media_convert_queue.aws_media_convert_queue.reserved_slots
+}
+output "arn" {
+  description = "The Arn of the queue"
+  value       = aws_media_convert_queue.aws_media_convert_queue.arn
+}
+output "id" {
+  description = "The same as name"
+  value       = aws_media_convert_queue.aws_media_convert_queue.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -289,7 +242,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

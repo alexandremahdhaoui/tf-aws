@@ -1,54 +1,38 @@
 resource "aws_redshiftserverless_endpoint_access" "aws_redshiftserverless_endpoint_access" {
-  endpoint_name          = var.endpoint_name
-  subnet_ids             = var.subnet_ids
+  address                = var.address
+  network_interface_id   = var.network_interface_id
   vpc_endpoint           = var.vpc_endpoint
+  vpc_security_group_ids = var.vpc_security_group_ids
+  private_ip_address     = var.private_ip_address
+  subnet_ids             = var.subnet_ids
+  workgroup_name         = var.workgroup_name
+  availability_zone      = var.availability_zone
+  endpoint_name          = var.endpoint_name
+  network_interface      = var.network_interface
+  port                   = var.port
   vpc_endpoint_id        = var.vpc_endpoint_id
   vpc_id                 = var.vpc_id
   arn                    = var.arn
-  network_interface      = var.network_interface
-  network_interface_id   = var.network_interface_id
-  port                   = var.port
-  private_ip_address     = var.private_ip_address
-  availability_zone      = var.availability_zone
-  vpc_security_group_ids = var.vpc_security_group_ids
-  address                = var.address
-  workgroup_name         = var.workgroup_name
   id                     = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "address" {
-  description = "The DNS address of the VPC endpoint."
-  type        = string
-}
-variable "vpc_security_group_ids" {
-  description = "(Optional) An array of security group IDs to associate with the workgroup."
-  type        = string
-}
-variable "id" {
-  description = "The Redshift Endpoint Access Name."
-  type        = string
-}
-variable "workgroup_name" {
-  description = "(Required) The name of the workgroup.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
-  type        = string
-}
-variable "endpoint_name" {
-  description = "(Required) The name of the endpoint."
+variable "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
   type        = string
 }
 variable "subnet_ids" {
   description = "(Required) An array of VPC subnet IDs to associate with the endpoint."
   type        = string
 }
-variable "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+variable "workgroup_name" {
+  description = "(Required) The name of the workgroup.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
   type        = string
 }
 variable "vpc_endpoint_id" {
@@ -63,20 +47,37 @@ variable "availability_zone" {
   description = "The availability Zone."
   type        = string
 }
+variable "endpoint_name" {
+  description = "(Required) The name of the endpoint."
+  type        = string
+}
 variable "network_interface" {
   description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
+  type        = string
+}
+variable "id" {
+  description = "The Redshift Endpoint Access Name."
+  type        = string
+}
+variable "vpc_security_group_ids" {
+  description = "(Optional) An array of security group IDs to associate with the workgroup."
+  type        = string
+  default     = ""
+}
+variable "address" {
+  description = "The DNS address of the VPC endpoint."
   type        = string
 }
 variable "network_interface_id" {
   description = "The unique identifier of the network interface."
   type        = string
 }
-variable "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  type        = string
-}
-variable "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
+variable "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,221 +200,117 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "availability_zone" {
-  description = "The availability Zone."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.availability_zone
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface" {
-  description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_id" {
-  description = "The unique identifier of the network interface."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.private_ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The Redshift Endpoint Access Name."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
 }
 output "address" {
   description = "The DNS address of the VPC endpoint."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "network_interface_id" {
+  description = "The unique identifier of the network interface."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
+}
+output "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
 }
 output "vpc_security_group_ids" {
   description = "(Optional) An array of security group IDs to associate with the workgroup."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_security_group_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Redshift Endpoint Access Name."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "workgroup_name" {
-  description = "(Required) The name of the workgroup.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.workgroup_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_name" {
-  description = "(Required) The name of the endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.endpoint_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.private_ip_address
 }
 output "subnet_ids" {
   description = "(Required) An array of VPC subnet IDs to associate with the endpoint."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "workgroup_name" {
+  description = "(Required) The name of the workgroup.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.workgroup_name
 }
 output "vpc_endpoint_id" {
   description = "The DNS address of the VPC endpoint."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_id" {
   description = "The port that Amazon Redshift Serverless listens on."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface_id" {
-  description = "The unique identifier of the network interface."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ip_address" {
-  description = "The IPv4 address of the network interface within the subnet."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.private_ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Redshift Endpoint Access Name."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_interface" {
-  description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint" {
-  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_endpoint_id" {
-  description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "The port that Amazon Redshift Serverless listens on."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "address" {
-  description = "The DNS address of the VPC endpoint."
-  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "availability_zone" {
   description = "The availability Zone."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.availability_zone
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "endpoint_name" {
+  description = "(Required) The name of the endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.endpoint_name
+}
+output "network_interface" {
+  description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface
+}
+output "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
+}
+output "address" {
+  description = "The DNS address of the VPC endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.address
+}
+output "network_interface_id" {
+  description = "The unique identifier of the network interface."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface_id
+}
+output "vpc_endpoint_id" {
+  description = "The DNS address of the VPC endpoint."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint_id
 }
 output "subnet_id" {
   description = "The unique identifier of the subnet."
   value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.subnet_id
 }
+output "vpc_endpoint" {
+  description = "The VPC endpoint or the Redshift Serverless workgroup. See VPC Endpoint below.VPC Endpoint"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_endpoint
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Serverless Endpoint Access."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.arn
+}
+output "availability_zone" {
+  description = "The availability Zone."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.availability_zone
+}
+output "id" {
+  description = "The Redshift Endpoint Access Name."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.id
+}
+output "network_interface" {
+  description = "The network interfaces of the endpoint.. See Network Interface below.Network Interface"
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.network_interface
+}
+output "port" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.port
+}
+output "private_ip_address" {
+  description = "The IPv4 address of the network interface within the subnet."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.private_ip_address
+}
+output "vpc_id" {
+  description = "The port that Amazon Redshift Serverless listens on."
+  value       = aws_redshiftserverless_endpoint_access.aws_redshiftserverless_endpoint_access.vpc_id
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,52 +1,88 @@
 resource "aws_ssm_association" "aws_ssm_association" {
-  apply_only_at_cron_interval      = var.apply_only_at_cron_interval
-  association_id                   = var.association_id
-  automation_target_parameter_name = var.automation_target_parameter_name
-  key                              = var.key
+  max_errors                       = var.max_errors
+  name                             = var.name
   s3_bucket_name                   = var.s3_bucket_name
   s3_key_prefix                    = var.s3_key_prefix
-  s3_region                        = var.s3_region
-  values                           = var.values
-  arn                              = var.arn
-  name                             = var.name
-  output_location                  = var.output_location
-  schedule_expression              = var.schedule_expression
-  wait_for_success_timeout_seconds = var.wait_for_success_timeout_seconds
-  parameters                       = var.parameters
-  targets                          = var.targets
-  association_name                 = var.association_name
-  compliance_severity              = var.compliance_severity
+  apply_only_at_cron_interval      = var.apply_only_at_cron_interval
   document_version                 = var.document_version
+  key                              = var.key
+  parameters                       = var.parameters
+  s3_region                        = var.s3_region
+  automation_target_parameter_name = var.automation_target_parameter_name
   instance_id                      = var.instance_id
   max_concurrency                  = var.max_concurrency
-  max_errors                       = var.max_errors
+  targets                          = var.targets
+  values                           = var.values
+  wait_for_success_timeout_seconds = var.wait_for_success_timeout_seconds
+  association_id                   = var.association_id
+  compliance_severity              = var.compliance_severity
+  output_location                  = var.output_location
+  arn                              = var.arn
+  association_name                 = var.association_name
+  schedule_expression              = var.schedule_expression
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "s3_region" {
-  description = "(Optional) The S3 bucket region.Targets specify what instance IDs or tags to apply the document to and has these keys:"
+variable "compliance_severity" {
+  description = "(Optional) The compliance severity for the association. Can be one of the following: UNSPECIFIED, LOW, MEDIUM, HIGH or CRITICAL"
   type        = string
+  default     = ""
+}
+variable "output_location" {
+  description = "(Optional) An output location block. Output Location is documented below."
+  type        = string
+  default     = ""
+}
+variable "targets" {
+  description = "(Optional) A block containing the targets of the SSM association. Targets are documented below. AWS currently supports a maximum of 5 targets."
+  type        = string
+  default     = ""
 }
 variable "values" {
   description = "(Required) A list of instance IDs or tag values. AWS currently limits this list size to one value.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "apply_only_at_cron_interval" {
-  description = "(Optional) By default, when you create a new or update associations, the system runs it immediately and then according to the schedule you specified. Enable this option if you do not want an association to run immediately after you create or update it. This parameter is not supported for rate expressions. Default: false."
+variable "wait_for_success_timeout_seconds" {
+  description = "(Optional) The number of seconds to wait for the association status to be Success. If Success status is not reached within the given time, create opration will fail.Output Location (output_location) is an S3 bucket where you want to store the results of this association:"
   type        = string
+  default     = ""
 }
 variable "association_id" {
   description = "The ID of the SSM association."
   type        = string
 }
-variable "automation_target_parameter_name" {
-  description = "(Optional) Specify the target for the association. This target is required for associations that use an Automation document and target resources by using rate controls. This should be set to the SSM document parameter that will define how your automation will branch out."
+variable "association_name" {
+  description = "(Optional) The descriptive name for the association."
   type        = string
+  default     = ""
+}
+variable "schedule_expression" {
+  description = "(Optional) A cron or rate expression that specifies when the association runs."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the SSM association"
+  type        = string
+}
+variable "document_version" {
+  description = "(Optional) The document version you want to associate with the target(s). Can be a specific version or the default version."
+  type        = string
+  default     = ""
 }
 variable "key" {
   description = "(Required) Either InstanceIds or tag:Tag Name to specify an EC2 tag."
+  type        = string
+}
+variable "max_errors" {
+  description = "(Optional) The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "The name of the SSM document to apply."
   type        = string
 }
 variable "s3_bucket_name" {
@@ -56,46 +92,12 @@ variable "s3_bucket_name" {
 variable "s3_key_prefix" {
   description = "(Optional) The S3 bucket prefix. Results stored in the root if not configured."
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "The ARN of the SSM association"
+variable "apply_only_at_cron_interval" {
+  description = "(Optional) By default, when you create a new or update associations, the system runs it immediately and then according to the schedule you specified. Enable this option if you do not want an association to run immediately after you create or update it. This parameter is not supported for rate expressions. Default: false."
   type        = string
-}
-variable "name" {
-  description = "The name of the SSM document to apply."
-  type        = string
-}
-variable "output_location" {
-  description = "(Optional) An output location block. Output Location is documented below."
-  type        = string
-}
-variable "schedule_expression" {
-  description = "(Optional) A cron or rate expression that specifies when the association runs."
-  type        = string
-}
-variable "wait_for_success_timeout_seconds" {
-  description = "(Optional) The number of seconds to wait for the association status to be Success. If Success status is not reached within the given time, create opration will fail.Output Location (output_location) is an S3 bucket where you want to store the results of this association:"
-  type        = string
-}
-variable "parameters" {
-  description = "(Optional) A block of arbitrary string parameters to pass to the SSM document."
-  type        = string
-}
-variable "targets" {
-  description = "(Optional) A block containing the targets of the SSM association. Targets are documented below. AWS currently supports a maximum of 5 targets."
-  type        = string
-}
-variable "association_name" {
-  description = "(Optional) The descriptive name for the association."
-  type        = string
-}
-variable "compliance_severity" {
-  description = "(Optional) The compliance severity for the association. Can be one of the following: UNSPECIFIED, LOW, MEDIUM, HIGH or CRITICAL"
-  type        = string
-}
-variable "document_version" {
-  description = "(Optional) The document version you want to associate with the target(s). Can be a specific version or the default version."
-  type        = string
+  default     = ""
 }
 variable "instance_id" {
   description = "The instance id that the SSM document was applied to."
@@ -104,10 +106,22 @@ variable "instance_id" {
 variable "max_concurrency" {
   description = "(Optional) The maximum number of targets allowed to run the association at the same time. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
   type        = string
+  default     = ""
 }
-variable "max_errors" {
-  description = "(Optional) The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
+variable "parameters" {
+  description = "(Optional) A block of arbitrary string parameters to pass to the SSM document."
   type        = string
+  default     = ""
+}
+variable "s3_region" {
+  description = "(Optional) The S3 bucket region.Targets specify what instance IDs or tags to apply the document to and has these keys:"
+  type        = string
+  default     = ""
+}
+variable "automation_target_parameter_name" {
+  description = "(Optional) Specify the target for the association. This target is required for associations that use an Automation document and target resources by using rate controls. This should be set to the SSM document parameter that will define how your automation will branch out."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -229,197 +243,105 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "parameters" {
-  description = "(Optional) A block of arbitrary string parameters to pass to the SSM document."
-  value       = aws_ssm_association.aws_ssm_association.parameters
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "targets" {
-  description = "(Optional) A block containing the targets of the SSM association. Targets are documented below. AWS currently supports a maximum of 5 targets."
-  value       = aws_ssm_association.aws_ssm_association.targets
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "association_name" {
-  description = "(Optional) The descriptive name for the association."
-  value       = aws_ssm_association.aws_ssm_association.association_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "compliance_severity" {
-  description = "(Optional) The compliance severity for the association. Can be one of the following: UNSPECIFIED, LOW, MEDIUM, HIGH or CRITICAL"
-  value       = aws_ssm_association.aws_ssm_association.compliance_severity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "document_version" {
-  description = "(Optional) The document version you want to associate with the target(s). Can be a specific version or the default version."
-  value       = aws_ssm_association.aws_ssm_association.document_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_id" {
-  description = "The instance id that the SSM document was applied to."
-  value       = aws_ssm_association.aws_ssm_association.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_concurrency" {
-  description = "(Optional) The maximum number of targets allowed to run the association at the same time. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
-  value       = aws_ssm_association.aws_ssm_association.max_concurrency
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_errors" {
-  description = "(Optional) The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
-  value       = aws_ssm_association.aws_ssm_association.max_errors
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "values" {
-  description = "(Required) A list of instance IDs or tag values. AWS currently limits this list size to one value.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ssm_association.aws_ssm_association.values
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "s3_key_prefix" {
+  description = "(Optional) The S3 bucket prefix. Results stored in the root if not configured."
+  value       = aws_ssm_association.aws_ssm_association.s3_key_prefix
 }
 output "apply_only_at_cron_interval" {
   description = "(Optional) By default, when you create a new or update associations, the system runs it immediately and then according to the schedule you specified. Enable this option if you do not want an association to run immediately after you create or update it. This parameter is not supported for rate expressions. Default: false."
   value       = aws_ssm_association.aws_ssm_association.apply_only_at_cron_interval
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "association_id" {
-  description = "The ID of the SSM association."
-  value       = aws_ssm_association.aws_ssm_association.association_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "automation_target_parameter_name" {
-  description = "(Optional) Specify the target for the association. This target is required for associations that use an Automation document and target resources by using rate controls. This should be set to the SSM document parameter that will define how your automation will branch out."
-  value       = aws_ssm_association.aws_ssm_association.automation_target_parameter_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "document_version" {
+  description = "(Optional) The document version you want to associate with the target(s). Can be a specific version or the default version."
+  value       = aws_ssm_association.aws_ssm_association.document_version
 }
 output "key" {
   description = "(Required) Either InstanceIds or tag:Tag Name to specify an EC2 tag."
   value       = aws_ssm_association.aws_ssm_association.key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "max_errors" {
+  description = "(Optional) The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
+  value       = aws_ssm_association.aws_ssm_association.max_errors
+}
+output "name" {
+  description = "The name of the SSM document to apply."
+  value       = aws_ssm_association.aws_ssm_association.name
 }
 output "s3_bucket_name" {
   description = "(Required) The S3 bucket name."
   value       = aws_ssm_association.aws_ssm_association.s3_bucket_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_key_prefix" {
-  description = "(Optional) The S3 bucket prefix. Results stored in the root if not configured."
-  value       = aws_ssm_association.aws_ssm_association.s3_key_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_region" {
-  description = "(Optional) The S3 bucket region.Targets specify what instance IDs or tags to apply the document to and has these keys:"
-  value       = aws_ssm_association.aws_ssm_association.s3_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the SSM association"
-  value       = aws_ssm_association.aws_ssm_association.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The name of the SSM document to apply."
-  value       = aws_ssm_association.aws_ssm_association.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "output_location" {
-  description = "(Optional) An output location block. Output Location is documented below."
-  value       = aws_ssm_association.aws_ssm_association.output_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "schedule_expression" {
-  description = "(Optional) A cron or rate expression that specifies when the association runs."
-  value       = aws_ssm_association.aws_ssm_association.schedule_expression
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "wait_for_success_timeout_seconds" {
-  description = "(Optional) The number of seconds to wait for the association status to be Success. If Success status is not reached within the given time, create opration will fail.Output Location (output_location) is an S3 bucket where you want to store the results of this association:"
-  value       = aws_ssm_association.aws_ssm_association.wait_for_success_timeout_seconds
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the SSM association"
-  value       = aws_ssm_association.aws_ssm_association.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "association_id" {
-  description = "The ID of the SSM association."
-  value       = aws_ssm_association.aws_ssm_association.association_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "automation_target_parameter_name" {
+  description = "(Optional) Specify the target for the association. This target is required for associations that use an Automation document and target resources by using rate controls. This should be set to the SSM document parameter that will define how your automation will branch out."
+  value       = aws_ssm_association.aws_ssm_association.automation_target_parameter_name
 }
 output "instance_id" {
   description = "The instance id that the SSM document was applied to."
   value       = aws_ssm_association.aws_ssm_association.instance_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "max_concurrency" {
+  description = "(Optional) The maximum number of targets allowed to run the association at the same time. You can specify a number, for example 10, or a percentage of the target set, for example 10%."
+  value       = aws_ssm_association.aws_ssm_association.max_concurrency
+}
+output "parameters" {
+  description = "(Optional) A block of arbitrary string parameters to pass to the SSM document."
+  value       = aws_ssm_association.aws_ssm_association.parameters
+}
+output "s3_region" {
+  description = "(Optional) The S3 bucket region.Targets specify what instance IDs or tags to apply the document to and has these keys:"
+  value       = aws_ssm_association.aws_ssm_association.s3_region
+}
+output "association_id" {
+  description = "The ID of the SSM association."
+  value       = aws_ssm_association.aws_ssm_association.association_id
+}
+output "compliance_severity" {
+  description = "(Optional) The compliance severity for the association. Can be one of the following: UNSPECIFIED, LOW, MEDIUM, HIGH or CRITICAL"
+  value       = aws_ssm_association.aws_ssm_association.compliance_severity
+}
+output "output_location" {
+  description = "(Optional) An output location block. Output Location is documented below."
+  value       = aws_ssm_association.aws_ssm_association.output_location
+}
+output "targets" {
+  description = "(Optional) A block containing the targets of the SSM association. Targets are documented below. AWS currently supports a maximum of 5 targets."
+  value       = aws_ssm_association.aws_ssm_association.targets
+}
+output "values" {
+  description = "(Required) A list of instance IDs or tag values. AWS currently limits this list size to one value.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ssm_association.aws_ssm_association.values
+}
+output "wait_for_success_timeout_seconds" {
+  description = "(Optional) The number of seconds to wait for the association status to be Success. If Success status is not reached within the given time, create opration will fail.Output Location (output_location) is an S3 bucket where you want to store the results of this association:"
+  value       = aws_ssm_association.aws_ssm_association.wait_for_success_timeout_seconds
+}
+output "arn" {
+  description = "The ARN of the SSM association"
+  value       = aws_ssm_association.aws_ssm_association.arn
+}
+output "association_name" {
+  description = "(Optional) The descriptive name for the association."
+  value       = aws_ssm_association.aws_ssm_association.association_name
+}
+output "schedule_expression" {
+  description = "(Optional) A cron or rate expression that specifies when the association runs."
+  value       = aws_ssm_association.aws_ssm_association.schedule_expression
+}
+output "parameters" {
+  description = "Additional parameters passed to the SSM document."
+  value       = aws_ssm_association.aws_ssm_association.parameters
+}
+output "arn" {
+  description = "The ARN of the SSM association"
+  value       = aws_ssm_association.aws_ssm_association.arn
+}
+output "association_id" {
+  description = "The ID of the SSM association."
+  value       = aws_ssm_association.aws_ssm_association.association_id
+}
+output "instance_id" {
+  description = "The instance id that the SSM document was applied to."
+  value       = aws_ssm_association.aws_ssm_association.instance_id
 }
 output "name" {
   description = "The name of the SSM document to apply."
@@ -427,15 +349,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "parameters" {
-  description = "Additional parameters passed to the SSM document."
-  value       = aws_ssm_association.aws_ssm_association.parameters
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

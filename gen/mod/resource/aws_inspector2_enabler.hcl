@@ -1,11 +1,15 @@
 resource "aws_inspector2_enabler" "aws_inspector2_enabler" {
-  resource_types = var.resource_types
   update         = var.update
   account_ids    = var.account_ids
   create         = var.create
+  resource_types = var.resource_types
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "account_ids" {
+  description = "(Required) Set of account IDs."
   type        = string
 }
 variable "create" {
@@ -18,10 +22,6 @@ variable "resource_types" {
 }
 variable "update" {
   description = "(Default 15m)"
-  type        = string
-}
-variable "account_ids" {
-  description = "(Required) Set of account IDs."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,53 +144,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "account_ids" {
+  description = "(Required) Set of account IDs."
+  value       = aws_inspector2_enabler.aws_inspector2_enabler.account_ids
+}
 output "create" {
   description = "(Default 15m)"
   value       = aws_inspector2_enabler.aws_inspector2_enabler.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_types" {
   description = "(Required) Type of resources to scan. Valid values are EC2 and ECR. If you only use one type, Terraform will ignore the status of the other type.No additional attributes are exported.TimeoutsConfiguration options:"
   value       = aws_inspector2_enabler.aws_inspector2_enabler.resource_types
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 15m)"
   value       = aws_inspector2_enabler.aws_inspector2_enabler.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_ids" {
-  description = "(Required) Set of account IDs."
-  value       = aws_inspector2_enabler.aws_inspector2_enabler.account_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 15m)"
   value       = aws_inspector2_enabler.aws_inspector2_enabler.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 15m)"
   value       = aws_inspector2_enabler.aws_inspector2_enabler.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

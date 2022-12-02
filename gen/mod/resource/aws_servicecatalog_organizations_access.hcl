@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "Account ID for the account using the resource.TimeoutsConfiguration options:"
-  type        = string
-}
 variable "enabled" {
   description = "(Required) Whether to enable AWS Organizations access.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "Account ID for the account using the resource.TimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -134,21 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "Account ID for the account using the resource.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_organizations_access.aws_servicecatalog_organizations_access.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "enabled" {
   description = "(Required) Whether to enable AWS Organizations access.In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_organizations_access.aws_servicecatalog_organizations_access.enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Account ID for the account using the resource.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_organizations_access.aws_servicecatalog_organizations_access.id
 }
 output "id" {
   description = "Account ID for the account using the resource.TimeoutsConfiguration options:"
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

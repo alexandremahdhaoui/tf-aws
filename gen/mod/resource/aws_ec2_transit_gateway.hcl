@@ -1,38 +1,67 @@
 resource "aws_ec2_transit_gateway" "aws_ec2_transit_gateway" {
-  id                                 = var.id
-  auto_accept_shared_attachments     = var.auto_accept_shared_attachments
-  description                        = var.description
-  default_route_table_association    = var.default_route_table_association
-  vpn_ecmp_support                   = var.vpn_ecmp_support
-  amazon_side_asn                    = var.amazon_side_asn
-  association_default_route_table_id = var.association_default_route_table_id
-  default_route_table_propagation    = var.default_route_table_propagation
+  multicast_support                  = var.multicast_support
   owner_id                           = var.owner_id
-  tags                               = var.tags
+  association_default_route_table_id = var.association_default_route_table_id
+  default_route_table_association    = var.default_route_table_association
+  default_route_table_propagation    = var.default_route_table_propagation
+  id                                 = var.id
+  vpn_ecmp_support                   = var.vpn_ecmp_support
   update                             = var.update
   arn                                = var.arn
   create                             = var.create
+  dns_support                        = var.dns_support
   propagation_default_route_table_id = var.propagation_default_route_table_id
+  tags                               = var.tags
+  amazon_side_asn                    = var.amazon_side_asn
+  auto_accept_shared_attachments     = var.auto_accept_shared_attachments
+  description                        = var.description
   tags_all                           = var.tags_all
   transit_gateway_cidr_blocks        = var.transit_gateway_cidr_blocks
-  dns_support                        = var.dns_support
-  multicast_support                  = var.multicast_support
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "default_route_table_propagation" {
-  description = "(Optional) Whether resource attachments automatically propagate routes to the default propagation route table. Valid values: disable, enable. Default value: enable."
+variable "multicast_support" {
+  description = "(Optional) Whether Multicast support is enabled. Required to use ec2_transit_gateway_multicast_domain. Valid values: disable, enable. Default value: disable."
   type        = string
+  default     = ""
 }
 variable "owner_id" {
   description = "Identifier of the AWS account that owns the EC2 Transit Gateway"
   type        = string
 }
+variable "id" {
+  description = "EC2 Transit Gateway identifier"
+  type        = string
+}
+variable "vpn_ecmp_support" {
+  description = "(Optional) Whether VPN Equal Cost Multipath Protocol support is enabled. Valid values: disable, enable. Default value: enable.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "association_default_route_table_id" {
+  description = "Identifier of the default association route table"
+  type        = string
+}
+variable "default_route_table_association" {
+  description = "(Optional) Whether resource attachments are automatically associated with the default association route table. Valid values: disable, enable. Default value: enable."
+  type        = string
+  default     = ""
+}
+variable "default_route_table_propagation" {
+  description = "(Optional) Whether resource attachments automatically propagate routes to the default propagation route table. Valid values: disable, enable. Default value: enable."
+  type        = string
+  default     = ""
+}
+variable "propagation_default_route_table_id" {
+  description = "Identifier of the default propagation route tableTimeoutsConfiguration options:"
+  type        = string
+}
 variable "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
 variable "update" {
   description = "(Default 10m)"
@@ -46,9 +75,10 @@ variable "create" {
   description = "(Default 10m)"
   type        = string
 }
-variable "propagation_default_route_table_id" {
-  description = "Identifier of the default propagation route tableTimeoutsConfiguration options:"
+variable "dns_support" {
+  description = "(Optional) Whether DNS support is enabled. Valid values: disable, enable. Default value: enable."
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -57,42 +87,22 @@ variable "tags_all" {
 variable "transit_gateway_cidr_blocks" {
   description = "(Optional) One or more IPv4 or IPv6 CIDR blocks for the transit gateway. Must be a size /24 CIDR block or larger for IPv4, or a size /64 CIDR block or larger for IPv6."
   type        = string
-}
-variable "dns_support" {
-  description = "(Optional) Whether DNS support is enabled. Valid values: disable, enable. Default value: enable."
-  type        = string
-}
-variable "multicast_support" {
-  description = "(Optional) Whether Multicast support is enabled. Required to use ec2_transit_gateway_multicast_domain. Valid values: disable, enable. Default value: disable."
-  type        = string
-}
-variable "id" {
-  description = "EC2 Transit Gateway identifier"
-  type        = string
-}
-variable "auto_accept_shared_attachments" {
-  description = "(Optional) Whether resource attachment requests are automatically accepted. Valid values: disable, enable. Default value: disable."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the EC2 Transit Gateway."
-  type        = string
-}
-variable "default_route_table_association" {
-  description = "(Optional) Whether resource attachments are automatically associated with the default association route table. Valid values: disable, enable. Default value: enable."
-  type        = string
-}
-variable "vpn_ecmp_support" {
-  description = "(Optional) Whether VPN Equal Cost Multipath Protocol support is enabled. Valid values: disable, enable. Default value: enable.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "amazon_side_asn" {
   description = "(Optional) Private Autonomous System Number (ASN) for the Amazon side of a BGP session. The range is 64512 to 65534 for 16-bit ASNs and 4200000000 to 4294967294 for 32-bit ASNs. Default value: 64512.-> strongNOTE: Modifying amazon_side_asn on a Transit Gateway with active BGP sessions is not allowed. You must first delete all Transit Gateway attachments that have BGP configured prior to modifying amazon_side_asn."
   type        = string
+  default     = ""
 }
-variable "association_default_route_table_id" {
-  description = "Identifier of the default association route table"
+variable "auto_accept_shared_attachments" {
+  description = "(Optional) Whether resource attachment requests are automatically accepted. Valid values: disable, enable. Default value: disable."
   type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) Description of the EC2 Transit Gateway."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -214,149 +224,109 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.update
+}
 output "arn" {
   description = "EC2 Transit Gateway Amazon Resource Name (ARN)"
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 10m)"
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_route_table_propagation" {
-  description = "(Optional) Whether resource attachments automatically propagate routes to the default propagation route table. Valid values: disable, enable. Default value: enable."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.default_route_table_propagation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "Identifier of the AWS account that owns the EC2 Transit Gateway"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "dns_support" {
   description = "(Optional) Whether DNS support is enabled. Valid values: disable, enable. Default value: enable."
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.dns_support
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "multicast_support" {
-  description = "(Optional) Whether Multicast support is enabled. Required to use ec2_transit_gateway_multicast_domain. Valid values: disable, enable. Default value: disable."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.multicast_support
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "propagation_default_route_table_id" {
   description = "Identifier of the default propagation route tableTimeoutsConfiguration options:"
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.propagation_default_route_table_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "transit_gateway_cidr_blocks" {
-  description = "(Optional) One or more IPv4 or IPv6 CIDR blocks for the transit gateway. Must be a size /24 CIDR block or larger for IPv4, or a size /64 CIDR block or larger for IPv6."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.transit_gateway_cidr_blocks
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_accept_shared_attachments" {
-  description = "(Optional) Whether resource attachment requests are automatically accepted. Valid values: disable, enable. Default value: disable."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.auto_accept_shared_attachments
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the EC2 Transit Gateway."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway identifier"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.tags
 }
 output "amazon_side_asn" {
   description = "(Optional) Private Autonomous System Number (ASN) for the Amazon side of a BGP session. The range is 64512 to 65534 for 16-bit ASNs and 4200000000 to 4294967294 for 32-bit ASNs. Default value: 64512.-> strongNOTE: Modifying amazon_side_asn on a Transit Gateway with active BGP sessions is not allowed. You must first delete all Transit Gateway attachments that have BGP configured prior to modifying amazon_side_asn."
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.amazon_side_asn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "auto_accept_shared_attachments" {
+  description = "(Optional) Whether resource attachment requests are automatically accepted. Valid values: disable, enable. Default value: disable."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.auto_accept_shared_attachments
+}
+output "description" {
+  description = "(Optional) Description of the EC2 Transit Gateway."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.description
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.tags_all
+}
+output "transit_gateway_cidr_blocks" {
+  description = "(Optional) One or more IPv4 or IPv6 CIDR blocks for the transit gateway. Must be a size /24 CIDR block or larger for IPv4, or a size /64 CIDR block or larger for IPv6."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.transit_gateway_cidr_blocks
+}
+output "multicast_support" {
+  description = "(Optional) Whether Multicast support is enabled. Required to use ec2_transit_gateway_multicast_domain. Valid values: disable, enable. Default value: disable."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.multicast_support
+}
+output "owner_id" {
+  description = "Identifier of the AWS account that owns the EC2 Transit Gateway"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.owner_id
 }
 output "association_default_route_table_id" {
   description = "Identifier of the default association route table"
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.association_default_route_table_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "default_route_table_association" {
   description = "(Optional) Whether resource attachments are automatically associated with the default association route table. Valid values: disable, enable. Default value: enable."
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.default_route_table_association
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "default_route_table_propagation" {
+  description = "(Optional) Whether resource attachments automatically propagate routes to the default propagation route table. Valid values: disable, enable. Default value: enable."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.default_route_table_propagation
+}
+output "id" {
+  description = "EC2 Transit Gateway identifier"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
 }
 output "vpn_ecmp_support" {
   description = "(Optional) Whether VPN Equal Cost Multipath Protocol support is enabled. Valid values: disable, enable. Default value: enable.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.vpn_ecmp_support
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "EC2 Transit Gateway Amazon Resource Name (ARN)"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.create
+}
+output "id" {
+  description = "EC2 Transit Gateway identifier"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
+}
+output "owner_id" {
+  description = "Identifier of the AWS account that owns the EC2 Transit Gateway"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.owner_id
+}
+output "propagation_default_route_table_id" {
+  description = "Identifier of the default propagation route tableTimeoutsConfiguration options:"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.propagation_default_route_table_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.tags_all
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.update
+}
+output "association_default_route_table_id" {
+  description = "Identifier of the default association route table"
+  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.association_default_route_table_id
 }
 output "delete" {
   description = "(Default 10m)"
@@ -364,71 +334,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "EC2 Transit Gateway identifier"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "Identifier of the AWS account that owns the EC2 Transit Gateway"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "association_default_route_table_id" {
-  description = "Identifier of the default association route table"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.association_default_route_table_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "propagation_default_route_table_id" {
-  description = "Identifier of the default propagation route tableTimeoutsConfiguration options:"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.propagation_default_route_table_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "EC2 Transit Gateway Amazon Resource Name (ARN)"
-  value       = aws_ec2_transit_gateway.aws_ec2_transit_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -9,6 +9,7 @@ variable "provider_region" {
 variable "resource_type_management_preference" {
   description = "(Optional) A map of services along with the management preferences for the Region.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "resource_type_opt_in_preference" {
   description = "(Required) A map of services along with the opt-in preferences for the Region."
@@ -138,17 +139,9 @@ output "resource_type_management_preference" {
   description = "(Optional) A map of services along with the management preferences for the Region.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_region_settings.aws_backup_region_settings.resource_type_management_preference
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_type_opt_in_preference" {
   description = "(Required) A map of services along with the opt-in preferences for the Region."
   value       = aws_backup_region_settings.aws_backup_region_settings.resource_type_opt_in_preference
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The AWS region."
@@ -156,7 +149,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {
