@@ -1,69 +1,85 @@
 resource "aws_db_option_group" "aws_db_option_group" {
-  version                        = var.version
   vpc_security_group_memberships = var.vpc_security_group_memberships
-  option_settings                = var.option_settings
-  id                             = var.id
   name                           = var.name
+  name_prefix                    = var.name_prefix
   option                         = var.option
+  option_name                    = var.option_name
+  arn                            = var.arn
   db_security_group_memberships  = var.db_security_group_memberships
   engine_name                    = var.engine_name
-  name_prefix                    = var.name_prefix
-  option_group_description       = var.option_group_description
+  id                             = var.id
+  option_settings                = var.option_settings
   port                           = var.port
   tags                           = var.tags
-  value                          = var.value
-  arn                            = var.arn
-  option_name                    = var.option_name
   tags_all                       = var.tags_all
   major_engine_version           = var.major_engine_version
+  option_group_description       = var.option_group_description
+  value                          = var.value
+  version                        = var.version
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Optional) The Name of the setting."
+variable "version" {
+  description = "(Optional) The version of the option (e.g., 13.1.0.0)."
   type        = string
+  default     = ""
 }
-variable "option" {
-  description = "(Optional) A list of Options to apply."
+variable "vpc_security_group_memberships" {
+  description = "(Optional) A list of VPC Security Groups for which the option is enabled.Option Settings blocks support the following:"
   type        = string
-}
-variable "db_security_group_memberships" {
-  description = "(Optional) A list of DB Security Groups for which the option is enabled."
-  type        = string
-}
-variable "id" {
-  description = "The db option group name."
-  type        = string
+  default     = ""
 }
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name. Must be lowercase, to match as it is stored in AWS."
   type        = string
 }
-variable "option_group_description" {
-  description = "(Optional) The description of the option group. Defaults to \"Managed by Terraform\"."
+variable "option" {
+  description = "(Optional) A list of Options to apply."
   type        = string
+  default     = ""
 }
-variable "port" {
-  description = "(Optional) The Port number when connecting to the Option (e.g., 11211)."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option blocks support the following:"
-  type        = string
-}
-variable "value" {
-  description = "(Optional) The Value of the setting.In addition to all arguments above, the following attributes are exported:"
+variable "option_name" {
+  description = "(Required) The Name of the Option (e.g., MEMCACHED)."
   type        = string
 }
 variable "arn" {
   description = "The ARN of the db option group."
   type        = string
 }
+variable "db_security_group_memberships" {
+  description = "(Optional) A list of DB Security Groups for which the option is enabled."
+  type        = string
+  default     = ""
+}
 variable "engine_name" {
   description = "(Required) Specifies the name of the engine that this option group should be associated with."
   type        = string
+}
+variable "id" {
+  description = "The db option group name."
+  type        = string
+}
+variable "name" {
+  description = "(Optional) The Name of the setting."
+  type        = string
+  default     = ""
+}
+variable "option_settings" {
+  description = "(Optional) A list of option settings to apply."
+  type        = string
+  default     = ""
+}
+variable "port" {
+  description = "(Optional) The Port number when connecting to the Option (e.g., 11211)."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option blocks support the following:"
+  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -73,21 +89,15 @@ variable "major_engine_version" {
   description = "(Required) Specifies the major version of the engine that this option group should be associated with."
   type        = string
 }
-variable "option_name" {
-  description = "(Required) The Name of the Option (e.g., MEMCACHED)."
+variable "option_group_description" {
+  description = "(Optional) The description of the option group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
-variable "vpc_security_group_memberships" {
-  description = "(Optional) A list of VPC Security Groups for which the option is enabled.Option Settings blocks support the following:"
+variable "value" {
+  description = "(Optional) The Value of the setting.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "option_settings" {
-  description = "(Optional) A list of option settings to apply."
-  type        = string
-}
-variable "version" {
-  description = "(Optional) The version of the option (e.g., 13.1.0.0)."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -209,165 +219,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "major_engine_version" {
-  description = "(Required) Specifies the major version of the engine that this option group should be associated with."
-  value       = aws_db_option_group.aws_db_option_group.major_engine_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "option_name" {
-  description = "(Required) The Name of the Option (e.g., MEMCACHED)."
-  value       = aws_db_option_group.aws_db_option_group.option_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_db_option_group.aws_db_option_group.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "option_settings" {
-  description = "(Optional) A list of option settings to apply."
-  value       = aws_db_option_group.aws_db_option_group.option_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "(Optional) The version of the option (e.g., 13.1.0.0)."
-  value       = aws_db_option_group.aws_db_option_group.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_security_group_memberships" {
-  description = "(Optional) A list of VPC Security Groups for which the option is enabled.Option Settings blocks support the following:"
-  value       = aws_db_option_group.aws_db_option_group.vpc_security_group_memberships
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "db_security_group_memberships" {
-  description = "(Optional) A list of DB Security Groups for which the option is enabled."
-  value       = aws_db_option_group.aws_db_option_group.db_security_group_memberships
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The db option group name."
-  value       = aws_db_option_group.aws_db_option_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional) The Name of the setting."
-  value       = aws_db_option_group.aws_db_option_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "option" {
-  description = "(Optional) A list of Options to apply."
-  value       = aws_db_option_group.aws_db_option_group.option
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "option_group_description" {
+  description = "(Optional) The description of the option group. Defaults to \"Managed by Terraform\"."
+  value       = aws_db_option_group.aws_db_option_group.option_group_description
 }
 output "value" {
   description = "(Optional) The Value of the setting.In addition to all arguments above, the following attributes are exported:"
   value       = aws_db_option_group.aws_db_option_group.value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "major_engine_version" {
+  description = "(Required) Specifies the major version of the engine that this option group should be associated with."
+  value       = aws_db_option_group.aws_db_option_group.major_engine_version
 }
-output "arn" {
-  description = "The ARN of the db option group."
-  value       = aws_db_option_group.aws_db_option_group.arn
+output "version" {
+  description = "(Optional) The version of the option (e.g., 13.1.0.0)."
+  value       = aws_db_option_group.aws_db_option_group.version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_security_group_memberships" {
+  description = "(Optional) A list of VPC Security Groups for which the option is enabled.Option Settings blocks support the following:"
+  value       = aws_db_option_group.aws_db_option_group.vpc_security_group_memberships
+}
+output "db_security_group_memberships" {
+  description = "(Optional) A list of DB Security Groups for which the option is enabled."
+  value       = aws_db_option_group.aws_db_option_group.db_security_group_memberships
 }
 output "engine_name" {
   description = "(Required) Specifies the name of the engine that this option group should be associated with."
   value       = aws_db_option_group.aws_db_option_group.engine_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The db option group name."
+  value       = aws_db_option_group.aws_db_option_group.id
+}
+output "name" {
+  description = "(Optional) The Name of the setting."
+  value       = aws_db_option_group.aws_db_option_group.name
 }
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name. Must be lowercase, to match as it is stored in AWS."
   value       = aws_db_option_group.aws_db_option_group.name_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "option" {
+  description = "(Optional) A list of Options to apply."
+  value       = aws_db_option_group.aws_db_option_group.option
 }
-output "option_group_description" {
-  description = "(Optional) The description of the option group. Defaults to \"Managed by Terraform\"."
-  value       = aws_db_option_group.aws_db_option_group.option_group_description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port" {
-  description = "(Optional) The Port number when connecting to the Option (e.g., 11211)."
-  value       = aws_db_option_group.aws_db_option_group.port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option blocks support the following:"
-  value       = aws_db_option_group.aws_db_option_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "option_name" {
+  description = "(Required) The Name of the Option (e.g., MEMCACHED)."
+  value       = aws_db_option_group.aws_db_option_group.option_name
 }
 output "arn" {
   description = "The ARN of the db option group."
   value       = aws_db_option_group.aws_db_option_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "port" {
+  description = "(Optional) The Port number when connecting to the Option (e.g., 11211)."
+  value       = aws_db_option_group.aws_db_option_group.port
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option blocks support the following:"
+  value       = aws_db_option_group.aws_db_option_group.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_db_option_group.aws_db_option_group.tags_all
+}
+output "option_settings" {
+  description = "(Optional) A list of option settings to apply."
+  value       = aws_db_option_group.aws_db_option_group.option_settings
+}
+output "arn" {
+  description = "The ARN of the db option group."
+  value       = aws_db_option_group.aws_db_option_group.arn
 }
 output "delete" {
   description = "(Default 15m)"
   value       = aws_db_option_group.aws_db_option_group.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The db option group name."
   value       = aws_db_option_group.aws_db_option_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -375,7 +305,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

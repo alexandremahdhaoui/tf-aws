@@ -1,58 +1,27 @@
 resource "aws_ecrpublic_repository" "aws_ecrpublic_repository" {
+  logo_image_blob   = var.logo_image_blob
+  tags_all          = var.tags_all
+  usage_text        = var.usage_text
+  arn               = var.arn
+  description       = var.description
+  operating_systems = var.operating_systems
+  registry_id       = var.registry_id
+  catalog_data      = var.catalog_data
   id                = var.id
   repository_name   = var.repository_name
+  tags              = var.tags
   about_text        = var.about_text
   architectures     = var.architectures
-  registry_id       = var.registry_id
-  description       = var.description
-  logo_image_blob   = var.logo_image_blob
-  operating_systems = var.operating_systems
   repository_uri    = var.repository_uri
-  tags              = var.tags
-  tags_all          = var.tags_all
-  arn               = var.arn
-  catalog_data      = var.catalog_data
-  usage_text        = var.usage_text
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional) A short description of the contents of the repository. This text appears in both the image details and also when searching for repositories on the Amazon ECR Public Gallery."
-  type        = string
-}
-variable "logo_image_blob" {
-  description = "(Optional) The base64-encoded repository logo payload. (Only visible for verified accounts) Note that drift detection is disabled for this attribute."
-  type        = string
-}
-variable "operating_systems" {
-  description = " (Optional) The operating systems that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported operating systems will appear as badges on the repository and are used as search filters: Linux, Windows"
-  type        = string
-}
-variable "repository_uri" {
-  description = "The URI of the repository."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.catalog_data"
-  type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "Full ARN of the repository."
-  type        = string
-}
 variable "catalog_data" {
   description = "(Optional) Catalog data configuration for the repository. See below for schema."
   type        = string
-}
-variable "usage_text" {
-  description = " (Optional) Detailed information on how to use the contents of the repository. It is publicly visible in the Amazon ECR Public Gallery. The usage text provides context, support information, and additional usage details for users of the repository. The text must be in markdown format.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "id" {
   description = "The repository name."
@@ -62,13 +31,52 @@ variable "repository_name" {
   description = "(Required) Name of the repository."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.catalog_data"
+  type        = string
+  default     = ""
+}
 variable "about_text" {
   description = "(Optional) A detailed description of the contents of the repository. It is publicly visible in the Amazon ECR Public Gallery. The text must be in markdown format."
   type        = string
+  default     = ""
 }
 variable "architectures" {
   description = "(Optional) The system architecture that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported architectures will appear as badges on the repository and are used as search filters: ARM, ARM 64, x86, x86-64"
   type        = string
+  default     = ""
+}
+variable "repository_uri" {
+  description = "The URI of the repository."
+  type        = string
+}
+variable "logo_image_blob" {
+  description = "(Optional) The base64-encoded repository logo payload. (Only visible for verified accounts) Note that drift detection is disabled for this attribute."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "usage_text" {
+  description = " (Optional) Detailed information on how to use the contents of the repository. It is publicly visible in the Amazon ECR Public Gallery. The usage text provides context, support information, and additional usage details for users of the repository. The text must be in markdown format.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Full ARN of the repository."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) A short description of the contents of the repository. This text appears in both the image details and also when searching for repositories on the Amazon ECR Public Gallery."
+  type        = string
+  default     = ""
+}
+variable "operating_systems" {
+  description = " (Optional) The operating systems that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported operating systems will appear as badges on the repository and are used as search filters: Linux, Windows"
+  type        = string
+  default     = ""
 }
 variable "registry_id" {
   description = "The registry ID where the repository was created."
@@ -194,149 +202,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The repository name."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "repository_name" {
-  description = "(Required) Name of the repository."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.repository_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "about_text" {
-  description = "(Optional) A detailed description of the contents of the repository. It is publicly visible in the Amazon ECR Public Gallery. The text must be in markdown format."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.about_text
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "architectures" {
-  description = "(Optional) The system architecture that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported architectures will appear as badges on the repository and are used as search filters: ARM, ARM 64, x86, x86-64"
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.architectures
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "registry_id" {
-  description = "The registry ID where the repository was created."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.registry_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) A short description of the contents of the repository. This text appears in both the image details and also when searching for repositories on the Amazon ECR Public Gallery."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "logo_image_blob" {
   description = "(Optional) The base64-encoded repository logo payload. (Only visible for verified accounts) Note that drift detection is disabled for this attribute."
   value       = aws_ecrpublic_repository.aws_ecrpublic_repository.logo_image_blob
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "operating_systems" {
-  description = " (Optional) The operating systems that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported operating systems will appear as badges on the repository and are used as search filters: Linux, Windows"
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.operating_systems
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "repository_uri" {
-  description = "The URI of the repository."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.repository_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.catalog_data"
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_ecrpublic_repository.aws_ecrpublic_repository.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Full ARN of the repository."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "catalog_data" {
-  description = "(Optional) Catalog data configuration for the repository. See below for schema."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.catalog_data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "usage_text" {
   description = " (Optional) Detailed information on how to use the contents of the repository. It is publicly visible in the Amazon ECR Public Gallery. The usage text provides context, support information, and additional usage details for users of the repository. The text must be in markdown format.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecrpublic_repository.aws_ecrpublic_repository.usage_text
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "Full ARN of the repository."
   value       = aws_ecrpublic_repository.aws_ecrpublic_repository.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) A short description of the contents of the repository. This text appears in both the image details and also when searching for repositories on the Amazon ECR Public Gallery."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.description
 }
-output "delete" {
-  description = "(Default 20m)"
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.delete
+output "operating_systems" {
+  description = " (Optional) The operating systems that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported operating systems will appear as badges on the repository and are used as search filters: Linux, Windows"
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.operating_systems
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "registry_id" {
+  description = "The registry ID where the repository was created."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.registry_id
+}
+output "catalog_data" {
+  description = "(Optional) Catalog data configuration for the repository. See below for schema."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.catalog_data
 }
 output "id" {
   description = "The repository name."
   value       = aws_ecrpublic_repository.aws_ecrpublic_repository.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "repository_name" {
+  description = "(Required) Name of the repository."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.repository_name
+}
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.catalog_data"
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.tags
+}
+output "about_text" {
+  description = "(Optional) A detailed description of the contents of the repository. It is publicly visible in the Amazon ECR Public Gallery. The text must be in markdown format."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.about_text
+}
+output "architectures" {
+  description = "(Optional) The system architecture that the images in the repository are compatible with. On the Amazon ECR Public Gallery, the following supported architectures will appear as badges on the repository and are used as search filters: ARM, ARM 64, x86, x86-64"
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.architectures
+}
+output "repository_uri" {
+  description = "The URI of the repository."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.repository_uri
+}
+output "repository_uri" {
+  description = "The URI of the repository."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.repository_uri
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.tags_all
+}
+output "arn" {
+  description = "Full ARN of the repository."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.arn
+}
+output "delete" {
+  description = "(Default 20m)"
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.delete
+}
+output "id" {
+  description = "The repository name."
+  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.id
 }
 output "registry_id" {
   description = "The registry ID where the repository was created."
@@ -344,15 +284,7 @@ output "registry_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "repository_uri" {
-  description = "The URI of the repository."
-  value       = aws_ecrpublic_repository.aws_ecrpublic_repository.repository_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

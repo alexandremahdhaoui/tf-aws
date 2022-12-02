@@ -10,6 +10,7 @@ variable "provider_region" {
 variable "log_group_names" {
   description = "(Optional) Specific log groups to use with the query.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the query."
@@ -139,29 +140,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "query_string" {
-  description = "(Required) The query to save. You can read more about CloudWatch Logs Query Syntax in the documentation."
-  value       = aws_cloudwatch_query_definition.aws_cloudwatch_query_definition.query_string
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "log_group_names" {
   description = "(Optional) Specific log groups to use with the query.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_query_definition.aws_cloudwatch_query_definition.log_group_names
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the query."
   value       = aws_cloudwatch_query_definition.aws_cloudwatch_query_definition.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "query_string" {
+  description = "(Required) The query to save. You can read more about CloudWatch Logs Query Syntax in the documentation."
+  value       = aws_cloudwatch_query_definition.aws_cloudwatch_query_definition.query_string
 }
 output "query_definition_id" {
   description = "The query definition ID."
@@ -169,7 +158,7 @@ output "query_definition_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

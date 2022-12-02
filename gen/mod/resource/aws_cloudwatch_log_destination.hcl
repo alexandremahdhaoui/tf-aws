@@ -143,25 +143,13 @@ output "name" {
   description = "(Required) A name for the log destination"
   value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "role_arn" {
   description = "(Required) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to put data into the target"
   value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.role_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "target_arn" {
   description = "(Required) The ARN of the target Amazon Kinesis stream resource for the destinationIn addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.target_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the log destination."
@@ -169,7 +157,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

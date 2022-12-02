@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "created_by" {
-  description = "Name of the SaaS partner that created the event source"
-  type        = string
-}
 variable "name" {
   description = "Name of the event source"
   type        = string
@@ -19,58 +15,39 @@ variable "name" {
 variable "name_prefix" {
   description = "(Optional) Specifying this limits the results to only those partner event sources with names that start with the specified prefixIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "ARN of the partner event source"
   type        = string
 }
+variable "created_by" {
+  description = "Name of the SaaS partner that created the event source"
+  type        = string
+}
 output "arn" {
   description = "ARN of the partner event source"
   value       = aws_cloudwatch_event_source.aws_cloudwatch_event_source.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "created_by" {
   description = "Name of the SaaS partner that created the event source"
   value       = aws_cloudwatch_event_source.aws_cloudwatch_event_source.created_by
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "Name of the event source"
   value       = aws_cloudwatch_event_source.aws_cloudwatch_event_source.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name_prefix" {
   description = "(Optional) Specifying this limits the results to only those partner event sources with names that start with the specified prefixIn addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_event_source.aws_cloudwatch_event_source.name_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the partner event source"
   value       = aws_cloudwatch_event_source.aws_cloudwatch_event_source.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_by" {
   description = "Name of the SaaS partner that created the event source"
   value       = aws_cloudwatch_event_source.aws_cloudwatch_event_source.created_by
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "Name of the event source"
@@ -78,7 +55,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

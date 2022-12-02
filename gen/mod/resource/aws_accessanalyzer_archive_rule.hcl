@@ -1,23 +1,15 @@
 resource "aws_accessanalyzer_archive_rule" "aws_accessanalyzer_archive_rule" {
-  rule_name     = var.rule_name
-  analyzer_name = var.analyzer_name
-  contains      = var.contains
   criteria      = var.criteria
   eq            = var.eq
   exists        = var.exists
   filter        = var.filter
   neq           = var.neq
+  rule_name     = var.rule_name
+  analyzer_name = var.analyzer_name
+  contains      = var.contains
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "neq" {
-  description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "rule_name" {
-  description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
   type        = string
 }
 variable "analyzer_name" {
@@ -27,6 +19,7 @@ variable "analyzer_name" {
 variable "contains" {
   description = "(Optional) Contains comparator."
   type        = string
+  default     = ""
 }
 variable "criteria" {
   description = "(Required) Filter criteria."
@@ -35,13 +28,24 @@ variable "criteria" {
 variable "eq" {
   description = "(Optional) Equals comparator."
   type        = string
+  default     = ""
 }
 variable "exists" {
   description = "(Optional) Boolean comparator."
   type        = string
+  default     = ""
 }
 variable "filter" {
   description = "(Required) Filter criteria for the archive rule. See Filter for more details."
+  type        = string
+}
+variable "neq" {
+  description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "rule_name" {
+  description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +168,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "neq" {
-  description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.neq
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule_name" {
   description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.rule_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "analyzer_name" {
   description = "(Required) Analyzer name."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.analyzer_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "contains" {
   description = "(Optional) Contains comparator."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.contains
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "criteria" {
   description = "(Required) Filter criteria."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.criteria
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "eq" {
   description = "(Optional) Equals comparator."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.eq
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "exists" {
   description = "(Optional) Boolean comparator."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.exists
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "filter" {
   description = "(Required) Filter criteria for the archive rule. See Filter for more details."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.filter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "neq" {
+  description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.neq
 }
 output "id" {
   description = "Resource ID in the format: analyzer_name/rule_name."
@@ -234,7 +206,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

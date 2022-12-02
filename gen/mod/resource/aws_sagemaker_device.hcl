@@ -1,13 +1,22 @@
 resource "aws_sagemaker_device" "aws_sagemaker_device" {
-  id                = var.id
-  iot_thing_name    = var.iot_thing_name
   description       = var.description
   device            = var.device
   device_fleet_name = var.device_fleet_name
   device_name       = var.device_name
+  id                = var.id
+  iot_thing_name    = var.iot_thing_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "iot_thing_name" {
+  description = "(Optional) Amazon Web Services Internet of Things (IoT) object name.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Required) A description for the device."
   type        = string
 }
 variable "device" {
@@ -21,17 +30,10 @@ variable "device_fleet_name" {
 variable "device_name" {
   description = "(Optional) The name of the device."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The id is constructed from device-fleet-name/device-name."
-  type        = string
-}
-variable "iot_thing_name" {
-  description = "(Optional) Amazon Web Services Internet of Things (IoT) object name.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "description" {
-  description = "(Required) A description for the device."
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,49 +160,29 @@ output "description" {
   description = "(Required) A description for the device."
   value       = aws_sagemaker_device.aws_sagemaker_device.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "device" {
   description = "(Required) The device to register with SageMaker Edge Manager. See Device details below.Device"
   value       = aws_sagemaker_device.aws_sagemaker_device.device
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "device_fleet_name" {
   description = "(Required) The name of the Device Fleet."
   value       = aws_sagemaker_device.aws_sagemaker_device.device_fleet_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "device_name" {
   description = "(Optional) The name of the device."
   value       = aws_sagemaker_device.aws_sagemaker_device.device_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The id is constructed from device-fleet-name/device-name."
   value       = aws_sagemaker_device.aws_sagemaker_device.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "iot_thing_name" {
   description = "(Optional) Amazon Web Services Internet of Things (IoT) object name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_device.aws_sagemaker_device.iot_thing_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Device."
+  value       = aws_sagemaker_device.aws_sagemaker_device.arn
 }
 output "id" {
   description = "The id is constructed from device-fleet-name/device-name."
@@ -208,15 +190,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Device."
-  value       = aws_sagemaker_device.aws_sagemaker_device.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

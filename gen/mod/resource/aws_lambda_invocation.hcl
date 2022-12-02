@@ -1,15 +1,11 @@
 resource "aws_lambda_invocation" "aws_lambda_invocation" {
-  function_name = var.function_name
-  input         = var.input
   qualifier     = var.qualifier
   triggers      = var.triggers
+  function_name = var.function_name
+  input         = var.input
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "function_name" {
-  description = "(Required) Name of the lambda function."
   type        = string
 }
 variable "input" {
@@ -19,9 +15,15 @@ variable "input" {
 variable "qualifier" {
   description = "(Optional) Qualifier (i.e., version) of the lambda function. Defaults to $LATEST."
   type        = string
+  default     = ""
 }
 variable "triggers" {
   description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a re-invocation. To force a re-invocation without changing these keys/values, use the terraform taint command.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "function_name" {
+  description = "(Required) Name of the lambda function."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,37 +146,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "function_name" {
+  description = "(Required) Name of the lambda function."
+  value       = aws_lambda_invocation.aws_lambda_invocation.function_name
+}
+output "input" {
+  description = "(Required) JSON payload to the lambda function."
+  value       = aws_lambda_invocation.aws_lambda_invocation.input
+}
+output "qualifier" {
+  description = "(Optional) Qualifier (i.e., version) of the lambda function. Defaults to $LATEST."
+  value       = aws_lambda_invocation.aws_lambda_invocation.qualifier
+}
 output "triggers" {
   description = "(Optional) Map of arbitrary keys and values that, when changed, will trigger a re-invocation. To force a re-invocation without changing these keys/values, use the terraform taint command.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lambda_invocation.aws_lambda_invocation.triggers
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "function_name" {
-  description = "(Required) Name of the lambda function."
-  value       = aws_lambda_invocation.aws_lambda_invocation.function_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "input" {
-  description = "(Required) JSON payload to the lambda function."
-  value       = aws_lambda_invocation.aws_lambda_invocation.input
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "qualifier" {
-  description = "(Optional) Qualifier (i.e., version) of the lambda function. Defaults to $LATEST."
-  value       = aws_lambda_invocation.aws_lambda_invocation.qualifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

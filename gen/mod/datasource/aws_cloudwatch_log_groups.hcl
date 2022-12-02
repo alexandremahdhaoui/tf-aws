@@ -13,30 +13,23 @@ variable "arns" {
 variable "log_group_name_prefix" {
   description = "(Optional) Group prefix of the Cloudwatch log groups to listIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 output "arns" {
   description = "Set of ARNs of the Cloudwatch log groups"
   value       = aws_cloudwatch_log_groups.aws_cloudwatch_log_groups.arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "log_group_name_prefix" {
   description = "(Optional) Group prefix of the Cloudwatch log groups to listIn addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_log_groups.aws_cloudwatch_log_groups.log_group_name_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arns" {
   description = "Set of ARNs of the Cloudwatch log groups"
   value       = aws_cloudwatch_log_groups.aws_cloudwatch_log_groups.arns
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

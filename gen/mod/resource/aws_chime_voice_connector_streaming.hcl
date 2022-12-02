@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "streaming_notification_targets" {
-  description = "(Optional) The streaming notification targets. Valid Values: EventBridge | SNS | SQSIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
@@ -23,6 +19,12 @@ variable "data_retention" {
 variable "disabled" {
   description = "(Optional) When true, media streaming to Amazon Kinesis is turned off. Default: false"
   type        = string
+  default     = ""
+}
+variable "streaming_notification_targets" {
+  description = "(Optional) The streaming notification targets. Valid Values: EventBridge | SNS | SQSIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,37 +146,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "voice_connector_id" {
+  description = "(Required) The Amazon Chime Voice Connector ID."
+  value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.voice_connector_id
+}
 output "data_retention" {
   description = "  - (Required) The retention period, in hours, for the Amazon Kinesis data."
   value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.data_retention
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "disabled" {
   description = "(Optional) When true, media streaming to Amazon Kinesis is turned off. Default: false"
   value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.disabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "streaming_notification_targets" {
   description = "(Optional) The streaming notification targets. Valid Values: EventBridge | SNS | SQSIn addition to all arguments above, the following attributes are exported:"
   value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.streaming_notification_targets
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "voice_connector_id" {
-  description = "(Required) The Amazon Chime Voice Connector ID."
-  value       = aws_chime_voice_connector_streaming.aws_chime_voice_connector_streaming.voice_connector_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Chime Voice Connector ID."
@@ -182,7 +168,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

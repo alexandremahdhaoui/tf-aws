@@ -1,28 +1,20 @@
 resource "aws_transfer_access" "aws_transfer_access" {
-  posix_profile           = var.posix_profile
-  secondary_gids          = var.secondary_gids
-  target                  = var.target
-  external_id             = var.external_id
-  gid                     = var.gid
+  entry                   = var.entry
   home_directory_mappings = var.home_directory_mappings
   home_directory_type     = var.home_directory_type
-  server_id               = var.server_id
-  uid                     = var.uid
-  entry                   = var.entry
-  home_directory          = var.home_directory
   policy                  = var.policy
+  posix_profile           = var.posix_profile
+  secondary_gids          = var.secondary_gids
+  uid                     = var.uid
+  external_id             = var.external_id
+  gid                     = var.gid
+  home_directory          = var.home_directory
   role                    = var.role
+  server_id               = var.server_id
+  target                  = var.target
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "secondary_gids" {
-  description = "(Optional) The secondary POSIX group IDs used for all EFS operations by this user.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "target" {
-  description = "(Required) Represents the map target.Posix Profile"
   type        = string
 }
 variable "external_id" {
@@ -33,16 +25,21 @@ variable "gid" {
   description = "(Required) The POSIX group ID used for all EFS operations by this user."
   type        = string
 }
-variable "home_directory_mappings" {
-  description = "(Optional) Logical directory mappings that specify what S3 paths and keys should be visible to your user and how you want to make them visible. See Home Directory Mappings below."
+variable "home_directory" {
+  description = "(Optional) The landing directory (folder) for a user when they log in to the server using their SFTP client.  It should begin with a /.  The first item in the path is the name of the home bucket (accessible as $${Transfer:HomeBucket} in the policy) and the rest is the home directory (accessible as $${Transfer:HomeDirectory} in the policy). For example, /example-bucket-1234/username would set the home bucket to example-bucket-1234 and the home directory to username."
+  type        = string
+  default     = ""
+}
+variable "role" {
+  description = "(Required) Amazon Resource Name (ARN) of an IAM role that allows the service to controls your user’s access to your Amazon S3 bucket.Home Directory Mappings"
   type        = string
 }
-variable "home_directory_type" {
-  description = "(Optional) The type of landing directory (folder) you mapped for your users' home directory. Valid values are PATH and LOGICAL."
+variable "server_id" {
+  description = "(Required) The Server ID of the Transfer Server (e.g., s-12345678)"
   type        = string
 }
-variable "posix_profile" {
-  description = "(Optional) Specifies the full POSIX identity, including user ID (Uid), group ID (Gid), and any secondary groups IDs (SecondaryGids), that controls your users' access to your Amazon EFS file systems. See Posix Profile below."
+variable "target" {
+  description = "(Required) Represents the map target.Posix Profile"
   type        = string
 }
 variable "uid" {
@@ -53,21 +50,30 @@ variable "entry" {
   description = "(Required) Represents an entry and a target."
   type        = string
 }
-variable "home_directory" {
-  description = "(Optional) The landing directory (folder) for a user when they log in to the server using their SFTP client.  It should begin with a /.  The first item in the path is the name of the home bucket (accessible as $${Transfer:HomeBucket} in the policy) and the rest is the home directory (accessible as $${Transfer:HomeDirectory} in the policy). For example, /example-bucket-1234/username would set the home bucket to example-bucket-1234 and the home directory to username."
+variable "home_directory_mappings" {
+  description = "(Optional) Logical directory mappings that specify what S3 paths and keys should be visible to your user and how you want to make them visible. See Home Directory Mappings below."
   type        = string
+  default     = ""
+}
+variable "home_directory_type" {
+  description = "(Optional) The type of landing directory (folder) you mapped for your users' home directory. Valid values are PATH and LOGICAL."
+  type        = string
+  default     = ""
 }
 variable "policy" {
   description = "(Optional) An IAM JSON policy document that scopes down user access to portions of their Amazon S3 bucket. IAM variables you can use inside this policy include $${Transfer:UserName}, $${Transfer:HomeDirectory}, and $${Transfer:HomeBucket}. Since the IAM variable syntax matches Terraform's interpolation syntax, they must be escaped inside Terraform configuration strings ($$${Transfer:UserName}).  These are evaluated on-the-fly when navigating the bucket."
   type        = string
+  default     = ""
 }
-variable "role" {
-  description = "(Required) Amazon Resource Name (ARN) of an IAM role that allows the service to controls your user’s access to your Amazon S3 bucket.Home Directory Mappings"
+variable "posix_profile" {
+  description = "(Optional) Specifies the full POSIX identity, including user ID (Uid), group ID (Gid), and any secondary groups IDs (SecondaryGids), that controls your users' access to your Amazon EFS file systems. See Posix Profile below."
   type        = string
+  default     = ""
 }
-variable "server_id" {
-  description = "(Required) The Server ID of the Transfer Server (e.g., s-12345678)"
+variable "secondary_gids" {
+  description = "(Optional) The secondary POSIX group IDs used for all EFS operations by this user.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -193,105 +199,53 @@ output "home_directory_type" {
   description = "(Optional) The type of landing directory (folder) you mapped for your users' home directory. Valid values are PATH and LOGICAL."
   value       = aws_transfer_access.aws_transfer_access.home_directory_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "policy" {
+  description = "(Optional) An IAM JSON policy document that scopes down user access to portions of their Amazon S3 bucket. IAM variables you can use inside this policy include $${Transfer:UserName}, $${Transfer:HomeDirectory}, and $${Transfer:HomeBucket}. Since the IAM variable syntax matches Terraform's interpolation syntax, they must be escaped inside Terraform configuration strings ($$${Transfer:UserName}).  These are evaluated on-the-fly when navigating the bucket."
+  value       = aws_transfer_access.aws_transfer_access.policy
 }
 output "posix_profile" {
   description = "(Optional) Specifies the full POSIX identity, including user ID (Uid), group ID (Gid), and any secondary groups IDs (SecondaryGids), that controls your users' access to your Amazon EFS file systems. See Posix Profile below."
   value       = aws_transfer_access.aws_transfer_access.posix_profile
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "secondary_gids" {
   description = "(Optional) The secondary POSIX group IDs used for all EFS operations by this user.In addition to all arguments above, the following attributes are exported:"
   value       = aws_transfer_access.aws_transfer_access.secondary_gids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "target" {
-  description = "(Required) Represents the map target.Posix Profile"
-  value       = aws_transfer_access.aws_transfer_access.target
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "external_id" {
-  description = "(Required) The SID of a group in the directory connected to the Transfer Server (e.g., S-1-1-12-1234567890-123456789-1234567890-1234)"
-  value       = aws_transfer_access.aws_transfer_access.external_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "gid" {
-  description = "(Required) The POSIX group ID used for all EFS operations by this user."
-  value       = aws_transfer_access.aws_transfer_access.gid
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "home_directory_mappings" {
-  description = "(Optional) Logical directory mappings that specify what S3 paths and keys should be visible to your user and how you want to make them visible. See Home Directory Mappings below."
-  value       = aws_transfer_access.aws_transfer_access.home_directory_mappings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role" {
-  description = "(Required) Amazon Resource Name (ARN) of an IAM role that allows the service to controls your user’s access to your Amazon S3 bucket.Home Directory Mappings"
-  value       = aws_transfer_access.aws_transfer_access.role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "server_id" {
-  description = "(Required) The Server ID of the Transfer Server (e.g., s-12345678)"
-  value       = aws_transfer_access.aws_transfer_access.server_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "uid" {
-  description = "(Required) The POSIX user ID used for all EFS operations by this user."
-  value       = aws_transfer_access.aws_transfer_access.uid
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "entry" {
   description = "(Required) Represents an entry and a target."
   value       = aws_transfer_access.aws_transfer_access.entry
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "home_directory_mappings" {
+  description = "(Optional) Logical directory mappings that specify what S3 paths and keys should be visible to your user and how you want to make them visible. See Home Directory Mappings below."
+  value       = aws_transfer_access.aws_transfer_access.home_directory_mappings
 }
 output "home_directory" {
   description = "(Optional) The landing directory (folder) for a user when they log in to the server using their SFTP client.  It should begin with a /.  The first item in the path is the name of the home bucket (accessible as $${Transfer:HomeBucket} in the policy) and the rest is the home directory (accessible as $${Transfer:HomeDirectory} in the policy). For example, /example-bucket-1234/username would set the home bucket to example-bucket-1234 and the home directory to username."
   value       = aws_transfer_access.aws_transfer_access.home_directory
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "role" {
+  description = "(Required) Amazon Resource Name (ARN) of an IAM role that allows the service to controls your user’s access to your Amazon S3 bucket.Home Directory Mappings"
+  value       = aws_transfer_access.aws_transfer_access.role
 }
-output "policy" {
-  description = "(Optional) An IAM JSON policy document that scopes down user access to portions of their Amazon S3 bucket. IAM variables you can use inside this policy include $${Transfer:UserName}, $${Transfer:HomeDirectory}, and $${Transfer:HomeBucket}. Since the IAM variable syntax matches Terraform's interpolation syntax, they must be escaped inside Terraform configuration strings ($$${Transfer:UserName}).  These are evaluated on-the-fly when navigating the bucket."
-  value       = aws_transfer_access.aws_transfer_access.policy
+output "server_id" {
+  description = "(Required) The Server ID of the Transfer Server (e.g., s-12345678)"
+  value       = aws_transfer_access.aws_transfer_access.server_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "target" {
+  description = "(Required) Represents the map target.Posix Profile"
+  value       = aws_transfer_access.aws_transfer_access.target
+}
+output "uid" {
+  description = "(Required) The POSIX user ID used for all EFS operations by this user."
+  value       = aws_transfer_access.aws_transfer_access.uid
+}
+output "external_id" {
+  description = "(Required) The SID of a group in the directory connected to the Transfer Server (e.g., S-1-1-12-1234567890-123456789-1234567890-1234)"
+  value       = aws_transfer_access.aws_transfer_access.external_id
+}
+output "gid" {
+  description = "(Required) The POSIX group ID used for all EFS operations by this user."
+  value       = aws_transfer_access.aws_transfer_access.gid
 }
 output "id" {
   description = "  - The ID of the resource"
@@ -299,7 +253,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

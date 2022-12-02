@@ -4,21 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "id" {
+  description = "AWS Region."
+  value       = aws_route_tables.aws_route_tables.id
+}
 output "ids" {
   description = "List of all the route table ids found.TimeoutsConfiguration options:"
   value       = aws_route_tables.aws_route_tables.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AWS Region."
-  value       = aws_route_tables.aws_route_tables.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

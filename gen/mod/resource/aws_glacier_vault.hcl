@@ -1,35 +1,15 @@
 resource "aws_glacier_vault" "aws_glacier_vault" {
-  location      = var.location
-  name          = var.name
   notification  = var.notification
   sns_topic     = var.sns_topic
   tags          = var.tags
   access_policy = var.access_policy
   arn           = var.arn
   events        = var.events
+  location      = var.location
+  name          = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "notification" {
-  description = "(Optional) The notifications for the Vault. Fields documented below."
-  type        = string
-}
-variable "sns_topic" {
-  description = "(Required) The SNS Topic ARN.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongnotification supports the following:"
-  type        = string
-}
-variable "access_policy" {
-  description = "(Optional) The policy document. This is a JSON formatted string.\nThe heredoc syntax or file function is helpful here. Use the Glacier Developer Guide for more information on Glacier Vault Policy"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the vault."
   type        = string
 }
 variable "events" {
@@ -42,6 +22,29 @@ variable "location" {
 }
 variable "name" {
   description = "(Required) The name of the Vault. Names can be between 1 and 255 characters long and the valid characters are a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), and '.' (period)."
+  type        = string
+}
+variable "notification" {
+  description = "(Optional) The notifications for the Vault. Fields documented below."
+  type        = string
+  default     = ""
+}
+variable "sns_topic" {
+  description = "(Required) The SNS Topic ARN.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongnotification supports the following:"
+  type        = string
+  default     = ""
+}
+variable "access_policy" {
+  description = "(Optional) The policy document. This is a JSON formatted string.\nThe heredoc syntax or file function is helpful here. Use the Glacier Developer Guide for more information on Glacier Vault Policy"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the vault."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,93 +167,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "events" {
+  description = "(Required) You can configure a vault to publish a notification for ArchiveRetrievalCompleted and InventoryRetrievalCompleted events."
+  value       = aws_glacier_vault.aws_glacier_vault.events
+}
 output "location" {
   description = "The URI of the vault that was created."
   value       = aws_glacier_vault.aws_glacier_vault.location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the Vault. Names can be between 1 and 255 characters long and the valid characters are a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), and '.' (period)."
   value       = aws_glacier_vault.aws_glacier_vault.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "notification" {
   description = "(Optional) The notifications for the Vault. Fields documented below."
   value       = aws_glacier_vault.aws_glacier_vault.notification
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "sns_topic" {
   description = "(Required) The SNS Topic ARN.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glacier_vault.aws_glacier_vault.sns_topic
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.strongnotification supports the following:"
   value       = aws_glacier_vault.aws_glacier_vault.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "access_policy" {
   description = "(Optional) The policy document. This is a JSON formatted string.\nThe heredoc syntax or file function is helpful here. Use the Glacier Developer Guide for more information on Glacier Vault Policy"
   value       = aws_glacier_vault.aws_glacier_vault.access_policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the vault."
   value       = aws_glacier_vault.aws_glacier_vault.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "events" {
-  description = "(Required) You can configure a vault to publish a notification for ArchiveRetrievalCompleted and InventoryRetrievalCompleted events."
-  value       = aws_glacier_vault.aws_glacier_vault.events
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the vault."
-  value       = aws_glacier_vault.aws_glacier_vault.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "location" {
   description = "The URI of the vault that was created."
   value       = aws_glacier_vault.aws_glacier_vault.location
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_glacier_vault.aws_glacier_vault.tags_all
 }
+output "arn" {
+  description = "The ARN of the vault."
+  value       = aws_glacier_vault.aws_glacier_vault.arn
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -149,45 +149,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "customer_managed_policy_reference" {
-  description = "(Required, Forces new resource) Specifies the name and path of a customer managed policy. See below.Customer Managed Policy ReferenceThe customer_managed_policy_reference config block describes a customer managed IAM policy. You must have an IAM policy that matches the name and path in each AWS account where you want to deploy your specified permission set."
-  value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.customer_managed_policy_reference
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
-  value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.instance_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required, Forces new resource) Name of the customer managed IAM Policy to be attached."
   value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "path" {
   description = "(Optional, Forces new resource) The path to the IAM policy to be attached. The default is /. See IAM Identifiers for more information.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "permission_set_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the Permission Set."
   value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.permission_set_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "customer_managed_policy_reference" {
+  description = "(Required, Forces new resource) Specifies the name and path of a customer managed policy. See below.Customer Managed Policy ReferenceThe customer_managed_policy_reference config block describes a customer managed IAM policy. You must have an IAM policy that matches the name and path in each AWS account where you want to deploy your specified permission set."
+  value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.customer_managed_policy_reference
+}
+output "instance_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
+  value       = aws_ssoadmin_customer_managed_policy_attachment.aws_ssoadmin_customer_managed_policy_attachment.instance_arn
 }
 output "id" {
   description = "Policy Name, Policy Path, Permission Set Amazon Resource Name (ARN), and SSO Instance ARN, each separated by a comma (,)."
@@ -195,7 +175,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

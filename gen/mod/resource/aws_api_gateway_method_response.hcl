@@ -1,9 +1,9 @@
 resource "aws_api_gateway_method_response" "aws_api_gateway_method_response" {
-  resource_id     = var.resource_id
   response_models = var.response_models
   rest_api_id     = var.rest_api_id
   status_code     = var.status_code
   http_method     = var.http_method
+  resource_id     = var.resource_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -20,6 +20,7 @@ variable "resource_id" {
 variable "response_models" {
   description = "(Optional) Map of the API models used for the response's content type"
   type        = string
+  default     = ""
 }
 variable "rest_api_id" {
   description = "(Required) ID of the associated REST API"
@@ -149,21 +150,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "http_method" {
+  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
+  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.http_method
+}
+output "resource_id" {
+  description = "(Required) API resource ID"
+  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.resource_id
+}
 output "response_models" {
   description = "(Optional) Map of the API models used for the response's content type"
   value       = aws_api_gateway_method_response.aws_api_gateway_method_response.response_models
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   value       = aws_api_gateway_method_response.aws_api_gateway_method_response.rest_api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status_code" {
   description = "(Required) HTTP status code"
@@ -171,23 +172,7 @@ output "status_code" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "http_method" {
-  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
-  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.http_method
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_id" {
-  description = "(Required) API resource ID"
-  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.resource_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

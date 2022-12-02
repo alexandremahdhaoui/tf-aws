@@ -1,56 +1,48 @@
 resource "aws_cloudformation_stack_set_instance" "aws_cloudformation_stack_set_instance" {
+  create                 = var.create
+  operation_preferences  = var.operation_preferences
   parameter_overrides    = var.parameter_overrides
   stack_id               = var.stack_id
-  update                 = var.update
+  stack_set_name         = var.stack_set_name
+  account_id             = var.account_id
   call_as                = var.call_as
   deployment_targets     = var.deployment_targets
   id                     = var.id
-  operation_preferences  = var.operation_preferences
-  retain_stack           = var.retain_stack
-  stack_set_name         = var.stack_set_name
-  account_id             = var.account_id
-  create                 = var.create
   organizational_unit_id = var.organizational_unit_id
   region                 = var.region
+  retain_stack           = var.retain_stack
+  update                 = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "call_as" {
-  description = "(Optional) Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. Valid values: SELF (default), DELEGATED_ADMIN."
+variable "retain_stack" {
+  description = "(Optional) During Terraform resource destroy, remove Instance from StackSet while keeping the Stack and its associated resources. Must be enabled in Terraform state embefore destroy operation to take effect. You cannot reassociate a retained Stack or add an existing, saved Stack to a new StackSet. Defaults to false."
   type        = string
+  default     = ""
 }
-variable "deployment_targets" {
-  description = "(Optional) The AWS Organizations accounts to which StackSets deploys. StackSets doesn't deploy stack instances to the organization management account, even if the organization management account is in your organization or in an OU in your organization. Drift detection is not possible for this argument. See deployment_targets below."
-  type        = string
-}
-variable "id" {
-  description = "StackSet name, target AWS account ID, and target AWS region separated by commas (,)"
-  type        = string
-}
-variable "operation_preferences" {
-  description = "(Optional) Preferences for how AWS CloudFormation performs a stack set operation.deployment_targets Argument ReferenceThe deployment_targets configuration block supports the following arguments:*organizational_unit_ids(Optional) The organization root ID or organizational unit (OU) IDs to which StackSets deploys.operation_preferences Argument ReferenceThe operation_preferences configuration block supports the following arguments:*failure_tolerance_count(Optional) The number of accounts, per Region, for which this operation can fail before AWS CloudFormation stops the operation in that Region.\n*failure_tolerance_percentage(Optional) The percentage of accounts, per Region, for which this stack operation can fail before AWS CloudFormation stops the operation in that Region.\n*max_concurrent_countmax_concurrent_percentage(Optional) The maximum percentage of accounts in which to perform this operation at one time.\n*region_concurrency_type(Optional) The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.\n*region_order(Optional) The order of the Regions in where you want to perform the stack operation.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "parameter_overrides" {
-  description = "(Optional) Key-value map of input parameters to override from the StackSet for this Instance."
-  type        = string
-}
-variable "stack_id" {
-  description = "Stack identifierTimeoutsConfiguration options:"
-  type        = string
-}
-variable "update" {
-  description = "(Default 30m)"
+variable "stack_set_name" {
+  description = "(Required) Name of the StackSet."
   type        = string
 }
 variable "account_id" {
   description = "(Optional) Target AWS Account ID to create a Stack based on the StackSet. Defaults to current account."
   type        = string
+  default     = ""
 }
-variable "create" {
-  description = "(Default 30m)"
+variable "call_as" {
+  description = "(Optional) Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. Valid values: SELF (default), DELEGATED_ADMIN."
+  type        = string
+  default     = ""
+}
+variable "deployment_targets" {
+  description = "(Optional) The AWS Organizations accounts to which StackSets deploys. StackSets doesn't deploy stack instances to the organization management account, even if the organization management account is in your organization or in an OU in your organization. Drift detection is not possible for this argument. See deployment_targets below."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "StackSet name, target AWS account ID, and target AWS region separated by commas (,)"
   type        = string
 }
 variable "organizational_unit_id" {
@@ -60,13 +52,28 @@ variable "organizational_unit_id" {
 variable "region" {
   description = "(Optional) Target AWS Region to create a Stack based on the StackSet. Defaults to current region."
   type        = string
+  default     = ""
 }
-variable "retain_stack" {
-  description = "(Optional) During Terraform resource destroy, remove Instance from StackSet while keeping the Stack and its associated resources. Must be enabled in Terraform state embefore destroy operation to take effect. You cannot reassociate a retained Stack or add an existing, saved Stack to a new StackSet. Defaults to false."
+variable "update" {
+  description = "(Default 30m)"
   type        = string
 }
-variable "stack_set_name" {
-  description = "(Required) Name of the StackSet."
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+}
+variable "operation_preferences" {
+  description = "(Optional) Preferences for how AWS CloudFormation performs a stack set operation.deployment_targets Argument ReferenceThe deployment_targets configuration block supports the following arguments:*organizational_unit_ids(Optional) The organization root ID or organizational unit (OU) IDs to which StackSets deploys.operation_preferences Argument ReferenceThe operation_preferences configuration block supports the following arguments:*failure_tolerance_count(Optional) The number of accounts, per Region, for which this operation can fail before AWS CloudFormation stops the operation in that Region.\n*failure_tolerance_percentage(Optional) The percentage of accounts, per Region, for which this stack operation can fail before AWS CloudFormation stops the operation in that Region.\n*max_concurrent_countmax_concurrent_percentage(Optional) The maximum percentage of accounts in which to perform this operation at one time.\n*region_concurrency_type(Optional) The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.\n*region_order(Optional) The order of the Regions in where you want to perform the stack operation.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "parameter_overrides" {
+  description = "(Optional) Key-value map of input parameters to override from the StackSet for this Instance."
+  type        = string
+  default     = ""
+}
+variable "stack_id" {
+  description = "Stack identifierTimeoutsConfiguration options:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -189,141 +196,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "parameter_overrides" {
-  description = "(Optional) Key-value map of input parameters to override from the StackSet for this Instance."
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.parameter_overrides
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "stack_id" {
-  description = "Stack identifierTimeoutsConfiguration options:"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.stack_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "account_id" {
+  description = "(Optional) Target AWS Account ID to create a Stack based on the StackSet. Defaults to current account."
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.account_id
 }
 output "call_as" {
   description = "(Optional) Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. Valid values: SELF (default), DELEGATED_ADMIN."
   value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.call_as
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "deployment_targets" {
   description = "(Optional) The AWS Organizations accounts to which StackSets deploys. StackSets doesn't deploy stack instances to the organization management account, even if the organization management account is in your organization or in an OU in your organization. Drift detection is not possible for this argument. See deployment_targets below."
   value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.deployment_targets
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "StackSet name, target AWS account ID, and target AWS region separated by commas (,)"
   value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "operation_preferences" {
-  description = "(Optional) Preferences for how AWS CloudFormation performs a stack set operation.deployment_targets Argument ReferenceThe deployment_targets configuration block supports the following arguments:*organizational_unit_ids(Optional) The organization root ID or organizational unit (OU) IDs to which StackSets deploys.operation_preferences Argument ReferenceThe operation_preferences configuration block supports the following arguments:*failure_tolerance_count(Optional) The number of accounts, per Region, for which this operation can fail before AWS CloudFormation stops the operation in that Region.\n*failure_tolerance_percentage(Optional) The percentage of accounts, per Region, for which this stack operation can fail before AWS CloudFormation stops the operation in that Region.\n*max_concurrent_countmax_concurrent_percentage(Optional) The maximum percentage of accounts in which to perform this operation at one time.\n*region_concurrency_type(Optional) The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.\n*region_order(Optional) The order of the Regions in where you want to perform the stack operation.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.operation_preferences
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "retain_stack" {
-  description = "(Optional) During Terraform resource destroy, remove Instance from StackSet while keeping the Stack and its associated resources. Must be enabled in Terraform state embefore destroy operation to take effect. You cannot reassociate a retained Stack or add an existing, saved Stack to a new StackSet. Defaults to false."
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.retain_stack
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "stack_set_name" {
-  description = "(Required) Name of the StackSet."
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.stack_set_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "account_id" {
-  description = "(Optional) Target AWS Account ID to create a Stack based on the StackSet. Defaults to current account."
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "organizational_unit_id" {
   description = "The organization root ID or organizational unit (OU) IDs specified for deployment_targets."
   value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.organizational_unit_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "region" {
   description = "(Optional) Target AWS Region to create a Stack based on the StackSet. Defaults to current region."
   value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.region
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "retain_stack" {
+  description = "(Optional) During Terraform resource destroy, remove Instance from StackSet while keeping the Stack and its associated resources. Must be enabled in Terraform state embefore destroy operation to take effect. You cannot reassociate a retained Stack or add an existing, saved Stack to a new StackSet. Defaults to false."
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.retain_stack
 }
-output "delete" {
+output "stack_set_name" {
+  description = "(Required) Name of the StackSet."
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.stack_set_name
+}
+output "update" {
   description = "(Default 30m)"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.delete
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.create
 }
-output "id" {
-  description = "StackSet name, target AWS account ID, and target AWS region separated by commas (,)"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.id
+output "operation_preferences" {
+  description = "(Optional) Preferences for how AWS CloudFormation performs a stack set operation.deployment_targets Argument ReferenceThe deployment_targets configuration block supports the following arguments:*organizational_unit_ids(Optional) The organization root ID or organizational unit (OU) IDs to which StackSets deploys.operation_preferences Argument ReferenceThe operation_preferences configuration block supports the following arguments:*failure_tolerance_count(Optional) The number of accounts, per Region, for which this operation can fail before AWS CloudFormation stops the operation in that Region.\n*failure_tolerance_percentage(Optional) The percentage of accounts, per Region, for which this stack operation can fail before AWS CloudFormation stops the operation in that Region.\n*max_concurrent_countmax_concurrent_percentage(Optional) The maximum percentage of accounts in which to perform this operation at one time.\n*region_concurrency_type(Optional) The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.\n*region_order(Optional) The order of the Regions in where you want to perform the stack operation.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.operation_preferences
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "organizational_unit_id" {
-  description = "The organization root ID or organizational unit (OU) IDs specified for deployment_targets."
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.organizational_unit_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "parameter_overrides" {
+  description = "(Optional) Key-value map of input parameters to override from the StackSet for this Instance."
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.parameter_overrides
 }
 output "stack_id" {
   description = "Stack identifierTimeoutsConfiguration options:"
   value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.stack_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.create
+}
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.delete
+}
+output "id" {
+  description = "StackSet name, target AWS account ID, and target AWS region separated by commas (,)"
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.id
+}
+output "organizational_unit_id" {
+  description = "The organization root ID or organizational unit (OU) IDs specified for deployment_targets."
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.organizational_unit_id
+}
+output "stack_id" {
+  description = "Stack identifierTimeoutsConfiguration options:"
+  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.stack_id
 }
 output "update" {
   description = "(Default 30m)"
@@ -331,15 +274,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_cloudformation_stack_set_instance.aws_cloudformation_stack_set_instance.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

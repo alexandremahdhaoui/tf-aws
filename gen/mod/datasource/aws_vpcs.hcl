@@ -8,17 +8,13 @@ output "id" {
   description = "AWS Region."
   value       = aws_vpcs.aws_vpcs.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ids" {
   description = "List of all the VPC Ids found.TimeoutsConfiguration options:"
   value       = aws_vpcs.aws_vpcs.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

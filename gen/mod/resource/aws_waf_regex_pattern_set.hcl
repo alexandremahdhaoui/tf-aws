@@ -1,7 +1,7 @@
 resource "aws_waf_regex_pattern_set" "aws_waf_regex_pattern_set" {
+  id                    = var.id
   name                  = var.name
   regex_pattern_strings = var.regex_pattern_strings
-  id                    = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -18,6 +18,7 @@ variable "name" {
 variable "regex_pattern_strings" {
   description = "(Optional) A list of regular expression (regex) patterns that you want AWS WAF to search for, such as B[a@]dB[o0]t.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -139,45 +140,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name or description of the Regex Pattern Set."
-  value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "regex_pattern_strings" {
   description = "(Optional) A list of regular expression (regex) patterns that you want AWS WAF to search for, such as B[a@]dB[o0]t.In addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.regex_pattern_strings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the WAF Regex Pattern Set."
   value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name or description of the Regex Pattern Set."
+  value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.name
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"
   value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the WAF Regex Pattern Set."
   value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -8,17 +8,13 @@ output "delegated_services" {
   description = "Services for which the account is a delegated administrator, which have the following attributes:\n"
   value       = aws_organizations_delegated_services.aws_organizations_delegated_services.delegated_services
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delegation_enabled_date" {
   description = "The date that the account became a delegated administrator for this service."
   value       = aws_organizations_delegated_services.aws_organizations_delegated_services.delegation_enabled_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

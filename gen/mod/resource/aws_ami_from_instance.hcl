@@ -1,19 +1,15 @@
 resource "aws_ami_from_instance" "aws_ami_from_instance" {
-  source_instance_id      = var.source_instance_id
-  tags                    = var.tags
-  update                  = var.update
   arn                     = var.arn
   create                  = var.create
   delete                  = var.delete
   name                    = var.name
   snapshot_without_reboot = var.snapshot_without_reboot
+  source_instance_id      = var.source_instance_id
+  tags                    = var.tags
+  update                  = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "snapshot_without_reboot" {
-  description = "(Optional) Boolean that overrides the behavior of stopping\nthe instance before snapshotting. This is risky since it may cause a snapshot of an\ninconsistent filesystem state, but can be used to avoid downtime if the user otherwise\nguarantees that no filesystem writes will be underway at the time of snapshot."
   type        = string
 }
 variable "source_instance_id" {
@@ -23,6 +19,7 @@ variable "source_instance_id" {
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:"
   type        = string
+  default     = ""
 }
 variable "update" {
   description = "(Default 40m)"
@@ -43,6 +40,11 @@ variable "delete" {
 variable "name" {
   description = "(Required) Region-unique name for the AMI."
   type        = string
+}
+variable "snapshot_without_reboot" {
+  description = "(Optional) Boolean that overrides the behavior of stopping\nthe instance before snapshotting. This is risky since it may cause a snapshot of an\ninconsistent filesystem state, but can be used to avoid downtime if the user otherwise\nguarantees that no filesystem writes will be underway at the time of snapshot."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,69 +166,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the AMI."
-  value       = aws_ami_from_instance.aws_ami_from_instance.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 40m)"
-  value       = aws_ami_from_instance.aws_ami_from_instance.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 90m)In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ami_from_instance.aws_ami_from_instance.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Region-unique name for the AMI."
   value       = aws_ami_from_instance.aws_ami_from_instance.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "snapshot_without_reboot" {
   description = "(Optional) Boolean that overrides the behavior of stopping\nthe instance before snapshotting. This is risky since it may cause a snapshot of an\ninconsistent filesystem state, but can be used to avoid downtime if the user otherwise\nguarantees that no filesystem writes will be underway at the time of snapshot."
   value       = aws_ami_from_instance.aws_ami_from_instance.snapshot_without_reboot
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "source_instance_id" {
   description = "(Required) ID of the instance to use as the basis of the AMI."
   value       = aws_ami_from_instance.aws_ami_from_instance.source_instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.TimeoutsConfiguration options:"
   value       = aws_ami_from_instance.aws_ami_from_instance.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 40m)"
   value       = aws_ami_from_instance.aws_ami_from_instance.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of the AMI."
+  value       = aws_ami_from_instance.aws_ami_from_instance.arn
+}
+output "create" {
+  description = "(Default 40m)"
+  value       = aws_ami_from_instance.aws_ami_from_instance.create
+}
+output "delete" {
+  description = "(Default 90m)In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ami_from_instance.aws_ami_from_instance.delete
 }
 output "arn" {
   description = "ARN of the AMI."
@@ -234,7 +204,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

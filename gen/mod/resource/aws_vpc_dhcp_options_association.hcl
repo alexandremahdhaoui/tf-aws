@@ -1,8 +1,8 @@
 resource "aws_vpc_dhcp_options_association" "aws_vpc_dhcp_options_association" {
+  Removing the DHCP Options Association automatically sets AWS's  = var.Removing the DHCP Options Association automatically sets AWS's 
   You can only associate one DHCP Options Set to a given VPC ID.  = var.You can only associate one DHCP Options Set to a given VPC ID.
   dhcp_options_id                                                 = var.dhcp_options_id
   vpc_id                                                          = var.vpc_id
-  Removing the DHCP Options Association automatically sets AWS's  = var.Removing the DHCP Options Association automatically sets AWS's 
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -144,37 +144,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "dhcp_options_id" {
-  description = "(Required) The ID of the DHCP Options Set to associate to the VPC.Remarks"
-  value       = aws_vpc_dhcp_options_association.aws_vpc_dhcp_options_association.dhcp_options_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "(Required) The ID of the VPC to which we would like to associate a DHCP Options Set."
-  value       = aws_vpc_dhcp_options_association.aws_vpc_dhcp_options_association.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "Removing the DHCP Options Association automatically sets AWS's " {
   description = "default DHCP Options Set to the VPC.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_dhcp_options_association.aws_vpc_dhcp_options_association.Removing the DHCP Options Association automatically sets AWS's 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "You can only associate one DHCP Options Set to a given VPC ID." {
   description = ""
   value       = aws_vpc_dhcp_options_association.aws_vpc_dhcp_options_association.You can only associate one DHCP Options Set to a given VPC ID.
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "dhcp_options_id" {
+  description = "(Required) The ID of the DHCP Options Set to associate to the VPC.Remarks"
+  value       = aws_vpc_dhcp_options_association.aws_vpc_dhcp_options_association.dhcp_options_id
+}
+output "vpc_id" {
+  description = "(Required) The ID of the VPC to which we would like to associate a DHCP Options Set."
+  value       = aws_vpc_dhcp_options_association.aws_vpc_dhcp_options_association.vpc_id
 }
 output "id" {
   description = "The ID of the DHCP Options Set Association."
@@ -182,7 +166,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

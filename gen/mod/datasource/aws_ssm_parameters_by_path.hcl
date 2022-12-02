@@ -25,6 +25,7 @@ variable "path" {
 variable "recursive" {
   description = "(Optional) Whether to recursively return parameters under path. Defaults to false.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "types" {
   description = "Types of the parameters."
@@ -33,22 +34,27 @@ variable "types" {
 variable "with_decryption" {
   description = "(Optional) Whether to return decrypted SecureString value. Defaults to true."
   type        = string
+  default     = ""
+}
+output "types" {
+  description = "Types of the parameters."
+  value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.types
+}
+output "with_decryption" {
+  description = "(Optional) Whether to return decrypted SecureString value. Defaults to true."
+  value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.with_decryption
+}
+output "arns" {
+  description = "ARNs of the parameters."
+  value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.arns
 }
 output "names" {
   description = "Names of the parameters."
   value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.names
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "path" {
   description = "(Required) Prefix path of the parameter."
   value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "recursive" {
   description = "(Optional) Whether to recursively return parameters under path. Defaults to false.In addition to all arguments above, the following attributes are exported:"
@@ -56,31 +62,7 @@ output "recursive" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "types" {
-  description = "Types of the parameters."
-  value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.types
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "with_decryption" {
-  description = "(Optional) Whether to return decrypted SecureString value. Defaults to true."
-  value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.with_decryption
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arns" {
-  description = "ARNs of the parameters."
-  value       = aws_ssm_parameters_by_path.aws_ssm_parameters_by_path.arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

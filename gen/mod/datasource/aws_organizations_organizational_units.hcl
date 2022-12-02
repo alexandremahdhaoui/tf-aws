@@ -4,13 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "id" {
+  description = "ID of the organizational unit"
+  value       = aws_organizations_organizational_units.aws_organizations_organizational_units.id
+}
+output "name" {
+  description = "Name of the organizational unit"
+  value       = aws_organizations_organizational_units.aws_organizations_organizational_units.name
+}
 output "arn" {
   description = "ARN of the organizational unit"
   value       = aws_organizations_organizational_units.aws_organizations_organizational_units.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "children" {
   description = "List of child organizational units, which have the following attributes:\n"
@@ -18,23 +22,7 @@ output "children" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the organizational unit"
-  value       = aws_organizations_organizational_units.aws_organizations_organizational_units.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Name of the organizational unit"
-  value       = aws_organizations_organizational_units.aws_organizations_organizational_units.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

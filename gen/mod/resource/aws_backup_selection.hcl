@@ -2,12 +2,12 @@ resource "aws_backup_selection" "aws_backup_selection" {
   condition     = var.condition
   iam_role_arn  = var.iam_role_arn
   key           = var.key
-  plan_id       = var.plan_id
-  value         = var.value
-  name          = var.name
   not_resources = var.not_resources
+  plan_id       = var.plan_id
   resources     = var.resources
   selection_tag = var.selection_tag
+  value         = var.value
+  name          = var.name
   type          = var.type
 }
 variable "provider_region" {
@@ -18,25 +18,32 @@ variable "name" {
   description = "(Required) The display name of a resource selection document."
   type        = string
 }
-variable "not_resources" {
-  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
+variable "type" {
+  description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
+  type        = string
+}
+variable "plan_id" {
+  description = "(Required) The backup plan ID to be associated with the selection of resources."
   type        = string
 }
 variable "resources" {
   description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to assign to a backup plan."
   type        = string
+  default     = ""
 }
 variable "selection_tag" {
   description = "(Optional) Tag-based conditions used to specify a set of resources to assign to a backup plan."
   type        = string
+  default     = ""
 }
-variable "type" {
-  description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
+variable "value" {
+  description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "condition" {
   description = "(Optional) A list of conditions that you define to assign resources to your backup plans using tags."
   type        = string
+  default     = ""
 }
 variable "iam_role_arn" {
   description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
@@ -46,13 +53,10 @@ variable "key" {
   description = "(Required) The key in a key-value pair."
   type        = string
 }
-variable "plan_id" {
-  description = "(Required) The backup plan ID to be associated with the selection of resources."
+variable "not_resources" {
+  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
   type        = string
-}
-variable "value" {
-  description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,85 +178,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "condition" {
-  description = "(Optional) A list of conditions that you define to assign resources to your backup plans using tags."
-  value       = aws_backup_selection.aws_backup_selection.condition
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iam_role_arn" {
-  description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
-  value       = aws_backup_selection.aws_backup_selection.iam_role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "key" {
-  description = "(Required) The key in a key-value pair."
-  value       = aws_backup_selection.aws_backup_selection.key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "not_resources" {
+  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
+  value       = aws_backup_selection.aws_backup_selection.not_resources
 }
 output "plan_id" {
   description = "(Required) The backup plan ID to be associated with the selection of resources."
   value       = aws_backup_selection.aws_backup_selection.plan_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_backup_selection.aws_backup_selection.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The display name of a resource selection document."
-  value       = aws_backup_selection.aws_backup_selection.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "not_resources" {
-  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
-  value       = aws_backup_selection.aws_backup_selection.not_resources
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resources" {
   description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to assign to a backup plan."
   value       = aws_backup_selection.aws_backup_selection.resources
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "selection_tag" {
   description = "(Optional) Tag-based conditions used to specify a set of resources to assign to a backup plan."
   value       = aws_backup_selection.aws_backup_selection.selection_tag
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_backup_selection.aws_backup_selection.value
+}
+output "condition" {
+  description = "(Optional) A list of conditions that you define to assign resources to your backup plans using tags."
+  value       = aws_backup_selection.aws_backup_selection.condition
+}
+output "iam_role_arn" {
+  description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
+  value       = aws_backup_selection.aws_backup_selection.iam_role_arn
+}
+output "key" {
+  description = "(Required) The key in a key-value pair."
+  value       = aws_backup_selection.aws_backup_selection.key
+}
+output "name" {
+  description = "(Required) The display name of a resource selection document."
+  value       = aws_backup_selection.aws_backup_selection.name
 }
 output "type" {
   description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
   value       = aws_backup_selection.aws_backup_selection.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Backup Selection identifier"
@@ -260,7 +224,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,8 +1,8 @@
 resource "aws_route53_zone_association" "aws_route53_zone_association" {
-  vpc_region = var.vpc_region
-  zone_id    = var.zone_id
   id         = var.id
   vpc_id     = var.vpc_id
+  vpc_region = var.vpc_region
+  zone_id    = var.zone_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -19,6 +19,7 @@ variable "vpc_id" {
 variable "vpc_region" {
   description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "zone_id" {
   description = "(Required) The private hosted zone to associate."
@@ -144,45 +145,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The calculated unique identifier for the association."
-  value       = aws_route53_zone_association.aws_route53_zone_association.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "(Required) The VPC to associate with the private hosted zone."
-  value       = aws_route53_zone_association.aws_route53_zone_association.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vpc_region" {
   description = "(Optional) The VPC's region. Defaults to the region of the AWS provider.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53_zone_association.aws_route53_zone_association.vpc_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "zone_id" {
   description = "(Required) The private hosted zone to associate."
   value       = aws_route53_zone_association.aws_route53_zone_association.zone_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The calculated unique identifier for the association."
   value       = aws_route53_zone_association.aws_route53_zone_association.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "vpc_id" {
+  description = "(Required) The VPC to associate with the private hosted zone."
+  value       = aws_route53_zone_association.aws_route53_zone_association.vpc_id
+}
+output "id" {
+  description = "The calculated unique identifier for the association."
+  value       = aws_route53_zone_association.aws_route53_zone_association.id
 }
 output "owning_account" {
   description = "The account ID of the account that created the hosted zone."
@@ -190,7 +171,7 @@ output "owning_account" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

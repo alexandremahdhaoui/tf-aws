@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
-  type        = string
-}
 variable "arns" {
   description = "Set of ARNs of the matched Image Builder Infrastructure Configurations."
   type        = string
@@ -24,37 +20,25 @@ variable "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListInfrastructureConfigurations API Reference."
   type        = string
 }
+variable "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
+  type        = string
+}
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Infrastructure Configurations."
   value       = aws_imagebuilder_infrastructure_configurations.aws_imagebuilder_infrastructure_configurations.arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "filter" {
   description = " configuration block:"
   value       = aws_imagebuilder_infrastructure_configurations.aws_imagebuilder_infrastructure_configurations.filter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListInfrastructureConfigurations API Reference."
   value       = aws_imagebuilder_infrastructure_configurations.aws_imagebuilder_infrastructure_configurations.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
   value       = aws_imagebuilder_infrastructure_configurations.aws_imagebuilder_infrastructure_configurations.values
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Infrastructure Configurations."
@@ -62,7 +46,7 @@ output "arns" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "instance_id" {
-  description = "(Required) The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "function_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the Lambda Function, omitting any version or alias qualifier."
+  type        = string
+}
+variable "instance_id" {
+  description = "(Required) The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +138,9 @@ output "function_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the Lambda Function, omitting any version or alias qualifier."
   value       = aws_connect_lambda_function_association.markdown.aws_connect_lambda_function_association.markdown.function_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "instance_id" {
   description = "(Required) The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.In addition to all arguments above, the following attributes are exported:"
   value       = aws_connect_lambda_function_association.markdown.aws_connect_lambda_function_association.markdown.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The Amazon Connect instance ID and Lambda Function ARN separated by a comma (,)."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

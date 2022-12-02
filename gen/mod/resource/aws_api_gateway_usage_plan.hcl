@@ -128,9 +128,33 @@ output "api_stages" {
   description = "Associated API stages of the usage plan."
   value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.api_stages
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "throttle_settings" {
+  description = "Throttling limits of the usage plan."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.throttle_settings
+}
+output "id" {
+  description = "ID of the API resource"
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.id
+}
+output "name" {
+  description = "Name of the usage plan."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.name
+}
+output "product_code" {
+  description = "AWS Marketplace product identifier to associate with the usage plan as a SaaS product on AWS Marketplace."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.product_code
+}
+output "quota_settings" {
+  description = "Quota of the usage plan."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.quota_settings
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.tags_all
+}
+output "arn" {
+  description = "ARN"
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.arn
 }
 output "description" {
   description = "Description of a usage plan."
@@ -138,63 +162,7 @@ output "description" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the API resource"
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Name of the usage plan."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "throttle_settings" {
-  description = "Throttling limits of the usage plan."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.throttle_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN"
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "product_code" {
-  description = "AWS Marketplace product identifier to associate with the usage plan as a SaaS product on AWS Marketplace."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.product_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "quota_settings" {
-  description = "Quota of the usage plan."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.quota_settings
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

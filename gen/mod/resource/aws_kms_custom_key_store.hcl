@@ -1,14 +1,22 @@
 resource "aws_kms_custom_key_store" "aws_kms_custom_key_store" {
-  custom_key_store_name    = var.custom_key_store_name
   id                       = var.id
   key_store_password       = var.key_store_password
   trust_anchor_certificate = var.trust_anchor_certificate
   update                   = var.update
   cloud_hsm_cluster_id     = var.cloud_hsm_cluster_id
   create                   = var.create
+  custom_key_store_name    = var.custom_key_store_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "trust_anchor_certificate" {
+  description = "(Required) Customer certificate used for signing on CloudHSM.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 15m)"
   type        = string
 }
 variable "cloud_hsm_cluster_id" {
@@ -29,14 +37,6 @@ variable "id" {
 }
 variable "key_store_password" {
   description = "(Required) Password for kmsuser on CloudHSM."
-  type        = string
-}
-variable "trust_anchor_certificate" {
-  description = "(Required) Customer certificate used for signing on CloudHSM.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "update" {
-  description = "(Default 15m)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -163,57 +163,41 @@ output "update" {
   description = "(Default 15m)"
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cloud_hsm_cluster_id" {
   description = "(Required) Cluster ID of CloudHSM."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.cloud_hsm_cluster_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 15m)"
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "custom_key_store_name" {
   description = "(Required) Unique name for Custom Key Store."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.custom_key_store_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Custom Key Store IDTimeoutsConfiguration options:"
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "key_store_password" {
   description = "(Required) Password for kmsuser on CloudHSM."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.key_store_password
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "trust_anchor_certificate" {
   description = "(Required) Customer certificate used for signing on CloudHSM.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.trust_anchor_certificate
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "delete" {
+  description = "(Default 15m)"
+  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.delete
+}
+output "id" {
+  description = "The Custom Key Store IDTimeoutsConfiguration options:"
+  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.id
+}
+output "update" {
+  description = "(Default 15m)"
+  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.update
 }
 output "create" {
   description = "(Default 15m)"
@@ -221,31 +205,7 @@ output "create" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 15m)"
-  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Custom Key Store IDTimeoutsConfiguration options:"
-  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 15m)"
-  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -138,17 +138,13 @@ output "policy" {
   description = "(Required) The policy document. This is a JSON formatted string. See more details about Policy Parameters in the official AWS docs.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "repository" {
   description = "The name of the repository."
   value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "repository" {
+  description = "The name of the repository."
+  value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
 }
 output "registry_id" {
   description = "The registry ID where the repository was created."
@@ -156,15 +152,7 @@ output "registry_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "repository" {
-  description = "The name of the repository."
-  value       = aws_ecr_lifecycle_policy.aws_ecr_lifecycle_policy.repository
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

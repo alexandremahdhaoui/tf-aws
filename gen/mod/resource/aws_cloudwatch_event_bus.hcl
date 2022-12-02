@@ -1,8 +1,8 @@
 resource "aws_cloudwatch_event_bus" "aws_cloudwatch_event_bus" {
-  name              = var.name
-  tags              = var.tags
   arn               = var.arn
   event_source_name = var.event_source_name
+  name              = var.name
+  tags              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "arn" {
 variable "event_source_name" {
   description = " (Optional) The partner event source that the new event bus will be matched with. Must match name."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the new event bus. The names of custom event buses can't contain the / character. To create a partner event bus, ensure the name matches the event_source_name."
@@ -23,6 +24,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional)  A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,45 +146,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the event bus."
+  value       = aws_cloudwatch_event_bus.aws_cloudwatch_event_bus.arn
+}
 output "event_source_name" {
   description = " (Optional) The partner event source that the new event bus will be matched with. Must match name."
   value       = aws_cloudwatch_event_bus.aws_cloudwatch_event_bus.event_source_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the new event bus. The names of custom event buses can't contain the / character. To create a partner event bus, ensure the name matches the event_source_name."
   value       = aws_cloudwatch_event_bus.aws_cloudwatch_event_bus.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional)  A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_event_bus.aws_cloudwatch_event_bus.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the event bus."
   value       = aws_cloudwatch_event_bus.aws_cloudwatch_event_bus.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the event bus."
-  value       = aws_cloudwatch_event_bus.aws_cloudwatch_event_bus.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -190,7 +172,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

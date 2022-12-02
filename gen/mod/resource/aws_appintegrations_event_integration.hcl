@@ -1,31 +1,15 @@
 resource "aws_appintegrations_event_integration" "aws_appintegrations_event_integration" {
+  arn             = var.arn
+  description     = var.description
+  event_filter    = var.event_filter
   eventbridge_bus = var.eventbridge_bus
   id              = var.id
   name            = var.name
   source          = var.source
   tags            = var.tags
-  arn             = var.arn
-  description     = var.description
-  event_filter    = var.event_filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the Event Integration."
-  type        = string
-}
-variable "event_filter" {
-  description = "(Required) Block that defines the configuration information for the event filter. The Event Filter block is documented below."
-  type        = string
-}
-variable "eventbridge_bus" {
-  description = "(Required) EventBridge bus."
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the Event Integration which is the name of the Event Integration."
   type        = string
 }
 variable "name" {
@@ -39,9 +23,27 @@ variable "source" {
 variable "tags" {
   description = "(Optional) Tags to apply to the Event Integration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A event_filter block supports the following arguments:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "ARN of the Event Integration."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the Event Integration."
+  type        = string
+  default     = ""
+}
+variable "event_filter" {
+  description = "(Required) Block that defines the configuration information for the event filter. The Event Filter block is documented below."
+  type        = string
+}
+variable "eventbridge_bus" {
+  description = "(Required) EventBridge bus."
+  type        = string
+}
+variable "id" {
+  description = "Identifier of the Event Integration which is the name of the Event Integration."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,85 +166,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) Description of the Event Integration."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "event_filter" {
-  description = "(Required) Block that defines the configuration information for the event filter. The Event Filter block is documented below."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.event_filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "eventbridge_bus" {
-  description = "(Required) EventBridge bus."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.eventbridge_bus
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Identifier of the Event Integration which is the name of the Event Integration."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the Event Integration."
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "source" {
   description = "(Required) Source of the events.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.source
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Tags to apply to the Event Integration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A event_filter block supports the following arguments:"
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the Event Integration."
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the Event Integration."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.description
 }
-output "arn" {
-  description = "ARN of the Event Integration."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.arn
+output "event_filter" {
+  description = "(Required) Block that defines the configuration information for the event filter. The Event Filter block is documented below."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.event_filter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "eventbridge_bus" {
+  description = "(Required) EventBridge bus."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.eventbridge_bus
 }
 output "id" {
   description = "Identifier of the Event Integration which is the name of the Event Integration."
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of the Event Integration."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.arn
+}
+output "id" {
+  description = "Identifier of the Event Integration which is the name of the Event Integration."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.id
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,7 +212,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,36 +1,21 @@
 resource "aws_elasticache_user" "aws_elasticache_user" {
-  passwords            = var.passwords
-  tags                 = var.tags
-  user_id              = var.user_id
   user_name            = var.user_name
   access_string        = var.access_string
   arn                  = var.arn
   engine               = var.engine
   no_password_required = var.no_password_required
+  passwords            = var.passwords
+  tags                 = var.tags
+  user_id              = var.user_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The ARN of the created ElastiCache User."
-  type        = string
-}
-variable "engine" {
-  description = "(Required) The current supported value is REDIS."
-  type        = string
-}
-variable "no_password_required" {
-  description = "(Optional) Indicates a password is not required for this user."
-  type        = string
-}
-variable "passwords" {
-  description = "(Optional) Passwords used for this user. You can create up to two passwords for each user."
-  type        = string
-}
 variable "tags" {
   description = "(Optional) A list of tags to be added to this resource. A tag is a key-value pair.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "user_id" {
   description = "(Required) The ID of the user."
@@ -43,6 +28,25 @@ variable "user_name" {
 variable "access_string" {
   description = "(Required) Access permissions string used for this user. See Specifying Permissions Using an Access String for more details."
   type        = string
+}
+variable "arn" {
+  description = "The ARN of the created ElastiCache User."
+  type        = string
+  default     = ""
+}
+variable "engine" {
+  description = "(Required) The current supported value is REDIS."
+  type        = string
+}
+variable "no_password_required" {
+  description = "(Optional) Indicates a password is not required for this user."
+  type        = string
+  default     = ""
+}
+variable "passwords" {
+  description = "(Optional) Passwords used for this user. You can create up to two passwords for each user."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,69 +168,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A list of tags to be added to this resource. A tag is a key-value pair.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_elasticache_user.aws_elasticache_user.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_id" {
-  description = "(Required) The ID of the user."
-  value       = aws_elasticache_user.aws_elasticache_user.user_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_name" {
-  description = "(Required) The username of the user."
-  value       = aws_elasticache_user.aws_elasticache_user.user_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "access_string" {
-  description = "(Required) Access permissions string used for this user. See Specifying Permissions Using an Access String for more details."
-  value       = aws_elasticache_user.aws_elasticache_user.access_string
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the created ElastiCache User."
   value       = aws_elasticache_user.aws_elasticache_user.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "engine" {
   description = "(Required) The current supported value is REDIS."
   value       = aws_elasticache_user.aws_elasticache_user.engine
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "no_password_required" {
   description = "(Optional) Indicates a password is not required for this user."
   value       = aws_elasticache_user.aws_elasticache_user.no_password_required
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "passwords" {
   description = "(Optional) Passwords used for this user. You can create up to two passwords for each user."
   value       = aws_elasticache_user.aws_elasticache_user.passwords
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A list of tags to be added to this resource. A tag is a key-value pair.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_elasticache_user.aws_elasticache_user.tags
+}
+output "user_id" {
+  description = "(Required) The ID of the user."
+  value       = aws_elasticache_user.aws_elasticache_user.user_id
+}
+output "user_name" {
+  description = "(Required) The username of the user."
+  value       = aws_elasticache_user.aws_elasticache_user.user_name
+}
+output "access_string" {
+  description = "(Required) Access permissions string used for this user. See Specifying Permissions Using an Access String for more details."
+  value       = aws_elasticache_user.aws_elasticache_user.access_string
 }
 output "arn" {
   description = "The ARN of the created ElastiCache User."
@@ -234,7 +206,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

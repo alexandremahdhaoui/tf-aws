@@ -1,25 +1,13 @@
 resource "aws_ec2_transit_gateway_peering_attachment" "aws_ec2_transit_gateway_peering_attachment" {
+  id                      = var.id
   peer_account_id         = var.peer_account_id
   peer_region             = var.peer_region
   peer_transit_gateway_id = var.peer_transit_gateway_id
   tags                    = var.tags
   transit_gateway_id      = var.transit_gateway_id
-  id                      = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "peer_region" {
-  description = "(Required) Region of EC2 Transit Gateway to peer with."
-  type        = string
-}
-variable "peer_transit_gateway_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway to peer with."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
 }
 variable "transit_gateway_id" {
@@ -33,6 +21,20 @@ variable "id" {
 variable "peer_account_id" {
   description = "(Optional) Account ID of EC2 Transit Gateway to peer with. Defaults to the account ID the AWS provider is currently connected to."
   type        = string
+  default     = ""
+}
+variable "peer_region" {
+  description = "(Required) Region of EC2 Transit Gateway to peer with."
+  type        = string
+}
+variable "peer_transit_gateway_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway to peer with."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -158,57 +160,29 @@ output "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "peer_account_id" {
   description = "(Optional) Account ID of EC2 Transit Gateway to peer with. Defaults to the account ID the AWS provider is currently connected to."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.peer_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "peer_region" {
   description = "(Required) Region of EC2 Transit Gateway to peer with."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.peer_region
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "peer_transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway to peer with."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.peer_transit_gateway_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.transit_gateway_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -216,7 +190,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

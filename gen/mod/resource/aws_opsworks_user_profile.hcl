@@ -1,8 +1,8 @@
 resource "aws_opsworks_user_profile" "aws_opsworks_user_profile" {
+  ssh_public_key        = var.ssh_public_key
   ssh_username          = var.ssh_username
   user_arn              = var.user_arn
   allow_self_management = var.allow_self_management
-  ssh_public_key        = var.ssh_public_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -11,10 +11,12 @@ variable "provider_region" {
 variable "allow_self_management" {
   description = "(Optional) Whether users can specify their own SSH public key through the My Settings page"
   type        = string
+  default     = ""
 }
 variable "ssh_public_key" {
   description = "(Optional) The users public keyIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "ssh_username" {
   description = "(Required) The ssh username, with witch this user wants to log in"
@@ -144,37 +146,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "user_arn" {
+  description = "(Required) The user's IAM ARN"
+  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.user_arn
+}
+output "allow_self_management" {
+  description = "(Optional) Whether users can specify their own SSH public key through the My Settings page"
+  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.allow_self_management
+}
+output "ssh_public_key" {
+  description = "(Optional) The users public keyIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.ssh_public_key
+}
 output "ssh_username" {
   description = "(Required) The ssh username, with witch this user wants to log in"
   value       = aws_opsworks_user_profile.aws_opsworks_user_profile.ssh_username
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_arn" {
-  description = "(Required) The user's IAM ARN"
-  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.user_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allow_self_management" {
-  description = "(Optional) Whether users can specify their own SSH public key through the My Settings page"
-  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.allow_self_management
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ssh_public_key" {
-  description = "(Optional) The users public keyIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_opsworks_user_profile.aws_opsworks_user_profile.ssh_public_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -4,85 +4,49 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "description" {
-  description = "Description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key_id" {
-  description = "ARN of the Key Management Service (KMS) Key used to encrypt the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner" {
-  description = "Owner of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "supported_os_versions" {
-  description = "Operating Systems (OSes) supported by the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "Key-value map of resource tags for the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "change_description" {
   description = "Change description of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "date_created" {
   description = "Date the component was created."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encrypted" {
-  description = "Encryption status of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "Name of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "platform" {
   description = "Platform of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "supported_os_versions" {
+  description = "Operating Systems (OSes) supported by the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
+}
+output "data" {
+  description = "Data of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.data
+}
+output "description" {
+  description = "Description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
+}
+output "encrypted" {
+  description = "Encryption status of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
+}
+output "kms_key_id" {
+  description = "ARN of the Key Management Service (KMS) Key used to encrypt the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.kms_key_id
+}
+output "owner" {
+  description = "Owner of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
+}
+output "tags" {
+  description = "Key-value map of resource tags for the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
 }
 output "type" {
   description = "Type of the component."
@@ -90,15 +54,7 @@ output "type" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "data" {
-  description = "Data of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

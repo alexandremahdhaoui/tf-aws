@@ -1,10 +1,10 @@
 resource "aws_autoscaling_schedule" "aws_autoscaling_schedule" {
+  autoscaling_group_name = var.autoscaling_group_name
   desired_capacity       = var.desired_capacity
+  end_time               = var.end_time
+  time_zone              = var.time_zone
   max_size               = var.max_size
   min_size               = var.min_size
-  time_zone              = var.time_zone
-  autoscaling_group_name = var.autoscaling_group_name
-  end_time               = var.end_time
   recurrence             = var.recurrence
   scheduled_action_name  = var.scheduled_action_name
   start_time             = var.start_time
@@ -13,21 +13,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "time_zone" {
-  description = "(Optional)  The timezone for the cron expression. Valid values are the canonical names of the IANA time zones (such as Etc/GMT+9 or Pacific/Tahiti)."
-  type        = string
-}
-variable "autoscaling_group_name" {
-  description = "(Required) Name or ARN of the Auto Scaling group."
-  type        = string
-}
-variable "end_time" {
-  description = "(Optional) Time for this action to end, in \"YYYY-MM-DDThh:mm:ssZ\" format in UTC/GMT only (for example, 2014-06-01T00:00:00Z ).\nIf you try to schedule your action in the past, Auto Scaling returns an error message."
+variable "min_size" {
+  description = ""
   type        = string
 }
 variable "recurrence" {
   description = "(Optional) Time when recurring future actions will start. Start time is specified by the user following the Unix cron syntax format."
   type        = string
+  default     = ""
 }
 variable "scheduled_action_name" {
   description = "(Required) Name of this scaling action."
@@ -36,17 +29,30 @@ variable "scheduled_action_name" {
 variable "start_time" {
   description = "(Optional) Time for this action to start, in \"YYYY-MM-DDThh:mm:ssZ\" format in UTC/GMT only (for example, 2014-06-01T00:00:00Z ).\nIf you try to schedule your action in the past, Auto Scaling returns an error message."
   type        = string
-}
-variable "desired_capacity" {
-  description = "(Optional) Number of EC2 instances that should be running in the group. Default 0.  Set to -1 if you don't want to change the desired capacity at the scheduled time.~> strongNOTE: When start_time and end_time are specified with recurrence , they form the boundaries of when the recurring action will start and stop.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "max_size" {
   description = "(Optional) Maximum size for the Auto Scaling group. Default 0.\nSet to -1 if you don't want to change the maximum size at the scheduled time."
   type        = string
+  default     = ""
 }
-variable "min_size" {
-  description = ""
+variable "desired_capacity" {
+  description = "(Optional) Number of EC2 instances that should be running in the group. Default 0.  Set to -1 if you don't want to change the desired capacity at the scheduled time.~> strongNOTE: When start_time and end_time are specified with recurrence , they form the boundaries of when the recurring action will start and stop.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "end_time" {
+  description = "(Optional) Time for this action to end, in \"YYYY-MM-DDThh:mm:ssZ\" format in UTC/GMT only (for example, 2014-06-01T00:00:00Z ).\nIf you try to schedule your action in the past, Auto Scaling returns an error message."
+  type        = string
+  default     = ""
+}
+variable "time_zone" {
+  description = "(Optional)  The timezone for the cron expression. Valid values are the canonical names of the IANA time zones (such as Etc/GMT+9 or Pacific/Tahiti)."
+  type        = string
+  default     = ""
+}
+variable "autoscaling_group_name" {
+  description = "(Required) Name or ARN of the Auto Scaling group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,77 +175,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "desired_capacity" {
-  description = "(Optional) Number of EC2 instances that should be running in the group. Default 0.  Set to -1 if you don't want to change the desired capacity at the scheduled time.~> strongNOTE: When start_time and end_time are specified with recurrence , they form the boundaries of when the recurring action will start and stop.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.desired_capacity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "max_size" {
-  description = "(Optional) Maximum size for the Auto Scaling group. Default 0.\nSet to -1 if you don't want to change the maximum size at the scheduled time."
-  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.max_size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "min_size" {
-  description = ""
-  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.min_size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "time_zone" {
-  description = "(Optional)  The timezone for the cron expression. Valid values are the canonical names of the IANA time zones (such as Etc/GMT+9 or Pacific/Tahiti)."
-  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.time_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "autoscaling_group_name" {
-  description = "(Required) Name or ARN of the Auto Scaling group."
-  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.autoscaling_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "end_time" {
-  description = "(Optional) Time for this action to end, in \"YYYY-MM-DDThh:mm:ssZ\" format in UTC/GMT only (for example, 2014-06-01T00:00:00Z ).\nIf you try to schedule your action in the past, Auto Scaling returns an error message."
-  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.end_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "recurrence" {
   description = "(Optional) Time when recurring future actions will start. Start time is specified by the user following the Unix cron syntax format."
   value       = aws_autoscaling_schedule.aws_autoscaling_schedule.recurrence
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "scheduled_action_name" {
   description = "(Required) Name of this scaling action."
   value       = aws_autoscaling_schedule.aws_autoscaling_schedule.scheduled_action_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "start_time" {
   description = "(Optional) Time for this action to start, in \"YYYY-MM-DDThh:mm:ssZ\" format in UTC/GMT only (for example, 2014-06-01T00:00:00Z ).\nIf you try to schedule your action in the past, Auto Scaling returns an error message."
   value       = aws_autoscaling_schedule.aws_autoscaling_schedule.start_time
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "max_size" {
+  description = "(Optional) Maximum size for the Auto Scaling group. Default 0.\nSet to -1 if you don't want to change the maximum size at the scheduled time."
+  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.max_size
+}
+output "min_size" {
+  description = ""
+  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.min_size
+}
+output "end_time" {
+  description = "(Optional) Time for this action to end, in \"YYYY-MM-DDThh:mm:ssZ\" format in UTC/GMT only (for example, 2014-06-01T00:00:00Z ).\nIf you try to schedule your action in the past, Auto Scaling returns an error message."
+  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.end_time
+}
+output "time_zone" {
+  description = "(Optional)  The timezone for the cron expression. Valid values are the canonical names of the IANA time zones (such as Etc/GMT+9 or Pacific/Tahiti)."
+  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.time_zone
+}
+output "autoscaling_group_name" {
+  description = "(Required) Name or ARN of the Auto Scaling group."
+  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.autoscaling_group_name
+}
+output "desired_capacity" {
+  description = "(Optional) Number of EC2 instances that should be running in the group. Default 0.  Set to -1 if you don't want to change the desired capacity at the scheduled time.~> strongNOTE: When start_time and end_time are specified with recurrence , they form the boundaries of when the recurring action will start and stop.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_autoscaling_schedule.aws_autoscaling_schedule.desired_capacity
 }
 output "arn" {
   description = "ARN assigned by AWS to the autoscaling schedule."
@@ -247,7 +217,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

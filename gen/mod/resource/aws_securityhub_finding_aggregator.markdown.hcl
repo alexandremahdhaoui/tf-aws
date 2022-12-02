@@ -13,6 +13,7 @@ variable "linking_mode" {
 variable "specified_regions" {
   description = "(Optional) List of regions to include or exclude (required if linking_mode is set to ALL_REGIONS_EXCEPT_SPECIFIED or SPECIFIED_REGIONS)In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -138,17 +139,9 @@ output "linking_mode" {
   description = "(Required) Indicates whether to aggregate findings from all of the available Regions or from a specified list. The options are ALL_REGIONS, ALL_REGIONS_EXCEPT_SPECIFIED or SPECIFIED_REGIONS. When ALL_REGIONS or ALL_REGIONS_EXCEPT_SPECIFIED are used, Security Hub will automatically aggregate findings from new Regions as Security Hub supports them and you opt into them."
   value       = aws_securityhub_finding_aggregator.markdown.aws_securityhub_finding_aggregator.markdown.linking_mode
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "specified_regions" {
   description = "(Optional) List of regions to include or exclude (required if linking_mode is set to ALL_REGIONS_EXCEPT_SPECIFIED or SPECIFIED_REGIONS)In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_finding_aggregator.markdown.aws_securityhub_finding_aggregator.markdown.specified_regions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Security Hub finding aggregator."
@@ -156,7 +149,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

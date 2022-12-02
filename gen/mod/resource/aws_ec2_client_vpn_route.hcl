@@ -1,28 +1,21 @@
 resource "aws_ec2_client_vpn_route" "aws_ec2_client_vpn_route" {
+  create                 = var.create
+  description            = var.description
   destination_cidr_block = var.destination_cidr_block
   id                     = var.id
   origin                 = var.origin
   target_vpc_subnet_id   = var.target_vpc_subnet_id
   type                   = var.type
   client_vpn_endpoint_id = var.client_vpn_endpoint_id
-  create                 = var.create
-  description            = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "client_vpn_endpoint_id" {
-  description = "(Required) The ID of the Client VPN endpoint."
-  type        = string
-}
-variable "create" {
-  description = "(Default 1m)"
-  type        = string
-}
 variable "description" {
   description = "(Optional) A brief description of the route."
   type        = string
+  default     = ""
 }
 variable "destination_cidr_block" {
   description = "(Required) The IPv4 address range, in CIDR notation, of the route destination."
@@ -42,6 +35,14 @@ variable "target_vpc_subnet_id" {
 }
 variable "type" {
   description = "The type of the route.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "client_vpn_endpoint_id" {
+  description = "(Required) The ID of the Client VPN endpoint."
+  type        = string
+}
+variable "create" {
+  description = "(Default 1m)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,93 +165,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type" {
-  description = "The type of the route.TimeoutsConfiguration options:"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_vpn_endpoint_id" {
-  description = "(Required) The ID of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.client_vpn_endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 1m)"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) A brief description of the route."
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination_cidr_block" {
-  description = "(Required) The IPv4 address range, in CIDR notation, of the route destination."
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.destination_cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "origin" {
   description = "Indicates how the Client VPN route was added. Will be add-route for routes created by this resource."
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.origin
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "target_vpc_subnet_id" {
   description = "(Required) The ID of the Subnet to route the traffic through. It must already be attached to the Client VPN.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.target_vpc_subnet_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "type" {
+  description = "The type of the route.TimeoutsConfiguration options:"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
+}
+output "client_vpn_endpoint_id" {
+  description = "(Required) The ID of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.client_vpn_endpoint_id
 }
 output "create" {
   description = "(Default 1m)"
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) A brief description of the route."
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.description
 }
-output "delete" {
-  description = "(Default 1m)"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "destination_cidr_block" {
+  description = "(Required) The IPv4 address range, in CIDR notation, of the route destination."
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.destination_cidr_block
 }
 output "id" {
   description = "The ID of the Client VPN endpoint."
   value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "type" {
+  description = "The type of the route.TimeoutsConfiguration options:"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
+}
+output "create" {
+  description = "(Default 1m)"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.create
+}
+output "delete" {
+  description = "(Default 1m)"
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.delete
+}
+output "id" {
+  description = "The ID of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.id
 }
 output "origin" {
   description = "Indicates how the Client VPN route was added. Will be add-route for routes created by this resource."
@@ -258,15 +219,7 @@ output "origin" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "The type of the route.TimeoutsConfiguration options:"
-  value       = aws_ec2_client_vpn_route.aws_ec2_client_vpn_route.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

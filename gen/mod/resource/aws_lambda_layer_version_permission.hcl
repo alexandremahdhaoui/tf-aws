@@ -12,6 +12,18 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "principal" {
+  description = "(Required) AWS account ID which should be able to use your Lambda Layer. * can be used here, if you want to share your Lambda Layer widely."
+  type        = string
+}
+variable "revision_id" {
+  description = "A unique identifier for the current revision of the policy."
+  type        = string
+}
+variable "statement_id" {
+  description = "(Required) The name of Lambda Layer Permission, for example dev-accounthuman readable note about what is this permission for."
+  type        = string
+}
 variable "version_number" {
   description = " (Required) Version of Lambda Layer, which you want to grant access to. Note: permissions only apply to a single version of a layer.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -31,18 +43,7 @@ variable "layer_name" {
 variable "organization_id" {
   description = "(Optional) An identifier of AWS Organization, which should be able to use your Lambda Layer. principal should be equal to * if organization_id provided."
   type        = string
-}
-variable "principal" {
-  description = "(Required) AWS account ID which should be able to use your Lambda Layer. * can be used here, if you want to share your Lambda Layer widely."
-  type        = string
-}
-variable "revision_id" {
-  description = "A unique identifier for the current revision of the policy."
-  type        = string
-}
-variable "statement_id" {
-  description = "(Required) The name of Lambda Layer Permission, for example dev-accounthuman readable note about what is this permission for."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,85 +165,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "action" {
-  description = "(Required) Action, which will be allowed. lambda:GetLayerVersion value is suggested by AWS documantation."
-  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.action
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The layer_name and version_number, separated by a comma (,)."
-  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "layer_name" {
   description = " (Required) The name or ARN of the Lambda Layer, which you want to grant access to."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.layer_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "organization_id" {
   description = "(Optional) An identifier of AWS Organization, which should be able to use your Lambda Layer. principal should be equal to * if organization_id provided."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.organization_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "principal" {
   description = "(Required) AWS account ID which should be able to use your Lambda Layer. * can be used here, if you want to share your Lambda Layer widely."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.principal
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "revision_id" {
   description = "A unique identifier for the current revision of the policy."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.revision_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "statement_id" {
   description = "(Required) The name of Lambda Layer Permission, for example dev-accounthuman readable note about what is this permission for."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.statement_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "version_number" {
   description = " (Required) Version of Lambda Layer, which you want to grant access to. Note: permissions only apply to a single version of a layer.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.version_number
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "action" {
+  description = "(Required) Action, which will be allowed. lambda:GetLayerVersion value is suggested by AWS documantation."
+  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.action
 }
 output "id" {
   description = "The layer_name and version_number, separated by a comma (,)."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The layer_name and version_number, separated by a comma (,)."
+  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.id
 }
 output "policy" {
   description = "Full Lambda Layer Permission policy."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "revision_id" {
   description = "A unique identifier for the current revision of the policy."
@@ -250,7 +211,7 @@ output "revision_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

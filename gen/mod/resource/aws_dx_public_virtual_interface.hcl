@@ -1,58 +1,65 @@
 resource "aws_dx_public_virtual_interface" "aws_dx_public_virtual_interface" {
-  aws_device            = var.aws_device
-  bgp_auth_key          = var.bgp_auth_key
-  vlan                  = var.vlan
   amazon_address        = var.amazon_address
-  customer_address      = var.customer_address
-  bgp_asn               = var.bgp_asn
-  id                    = var.id
-  tags                  = var.tags
-  route_filter_prefixes = var.route_filter_prefixes
-  tags_all              = var.tags_all
   address_family        = var.address_family
-  arn                   = var.arn
+  aws_device            = var.aws_device
+  id                    = var.id
+  route_filter_prefixes = var.route_filter_prefixes
+  tags                  = var.tags
+  vlan                  = var.vlan
+  bgp_asn               = var.bgp_asn
+  bgp_auth_key          = var.bgp_auth_key
   connection_id         = var.connection_id
-  create                = var.create
   name                  = var.name
+  arn                   = var.arn
+  create                = var.create
+  customer_address      = var.customer_address
+  tags_all              = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the virtual interface."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "bgp_asn" {
-  description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the virtual interface."
-  type        = string
-}
-variable "connection_id" {
-  description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
   type        = string
 }
 variable "create" {
   description = "(Default 10m)"
   type        = string
 }
-variable "name" {
-  description = "(Required) The name for the virtual interface."
+variable "customer_address" {
+  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the virtual interface."
+  type        = string
+}
+variable "amazon_address" {
+  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
+  type        = string
+  default     = ""
+}
+variable "aws_device" {
+  description = "The Direct Connect endpoint on which the virtual interface terminates."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the virtual interface."
   type        = string
 }
 variable "route_filter_prefixes" {
   description = "(Required) A list of routes to be advertised to the AWS network in this region."
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "vlan" {
+  description = "(Required) The VLAN ID."
   type        = string
 }
 variable "address_family" {
@@ -62,21 +69,18 @@ variable "address_family" {
 variable "bgp_auth_key" {
   description = "(Optional) The authentication key for BGP configuration."
   type        = string
+  default     = ""
 }
-variable "vlan" {
-  description = "(Required) The VLAN ID."
+variable "connection_id" {
+  description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
   type        = string
 }
-variable "aws_device" {
-  description = "The Direct Connect endpoint on which the virtual interface terminates."
+variable "name" {
+  description = "(Required) The name for the virtual interface."
   type        = string
 }
-variable "customer_address" {
-  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers."
-  type        = string
-}
-variable "amazon_address" {
-  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
+variable "bgp_asn" {
+  description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,141 +203,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bgp_asn" {
-  description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.bgp_asn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the virtual interface."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "route_filter_prefixes" {
-  description = "(Required) A list of routes to be advertised to the AWS network in this region."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.route_filter_prefixes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "amazon_address" {
+  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.amazon_address
 }
 output "address_family" {
   description = "(Required) The address family for the BGP peer. ipv4  or ipv6."
   value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.address_family
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the virtual interface."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "connection_id" {
-  description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.connection_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name for the virtual interface."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "aws_device" {
   description = "The Direct Connect endpoint on which the virtual interface terminates."
   value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.aws_device
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bgp_auth_key" {
-  description = "(Optional) The authentication key for BGP configuration."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.bgp_auth_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vlan" {
-  description = "(Required) The VLAN ID."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.vlan
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "amazon_address" {
-  description = "(Optional) The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.amazon_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "customer_address" {
-  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.customer_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the virtual interface."
   value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "route_filter_prefixes" {
+  description = "(Required) A list of routes to be advertised to the AWS network in this region."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.route_filter_prefixes
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.tags
+}
+output "vlan" {
+  description = "(Required) The VLAN ID."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.vlan
+}
+output "bgp_asn" {
+  description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.bgp_asn
+}
+output "bgp_auth_key" {
+  description = "(Optional) The authentication key for BGP configuration."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.bgp_auth_key
+}
+output "connection_id" {
+  description = "(Required) The ID of the Direct Connect connection (or LAG) on which to create the virtual interface."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.connection_id
+}
+output "name" {
+  description = "(Required) The name for the virtual interface."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.name
+}
+output "arn" {
+  description = "The ARN of the virtual interface."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.create
+}
+output "customer_address" {
+  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.customer_address
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.tags_all
+}
+output "arn" {
+  description = "The ARN of the virtual interface."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.arn
+}
+output "aws_device" {
+  description = "The Direct Connect endpoint on which the virtual interface terminates."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.aws_device
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.create
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.delete
+}
+output "id" {
+  description = "The ID of the virtual interface."
+  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -341,31 +289,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the virtual interface."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "aws_device" {
-  description = "The Direct Connect endpoint on which the virtual interface terminates."
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.aws_device
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_public_virtual_interface.aws_dx_public_virtual_interface.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

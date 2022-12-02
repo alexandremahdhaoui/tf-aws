@@ -10,13 +10,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
-  type        = string
-}
 variable "description" {
   description = "(Optional) The description that you specify for the namespace when you create it."
   type        = string
+  default     = ""
 }
 variable "http_name" {
   description = "The name of an HTTP namespace."
@@ -32,6 +29,11 @@ variable "name" {
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   type        = string
 }
 variable "tag_instance_id" {
@@ -154,77 +156,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
-  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description that you specify for the namespace when you create it."
-  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "http_name" {
   description = "The name of an HTTP namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.http_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of a namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the http namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The description that you specify for the namespace when you create it."
+  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.description
+}
+output "arn" {
+  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
+  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.arn
 }
 output "http_name" {
   description = "The name of an HTTP namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.http_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of a namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -232,7 +198,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

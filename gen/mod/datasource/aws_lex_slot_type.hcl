@@ -12,6 +12,19 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "version" {
+  description = "(Optional) Version of the slot type.The following attributes are exported."
+  type        = string
+  default     = ""
+}
+variable "checksum" {
+  description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
+  type        = string
+}
+variable "created_date" {
+  description = "Date when the slot type version was created."
+  type        = string
+}
 variable "description" {
   description = "Description of the slot type."
   type        = string
@@ -32,89 +45,61 @@ variable "value_selection_strategy" {
   description = "Determines the slot resolution strategy that Amazon Lex\nuses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION"
   type        = string
 }
-variable "version" {
-  description = "(Optional) Version of the slot type.The following attributes are exported."
-  type        = string
-}
-variable "checksum" {
-  description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
-  type        = string
-}
-variable "created_date" {
-  description = "Date when the slot type version was created."
-  type        = string
-}
-output "enumeration_value" {
-  description = ""
-  value       = aws_lex_slot_type.aws_lex_slot_type.enumeration_value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_updated_date" {
-  description = "Date when the $LATEST version of this slot type was updated."
-  value       = aws_lex_slot_type.aws_lex_slot_type.last_updated_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Name of the slot type. The name is not case sensitive."
-  value       = aws_lex_slot_type.aws_lex_slot_type.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value_selection_strategy" {
-  description = "Determines the slot resolution strategy that Amazon Lex\nuses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION"
-  value       = aws_lex_slot_type.aws_lex_slot_type.value_selection_strategy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "version" {
   description = "(Optional) Version of the slot type.The following attributes are exported."
   value       = aws_lex_slot_type.aws_lex_slot_type.version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "checksum" {
   description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
   value       = aws_lex_slot_type.aws_lex_slot_type.checksum
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "created_date" {
   description = "Date when the slot type version was created."
   value       = aws_lex_slot_type.aws_lex_slot_type.created_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "Description of the slot type."
   value       = aws_lex_slot_type.aws_lex_slot_type.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "enumeration_value" {
   description = ""
   value       = aws_lex_slot_type.aws_lex_slot_type.enumeration_value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "last_updated_date" {
+  description = "Date when the $LATEST version of this slot type was updated."
+  value       = aws_lex_slot_type.aws_lex_slot_type.last_updated_date
+}
+output "name" {
+  description = "Name of the slot type. The name is not case sensitive."
+  value       = aws_lex_slot_type.aws_lex_slot_type.name
+}
+output "value_selection_strategy" {
+  description = "Determines the slot resolution strategy that Amazon Lex\nuses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION"
+  value       = aws_lex_slot_type.aws_lex_slot_type.value_selection_strategy
+}
+output "name" {
+  description = "Name of the slot type. The name is not case sensitive."
+  value       = aws_lex_slot_type.aws_lex_slot_type.name
+}
+output "value_selection_strategy" {
+  description = "Determines the slot resolution strategy that Amazon Lex\nuses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION"
+  value       = aws_lex_slot_type.aws_lex_slot_type.value_selection_strategy
+}
+output "checksum" {
+  description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
+  value       = aws_lex_slot_type.aws_lex_slot_type.checksum
+}
+output "created_date" {
+  description = "Date when the slot type version was created."
+  value       = aws_lex_slot_type.aws_lex_slot_type.created_date
+}
+output "description" {
+  description = "Description of the slot type."
+  value       = aws_lex_slot_type.aws_lex_slot_type.description
+}
+output "enumeration_value" {
+  description = ""
+  value       = aws_lex_slot_type.aws_lex_slot_type.enumeration_value
 }
 output "last_updated_date" {
   description = "Date when the $LATEST version of this slot type was updated."
@@ -122,47 +107,7 @@ output "last_updated_date" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Name of the slot type. The name is not case sensitive."
-  value       = aws_lex_slot_type.aws_lex_slot_type.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value_selection_strategy" {
-  description = "Determines the slot resolution strategy that Amazon Lex\nuses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION"
-  value       = aws_lex_slot_type.aws_lex_slot_type.value_selection_strategy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "checksum" {
-  description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
-  value       = aws_lex_slot_type.aws_lex_slot_type.checksum
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_date" {
-  description = "Date when the slot type version was created."
-  value       = aws_lex_slot_type.aws_lex_slot_type.created_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "Description of the slot type."
-  value       = aws_lex_slot_type.aws_lex_slot_type.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

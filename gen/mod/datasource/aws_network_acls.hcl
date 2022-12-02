@@ -8,17 +8,13 @@ output "id" {
   description = "AWS Region."
   value       = aws_network_acls.aws_network_acls.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ids" {
   description = "List of all the network ACL ids found.TimeoutsConfiguration options:"
   value       = aws_network_acls.aws_network_acls.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

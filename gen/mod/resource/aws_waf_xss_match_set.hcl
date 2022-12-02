@@ -11,9 +11,23 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "text_transformation" {
+  description = "target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
+  type        = string
+}
+variable "type" {
+  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "xss_match_tuples" {
+  description = "(Optional) The parts of web requests that you want to inspect for cross-site scripting attacks.Nested Blocksxss_match_tuples"
+  type        = string
+  default     = ""
+}
 variable "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   type        = string
+  default     = ""
 }
 variable "field_to_match" {
   description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
@@ -25,18 +39,6 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) The name or description of the SizeConstraintSet."
-  type        = string
-}
-variable "text_transformation" {
-  description = "target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
-  type        = string
-}
-variable "type" {
-  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "xss_match_tuples" {
-  description = "(Optional) The parts of web requests that you want to inspect for cross-site scripting attacks.Nested Blocksxss_match_tuples"
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,69 +161,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  value       = aws_waf_xss_match_set.aws_waf_xss_match_set.data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "field_to_match" {
-  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
-  value       = aws_waf_xss_match_set.aws_waf_xss_match_set.field_to_match
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the WAF XssMatchSet."
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name or description of the SizeConstraintSet."
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "text_transformation" {
   description = "target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.text_transformation
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "xss_match_tuples" {
   description = "(Optional) The parts of web requests that you want to inspect for cross-site scripting attacks.Nested Blocksxss_match_tuples"
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.xss_match_tuples
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  value       = aws_waf_xss_match_set.aws_waf_xss_match_set.data
+}
+output "field_to_match" {
+  description = "(Required) Specifies where in a web request to look for cross-site scripting attacks."
+  value       = aws_waf_xss_match_set.aws_waf_xss_match_set.field_to_match
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"
   value       = aws_waf_xss_match_set.aws_waf_xss_match_set.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the WAF XssMatchSet."
@@ -229,7 +199,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,59 +1,45 @@
 resource "aws_s3_bucket_inventory" "aws_s3_bucket_inventory" {
+  frequency                = var.frequency
+  encryption               = var.encryption
   bucket                   = var.bucket
-  filter                   = var.filter
+  enabled                  = var.enabled
   format                   = var.format
   optional_fields          = var.optional_fields
-  schedule                 = var.schedule
-  encryption               = var.encryption
-  frequency                = var.frequency
-  sse_kms                  = var.sse_kms
-  prefix                   = var.prefix
   account_id               = var.account_id
-  bucket_arn               = var.bucket_arn
   destination              = var.destination
-  enabled                  = var.enabled
   included_object_versions = var.included_object_versions
+  prefix                   = var.prefix
+  schedule                 = var.schedule
+  sse_kms                  = var.sse_kms
+  bucket_arn               = var.bucket_arn
   name                     = var.name
   sse_s3                   = var.sse_s3
+  filter                   = var.filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "sse_s3" {
-  description = "(Optional) Specifies to use server-side encryption with Amazon S3-managed keys (SSE-S3) to encrypt the inventory file.The sse_kms configuration supports the following:"
+variable "encryption" {
+  description = "(Optional) Contains the type of server-side encryption to use to encrypt the inventory (documented below).The encryption configuration supports the following:"
+  type        = string
+  default     = ""
+}
+variable "frequency" {
+  description = "(Required) Specifies how frequently inventory results are produced. Valid values: Daily, Weekly.The destination configuration supports the following:"
   type        = string
 }
 variable "account_id" {
   description = "(Optional) The ID of the account that owns the destination bucket. Recommended to be set to prevent problems if the destination bucket ownership changes."
   type        = string
-}
-variable "bucket_arn" {
-  description = "(Required) The Amazon S3 bucket ARN of the destination."
-  type        = string
-}
-variable "destination" {
-  description = "(Required) Contains information about where to publish the inventory results (documented below)."
-  type        = string
-}
-variable "enabled" {
-  description = "(Optional, Default: true) Specifies whether the inventory is enabled or disabled."
-  type        = string
-}
-variable "included_object_versions" {
-  description = "(Required) Object versions to include in the inventory list. Valid values: All, Current."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Unique identifier of the inventory configuration for the bucket."
-  type        = string
+  default     = ""
 }
 variable "bucket" {
   description = "(Required) The S3 bucket configuration where inventory results are published (documented below).The bucket configuration supports the following:"
   type        = string
 }
-variable "filter" {
-  description = "(Optional) Specifies an inventory filter. The inventory only includes objects that meet the filter's criteria (documented below)."
+variable "enabled" {
+  description = "(Optional, Default: true) Specifies whether the inventory is enabled or disabled."
   type        = string
 }
 variable "format" {
@@ -63,26 +49,47 @@ variable "format" {
 variable "optional_fields" {
   description = "(Optional) List of optional fields that are included in the inventory results. Please refer to the S3 documentation for more details.The filter configuration supports the following:"
   type        = string
+  default     = ""
 }
-variable "schedule" {
-  description = "(Required) Specifies the schedule for generating inventory results (documented below)."
+variable "bucket_arn" {
+  description = "(Required) The Amazon S3 bucket ARN of the destination."
   type        = string
 }
-variable "encryption" {
-  description = "(Optional) Contains the type of server-side encryption to use to encrypt the inventory (documented below).The encryption configuration supports the following:"
+variable "destination" {
+  description = "(Required) Contains information about where to publish the inventory results (documented below)."
   type        = string
 }
-variable "frequency" {
-  description = "(Required) Specifies how frequently inventory results are produced. Valid values: Daily, Weekly.The destination configuration supports the following:"
-  type        = string
-}
-variable "sse_kms" {
-  description = "(Optional) Specifies to use server-side encryption with AWS KMS-managed keys to encrypt the inventory file (documented below)."
+variable "included_object_versions" {
+  description = "(Required) Object versions to include in the inventory list. Valid values: All, Current."
   type        = string
 }
 variable "prefix" {
   description = "(Optional) The prefix that is prepended to all inventory results."
   type        = string
+  default     = ""
+}
+variable "schedule" {
+  description = "(Required) Specifies the schedule for generating inventory results (documented below)."
+  type        = string
+}
+variable "sse_kms" {
+  description = "(Optional) Specifies to use server-side encryption with AWS KMS-managed keys to encrypt the inventory file (documented below)."
+  type        = string
+  default     = ""
+}
+variable "filter" {
+  description = "(Optional) Specifies an inventory filter. The inventory only includes objects that meet the filter's criteria (documented below)."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Unique identifier of the inventory configuration for the bucket."
+  type        = string
+}
+variable "sse_s3" {
+  description = "(Optional) Specifies to use server-side encryption with Amazon S3-managed keys (SSE-S3) to encrypt the inventory file.The sse_kms configuration supports the following:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -204,61 +211,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "account_id" {
-  description = "(Optional) The ID of the account that owns the destination bucket. Recommended to be set to prevent problems if the destination bucket ownership changes."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.account_id
+output "included_object_versions" {
+  description = "(Required) Object versions to include in the inventory list. Valid values: All, Current."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.included_object_versions
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "prefix" {
+  description = "(Optional) The prefix that is prepended to all inventory results."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.prefix
+}
+output "schedule" {
+  description = "(Required) Specifies the schedule for generating inventory results (documented below)."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.schedule
+}
+output "sse_kms" {
+  description = "(Optional) Specifies to use server-side encryption with AWS KMS-managed keys to encrypt the inventory file (documented below)."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.sse_kms
 }
 output "bucket_arn" {
   description = "(Required) The Amazon S3 bucket ARN of the destination."
   value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.bucket_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "destination" {
   description = "(Required) Contains information about where to publish the inventory results (documented below)."
   value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled" {
-  description = "(Optional, Default: true) Specifies whether the inventory is enabled or disabled."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "included_object_versions" {
-  description = "(Required) Object versions to include in the inventory list. Valid values: All, Current."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.included_object_versions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Unique identifier of the inventory configuration for the bucket."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "sse_s3" {
   description = "(Optional) Specifies to use server-side encryption with Amazon S3-managed keys (SSE-S3) to encrypt the inventory file.The sse_kms configuration supports the following:"
   value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.sse_s3
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "filter" {
+  description = "(Optional) Specifies an inventory filter. The inventory only includes objects that meet the filter's criteria (documented below)."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.filter
+}
+output "name" {
+  description = "(Required) Unique identifier of the inventory configuration for the bucket."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.name
+}
+output "encryption" {
+  description = "(Optional) Contains the type of server-side encryption to use to encrypt the inventory (documented below).The encryption configuration supports the following:"
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.encryption
+}
+output "frequency" {
+  description = "(Required) Specifies how frequently inventory results are produced. Valid values: Daily, Weekly.The destination configuration supports the following:"
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.frequency
+}
+output "enabled" {
+  description = "(Optional, Default: true) Specifies whether the inventory is enabled or disabled."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.enabled
+}
+output "format" {
+  description = "(Required) Specifies the output format of the inventory results. Can be CSV, ORC or Parquet."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.format
+}
+output "optional_fields" {
+  description = "(Optional) List of optional fields that are included in the inventory results. Please refer to the S3 documentation for more details.The filter configuration supports the following:"
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.optional_fields
+}
+output "account_id" {
+  description = "(Optional) The ID of the account that owns the destination bucket. Recommended to be set to prevent problems if the destination bucket ownership changes."
+  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.account_id
 }
 output "bucket" {
   description = "(Required) The S3 bucket configuration where inventory results are published (documented below).The bucket configuration supports the following:"
@@ -266,71 +277,7 @@ output "bucket" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter" {
-  description = "(Optional) Specifies an inventory filter. The inventory only includes objects that meet the filter's criteria (documented below)."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "format" {
-  description = "(Required) Specifies the output format of the inventory results. Can be CSV, ORC or Parquet."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.format
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "optional_fields" {
-  description = "(Optional) List of optional fields that are included in the inventory results. Please refer to the S3 documentation for more details.The filter configuration supports the following:"
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.optional_fields
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "schedule" {
-  description = "(Required) Specifies the schedule for generating inventory results (documented below)."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.schedule
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encryption" {
-  description = "(Optional) Contains the type of server-side encryption to use to encrypt the inventory (documented below).The encryption configuration supports the following:"
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.encryption
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "frequency" {
-  description = "(Required) Specifies how frequently inventory results are produced. Valid values: Daily, Weekly.The destination configuration supports the following:"
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.frequency
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "sse_kms" {
-  description = "(Optional) Specifies to use server-side encryption with AWS KMS-managed keys to encrypt the inventory file (documented below)."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.sse_kms
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "prefix" {
-  description = "(Optional) The prefix that is prepended to all inventory results."
-  value       = aws_s3_bucket_inventory.aws_s3_bucket_inventory.prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

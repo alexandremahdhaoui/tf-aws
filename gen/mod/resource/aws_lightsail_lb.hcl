@@ -1,26 +1,18 @@
 resource "aws_lightsail_lb" "aws_lightsail_lb" {
-  name              = var.name
-  support_code      = var.support_code
-  tags              = var.tags
-  arn               = var.arn
   created_at        = var.created_at
-  id                = var.id
-  instance_port     = var.instance_port
+  dns_name          = var.dns_name
+  name              = var.name
+  tags              = var.tags
   protocol          = var.protocol
   public_ports      = var.public_ports
-  dns_name          = var.dns_name
+  support_code      = var.support_code
+  arn               = var.arn
   health_check_path = var.health_check_path
+  id                = var.id
+  instance_port     = var.instance_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "dns_name" {
-  description = "The DNS name of the load balancer."
-  type        = string
-}
-variable "health_check_path" {
-  description = "(Optional) The health check path of the load balancer. Default value \"/\"."
   type        = string
 }
 variable "id" {
@@ -39,24 +31,34 @@ variable "public_ports" {
   description = "The public ports of the load balancer."
   type        = string
 }
+variable "support_code" {
+  description = "The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily."
+  type        = string
+}
 variable "arn" {
   description = "The ARN of the Lightsail load balancer."
   type        = string
 }
-variable "created_at" {
-  description = "The timestamp when the load balancer was created."
+variable "health_check_path" {
+  description = "(Optional) The health check path of the load balancer. Default value \"/\"."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the Lightsail load balancer."
   type        = string
 }
-variable "support_code" {
-  description = "The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily."
-  type        = string
-}
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "created_at" {
+  description = "The timestamp when the load balancer was created."
+  type        = string
+}
+variable "dns_name" {
+  description = "The DNS name of the load balancer."
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,125 +181,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "support_code" {
-  description = "The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily."
-  value       = aws_lightsail_lb.aws_lightsail_lb.support_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_lb.aws_lightsail_lb.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the Lightsail load balancer."
-  value       = aws_lightsail_lb.aws_lightsail_lb.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_at" {
-  description = "The timestamp when the load balancer was created."
-  value       = aws_lightsail_lb.aws_lightsail_lb.created_at
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the Lightsail load balancer."
-  value       = aws_lightsail_lb.aws_lightsail_lb.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_port" {
-  description = "(Required) The instance port the load balancer will connect."
-  value       = aws_lightsail_lb.aws_lightsail_lb.instance_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "protocol" {
-  description = "The protocol of the load balancer."
-  value       = aws_lightsail_lb.aws_lightsail_lb.protocol
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "public_ports" {
   description = "The public ports of the load balancer."
   value       = aws_lightsail_lb.aws_lightsail_lb.public_ports
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "support_code" {
+  description = "The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily."
+  value       = aws_lightsail_lb.aws_lightsail_lb.support_code
 }
-output "dns_name" {
-  description = "The DNS name of the load balancer."
-  value       = aws_lightsail_lb.aws_lightsail_lb.dns_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The ARN of the Lightsail load balancer."
+  value       = aws_lightsail_lb.aws_lightsail_lb.arn
 }
 output "health_check_path" {
   description = "(Optional) The health check path of the load balancer. Default value \"/\"."
   value       = aws_lightsail_lb.aws_lightsail_lb.health_check_path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name used for this load balancer (matches name)."
   value       = aws_lightsail_lb.aws_lightsail_lb.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_port" {
+  description = "(Required) The instance port the load balancer will connect."
+  value       = aws_lightsail_lb.aws_lightsail_lb.instance_port
 }
-output "arn" {
-  description = "The ARN of the Lightsail load balancer."
-  value       = aws_lightsail_lb.aws_lightsail_lb.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "protocol" {
+  description = "The protocol of the load balancer."
+  value       = aws_lightsail_lb.aws_lightsail_lb.protocol
 }
 output "created_at" {
   description = "The timestamp when the load balancer was created."
   value       = aws_lightsail_lb.aws_lightsail_lb.created_at
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "dns_name" {
+  description = "The DNS name of the load balancer."
+  value       = aws_lightsail_lb.aws_lightsail_lb.dns_name
+}
+output "name" {
+  description = "(Required) The name of the Lightsail load balancer."
+  value       = aws_lightsail_lb.aws_lightsail_lb.name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_lb.aws_lightsail_lb.tags
+}
+output "public_ports" {
+  description = "The public ports of the load balancer."
+  value       = aws_lightsail_lb.aws_lightsail_lb.public_ports
+}
+output "support_code" {
+  description = "The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily."
+  value       = aws_lightsail_lb.aws_lightsail_lb.support_code
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_lightsail_lb.aws_lightsail_lb.tags_all
+}
+output "arn" {
+  description = "The ARN of the Lightsail load balancer."
+  value       = aws_lightsail_lb.aws_lightsail_lb.arn
+}
+output "created_at" {
+  description = "The timestamp when the load balancer was created."
+  value       = aws_lightsail_lb.aws_lightsail_lb.created_at
 }
 output "dns_name" {
   description = "The DNS name of the load balancer."
   value       = aws_lightsail_lb.aws_lightsail_lb.dns_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name used for this load balancer (matches name)."
   value       = aws_lightsail_lb.aws_lightsail_lb.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "protocol" {
   description = "The protocol of the load balancer."
@@ -305,31 +259,7 @@ output "protocol" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "public_ports" {
-  description = "The public ports of the load balancer."
-  value       = aws_lightsail_lb.aws_lightsail_lb.public_ports
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "support_code" {
-  description = "The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily."
-  value       = aws_lightsail_lb.aws_lightsail_lb.support_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_lightsail_lb.aws_lightsail_lb.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

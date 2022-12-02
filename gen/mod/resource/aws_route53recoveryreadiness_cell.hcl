@@ -1,22 +1,14 @@
 resource "aws_route53recoveryreadiness_cell" "aws_route53recoveryreadiness_cell" {
+  arn                     = var.arn
   cell_name               = var.cell_name
   cells                   = var.cells
   delete                  = var.delete
   parent_readiness_scopes = var.parent_readiness_scopes
   tags                    = var.tags
   tags_all                = var.tags_all
-  arn                     = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the cell"
   type        = string
 }
 variable "cell_name" {
@@ -26,18 +18,32 @@ variable "cell_name" {
 variable "cells" {
   description = "(Optional) List of cell arns to add as nested fault domains within this cell."
   type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 5m)"
   type        = string
+  default     = ""
 }
 variable "parent_readiness_scopes" {
   description = "List of readiness scopes (recovery groups or cells) that contain this cell."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the cell"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,85 +165,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cell_name" {
-  description = "(Required) Unique name describing the cell."
-  value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.cell_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cells" {
   description = "(Optional) List of cell arns to add as nested fault domains within this cell."
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.cells
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Default 5m)"
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parent_readiness_scopes" {
   description = "List of readiness scopes (recovery groups or cells) that contain this cell."
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.parent_readiness_scopes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the cell"
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cell_name" {
+  description = "(Required) Unique name describing the cell."
+  value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.cell_name
 }
 output "delete" {
   description = "(Default 5m)"
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parent_readiness_scopes" {
   description = "List of readiness scopes (recovery groups or cells) that contain this cell."
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.parent_readiness_scopes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_route53recoveryreadiness_cell.aws_route53recoveryreadiness_cell.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the cell"
@@ -245,7 +211,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

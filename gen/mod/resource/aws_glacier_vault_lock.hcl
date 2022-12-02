@@ -1,8 +1,8 @@
 resource "aws_glacier_vault_lock" "aws_glacier_vault_lock" {
+  ignore_deletion_error = var.ignore_deletion_error
   policy                = var.policy
   vault_name            = var.vault_name
   complete_lock         = var.complete_lock
-  ignore_deletion_error = var.ignore_deletion_error
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "complete_lock" {
 variable "ignore_deletion_error" {
   description = "(Optional) Allow Terraform to ignore the error returned when attempting to delete the Glacier Lock Policy. This can be used to delete or recreate the Glacier Vault via Terraform, for example, if the Glacier Vault Lock policy permits that action. This should only be used in conjunction with complete_lock being set to true.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "policy" {
   description = "(Required) JSON string containing the IAM policy to apply as the Glacier Vault Lock policy."
@@ -144,37 +145,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "policy" {
+  description = "(Required) JSON string containing the IAM policy to apply as the Glacier Vault Lock policy."
+  value       = aws_glacier_vault_lock.aws_glacier_vault_lock.policy
+}
 output "vault_name" {
   description = "(Required) The name of the Glacier Vault."
   value       = aws_glacier_vault_lock.aws_glacier_vault_lock.vault_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "complete_lock" {
   description = "(Required) Boolean whether to permanently apply this Glacier Lock Policy. Once completed, this cannot be undone. If set to false, the Glacier Lock Policy remains in a testing mode for 24 hours. After that time, the Glacier Lock Policy is automatically removed by Glacier and the Terraform resource will show as needing recreation. Changing this from false to true will show as resource recreation, which is expected. Changing this from true to false is not possible unless the Glacier Vault is recreated at the same time."
   value       = aws_glacier_vault_lock.aws_glacier_vault_lock.complete_lock
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ignore_deletion_error" {
   description = "(Optional) Allow Terraform to ignore the error returned when attempting to delete the Glacier Lock Policy. This can be used to delete or recreate the Glacier Vault via Terraform, for example, if the Glacier Vault Lock policy permits that action. This should only be used in conjunction with complete_lock being set to true.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glacier_vault_lock.aws_glacier_vault_lock.ignore_deletion_error
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "policy" {
-  description = "(Required) JSON string containing the IAM policy to apply as the Glacier Vault Lock policy."
-  value       = aws_glacier_vault_lock.aws_glacier_vault_lock.policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Glacier Vault name."
@@ -182,7 +167,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

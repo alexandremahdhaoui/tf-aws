@@ -8,13 +8,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) A name to identify the key group.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "comment" {
   description = "(Optional) A comment to describe the key group.."
   type        = string
+  default     = ""
 }
 variable "etag" {
   description = "The identifier for this version of the key group."
@@ -22,6 +19,10 @@ variable "etag" {
 }
 variable "items" {
   description = "(Required) A list of the identifiers of the public keys in the key group."
+  type        = string
+}
+variable "name" {
+  description = "(Required) A name to identify the key group.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,45 +145,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) A name to identify the key group.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudfront_key_group.aws_cloudfront_key_group.name
+}
 output "comment" {
   description = "(Optional) A comment to describe the key group.."
   value       = aws_cloudfront_key_group.aws_cloudfront_key_group.comment
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "etag" {
   description = "The identifier for this version of the key group."
   value       = aws_cloudfront_key_group.aws_cloudfront_key_group.etag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "items" {
   description = "(Required) A list of the identifiers of the public keys in the key group."
   value       = aws_cloudfront_key_group.aws_cloudfront_key_group.items
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) A name to identify the key group.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudfront_key_group.aws_cloudfront_key_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "etag" {
   description = "The identifier for this version of the key group."
   value       = aws_cloudfront_key_group.aws_cloudfront_key_group.etag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The identifier for the key group."
@@ -190,7 +171,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

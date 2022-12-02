@@ -8,17 +8,13 @@ output "id" {
   description = "AWS Region."
   value       = aws_vpc_peering_connections.aws_vpc_peering_connections.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ids" {
   description = "IDs of the VPC Peering Connections.TimeoutsConfiguration options:"
   value       = aws_vpc_peering_connections.aws_vpc_peering_connections.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,25 +1,13 @@
 resource "aws_lb_ssl_negotiation_policy" "aws_lb_ssl_negotiation_policy" {
+  id            = var.id
+  lb_port       = var.lb_port
   load_balancer = var.load_balancer
   name          = var.name
   value         = var.value
   attribute     = var.attribute
-  id            = var.id
-  lb_port       = var.lb_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "value" {
-  description = "The value of the attributeTo set your attributes, please see the AWS Elastic Load Balancing Developer Guide for a listing of the supported SSL protocols, SSL options, and SSL ciphers.~> strongNOTE: The AWS documentation references Server Order Preference, which the AWS Elastic Load Balancing API refers to as Server-Defined-Cipher-Order. If you wish to set Server Order Preference, use this value instead.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "attribute" {
-  description = ""
-  type        = string
-}
-variable "id" {
-  description = "The ID of the policy."
   type        = string
 }
 variable "lb_port" {
@@ -32,6 +20,18 @@ variable "load_balancer" {
 }
 variable "name" {
   description = "The name of the stickiness policy."
+  type        = string
+}
+variable "value" {
+  description = "The value of the attributeTo set your attributes, please see the AWS Elastic Load Balancing Developer Guide for a listing of the supported SSL protocols, SSL options, and SSL ciphers.~> strongNOTE: The AWS documentation references Server Order Preference, which the AWS Elastic Load Balancing API refers to as Server-Defined-Cipher-Order. If you wish to set Server Order Preference, use this value instead.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "attribute" {
+  description = ""
+  type        = string
+}
+variable "id" {
+  description = "The ID of the policy."
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,49 +158,37 @@ output "attribute" {
   description = ""
   value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.attribute
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the policy."
   value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "lb_port" {
   description = "The load balancer port to which the policy is applied."
   value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.lb_port
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "load_balancer" {
   description = "The load balancer to which the policy is attached."
   value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.load_balancer
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The name of the stickiness policy."
   value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "value" {
   description = "The value of the attributeTo set your attributes, please see the AWS Elastic Load Balancing Developer Guide for a listing of the supported SSL protocols, SSL options, and SSL ciphers.~> strongNOTE: The AWS documentation references Server Order Preference, which the AWS Elastic Load Balancing API refers to as Server-Defined-Cipher-Order. If you wish to set Server Order Preference, use this value instead.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The ID of the policy."
+  value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.id
+}
+output "lb_port" {
+  description = "The load balancer port to which the policy is applied."
+  value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.lb_port
+}
+output "load_balancer" {
+  description = "The load balancer to which the policy is attached."
+  value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.load_balancer
 }
 output "name" {
   description = "The name of the stickiness policy."
@@ -208,31 +196,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the policy."
-  value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lb_port" {
-  description = "The load balancer port to which the policy is applied."
-  value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.lb_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "load_balancer" {
-  description = "The load balancer to which the policy is attached."
-  value       = aws_lb_ssl_negotiation_policy.aws_lb_ssl_negotiation_policy.load_balancer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

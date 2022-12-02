@@ -1,21 +1,52 @@
 resource "aws_location_tracker" "aws_location_tracker" {
-  tags               = var.tags
+  tracker_arn        = var.tracker_arn
+  description        = var.description
   tags_all           = var.tags_all
+  position_filtering = var.position_filtering
+  tags               = var.tags
   tracker_name       = var.tracker_name
   update_time        = var.update_time
   create_time        = var.create_time
-  description        = var.description
   kms_key_id         = var.kms_key_id
-  position_filtering = var.position_filtering
-  tracker_arn        = var.tracker_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "description" {
+  description = "(Optional) The optional description for the tracker resource."
+  type        = string
+  default     = ""
+}
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
+}
+variable "tracker_arn" {
+  description = "The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS."
+  type        = string
+  default     = ""
+}
+variable "create_time" {
+  description = "The timestamp for when the tracker resource was created in ISO 8601 format."
+  type        = string
+  default     = ""
+}
+variable "kms_key_id" {
+  description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
+  type        = string
+  default     = ""
+}
+variable "position_filtering" {
+  description = "(Optional) The position filtering method of the tracker resource. Valid values: TimeBased, DistanceBased, AccuracyBased. Default: TimeBased."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the tracker. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tracker_name" {
   description = "(Required) The name of the tracker resource."
@@ -24,30 +55,7 @@ variable "tracker_name" {
 variable "update_time" {
   description = "The timestamp for when the tracker resource was last updated in ISO 8601 format."
   type        = string
-}
-variable "create_time" {
-  description = "The timestamp for when the tracker resource was created in ISO 8601 format."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The optional description for the tracker resource."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the tracker. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "position_filtering" {
-  description = "(Optional) The position filtering method of the tracker resource. Valid values: TimeBased, DistanceBased, AccuracyBased. Default: TimeBased."
-  type        = string
-}
-variable "tracker_arn" {
-  description = "The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,101 +177,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value tags for the tracker. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_location_tracker.aws_location_tracker.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_location_tracker.aws_location_tracker.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tracker_name" {
-  description = "(Required) The name of the tracker resource."
-  value       = aws_location_tracker.aws_location_tracker.tracker_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update_time" {
-  description = "The timestamp for when the tracker resource was last updated in ISO 8601 format."
-  value       = aws_location_tracker.aws_location_tracker.update_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create_time" {
   description = "The timestamp for when the tracker resource was created in ISO 8601 format."
   value       = aws_location_tracker.aws_location_tracker.create_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The optional description for the tracker resource."
-  value       = aws_location_tracker.aws_location_tracker.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "kms_key_id" {
   description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
   value       = aws_location_tracker.aws_location_tracker.kms_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "position_filtering" {
   description = "(Optional) The position filtering method of the tracker resource. Valid values: TimeBased, DistanceBased, AccuracyBased. Default: TimeBased."
   value       = aws_location_tracker.aws_location_tracker.position_filtering
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value tags for the tracker. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_location_tracker.aws_location_tracker.tags
 }
-output "tracker_arn" {
-  description = "The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS."
-  value       = aws_location_tracker.aws_location_tracker.tracker_arn
+output "tracker_name" {
+  description = "(Required) The name of the tracker resource."
+  value       = aws_location_tracker.aws_location_tracker.tracker_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "update_time" {
+  description = "The timestamp for when the tracker resource was last updated in ISO 8601 format."
+  value       = aws_location_tracker.aws_location_tracker.update_time
 }
-output "create_time" {
-  description = "The timestamp for when the tracker resource was created in ISO 8601 format."
-  value       = aws_location_tracker.aws_location_tracker.create_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The optional description for the tracker resource."
+  value       = aws_location_tracker.aws_location_tracker.description
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_location_tracker.aws_location_tracker.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tracker_arn" {
   description = "The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS."
   value       = aws_location_tracker.aws_location_tracker.tracker_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create_time" {
+  description = "The timestamp for when the tracker resource was created in ISO 8601 format."
+  value       = aws_location_tracker.aws_location_tracker.create_time
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_location_tracker.aws_location_tracker.tags_all
+}
+output "tracker_arn" {
+  description = "The Amazon Resource Name (ARN) for the tracker resource. Used when you need to specify a resource across all AWS."
+  value       = aws_location_tracker.aws_location_tracker.tracker_arn
 }
 output "update_time" {
   description = "The timestamp for when the tracker resource was last updated in ISO 8601 format."
@@ -271,7 +231,7 @@ output "update_time" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

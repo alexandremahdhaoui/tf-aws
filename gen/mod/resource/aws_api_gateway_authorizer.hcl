@@ -1,13 +1,13 @@
 resource "aws_api_gateway_authorizer" "aws_api_gateway_authorizer" {
-  arn                              = var.arn
   authorizer_credentials           = var.authorizer_credentials
-  authorizer_uri                   = var.authorizer_uri
   identity_validation_expression   = var.identity_validation_expression
-  provider_arns                    = var.provider_arns
-  authorizer_result_ttl_in_seconds = var.authorizer_result_ttl_in_seconds
-  identity_source                  = var.identity_source
   name                             = var.name
   rest_api_id                      = var.rest_api_id
+  arn                              = var.arn
+  authorizer_result_ttl_in_seconds = var.authorizer_result_ttl_in_seconds
+  authorizer_uri                   = var.authorizer_uri
+  identity_source                  = var.identity_source
+  provider_arns                    = var.provider_arns
   type                             = var.type
 }
 variable "provider_region" {
@@ -18,29 +18,38 @@ variable "arn" {
   description = "ARN of the API Gateway Authorizer"
   type        = string
 }
-variable "authorizer_credentials" {
-  description = "(Optional) Credentials required for the authorizer. To specify an IAM Role for API Gateway to assume, use the IAM Role ARN."
+variable "authorizer_result_ttl_in_seconds" {
+  description = "(Optional) TTL of cached authorizer results in seconds. Defaults to 300."
   type        = string
+  default     = ""
 }
 variable "authorizer_uri" {
   description = "(Optional, required for type TOKEN/REQUEST) Authorizer's Uniform Resource Identifier (URI). This must be a well-formed Lambda function URI in the form of arn:aws:apigateway:{region}:lambda:path/{service_api}arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:012345678912:function:my-function/invocations"
   type        = string
 }
-variable "identity_validation_expression" {
-  description = "(Optional) Validation expression for the incoming identity. For TOKEN type, this value should be a regular expression. The incoming token from the client is matched against this expression, and will proceed if the token matches. If the token doesn't match, the client receives a 401 Unauthorized response."
+variable "identity_source" {
+  description = "(Optional) Source of the identity in an incoming request. Defaults to method.request.header.Authorization. For REQUEST type, this may be a comma-separated list of values, including headers, query string parameters and stage variables - e.g., \"method.request.header.SomeHeaderName,method.request.querystring.SomeQueryStringName,stageVariables.SomeStageVariableName\""
   type        = string
+  default     = ""
 }
 variable "provider_arns" {
   description = "(Optional, required for type COGNITO_USER_POOLS) List of the Amazon Cognito user pool ARNs. Each element is of this format: arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "authorizer_result_ttl_in_seconds" {
-  description = "(Optional) TTL of cached authorizer results in seconds. Defaults to 300."
+variable "type" {
+  description = "(Optional) Type of the authorizer. Possible values are TOKEN for a Lambda function using a single authorization token submitted in a custom header, REQUEST for a Lambda function using incoming request parameters, or COGNITO_USER_POOLS for using an Amazon Cognito user pool. Defaults to TOKEN."
   type        = string
+  default     = ""
 }
-variable "identity_source" {
-  description = "(Optional) Source of the identity in an incoming request. Defaults to method.request.header.Authorization. For REQUEST type, this may be a comma-separated list of values, including headers, query string parameters and stage variables - e.g., \"method.request.header.SomeHeaderName,method.request.querystring.SomeQueryStringName,stageVariables.SomeStageVariableName\""
+variable "authorizer_credentials" {
+  description = "(Optional) Credentials required for the authorizer. To specify an IAM Role for API Gateway to assume, use the IAM Role ARN."
   type        = string
+  default     = ""
+}
+variable "identity_validation_expression" {
+  description = "(Optional) Validation expression for the incoming identity. For TOKEN type, this value should be a regular expression. The incoming token from the client is matched against this expression, and will proceed if the token matches. If the token doesn't match, the client receives a 401 Unauthorized response."
+  type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the authorizer"
@@ -48,10 +57,6 @@ variable "name" {
 }
 variable "rest_api_id" {
   description = "(Required) ID of the associated REST API"
-  type        = string
-}
-variable "type" {
-  description = "(Optional) Type of the authorizer. Possible values are TOKEN for a Lambda function using a single authorization token submitted in a custom header, REQUEST for a Lambda function using incoming request parameters, or COGNITO_USER_POOLS for using an Amazon Cognito user pool. Defaults to TOKEN."
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,93 +179,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type" {
-  description = "(Optional) Type of the authorizer. Possible values are TOKEN for a Lambda function using a single authorization token submitted in a custom header, REQUEST for a Lambda function using incoming request parameters, or COGNITO_USER_POOLS for using an Amazon Cognito user pool. Defaults to TOKEN."
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorizer_result_ttl_in_seconds" {
-  description = "(Optional) TTL of cached authorizer results in seconds. Defaults to 300."
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.authorizer_result_ttl_in_seconds
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "identity_source" {
-  description = "(Optional) Source of the identity in an incoming request. Defaults to method.request.header.Authorization. For REQUEST type, this may be a comma-separated list of values, including headers, query string parameters and stage variables - e.g., \"method.request.header.SomeHeaderName,method.request.querystring.SomeQueryStringName,stageVariables.SomeStageVariableName\""
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.identity_source
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Name of the authorizer"
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.rest_api_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provider_arns" {
-  description = "(Optional, required for type COGNITO_USER_POOLS) List of the Amazon Cognito user pool ARNs. Each element is of this format: arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.provider_arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the API Gateway Authorizer"
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "authorizer_credentials" {
   description = "(Optional) Credentials required for the authorizer. To specify an IAM Role for API Gateway to assume, use the IAM Role ARN."
   value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.authorizer_credentials
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "authorizer_uri" {
-  description = "(Optional, required for type TOKEN/REQUEST) Authorizer's Uniform Resource Identifier (URI). This must be a well-formed Lambda function URI in the form of arn:aws:apigateway:{region}:lambda:path/{service_api}arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:012345678912:function:my-function/invocations"
-  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.authorizer_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "identity_validation_expression" {
   description = "(Optional) Validation expression for the incoming identity. For TOKEN type, this value should be a regular expression. The incoming token from the client is matched against this expression, and will proceed if the token matches. If the token doesn't match, the client receives a 401 Unauthorized response."
   value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.identity_validation_expression
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) Name of the authorizer"
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.name
+}
+output "identity_source" {
+  description = "(Optional) Source of the identity in an incoming request. Defaults to method.request.header.Authorization. For REQUEST type, this may be a comma-separated list of values, including headers, query string parameters and stage variables - e.g., \"method.request.header.SomeHeaderName,method.request.querystring.SomeQueryStringName,stageVariables.SomeStageVariableName\""
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.identity_source
+}
+output "provider_arns" {
+  description = "(Optional, required for type COGNITO_USER_POOLS) List of the Amazon Cognito user pool ARNs. Each element is of this format: arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.provider_arns
+}
+output "type" {
+  description = "(Optional) Type of the authorizer. Possible values are TOKEN for a Lambda function using a single authorization token submitted in a custom header, REQUEST for a Lambda function using incoming request parameters, or COGNITO_USER_POOLS for using an Amazon Cognito user pool. Defaults to TOKEN."
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.type
 }
 output "arn" {
   description = "ARN of the API Gateway Authorizer"
   value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "authorizer_result_ttl_in_seconds" {
+  description = "(Optional) TTL of cached authorizer results in seconds. Defaults to 300."
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.authorizer_result_ttl_in_seconds
+}
+output "authorizer_uri" {
+  description = "(Optional, required for type TOKEN/REQUEST) Authorizer's Uniform Resource Identifier (URI). This must be a well-formed Lambda function URI in the form of arn:aws:apigateway:{region}:lambda:path/{service_api}arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:012345678912:function:my-function/invocations"
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.authorizer_uri
+}
+output "arn" {
+  description = "ARN of the API Gateway Authorizer"
+  value       = aws_api_gateway_authorizer.aws_api_gateway_authorizer.arn
 }
 output "id" {
   description = "Authorizer identifier."
@@ -268,7 +229,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

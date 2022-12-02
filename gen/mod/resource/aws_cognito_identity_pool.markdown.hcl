@@ -128,17 +128,9 @@ output "arn" {
   description = "The ARN of the identity pool."
   value       = aws_cognito_identity_pool.markdown.aws_cognito_identity_pool.markdown.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "An identity pool ID, e.g. us-west-2_abc123."
   value       = aws_cognito_identity_pool.markdown.aws_cognito_identity_pool.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -146,7 +138,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

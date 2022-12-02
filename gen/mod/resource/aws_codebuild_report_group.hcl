@@ -1,62 +1,27 @@
 resource "aws_codebuild_report_group" "aws_codebuild_report_group" {
-  encryption_key      = var.encryption_key
-  name                = var.name
-  encryption_disabled = var.encryption_disabled
-  export_config       = var.export_config
-  s3_destination      = var.s3_destination
-  tags                = var.tags
-  arn                 = var.arn
-  bucket              = var.bucket
-  created             = var.created
   delete_reports      = var.delete_reports
   id                  = var.id
   packaging           = var.packaging
-  path                = var.path
+  s3_destination      = var.s3_destination
+  tags                = var.tags
   type                = var.type
+  bucket              = var.bucket
+  encryption_disabled = var.encryption_disabled
+  name                = var.name
+  arn                 = var.arn
+  created             = var.created
+  encryption_key      = var.encryption_key
+  export_config       = var.export_config
+  path                = var.path
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "encryption_key" {
-  description = "(Required) The encryption key for the report's encrypted raw data. The KMS key ARN."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of a Report Group."
-  type        = string
-}
-variable "encryption_disabled" {
-  description = "strongNote: the API does not currently allow setting encryption as disabled"
-  type        = string
-}
-variable "export_config" {
-  description = "(Required) Information about the destination where the raw data of this Report Group is exported. see Export Config documented below."
-  type        = string
-}
-variable "s3_destination" {
-  description = "(Required) contains information about the S3 bucket where the run of a report is exported. see S3 Destination documented below.S3 Destination"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Export Config"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of Report Group."
-  type        = string
-}
-variable "bucket" {
-  description = "- (Required) The name of the S3 bucket where the raw data of a report are exported."
-  type        = string
-}
-variable "created" {
-  description = "The date and time this Report Group was created."
-  type        = string
-}
 variable "delete_reports" {
   description = "(Optional) If true, deletes any reports that belong to a report group before deleting the report group. If false, you must delete any reports in the report group before deleting it. Default value is false."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ARN of Report Group."
@@ -65,14 +30,53 @@ variable "id" {
 variable "packaging" {
   description = "(Optional) The type of build output artifact to create. Valid values are: NONE (default) and ZIP."
   type        = string
+  default     = ""
 }
-variable "path" {
-  description = "(Optional) The path to the exported report's raw data results.In addition to all arguments above, the following attributes are exported:"
+variable "s3_destination" {
+  description = "(Required) contains information about the S3 bucket where the run of a report is exported. see S3 Destination documented below.S3 Destination"
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Export Config"
+  type        = string
+  default     = ""
 }
 variable "type" {
   description = "(Required) The export configuration type. Valid values are S3 and NO_EXPORT."
   type        = string
+}
+variable "bucket" {
+  description = "- (Required) The name of the S3 bucket where the raw data of a report are exported."
+  type        = string
+}
+variable "encryption_disabled" {
+  description = "strongNote: the API does not currently allow setting encryption as disabled"
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of a Report Group."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of Report Group."
+  type        = string
+}
+variable "created" {
+  description = "The date and time this Report Group was created."
+  type        = string
+}
+variable "encryption_key" {
+  description = "(Required) The encryption key for the report's encrypted raw data. The KMS key ARN."
+  type        = string
+}
+variable "export_config" {
+  description = "(Required) Information about the destination where the raw data of this Report Group is exported. see Export Config documented below."
+  type        = string
+}
+variable "path" {
+  description = "(Optional) The path to the exported report's raw data results.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -194,141 +198,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ARN of Report Group."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "packaging" {
-  description = "(Optional) The type of build output artifact to create. Valid values are: NONE (default) and ZIP."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.packaging
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "path" {
-  description = "(Optional) The path to the exported report's raw data results.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Required) The export configuration type. Valid values are S3 and NO_EXPORT."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete_reports" {
-  description = "(Optional) If true, deletes any reports that belong to a report group before deleting the report group. If false, you must delete any reports in the report group before deleting it. Default value is false."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.delete_reports
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The name of a Report Group."
   value       = aws_codebuild_report_group.aws_codebuild_report_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encryption_key" {
-  description = "(Required) The encryption key for the report's encrypted raw data. The KMS key ARN."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.encryption_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "export_config" {
-  description = "(Required) Information about the destination where the raw data of this Report Group is exported. see Export Config documented below."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.export_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_destination" {
-  description = "(Required) contains information about the S3 bucket where the run of a report is exported. see S3 Destination documented below.S3 Destination"
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.s3_destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Export Config"
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encryption_disabled" {
-  description = "strongNote: the API does not currently allow setting encryption as disabled"
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.encryption_disabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bucket" {
   description = "- (Required) The name of the S3 bucket where the raw data of a report are exported."
   value       = aws_codebuild_report_group.aws_codebuild_report_group.bucket
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "encryption_disabled" {
+  description = "strongNote: the API does not currently allow setting encryption as disabled"
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.encryption_disabled
 }
-output "created" {
-  description = "The date and time this Report Group was created."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.created
+output "encryption_key" {
+  description = "(Required) The encryption key for the report's encrypted raw data. The KMS key ARN."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.encryption_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "export_config" {
+  description = "(Required) Information about the destination where the raw data of this Report Group is exported. see Export Config documented below."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.export_config
 }
-output "arn" {
-  description = "The ARN of Report Group."
-  value       = aws_codebuild_report_group.aws_codebuild_report_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "path" {
+  description = "(Optional) The path to the exported report's raw data results.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.path
 }
 output "arn" {
   description = "The ARN of Report Group."
   value       = aws_codebuild_report_group.aws_codebuild_report_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created" {
   description = "The date and time this Report Group was created."
   value       = aws_codebuild_report_group.aws_codebuild_report_group.created
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "packaging" {
+  description = "(Optional) The type of build output artifact to create. Valid values are: NONE (default) and ZIP."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.packaging
+}
+output "s3_destination" {
+  description = "(Required) contains information about the S3 bucket where the run of a report is exported. see S3 Destination documented below.S3 Destination"
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.s3_destination
+}
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Export Config"
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.tags
+}
+output "type" {
+  description = "(Required) The export configuration type. Valid values are S3 and NO_EXPORT."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.type
+}
+output "delete_reports" {
+  description = "(Optional) If true, deletes any reports that belong to a report group before deleting the report group. If false, you must delete any reports in the report group before deleting it. Default value is false."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.delete_reports
 }
 output "id" {
   description = "The ARN of Report Group."
   value       = aws_codebuild_report_group.aws_codebuild_report_group.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The ARN of Report Group."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.arn
+}
+output "created" {
+  description = "The date and time this Report Group was created."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.created
+}
+output "id" {
+  description = "The ARN of Report Group."
+  value       = aws_codebuild_report_group.aws_codebuild_report_group.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -336,7 +272,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

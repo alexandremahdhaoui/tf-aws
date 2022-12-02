@@ -1,19 +1,11 @@
 resource "aws_sesv2_dedicated_ip_assignment" "aws_sesv2_dedicated_ip_assignment" {
+  ip                    = var.ip
   create                = var.create
   destination_pool_name = var.destination_pool_name
   id                    = var.id
-  ip                    = var.ip
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "ip" {
-  description = "(Required) Dedicated IP address."
   type        = string
 }
 variable "create" {
@@ -22,6 +14,14 @@ variable "create" {
 }
 variable "destination_pool_name" {
   description = "(Required) Dedicated IP address.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "ip" {
+  description = "(Required) Dedicated IP address."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,53 +144,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "destination_pool_name" {
-  description = "(Required) Dedicated IP address.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.destination_pool_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ip" {
   description = "(Required) Dedicated IP address."
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.ip
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "destination_pool_name" {
+  description = "(Required) Dedicated IP address.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.destination_pool_name
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delete" {
   description = "(Default 30m)"
   value       = aws_sesv2_dedicated_ip_assignment.aws_sesv2_dedicated_ip_assignment.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "A comma-separated string made up of ip and destination_pool_name.TimeoutsConfiguration options:"
@@ -198,7 +174,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

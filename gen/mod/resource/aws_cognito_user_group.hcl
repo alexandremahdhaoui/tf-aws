@@ -1,12 +1,17 @@
 resource "aws_cognito_user_group" "aws_cognito_user_group" {
-  description  = var.description
   name         = var.name
   precedence   = var.precedence
   user_pool_id = var.user_pool_id
+  description  = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the user group."
+  type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the user group."
@@ -15,13 +20,10 @@ variable "name" {
 variable "precedence" {
   description = "(Optional) The precedence of the user group."
   type        = string
+  default     = ""
 }
 variable "user_pool_id" {
   description = "(Required) The user pool ID."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the user group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,13 +146,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = "(Optional) The description of the user group."
+  value       = aws_cognito_user_group.aws_cognito_user_group.description
+}
+output "name" {
+  description = "(Required) The name of the user group."
+  value       = aws_cognito_user_group.aws_cognito_user_group.name
+}
 output "precedence" {
   description = "(Optional) The precedence of the user group."
   value       = aws_cognito_user_group.aws_cognito_user_group.precedence
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "user_pool_id" {
   description = "(Required) The user pool ID."
@@ -158,23 +164,7 @@ output "user_pool_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the user group."
-  value       = aws_cognito_user_group.aws_cognito_user_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the user group."
-  value       = aws_cognito_user_group.aws_cognito_user_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,17 +1,17 @@
 resource "aws_ec2_traffic_mirror_filter_rule" "aws_ec2_traffic_mirror_filter_rule" {
-  to_port                  = var.to_port
   traffic_direction        = var.traffic_direction
   traffic_mirror_filter_id = var.traffic_mirror_filter_id
-  description              = var.description
   destination_cidr_block   = var.destination_cidr_block
-  source_port_range        = var.source_port_range
-  protocol                 = var.protocol
-  rule_action              = var.rule_action
-  rule_number              = var.rule_number
-  source_cidr_block        = var.source_cidr_block
-  arn                      = var.arn
   destination_port_range   = var.destination_port_range
   from_port                = var.from_port
+  rule_action              = var.rule_action
+  rule_number              = var.rule_number
+  source_port_range        = var.source_port_range
+  arn                      = var.arn
+  description              = var.description
+  protocol                 = var.protocol
+  source_cidr_block        = var.source_cidr_block
+  to_port                  = var.to_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -20,10 +20,7 @@ variable "provider_region" {
 variable "from_port" {
   description = "(Optional) Starting port of the range"
   type        = string
-}
-variable "protocol" {
-  description = "(Optional) Protocol number, for example 17 (UDP), to assign to the Traffic Mirror rule. For information about the protocol value, see Protocol Numbers on the Internet Assigned Numbers Authority (IANA) website."
-  type        = string
+  default     = ""
 }
 variable "rule_action" {
   description = "(Required) Action to take (accept | reject) on the filtered traffic. Valid values are accept and reject"
@@ -33,25 +30,10 @@ variable "rule_number" {
   description = "(Required) Number of the Traffic Mirror rule. This number must be unique for each Traffic Mirror rule in a given direction. The rules are processed in ascending order by rule number."
   type        = string
 }
-variable "source_cidr_block" {
-  description = "(Required) Source CIDR block to assign to the Traffic Mirror rule."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the traffic mirror filter rule."
-  type        = string
-}
-variable "destination_port_range" {
-  description = "(Optional) Destination port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
-  type        = string
-}
 variable "source_port_range" {
   description = "(Optional) Source port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
   type        = string
-}
-variable "to_port" {
-  description = "(Optional) Ending port of the rangeIn addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "traffic_direction" {
   description = "(Required) Direction of traffic to be captured. Valid values are ingress and egressTraffic mirror port range support following attributes:"
@@ -61,13 +43,37 @@ variable "traffic_mirror_filter_id" {
   description = "  - (Required) ID of the traffic mirror filter to which this rule should be added"
   type        = string
 }
-variable "description" {
-  description = "(Optional) Description of the traffic mirror filter rule."
-  type        = string
-}
 variable "destination_cidr_block" {
   description = "(Required) Destination CIDR block to assign to the Traffic Mirror rule."
   type        = string
+}
+variable "destination_port_range" {
+  description = "(Optional) Destination port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
+  type        = string
+  default     = ""
+}
+variable "protocol" {
+  description = "(Optional) Protocol number, for example 17 (UDP), to assign to the Traffic Mirror rule. For information about the protocol value, see Protocol Numbers on the Internet Assigned Numbers Authority (IANA) website."
+  type        = string
+  default     = ""
+}
+variable "source_cidr_block" {
+  description = "(Required) Source CIDR block to assign to the Traffic Mirror rule."
+  type        = string
+}
+variable "to_port" {
+  description = "(Optional) Ending port of the rangeIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the traffic mirror filter rule."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the traffic mirror filter rule."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,117 +195,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) Description of the traffic mirror filter rule."
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination_cidr_block" {
-  description = "(Required) Destination CIDR block to assign to the Traffic Mirror rule."
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.destination_cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_port_range" {
-  description = "(Optional) Source port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.source_port_range
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "to_port" {
-  description = "(Optional) Ending port of the rangeIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.to_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "traffic_direction" {
-  description = "(Required) Direction of traffic to be captured. Valid values are ingress and egressTraffic mirror port range support following attributes:"
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.traffic_direction
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "traffic_mirror_filter_id" {
-  description = "  - (Required) ID of the traffic mirror filter to which this rule should be added"
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.traffic_mirror_filter_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the traffic mirror filter rule."
   value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "destination_port_range" {
-  description = "(Optional) Destination port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.destination_port_range
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "from_port" {
-  description = "(Optional) Starting port of the range"
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.from_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the traffic mirror filter rule."
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.description
 }
 output "protocol" {
   description = "(Optional) Protocol number, for example 17 (UDP), to assign to the Traffic Mirror rule. For information about the protocol value, see Protocol Numbers on the Internet Assigned Numbers Authority (IANA) website."
   value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_cidr_block" {
+  description = "(Required) Source CIDR block to assign to the Traffic Mirror rule."
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.source_cidr_block
+}
+output "to_port" {
+  description = "(Optional) Ending port of the rangeIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.to_port
+}
+output "traffic_mirror_filter_id" {
+  description = "  - (Required) ID of the traffic mirror filter to which this rule should be added"
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.traffic_mirror_filter_id
+}
+output "destination_cidr_block" {
+  description = "(Required) Destination CIDR block to assign to the Traffic Mirror rule."
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.destination_cidr_block
+}
+output "destination_port_range" {
+  description = "(Optional) Destination port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.destination_port_range
+}
+output "from_port" {
+  description = "(Optional) Starting port of the range"
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.from_port
 }
 output "rule_action" {
   description = "(Required) Action to take (accept | reject) on the filtered traffic. Valid values are accept and reject"
   value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.rule_action
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule_number" {
   description = "(Required) Number of the Traffic Mirror rule. This number must be unique for each Traffic Mirror rule in a given direction. The rules are processed in ascending order by rule number."
   value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.rule_number
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_port_range" {
+  description = "(Optional) Source port range. Supported only when the protocol is set to TCP(6) or UDP(17). See Traffic mirror port range documented below"
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.source_port_range
 }
-output "source_cidr_block" {
-  description = "(Required) Source CIDR block to assign to the Traffic Mirror rule."
-  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.source_cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "traffic_direction" {
+  description = "(Required) Direction of traffic to be captured. Valid values are ingress and egressTraffic mirror port range support following attributes:"
+  value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.traffic_direction
 }
 output "arn" {
   description = "ARN of the traffic mirror filter rule."
   value       = aws_ec2_traffic_mirror_filter_rule.aws_ec2_traffic_mirror_filter_rule.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Name of the traffic mirror filter rule."
@@ -307,7 +257,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

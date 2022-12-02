@@ -1,4 +1,5 @@
 resource "aws_redshift_parameter_group" "aws_redshift_parameter_group" {
+  family      = var.family
   id          = var.id
   name        = var.name
   parameter   = var.parameter
@@ -6,10 +7,13 @@ resource "aws_redshift_parameter_group" "aws_redshift_parameter_group" {
   value       = var.value
   arn         = var.arn
   description = var.description
-  family      = var.family
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "value" {
+  description = "(Required) The value of the Redshift parameter."
   type        = string
 }
 variable "arn" {
@@ -19,6 +23,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the Redshift parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
 variable "family" {
   description = "(Required) The family of the Redshift parameter group."
@@ -35,14 +40,12 @@ variable "name" {
 variable "parameter" {
   description = "(Optional) A list of Redshift parameters to apply.Parameter blocks support the following:"
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.You can read more about the parameters that Redshift supports in the documentationIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "value" {
-  description = "(Required) The value of the Redshift parameter."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,85 +167,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.You can read more about the parameters that Redshift supports in the documentationIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "(Required) The value of the Redshift parameter."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of parameter group"
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the Redshift parameter group. Defaults to \"Managed by Terraform\"."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "family" {
-  description = "(Required) The family of the Redshift parameter group."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.family
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Redshift parameter group name."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The name of the Redshift parameter."
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "parameter" {
   description = "(Optional) A list of Redshift parameters to apply.Parameter blocks support the following:"
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.parameter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.You can read more about the parameters that Redshift supports in the documentationIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.tags
+}
+output "value" {
+  description = "(Required) The value of the Redshift parameter."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.value
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of parameter group"
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The description of the Redshift parameter group. Defaults to \"Managed by Terraform\"."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.description
+}
+output "family" {
+  description = "(Required) The family of the Redshift parameter group."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.family
 }
 output "id" {
   description = "The Redshift parameter group name."
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of parameter group"
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.arn
+}
+output "id" {
+  description = "The Redshift parameter group name."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,7 +213,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

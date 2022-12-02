@@ -1,19 +1,11 @@
 resource "aws_s3_bucket_metric" "aws_s3_bucket_metric" {
-  name   = var.name
-  prefix = var.prefix
   bucket = var.bucket
   filter = var.filter
+  name   = var.name
+  prefix = var.prefix
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Unique identifier of the metrics configuration for the bucket. Must be less than or equal to 64 characters in length."
-  type        = string
-}
-variable "prefix" {
-  description = "(Optional) Object prefix for filtering (singular)."
   type        = string
 }
 variable "bucket" {
@@ -23,6 +15,16 @@ variable "bucket" {
 variable "filter" {
   description = "(Optional) Object filtering that accepts a prefix, tags, or a logical AND of prefix and tags (documented below).The filter metric configuration supports the following:~> strongNOTE: At least one of prefix or tags is required when specifying a filter"
   type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Unique identifier of the metrics configuration for the bucket. Must be less than or equal to 64 characters in length."
+  type        = string
+}
+variable "prefix" {
+  description = "(Optional) Object prefix for filtering (singular)."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,37 +146,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "bucket" {
+  description = "(Required) The name of the bucket to put metric configuration."
+  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.bucket
+}
+output "filter" {
+  description = "(Optional) Object filtering that accepts a prefix, tags, or a logical AND of prefix and tags (documented below).The filter metric configuration supports the following:~> strongNOTE: At least one of prefix or tags is required when specifying a filter"
+  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.filter
+}
+output "name" {
+  description = "(Required) Unique identifier of the metrics configuration for the bucket. Must be less than or equal to 64 characters in length."
+  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.name
+}
 output "prefix" {
   description = "(Optional) Object prefix for filtering (singular)."
   value       = aws_s3_bucket_metric.aws_s3_bucket_metric.prefix
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "bucket" {
-  description = "(Required) The name of the bucket to put metric configuration."
-  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter" {
-  description = "(Optional) Object filtering that accepts a prefix, tags, or a logical AND of prefix and tags (documented below).The filter metric configuration supports the following:~> strongNOTE: At least one of prefix or tags is required when specifying a filter"
-  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) Unique identifier of the metrics configuration for the bucket. Must be less than or equal to 64 characters in length."
-  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

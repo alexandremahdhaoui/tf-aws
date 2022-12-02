@@ -138,17 +138,9 @@ output "dashboard_body" {
   description = "(Required) The detailed information about the dashboard, including what widgets are included and their location on the dashboard. You can read more about the body structure in the documentation.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_dashboard.aws_cloudwatch_dashboard.dashboard_body
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "dashboard_name" {
   description = "(Required) The name of the dashboard."
   value       = aws_cloudwatch_dashboard.aws_cloudwatch_dashboard.dashboard_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "dashboard_arn" {
   description = "The Amazon Resource Name (ARN) of the dashboard."
@@ -156,7 +148,7 @@ output "dashboard_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

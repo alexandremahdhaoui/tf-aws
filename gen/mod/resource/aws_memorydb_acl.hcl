@@ -1,4 +1,5 @@
 resource "aws_memorydb_acl" "aws_memorydb_acl" {
+  name_prefix            = var.name_prefix
   tags                   = var.tags
   tags_all               = var.tags_all
   user_names             = var.user_names
@@ -6,43 +7,50 @@ resource "aws_memorydb_acl" "aws_memorydb_acl" {
   id                     = var.id
   minimum_engine_version = var.minimum_engine_version
   name                   = var.name
-  name_prefix            = var.name_prefix
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "minimum_engine_version" {
-  description = "The minimum engine version supported by the ACL."
-  type        = string
-}
-variable "name" {
-  description = "(Optional, Forces new resource) Name of the ACL. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
-  type        = string
-}
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
 }
 variable "user_names" {
   description = "(Optional) Set of MemoryDB user names to be included in this ACL."
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the ACL."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "Same as name."
   type        = string
+  default     = ""
+}
+variable "minimum_engine_version" {
+  description = "The minimum engine version supported by the ACL."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional, Forces new resource) Name of the ACL. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,77 +172,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "minimum_engine_version" {
-  description = "The minimum engine version supported by the ACL."
-  value       = aws_memorydb_acl.aws_memorydb_acl.minimum_engine_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional, Forces new resource) Name of the ACL. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
-  value       = aws_memorydb_acl.aws_memorydb_acl.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_memorydb_acl.aws_memorydb_acl.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_memorydb_acl.aws_memorydb_acl.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_memorydb_acl.aws_memorydb_acl.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "user_names" {
   description = "(Optional) Set of MemoryDB user names to be included in this ACL."
   value       = aws_memorydb_acl.aws_memorydb_acl.user_names
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the ACL."
   value       = aws_memorydb_acl.aws_memorydb_acl.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Same as name."
   value       = aws_memorydb_acl.aws_memorydb_acl.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "minimum_engine_version" {
   description = "The minimum engine version supported by the ACL."
   value       = aws_memorydb_acl.aws_memorydb_acl.minimum_engine_version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Optional, Forces new resource) Name of the ACL. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
+  value       = aws_memorydb_acl.aws_memorydb_acl.name
+}
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_memorydb_acl.aws_memorydb_acl.name_prefix
+}
+output "arn" {
+  description = "The ARN of the ACL."
+  value       = aws_memorydb_acl.aws_memorydb_acl.arn
+}
+output "id" {
+  description = "Same as name."
+  value       = aws_memorydb_acl.aws_memorydb_acl.id
+}
+output "minimum_engine_version" {
+  description = "The minimum engine version supported by the ACL."
+  value       = aws_memorydb_acl.aws_memorydb_acl.minimum_engine_version
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -242,23 +222,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the ACL."
-  value       = aws_memorydb_acl.aws_memorydb_acl.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Same as name."
-  value       = aws_memorydb_acl.aws_memorydb_acl.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

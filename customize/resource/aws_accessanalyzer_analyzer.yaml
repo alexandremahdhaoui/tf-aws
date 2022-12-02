@@ -1,0 +1,34 @@
+apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
+kind: TerraformResource
+metadata:
+    name: aws_accessanalyzer_analyzer
+spec:
+    args:
+        analyzer_name:
+            description: (NOW ITS OPTIONAL) Name of the Analyzer.
+            optional: true
+            is_default_set: true
+            default: HEY_HEY
+            type: string
+        arn:
+            description: ARN of the Analyzer.
+            optional: true
+            type: string
+        id:
+            description: yolo.
+            optional: true
+            type: UUID_TYPE
+    attrs:
+        arn:
+            description: ARN of the Analyzer.
+            type: string
+    terraform:
+        backend: ""
+        version: 6.6.6
+        provider:
+            assume_role: false
+            name: aws
+            source: hashicorp/aws
+            version: 4.38.0
+            default_tags:
+                enabled: true

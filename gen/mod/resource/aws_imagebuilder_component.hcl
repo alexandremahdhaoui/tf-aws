@@ -1,46 +1,44 @@
 resource "aws_imagebuilder_component" "aws_imagebuilder_component" {
-  change_description    = var.change_description
   uri                   = var.uri
-  data                  = var.data
-  kms_key_id            = var.kms_key_id
-  platform              = var.platform
-  tags                  = var.tags
-  tags_all              = var.tags_all
-  arn                   = var.arn
-  date_created          = var.date_created
-  description           = var.description
-  encrypted             = var.encrypted
-  name                  = var.name
-  owner                 = var.owner
-  supported_os_versions = var.supported_os_versions
   version               = var.version
+  arn                   = var.arn
+  name                  = var.name
+  supported_os_versions = var.supported_os_versions
+  tags                  = var.tags
+  description           = var.description
+  data                  = var.data
+  date_created          = var.date_created
+  encrypted             = var.encrypted
+  kms_key_id            = var.kms_key_id
+  owner                 = var.owner
+  platform              = var.platform
+  tags_all              = var.tags_all
+  change_description    = var.change_description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "data" {
-  description = "(Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+variable "platform" {
+  description = "(Required) Platform of the component."
   type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
-variable "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the component."
+variable "change_description" {
+  description = "(Optional) Change description of the component."
   type        = string
+  default     = ""
+}
+variable "data" {
+  description = "(Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration."
+  type        = string
+  default     = ""
 }
 variable "date_created" {
   description = "Date the component was created."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the component."
   type        = string
 }
 variable "encrypted" {
@@ -50,34 +48,43 @@ variable "encrypted" {
 variable "kms_key_id" {
   description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
   type        = string
-}
-variable "platform" {
-  description = "(Required) Platform of the component."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the component."
-  type        = string
+  default     = ""
 }
 variable "owner" {
   description = "Owner of the component."
   type        = string
 }
-variable "supported_os_versions" {
-  description = "(Optional) Set of Operating Systems (OS) supported by the component."
+variable "uri" {
+  description = "(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the component."
   type        = string
 }
 variable "version" {
   description = "(Required) Version of the component.The following attributes are optional:"
   type        = string
 }
-variable "change_description" {
-  description = "(Optional) Change description of the component."
+variable "description" {
+  description = "(Optional) Description of the component."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name of the component."
   type        = string
 }
-variable "uri" {
-  description = "(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:"
+variable "supported_os_versions" {
+  description = "(Optional) Set of Operating Systems (OS) supported by the component."
   type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -199,149 +206,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "data" {
-  description = "(Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "date_created" {
-  description = "Date the component was created."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encrypted" {
-  description = "Encryption status of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "platform" {
-  description = "(Required) Platform of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "uri" {
+  description = "(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.uri
 }
 output "arn" {
   description = "(Required) Amazon Resource Name (ARN) of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner" {
-  description = "Owner of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "supported_os_versions" {
-  description = "(Optional) Set of Operating Systems (OS) supported by the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "version" {
   description = "(Required) Version of the component.The following attributes are optional:"
   value       = aws_imagebuilder_component.aws_imagebuilder_component.version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
 }
 output "name" {
   description = "(Required) Name of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "supported_os_versions" {
+  description = "(Optional) Set of Operating Systems (OS) supported by the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
 }
-output "uri" {
-  description = "(Optional) S3 URI with data of the component. Exactly one of data and uri can be specified.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.uri
+output "tags" {
+  description = "(Optional) Key-value map of resource tags for the component. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "change_description" {
-  description = "(Optional) Change description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encrypted" {
-  description = "Encryption status of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key used to encrypt the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.kms_key_id
 }
 output "owner" {
   description = "Owner of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "platform" {
+  description = "(Required) Platform of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "change_description" {
+  description = "(Optional) Change description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
+}
+output "data" {
+  description = "(Optional) Inline YAML string with data of the component. Exactly one of data and uri can be specified. Terraform will only perform drift detection of its value when present in a configuration."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.data
+}
+output "date_created" {
+  description = "Date the component was created."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
+}
+output "encrypted" {
+  description = "Encryption status of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
+}
+output "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.arn
+}
+output "date_created" {
+  description = "Date the component was created."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
+}
+output "encrypted" {
+  description = "Encryption status of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.encrypted
+}
+output "owner" {
+  description = "Owner of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.tags_all
 }
 output "type" {
   description = "Type of the component."
@@ -349,23 +292,7 @@ output "type" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "date_created" {
-  description = "Date the component was created."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

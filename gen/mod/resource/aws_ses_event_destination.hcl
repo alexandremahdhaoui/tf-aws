@@ -1,53 +1,63 @@
 resource "aws_ses_event_destination" "aws_ses_event_destination" {
-  sns_destination        = var.sns_destination
-  value_source           = var.value_source
   default_value          = var.default_value
-  enabled                = var.enabled
-  id                     = var.id
-  stream_arn             = var.stream_arn
-  cloudwatch_destination = var.cloudwatch_destination
-  role_arn               = var.role_arn
-  configuration_set_name = var.configuration_set_name
   dimension_name         = var.dimension_name
   kinesis_destination    = var.kinesis_destination
+  sns_destination        = var.sns_destination
+  value_source           = var.value_source
+  configuration_set_name = var.configuration_set_name
+  id                     = var.id
   matching_types         = var.matching_types
   name                   = var.name
+  cloudwatch_destination = var.cloudwatch_destination
+  enabled                = var.enabled
+  role_arn               = var.role_arn
+  stream_arn             = var.stream_arn
   topic_arn              = var.topic_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "sns_destination" {
-  description = "(Optional) Send the events to an SNS Topic destination~> strongNOTE: You can specify \"cloudwatch_destination\" or \"kinesis_destination\" but not bothcloudwatch_destination Argument Reference"
-  type        = string
-}
-variable "value_source" {
-  description = "(Required) The source for the value. May be any of \"messageTag\", \"emailHeader\" or \"linkTag\".kinesis_destination Argument Reference"
+variable "role_arn" {
+  description = "(Required) The ARN of the role that has permissions to access the Kinesis Streamsns_destination Argument Reference"
   type        = string
 }
 variable "stream_arn" {
   description = "(Required) The ARN of the Kinesis Stream"
   type        = string
 }
+variable "topic_arn" {
+  description = "(Required) The ARN of the SNS topicIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "default_value" {
   description = "(Required) The default value for the event"
   type        = string
 }
-variable "enabled" {
-  description = "(Optional) If true, the event destination will be enabled"
+variable "dimension_name" {
+  description = "(Required) The name for the dimension"
+  type        = string
+}
+variable "kinesis_destination" {
+  description = "(Optional) Send the events to a kinesis firehose destination"
+  type        = string
+  default     = ""
+}
+variable "sns_destination" {
+  description = "(Optional) Send the events to an SNS Topic destination~> strongNOTE: You can specify \"cloudwatch_destination\" or \"kinesis_destination\" but not bothcloudwatch_destination Argument Reference"
+  type        = string
+  default     = ""
+}
+variable "value_source" {
+  description = "(Required) The source for the value. May be any of \"messageTag\", \"emailHeader\" or \"linkTag\".kinesis_destination Argument Reference"
+  type        = string
+}
+variable "configuration_set_name" {
+  description = "(Required) The name of the configuration set"
   type        = string
 }
 variable "id" {
   description = "The SES event destination name."
-  type        = string
-}
-variable "cloudwatch_destination" {
-  description = "(Optional) CloudWatch destination for the events"
-  type        = string
-}
-variable "role_arn" {
-  description = "(Required) The ARN of the role that has permissions to access the Kinesis Streamsns_destination Argument Reference"
   type        = string
 }
 variable "matching_types" {
@@ -58,21 +68,15 @@ variable "name" {
   description = "(Required) The name of the event destination"
   type        = string
 }
-variable "topic_arn" {
-  description = "(Required) The ARN of the SNS topicIn addition to all arguments above, the following attributes are exported:"
+variable "cloudwatch_destination" {
+  description = "(Optional) CloudWatch destination for the events"
   type        = string
+  default     = ""
 }
-variable "configuration_set_name" {
-  description = "(Required) The name of the configuration set"
+variable "enabled" {
+  description = "(Optional) If true, the event destination will be enabled"
   type        = string
-}
-variable "dimension_name" {
-  description = "(Required) The name for the dimension"
-  type        = string
-}
-variable "kinesis_destination" {
-  description = "(Optional) Send the events to a kinesis firehose destination"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -194,125 +198,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "sns_destination" {
-  description = "(Optional) Send the events to an SNS Topic destination~> strongNOTE: You can specify \"cloudwatch_destination\" or \"kinesis_destination\" but not bothcloudwatch_destination Argument Reference"
-  value       = aws_ses_event_destination.aws_ses_event_destination.sns_destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value_source" {
-  description = "(Required) The source for the value. May be any of \"messageTag\", \"emailHeader\" or \"linkTag\".kinesis_destination Argument Reference"
-  value       = aws_ses_event_destination.aws_ses_event_destination.value_source
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_value" {
-  description = "(Required) The default value for the event"
-  value       = aws_ses_event_destination.aws_ses_event_destination.default_value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "cloudwatch_destination" {
+  description = "(Optional) CloudWatch destination for the events"
+  value       = aws_ses_event_destination.aws_ses_event_destination.cloudwatch_destination
 }
 output "enabled" {
   description = "(Optional) If true, the event destination will be enabled"
   value       = aws_ses_event_destination.aws_ses_event_destination.enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The SES event destination name."
-  value       = aws_ses_event_destination.aws_ses_event_destination.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "role_arn" {
+  description = "(Required) The ARN of the role that has permissions to access the Kinesis Streamsns_destination Argument Reference"
+  value       = aws_ses_event_destination.aws_ses_event_destination.role_arn
 }
 output "stream_arn" {
   description = "(Required) The ARN of the Kinesis Stream"
   value       = aws_ses_event_destination.aws_ses_event_destination.stream_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cloudwatch_destination" {
-  description = "(Optional) CloudWatch destination for the events"
-  value       = aws_ses_event_destination.aws_ses_event_destination.cloudwatch_destination
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Required) The ARN of the role that has permissions to access the Kinesis Streamsns_destination Argument Reference"
-  value       = aws_ses_event_destination.aws_ses_event_destination.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "topic_arn" {
   description = "(Required) The ARN of the SNS topicIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_event_destination.aws_ses_event_destination.topic_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value_source" {
+  description = "(Required) The source for the value. May be any of \"messageTag\", \"emailHeader\" or \"linkTag\".kinesis_destination Argument Reference"
+  value       = aws_ses_event_destination.aws_ses_event_destination.value_source
 }
-output "configuration_set_name" {
-  description = "(Required) The name of the configuration set"
-  value       = aws_ses_event_destination.aws_ses_event_destination.configuration_set_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "default_value" {
+  description = "(Required) The default value for the event"
+  value       = aws_ses_event_destination.aws_ses_event_destination.default_value
 }
 output "dimension_name" {
   description = "(Required) The name for the dimension"
   value       = aws_ses_event_destination.aws_ses_event_destination.dimension_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "kinesis_destination" {
   description = "(Optional) Send the events to a kinesis firehose destination"
   value       = aws_ses_event_destination.aws_ses_event_destination.kinesis_destination
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "sns_destination" {
+  description = "(Optional) Send the events to an SNS Topic destination~> strongNOTE: You can specify \"cloudwatch_destination\" or \"kinesis_destination\" but not bothcloudwatch_destination Argument Reference"
+  value       = aws_ses_event_destination.aws_ses_event_destination.sns_destination
+}
+output "configuration_set_name" {
+  description = "(Required) The name of the configuration set"
+  value       = aws_ses_event_destination.aws_ses_event_destination.configuration_set_name
+}
+output "id" {
+  description = "The SES event destination name."
+  value       = aws_ses_event_destination.aws_ses_event_destination.id
 }
 output "matching_types" {
   description = "(Required) A list of matching types. May be any of \"send\", \"reject\", \"bounce\", \"complaint\", \"delivery\", \"open\", \"click\", or \"renderingFailure\"."
   value       = aws_ses_event_destination.aws_ses_event_destination.matching_types
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The name of the event destination"
   value       = aws_ses_event_destination.aws_ses_event_destination.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The SES event destination ARN."
   value       = aws_ses_event_destination.aws_ses_event_destination.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The SES event destination name."
@@ -320,7 +264,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

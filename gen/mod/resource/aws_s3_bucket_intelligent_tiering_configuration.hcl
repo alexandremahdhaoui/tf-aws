@@ -1,19 +1,15 @@
 resource "aws_s3_bucket_intelligent_tiering_configuration" "aws_s3_bucket_intelligent_tiering_configuration" {
-  status      = var.status
-  tags        = var.tags
-  tiering     = var.tiering
-  access_tier = var.access_tier
   bucket      = var.bucket
   filter      = var.filter
   name        = var.name
   prefix      = var.prefix
+  status      = var.status
+  tags        = var.tags
+  tiering     = var.tiering
+  access_tier = var.access_tier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "access_tier" {
-  description = "(Required) S3 Intelligent-Tiering access tier. Valid values: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS."
   type        = string
 }
 variable "bucket" {
@@ -23,6 +19,7 @@ variable "bucket" {
 variable "filter" {
   description = "(Optional) A bucket filter. The configuration only includes objects that meet the filter's criteria (documented below)."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The unique name used to identify the S3 Intelligent-Tiering configuration for the bucket."
@@ -31,17 +28,24 @@ variable "name" {
 variable "prefix" {
   description = "(Optional) An object key name prefix that identifies the subset of objects to which the configuration applies."
   type        = string
+  default     = ""
 }
 variable "status" {
   description = "(Optional) Specifies the status of the configuration. Valid values: Enabled, Disabled."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) All of these tags must exist in the object's tag set in order for the configuration to apply.The tiering configuration supports the following:"
   type        = string
+  default     = ""
 }
 variable "tiering" {
   description = "(Required) The S3 Intelligent-Tiering storage class tiers of the configuration (documented below).The filter configuration supports the following:"
+  type        = string
+}
+variable "access_tier" {
+  description = "(Required) S3 Intelligent-Tiering access tier. Valid values: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,69 +168,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) All of these tags must exist in the object's tag set in order for the configuration to apply.The tiering configuration supports the following:"
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.tags
+}
+output "tiering" {
+  description = "(Required) The S3 Intelligent-Tiering storage class tiers of the configuration (documented below).The filter configuration supports the following:"
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.tiering
+}
+output "access_tier" {
+  description = "(Required) S3 Intelligent-Tiering access tier. Valid values: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS."
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.access_tier
+}
+output "bucket" {
+  description = "(Required) The name of the bucket this intelligent tiering configuration is associated with."
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.bucket
+}
+output "filter" {
+  description = "(Optional) A bucket filter. The configuration only includes objects that meet the filter's criteria (documented below)."
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.filter
+}
+output "name" {
+  description = "(Required) The unique name used to identify the S3 Intelligent-Tiering configuration for the bucket."
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.name
+}
+output "prefix" {
+  description = "(Optional) An object key name prefix that identifies the subset of objects to which the configuration applies."
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.prefix
+}
 output "status" {
   description = "(Optional) Specifies the status of the configuration. Valid values: Enabled, Disabled."
   value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) All of these tags must exist in the object's tag set in order for the configuration to apply.The tiering configuration supports the following:"
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tiering" {
-  description = "(Required) The S3 Intelligent-Tiering storage class tiers of the configuration (documented below).The filter configuration supports the following:"
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.tiering
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "access_tier" {
-  description = "(Required) S3 Intelligent-Tiering access tier. Valid values: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS."
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.access_tier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bucket" {
-  description = "(Required) The name of the bucket this intelligent tiering configuration is associated with."
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.bucket
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter" {
-  description = "(Optional) A bucket filter. The configuration only includes objects that meet the filter's criteria (documented below)."
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.filter
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The unique name used to identify the S3 Intelligent-Tiering configuration for the bucket."
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "prefix" {
-  description = "(Optional) An object key name prefix that identifies the subset of objects to which the configuration applies."
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

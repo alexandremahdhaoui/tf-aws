@@ -138,17 +138,9 @@ output "stream_arn" {
   description = "(Required) The ARN for a Kinesis data stream. This must exist in the same account and region as the DynamoDB table."
   value       = aws_dynamodb_kinesis_streaming_destination.aws_dynamodb_kinesis_streaming_destination.stream_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "table_name" {
   description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_dynamodb_kinesis_streaming_destination.aws_dynamodb_kinesis_streaming_destination.table_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The table_name and stream_arn separated by a comma (,)."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

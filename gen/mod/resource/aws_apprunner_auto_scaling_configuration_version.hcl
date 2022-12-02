@@ -124,45 +124,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "ARN of this auto scaling configuration version."
+  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.arn
+}
+output "auto_scaling_configuration_revision" {
+  description = "The revision of this auto scaling configuration."
+  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.auto_scaling_configuration_revision
+}
+output "latest" {
+  description = "Whether the auto scaling configuration has the highest auto_scaling_configuration_revision among all configurations that share the same auto_scaling_configuration_name."
+  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.latest
+}
+output "status" {
+  description = "Current state of the auto scaling configuration. An INACTIVE configuration revision has been deleted and can't be used. It is permanently removed some time after deletion."
+  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.status
+}
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of this auto scaling configuration version."
-  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_scaling_configuration_revision" {
-  description = "The revision of this auto scaling configuration."
-  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.auto_scaling_configuration_revision
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "latest" {
-  description = "Whether the auto scaling configuration has the highest auto_scaling_configuration_revision among all configurations that share the same auto_scaling_configuration_name."
-  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.latest
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "Current state of the auto scaling configuration. An INACTIVE configuration revision has been deleted and can't be used. It is permanently removed some time after deletion."
-  value       = aws_apprunner_auto_scaling_configuration_version.aws_apprunner_auto_scaling_configuration_version.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

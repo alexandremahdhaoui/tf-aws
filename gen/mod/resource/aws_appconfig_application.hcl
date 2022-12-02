@@ -1,9 +1,9 @@
 resource "aws_appconfig_application" "aws_appconfig_application" {
+  name        = var.name
+  tags        = var.tags
   arn         = var.arn
   description = var.description
   id          = var.id
-  name        = var.name
-  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -16,6 +16,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) Description of the application. Can be at most 1024 characters."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "AppConfig application ID."
@@ -28,6 +29,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,61 +151,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the AppConfig Application."
-  value       = aws_appconfig_application.aws_appconfig_application.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) Description of the application. Can be at most 1024 characters."
-  value       = aws_appconfig_application.aws_appconfig_application.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "AppConfig application ID."
   value       = aws_appconfig_application.aws_appconfig_application.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name for the application. Must be between 1 and 64 characters in length."
   value       = aws_appconfig_application.aws_appconfig_application.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appconfig_application.aws_appconfig_application.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "ARN of the AppConfig Application."
   value       = aws_appconfig_application.aws_appconfig_application.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) Description of the application. Can be at most 1024 characters."
+  value       = aws_appconfig_application.aws_appconfig_application.description
+}
+output "arn" {
+  description = "ARN of the AppConfig Application."
+  value       = aws_appconfig_application.aws_appconfig_application.arn
 }
 output "id" {
   description = "AppConfig application ID."
   value       = aws_appconfig_application.aws_appconfig_application.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -211,7 +185,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

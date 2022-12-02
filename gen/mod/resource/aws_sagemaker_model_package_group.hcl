@@ -1,12 +1,16 @@
 resource "aws_sagemaker_model_package_group" "aws_sagemaker_model_package_group" {
+  arn                             = var.arn
   id                              = var.id
   model_package_group_description = var.model_package_group_description
   model_package_group_name        = var.model_package_group_name
   tags                            = var.tags
-  arn                             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Model Package Group."
   type        = string
 }
 variable "id" {
@@ -16,6 +20,7 @@ variable "id" {
 variable "model_package_group_description" {
   description = "(Optional) A description for the model group."
   type        = string
+  default     = ""
 }
 variable "model_package_group_name" {
   description = "(Required) The name of the model group."
@@ -24,10 +29,7 @@ variable "model_package_group_name" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Model Package Group."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,69 +151,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Model Package Group."
+  value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.arn
+}
 output "id" {
   description = "The name of the Model Package Group."
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "model_package_group_description" {
   description = "(Optional) A description for the model group."
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.model_package_group_description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "model_package_group_name" {
   description = "(Required) The name of the model group."
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.model_package_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Model Package Group."
-  value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the Model Package Group."
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Model Package Group."
   value       = aws_sagemaker_model_package_group.aws_sagemaker_model_package_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,9 +1,9 @@
 resource "aws_cloudwatch_event_archive" "aws_cloudwatch_event_archive" {
-  description      = var.description
-  event_pattern    = var.event_pattern
   event_source_arn = var.event_source_arn
   name             = var.name
   retention_days   = var.retention_days
+  description      = var.description
+  event_pattern    = var.event_pattern
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -20,14 +20,17 @@ variable "name" {
 variable "retention_days" {
   description = "(Optional) The maximum number of days to retain events in the new event archive. By default, it archives indefinitely.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Optional) The description of the new event archive."
   type        = string
+  default     = ""
 }
 variable "event_pattern" {
   description = "(Optional) Instructs the new event archive to only capture events matched by this pattern. By default, it attempts to archive every event received in the event_source_arn."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,45 +152,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "event_pattern" {
+  description = "(Optional) Instructs the new event archive to only capture events matched by this pattern. By default, it attempts to archive every event received in the event_source_arn."
+  value       = aws_cloudwatch_event_archive.aws_cloudwatch_event_archive.event_pattern
+}
 output "event_source_arn" {
   description = "(Required) Event bus source ARN from where these events should be archived."
   value       = aws_cloudwatch_event_archive.aws_cloudwatch_event_archive.event_source_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the new event archive. The archive name cannot exceed 48 characters."
   value       = aws_cloudwatch_event_archive.aws_cloudwatch_event_archive.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "retention_days" {
   description = "(Optional) The maximum number of days to retain events in the new event archive. By default, it archives indefinitely.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_event_archive.aws_cloudwatch_event_archive.retention_days
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the new event archive."
   value       = aws_cloudwatch_event_archive.aws_cloudwatch_event_archive.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "event_pattern" {
-  description = "(Optional) Instructs the new event archive to only capture events matched by this pattern. By default, it attempts to archive every event received in the event_source_arn."
-  value       = aws_cloudwatch_event_archive.aws_cloudwatch_event_archive.event_pattern
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the event archive."
@@ -195,7 +178,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

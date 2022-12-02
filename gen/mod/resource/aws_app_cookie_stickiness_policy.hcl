@@ -1,12 +1,20 @@
 resource "aws_app_cookie_stickiness_policy" "aws_app_cookie_stickiness_policy" {
-  id            = var.id
-  lb_port       = var.lb_port
   load_balancer = var.load_balancer
   name          = var.name
   cookie_name   = var.cookie_name
+  id            = var.id
+  lb_port       = var.lb_port
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "load_balancer" {
+  description = "Name of load balancer to which the policy is attached."
+  type        = string
+}
+variable "name" {
+  description = "Name of the stickiness policy."
   type        = string
 }
 variable "cookie_name" {
@@ -19,14 +27,6 @@ variable "id" {
 }
 variable "lb_port" {
   description = "Load balancer port to which the policy is applied."
-  type        = string
-}
-variable "load_balancer" {
-  description = "Name of load balancer to which the policy is attached."
-  type        = string
-}
-variable "name" {
-  description = "Name of the stickiness policy."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,77 +149,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "Name of the stickiness policy."
-  value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "cookie_name" {
   description = "(Required) Application cookie whose lifetime the ELB's cookie should follow.In addition to all arguments above, the following attributes are exported:"
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.cookie_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "ID of the policy."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "lb_port" {
   description = "Load balancer port to which the policy is applied."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.lb_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "load_balancer" {
   description = "Name of load balancer to which the policy is attached."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.load_balancer
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "Name of the stickiness policy."
+  value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.name
 }
 output "cookie_name" {
   description = "Application cookie whose lifetime the ELB's cookie should follow."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.cookie_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "ID of the policy."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "lb_port" {
   description = "Load balancer port to which the policy is applied."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.lb_port
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "load_balancer" {
   description = "Name of load balancer to which the policy is attached."
   value       = aws_app_cookie_stickiness_policy.aws_app_cookie_stickiness_policy.load_balancer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "Name of the stickiness policy."
@@ -227,7 +191,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,21 +1,21 @@
 resource "aws_ebs_volume" "aws_ebs_volume" {
-  create               = var.create
-  final_snapshot       = var.final_snapshot
-  id                   = var.id
-  outpost_arn          = var.outpost_arn
+  encrypted            = var.encrypted
   size                 = var.size
-  availability_zone    = var.availability_zone
+  snapshot_id          = var.snapshot_id
   arn                  = var.arn
+  final_snapshot       = var.final_snapshot
+  throughput           = var.throughput
   iops                 = var.iops
   kms_key_id           = var.kms_key_id
-  multi_attach_enabled = var.multi_attach_enabled
-  snapshot_id          = var.snapshot_id
+  type                 = var.type
   tags_all             = var.tags_all
   update               = var.update
-  encrypted            = var.encrypted
+  availability_zone    = var.availability_zone
+  create               = var.create
+  id                   = var.id
+  multi_attach_enabled = var.multi_attach_enabled
+  outpost_arn          = var.outpost_arn
   tags                 = var.tags
-  throughput           = var.throughput
-  type                 = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -24,46 +24,46 @@ variable "provider_region" {
 variable "encrypted" {
   description = "(Optional) If true, the disk will be encrypted."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "throughput" {
-  description = "(Optional) The throughput that the volume supports, in MiB/s. Only valid for type of gp3.~> strongNOTE: When changing the size, iops or type of an instance, there are considerations to be aware of.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "type" {
-  description = "(Optional) The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1 (Default: gp2)."
-  type        = string
+  default     = ""
 }
 variable "size" {
   description = "(Optional) The size of the drive in GiBs."
   type        = string
+  default     = ""
 }
-variable "create" {
-  description = "(Default 5m)"
+variable "snapshot_id" {
+  description = " (Optional) A snapshot to base the EBS volume off of."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e)."
   type        = string
 }
 variable "final_snapshot" {
   description = "(Optional) If true, snapshot will be created before volume deletion. Any tags on the volume will be migrated to the snapshot. By default set to false"
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "The volume ID (e.g., vol-59fcb34e)."
+variable "throughput" {
+  description = "(Optional) The throughput that the volume supports, in MiB/s. Only valid for type of gp3.~> strongNOTE: When changing the size, iops or type of an instance, there are considerations to be aware of.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "outpost_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost."
+variable "iops" {
+  description = "(Optional) The amount of IOPS to provision for the disk. Only valid for type of io1, io2 or gp3."
   type        = string
+  default     = ""
 }
-variable "availability_zone" {
-  description = "(Required) The AZ where the EBS volume will exist."
+variable "kms_key_id" {
+  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true. Note: Terraform must be running with credentials which have the GenerateDataKeyWithoutPlaintext permission on the specified KMS key as required by the EBS KMS CMK volume provisioning process to prevent a volume from being created and almost immediately deleted."
   type        = string
+  default     = ""
 }
-variable "snapshot_id" {
-  description = " (Optional) A snapshot to base the EBS volume off of."
+variable "type" {
+  description = "(Optional) The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1 (Default: gp2)."
   type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -73,21 +73,32 @@ variable "update" {
   description = "(Default 5m)"
   type        = string
 }
-variable "arn" {
-  description = "The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e)."
+variable "availability_zone" {
+  description = "(Required) The AZ where the EBS volume will exist."
   type        = string
 }
-variable "iops" {
-  description = "(Optional) The amount of IOPS to provision for the disk. Only valid for type of io1, io2 or gp3."
+variable "create" {
+  description = "(Default 5m)"
   type        = string
 }
-variable "kms_key_id" {
-  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true. Note: Terraform must be running with credentials which have the GenerateDataKeyWithoutPlaintext permission on the specified KMS key as required by the EBS KMS CMK volume provisioning process to prevent a volume from being created and almost immediately deleted."
+variable "id" {
+  description = "The volume ID (e.g., vol-59fcb34e)."
   type        = string
 }
 variable "multi_attach_enabled" {
   description = "(Optional) Specifies whether to enable Amazon EBS Multi-Attach. Multi-Attach is supported on io1 and io2 volumes."
   type        = string
+  default     = ""
+}
+variable "outpost_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -209,141 +220,93 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "availability_zone" {
-  description = "(Required) The AZ where the EBS volume will exist."
-  value       = aws_ebs_volume.aws_ebs_volume.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The volume ID (e.g., vol-59fcb34e)."
+  value       = aws_ebs_volume.aws_ebs_volume.id
 }
 output "multi_attach_enabled" {
   description = "(Optional) Specifies whether to enable Amazon EBS Multi-Attach. Multi-Attach is supported on io1 and io2 volumes."
   value       = aws_ebs_volume.aws_ebs_volume.multi_attach_enabled
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "snapshot_id" {
-  description = " (Optional) A snapshot to base the EBS volume off of."
-  value       = aws_ebs_volume.aws_ebs_volume.snapshot_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ebs_volume.aws_ebs_volume.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_ebs_volume.aws_ebs_volume.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e)."
-  value       = aws_ebs_volume.aws_ebs_volume.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iops" {
-  description = "(Optional) The amount of IOPS to provision for the disk. Only valid for type of io1, io2 or gp3."
-  value       = aws_ebs_volume.aws_ebs_volume.iops
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key_id" {
-  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true. Note: Terraform must be running with credentials which have the GenerateDataKeyWithoutPlaintext permission on the specified KMS key as required by the EBS KMS CMK volume provisioning process to prevent a volume from being created and almost immediately deleted."
-  value       = aws_ebs_volume.aws_ebs_volume.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1 (Default: gp2)."
-  value       = aws_ebs_volume.aws_ebs_volume.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encrypted" {
-  description = "(Optional) If true, the disk will be encrypted."
-  value       = aws_ebs_volume.aws_ebs_volume.encrypted
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "outpost_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost."
+  value       = aws_ebs_volume.aws_ebs_volume.outpost_arn
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_ebs_volume.aws_ebs_volume.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ebs_volume.aws_ebs_volume.tags_all
 }
-output "throughput" {
-  description = "(Optional) The throughput that the volume supports, in MiB/s. Only valid for type of gp3.~> strongNOTE: When changing the size, iops or type of an instance, there are considerations to be aware of.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ebs_volume.aws_ebs_volume.throughput
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_ebs_volume.aws_ebs_volume.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "outpost_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost."
-  value       = aws_ebs_volume.aws_ebs_volume.outpost_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "size" {
-  description = "(Optional) The size of the drive in GiBs."
-  value       = aws_ebs_volume.aws_ebs_volume.size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "availability_zone" {
+  description = "(Required) The AZ where the EBS volume will exist."
+  value       = aws_ebs_volume.aws_ebs_volume.availability_zone
 }
 output "create" {
   description = "(Default 5m)"
   value       = aws_ebs_volume.aws_ebs_volume.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "snapshot_id" {
+  description = " (Optional) A snapshot to base the EBS volume off of."
+  value       = aws_ebs_volume.aws_ebs_volume.snapshot_id
+}
+output "encrypted" {
+  description = "(Optional) If true, the disk will be encrypted."
+  value       = aws_ebs_volume.aws_ebs_volume.encrypted
+}
+output "size" {
+  description = "(Optional) The size of the drive in GiBs."
+  value       = aws_ebs_volume.aws_ebs_volume.size
+}
+output "throughput" {
+  description = "(Optional) The throughput that the volume supports, in MiB/s. Only valid for type of gp3.~> strongNOTE: When changing the size, iops or type of an instance, there are considerations to be aware of.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ebs_volume.aws_ebs_volume.throughput
+}
+output "arn" {
+  description = "The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e)."
+  value       = aws_ebs_volume.aws_ebs_volume.arn
 }
 output "final_snapshot" {
   description = "(Optional) If true, snapshot will be created before volume deletion. Any tags on the volume will be migrated to the snapshot. By default set to false"
   value       = aws_ebs_volume.aws_ebs_volume.final_snapshot
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "type" {
+  description = "(Optional) The type of EBS volume. Can be standard, gp2, gp3, io1, io2, sc1 or st1 (Default: gp2)."
+  value       = aws_ebs_volume.aws_ebs_volume.type
+}
+output "iops" {
+  description = "(Optional) The amount of IOPS to provision for the disk. Only valid for type of io1, io2 or gp3."
+  value       = aws_ebs_volume.aws_ebs_volume.iops
+}
+output "kms_key_id" {
+  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true. Note: Terraform must be running with credentials which have the GenerateDataKeyWithoutPlaintext permission on the specified KMS key as required by the EBS KMS CMK volume provisioning process to prevent a volume from being created and almost immediately deleted."
+  value       = aws_ebs_volume.aws_ebs_volume.kms_key_id
 }
 output "id" {
   description = "The volume ID (e.g., vol-59fcb34e)."
   value       = aws_ebs_volume.aws_ebs_volume.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ebs_volume.aws_ebs_volume.tags_all
+}
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_ebs_volume.aws_ebs_volume.update
+}
+output "arn" {
+  description = "The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e)."
+  value       = aws_ebs_volume.aws_ebs_volume.arn
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_ebs_volume.aws_ebs_volume.create
 }
 output "delete" {
   description = "(Default 5m)"
@@ -351,47 +314,7 @@ output "delete" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The volume ID (e.g., vol-59fcb34e)."
-  value       = aws_ebs_volume.aws_ebs_volume.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ebs_volume.aws_ebs_volume.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_ebs_volume.aws_ebs_volume.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The volume ARN (e.g., arn:aws:ec2:us-east-1:0123456789012:volume/vol-59fcb34e)."
-  value       = aws_ebs_volume.aws_ebs_volume.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_ebs_volume.aws_ebs_volume.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -8,17 +8,13 @@ output "iam_arns" {
   description = "Set of ARNs of the matched origin access identities."
   value       = aws_cloudfront_origin_access_identities.aws_cloudfront_origin_access_identities.iam_arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ids" {
   description = "Set of ids of the matched origin access identities."
   value       = aws_cloudfront_origin_access_identities.aws_cloudfront_origin_access_identities.ids
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,21 +1,13 @@
 resource "aws_codeartifact_repository_permissions_policy" "aws_codeartifact_repository_permissions_policy" {
-  domain          = var.domain
   domain_owner    = var.domain_owner
   id              = var.id
   policy_document = var.policy_document
   policy_revision = var.policy_revision
   repository      = var.repository
+  domain          = var.domain
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "domain" {
-  description = "(Required) The name of the domain on which to set the resource policy."
-  type        = string
-}
-variable "domain_owner" {
-  description = "(Optional) The account number of the AWS account that owns the domain."
   type        = string
 }
 variable "id" {
@@ -29,10 +21,20 @@ variable "policy_document" {
 variable "policy_revision" {
   description = "(Optional) The current revision of the resource policy to be set. This revision is used for optimistic locking, which prevents others from overwriting your changes to the domain's resource policy.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "repository" {
   description = "(Required) The name of the repository to set the resource policy on."
   type        = string
+}
+variable "domain" {
+  description = "(Required) The name of the domain on which to set the resource policy."
+  type        = string
+}
+variable "domain_owner" {
+  description = "(Optional) The account number of the AWS account that owns the domain."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -158,49 +160,29 @@ output "domain" {
   description = "(Required) The name of the domain on which to set the resource policy."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.domain
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "domain_owner" {
   description = "(Optional) The account number of the AWS account that owns the domain."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.domain_owner
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ARN of the resource associated with the resource policy."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "policy_document" {
   description = "(Required) A JSON policy string to be set as the access control resource policy on the provided domain."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.policy_document
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_revision" {
   description = "(Optional) The current revision of the resource policy to be set. This revision is used for optimistic locking, which prevents others from overwriting your changes to the domain's resource policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.policy_revision
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "repository" {
   description = "(Required) The name of the repository to set the resource policy on."
   value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.repository
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "resource_arn" {
+  description = "The ARN of the resource associated with the resource policy."
+  value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.resource_arn
 }
 output "id" {
   description = "The ARN of the resource associated with the resource policy."
@@ -208,15 +190,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_arn" {
-  description = "The ARN of the resource associated with the resource policy."
-  value       = aws_codeartifact_repository_permissions_policy.aws_codeartifact_repository_permissions_policy.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

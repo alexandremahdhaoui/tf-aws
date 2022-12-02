@@ -1,21 +1,28 @@
 resource "aws_ami_launch_permission" "aws_ami_launch_permission" {
+  organization_arn        = var.organization_arn
+  organizational_unit_arn = var.organizational_unit_arn
   account_id              = var.account_id
   group                   = var.group
   image_id                = var.image_id
-  organization_arn        = var.organization_arn
-  organizational_unit_arn = var.organizational_unit_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "organizational_unit_arn" {
+  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "account_id" {
   description = "(Optional) AWS account ID for the launch permission."
   type        = string
+  default     = ""
 }
 variable "group" {
   description = "(Optional) Name of the group for the launch permission. Valid values: \"all\"."
   type        = string
+  default     = ""
 }
 variable "image_id" {
   description = "(Required) ID of the AMI."
@@ -24,10 +31,7 @@ variable "image_id" {
 variable "organization_arn" {
   description = "(Optional) ARN of an organization for the launch permission."
   type        = string
-}
-variable "organizational_unit_arn" {
-  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,45 +153,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "organizational_unit_arn" {
-  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ami_launch_permission.aws_ami_launch_permission.organizational_unit_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "account_id" {
   description = "(Optional) AWS account ID for the launch permission."
   value       = aws_ami_launch_permission.aws_ami_launch_permission.account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "group" {
   description = "(Optional) Name of the group for the launch permission. Valid values: \"all\"."
   value       = aws_ami_launch_permission.aws_ami_launch_permission.group
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "image_id" {
   description = "(Required) ID of the AMI."
   value       = aws_ami_launch_permission.aws_ami_launch_permission.image_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "organization_arn" {
   description = "(Optional) ARN of an organization for the launch permission."
   value       = aws_ami_launch_permission.aws_ami_launch_permission.organization_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "organizational_unit_arn" {
+  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ami_launch_permission.aws_ami_launch_permission.organizational_unit_arn
 }
 output "id" {
   description = "Launch permission ID."
@@ -195,7 +179,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

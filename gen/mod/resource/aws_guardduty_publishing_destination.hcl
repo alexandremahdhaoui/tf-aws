@@ -8,20 +8,21 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "detector_id" {
-  description = "(Required) The detector ID of the GuardDuty."
-  type        = string
-}
-variable "kms_key_arn" {
-  description = "(Required) The ARN of the KMS key used to encrypt GuardDuty findings. GuardDuty enforces this to be encrypted."
-  type        = string
-}
 variable "destination_arn" {
   description = "(Required) The bucket arn and prefix under which the findings get exported. Bucket-ARN is required, the prefix is optional and will be AWSLogs/[Account-ID]/GuardDuty/[Region]/ if not provided"
   type        = string
 }
 variable "destination_type" {
   description = "- (Optional) Currently there is only \"S3\" available as destination type which is also the default value~> strongNote: In case of missing permissions (S3 Bucket Policy emor KMS Key permissions) the resource will fail to create. If the permissions are changed after resource creation, this can be asked from the AWS API via the \"DescribePublishingDestination\" call (https://docs.aws.amazon.com/cli/latest/reference/guardduty/describe-publishing-destination.html).In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "detector_id" {
+  description = "(Required) The detector ID of the GuardDuty."
+  type        = string
+}
+variable "kms_key_arn" {
+  description = "(Required) The ARN of the KMS key used to encrypt GuardDuty findings. GuardDuty enforces this to be encrypted."
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,37 +145,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "kms_key_arn" {
+  description = "(Required) The ARN of the KMS key used to encrypt GuardDuty findings. GuardDuty enforces this to be encrypted."
+  value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.kms_key_arn
+}
 output "destination_arn" {
   description = "(Required) The bucket arn and prefix under which the findings get exported. Bucket-ARN is required, the prefix is optional and will be AWSLogs/[Account-ID]/GuardDuty/[Region]/ if not provided"
   value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.destination_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "destination_type" {
   description = "- (Optional) Currently there is only \"S3\" available as destination type which is also the default value~> strongNote: In case of missing permissions (S3 Bucket Policy emor KMS Key permissions) the resource will fail to create. If the permissions are changed after resource creation, this can be asked from the AWS API via the \"DescribePublishingDestination\" call (https://docs.aws.amazon.com/cli/latest/reference/guardduty/describe-publishing-destination.html).In addition to all arguments above, the following attributes are exported:"
   value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.destination_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "detector_id" {
   description = "(Required) The detector ID of the GuardDuty."
   value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.detector_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key_arn" {
-  description = "(Required) The ARN of the KMS key used to encrypt GuardDuty findings. GuardDuty enforces this to be encrypted."
-  value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.kms_key_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the GuardDuty PublishingDestination and the detector ID. Format: <DetectorID>:<PublishingDestinationID>"
@@ -182,7 +167,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

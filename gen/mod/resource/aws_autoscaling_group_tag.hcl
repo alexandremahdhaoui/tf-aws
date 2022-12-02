@@ -1,16 +1,12 @@
 resource "aws_autoscaling_group_tag" "aws_autoscaling_group_tag" {
-  value                  = var.value
-  autoscaling_group_name = var.autoscaling_group_name
   key                    = var.key
   propagate_at_launch    = var.propagate_at_launch
   tag                    = var.tag
+  value                  = var.value
+  autoscaling_group_name = var.autoscaling_group_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "autoscaling_group_name" {
-  description = "(Required) Name of the Autoscaling Group to apply the tag to."
   type        = string
 }
 variable "key" {
@@ -27,6 +23,10 @@ variable "tag" {
 }
 variable "value" {
   description = "(Required) Tag value."
+  type        = string
+}
+variable "autoscaling_group_name" {
+  description = "(Required) Name of the Autoscaling Group to apply the tag to."
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,41 +153,21 @@ output "propagate_at_launch" {
   description = "(Required) Whether to propagate the tags to instances launched by the ASG.In addition to all arguments above, the following attributes are exported:"
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.propagate_at_launch
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tag" {
   description = "(Required) Tag to create. The tag block is documented below.The tag block supports the following arguments:"
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.tag
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "value" {
   description = "(Required) Tag value."
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "autoscaling_group_name" {
   description = "(Required) Name of the Autoscaling Group to apply the tag to."
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.autoscaling_group_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "key" {
   description = "(Required) Tag name."
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "ASG name and key, separated by a comma (,)"
@@ -195,7 +175,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

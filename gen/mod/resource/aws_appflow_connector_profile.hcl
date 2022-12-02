@@ -128,17 +128,13 @@ output "arn" {
   description = "ARN of the connector profile."
   value       = aws_appflow_connector_profile.aws_appflow_connector_profile.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "credentials_arn" {
   description = "ARN of the connector profile credentials."
   value       = aws_appflow_connector_profile.aws_appflow_connector_profile.credentials_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

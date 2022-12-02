@@ -1,10 +1,10 @@
 resource "aws_workspaces_ip_group" "aws_workspaces_ip_group" {
-  name        = var.name
-  rules       = var.rules
   source      = var.source
   tags        = var.tags
   description = var.description
   id          = var.id
+  name        = var.name
+  rules       = var.rules
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -13,6 +13,7 @@ variable "provider_region" {
 variable "description" {
   description = "(Optional) The description.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The IP group identifier."
@@ -25,6 +26,7 @@ variable "name" {
 variable "rules" {
   description = "(Optional) One or more pairs specifying the IP group rule (in CIDR format) from which web requests originate."
   type        = string
+  default     = ""
 }
 variable "source" {
   description = "(Required) The IP address range, in CIDR notation, e.g., 10.0.0.0/16"
@@ -33,6 +35,7 @@ variable "source" {
 variable "tags" {
   description = " – (Optional) A map of tags assigned to the WorkSpaces directory. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlocksrulesArguments"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -158,57 +161,29 @@ output "description" {
   description = "(Optional) The description.In addition to all arguments above, the following attributes are exported:"
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The IP group identifier."
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the IP group."
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rules" {
   description = "(Optional) One or more pairs specifying the IP group rule (in CIDR format) from which web requests originate."
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.rules
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "source" {
   description = "(Required) The IP address range, in CIDR notation, e.g., 10.0.0.0/16"
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.source
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = " – (Optional) A map of tags assigned to the WorkSpaces directory. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlocksrulesArguments"
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The IP group identifier."
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -216,7 +191,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,118 +1,139 @@
 resource "aws_rds_reserved_instance" "aws_rds_reserved_instance" {
-  delete              = var.delete
-  instance_class      = var.instance_class
-  lease_id            = var.lease_id
-  recurring_charges   = var.recurring_charges
   update              = var.update
   arn                 = var.arn
-  offering_type       = var.offering_type
+  duration            = var.duration
+  instance_class      = var.instance_class
+  instance_id         = var.instance_id
+  offering_id         = var.offering_id
   product_description = var.product_description
   start_time          = var.start_time
-  usage_price         = var.usage_price
-  create              = var.create
-  fixed_price         = var.fixed_price
-  instance_id         = var.instance_id
-  multi_az            = var.multi_az
-  offering_id         = var.offering_id
-  tags                = var.tags
-  currency_code       = var.currency_code
-  duration            = var.duration
-  id                  = var.id
   instance_count      = var.instance_count
-  state               = var.state
+  lease_id            = var.lease_id
+  offering_type       = var.offering_type
+  tags                = var.tags
   tags_all            = var.tags_all
+  fixed_price         = var.fixed_price
+  id                  = var.id
+  multi_az            = var.multi_az
+  recurring_charges   = var.recurring_charges
+  create              = var.create
+  currency_code       = var.currency_code
+  delete              = var.delete
+  state               = var.state
+  usage_price         = var.usage_price
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "fixed_price" {
+  description = " – Fixed price charged for this reserved DB instance."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "Unique identifier for the reservation. same as instance_id."
   type        = string
-}
-variable "instance_count" {
-  description = "(Optional) Number of instances to reserve. Default value is 1."
-  type        = string
-}
-variable "state" {
-  description = "State of the reserved DB instance."
-  type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "currency_code" {
-  description = "Currency code for the reserved DB instance."
-  type        = string
-}
-variable "duration" {
-  description = "Duration of the reservation in seconds."
-  type        = string
-}
-variable "lease_id" {
-  description = "Unique identifier for the lease associated with the reserved DB instance. Amazon Web Services Support might request the lease ID for an issue related to a reserved DB instance."
-  type        = string
-}
-variable "recurring_charges" {
-  description = "Recurring price charged to run this reserved DB instance."
-  type        = string
-}
-variable "update" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "delete" {
-  description = "(Default 1m)"
-  type        = string
-}
-variable "instance_class" {
-  description = "DB instance class for the reserved DB instance."
-  type        = string
-}
-variable "product_description" {
-  description = "Description of the reserved DB instance."
-  type        = string
-}
-variable "start_time" {
-  description = "Time the reservation started."
-  type        = string
-}
-variable "usage_price" {
-  description = "Hourly price charged for this reserved DB instance."
-  type        = string
-}
-variable "arn" {
-  description = "ARN for the reserved DB instance."
-  type        = string
-}
-variable "offering_type" {
-  description = "Offering type of this reserved DB instance."
-  type        = string
-}
-variable "instance_id" {
-  description = "(Optional) Customer-specified identifier to track this reservation."
-  type        = string
+  default     = ""
 }
 variable "multi_az" {
   description = "Whether the reservation applies to Multi-AZ deployments."
   type        = string
+  default     = ""
+}
+variable "recurring_charges" {
+  description = "Recurring price charged to run this reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "usage_price" {
+  description = "Hourly price charged for this reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "currency_code" {
+  description = "Currency code for the reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 1m)"
+  type        = string
+  default     = ""
+}
+variable "state" {
+  description = "State of the reserved DB instance."
+  type        = string
+  default     = ""
 }
 variable "offering_id" {
   description = "(Required) ID of the Reserved DB instance offering to purchase. To determine an offering_id, see the aws_rds_reserved_instance_offering data source."
   type        = string
 }
+variable "product_description" {
+  description = "Description of the reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "start_time" {
+  description = "Time the reservation started."
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 10m)"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN for the reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "duration" {
+  description = "Duration of the reservation in seconds."
+  type        = string
+  default     = ""
+}
+variable "instance_class" {
+  description = "DB instance class for the reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "instance_id" {
+  description = "(Optional) Customer-specified identifier to track this reservation."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "instance_count" {
+  description = "(Optional) Number of instances to reserve. Default value is 1."
+  type        = string
+  default     = ""
+}
+variable "lease_id" {
+  description = "Unique identifier for the lease associated with the reserved DB instance. Amazon Web Services Support might request the lease ID for an issue related to a reserved DB instance."
+  type        = string
+  default     = ""
+}
+variable "offering_type" {
+  description = "Offering type of this reserved DB instance."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Map of tags to assign to the DB reservation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "fixed_price" {
-  description = " – Fixed price charged for this reserved DB instance."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -234,269 +255,161 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "usage_price" {
-  description = "Hourly price charged for this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.usage_price
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN for the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "offering_type" {
-  description = "Offering type of this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.offering_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "product_description" {
-  description = "Description of the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.product_description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "start_time" {
-  description = "Time the reservation started."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.start_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_id" {
+  description = "(Optional) Customer-specified identifier to track this reservation."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_id
 }
 output "offering_id" {
   description = "(Required) ID of the Reserved DB instance offering to purchase. To determine an offering_id, see the aws_rds_reserved_instance_offering data source."
   value       = aws_rds_reserved_instance.aws_rds_reserved_instance.offering_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "product_description" {
+  description = "Description of the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.product_description
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the DB reservation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "fixed_price" {
-  description = " – Fixed price charged for this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.fixed_price
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_id" {
-  description = "(Optional) Customer-specified identifier to track this reservation."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "multi_az" {
-  description = "Whether the reservation applies to Multi-AZ deployments."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.multi_az
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "State of the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "currency_code" {
-  description = "Currency code for the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.currency_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "duration" {
-  description = "Duration of the reservation in seconds."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.duration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Unique identifier for the reservation. same as instance_id."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_count" {
-  description = "(Optional) Number of instances to reserve. Default value is 1."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "start_time" {
+  description = "Time the reservation started."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.start_time
 }
 output "update" {
   description = "(Default 10m)"
   value       = aws_rds_reserved_instance.aws_rds_reserved_instance.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 1m)"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_class" {
-  description = "DB instance class for the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_class
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lease_id" {
-  description = "Unique identifier for the lease associated with the reserved DB instance. Amazon Web Services Support might request the lease ID for an issue related to a reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.lease_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "recurring_charges" {
-  description = "Recurring price charged to run this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.recurring_charges
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "fixed_price" {
-  description = " – Fixed price charged for this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.fixed_price
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Unique identifier for the reservation. same as instance_id."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_class" {
-  description = "DB instance class for the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_class
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "State of the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 1m)"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN for the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.arn
 }
 output "duration" {
   description = "Duration of the reservation in seconds."
   value       = aws_rds_reserved_instance.aws_rds_reserved_instance.duration
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_class" {
+  description = "DB instance class for the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_class
 }
-output "currency_code" {
-  description = "Currency code for the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.currency_code
+output "tags" {
+  description = "(Optional) Map of tags to assign to the DB reservation. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.tags_all
+}
+output "instance_count" {
+  description = "(Optional) Number of instances to reserve. Default value is 1."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_count
+}
+output "lease_id" {
+  description = "Unique identifier for the lease associated with the reserved DB instance. Amazon Web Services Support might request the lease ID for an issue related to a reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.lease_id
+}
+output "offering_type" {
+  description = "Offering type of this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.offering_type
+}
+output "recurring_charges" {
+  description = "Recurring price charged to run this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.recurring_charges
+}
+output "fixed_price" {
+  description = " – Fixed price charged for this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.fixed_price
+}
+output "id" {
+  description = "Unique identifier for the reservation. same as instance_id."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.id
 }
 output "multi_az" {
   description = "Whether the reservation applies to Multi-AZ deployments."
   value       = aws_rds_reserved_instance.aws_rds_reserved_instance.multi_az
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "state" {
+  description = "State of the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.state
 }
-output "product_description" {
-  description = "Description of the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.product_description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN for the reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "usage_price" {
+  description = "Hourly price charged for this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.usage_price
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_rds_reserved_instance.aws_rds_reserved_instance.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "currency_code" {
+  description = "Currency code for the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.currency_code
+}
+output "delete" {
+  description = "(Default 1m)"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.delete
+}
+output "delete" {
+  description = "(Default 1m)"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.delete
+}
+output "lease_id" {
+  description = "Unique identifier for the lease associated with the reserved DB instance. Amazon Web Services Support might request the lease ID for an issue related to a reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.lease_id
+}
+output "product_description" {
+  description = "Description of the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.product_description
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.create
+}
+output "fixed_price" {
+  description = " – Fixed price charged for this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.fixed_price
+}
+output "id" {
+  description = "Unique identifier for the reservation. same as instance_id."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.id
+}
+output "multi_az" {
+  description = "Whether the reservation applies to Multi-AZ deployments."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.multi_az
+}
+output "offering_type" {
+  description = "Offering type of this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.offering_type
+}
+output "start_time" {
+  description = "Time the reservation started."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.start_time
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.update
+}
+output "currency_code" {
+  description = "Currency code for the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.currency_code
+}
+output "duration" {
+  description = "Duration of the reservation in seconds."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.duration
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.tags_all
+}
+output "arn" {
+  description = "ARN for the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.arn
+}
+output "instance_class" {
+  description = "DB instance class for the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.instance_class
+}
+output "recurring_charges" {
+  description = "Recurring price charged to run this reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.recurring_charges
+}
+output "state" {
+  description = "State of the reserved DB instance."
+  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.state
 }
 output "usage_price" {
   description = "Hourly price charged for this reserved DB instance."
@@ -504,55 +417,7 @@ output "usage_price" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "offering_type" {
-  description = "Offering type of this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.offering_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "start_time" {
-  description = "Time the reservation started."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.start_time
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lease_id" {
-  description = "Unique identifier for the lease associated with the reserved DB instance. Amazon Web Services Support might request the lease ID for an issue related to a reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.lease_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "recurring_charges" {
-  description = "Recurring price charged to run this reserved DB instance."
-  value       = aws_rds_reserved_instance.aws_rds_reserved_instance.recurring_charges
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,6 +1,6 @@
 resource "aws_lightsail_static_ip_attachment" "aws_lightsail_static_ip_attachment" {
-  instance_name  = var.instance_name
   static_ip_name = var.static_ip_name
+  instance_name  = var.instance_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -134,21 +134,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "instance_name" {
+  description = "(Required) The name of the Lightsail instance to attach the IP toIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_static_ip_attachment.aws_lightsail_static_ip_attachment.instance_name
+}
 output "static_ip_name" {
   description = "(Required) The name of the allocated static IP"
   value       = aws_lightsail_static_ip_attachment.aws_lightsail_static_ip_attachment.static_ip_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_name" {
-  description = "(Required) The name of the Lightsail instance to attach the IP toIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_static_ip_attachment.aws_lightsail_static_ip_attachment.instance_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

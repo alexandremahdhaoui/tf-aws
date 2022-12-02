@@ -1,6 +1,6 @@
 resource "aws_ses_active_receipt_rule_set" "aws_ses_active_receipt_rule_set" {
-  id            = var.id
   rule_set_name = var.rule_set_name
+  id            = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,17 +138,9 @@ output "id" {
   description = "The SES receipt rule set name."
   value       = aws_ses_active_receipt_rule_set.aws_ses_active_receipt_rule_set.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule_set_name" {
   description = "(Required) The name of the rule setIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_active_receipt_rule_set.aws_ses_active_receipt_rule_set.rule_set_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The SES receipt rule set name."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

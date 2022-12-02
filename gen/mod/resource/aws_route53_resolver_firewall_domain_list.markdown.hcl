@@ -124,13 +124,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The ARN (Amazon Resource Name) of the domain list."
+  value       = aws_route53_resolver_firewall_domain_list.markdown.aws_route53_resolver_firewall_domain_list.markdown.arn
+}
 output "id" {
   description = "The ID of the domain list."
   value       = aws_route53_resolver_firewall_domain_list.markdown.aws_route53_resolver_firewall_domain_list.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -138,15 +138,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN (Amazon Resource Name) of the domain list."
-  value       = aws_route53_resolver_firewall_domain_list.markdown.aws_route53_resolver_firewall_domain_list.markdown.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

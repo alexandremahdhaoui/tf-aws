@@ -1,12 +1,12 @@
 resource "aws_transcribe_vocabulary_filter" "aws_transcribe_vocabulary_filter" {
-  vocabulary_filter_file_uri = var.vocabulary_filter_file_uri
-  vocabulary_filter_name     = var.vocabulary_filter_name
-  words                      = var.words
   arn                        = var.arn
   download_uri               = var.download_uri
   id                         = var.id
   language_code              = var.language_code
   tags                       = var.tags
+  vocabulary_filter_file_uri = var.vocabulary_filter_file_uri
+  vocabulary_filter_name     = var.vocabulary_filter_name
+  words                      = var.words
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -19,6 +19,7 @@ variable "language_code" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the VocabularyFilter. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "vocabulary_filter_file_uri" {
   description = "(Required) The Amazon S3 location (URI) of the text file that contains your custom VocabularyFilter. Conflicts with words."
@@ -35,14 +36,17 @@ variable "words" {
 variable "arn" {
   description = "ARN of the VocabularyFilter."
   type        = string
+  default     = ""
 }
 variable "download_uri" {
   description = "Generated download URI."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "VocabularyFilter name."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,61 +168,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "language_code" {
-  description = "(Required) The language code you selected for your vocabulary filter. Refer to the supported languages page for accepted codes."
-  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.language_code
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the VocabularyFilter. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "vocabulary_filter_file_uri" {
   description = "(Required) The Amazon S3 location (URI) of the text file that contains your custom VocabularyFilter. Conflicts with words."
   value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.vocabulary_filter_file_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vocabulary_filter_name" {
   description = "(Required) The name of the VocabularyFilter."
   value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.vocabulary_filter_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "words" {
   description = "(Required) - A list of terms to include in the vocabulary. Conflicts with vocabulary_file_uri"
   value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.words
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the VocabularyFilter."
   value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "download_uri" {
   description = "Generated download URI."
   value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.download_uri
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "VocabularyFilter name."
+  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.id
+}
+output "language_code" {
+  description = "(Required) The language code you selected for your vocabulary filter. Refer to the supported languages page for accepted codes."
+  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.language_code
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the VocabularyFilter. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.tags
+}
+output "arn" {
+  description = "ARN of the VocabularyFilter."
+  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.arn
+}
+output "download_uri" {
+  description = "Generated download URI."
+  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.download_uri
 }
 output "id" {
   description = "VocabularyFilter name."
@@ -226,31 +214,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the VocabularyFilter."
-  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "download_uri" {
-  description = "Generated download URI."
-  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.download_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "VocabularyFilter name."
-  value       = aws_transcribe_vocabulary_filter.aws_transcribe_vocabulary_filter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

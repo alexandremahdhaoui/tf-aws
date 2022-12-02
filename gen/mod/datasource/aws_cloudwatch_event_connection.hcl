@@ -4,29 +4,21 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "arn" {
+  description = "ARN (Amazon Resource Name) for the connection."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.arn
+}
+output "name" {
+  description = "Name of the connection."
+  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.name
+}
 output "secret_arn" {
   description = "ARN (Amazon Resource Name) for the secret created from the authorization parameters specified for the connection."
   value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.secret_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN (Amazon Resource Name) for the connection."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "Name of the connection."
-  value       = aws_cloudwatch_event_connection.aws_cloudwatch_event_connection.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

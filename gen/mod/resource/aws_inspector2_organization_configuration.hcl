@@ -1,17 +1,13 @@
 resource "aws_inspector2_organization_configuration" "aws_inspector2_organization_configuration" {
-  update                    = var.update
   auto_enable               = var.auto_enable
   create                    = var.create
   ec2                       = var.ec2
   ecr                       = var.ecr
   max_account_limit_reached = var.max_account_limit_reached
+  update                    = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "auto_enable" {
-  description = "(Required) Configuration block for auto enabling. See below.auto_enable"
   type        = string
 }
 variable "create" {
@@ -32,6 +28,10 @@ variable "max_account_limit_reached" {
 }
 variable "update" {
   description = "(Default 5m)"
+  type        = string
+}
+variable "auto_enable" {
+  description = "(Required) Configuration block for auto enabling. See below.auto_enable"
   type        = string
 }
 variable "tag_instance_id" {
@@ -158,65 +158,33 @@ output "max_account_limit_reached" {
   description = "Whether your configuration reached the max account limit.TimeoutsConfiguration options:"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.max_account_limit_reached
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 5m)"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "auto_enable" {
   description = "(Required) Configuration block for auto enabling. See below.auto_enable"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.auto_enable
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "create" {
   description = "(Default 5m)"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ec2" {
   description = "(Required) Whether Amazon EC2 scans are automatically enabled for new members of your Amazon Inspector organization."
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.ec2
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ecr" {
   description = "(Required) Whether Amazon ECR scans are automatically enabled for new members of your Amazon Inspector organization.In addition to all arguments above, the following attributes are exported:"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.ecr
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 5m)"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "max_account_limit_reached" {
   description = "Whether your configuration reached the max account limit.TimeoutsConfiguration options:"
   value       = aws_inspector2_organization_configuration.aws_inspector2_organization_configuration.max_account_limit_reached
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 5m)"
@@ -224,7 +192,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

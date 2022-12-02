@@ -1,87 +1,93 @@
 resource "aws_service_discovery_service" "aws_service_discovery_service" {
-  failure_threshold          = var.failure_threshold
-  id                         = var.id
-  tags                       = var.tags
-  arn                        = var.arn
-  namespace_id               = var.namespace_id
-  resource_path              = var.resource_path
+  name                       = var.name
   routing_policy             = var.routing_policy
+  type                       = var.type
+  description                = var.description
   dns_config                 = var.dns_config
+  failure_threshold          = var.failure_threshold
+  resource_path              = var.resource_path
+  tags                       = var.tags
+  dns_records                = var.dns_records
+  id                         = var.id
+  arn                        = var.arn
   force_destroy              = var.force_destroy
   health_check_config        = var.health_check_config
   health_check_custom_config = var.health_check_custom_config
-  name                       = var.name
-  description                = var.description
+  namespace_id               = var.namespace_id
   ttl                        = var.ttl
-  type                       = var.type
-  dns_records                = var.dns_records
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "dns_records" {
-  description = "(Required) An array that contains one DnsRecord object for each resource record set."
+variable "health_check_config" {
+  description = "(Optional) A complex type that contains settings for an optional health check. Only for Public DNS namespaces."
   type        = string
+  default     = ""
 }
-variable "ttl" {
-  description = "(Required) The amount of time, in seconds, that you want DNS resolvers to cache the settings for this resource record set."
-  type        = string
-}
-variable "type" {
-  description = "(Optional, ForceNew) The type of health check that you want to create, which indicates how Route 53 determines whether an endpoint is healthy. Valid Values: HTTP, HTTPS, TCPhealth_check_custom_config"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the service."
-  type        = string
-}
-variable "failure_threshold" {
-  description = "(Optional, ForceNew) The number of 30-second intervals that you want service discovery to wait before it changes the health status of a service instance.  Maximum value of 10.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "The ID of the service."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.dns_config"
-  type        = string
-}
-variable "dns_config" {
-  description = "(Optional) A complex type that contains information about the resource record sets that you want Amazon Route 53 to create when you register an instance."
+variable "health_check_custom_config" {
+  description = "(Optional, ForceNew) A complex type that contains settings for ECS managed health checks."
   type        = string
 }
 variable "namespace_id" {
   description = "(Required, ForceNew) The ID of the namespace to use for DNS configuration."
   type        = string
 }
-variable "resource_path" {
-  description = "(Optional) The path that you want Route 53 to request when performing health checks. Route 53 automatically adds the DNS name for the service. If you don't specify a value, the default value is /."
+variable "ttl" {
+  description = "(Required) The amount of time, in seconds, that you want DNS resolvers to cache the settings for this resource record set."
   type        = string
 }
-variable "routing_policy" {
-  description = "(Optional) The routing policy that you want to apply to all records that Route 53 creates when you register an instance and specify the service. Valid Values: MULTIVALUE, WEIGHTEDdns_records"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the service."
+variable "arn" {
+  description = "The ARN of the service."
   type        = string
 }
 variable "force_destroy" {
   description = "(Optional, Default:false ) A boolean that indicates all instances should be deleted from the service so that the service can be destroyed without error. These instances are not recoverable."
   type        = string
 }
-variable "health_check_config" {
-  description = "(Optional) A complex type that contains settings for an optional health check. Only for Public DNS namespaces."
-  type        = string
-}
-variable "health_check_custom_config" {
-  description = "(Optional, ForceNew) A complex type that contains settings for ECS managed health checks."
+variable "type" {
+  description = "(Optional, ForceNew) The type of health check that you want to create, which indicates how Route 53 determines whether an endpoint is healthy. Valid Values: HTTP, HTTPS, TCPhealth_check_custom_config"
   type        = string
 }
 variable "name" {
   description = "(Required, ForceNew) The name of the service."
+  type        = string
+}
+variable "routing_policy" {
+  description = "(Optional) The routing policy that you want to apply to all records that Route 53 creates when you register an instance and specify the service. Valid Values: MULTIVALUE, WEIGHTEDdns_records"
+  type        = string
+  default     = ""
+}
+variable "failure_threshold" {
+  description = "(Optional, ForceNew) The number of 30-second intervals that you want service discovery to wait before it changes the health status of a service instance.  Maximum value of 10.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "resource_path" {
+  description = "(Optional) The path that you want Route 53 to request when performing health checks. Route 53 automatically adds the DNS name for the service. If you don't specify a value, the default value is /."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.dns_config"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The description of the service."
+  type        = string
+  default     = ""
+}
+variable "dns_config" {
+  description = "(Optional) A complex type that contains information about the resource record sets that you want Amazon Route 53 to create when you register an instance."
+  type        = string
+  default     = ""
+}
+variable "dns_records" {
+  description = "(Required) An array that contains one DnsRecord object for each resource record set."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the service."
   type        = string
 }
 variable "tag_instance_id" {
@@ -204,141 +210,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "ttl" {
+  description = "(Required) The amount of time, in seconds, that you want DNS resolvers to cache the settings for this resource record set."
+  value       = aws_service_discovery_service.aws_service_discovery_service.ttl
+}
 output "arn" {
   description = "The ARN of the service."
   value       = aws_service_discovery_service.aws_service_discovery_service.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "failure_threshold" {
-  description = "(Optional, ForceNew) The number of 30-second intervals that you want service discovery to wait before it changes the health status of a service instance.  Maximum value of 10.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_service_discovery_service.aws_service_discovery_service.failure_threshold
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the service."
-  value       = aws_service_discovery_service.aws_service_discovery_service.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.dns_config"
-  value       = aws_service_discovery_service.aws_service_discovery_service.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dns_config" {
-  description = "(Optional) A complex type that contains information about the resource record sets that you want Amazon Route 53 to create when you register an instance."
-  value       = aws_service_discovery_service.aws_service_discovery_service.dns_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "namespace_id" {
-  description = "(Required, ForceNew) The ID of the namespace to use for DNS configuration."
-  value       = aws_service_discovery_service.aws_service_discovery_service.namespace_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_path" {
-  description = "(Optional) The path that you want Route 53 to request when performing health checks. Route 53 automatically adds the DNS name for the service. If you don't specify a value, the default value is /."
-  value       = aws_service_discovery_service.aws_service_discovery_service.resource_path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "routing_policy" {
-  description = "(Optional) The routing policy that you want to apply to all records that Route 53 creates when you register an instance and specify the service. Valid Values: MULTIVALUE, WEIGHTEDdns_records"
-  value       = aws_service_discovery_service.aws_service_discovery_service.routing_policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the service."
-  value       = aws_service_discovery_service.aws_service_discovery_service.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "force_destroy" {
   description = "(Optional, Default:false ) A boolean that indicates all instances should be deleted from the service so that the service can be destroyed without error. These instances are not recoverable."
   value       = aws_service_discovery_service.aws_service_discovery_service.force_destroy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "health_check_config" {
   description = "(Optional) A complex type that contains settings for an optional health check. Only for Public DNS namespaces."
   value       = aws_service_discovery_service.aws_service_discovery_service.health_check_config
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "health_check_custom_config" {
   description = "(Optional, ForceNew) A complex type that contains settings for ECS managed health checks."
   value       = aws_service_discovery_service.aws_service_discovery_service.health_check_custom_config
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "namespace_id" {
+  description = "(Required, ForceNew) The ID of the namespace to use for DNS configuration."
+  value       = aws_service_discovery_service.aws_service_discovery_service.namespace_id
 }
 output "name" {
   description = "(Required, ForceNew) The name of the service."
   value       = aws_service_discovery_service.aws_service_discovery_service.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "dns_records" {
-  description = "(Required) An array that contains one DnsRecord object for each resource record set."
-  value       = aws_service_discovery_service.aws_service_discovery_service.dns_records
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ttl" {
-  description = "(Required) The amount of time, in seconds, that you want DNS resolvers to cache the settings for this resource record set."
-  value       = aws_service_discovery_service.aws_service_discovery_service.ttl
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "routing_policy" {
+  description = "(Optional) The routing policy that you want to apply to all records that Route 53 creates when you register an instance and specify the service. Valid Values: MULTIVALUE, WEIGHTEDdns_records"
+  value       = aws_service_discovery_service.aws_service_discovery_service.routing_policy
 }
 output "type" {
   description = "(Optional, ForceNew) The type of health check that you want to create, which indicates how Route 53 determines whether an endpoint is healthy. Valid Values: HTTP, HTTPS, TCPhealth_check_custom_config"
   value       = aws_service_discovery_service.aws_service_discovery_service.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The description of the service."
+  value       = aws_service_discovery_service.aws_service_discovery_service.description
+}
+output "dns_config" {
+  description = "(Optional) A complex type that contains information about the resource record sets that you want Amazon Route 53 to create when you register an instance."
+  value       = aws_service_discovery_service.aws_service_discovery_service.dns_config
+}
+output "failure_threshold" {
+  description = "(Optional, ForceNew) The number of 30-second intervals that you want service discovery to wait before it changes the health status of a service instance.  Maximum value of 10.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_service_discovery_service.aws_service_discovery_service.failure_threshold
+}
+output "resource_path" {
+  description = "(Optional) The path that you want Route 53 to request when performing health checks. Route 53 automatically adds the DNS name for the service. If you don't specify a value, the default value is /."
+  value       = aws_service_discovery_service.aws_service_discovery_service.resource_path
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the service. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.dns_config"
+  value       = aws_service_discovery_service.aws_service_discovery_service.tags
+}
+output "dns_records" {
+  description = "(Required) An array that contains one DnsRecord object for each resource record set."
+  value       = aws_service_discovery_service.aws_service_discovery_service.dns_records
 }
 output "id" {
   description = "The ID of the service."
   value       = aws_service_discovery_service.aws_service_discovery_service.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The ARN of the service."
+  value       = aws_service_discovery_service.aws_service_discovery_service.arn
+}
+output "id" {
+  description = "The ID of the service."
+  value       = aws_service_discovery_service.aws_service_discovery_service.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -346,15 +288,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the service."
-  value       = aws_service_discovery_service.aws_service_discovery_service.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

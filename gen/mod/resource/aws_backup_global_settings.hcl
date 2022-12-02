@@ -133,17 +133,13 @@ output "global_settings" {
   description = "(Required) A list of resources along with the opt-in preferences for the account.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_global_settings.aws_backup_global_settings.global_settings
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The AWS Account ID."
   value       = aws_backup_global_settings.aws_backup_global_settings.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

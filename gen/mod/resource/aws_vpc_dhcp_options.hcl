@@ -1,21 +1,26 @@
 resource "aws_vpc_dhcp_options" "aws_vpc_dhcp_options" {
-  domain_name                                                                           = var.domain_name
-  netbios_node_type                                                                     = var.netbios_node_type
-  tags                                                                                  = var.tags
-  In most cases unless you're configuring your own DNS you'll want to set               = var.In most cases unless you're configuring your own DNS you'll want to set 
-  To actually use the DHCP Options Set you need to associate it to a VPC using          = var.To actually use the DHCP Options Set you need to associate it to a VPC using 
-  arn                                                                                   = var.arn
   id                                                                                    = var.id
   netbios_name_servers                                                                  = var.netbios_name_servers
   ntp_servers                                                                           = var.ntp_servers
   owner_id                                                                              = var.owner_id
   If you delete a DHCP Options Set, all VPCs using it will be associated to AWS's       = var.If you delete a DHCP Options Set, all VPCs using it will be associated to AWS's 
-  Notice that all arguments are optional but you have to specify at least one argument. = var.Notice that all arguments are optional but you have to specify at least one argument.
+  In most cases unless you're configuring your own DNS you'll want to set               = var.In most cases unless you're configuring your own DNS you'll want to set 
+  domain_name                                                                           = var.domain_name
   domain_name_servers                                                                   = var.domain_name_servers
+  netbios_node_type                                                                     = var.netbios_node_type
+  tags                                                                                  = var.tags
+  Notice that all arguments are optional but you have to specify at least one argument. = var.Notice that all arguments are optional but you have to specify at least one argument.
+  To actually use the DHCP Options Set you need to associate it to a VPC using          = var.To actually use the DHCP Options Set you need to associate it to a VPC using 
+  arn                                                                                   = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "ntp_servers" {
+  description = "(Optional) List of NTP servers to configure."
+  type        = string
+  default     = ""
 }
 variable "owner_id" {
   description = "The ID of the AWS account that owns the DHCP options set."
@@ -25,13 +30,14 @@ variable "If you delete a DHCP Options Set, all VPCs using it will be associated
   description = "default DHCP Option Set."
   type        = string
 }
-variable "Notice that all arguments are optional but you have to specify at least one argument." {
-  description = ""
+variable "In most cases unless you're configuring your own DNS you'll want to set " {
+  description = "domain_name_servers to AmazonProvidedDNS.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "domain_name_servers" {
-  description = ", netbios_name_servers, ntp_servers are limited by AWS to maximum four servers only."
+variable "domain_name" {
+  description = "(Optional) the suffix domain name to use by default when resolving non Fully Qualified Domain Names. In other words, this is what ends up being the search value in the /etc/resolv.conf file."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ID of the DHCP Options Set."
@@ -40,13 +46,15 @@ variable "id" {
 variable "netbios_name_servers" {
   description = "(Optional) List of NETBIOS name servers."
   type        = string
+  default     = ""
 }
-variable "ntp_servers" {
-  description = "(Optional) List of NTP servers to configure."
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Remarks"
   type        = string
+  default     = ""
 }
-variable "In most cases unless you're configuring your own DNS you'll want to set " {
-  description = "domain_name_servers to AmazonProvidedDNS.In addition to all arguments above, the following attributes are exported:"
+variable "Notice that all arguments are optional but you have to specify at least one argument." {
+  description = ""
   type        = string
 }
 variable "To actually use the DHCP Options Set you need to associate it to a VPC using " {
@@ -57,17 +65,14 @@ variable "arn" {
   description = "The ARN of the DHCP Options Set."
   type        = string
 }
-variable "domain_name" {
-  description = "(Optional) the suffix domain name to use by default when resolving non Fully Qualified Domain Names. In other words, this is what ends up being the search value in the /etc/resolv.conf file."
+variable "domain_name_servers" {
+  description = ", netbios_name_servers, ntp_servers are limited by AWS to maximum four servers only."
   type        = string
 }
 variable "netbios_node_type" {
   description = "(Optional) The NetBIOS node type (1, 2, 4, or 8). AWS recommends to specify 2 since broadcast and multicast are not supported in their network. For more information about these node types, see RFC 2132."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Remarks"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,109 +194,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "Notice that all arguments are optional but you have to specify at least one argument." {
-  description = ""
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.Notice that all arguments are optional but you have to specify at least one argument.
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "domain_name_servers" {
   description = ", netbios_name_servers, ntp_servers are limited by AWS to maximum four servers only."
   value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.domain_name_servers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the DHCP Options Set."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "netbios_name_servers" {
-  description = "(Optional) List of NETBIOS name servers."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.netbios_name_servers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ntp_servers" {
-  description = "(Optional) List of NTP servers to configure."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.ntp_servers
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "The ID of the AWS account that owns the DHCP options set."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "If you delete a DHCP Options Set, all VPCs using it will be associated to AWS's " {
-  description = "default DHCP Option Set."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.If you delete a DHCP Options Set, all VPCs using it will be associated to AWS's 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "To actually use the DHCP Options Set you need to associate it to a VPC using " {
-  description = "aws_vpc_dhcp_options_association."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.To actually use the DHCP Options Set you need to associate it to a VPC using 
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the DHCP Options Set."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "domain_name" {
-  description = "(Optional) the suffix domain name to use by default when resolving non Fully Qualified Domain Names. In other words, this is what ends up being the search value in the /etc/resolv.conf file."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "netbios_node_type" {
   description = "(Optional) The NetBIOS node type (1, 2, 4, or 8). AWS recommends to specify 2 since broadcast and multicast are not supported in their network. For more information about these node types, see RFC 2132."
   value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.netbios_node_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Remarks"
   value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "Notice that all arguments are optional but you have to specify at least one argument." {
+  description = ""
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.Notice that all arguments are optional but you have to specify at least one argument.
+}
+output "To actually use the DHCP Options Set you need to associate it to a VPC using " {
+  description = "aws_vpc_dhcp_options_association."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.To actually use the DHCP Options Set you need to associate it to a VPC using 
+}
+output "arn" {
+  description = "The ARN of the DHCP Options Set."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.arn
+}
+output "id" {
+  description = "The ID of the DHCP Options Set."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.id
+}
+output "netbios_name_servers" {
+  description = "(Optional) List of NETBIOS name servers."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.netbios_name_servers
+}
+output "ntp_servers" {
+  description = "(Optional) List of NTP servers to configure."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.ntp_servers
+}
+output "owner_id" {
+  description = "The ID of the AWS account that owns the DHCP options set."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.owner_id
+}
+output "If you delete a DHCP Options Set, all VPCs using it will be associated to AWS's " {
+  description = "default DHCP Option Set."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.If you delete a DHCP Options Set, all VPCs using it will be associated to AWS's 
 }
 output "In most cases unless you're configuring your own DNS you'll want to set " {
   description = "domain_name_servers to AmazonProvidedDNS.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.In most cases unless you're configuring your own DNS you'll want to set 
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "domain_name" {
+  description = "(Optional) the suffix domain name to use by default when resolving non Fully Qualified Domain Names. In other words, this is what ends up being the search value in the /etc/resolv.conf file."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.domain_name
+}
+output "id" {
+  description = "The ID of the DHCP Options Set."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.id
+}
+output "owner_id" {
+  description = "The ID of the AWS account that owns the DHCP options set."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.owner_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.AWS User Guide."
+  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.tags_all
 }
 output "arn" {
   description = "The ARN of the DHCP Options Set."
@@ -299,31 +264,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the DHCP Options Set."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "The ID of the AWS account that owns the DHCP options set."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.AWS User Guide."
-  value       = aws_vpc_dhcp_options.aws_vpc_dhcp_options.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

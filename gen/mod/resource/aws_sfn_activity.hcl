@@ -1,8 +1,8 @@
 resource "aws_sfn_activity" "aws_sfn_activity" {
+  creation_date = var.creation_date
   id            = var.id
   name          = var.name
   tags          = var.tags
-  creation_date = var.creation_date
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,6 +23,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,37 +145,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "creation_date" {
-  description = "The date the activity was created."
-  value       = aws_sfn_activity.aws_sfn_activity.creation_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Amazon Resource Name (ARN) that identifies the created activity."
-  value       = aws_sfn_activity.aws_sfn_activity.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The name of the activity."
   value       = aws_sfn_activity.aws_sfn_activity.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sfn_activity.aws_sfn_activity.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "creation_date" {
+  description = "The date the activity was created."
+  value       = aws_sfn_activity.aws_sfn_activity.creation_date
+}
+output "id" {
+  description = "The Amazon Resource Name (ARN) that identifies the created activity."
+  value       = aws_sfn_activity.aws_sfn_activity.id
+}
+output "id" {
+  description = "The Amazon Resource Name (ARN) that identifies the created activity."
+  value       = aws_sfn_activity.aws_sfn_activity.id
+}
+output "name" {
+  description = "The name of the activity."
+  value       = aws_sfn_activity.aws_sfn_activity.name
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_sfn_activity.aws_sfn_activity.tags_all
 }
 output "creation_date" {
   description = "The date the activity was created."
@@ -182,31 +179,7 @@ output "creation_date" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Amazon Resource Name (ARN) that identifies the created activity."
-  value       = aws_sfn_activity.aws_sfn_activity.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The name of the activity."
-  value       = aws_sfn_activity.aws_sfn_activity.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_sfn_activity.aws_sfn_activity.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

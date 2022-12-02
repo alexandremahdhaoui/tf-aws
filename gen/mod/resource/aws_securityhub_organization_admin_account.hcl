@@ -133,17 +133,13 @@ output "admin_account_id" {
   description = "(Required) The AWS account identifier of the account to designate as the Security Hub administrator account.In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_organization_admin_account.aws_securityhub_organization_admin_account.admin_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "AWS account identifier."
   value       = aws_securityhub_organization_admin_account.aws_securityhub_organization_admin_account.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

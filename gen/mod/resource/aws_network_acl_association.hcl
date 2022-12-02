@@ -1,17 +1,17 @@
 resource "aws_network_acl_association" "aws_network_acl_association" {
-  network_acl_id = var.network_acl_id
   subnet_id      = var.subnet_id
+  network_acl_id = var.network_acl_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "subnet_id" {
-  description = "(Required) The ID of the associated Subnet.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "network_acl_id" {
   description = "(Required) The ID of the network ACL."
+  type        = string
+}
+variable "subnet_id" {
+  description = "(Required) The ID of the associated Subnet.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +138,13 @@ output "network_acl_id" {
   description = "(Required) The ID of the network ACL."
   value       = aws_network_acl_association.aws_network_acl_association.network_acl_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subnet_id" {
   description = "(Required) The ID of the associated Subnet.In addition to all arguments above, the following attributes are exported:"
   value       = aws_network_acl_association.aws_network_acl_association.subnet_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

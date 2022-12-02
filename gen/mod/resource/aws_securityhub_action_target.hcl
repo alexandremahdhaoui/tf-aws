@@ -1,7 +1,7 @@
 resource "aws_securityhub_action_target" "aws_securityhub_action_target" {
+  name        = var.name
   description = var.description
   identifier  = var.identifier
-  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -143,25 +143,13 @@ output "description" {
   description = "(Required) The name of the custom action target.In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_action_target.aws_securityhub_action_target.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "identifier" {
   description = "(Required) The ID for the custom action target."
   value       = aws_securityhub_action_target.aws_securityhub_action_target.identifier
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) The description for the custom action target."
   value       = aws_securityhub_action_target.aws_securityhub_action_target.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Security Hub custom action target."
@@ -169,7 +157,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

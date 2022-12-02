@@ -8,25 +8,13 @@ output "cloudhsm_cluster_id" {
   description = "ID for the CloudHSM cluster that is associated with the custom key store."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.cloudhsm_cluster_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "connection_state" {
   description = "Indicates whether the custom key store is connected to its CloudHSM cluster."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.connection_state
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "creation_date" {
   description = "The date and time when the custom key store was created."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.creation_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID for the custom key store."
@@ -34,7 +22,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

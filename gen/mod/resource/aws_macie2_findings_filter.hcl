@@ -1,25 +1,44 @@
 resource "aws_macie2_findings_filter" "aws_macie2_findings_filter" {
-  action           = var.action
-  id               = var.id
-  tags             = var.tags
-  field            = var.field
-  gt               = var.gt
-  name_prefix      = var.name_prefix
-  neq              = var.neq
-  finding_criteria = var.finding_criteria
   gte              = var.gte
   lt               = var.lt
-  lte              = var.lte
-  criterion        = var.criterion
+  position         = var.position
+  finding_criteria = var.finding_criteria
+  tags             = var.tags
+  gt               = var.gt
   description      = var.description
+  field            = var.field
+  id               = var.id
+  lte              = var.lte
+  name_prefix      = var.name_prefix
+  neq              = var.neq
+  criterion        = var.criterion
   eq               = var.eq
   eq_exact_match   = var.eq_exact_match
   name             = var.name
-  position         = var.position
+  action           = var.action
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "action" {
+  description = "(Required) The action to perform on findings that meet the filter criteria (finding_criteria). Valid values are: ARCHIVE, suppress (automatically archive) the findings; and, NOOP, don't perform any action on the findings."
+  type        = string
+}
+variable "eq" {
+  description = "(Optional) The value for the property matches (equals) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
+  type        = string
+  default     = ""
+}
+variable "eq_exact_match" {
+  description = "(Optional) The value for the property exclusively matches (equals an exact match for) all the specified values. If you specify multiple values, Amazon Macie uses AND logic to join the values."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Optional) A custom name for the filter. The name must contain at least 3 characters and can contain as many as 64 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
+  type        = string
+  default     = ""
 }
 variable "finding_criteria" {
   description = "(Required) The criteria to use to filter findings."
@@ -28,65 +47,59 @@ variable "finding_criteria" {
 variable "gte" {
   description = "(Optional) The value for the property is greater than or equal to the specified value.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "lt" {
   description = "(Optional) The value for the property is less than the specified value."
   type        = string
-}
-variable "lte" {
-  description = "(Optional) The value for the property is less than or equal to the specified value."
-  type        = string
-}
-variable "criterion" {
-  description = " (Optional) A condition that specifies the property, operator, and one or more values to use to filter the results.  (documented below)The criterion object supports the following:"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A custom description of the filter. The description can contain as many as 512 characters."
-  type        = string
-}
-variable "eq" {
-  description = "(Optional) The value for the property matches (equals) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
-  type        = string
-}
-variable "eq_exact_match" {
-  description = "(Optional) The value for the property exclusively matches (equals an exact match for) all the specified values. If you specify multiple values, Amazon Macie uses AND logic to join the values."
-  type        = string
-}
-variable "name" {
-  description = "(Optional) A custom name for the filter. The name must contain at least 3 characters and can contain as many as 64 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
-  type        = string
+  default     = ""
 }
 variable "position" {
   description = "(Optional) The position of the filter in the list of saved filters on the Amazon Macie console. This value also determines the order in which the filter is applied to findings, relative to other filters that are also applied to the findings."
   type        = string
+  default     = ""
 }
-variable "action" {
-  description = "(Required) The action to perform on findings that meet the filter criteria (finding_criteria). Valid values are: ARCHIVE, suppress (automatically archive) the findings; and, NOOP, don't perform any action on the findings."
+variable "gt" {
+  description = "(Optional) The value for the property is greater than the specified value."
   type        = string
-}
-variable "id" {
-  description = "The unique identifier (ID) of the macie Findings Filter."
-  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of key-value pairs that specifies the tags to associate with the filter.The finding_criteria object supports the following:"
   type        = string
+  default     = ""
+}
+variable "lte" {
+  description = "(Optional) The value for the property is less than or equal to the specified value."
+  type        = string
+  default     = ""
+}
+variable "name_prefix" {
+  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+  default     = ""
+}
+variable "neq" {
+  description = "(Optional) The value for the property doesn't match (doesn't equal) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
+  type        = string
+  default     = ""
+}
+variable "criterion" {
+  description = " (Optional) A condition that specifies the property, operator, and one or more values to use to filter the results.  (documented below)The criterion object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) A custom description of the filter. The description can contain as many as 512 characters."
+  type        = string
+  default     = ""
 }
 variable "field" {
   description = "(Required) The name of the field to be evaluated."
   type        = string
 }
-variable "gt" {
-  description = "(Optional) The value for the property is greater than the specified value."
-  type        = string
-}
-variable "name_prefix" {
-  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-}
-variable "neq" {
-  description = "(Optional) The value for the property doesn't match (doesn't equal) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
+variable "id" {
+  description = "The unique identifier (ID) of the macie Findings Filter."
   type        = string
 }
 variable "tag_instance_id" {
@@ -209,141 +222,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "field" {
-  description = "(Required) The name of the field to be evaluated."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.field
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "gt" {
-  description = "(Optional) The value for the property is greater than the specified value."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.gt
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name_prefix" {
-  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "neq" {
-  description = "(Optional) The value for the property doesn't match (doesn't equal) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.neq
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "criterion" {
-  description = " (Optional) A condition that specifies the property, operator, and one or more values to use to filter the results.  (documented below)The criterion object supports the following:"
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.criterion
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) A custom description of the filter. The description can contain as many as 512 characters."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "eq" {
-  description = "(Optional) The value for the property matches (equals) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.eq
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "eq_exact_match" {
   description = "(Optional) The value for the property exclusively matches (equals an exact match for) all the specified values. If you specify multiple values, Amazon Macie uses AND logic to join the values."
   value       = aws_macie2_findings_filter.aws_macie2_findings_filter.eq_exact_match
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "finding_criteria" {
-  description = "(Required) The criteria to use to filter findings."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.finding_criteria
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "gte" {
-  description = "(Optional) The value for the property is greater than or equal to the specified value.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.gte
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lt" {
-  description = "(Optional) The value for the property is less than the specified value."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.lt
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "lte" {
-  description = "(Optional) The value for the property is less than or equal to the specified value."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.lte
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Optional) A custom name for the filter. The name must contain at least 3 characters and can contain as many as 64 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
   value       = aws_macie2_findings_filter.aws_macie2_findings_filter.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "action" {
+  description = "(Required) The action to perform on findings that meet the filter criteria (finding_criteria). Valid values are: ARCHIVE, suppress (automatically archive) the findings; and, NOOP, don't perform any action on the findings."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.action
+}
+output "eq" {
+  description = "(Optional) The value for the property matches (equals) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.eq
+}
+output "lt" {
+  description = "(Optional) The value for the property is less than the specified value."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.lt
 }
 output "position" {
   description = "(Optional) The position of the filter in the list of saved filters on the Amazon Macie console. This value also determines the order in which the filter is applied to findings, relative to other filters that are also applied to the findings."
   value       = aws_macie2_findings_filter.aws_macie2_findings_filter.position
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "finding_criteria" {
+  description = "(Required) The criteria to use to filter findings."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.finding_criteria
 }
-output "action" {
-  description = "(Required) The action to perform on findings that meet the filter criteria (finding_criteria). Valid values are: ARCHIVE, suppress (automatically archive) the findings; and, NOOP, don't perform any action on the findings."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.action
+output "gte" {
+  description = "(Optional) The value for the property is greater than or equal to the specified value.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.gte
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The unique identifier (ID) of the macie Findings Filter."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "gt" {
+  description = "(Optional) The value for the property is greater than the specified value."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.gt
 }
 output "tags" {
   description = "(Optional) A map of key-value pairs that specifies the tags to associate with the filter.The finding_criteria object supports the following:"
   value       = aws_macie2_findings_filter.aws_macie2_findings_filter.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "field" {
+  description = "(Required) The name of the field to be evaluated."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.field
+}
+output "id" {
+  description = "The unique identifier (ID) of the macie Findings Filter."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.id
+}
+output "lte" {
+  description = "(Optional) The value for the property is less than or equal to the specified value."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.lte
+}
+output "name_prefix" {
+  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.name_prefix
+}
+output "neq" {
+  description = "(Optional) The value for the property doesn't match (doesn't equal) the specified value. If you specify multiple values, Amazon Macie uses OR logic to join the values."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.neq
+}
+output "criterion" {
+  description = " (Optional) A condition that specifies the property, operator, and one or more values to use to filter the results.  (documented below)The criterion object supports the following:"
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.criterion
+}
+output "description" {
+  description = "(Optional) A custom description of the filter. The description can contain as many as 512 characters."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.description
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Findings Filter."
+  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.arn
 }
 output "id" {
   description = "The unique identifier (ID) of the macie Findings Filter."
@@ -351,15 +300,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Findings Filter."
-  value       = aws_macie2_findings_filter.aws_macie2_findings_filter.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

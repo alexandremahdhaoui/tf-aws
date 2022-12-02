@@ -8,6 +8,7 @@ variable "provider_region" {
 variable "broker_id" {
   description = "(Optional) Unique id of the mq broker."
   type        = string
+  default     = ""
 }
 output "broker_id" {
   description = "(Optional) Unique id of the mq broker."
@@ -15,7 +16,7 @@ output "broker_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

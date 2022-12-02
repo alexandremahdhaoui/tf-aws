@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_destination_policy" "aws_cloudwatch_log_destination_policy" {
-  destination_name = var.destination_name
   access_policy    = var.access_policy
+  destination_name = var.destination_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,17 +138,13 @@ output "access_policy" {
   description = "(Required) The policy document. This is a JSON formatted string."
   value       = aws_cloudwatch_log_destination_policy.aws_cloudwatch_log_destination_policy.access_policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "destination_name" {
   description = "(Required) A name for the subscription filter"
   value       = aws_cloudwatch_log_destination_policy.aws_cloudwatch_log_destination_policy.destination_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

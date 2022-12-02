@@ -10,9 +10,24 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "id" {
+  description = "The ID of the VPN Gateway."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "vpc_id" {
+  description = "(Optional) The VPC ID to create in."
+  type        = string
+  default     = ""
+}
 variable "amazon_side_asn" {
   description = "(Optional) The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "Amazon Resource Name (ARN) of the VPN Gateway."
@@ -21,18 +36,7 @@ variable "arn" {
 variable "availability_zone" {
   description = "(Optional) The Availability Zone for the virtual private gateway."
   type        = string
-}
-variable "id" {
-  description = "The ID of the VPN Gateway."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-}
-variable "vpc_id" {
-  description = "(Optional) The VPC ID to create in."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,69 +158,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "amazon_side_asn" {
-  description = "(Optional) The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpn_gateway.aws_vpn_gateway.amazon_side_asn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the VPN Gateway."
-  value       = aws_vpn_gateway.aws_vpn_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "availability_zone" {
-  description = "(Optional) The Availability Zone for the virtual private gateway."
-  value       = aws_vpn_gateway.aws_vpn_gateway.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the VPN Gateway."
-  value       = aws_vpn_gateway.aws_vpn_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_vpn_gateway.aws_vpn_gateway.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_id" {
   description = "(Optional) The VPC ID to create in."
   value       = aws_vpn_gateway.aws_vpn_gateway.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "amazon_side_asn" {
+  description = "(Optional) The Autonomous System Number (ASN) for the Amazon side of the gateway. If you don't specify an ASN, the virtual private gateway is created with the default ASN.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpn_gateway.aws_vpn_gateway.amazon_side_asn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the VPN Gateway."
   value       = aws_vpn_gateway.aws_vpn_gateway.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "availability_zone" {
+  description = "(Optional) The Availability Zone for the virtual private gateway."
+  value       = aws_vpn_gateway.aws_vpn_gateway.availability_zone
 }
 output "id" {
   description = "The ID of the VPN Gateway."
   value       = aws_vpn_gateway.aws_vpn_gateway.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the VPN Gateway."
+  value       = aws_vpn_gateway.aws_vpn_gateway.arn
+}
+output "id" {
+  description = "The ID of the VPN Gateway."
+  value       = aws_vpn_gateway.aws_vpn_gateway.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -224,7 +196,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -14,13 +14,17 @@ variable "user_name" {
   description = "User name of the user."
   type        = string
 }
+output "user_name" {
+  description = "User name of the user."
+  value       = aws_elasticache_user.aws_elasticache_user.user_name
+}
 output "user_id" {
   description = "Identifier for the user."
   value       = aws_elasticache_user.aws_elasticache_user.user_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "user_id" {
+  description = "Identifier for the user."
+  value       = aws_elasticache_user.aws_elasticache_user.user_id
 }
 output "user_name" {
   description = "User name of the user."
@@ -28,23 +32,7 @@ output "user_name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_id" {
-  description = "Identifier for the user."
-  value       = aws_elasticache_user.aws_elasticache_user.user_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "user_name" {
-  description = "User name of the user."
-  value       = aws_elasticache_user.aws_elasticache_user.user_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -8,17 +8,13 @@ output "arns" {
   description = "Set of ARNs of instance profiles."
   value       = aws_iam_instance_profiles.aws_iam_instance_profiles.arns
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "names" {
   description = "Set of IAM instance profile names."
   value       = aws_iam_instance_profiles.aws_iam_instance_profiles.names
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

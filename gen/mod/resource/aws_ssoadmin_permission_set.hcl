@@ -1,20 +1,16 @@
 resource "aws_ssoadmin_permission_set" "aws_ssoadmin_permission_set" {
+  description      = var.description
   instance_arn     = var.instance_arn
-  relay_state      = var.relay_state
-  tags             = var.tags
+  session_duration = var.session_duration
   arn              = var.arn
   created_date     = var.created_date
-  description      = var.description
   id               = var.id
   name             = var.name
-  session_duration = var.session_duration
+  relay_state      = var.relay_state
+  tags             = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -25,10 +21,6 @@ variable "created_date" {
   description = "The date the Permission Set was created in RFC3339 format."
   type        = string
 }
-variable "description" {
-  description = "(Optional) The description of the Permission Set."
-  type        = string
-}
 variable "id" {
   description = "The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (,)."
   type        = string
@@ -37,17 +29,29 @@ variable "name" {
   description = "(Required, Forces new resource) The name of the Permission Set."
   type        = string
 }
-variable "session_duration" {
-  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
+variable "relay_state" {
+  description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
   type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The description of the Permission Set."
+  type        = string
+  default     = ""
 }
 variable "instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
   type        = string
 }
-variable "relay_state" {
-  description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
+variable "session_duration" {
+  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,101 +173,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Permission Set."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.arn
+}
+output "created_date" {
+  description = "The date the Permission Set was created in RFC3339 format."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.created_date
+}
 output "id" {
   description = "The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (,)."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required, Forces new resource) The name of the Permission Set."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "session_duration" {
-  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.session_duration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "relay_state" {
+  description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.relay_state
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Permission Set."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_date" {
-  description = "The date the Permission Set was created in RFC3339 format."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.created_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the Permission Set."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "instance_arn" {
   description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.instance_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "relay_state" {
-  description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.relay_state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "session_duration" {
+  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.session_duration
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Permission Set."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_date" {
   description = "The date the Permission Set was created in RFC3339 format."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.created_date
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (,)."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -271,7 +227,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

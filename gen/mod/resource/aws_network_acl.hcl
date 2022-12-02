@@ -1,92 +1,99 @@
 resource "aws_network_acl" "aws_network_acl" {
-  ipv6_cidr_block = var.ipv6_cidr_block
+  ingress         = var.ingress
+  vpc_id          = var.vpc_id
+  protocol        = var.protocol
+  to_port         = var.to_port
   action          = var.action
-  cidr_block      = var.cidr_block
   icmp_code       = var.icmp_code
   icmp_type       = var.icmp_type
-  ingress         = var.ingress
+  ipv6_cidr_block = var.ipv6_cidr_block
   egress          = var.egress
-  rule_no         = var.rule_no
-  to_port         = var.to_port
-  vpc_id          = var.vpc_id
-  from_port       = var.from_port
   id              = var.id
-  owner_id        = var.owner_id
-  protocol        = var.protocol
   subnet_ids      = var.subnet_ids
-  arn             = var.arn
   tags            = var.tags
+  rule_no         = var.rule_no
+  arn             = var.arn
+  cidr_block      = var.cidr_block
+  from_port       = var.from_port
+  owner_id        = var.owner_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "icmp_code" {
-  description = "(Optional) The ICMP type code to be used. Default 0.~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "icmp_type" {
-  description = "(Optional) The ICMP type to be used. Default 0."
-  type        = string
-}
-variable "ingress" {
-  description = "attribute-as-blocks mode."
-  type        = string
-}
 variable "ipv6_cidr_block" {
   description = "(Optional) The IPv6 CIDR block."
   type        = string
-}
-variable "action" {
-  description = "(Required) The action to take."
-  type        = string
-}
-variable "cidr_block" {
-  description = "(Optional) The CIDR block to match. This must be a\nvalid network mask."
-  type        = string
-}
-variable "egress" {
-  description = "(Optional) Specifies an egress rule. Parameters defined below.\nThis argument is processed in attribute-as-blocks mode."
-  type        = string
-}
-variable "rule_no" {
-  description = "(Required) The rule number. Used for ordering."
-  type        = string
-}
-variable "owner_id" {
-  description = "The ID of the AWS account that owns the network ACL."
-  type        = string
+  default     = ""
 }
 variable "protocol" {
   description = "(Required) The protocol to match. If using the -1 'all'\nprotocol, you must specify a from and to port of 0."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Optional) A list of Subnet IDs to apply the ACL to"
   type        = string
 }
 variable "to_port" {
   description = "(Required) The to port to match."
   type        = string
 }
-variable "vpc_id" {
-  description = "(Required) The ID of the associated VPC."
+variable "action" {
+  description = "(Required) The action to take."
   type        = string
 }
-variable "from_port" {
-  description = "(Required) The from port to match."
+variable "icmp_code" {
+  description = "(Optional) The ICMP type code to be used. Default 0.~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
+}
+variable "icmp_type" {
+  description = "(Optional) The ICMP type to be used. Default 0."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress support the following keys:"
+  type        = string
+  default     = ""
+}
+variable "egress" {
+  description = "(Optional) Specifies an egress rule. Parameters defined below.\nThis argument is processed in attribute-as-blocks mode."
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ID of the network ACL"
+  type        = string
+}
+variable "subnet_ids" {
+  description = "(Optional) A list of Subnet IDs to apply the ACL to"
+  type        = string
+  default     = ""
+}
+variable "owner_id" {
+  description = "The ID of the AWS account that owns the network ACL."
+  type        = string
+}
+variable "rule_no" {
+  description = "(Required) The rule number. Used for ordering."
   type        = string
 }
 variable "arn" {
   description = "The ARN of the network ACL"
   type        = string
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress support the following keys:"
+variable "cidr_block" {
+  description = "(Optional) The CIDR block to match. This must be a\nvalid network mask."
+  type        = string
+  default     = ""
+}
+variable "from_port" {
+  description = "(Required) The from port to match."
+  type        = string
+}
+variable "ingress" {
+  description = "attribute-as-blocks mode."
+  type        = string
+}
+variable "vpc_id" {
+  description = "(Required) The ID of the associated VPC."
   type        = string
 }
 variable "tag_instance_id" {
@@ -209,157 +216,85 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "egress" {
-  description = "(Optional) Specifies an egress rule. Parameters defined below.\nThis argument is processed in attribute-as-blocks mode."
-  value       = aws_network_acl.aws_network_acl.egress
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "rule_no" {
   description = "(Required) The rule number. Used for ordering."
   value       = aws_network_acl.aws_network_acl.rule_no
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "protocol" {
-  description = "(Required) The protocol to match. If using the -1 'all'\nprotocol, you must specify a from and to port of 0."
-  value       = aws_network_acl.aws_network_acl.protocol
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "subnet_ids" {
-  description = "(Optional) A list of Subnet IDs to apply the ACL to"
-  value       = aws_network_acl.aws_network_acl.subnet_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "to_port" {
-  description = "(Required) The to port to match."
-  value       = aws_network_acl.aws_network_acl.to_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "(Required) The ID of the associated VPC."
-  value       = aws_network_acl.aws_network_acl.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "from_port" {
-  description = "(Required) The from port to match."
-  value       = aws_network_acl.aws_network_acl.from_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the network ACL"
-  value       = aws_network_acl.aws_network_acl.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_id" {
-  description = "The ID of the AWS account that owns the network ACL."
-  value       = aws_network_acl.aws_network_acl.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the network ACL"
   value       = aws_network_acl.aws_network_acl.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress support the following keys:"
-  value       = aws_network_acl.aws_network_acl.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "icmp_type" {
-  description = "(Optional) The ICMP type to be used. Default 0."
-  value       = aws_network_acl.aws_network_acl.icmp_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ingress" {
-  description = "attribute-as-blocks mode."
-  value       = aws_network_acl.aws_network_acl.ingress
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipv6_cidr_block" {
-  description = "(Optional) The IPv6 CIDR block."
-  value       = aws_network_acl.aws_network_acl.ipv6_cidr_block
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "action" {
-  description = "(Required) The action to take."
-  value       = aws_network_acl.aws_network_acl.action
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cidr_block" {
   description = "(Optional) The CIDR block to match. This must be a\nvalid network mask."
   value       = aws_network_acl.aws_network_acl.cidr_block
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "from_port" {
+  description = "(Required) The from port to match."
+  value       = aws_network_acl.aws_network_acl.from_port
+}
+output "owner_id" {
+  description = "The ID of the AWS account that owns the network ACL."
+  value       = aws_network_acl.aws_network_acl.owner_id
+}
+output "ingress" {
+  description = "attribute-as-blocks mode."
+  value       = aws_network_acl.aws_network_acl.ingress
+}
+output "vpc_id" {
+  description = "(Required) The ID of the associated VPC."
+  value       = aws_network_acl.aws_network_acl.vpc_id
+}
+output "protocol" {
+  description = "(Required) The protocol to match. If using the -1 'all'\nprotocol, you must specify a from and to port of 0."
+  value       = aws_network_acl.aws_network_acl.protocol
+}
+output "to_port" {
+  description = "(Required) The to port to match."
+  value       = aws_network_acl.aws_network_acl.to_port
+}
+output "action" {
+  description = "(Required) The action to take."
+  value       = aws_network_acl.aws_network_acl.action
 }
 output "icmp_code" {
   description = "(Optional) The ICMP type code to be used. Default 0.~> Note: For more information on ICMP types and codes, see here: https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtmlIn addition to all arguments above, the following attributes are exported:"
   value       = aws_network_acl.aws_network_acl.icmp_code
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "icmp_type" {
+  description = "(Optional) The ICMP type to be used. Default 0."
+  value       = aws_network_acl.aws_network_acl.icmp_type
 }
-output "arn" {
-  description = "The ARN of the network ACL"
-  value       = aws_network_acl.aws_network_acl.arn
+output "ipv6_cidr_block" {
+  description = "(Optional) The IPv6 CIDR block."
+  value       = aws_network_acl.aws_network_acl.ipv6_cidr_block
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "egress" {
+  description = "(Optional) Specifies an egress rule. Parameters defined below.\nThis argument is processed in attribute-as-blocks mode."
+  value       = aws_network_acl.aws_network_acl.egress
 }
 output "id" {
   description = "The ID of the network ACL"
   value       = aws_network_acl.aws_network_acl.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "subnet_ids" {
+  description = "(Optional) A list of Subnet IDs to apply the ACL to"
+  value       = aws_network_acl.aws_network_acl.subnet_ids
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress support the following keys:"
+  value       = aws_network_acl.aws_network_acl.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_network_acl.aws_network_acl.tags_all
+}
+output "arn" {
+  description = "The ARN of the network ACL"
+  value       = aws_network_acl.aws_network_acl.arn
+}
+output "id" {
+  description = "The ID of the network ACL"
+  value       = aws_network_acl.aws_network_acl.id
 }
 output "owner_id" {
   description = "The ID of the AWS account that owns the network ACL."
@@ -367,15 +302,7 @@ output "owner_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_network_acl.aws_network_acl.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

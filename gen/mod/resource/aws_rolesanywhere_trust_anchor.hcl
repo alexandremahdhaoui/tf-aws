@@ -1,41 +1,26 @@
 resource "aws_rolesanywhere_trust_anchor" "aws_rolesanywhere_trust_anchor" {
+  source                = var.source
+  source_data           = var.source_data
+  x509_certificate_data = var.x509_certificate_data
   acm_pca_arn           = var.acm_pca_arn
   arn                   = var.arn
-  source                = var.source
-  source_type           = var.source_type
-  tags                  = var.tags
-  x509_certificate_data = var.x509_certificate_data
-  enabled               = var.enabled
   id                    = var.id
+  tags                  = var.tags
+  enabled               = var.enabled
   name                  = var.name
-  source_data           = var.source_data
+  source_type           = var.source_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The Trust Anchor ID."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the Trust Anchor."
-  type        = string
-}
-variable "source_data" {
-  description = "(Required) The data denoting the source of trust, documented below"
-  type        = string
-}
 variable "enabled" {
   description = "(Optional) Whether or not the Trust Anchor should be enabled."
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Trust Anchor"
-  type        = string
-}
-variable "source" {
-  description = "(Required) The source of trust, documented below"
+variable "name" {
+  description = "(Required) The name of the Trust Anchor."
   type        = string
 }
 variable "source_type" {
@@ -45,13 +30,30 @@ variable "source_type" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blockssource"
   type        = string
-}
-variable "x509_certificate_data" {
-  description = "(Optional, required when source_type is CERTIFICATE_BUNDLE)In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "acm_pca_arn" {
   description = "(Optional, required when source_type is AWS_ACM_PCA) The ARN of an ACM Private Certificate Authority."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Trust Anchor"
+  type        = string
+}
+variable "id" {
+  description = "The Trust Anchor ID."
+  type        = string
+}
+variable "source" {
+  description = "(Required) The source of trust, documented below"
+  type        = string
+}
+variable "source_data" {
+  description = "(Required) The data denoting the source of trust, documented below"
+  type        = string
+}
+variable "x509_certificate_data" {
+  description = "(Optional, required when source_type is CERTIFICATE_BUNDLE)In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,101 +176,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "enabled" {
-  description = "(Optional) Whether or not the Trust Anchor should be enabled."
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Trust Anchor ID."
   value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the Trust Anchor."
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "source_data" {
-  description = "(Required) The data denoting the source of trust, documented below"
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.source_data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "x509_certificate_data" {
-  description = "(Optional, required when source_type is CERTIFICATE_BUNDLE)In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.x509_certificate_data
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "acm_pca_arn" {
-  description = "(Optional, required when source_type is AWS_ACM_PCA) The ARN of an ACM Private Certificate Authority."
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.acm_pca_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Trust Anchor"
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "source" {
   description = "(Required) The source of trust, documented below"
   value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.source
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_data" {
+  description = "(Required) The data denoting the source of trust, documented below"
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.source_data
 }
-output "source_type" {
-  description = "(Required) The type of the source of trust. Must be either AWS_ACM_PCA or CERTIFICATE_BUNDLE.source_data"
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.source_type
+output "x509_certificate_data" {
+  description = "(Optional, required when source_type is CERTIFICATE_BUNDLE)In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.x509_certificate_data
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blockssource"
-  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "acm_pca_arn" {
+  description = "(Optional, required when source_type is AWS_ACM_PCA) The ARN of an ACM Private Certificate Authority."
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.acm_pca_arn
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Trust Anchor"
   value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "source_type" {
+  description = "(Required) The type of the source of trust. Must be either AWS_ACM_PCA or CERTIFICATE_BUNDLE.source_data"
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.source_type
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blockssource"
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.tags
+}
+output "enabled" {
+  description = "(Optional) Whether or not the Trust Anchor should be enabled."
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.enabled
+}
+output "name" {
+  description = "(Required) The name of the Trust Anchor."
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.name
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Trust Anchor"
+  value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.arn
 }
 output "id" {
   description = "The Trust Anchor ID."
   value       = aws_rolesanywhere_trust_anchor.aws_rolesanywhere_trust_anchor.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -276,7 +230,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

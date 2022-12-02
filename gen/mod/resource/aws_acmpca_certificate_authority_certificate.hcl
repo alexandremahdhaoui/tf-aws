@@ -138,17 +138,13 @@ output "certificate" {
   description = "(Required) PEM-encoded certificate for the Certificate Authority."
   value       = aws_acmpca_certificate_authority_certificate.aws_acmpca_certificate_authority_certificate.certificate
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "certificate_authority_arn" {
   description = "(Required) ARN of the Certificate Authority."
   value       = aws_acmpca_certificate_authority_certificate.aws_acmpca_certificate_authority_certificate.certificate_authority_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

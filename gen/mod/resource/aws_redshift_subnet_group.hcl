@@ -1,10 +1,10 @@
 resource "aws_redshift_subnet_group" "aws_redshift_subnet_group" {
+  id          = var.id
   name        = var.name
   subnet_ids  = var.subnet_ids
   tags        = var.tags
   arn         = var.arn
   description = var.description
-  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -17,6 +17,7 @@ variable "arn" {
 variable "description" {
   description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The Redshift Subnet group ID."
@@ -33,6 +34,7 @@ variable "subnet_ids" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,69 +156,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
-  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Redshift Subnet group ID."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name of the Redshift Subnet group."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "subnet_ids" {
   description = "(Required) An array of VPC subnet IDs."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.subnet_ids
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
+  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.arn
 }
 output "id" {
   description = "The Redshift Subnet group ID."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -224,7 +194,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

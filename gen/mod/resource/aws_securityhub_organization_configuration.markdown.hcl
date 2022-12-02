@@ -133,17 +133,13 @@ output "auto_enable" {
   description = "(Required) Whether to automatically enable Security Hub for new accounts in the organization.In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_organization_configuration.markdown.aws_securityhub_organization_configuration.markdown.auto_enable
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "AWS Account ID."
   value       = aws_securityhub_organization_configuration.markdown.aws_securityhub_organization_configuration.markdown.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

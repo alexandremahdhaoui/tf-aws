@@ -1,9 +1,9 @@
 resource "aws_api_gateway_model" "aws_api_gateway_model" {
-  rest_api_id  = var.rest_api_id
   schema       = var.schema
   content_type = var.content_type
   description  = var.description
   name         = var.name
+  rest_api_id  = var.rest_api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -16,6 +16,7 @@ variable "content_type" {
 variable "description" {
   description = "(Optional) Description of the model"
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the model"
@@ -149,45 +150,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "schema" {
-  description = "(Required) Schema of the model in a JSON formIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_api_gateway_model.aws_api_gateway_model.schema
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "content_type" {
   description = "(Required) Content type of the model"
   value       = aws_api_gateway_model.aws_api_gateway_model.content_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional) Description of the model"
   value       = aws_api_gateway_model.aws_api_gateway_model.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Name of the model"
   value       = aws_api_gateway_model.aws_api_gateway_model.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "rest_api_id" {
   description = "(Required) ID of the associated REST API"
   value       = aws_api_gateway_model.aws_api_gateway_model.rest_api_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "schema" {
+  description = "(Required) Schema of the model in a JSON formIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_api_gateway_model.aws_api_gateway_model.schema
 }
 output "id" {
   description = "ID of the model"
@@ -195,7 +176,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

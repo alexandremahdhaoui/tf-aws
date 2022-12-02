@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "provider_region" {
+  description = "Region where the provider should be executed."
+  value       = var.provider_region
+}
 terraform {
   backend "local" {
   }

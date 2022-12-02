@@ -1,34 +1,39 @@
 resource "aws_networkmanager_transit_gateway_peering" "aws_networkmanager_transit_gateway_peering" {
   resource_arn        = var.resource_arn
+  tags_all            = var.tags_all
+  id                  = var.id
+  core_network_arn    = var.core_network_arn
+  core_network_id     = var.core_network_id
+  edge_location       = var.edge_location
+  owner_account_id    = var.owner_account_id
+  peering_type        = var.peering_type
   tags                = var.tags
   transit_gateway_arn = var.transit_gateway_arn
   arn                 = var.arn
-  core_network_id     = var.core_network_id
-  edge_location       = var.edge_location
-  id                  = var.id
-  owner_account_id    = var.owner_account_id
-  peering_type        = var.peering_type
-  tags_all            = var.tags_all
-  core_network_arn    = var.core_network_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "Peering Amazon Resource Name (ARN)."
+variable "owner_account_id" {
+  description = "The ID of the account owner."
   type        = string
 }
-variable "resource_arn" {
-  description = "The resource ARN of the peer."
+variable "peering_type" {
+  description = "The type of peering. This will be TRANSIT_GATEWAY."
   type        = string
 }
 variable "tags" {
   description = "(Optional) Key-value tags for the peering. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
 variable "transit_gateway_arn" {
   description = "(Required) The ARN of the transit gateway for the peering request.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "arn" {
+  description = "Peering Amazon Resource Name (ARN)."
   type        = string
 }
 variable "core_network_arn" {
@@ -47,12 +52,8 @@ variable "id" {
   description = "Peering ID."
   type        = string
 }
-variable "owner_account_id" {
-  description = "The ID of the account owner."
-  type        = string
-}
-variable "peering_type" {
-  description = "The type of peering. This will be TRANSIT_GATEWAY."
+variable "resource_arn" {
+  description = "The resource ARN of the peer."
   type        = string
 }
 variable "tags_all" {
@@ -179,101 +180,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "core_network_arn" {
-  description = "The ARN of the core network."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.core_network_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "core_network_id" {
-  description = "(Required) The ID of a core network."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.core_network_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "edge_location" {
-  description = "The edge location for the peer."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.edge_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Peering ID."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_account_id" {
   description = "The ID of the account owner."
   value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "peering_type" {
   description = "The type of peering. This will be TRANSIT_GATEWAY."
   value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.peering_type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Peering Amazon Resource Name (ARN)."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_arn" {
-  description = "The resource ARN of the peer."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value tags for the peering. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "transit_gateway_arn" {
   description = "(Required) The ARN of the transit gateway for the peering request.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.transit_gateway_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "Peering Amazon Resource Name (ARN)."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.arn
+}
+output "core_network_arn" {
+  description = "The ARN of the core network."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.core_network_arn
+}
+output "core_network_id" {
+  description = "(Required) The ID of a core network."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.core_network_id
+}
+output "edge_location" {
+  description = "The edge location for the peer."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.edge_location
+}
+output "id" {
+  description = "Peering ID."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.id
+}
+output "resource_arn" {
+  description = "The resource ARN of the peer."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.resource_arn
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "core_network_arn" {
+  description = "The ARN of the core network."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.core_network_arn
+}
+output "resource_arn" {
+  description = "The resource ARN of the peer."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.resource_arn
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.tags_all
+}
+output "arn" {
+  description = "Peering Amazon Resource Name (ARN)."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.arn
+}
+output "edge_location" {
+  description = "The edge location for the peer."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.edge_location
+}
+output "id" {
+  description = "Peering ID."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.id
+}
+output "owner_account_id" {
+  description = "The ID of the account owner."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.owner_account_id
+}
+output "peering_type" {
+  description = "The type of peering. This will be TRANSIT_GATEWAY."
+  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.peering_type
 }
 output "transit_gateway_peering_attachment_id" {
   description = "The ID of the transit gateway peering attachment."
@@ -281,63 +262,7 @@ output "transit_gateway_peering_attachment_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "Peering Amazon Resource Name (ARN)."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "core_network_arn" {
-  description = "The ARN of the core network."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.core_network_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Peering ID."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_arn" {
-  description = "The resource ARN of the peer."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "edge_location" {
-  description = "The edge location for the peer."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.edge_location
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "owner_account_id" {
-  description = "The ID of the account owner."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.owner_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "peering_type" {
-  description = "The type of peering. This will be TRANSIT_GATEWAY."
-  value       = aws_networkmanager_transit_gateway_peering.aws_networkmanager_transit_gateway_peering.peering_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

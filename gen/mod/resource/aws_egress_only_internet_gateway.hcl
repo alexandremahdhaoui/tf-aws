@@ -14,6 +14,7 @@ variable "id" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "vpc_id" {
   description = "(Required) The VPC ID to create in."
@@ -139,37 +140,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The ID of the egress-only Internet gateway."
+  value       = aws_egress_only_internet_gateway.aws_egress_only_internet_gateway.id
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_egress_only_internet_gateway.aws_egress_only_internet_gateway.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_id" {
   description = "(Required) The VPC ID to create in."
   value       = aws_egress_only_internet_gateway.aws_egress_only_internet_gateway.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the egress-only Internet gateway."
   value       = aws_egress_only_internet_gateway.aws_egress_only_internet_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the egress-only Internet gateway."
-  value       = aws_egress_only_internet_gateway.aws_egress_only_internet_gateway.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -177,7 +162,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

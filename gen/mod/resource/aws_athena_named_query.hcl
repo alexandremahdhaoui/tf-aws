@@ -1,12 +1,21 @@
 resource "aws_athena_named_query" "aws_athena_named_query" {
+  workgroup   = var.workgroup
   database    = var.database
   description = var.description
   name        = var.name
   query       = var.query
-  workgroup   = var.workgroup
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Brief explanation of the query. Maximum length of 1024.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Plain language name for the query. Maximum length of 128."
   type        = string
 }
 variable "query" {
@@ -16,17 +25,10 @@ variable "query" {
 variable "workgroup" {
   description = "(Optional) Workgroup to which the query belongs. Defaults to primary"
   type        = string
+  default     = ""
 }
 variable "database" {
   description = "(Required) Database to which the query belongs."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Brief explanation of the query. Maximum length of 1024.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "name" {
-  description = "(Required) Plain language name for the query. Maximum length of 128."
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,41 +155,21 @@ output "database" {
   description = "(Required) Database to which the query belongs."
   value       = aws_athena_named_query.aws_athena_named_query.database
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "(Optional) Brief explanation of the query. Maximum length of 1024.In addition to all arguments above, the following attributes are exported:"
   value       = aws_athena_named_query.aws_athena_named_query.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Plain language name for the query. Maximum length of 128."
   value       = aws_athena_named_query.aws_athena_named_query.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "query" {
   description = "(Required) Text of the query itself. In other words, all query statements. Maximum length of 262144."
   value       = aws_athena_named_query.aws_athena_named_query.query
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "workgroup" {
   description = "(Optional) Workgroup to which the query belongs. Defaults to primary"
   value       = aws_athena_named_query.aws_athena_named_query.workgroup
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Unique ID of the query."
@@ -195,7 +177,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

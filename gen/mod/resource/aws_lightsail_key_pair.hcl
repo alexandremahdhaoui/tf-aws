@@ -1,5 +1,4 @@
 resource "aws_lightsail_key_pair" "aws_lightsail_key_pair" {
-  pgp_key               = var.pgp_key
   private_key           = var.private_key
   public_key            = var.public_key
   arn                   = var.arn
@@ -7,13 +6,10 @@ resource "aws_lightsail_key_pair" "aws_lightsail_key_pair" {
   fingerprint           = var.fingerprint
   id                    = var.id
   name                  = var.name
+  pgp_key               = var.pgp_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "pgp_key" {
-  description = ""
   type        = string
 }
 variable "private_key" {
@@ -41,6 +37,10 @@ variable "id" {
   type        = string
 }
 variable "name" {
+  description = ""
+  type        = string
+}
+variable "pgp_key" {
   description = ""
   type        = string
 }
@@ -164,117 +164,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "pgp_key" {
+  description = ""
+  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.pgp_key
+}
+output "private_key" {
+  description = "the private key, base64 encoded. This is only populated\nwhen creating a new key, and when no pgp_key is provided"
+  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.private_key
+}
+output "public_key" {
+  description = "the public key, base64 encoded"
+  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.public_key
+}
 output "arn" {
   description = "The ARN of the Lightsail key pair"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "encrypted_private_key" {
   description = "pgp_keypgp_key is supplied"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.encrypted_private_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "fingerprint" {
   description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.fingerprint
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name used for this key pair"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = ""
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pgp_key" {
-  description = ""
-  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.pgp_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_key" {
-  description = "the private key, base64 encoded. This is only populated\nwhen creating a new key, and when no pgp_key is provided"
-  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.private_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "public_key" {
-  description = "the public key, base64 encoded"
-  value       = aws_lightsail_key_pair.aws_lightsail_key_pair.public_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name used for this key pair"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "private_key" {
   description = "the private key, base64 encoded. This is only populated\nwhen creating a new key, and when no pgp_key is provided"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.private_key
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "public_key" {
   description = "the public key, base64 encoded"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.public_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The ARN of the Lightsail key pair"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "encrypted_fingerprint" {
   description = ""
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.encrypted_fingerprint
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "encrypted_private_key" {
   description = "pgp_keypgp_key is supplied"
   value       = aws_lightsail_key_pair.aws_lightsail_key_pair.encrypted_private_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "fingerprint" {
   description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
@@ -282,7 +226,7 @@ output "fingerprint" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

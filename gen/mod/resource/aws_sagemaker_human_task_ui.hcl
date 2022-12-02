@@ -1,23 +1,15 @@
 resource "aws_sagemaker_human_task_ui" "aws_sagemaker_human_task_ui" {
-  tags_all           = var.tags_all
-  ui_template        = var.ui_template
-  arn                = var.arn
   content            = var.content
   content_sha256     = var.content_sha256
   human_task_ui_name = var.human_task_ui_name
   id                 = var.id
   tags               = var.tags
+  tags_all           = var.tags_all
+  ui_template        = var.ui_template
+  arn                = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "The name of the Human Task UI."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
 }
 variable "tags_all" {
@@ -43,6 +35,15 @@ variable "content_sha256" {
 variable "human_task_ui_name" {
   description = "(Required) The name of the Human Task UI."
   type        = string
+}
+variable "id" {
+  description = "The name of the Human Task UI."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,109 +165,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Human Task UI."
-  value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content" {
-  description = "(Required) The content of the Liquid template for the worker user interface.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.content
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content_sha256" {
-  description = "The SHA-256 digest of the contents of the template."
-  value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.content_sha256
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "human_task_ui_name" {
   description = "(Required) The name of the Human Task UI."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.human_task_ui_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The name of the Human Task UI."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ui_template" {
   description = "(Required) The Liquid template for the worker user interface. See UI Template below.UI Template"
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.ui_template
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Human Task UI."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "content" {
+  description = "(Required) The content of the Liquid template for the worker user interface.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.content
 }
 output "content_sha256" {
   description = "The SHA-256 digest of the contents of the template."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.content_sha256
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Human Task UI."
+  value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.arn
+}
+output "content_sha256" {
+  description = "The SHA-256 digest of the contents of the template."
+  value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.content_sha256
 }
 output "id" {
   description = "The name of the Human Task UI."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ui_template" {
   description = "(Required) The Liquid template for the worker user interface. See UI Template below.UI Template"
   value       = aws_sagemaker_human_task_ui.aws_sagemaker_human_task_ui.ui_template
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "url" {
   description = "The URL for the user interface template."
@@ -274,7 +223,7 @@ output "url" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

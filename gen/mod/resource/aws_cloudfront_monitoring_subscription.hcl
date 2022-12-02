@@ -8,6 +8,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "distribution_id" {
+  description = "(Required) The ID of the distribution that you are enabling metrics for."
+  type        = string
+}
 variable "monitoring_subscription" {
   description = "(Required) A monitoring subscription. This structure contains information about whether additional CloudWatch metrics are enabled for a given CloudFront distribution.monitoring_subscription"
   type        = string
@@ -18,10 +22,6 @@ variable "realtime_metrics_subscription_config" {
 }
 variable "realtime_metrics_subscription_status" {
   description = "(Required) A flag that indicates whether additional CloudWatch metrics are enabled for a given CloudFront distribution. Valid values are Enabled and Disabled. See below.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "distribution_id" {
-  description = "(Required) The ID of the distribution that you are enabling metrics for."
   type        = string
 }
 variable "tag_instance_id" {
@@ -148,33 +148,17 @@ output "distribution_id" {
   description = "(Required) The ID of the distribution that you are enabling metrics for."
   value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.distribution_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "monitoring_subscription" {
   description = "(Required) A monitoring subscription. This structure contains information about whether additional CloudWatch metrics are enabled for a given CloudFront distribution.monitoring_subscription"
   value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.monitoring_subscription
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "realtime_metrics_subscription_config" {
   description = "(Required) A subscription configuration for additional CloudWatch metrics. See below.realtime_metrics_subscription_config"
   value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.realtime_metrics_subscription_config
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "realtime_metrics_subscription_status" {
   description = "(Required) A flag that indicates whether additional CloudWatch metrics are enabled for a given CloudFront distribution. Valid values are Enabled and Disabled. See below.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudfront_monitoring_subscription.aws_cloudfront_monitoring_subscription.realtime_metrics_subscription_status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the CloudFront monitoring subscription, which corresponds to the distribution_id."
@@ -182,7 +166,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

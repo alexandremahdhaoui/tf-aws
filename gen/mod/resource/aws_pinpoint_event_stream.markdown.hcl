@@ -138,17 +138,13 @@ output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_event_stream.markdown.aws_pinpoint_event_stream.markdown.application_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "destination_stream_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the Amazon Kinesis stream or Firehose delivery stream to which you want to publish events."
   value       = aws_pinpoint_event_stream.markdown.aws_pinpoint_event_stream.markdown.destination_stream_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

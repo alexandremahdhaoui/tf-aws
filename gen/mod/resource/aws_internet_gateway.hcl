@@ -12,9 +12,18 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 20m)"
+  type        = string
+}
 variable "vpc_id" {
   description = "(Optional) The VPC ID to create in.  See the aws_internet_gateway_attachment resource for an alternate way to attach an Internet Gateway to a VPC."
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The ARN of the Internet Gateway."
@@ -35,14 +44,7 @@ variable "owner_id" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.-> strongNote: It's recommended to denote that the AWS Instance or Elastic IP depends on the Internet Gateway. For example:In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "update" {
-  description = "(Default 20m)"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -168,89 +170,57 @@ output "owner_id" {
   description = "The ID of the AWS account that owns the internet gateway."
   value       = aws_internet_gateway.aws_internet_gateway.owner_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.-> strongNote: It's recommended to denote that the AWS Instance or Elastic IP depends on the Internet Gateway. For example:In addition to all arguments above, the following attributes are exported:"
   value       = aws_internet_gateway.aws_internet_gateway.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_internet_gateway.aws_internet_gateway.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "update" {
   description = "(Default 20m)"
   value       = aws_internet_gateway.aws_internet_gateway.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "vpc_id" {
   description = "(Optional) The VPC ID to create in.  See the aws_internet_gateway_attachment resource for an alternate way to attach an Internet Gateway to a VPC."
   value       = aws_internet_gateway.aws_internet_gateway.vpc_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the Internet Gateway."
   value       = aws_internet_gateway.aws_internet_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 20m)"
   value       = aws_internet_gateway.aws_internet_gateway.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the Internet Gateway."
   value       = aws_internet_gateway.aws_internet_gateway.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "update" {
+  description = "(Default 20m)"
+  value       = aws_internet_gateway.aws_internet_gateway.update
+}
+output "arn" {
+  description = "The ARN of the Internet Gateway."
+  value       = aws_internet_gateway.aws_internet_gateway.arn
+}
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_internet_gateway.aws_internet_gateway.create
 }
 output "delete" {
   description = "(Default 20m)"
   value       = aws_internet_gateway.aws_internet_gateway.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the Internet Gateway."
   value       = aws_internet_gateway.aws_internet_gateway.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "owner_id" {
   description = "The ID of the AWS account that owns the internet gateway."
   value       = aws_internet_gateway.aws_internet_gateway.owner_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -258,31 +228,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 20m)"
-  value       = aws_internet_gateway.aws_internet_gateway.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the Internet Gateway."
-  value       = aws_internet_gateway.aws_internet_gateway.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_internet_gateway.aws_internet_gateway.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

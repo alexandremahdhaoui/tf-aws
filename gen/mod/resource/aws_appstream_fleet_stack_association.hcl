@@ -138,17 +138,9 @@ output "fleet_name" {
   description = "(Required) Name of the fleet."
   value       = aws_appstream_fleet_stack_association.aws_appstream_fleet_stack_association.fleet_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "stack_name" {
   description = " (Required) Name of the stack.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appstream_fleet_stack_association.aws_appstream_fleet_stack_association.stack_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Unique ID of the appstream stack fleet association, composed of the fleet_name and stack_name separated by a slash (/)."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

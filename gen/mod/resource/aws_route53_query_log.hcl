@@ -1,7 +1,7 @@
 resource "aws_route53_query_log" "aws_route53_query_log" {
-  arn                      = var.arn
   cloudwatch_log_group_arn = var.cloudwatch_log_group_arn
   zone_id                  = var.zone_id
+  arn                      = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,37 +139,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "zone_id" {
+  description = "(Required) Route53 hosted zone ID to enable query logs.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_query_log.aws_route53_query_log.zone_id
+}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Query Logging Config."
   value       = aws_route53_query_log.aws_route53_query_log.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cloudwatch_log_group_arn" {
   description = "(Required) CloudWatch log group ARN to send query logs."
   value       = aws_route53_query_log.aws_route53_query_log.cloudwatch_log_group_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "zone_id" {
-  description = "(Required) Route53 hosted zone ID to enable query logs.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_query_log.aws_route53_query_log.zone_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Query Logging Config."
   value       = aws_route53_query_log.aws_route53_query_log.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The query logging configuration ID"
@@ -177,7 +161,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

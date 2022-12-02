@@ -8,17 +8,13 @@ output "arn" {
   description = "ARN of the COIP pool"
   value       = aws_ec2_coip_pool.aws_ec2_coip_pool.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "pool_cidrs" {
   description = "Set of CIDR blocks in poolTimeoutsConfiguration options:"
   value       = aws_ec2_coip_pool.aws_ec2_coip_pool.pool_cidrs
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

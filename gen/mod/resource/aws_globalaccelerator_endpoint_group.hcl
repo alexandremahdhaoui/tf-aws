@@ -1,99 +1,111 @@
 resource "aws_globalaccelerator_endpoint_group" "aws_globalaccelerator_endpoint_group" {
-  arn                            = var.arn
-  client_ip_preservation_enabled = var.client_ip_preservation_enabled
-  endpoint_configuration         = var.endpoint_configuration
-  threshold_count                = var.threshold_count
-  update                         = var.update
+  health_check_path              = var.health_check_path
+  health_check_protocol          = var.health_check_protocol
+  listener_arn                   = var.listener_arn
   create                         = var.create
-  endpoint_id                    = var.endpoint_id
-  health_check_interval_seconds  = var.health_check_interval_seconds
+  id                             = var.id
+  threshold_count                = var.threshold_count
+  traffic_dial_percentage        = var.traffic_dial_percentage
+  arn                            = var.arn
+  endpoint_port                  = var.endpoint_port
+  port_override                  = var.port_override
+  update                         = var.update
+  health_check_port              = var.health_check_port
   listener_port                  = var.listener_port
   weight                         = var.weight
-  health_check_path              = var.health_check_path
-  health_check_port              = var.health_check_port
-  listener_arn                   = var.listener_arn
-  port_override                  = var.port_override
+  client_ip_preservation_enabled = var.client_ip_preservation_enabled
+  endpoint_configuration         = var.endpoint_configuration
   endpoint_group_region          = var.endpoint_group_region
-  endpoint_port                  = var.endpoint_port
-  health_check_protocol          = var.health_check_protocol
-  id                             = var.id
-  traffic_dial_percentage        = var.traffic_dial_percentage
+  endpoint_id                    = var.endpoint_id
+  health_check_interval_seconds  = var.health_check_interval_seconds
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "weight" {
+  description = "(Optional) The weight associated with the endpoint. When you add weights to endpoints, you configure AWS Global Accelerator to route traffic based on proportions that you specify.strongport_override supports the following attributes:"
+  type        = string
+  default     = ""
+}
+variable "client_ip_preservation_enabled" {
+  description = "(Optional) Indicates whether client IP address preservation is enabled for an Application Load Balancer endpoint. See the AWS documentation for more details. The default value is falsestrongNote: When client IP address preservation is enabled, the Global Accelerator service creates an EC2 Security Group in the VPC named GlobalAccelerator that must be deleted (potentially outside of Terraform) before the VPC will successfully delete. If this EC2 Security Group is not deleted, Terraform will retry the VPC deletion for a few minutes before reporting a DependencyViolation error. This cannot be resolved by re-running Terraform."
+  type        = string
+  default     = ""
+}
+variable "endpoint_configuration" {
+  description = "(Optional) The list of endpoint objects. Fields documented below."
+  type        = string
+  default     = ""
+}
+variable "endpoint_group_region" {
+  description = " (Optional) - The name of the AWS Region where the endpoint group is located."
+  type        = string
+  default     = ""
+}
+variable "endpoint_id" {
+  description = "(Optional) An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID."
+  type        = string
+  default     = ""
+}
+variable "health_check_interval_seconds" {
+  description = "(Optional) The time—10 seconds or 30 seconds—between each health check for an endpoint. The default value is 30."
+  type        = string
+  default     = ""
+}
+variable "health_check_port" {
+  description = "(Optional) The port that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default port is the listener port that this endpoint group is associated with. If listener port is a list of ports, Global Accelerator uses the first port in the list.\nTerraform will only perform drift detection of its value when present in a configuration."
+  type        = string
+  default     = ""
+}
+variable "listener_port" {
+  description = "(Required) The listener port that you want to map to a specific endpoint port. This is the port that user traffic arrives to the Global Accelerator on.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "health_check_path" {
+  description = "(Optional) If the protocol is HTTP/S, then this specifies the path that is the destination for health check targets. The default value is slash (/). Terraform will only perform drift detection of its value when present in a configuration."
+  type        = string
+  default     = ""
+}
+variable "health_check_protocol" {
+  description = "(Optional) The protocol that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default value is TCP."
+  type        = string
+  default     = ""
+}
+variable "listener_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the listener."
   type        = string
 }
 variable "create" {
   description = "(Default 30m)"
   type        = string
 }
-variable "endpoint_id" {
-  description = "(Optional) An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID."
+variable "id" {
+  description = "The Amazon Resource Name (ARN) of the endpoint group."
   type        = string
 }
-variable "health_check_interval_seconds" {
-  description = "(Optional) The time—10 seconds or 30 seconds—between each health check for an endpoint. The default value is 30."
+variable "threshold_count" {
+  description = "(Optional) The number of consecutive health checks required to set the state of a healthy endpoint to unhealthy, or to set an unhealthy endpoint to healthy. The default value is 3."
   type        = string
+  default     = ""
 }
-variable "listener_port" {
-  description = "(Required) The listener port that you want to map to a specific endpoint port. This is the port that user traffic arrives to the Global Accelerator on.In addition to all arguments above, the following attributes are exported:"
+variable "traffic_dial_percentage" {
+  description = "(Optional) The percentage of traffic to send to an AWS Region. Additional traffic is distributed to other endpoint groups for this listener. The default value is 100."
   type        = string
+  default     = ""
 }
-variable "weight" {
-  description = "(Optional) The weight associated with the endpoint. When you add weights to endpoints, you configure AWS Global Accelerator to route traffic based on proportions that you specify.strongport_override supports the following attributes:"
-  type        = string
-}
-variable "health_check_path" {
-  description = "(Optional) If the protocol is HTTP/S, then this specifies the path that is the destination for health check targets. The default value is slash (/). Terraform will only perform drift detection of its value when present in a configuration."
-  type        = string
-}
-variable "health_check_port" {
-  description = "(Optional) The port that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default port is the listener port that this endpoint group is associated with. If listener port is a list of ports, Global Accelerator uses the first port in the list.\nTerraform will only perform drift detection of its value when present in a configuration."
-  type        = string
-}
-variable "listener_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the listener."
-  type        = string
-}
-variable "port_override" {
-  description = "(Optional) Override specific listener ports used to route traffic to endpoints that are part of this endpoint group. Fields documented below.strongendpoint_configuration supports the following attributes:"
-  type        = string
-}
-variable "endpoint_group_region" {
-  description = " (Optional) - The name of the AWS Region where the endpoint group is located."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:"
   type        = string
 }
 variable "endpoint_port" {
   description = "(Required) The endpoint port that you want a listener port to be mapped to. This is the port on the endpoint, such as the Application Load Balancer or Amazon EC2 instance."
   type        = string
 }
-variable "health_check_protocol" {
-  description = "(Optional) The protocol that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default value is TCP."
+variable "port_override" {
+  description = "(Optional) Override specific listener ports used to route traffic to endpoints that are part of this endpoint group. Fields documented below.strongendpoint_configuration supports the following attributes:"
   type        = string
-}
-variable "id" {
-  description = "The Amazon Resource Name (ARN) of the endpoint group."
-  type        = string
-}
-variable "traffic_dial_percentage" {
-  description = "(Optional) The percentage of traffic to send to an AWS Region. Additional traffic is distributed to other endpoint groups for this listener. The default value is 100."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "client_ip_preservation_enabled" {
-  description = "(Optional) Indicates whether client IP address preservation is enabled for an Application Load Balancer endpoint. See the AWS documentation for more details. The default value is falsestrongNote: When client IP address preservation is enabled, the Global Accelerator service creates an EC2 Security Group in the VPC named GlobalAccelerator that must be deleted (potentially outside of Terraform) before the VPC will successfully delete. If this EC2 Security Group is not deleted, Terraform will retry the VPC deletion for a few minutes before reporting a DependencyViolation error. This cannot be resolved by re-running Terraform."
-  type        = string
-}
-variable "endpoint_configuration" {
-  description = "(Optional) The list of endpoint objects. Fields documented below."
-  type        = string
-}
-variable "threshold_count" {
-  description = "(Optional) The number of consecutive health checks required to set the state of a healthy endpoint to unhealthy, or to set an unhealthy endpoint to healthy. The default value is 3."
-  type        = string
+  default     = ""
 }
 variable "update" {
   description = "(Default 30m)"
@@ -219,181 +231,97 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.create
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_id" {
-  description = "(Optional) An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "health_check_interval_seconds" {
-  description = "(Optional) The time—10 seconds or 30 seconds—between each health check for an endpoint. The default value is 30."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.health_check_interval_seconds
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "listener_port" {
-  description = "(Required) The listener port that you want to map to a specific endpoint port. This is the port that user traffic arrives to the Global Accelerator on.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.listener_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "weight" {
-  description = "(Optional) The weight associated with the endpoint. When you add weights to endpoints, you configure AWS Global Accelerator to route traffic based on proportions that you specify.strongport_override supports the following attributes:"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.weight
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "health_check_path" {
   description = "(Optional) If the protocol is HTTP/S, then this specifies the path that is the destination for health check targets. The default value is slash (/). Terraform will only perform drift detection of its value when present in a configuration."
   value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.health_check_path
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "health_check_port" {
-  description = "(Optional) The port that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default port is the listener port that this endpoint group is associated with. If listener port is a list of ports, Global Accelerator uses the first port in the list.\nTerraform will only perform drift detection of its value when present in a configuration."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.health_check_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "listener_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the listener."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.listener_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "port_override" {
-  description = "(Optional) Override specific listener ports used to route traffic to endpoints that are part of this endpoint group. Fields documented below.strongendpoint_configuration supports the following attributes:"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.port_override
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_group_region" {
-  description = " (Optional) - The name of the AWS Region where the endpoint group is located."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_group_region
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_port" {
-  description = "(Required) The endpoint port that you want a listener port to be mapped to. This is the port on the endpoint, such as the Application Load Balancer or Amazon EC2 instance."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_port
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "health_check_protocol" {
   description = "(Optional) The protocol that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default value is TCP."
   value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.health_check_protocol
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The Amazon Resource Name (ARN) of the endpoint group."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "traffic_dial_percentage" {
-  description = "(Optional) The percentage of traffic to send to an AWS Region. Additional traffic is distributed to other endpoint groups for this listener. The default value is 100."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.traffic_dial_percentage
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "client_ip_preservation_enabled" {
-  description = "(Optional) Indicates whether client IP address preservation is enabled for an Application Load Balancer endpoint. See the AWS documentation for more details. The default value is falsestrongNote: When client IP address preservation is enabled, the Global Accelerator service creates an EC2 Security Group in the VPC named GlobalAccelerator that must be deleted (potentially outside of Terraform) before the VPC will successfully delete. If this EC2 Security Group is not deleted, Terraform will retry the VPC deletion for a few minutes before reporting a DependencyViolation error. This cannot be resolved by re-running Terraform."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.client_ip_preservation_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint_configuration" {
-  description = "(Optional) The list of endpoint objects. Fields documented below."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_configuration
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "threshold_count" {
-  description = "(Optional) The number of consecutive health checks required to set the state of a healthy endpoint to unhealthy, or to set an unhealthy endpoint to healthy. The default value is 3."
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.threshold_count
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.update
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "listener_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the listener."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.listener_arn
 }
 output "create" {
   description = "(Default 30m)"
   value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "The Amazon Resource Name (ARN) of the endpoint group."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.id
+}
+output "threshold_count" {
+  description = "(Optional) The number of consecutive health checks required to set the state of a healthy endpoint to unhealthy, or to set an unhealthy endpoint to healthy. The default value is 3."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.threshold_count
+}
+output "traffic_dial_percentage" {
+  description = "(Optional) The percentage of traffic to send to an AWS Region. Additional traffic is distributed to other endpoint groups for this listener. The default value is 100."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.traffic_dial_percentage
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.arn
+}
+output "endpoint_port" {
+  description = "(Required) The endpoint port that you want a listener port to be mapped to. This is the port on the endpoint, such as the Application Load Balancer or Amazon EC2 instance."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_port
+}
+output "port_override" {
+  description = "(Optional) Override specific listener ports used to route traffic to endpoints that are part of this endpoint group. Fields documented below.strongendpoint_configuration supports the following attributes:"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.port_override
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.update
+}
+output "health_check_port" {
+  description = "(Optional) The port that AWS Global Accelerator uses to check the health of endpoints that are part of this endpoint group. The default port is the listener port that this endpoint group is associated with. If listener port is a list of ports, Global Accelerator uses the first port in the list.\nTerraform will only perform drift detection of its value when present in a configuration."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.health_check_port
+}
+output "listener_port" {
+  description = "(Required) The listener port that you want to map to a specific endpoint port. This is the port that user traffic arrives to the Global Accelerator on.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.listener_port
+}
+output "weight" {
+  description = "(Optional) The weight associated with the endpoint. When you add weights to endpoints, you configure AWS Global Accelerator to route traffic based on proportions that you specify.strongport_override supports the following attributes:"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.weight
+}
+output "client_ip_preservation_enabled" {
+  description = "(Optional) Indicates whether client IP address preservation is enabled for an Application Load Balancer endpoint. See the AWS documentation for more details. The default value is falsestrongNote: When client IP address preservation is enabled, the Global Accelerator service creates an EC2 Security Group in the VPC named GlobalAccelerator that must be deleted (potentially outside of Terraform) before the VPC will successfully delete. If this EC2 Security Group is not deleted, Terraform will retry the VPC deletion for a few minutes before reporting a DependencyViolation error. This cannot be resolved by re-running Terraform."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.client_ip_preservation_enabled
+}
+output "endpoint_configuration" {
+  description = "(Optional) The list of endpoint objects. Fields documented below."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_configuration
+}
+output "endpoint_group_region" {
+  description = " (Optional) - The name of the AWS Region where the endpoint group is located."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_group_region
+}
+output "endpoint_id" {
+  description = "(Optional) An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.endpoint_id
+}
+output "health_check_interval_seconds" {
+  description = "(Optional) The time—10 seconds or 30 seconds—between each health check for an endpoint. The default value is 30."
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.health_check_interval_seconds
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.create
 }
 output "delete" {
   description = "(Default 30m)"
   value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.delete
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Amazon Resource Name (ARN) of the endpoint group."
   value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "update" {
   description = "(Default 30m)"
@@ -401,15 +329,7 @@ output "update" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the endpoint group.TimeoutsConfiguration options:"
-  value       = aws_globalaccelerator_endpoint_group.aws_globalaccelerator_endpoint_group.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

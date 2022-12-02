@@ -134,21 +134,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "server_id" {
+  description = "(Requirement) The Server ID of the Transfer Server (e.g., s-12345678)"
+  value       = aws_transfer_ssh_key.aws_transfer_ssh_key.server_id
+}
 output "user_name" {
   description = "(Requirement) The name of the user account that is assigned to one or more servers."
   value       = aws_transfer_ssh_key.aws_transfer_ssh_key.user_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "server_id" {
-  description = "(Requirement) The Server ID of the Transfer Server (e.g., s-12345678)"
-  value       = aws_transfer_ssh_key.aws_transfer_ssh_key.server_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

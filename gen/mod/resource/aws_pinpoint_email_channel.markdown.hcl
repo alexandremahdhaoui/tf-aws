@@ -10,9 +10,19 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "application_id" {
+  description = "(Required) The application ID."
+  type        = string
+}
+variable "configuration_set" {
+  description = "(Optional) The ARN of the Amazon SES configuration set that you want to apply to messages that you send through the channel."
+  type        = string
+  default     = ""
+}
 variable "enabled" {
   description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
   type        = string
+  default     = ""
 }
 variable "from_address" {
   description = "(Required) The email address used to send emails from. You can use email only (user@example.com) or friendly address (User <user@example.com>). This field comply with RFC 5322."
@@ -25,14 +35,7 @@ variable "identity" {
 variable "role_arn" {
   description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "application_id" {
-  description = "(Required) The application ID."
-  type        = string
-}
-variable "configuration_set" {
-  description = "(Optional) The ARN of the Amazon SES configuration set that you want to apply to messages that you send through the channel."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,53 +157,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "role_arn" {
+  description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.role_arn
+}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "configuration_set" {
   description = "(Optional) The ARN of the Amazon SES configuration set that you want to apply to messages that you send through the channel."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.configuration_set
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "enabled" {
   description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "from_address" {
   description = "(Required) The email address used to send emails from. You can use email only (user@example.com) or friendly address (User <user@example.com>). This field comply with RFC 5322."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.from_address
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "identity" {
   description = "(Required) The ARN of an identity verified with SES."
   value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.identity
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "role_arn" {
-  description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_pinpoint_email_channel.markdown.aws_pinpoint_email_channel.markdown.role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "messages_per_second" {
   description = "Messages per second that can be sent."
@@ -208,7 +187,7 @@ output "messages_per_second" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

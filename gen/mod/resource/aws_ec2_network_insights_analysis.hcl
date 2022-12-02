@@ -1,22 +1,22 @@
 resource "aws_ec2_network_insights_analysis" "aws_ec2_network_insights_analysis" {
-  explanations             = var.explanations
   filter_in_arns           = var.filter_in_arns
-  start_date               = var.start_date
-  arn                      = var.arn
-  component_arn            = var.component_arn
-  component_id             = var.component_id
-  forward_path_components  = var.forward_path_components
-  network_insights_path_id = var.network_insights_path_id
-  path_found               = var.path_found
-  tags_all                 = var.tags_all
-  warning_message          = var.warning_message
-  alternate_path_hints     = var.alternate_path_hints
   id                       = var.id
   return_path_components   = var.return_path_components
-  status_message           = var.status_message
-  tags                     = var.tags
   status                   = var.status
   wait_for_completion      = var.wait_for_completion
+  network_insights_path_id = var.network_insights_path_id
+  path_found               = var.path_found
+  start_date               = var.start_date
+  status_message           = var.status_message
+  component_id             = var.component_id
+  forward_path_components  = var.forward_path_components
+  tags                     = var.tags
+  alternate_path_hints     = var.alternate_path_hints
+  arn                      = var.arn
+  component_arn            = var.component_arn
+  explanations             = var.explanations
+  tags_all                 = var.tags_all
+  warning_message          = var.warning_message
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -25,42 +25,82 @@ variable "provider_region" {
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "alternate_path_hints" {
-  description = "Potential intermediate components of a feasible path. Described below."
+variable "component_id" {
+  description = "The ID of the component."
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "ID of the Network Insights Analysis."
+variable "forward_path_components" {
+  description = "The components in the path from source to destination. See the AWS documentation for details."
   type        = string
+  default     = ""
 }
-variable "return_path_components" {
-  description = "The components in the path from destination to source. See the AWS documentation for details."
+variable "component_arn" {
+  description = "The Amazon Resource Name (ARN) of the component."
   type        = string
-}
-variable "status_message" {
-  description = "A message to provide more context when the status is failed."
-  type        = string
-}
-variable "status" {
-  description = "The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found."
-  type        = string
-}
-variable "wait_for_completion" {
-  description = "(Optional) If enabled, the resource will wait for the Network Insights Analysis status to change to succeeded or failed. Setting this to false will skip the process. Default: true."
-  type        = string
+  default     = ""
 }
 variable "explanations" {
   description = "Explanation codes for an unreachable path. See the AWS documentation for details."
   type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "warning_message" {
+  description = "The warning message.The alternate_path_hints object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "alternate_path_hints" {
+  description = "Potential intermediate components of a feasible path. Described below."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the Network Insights Analysis."
+  type        = string
+  default     = ""
+}
+variable "return_path_components" {
+  description = "The components in the path from destination to source. See the AWS documentation for details."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found."
+  type        = string
+  default     = ""
+}
+variable "wait_for_completion" {
+  description = "(Optional) If enabled, the resource will wait for the Network Insights Analysis status to change to succeeded or failed. Setting this to false will skip the process. Default: true."
+  type        = string
+  default     = ""
 }
 variable "filter_in_arns" {
   description = "(Optional) A list of ARNs for resources the path must traverse."
   type        = string
+  default     = ""
+}
+variable "id" {
+  description = "ID of the Network Insights Analysis."
+  type        = string
+  default     = ""
 }
 variable "start_date" {
   description = "The date/time the analysis was started."
   type        = string
+  default     = ""
+}
+variable "status_message" {
+  description = "A message to provide more context when the status is failed."
+  type        = string
+  default     = ""
 }
 variable "network_insights_path_id" {
   description = "(Required) ID of the Network Insights Path to run an analysis on."
@@ -69,30 +109,7 @@ variable "network_insights_path_id" {
 variable "path_found" {
   description = "Set to true if the destination was reachable."
   type        = string
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "warning_message" {
-  description = "The warning message.The alternate_path_hints object supports the following:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the Network Insights Analysis."
-  type        = string
-}
-variable "component_arn" {
-  description = "The Amazon Resource Name (ARN) of the component."
-  type        = string
-}
-variable "component_id" {
-  description = "The ID of the component."
-  type        = string
-}
-variable "forward_path_components" {
-  description = "The components in the path from source to destination. See the AWS documentation for details."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -214,205 +231,129 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "alternate_path_hints" {
-  description = "Potential intermediate components of a feasible path. Described below."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.alternate_path_hints
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the Network Insights Analysis."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "return_path_components" {
-  description = "The components in the path from destination to source. See the AWS documentation for details."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.return_path_components
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status_message" {
-  description = "A message to provide more context when the status is failed."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.status_message
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "forward_path_components" {
+  description = "The components in the path from source to destination. See the AWS documentation for details."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.forward_path_components
 }
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "wait_for_completion" {
-  description = "(Optional) If enabled, the resource will wait for the Network Insights Analysis status to change to succeeded or failed. Setting this to false will skip the process. Default: true."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.wait_for_completion
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "explanations" {
-  description = "Explanation codes for an unreachable path. See the AWS documentation for details."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.explanations
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "filter_in_arns" {
-  description = "(Optional) A list of ARNs for resources the path must traverse."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.filter_in_arns
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "start_date" {
-  description = "The date/time the analysis was started."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.start_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "warning_message" {
-  description = "The warning message.The alternate_path_hints object supports the following:"
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.warning_message
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "component_id" {
+  description = "The ID of the component."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_id
 }
 output "arn" {
   description = "ARN of the Network Insights Analysis."
   value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "component_arn" {
   description = "The Amazon Resource Name (ARN) of the component."
   value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "component_id" {
-  description = "The ID of the component."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "forward_path_components" {
-  description = "The components in the path from source to destination. See the AWS documentation for details."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.forward_path_components
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "network_insights_path_id" {
-  description = "(Required) ID of the Network Insights Path to run an analysis on."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.network_insights_path_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "path_found" {
-  description = "Set to true if the destination was reachable."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.path_found
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the Network Insights Analysis."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "return_path_components" {
-  description = "The components in the path from destination to source. See the AWS documentation for details."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.return_path_components
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "start_date" {
-  description = "The date/time the analysis was started."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.start_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "explanations" {
+  description = "Explanation codes for an unreachable path. See the AWS documentation for details."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.explanations
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.tags_all
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "warning_message" {
+  description = "The warning message.The alternate_path_hints object supports the following:"
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.warning_message
 }
 output "alternate_path_hints" {
   description = "Potential intermediate components of a feasible path. Described below."
   value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.alternate_path_hints
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "ID of the Network Insights Analysis."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.id
 }
-output "component_id" {
-  description = "The ID of the component."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_id
+output "return_path_components" {
+  description = "The components in the path from destination to source. See the AWS documentation for details."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.return_path_components
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "status" {
+  description = "The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.status
+}
+output "wait_for_completion" {
+  description = "(Optional) If enabled, the resource will wait for the Network Insights Analysis status to change to succeeded or failed. Setting this to false will skip the process. Default: true."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.wait_for_completion
+}
+output "filter_in_arns" {
+  description = "(Optional) A list of ARNs for resources the path must traverse."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.filter_in_arns
 }
 output "path_found" {
   description = "Set to true if the destination was reachable."
   value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.path_found
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "start_date" {
+  description = "The date/time the analysis was started."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.start_date
+}
+output "status_message" {
+  description = "A message to provide more context when the status is failed."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.status_message
+}
+output "network_insights_path_id" {
+  description = "(Required) ID of the Network Insights Path to run an analysis on."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.network_insights_path_id
+}
+output "start_date" {
+  description = "The date/time the analysis was started."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.start_date
+}
+output "status_message" {
+  description = "A message to provide more context when the status is failed."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.status_message
+}
+output "component_arn" {
+  description = "The Amazon Resource Name (ARN) of the component."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_arn
+}
+output "explanations" {
+  description = "Explanation codes for an unreachable path. See the AWS documentation for details."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.explanations
+}
+output "forward_path_components" {
+  description = "The components in the path from source to destination. See the AWS documentation for details."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.forward_path_components
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.tags_all
+}
+output "warning_message" {
+  description = "The warning message.The alternate_path_hints object supports the following:"
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.warning_message
+}
+output "alternate_path_hints" {
+  description = "Potential intermediate components of a feasible path. Described below."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.alternate_path_hints
+}
+output "arn" {
+  description = "ARN of the Network Insights Analysis."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.arn
+}
+output "component_id" {
+  description = "The ID of the component."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_id
+}
+output "id" {
+  description = "ID of the Network Insights Analysis."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.id
+}
+output "path_found" {
+  description = "Set to true if the destination was reachable."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.path_found
+}
+output "return_path_components" {
+  description = "The components in the path from destination to source. See the AWS documentation for details."
+  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.return_path_components
 }
 output "status" {
   description = "The status of the analysis. succeeded means the analysis was completed, not that a path was found, for that see path_found."
@@ -420,55 +361,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "component_arn" {
-  description = "The Amazon Resource Name (ARN) of the component."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.component_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "forward_path_components" {
-  description = "The components in the path from source to destination. See the AWS documentation for details."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.forward_path_components
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "warning_message" {
-  description = "The warning message.The alternate_path_hints object supports the following:"
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.warning_message
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "explanations" {
-  description = "Explanation codes for an unreachable path. See the AWS documentation for details."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.explanations
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "ID of the Network Insights Analysis."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status_message" {
-  description = "A message to provide more context when the status is failed."
-  value       = aws_ec2_network_insights_analysis.aws_ec2_network_insights_analysis.status_message
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

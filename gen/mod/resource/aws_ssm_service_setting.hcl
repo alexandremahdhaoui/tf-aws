@@ -143,33 +143,17 @@ output "arn" {
   description = "ARN of the service setting."
   value       = aws_ssm_service_setting.aws_ssm_service_setting.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "setting_id" {
   description = "(Required) ID of the service setting."
   value       = aws_ssm_service_setting.aws_ssm_service_setting.setting_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "setting_value" {
   description = "(Required) Value of the service setting.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssm_service_setting.aws_ssm_service_setting.setting_value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "ARN of the service setting."
   value       = aws_ssm_service_setting.aws_ssm_service_setting.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "Status of the service setting. Value can be Default, Customized or PendingUpdate."
@@ -177,7 +161,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

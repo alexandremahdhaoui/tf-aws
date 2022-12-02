@@ -1,15 +1,19 @@
 resource "aws_pinpoint_apns_channel.markdown" "aws_pinpoint_apns_channel.markdown" {
-  token_key                     = var.token_key
-  application_id                = var.application_id
-  bundle_id                     = var.bundle_id
-  certificate                   = var.certificate
   default_authentication_method = var.default_authentication_method
   enabled                       = var.enabled
   private_key                   = var.private_key
   team_id                       = var.team_id
+  token_key                     = var.token_key
+  application_id                = var.application_id
+  bundle_id                     = var.bundle_id
+  certificate                   = var.certificate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "private_key" {
+  description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
   type        = string
 }
 variable "team_id" {
@@ -35,14 +39,12 @@ variable "certificate" {
 variable "default_authentication_method" {
   description = "(Optional) The default authentication method used for APNs.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
   type        = string
+  default     = ""
 }
 variable "enabled" {
   description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
   type        = string
-}
-variable "private_key" {
-  description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,13 +166,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "application_id" {
+  description = "(Required) The application ID."
+  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.application_id
+}
+output "bundle_id" {
+  description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
+  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.bundle_id
+}
+output "certificate" {
+  description = "(Required) The pem encoded TLS Certificate from Apple."
+  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.certificate
+}
+output "default_authentication_method" {
+  description = "(Optional) The default authentication method used for APNs.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
+  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.default_authentication_method
+}
+output "enabled" {
+  description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
+  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.enabled
+}
+output "private_key" {
+  description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
+  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.private_key
+}
 output "team_id" {
   description = "(Required) The ID assigned to your Apple developer account team. This value is provided on the Membership page."
   value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.team_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "token_key" {
   description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
@@ -178,55 +200,7 @@ output "token_key" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "application_id" {
-  description = "(Required) The application ID."
-  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bundle_id" {
-  description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
-  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.bundle_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "certificate" {
-  description = "(Required) The pem encoded TLS Certificate from Apple."
-  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.certificate
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_authentication_method" {
-  description = "(Optional) The default authentication method used for APNs.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
-  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.default_authentication_method
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled" {
-  description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
-  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_key" {
-  description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
-  value       = aws_pinpoint_apns_channel.markdown.aws_pinpoint_apns_channel.markdown.private_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,47 +1,37 @@
 resource "aws_connect_contact_flow" "aws_connect_contact_flow" {
   tags            = var.tags
-  arn             = var.arn
   contact_flow_id = var.contact_flow_id
-  content         = var.content
   content_hash    = var.content_hash
+  description     = var.description
   id              = var.id
-  instance_id     = var.instance_id
   name            = var.name
   type            = var.type
-  description     = var.description
+  arn             = var.arn
+  content         = var.content
   filename        = var.filename
+  instance_id     = var.instance_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional) Specifies the description of the Contact Flow."
-  type        = string
-}
-variable "filename" {
-  description = "(Optional) The path to the Contact Flow source within the local filesystem. Conflicts with content."
+variable "type" {
+  description = "(Optional, Forces new resource) Specifies the type of the Contact Flow. Defaults to CONTACT_FLOW. Allowed Values are: CONTACT_FLOW, CUSTOMER_QUEUE, CUSTOMER_HOLD, CUSTOMER_WHISPER, AGENT_HOLD, AGENT_WHISPER, OUTBOUND_WHISPER, AGENT_TRANSFER, QUEUE_TRANSFER.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the Contact Flow."
   type        = string
 }
-variable "contact_flow_id" {
-  description = "The identifier of the Contact Flow."
-  type        = string
-}
 variable "content" {
   description = "(Optional) Specifies the content of the Contact Flow, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the filename argument cannot be used."
   type        = string
+  default     = ""
 }
-variable "content_hash" {
-  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow source specified with filename. The usual way to set this is filebase64sha256(\"mycontact_flow.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"mycontact_flow.json\")) (Terraform 0.11.11 and earlier), where \"mycontact_flow.json\" is the local filename of the Contact Flow source."
+variable "filename" {
+  description = "(Optional) The path to the Contact Flow source within the local filesystem. Conflicts with content."
   type        = string
-}
-variable "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow separated by a colon (:)."
-  type        = string
+  default     = ""
 }
 variable "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
@@ -51,13 +41,28 @@ variable "name" {
   description = "(Required) Specifies the name of the Contact Flow."
   type        = string
 }
+variable "contact_flow_id" {
+  description = "The identifier of the Contact Flow."
+  type        = string
+}
+variable "content_hash" {
+  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow source specified with filename. The usual way to set this is filebase64sha256(\"mycontact_flow.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"mycontact_flow.json\")) (Terraform 0.11.11 and earlier), where \"mycontact_flow.json\" is the local filename of the Contact Flow source."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) Specifies the description of the Contact Flow."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow separated by a colon (:)."
+  type        = string
+}
 variable "tags" {
   description = "(Optional) Tags to apply to the Contact Flow. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
-}
-variable "type" {
-  description = "(Optional, Forces new resource) Specifies the type of the Contact Flow. Defaults to CONTACT_FLOW. Allowed Values are: CONTACT_FLOW, CUSTOMER_QUEUE, CUSTOMER_HOLD, CUSTOMER_WHISPER, AGENT_HOLD, AGENT_WHISPER, OUTBOUND_WHISPER, AGENT_TRANSFER, QUEUE_TRANSFER.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,109 +184,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Tags to apply to the Contact Flow. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Contact Flow."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "contact_flow_id" {
-  description = "The identifier of the Contact Flow."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.contact_flow_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content" {
-  description = "(Optional) Specifies the content of the Contact Flow, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the filename argument cannot be used."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.content
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "content_hash" {
-  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow source specified with filename. The usual way to set this is filebase64sha256(\"mycontact_flow.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"mycontact_flow.json\")) (Terraform 0.11.11 and earlier), where \"mycontact_flow.json\" is the local filename of the Contact Flow source."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.content_hash
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow separated by a colon (:)."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.instance_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required) Specifies the name of the Contact Flow."
   value       = aws_connect_contact_flow.aws_connect_contact_flow.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "type" {
   description = "(Optional, Forces new resource) Specifies the type of the Contact Flow. Defaults to CONTACT_FLOW. Allowed Values are: CONTACT_FLOW, CUSTOMER_QUEUE, CUSTOMER_HOLD, CUSTOMER_WHISPER, AGENT_HOLD, AGENT_WHISPER, OUTBOUND_WHISPER, AGENT_TRANSFER, QUEUE_TRANSFER.In addition to all arguments above, the following attributes are exported:"
   value       = aws_connect_contact_flow.aws_connect_contact_flow.type
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Contact Flow."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.arn
 }
-output "description" {
-  description = "(Optional) Specifies the description of the Contact Flow."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "content" {
+  description = "(Optional) Specifies the content of the Contact Flow, provided as a JSON string, written in Amazon Connect Contact Flow Language. If defined, the filename argument cannot be used."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.content
 }
 output "filename" {
   description = "(Optional) The path to the Contact Flow source within the local filesystem. Conflicts with content."
   value       = aws_connect_contact_flow.aws_connect_contact_flow.filename
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.instance_id
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Contact Flow."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Tags to apply to the Contact Flow. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.tags
 }
 output "contact_flow_id" {
   description = "The identifier of the Contact Flow."
   value       = aws_connect_contact_flow.aws_connect_contact_flow.contact_flow_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "content_hash" {
+  description = "(Optional) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the Contact Flow source specified with filename. The usual way to set this is filebase64sha256(\"mycontact_flow.json\") (Terraform 0.11.12 and later) or base64sha256(file(\"mycontact_flow.json\")) (Terraform 0.11.11 and earlier), where \"mycontact_flow.json\" is the local filename of the Contact Flow source."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.content_hash
+}
+output "description" {
+  description = "(Optional) Specifies the description of the Contact Flow."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.description
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow separated by a colon (:)."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Contact Flow."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.arn
+}
+output "contact_flow_id" {
+  description = "The identifier of the Contact Flow."
+  value       = aws_connect_contact_flow.aws_connect_contact_flow.contact_flow_id
 }
 output "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Contact Flow separated by a colon (:)."
@@ -289,15 +246,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_connect_contact_flow.aws_connect_contact_flow.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

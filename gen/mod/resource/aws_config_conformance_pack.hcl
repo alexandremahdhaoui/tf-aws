@@ -1,12 +1,12 @@
 resource "aws_config_conformance_pack" "aws_config_conformance_pack" {
-  delivery_s3_bucket     = var.delivery_s3_bucket
-  delivery_s3_key_prefix = var.delivery_s3_key_prefix
-  input_parameter        = var.input_parameter
   name                   = var.name
   parameter_name         = var.parameter_name
   parameter_value        = var.parameter_value
   template_body          = var.template_body
   template_s3_uri        = var.template_s3_uri
+  delivery_s3_bucket     = var.delivery_s3_bucket
+  delivery_s3_key_prefix = var.delivery_s3_key_prefix
+  input_parameter        = var.input_parameter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,10 +15,12 @@ variable "provider_region" {
 variable "delivery_s3_key_prefix" {
   description = "(Optional) The prefix for the Amazon S3 bucket. Maximum length of 1024."
   type        = string
+  default     = ""
 }
 variable "input_parameter" {
   description = "(Optional) Set of configuration blocks describing input parameters passed to the conformance pack template. Documented below. When configured, the parameters must also be included in the template_body or in the template stored in Amazon S3 if using template_s3_uri."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required, Forces new resource) The name of the conformance pack. Must begin with a letter and contain from 1 to 256 alphanumeric characters and hyphens."
@@ -43,6 +45,7 @@ variable "template_s3_uri" {
 variable "delivery_s3_bucket" {
   description = "(Optional) Amazon S3 bucket where AWS Config stores conformance pack templates. Maximum length of 63."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,69 +167,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "template_body" {
+  description = "(Optional, required if template_s3_uri is not provided) A string containing full conformance pack template body. Maximum length of 51200. Drift detection is not possible with this argument."
+  value       = aws_config_conformance_pack.aws_config_conformance_pack.template_body
+}
 output "template_s3_uri" {
   description = "(Optional, required if template_body is not provided) Location of file, e.g., s3://bucketname/prefix, containing the template body. The uri must point to the conformance pack template that is located in an Amazon S3 bucket in the same region as the conformance pack. Maximum length of 1024. Drift detection is not possible with this argument.input_parameter Argument ReferenceThe input_parameter configuration block supports the following arguments:"
   value       = aws_config_conformance_pack.aws_config_conformance_pack.template_s3_uri
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "delivery_s3_bucket" {
   description = "(Optional) Amazon S3 bucket where AWS Config stores conformance pack templates. Maximum length of 63."
   value       = aws_config_conformance_pack.aws_config_conformance_pack.delivery_s3_bucket
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "delivery_s3_key_prefix" {
   description = "(Optional) The prefix for the Amazon S3 bucket. Maximum length of 1024."
   value       = aws_config_conformance_pack.aws_config_conformance_pack.delivery_s3_key_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "input_parameter" {
   description = "(Optional) Set of configuration blocks describing input parameters passed to the conformance pack template. Documented below. When configured, the parameters must also be included in the template_body or in the template stored in Amazon S3 if using template_s3_uri."
   value       = aws_config_conformance_pack.aws_config_conformance_pack.input_parameter
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "(Required, Forces new resource) The name of the conformance pack. Must begin with a letter and contain from 1 to 256 alphanumeric characters and hyphens."
   value       = aws_config_conformance_pack.aws_config_conformance_pack.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "parameter_name" {
   description = "(Required) The input key."
   value       = aws_config_conformance_pack.aws_config_conformance_pack.parameter_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "parameter_value" {
   description = "(Required) The input value.In addition to all arguments above, the following attributes are exported:"
   value       = aws_config_conformance_pack.aws_config_conformance_pack.parameter_value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "template_body" {
-  description = "(Optional, required if template_s3_uri is not provided) A string containing full conformance pack template body. Maximum length of 51200. Drift detection is not possible with this argument."
-  value       = aws_config_conformance_pack.aws_config_conformance_pack.template_body
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the conformance pack."
@@ -234,7 +205,7 @@ output "arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

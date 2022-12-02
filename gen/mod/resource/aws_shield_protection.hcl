@@ -1,9 +1,9 @@
 resource "aws_shield_protection" "aws_shield_protection" {
-  name         = var.name
   resource_arn = var.resource_arn
   tags         = var.tags
   arn          = var.arn
   id           = var.id
+  name         = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -28,6 +28,7 @@ variable "resource_arn" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,61 +150,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the Protection."
-  value       = aws_shield_protection.aws_shield_protection.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The unique identifier (ID) for the Protection object that is created."
-  value       = aws_shield_protection.aws_shield_protection.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) A friendly name for the Protection you are creating."
-  value       = aws_shield_protection.aws_shield_protection.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_arn" {
   description = "(Required) The ARN (Amazon Resource Name) of the resource to be protected."
   value       = aws_shield_protection.aws_shield_protection.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_shield_protection.aws_shield_protection.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the Protection."
   value       = aws_shield_protection.aws_shield_protection.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The unique identifier (ID) for the Protection object that is created."
   value       = aws_shield_protection.aws_shield_protection.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) A friendly name for the Protection you are creating."
+  value       = aws_shield_protection.aws_shield_protection.name
+}
+output "arn" {
+  description = "The ARN of the Protection."
+  value       = aws_shield_protection.aws_shield_protection.arn
+}
+output "id" {
+  description = "The unique identifier (ID) for the Protection object that is created."
+  value       = aws_shield_protection.aws_shield_protection.id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -211,7 +184,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

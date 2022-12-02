@@ -1,14 +1,10 @@
 resource "aws_autoscaling_attachment" "aws_autoscaling_attachment" {
-  alb_target_group_arn   = var.alb_target_group_arn
   autoscaling_group_name = var.autoscaling_group_name
   elb                    = var.elb
+  alb_target_group_arn   = var.alb_target_group_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "elb" {
-  description = "(Optional) Name of the ELB."
   type        = string
 }
 variable "alb_target_group_arn" {
@@ -18,6 +14,11 @@ variable "alb_target_group_arn" {
 variable "autoscaling_group_name" {
   description = "(Required) Name of ASG to associate with the ELB."
   type        = string
+}
+variable "elb" {
+  description = "(Optional) Name of the ELB."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -139,13 +140,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "autoscaling_group_name" {
+  description = "(Required) Name of ASG to associate with the ELB."
+  value       = aws_autoscaling_attachment.aws_autoscaling_attachment.autoscaling_group_name
+}
 output "elb" {
   description = "(Optional) Name of the ELB."
   value       = aws_autoscaling_attachment.aws_autoscaling_attachment.elb
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "alb_target_group_arn" {
   description = "(Optional, strongDeprecated use lb_target_group_arn instead) ARN of an ALB Target Group."
@@ -153,15 +154,7 @@ output "alb_target_group_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "autoscaling_group_name" {
-  description = "(Required) Name of ASG to associate with the ELB."
-  value       = aws_autoscaling_attachment.aws_autoscaling_attachment.autoscaling_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

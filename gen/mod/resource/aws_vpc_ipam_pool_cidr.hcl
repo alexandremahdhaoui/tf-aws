@@ -1,17 +1,23 @@
 resource "aws_vpc_ipam_pool_cidr" "aws_vpc_ipam_pool_cidr" {
-  signature                  = var.signature
-  cidr                       = var.cidr
   cidr_authorization_context = var.cidr_authorization_context
   ipam_pool_id               = var.ipam_pool_id
   message                    = var.message
+  signature                  = var.signature
+  cidr                       = var.cidr
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "cidr" {
+  description = "(Optional) The CIDR you want to assign to the pool."
+  type        = string
+  default     = ""
+}
 variable "cidr_authorization_context" {
   description = "(Optional) A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information."
   type        = string
+  default     = ""
 }
 variable "ipam_pool_id" {
   description = "(Required) The ID of the pool to which you want to assign a CIDR.cidr_authorization_context"
@@ -20,14 +26,12 @@ variable "ipam_pool_id" {
 variable "message" {
   description = "(Optional) The plain-text authorization message for the prefix and account."
   type        = string
+  default     = ""
 }
 variable "signature" {
   description = "(Optional) The signed authorization message for the prefix and account.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "cidr" {
-  description = "(Optional) The CIDR you want to assign to the pool."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,45 +153,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "signature" {
+  description = "(Optional) The signed authorization message for the prefix and account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.signature
+}
 output "cidr" {
   description = "(Optional) The CIDR you want to assign to the pool."
   value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.cidr
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cidr_authorization_context" {
   description = "(Optional) A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP. This is not stored in the state file. See cidr_authorization_context for more information."
   value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.cidr_authorization_context
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ipam_pool_id" {
   description = "(Required) The ID of the pool to which you want to assign a CIDR.cidr_authorization_context"
   value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.ipam_pool_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "message" {
   description = "(Optional) The plain-text authorization message for the prefix and account."
   value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.message
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "signature" {
-  description = "(Optional) The signed authorization message for the prefix and account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.signature
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the IPAM Pool Cidr concatenated with the IPAM Pool ID."
@@ -195,7 +179,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

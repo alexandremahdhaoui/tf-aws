@@ -1,32 +1,21 @@
 resource "aws_networkmanager_connection" "aws_networkmanager_connection" {
-  description         = var.description
-  device_id           = var.device_id
   global_network_id   = var.global_network_id
   link_id             = var.link_id
   tags                = var.tags
   arn                 = var.arn
   connected_device_id = var.connected_device_id
   connected_link_id   = var.connected_link_id
+  description         = var.description
+  device_id           = var.device_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "device_id" {
-  description = "(Required) The ID of the first device in the connection."
-  type        = string
-}
-variable "global_network_id" {
-  description = "(Required) The ID of the global network."
-  type        = string
-}
-variable "link_id" {
-  description = "(Optional) The ID of the link for the first device."
-  type        = string
-}
 variable "tags" {
   description = "(Optional) Key-value tags for the connection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."
@@ -39,10 +28,25 @@ variable "connected_device_id" {
 variable "connected_link_id" {
   description = "(Optional) The ID of the link for the second device."
   type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Optional) A description of the connection."
   type        = string
+  default     = ""
+}
+variable "device_id" {
+  description = "(Required) The ID of the first device in the connection."
+  type        = string
+}
+variable "global_network_id" {
+  description = "(Required) The ID of the global network."
+  type        = string
+}
+variable "link_id" {
+  description = "(Optional) The ID of the link for the first device."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,77 +168,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "device_id" {
+  description = "(Required) The ID of the first device in the connection."
+  value       = aws_networkmanager_connection.aws_networkmanager_connection.device_id
+}
 output "global_network_id" {
   description = "(Required) The ID of the global network."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.global_network_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "link_id" {
   description = "(Optional) The ID of the link for the first device."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.link_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Key-value tags for the connection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_connection.aws_networkmanager_connection.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "connected_device_id" {
   description = "(Required) The ID of the second device in the connection."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.connected_device_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "connected_link_id" {
   description = "(Optional) The ID of the link for the second device."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.connected_link_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional) A description of the connection."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "device_id" {
-  description = "(Required) The ID of the first device in the connection."
-  value       = aws_networkmanager_connection.aws_networkmanager_connection.device_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -242,7 +210,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

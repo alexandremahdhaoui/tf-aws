@@ -143,33 +143,17 @@ output "arn" {
   description = "The ARN of the Lightsail static IP"
   value       = aws_lightsail_static_ip.aws_lightsail_static_ip.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ip_address" {
   description = "The allocated static IP address"
   value       = aws_lightsail_static_ip.aws_lightsail_static_ip.ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) The name for the allocated static IPIn addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_static_ip.aws_lightsail_static_ip.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN of the Lightsail static IP"
   value       = aws_lightsail_static_ip.aws_lightsail_static_ip.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "ip_address" {
   description = "The allocated static IP address"
@@ -177,7 +161,7 @@ output "ip_address" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

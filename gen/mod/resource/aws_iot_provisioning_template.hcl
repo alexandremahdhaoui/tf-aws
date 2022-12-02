@@ -1,39 +1,60 @@
 resource "aws_iot_provisioning_template" "aws_iot_provisioning_template" {
-  tags                  = var.tags
-  arn                   = var.arn
   default_version_id    = var.default_version_id
-  description           = var.description
   enabled               = var.enabled
   name                  = var.name
   payload_version       = var.payload_version
-  pre_provisioning_hook = var.pre_provisioning_hook
-  target_arb            = var.target_arb
-  provisioning_role_arn = var.provisioning_role_arn
   template_body         = var.template_body
+  arn                   = var.arn
+  description           = var.description
+  pre_provisioning_hook = var.pre_provisioning_hook
+  provisioning_role_arn = var.provisioning_role_arn
+  tags                  = var.tags
+  target_arb            = var.target_arb
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
 }
 variable "arn" {
   description = "The ARN that identifies the provisioning template."
   type        = string
 }
-variable "default_version_id" {
-  description = "The default version of the fleet provisioning template."
-  type        = string
-}
 variable "description" {
   description = "(Optional) The description of the fleet provisioning template."
+  type        = string
+  default     = ""
+}
+variable "pre_provisioning_hook" {
+  description = "(Optional) Creates a pre-provisioning hook template. Details below."
+  type        = string
+  default     = ""
+}
+variable "provisioning_role_arn" {
+  description = "(Required) The role ARN for the role associated with the fleet provisioning template. This IoT role grants permission to provision a device."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "target_arb" {
+  description = "(Optional) The ARN of the target function.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "template_body" {
+  description = "(Required) The JSON formatted contents of the fleet provisioning template.pre_provisioning_hookThe pre_provisioning_hook configuration block supports the following:"
+  type        = string
+}
+variable "default_version_id" {
+  description = "The default version of the fleet provisioning template."
   type        = string
 }
 variable "enabled" {
   description = "(Optional) True to enable the fleet provisioning template, otherwise false."
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the fleet provisioning template."
@@ -42,22 +63,7 @@ variable "name" {
 variable "payload_version" {
   description = "(Optional) The version of the payload that was sent to the target function. The only valid (and the default) payload version is \"2020-04-01\"."
   type        = string
-}
-variable "pre_provisioning_hook" {
-  description = "(Optional) Creates a pre-provisioning hook template. Details below."
-  type        = string
-}
-variable "target_arb" {
-  description = "(Optional) The ARN of the target function.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "provisioning_role_arn" {
-  description = "(Required) The role ARN for the role associated with the fleet provisioning template. This IoT role grants permission to provision a device."
-  type        = string
-}
-variable "template_body" {
-  description = "(Required) The JSON formatted contents of the fleet provisioning template.pre_provisioning_hookThe pre_provisioning_hook configuration block supports the following:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -179,109 +185,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN that identifies the provisioning template."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_version_id" {
-  description = "The default version of the fleet provisioning template."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.default_version_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional) The description of the fleet provisioning template."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled" {
-  description = "(Optional) True to enable the fleet provisioning template, otherwise false."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the fleet provisioning template."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "payload_version" {
-  description = "(Optional) The version of the payload that was sent to the target function. The only valid (and the default) payload version is \"2020-04-01\"."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.payload_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "pre_provisioning_hook" {
-  description = "(Optional) Creates a pre-provisioning hook template. Details below."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.pre_provisioning_hook
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "provisioning_role_arn" {
+  description = "(Required) The role ARN for the role associated with the fleet provisioning template. This IoT role grants permission to provision a device."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.provisioning_role_arn
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_iot_provisioning_template.aws_iot_provisioning_template.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "target_arb" {
   description = "(Optional) The ARN of the target function.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iot_provisioning_template.aws_iot_provisioning_template.target_arb
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "provisioning_role_arn" {
-  description = "(Required) The role ARN for the role associated with the fleet provisioning template. This IoT role grants permission to provision a device."
-  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.provisioning_role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "template_body" {
   description = "(Required) The JSON formatted contents of the fleet provisioning template.pre_provisioning_hookThe pre_provisioning_hook configuration block supports the following:"
   value       = aws_iot_provisioning_template.aws_iot_provisioning_template.template_body
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN that identifies the provisioning template."
   value       = aws_iot_provisioning_template.aws_iot_provisioning_template.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The description of the fleet provisioning template."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.description
+}
+output "pre_provisioning_hook" {
+  description = "(Optional) Creates a pre-provisioning hook template. Details below."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.pre_provisioning_hook
+}
+output "payload_version" {
+  description = "(Optional) The version of the payload that was sent to the target function. The only valid (and the default) payload version is \"2020-04-01\"."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.payload_version
 }
 output "default_version_id" {
   description = "The default version of the fleet provisioning template."
   value       = aws_iot_provisioning_template.aws_iot_provisioning_template.default_version_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "enabled" {
+  description = "(Optional) True to enable the fleet provisioning template, otherwise false."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.enabled
+}
+output "name" {
+  description = "(Required) The name of the fleet provisioning template."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.name
+}
+output "arn" {
+  description = "The ARN that identifies the provisioning template."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.arn
+}
+output "default_version_id" {
+  description = "The default version of the fleet provisioning template."
+  value       = aws_iot_provisioning_template.aws_iot_provisioning_template.default_version_id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -289,7 +243,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,8 +1,8 @@
 resource "aws_acmpca_permission" "aws_acmpca_permission" {
-  principal                 = var.principal
-  source_account            = var.source_account
   actions                   = var.actions
   certificate_authority_arn = var.certificate_authority_arn
+  principal                 = var.principal
+  source_account            = var.source_account
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,6 +23,7 @@ variable "principal" {
 variable "source_account" {
   description = "(Optional) ID of the calling accountIn addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -144,13 +145,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "actions" {
+  description = "(Required) Actions that the specified AWS service principal can use. These include IssueCertificate, GetCertificate, and ListPermissions. Note that in order for ACM to automatically rotate certificates issued by a PCA, it must be granted permission on all 3 actions, as per the example above."
+  value       = aws_acmpca_permission.aws_acmpca_permission.actions
+}
+output "certificate_authority_arn" {
+  description = "(Required) ARN of the CA that grants the permissions."
+  value       = aws_acmpca_permission.aws_acmpca_permission.certificate_authority_arn
+}
 output "principal" {
   description = "(Required) AWS service or identity that receives the permission. At this time, the only valid principal is acm.amazonaws.com."
   value       = aws_acmpca_permission.aws_acmpca_permission.principal
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "source_account" {
   description = "(Optional) ID of the calling accountIn addition to all arguments above, the following attributes are exported:"
@@ -158,23 +163,7 @@ output "source_account" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "actions" {
-  description = "(Required) Actions that the specified AWS service principal can use. These include IssueCertificate, GetCertificate, and ListPermissions. Note that in order for ACM to automatically rotate certificates issued by a PCA, it must be granted permission on all 3 actions, as per the example above."
-  value       = aws_acmpca_permission.aws_acmpca_permission.actions
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "certificate_authority_arn" {
-  description = "(Required) ARN of the CA that grants the permissions."
-  value       = aws_acmpca_permission.aws_acmpca_permission.certificate_authority_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

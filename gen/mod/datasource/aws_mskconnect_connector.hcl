@@ -1,7 +1,7 @@
 datasource "aws_mskconnect_connector" "aws_mskconnect_connector" {
+  arn         = var.arn
   description = var.description
   name        = var.name
-  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,17 +23,9 @@ output "arn" {
   description = "ARN of the connector."
   value       = aws_mskconnect_connector.aws_mskconnect_connector.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = "Summary description of the connector."
   value       = aws_mskconnect_connector.aws_mskconnect_connector.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "(Required) Name of the connector.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
@@ -41,7 +33,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

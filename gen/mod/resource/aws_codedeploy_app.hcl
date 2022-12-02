@@ -1,4 +1,5 @@
 resource "aws_codedeploy_app" "aws_codedeploy_app" {
+  compute_platform    = var.compute_platform
   github_account_name = var.github_account_name
   id                  = var.id
   linked_to_github    = var.linked_to_github
@@ -6,10 +7,13 @@ resource "aws_codedeploy_app" "aws_codedeploy_app" {
   tags                = var.tags
   application_id      = var.application_id
   arn                 = var.arn
-  compute_platform    = var.compute_platform
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "Amazon's assigned ID for the application."
   type        = string
 }
 variable "linked_to_github" {
@@ -23,6 +27,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "application_id" {
   description = "The application ID."
@@ -35,13 +40,10 @@ variable "arn" {
 variable "compute_platform" {
   description = "(Optional) The compute platform can either be ECS, Lambda, or Server. Default is Server."
   type        = string
+  default     = ""
 }
 variable "github_account_name" {
   description = "The name for a connection to a GitHub account."
-  type        = string
-}
-variable "id" {
-  description = "Amazon's assigned ID for the application."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,85 +166,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "linked_to_github" {
-  description = "Whether the user has authenticated with GitHub for the specified application."
-  value       = aws_codedeploy_app.aws_codedeploy_app.linked_to_github
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The application's name."
-  value       = aws_codedeploy_app.aws_codedeploy_app.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codedeploy_app.aws_codedeploy_app.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "application_id" {
-  description = "The application ID."
-  value       = aws_codedeploy_app.aws_codedeploy_app.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the CodeDeploy application."
-  value       = aws_codedeploy_app.aws_codedeploy_app.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "compute_platform" {
   description = "(Optional) The compute platform can either be ECS, Lambda, or Server. Default is Server."
   value       = aws_codedeploy_app.aws_codedeploy_app.compute_platform
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "github_account_name" {
   description = "The name for a connection to a GitHub account."
   value       = aws_codedeploy_app.aws_codedeploy_app.github_account_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Amazon's assigned ID for the application."
   value       = aws_codedeploy_app.aws_codedeploy_app.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "linked_to_github" {
   description = "Whether the user has authenticated with GitHub for the specified application."
   value       = aws_codedeploy_app.aws_codedeploy_app.linked_to_github
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The application's name."
   value       = aws_codedeploy_app.aws_codedeploy_app.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codedeploy_app.aws_codedeploy_app.tags
+}
+output "application_id" {
+  description = "The application ID."
+  value       = aws_codedeploy_app.aws_codedeploy_app.application_id
+}
+output "arn" {
+  description = "The ARN of the CodeDeploy application."
+  value       = aws_codedeploy_app.aws_codedeploy_app.arn
+}
+output "application_id" {
+  description = "The application ID."
+  value       = aws_codedeploy_app.aws_codedeploy_app.application_id
+}
+output "arn" {
+  description = "The ARN of the CodeDeploy application."
+  value       = aws_codedeploy_app.aws_codedeploy_app.arn
+}
+output "github_account_name" {
+  description = "The name for a connection to a GitHub account."
+  value       = aws_codedeploy_app.aws_codedeploy_app.github_account_name
+}
+output "id" {
+  description = "Amazon's assigned ID for the application."
+  value       = aws_codedeploy_app.aws_codedeploy_app.id
+}
+output "linked_to_github" {
+  description = "Whether the user has authenticated with GitHub for the specified application."
+  value       = aws_codedeploy_app.aws_codedeploy_app.linked_to_github
+}
+output "name" {
+  description = "The application's name."
+  value       = aws_codedeploy_app.aws_codedeploy_app.name
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,39 +228,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "application_id" {
-  description = "The application ID."
-  value       = aws_codedeploy_app.aws_codedeploy_app.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN of the CodeDeploy application."
-  value       = aws_codedeploy_app.aws_codedeploy_app.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "github_account_name" {
-  description = "The name for a connection to a GitHub account."
-  value       = aws_codedeploy_app.aws_codedeploy_app.github_account_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Amazon's assigned ID for the application."
-  value       = aws_codedeploy_app.aws_codedeploy_app.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,4 +1,5 @@
 resource "aws_vpc_ipam_pool_cidr_allocation" "aws_vpc_ipam_pool_cidr_allocation" {
+  description      = var.description
   disallowed_cidrs = var.disallowed_cidrs
   id               = var.id
   ipam_pool_id     = var.ipam_pool_id
@@ -6,7 +7,6 @@ resource "aws_vpc_ipam_pool_cidr_allocation" "aws_vpc_ipam_pool_cidr_allocation"
   resource_id      = var.resource_id
   resource_owner   = var.resource_owner
   cidr             = var.cidr
-  description      = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "provider_region" {
 variable "disallowed_cidrs" {
   description = "(Optional) Exclude a particular CIDR range from being returned by the pool."
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ID of the allocation."
@@ -27,6 +28,7 @@ variable "ipam_pool_id" {
 variable "netmask_length" {
   description = "(Optional) The netmask length of the CIDR you would like to allocate to the IPAM pool. Valid Values: 0-32.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "resource_id" {
   description = "The ID of the resource."
@@ -39,10 +41,12 @@ variable "resource_owner" {
 variable "cidr" {
   description = "(Optional) The CIDR you want to assign to the pool."
   type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Optional) The description for the allocation."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -164,85 +168,49 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) The description for the allocation."
-  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "disallowed_cidrs" {
-  description = "(Optional) Exclude a particular CIDR range from being returned by the pool."
-  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.disallowed_cidrs
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the allocation."
-  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipam_pool_id" {
-  description = "(Required) The ID of the pool to which you want to assign a CIDR."
-  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.ipam_pool_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "netmask_length" {
   description = "(Optional) The netmask length of the CIDR you would like to allocate to the IPAM pool. Valid Values: 0-32.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.netmask_length
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_id" {
   description = "The ID of the resource."
   value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.resource_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_owner" {
   description = "The owner of the resource."
   value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.resource_owner
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "cidr" {
   description = "(Optional) The CIDR you want to assign to the pool."
   value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.cidr
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) The description for the allocation."
+  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.description
+}
+output "disallowed_cidrs" {
+  description = "(Optional) Exclude a particular CIDR range from being returned by the pool."
+  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.disallowed_cidrs
 }
 output "id" {
   description = "The ID of the allocation."
   value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ipam_pool_id" {
+  description = "(Required) The ID of the pool to which you want to assign a CIDR."
+  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.ipam_pool_id
+}
+output "resource_type" {
+  description = "The type of the resource."
+  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.resource_type
+}
+output "id" {
+  description = "The ID of the allocation."
+  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.id
 }
 output "resource_id" {
   description = "The ID of the resource."
   value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.resource_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "resource_owner" {
   description = "The owner of the resource."
@@ -250,15 +218,7 @@ output "resource_owner" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "resource_type" {
-  description = "The type of the resource."
-  value       = aws_vpc_ipam_pool_cidr_allocation.aws_vpc_ipam_pool_cidr_allocation.resource_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

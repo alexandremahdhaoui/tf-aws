@@ -1,12 +1,20 @@
 resource "aws_iam_openid_connect_provider" "aws_iam_openid_connect_provider" {
+  arn             = var.arn
+  client_id_list  = var.client_id_list
   tags            = var.tags
   thumbprint_list = var.thumbprint_list
   url             = var.url
-  arn             = var.arn
-  client_id_list  = var.client_id_list
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "thumbprint_list" {
+  description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
+  type        = string
+}
+variable "url" {
+  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
   type        = string
 }
 variable "arn" {
@@ -20,14 +28,7 @@ variable "client_id_list" {
 variable "tags" {
   description = "(Optional) Map of resource tags for the IAM OIDC provider. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "thumbprint_list" {
-  description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
-  type        = string
-}
-variable "url" {
-  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -149,53 +150,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "url" {
-  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
-  value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.url
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The ARN assigned by AWS for this provider."
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "client_id_list" {
   description = "(Required) A list of client IDs (also known as audiences). When a mobile or web app registers with an OpenID Connect provider, they establish a value that identifies the application. (This is the value that's sent as the client_id parameter on OAuth requests.)"
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.client_id_list
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "tags" {
   description = "(Optional) Map of resource tags for the IAM OIDC provider. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "thumbprint_list" {
   description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.thumbprint_list
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "url" {
+  description = "(Required) The URL of the identity provider. Corresponds to the emiss claim."
+  value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.url
 }
 output "arn" {
   description = "The ARN assigned by AWS for this provider."
   value       = aws_iam_openid_connect_provider.aws_iam_openid_connect_provider.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -203,7 +180,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

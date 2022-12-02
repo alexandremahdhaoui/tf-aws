@@ -1,14 +1,22 @@
 resource "aws_iam_user" "aws_iam_user" {
+  arn                  = var.arn
+  force_destroy        = var.force_destroy
+  name                 = var.name
   path                 = var.path
   permissions_boundary = var.permissions_boundary
   tags                 = var.tags
   tags_all             = var.tags_all
-  arn                  = var.arn
-  force_destroy        = var.force_destroy
-  name                 = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "tags" {
+  description = "Key-value map of tags for the IAM user. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "arn" {
@@ -30,14 +38,7 @@ variable "path" {
 variable "permissions_boundary" {
   description = "(Optional) The ARN of the policy that is used to set the permissions boundary for the user."
   type        = string
-}
-variable "tags" {
-  description = "Key-value map of tags for the IAM user. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -159,61 +160,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_user.aws_iam_user.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN assigned by AWS for this user."
-  value       = aws_iam_user.aws_iam_user.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "force_destroy" {
-  description = "force_destroy"
-  value       = aws_iam_user.aws_iam_user.force_destroy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = "The user's name."
   value       = aws_iam_user.aws_iam_user.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "path" {
   description = "(Optional, default \"/\") Path in which to create the user."
   value       = aws_iam_user.aws_iam_user.path
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "permissions_boundary" {
   description = "(Optional) The ARN of the policy that is used to set the permissions boundary for the user."
   value       = aws_iam_user.aws_iam_user.permissions_boundary
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags" {
   description = "Key-value map of tags for the IAM user. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_user.aws_iam_user.tags
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_user.aws_iam_user.tags_all
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this user."
+  value       = aws_iam_user.aws_iam_user.arn
+}
+output "force_destroy" {
+  description = "force_destroy"
+  value       = aws_iam_user.aws_iam_user.force_destroy
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this user."
+  value       = aws_iam_user.aws_iam_user.arn
+}
+output "name" {
+  description = "The user's name."
+  value       = aws_iam_user.aws_iam_user.name
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_user.aws_iam_user.tags_all
 }
 output "unique_id" {
   description = "The unique ID assigned by AWS."
@@ -221,31 +206,7 @@ output "unique_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "The ARN assigned by AWS for this user."
-  value       = aws_iam_user.aws_iam_user.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The user's name."
-  value       = aws_iam_user.aws_iam_user.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_user.aws_iam_user.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

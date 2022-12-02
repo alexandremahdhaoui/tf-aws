@@ -1,20 +1,46 @@
 resource "aws_lex_slot_type" "aws_lex_slot_type" {
-  update                   = var.update
-  checksum                 = var.checksum
-  create                   = var.create
-  enumeration_value        = var.enumeration_value
-  name                     = var.name
-  last_updated_date        = var.last_updated_date
   synonyms                 = var.synonyms
   value                    = var.value
   value_selection_strategy = var.value_selection_strategy
-  create_version           = var.create_version
   created_date             = var.created_date
-  delete                   = var.delete
   description              = var.description
+  name                     = var.name
+  delete                   = var.delete
+  enumeration_value        = var.enumeration_value
+  last_updated_date        = var.last_updated_date
+  update                   = var.update
+  checksum                 = var.checksum
+  create                   = var.create
+  create_version           = var.create_version
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "created_date" {
+  description = "The date when the slot type version was created."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) A description of the slot type. Must be less than or equal to 200 characters in length."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the slot type. The name is not case sensitive. Must be less than or equal to 100 characters in length."
+  type        = string
+}
+variable "synonyms" {
+  description = "(Optional) Additional values related to the slot type value. Each item must be less than or equal to 140 characters in length."
+  type        = string
+  default     = ""
+}
+variable "value" {
+  description = "(Required) The value of the slot type. Must be less than or equal to 140 characters in length.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "value_selection_strategy" {
+  description = "ORIGINAL_VALUETOP_RESOLUTIONORIGINAL_VALUE.enumeration_value"
   type        = string
 }
 variable "checksum" {
@@ -25,48 +51,25 @@ variable "create" {
   description = "(Default 1m)"
   type        = string
 }
-variable "enumeration_value" {
-  description = "enumeration_value."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the slot type. The name is not case sensitive. Must be less than or equal to 100 characters in length."
-  type        = string
-}
-variable "update" {
-  description = "(Default 1m)"
-  type        = string
-}
-variable "value_selection_strategy" {
-  description = "ORIGINAL_VALUETOP_RESOLUTIONORIGINAL_VALUE.enumeration_value"
-  type        = string
-}
 variable "create_version" {
   description = "(Optional)\nDetermines if a new slot type version is created when the initial resource is created and on each\nupdate. Defaults to false."
   type        = string
-}
-variable "created_date" {
-  description = "The date when the slot type version was created."
-  type        = string
+  default     = ""
 }
 variable "delete" {
   description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "description" {
-  description = "(Optional) A description of the slot type. Must be less than or equal to 200 characters in length."
+variable "enumeration_value" {
+  description = "enumeration_value."
   type        = string
 }
 variable "last_updated_date" {
   description = "The date when the $LATEST version of this slot type was updated."
   type        = string
 }
-variable "synonyms" {
-  description = "(Optional) Additional values related to the slot type value. Each item must be less than or equal to 140 characters in length."
-  type        = string
-}
-variable "value" {
-  description = "(Required) The value of the slot type. Must be less than or equal to 140 characters in length.TimeoutsConfiguration options:"
+variable "update" {
+  description = "(Default 1m)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -189,109 +192,69 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "synonyms" {
-  description = "(Optional) Additional values related to the slot type value. Each item must be less than or equal to 140 characters in length."
-  value       = aws_lex_slot_type.aws_lex_slot_type.synonyms
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value" {
-  description = "(Required) The value of the slot type. Must be less than or equal to 140 characters in length.TimeoutsConfiguration options:"
-  value       = aws_lex_slot_type.aws_lex_slot_type.value
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "value_selection_strategy" {
-  description = "ORIGINAL_VALUETOP_RESOLUTIONORIGINAL_VALUE.enumeration_value"
-  value       = aws_lex_slot_type.aws_lex_slot_type.value_selection_strategy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "create_version" {
-  description = "(Optional)\nDetermines if a new slot type version is created when the initial resource is created and on each\nupdate. Defaults to false."
-  value       = aws_lex_slot_type.aws_lex_slot_type.create_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "created_date" {
   description = "The date when the slot type version was created."
   value       = aws_lex_slot_type.aws_lex_slot_type.created_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "delete" {
-  description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lex_slot_type.aws_lex_slot_type.delete
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "(Optional) A description of the slot type. Must be less than or equal to 200 characters in length."
   value       = aws_lex_slot_type.aws_lex_slot_type.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Required) The name of the slot type. The name is not case sensitive. Must be less than or equal to 100 characters in length."
+  value       = aws_lex_slot_type.aws_lex_slot_type.name
 }
-output "last_updated_date" {
-  description = "The date when the $LATEST version of this slot type was updated."
-  value       = aws_lex_slot_type.aws_lex_slot_type.last_updated_date
+output "synonyms" {
+  description = "(Optional) Additional values related to the slot type value. Each item must be less than or equal to 140 characters in length."
+  value       = aws_lex_slot_type.aws_lex_slot_type.synonyms
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "value" {
+  description = "(Required) The value of the slot type. Must be less than or equal to 140 characters in length.TimeoutsConfiguration options:"
+  value       = aws_lex_slot_type.aws_lex_slot_type.value
+}
+output "value_selection_strategy" {
+  description = "ORIGINAL_VALUETOP_RESOLUTIONORIGINAL_VALUE.enumeration_value"
+  value       = aws_lex_slot_type.aws_lex_slot_type.value_selection_strategy
 }
 output "checksum" {
   description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
   value       = aws_lex_slot_type.aws_lex_slot_type.checksum
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "create" {
   description = "(Default 1m)"
   value       = aws_lex_slot_type.aws_lex_slot_type.create
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "create_version" {
+  description = "(Optional)\nDetermines if a new slot type version is created when the initial resource is created and on each\nupdate. Defaults to false."
+  value       = aws_lex_slot_type.aws_lex_slot_type.create_version
+}
+output "delete" {
+  description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lex_slot_type.aws_lex_slot_type.delete
 }
 output "enumeration_value" {
   description = "enumeration_value."
   value       = aws_lex_slot_type.aws_lex_slot_type.enumeration_value
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the slot type. The name is not case sensitive. Must be less than or equal to 100 characters in length."
-  value       = aws_lex_slot_type.aws_lex_slot_type.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "last_updated_date" {
+  description = "The date when the $LATEST version of this slot type was updated."
+  value       = aws_lex_slot_type.aws_lex_slot_type.last_updated_date
 }
 output "update" {
   description = "(Default 1m)"
   value       = aws_lex_slot_type.aws_lex_slot_type.update
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "created_date" {
+  description = "The date when the slot type version was created."
+  value       = aws_lex_slot_type.aws_lex_slot_type.created_date
+}
+output "last_updated_date" {
+  description = "The date when the $LATEST version of this slot type was updated."
+  value       = aws_lex_slot_type.aws_lex_slot_type.last_updated_date
+}
+output "version" {
+  description = "The version of the slot type."
+  value       = aws_lex_slot_type.aws_lex_slot_type.version
 }
 output "checksum" {
   description = "Checksum identifying the version of the slot type that was created. The checksum is\nnot included as an argument because the resource will add it automatically when updating the slot type."
@@ -299,31 +262,7 @@ output "checksum" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "created_date" {
-  description = "The date when the slot type version was created."
-  value       = aws_lex_slot_type.aws_lex_slot_type.created_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "last_updated_date" {
-  description = "The date when the $LATEST version of this slot type was updated."
-  value       = aws_lex_slot_type.aws_lex_slot_type.last_updated_date
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "version" {
-  description = "The version of the slot type."
-  value       = aws_lex_slot_type.aws_lex_slot_type.version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

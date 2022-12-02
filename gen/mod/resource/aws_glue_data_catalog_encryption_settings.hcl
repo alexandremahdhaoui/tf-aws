@@ -1,24 +1,21 @@
 resource "aws_glue_data_catalog_encryption_settings" "aws_glue_data_catalog_encryption_settings" {
-  data_catalog_encryption_settings     = var.data_catalog_encryption_settings
-  encryption_at_rest                   = var.encryption_at_rest
-  return_connection_password_encrypted = var.return_connection_password_encrypted
-  sse_aws_kms_key_id                   = var.sse_aws_kms_key_id
   aws_kms_key_id                       = var.aws_kms_key_id
   catalog_encryption_mode              = var.catalog_encryption_mode
   catalog_id                           = var.catalog_id
   connection_password_encryption       = var.connection_password_encryption
+  data_catalog_encryption_settings     = var.data_catalog_encryption_settings
+  encryption_at_rest                   = var.encryption_at_rest
+  return_connection_password_encrypted = var.return_connection_password_encrypted
+  sse_aws_kms_key_id                   = var.sse_aws_kms_key_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "sse_aws_kms_key_id" {
-  description = "(Optional) The ARN of the AWS KMS key to use for encryption at rest.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "aws_kms_key_id" {
   description = "(Optional) A KMS key ARN that is used to encrypt the connection password. If connection password protection is enabled, the caller of CreateConnection and UpdateConnection needs at least kms:Encrypt permission on the specified AWS KMS key, to encrypt passwords before storing them in the Data Catalog.encryption_at_rest"
   type        = string
+  default     = ""
 }
 variable "catalog_encryption_mode" {
   description = "(Required) The encryption-at-rest mode for encrypting Data Catalog data. Valid values are DISABLED and SSE-KMS."
@@ -27,6 +24,7 @@ variable "catalog_encryption_mode" {
 variable "catalog_id" {
   description = " – (Optional) The ID of the Data Catalog to set the security configuration for. If none is provided, the AWS account ID is used by default.data_catalog_encryption_settings"
   type        = string
+  default     = ""
 }
 variable "connection_password_encryption" {
   description = "(Required) When connection password protection is enabled, the Data Catalog uses a customer-provided key to encrypt the password as part of CreateConnection or UpdateConnection and store it in the ENCRYPTED_PASSWORD field in the connection properties. You can enable catalog encryption or only password encryption. see Connection Password Encryption."
@@ -43,6 +41,11 @@ variable "encryption_at_rest" {
 variable "return_connection_password_encrypted" {
   description = "(Required) When set to true, passwords remain encrypted in the responses of GetConnection and GetConnections. This encryption takes effect independently of the catalog encryption."
   type        = string
+}
+variable "sse_aws_kms_key_id" {
+  description = "(Optional) The ARN of the AWS KMS key to use for encryption at rest.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -168,65 +171,33 @@ output "return_connection_password_encrypted" {
   description = "(Required) When set to true, passwords remain encrypted in the responses of GetConnection and GetConnections. This encryption takes effect independently of the catalog encryption."
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.return_connection_password_encrypted
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "sse_aws_kms_key_id" {
   description = "(Optional) The ARN of the AWS KMS key to use for encryption at rest.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.sse_aws_kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "aws_kms_key_id" {
   description = "(Optional) A KMS key ARN that is used to encrypt the connection password. If connection password protection is enabled, the caller of CreateConnection and UpdateConnection needs at least kms:Encrypt permission on the specified AWS KMS key, to encrypt passwords before storing them in the Data Catalog.encryption_at_rest"
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.aws_kms_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "catalog_encryption_mode" {
   description = "(Required) The encryption-at-rest mode for encrypting Data Catalog data. Valid values are DISABLED and SSE-KMS."
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.catalog_encryption_mode
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "catalog_id" {
   description = " – (Optional) The ID of the Data Catalog to set the security configuration for. If none is provided, the AWS account ID is used by default.data_catalog_encryption_settings"
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.catalog_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "connection_password_encryption" {
   description = "(Required) When connection password protection is enabled, the Data Catalog uses a customer-provided key to encrypt the password as part of CreateConnection or UpdateConnection and store it in the ENCRYPTED_PASSWORD field in the connection properties. You can enable catalog encryption or only password encryption. see Connection Password Encryption."
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.connection_password_encryption
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "data_catalog_encryption_settings" {
   description = " – (Required) The security configuration to set. see Data Catalog Encryption Settings."
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.data_catalog_encryption_settings
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "encryption_at_rest" {
   description = "(Required) Specifies the encryption-at-rest configuration for the Data Catalog. see Encryption At Rest.connection_password_encryption"
   value       = aws_glue_data_catalog_encryption_settings.aws_glue_data_catalog_encryption_settings.encryption_at_rest
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ID of the Data Catalog to set the security configuration for."
@@ -234,7 +205,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

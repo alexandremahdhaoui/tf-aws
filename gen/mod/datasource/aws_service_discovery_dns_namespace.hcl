@@ -4,13 +4,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "hosted_zone" {
+  description = "ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
+  value       = aws_service_discovery_dns_namespace.aws_service_discovery_dns_namespace.hosted_zone
+}
+output "id" {
+  description = "Namespace ID."
+  value       = aws_service_discovery_dns_namespace.aws_service_discovery_dns_namespace.id
+}
 output "arn" {
   description = "ARN of the namespace."
   value       = aws_service_discovery_dns_namespace.aws_service_discovery_dns_namespace.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "description" {
   description = "Description of the namespace."
@@ -18,23 +22,7 @@ output "description" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "hosted_zone" {
-  description = "ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
-  value       = aws_service_discovery_dns_namespace.aws_service_discovery_dns_namespace.hosted_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Namespace ID."
-  value       = aws_service_discovery_dns_namespace.aws_service_discovery_dns_namespace.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

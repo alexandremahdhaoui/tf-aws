@@ -1,8 +1,8 @@
 resource "aws_kms_alias" "aws_kms_alias" {
+  arn           = var.arn
   name          = var.name
   name_prefix   = var.name_prefix
   target_key_id = var.target_key_id
-  arn           = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,6 +15,7 @@ variable "arn" {
 variable "name" {
   description = "(Optional) The display name of the alias. The name must start with the word \"alias\" followed by a forward slash (alias/)"
   type        = string
+  default     = ""
 }
 variable "name_prefix" {
   description = "name."
@@ -144,45 +145,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the key alias."
-  value       = aws_kms_alias.aws_kms_alias.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Optional) The display name of the alias. The name must start with the word \"alias\" followed by a forward slash (alias/)"
-  value       = aws_kms_alias.aws_kms_alias.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name_prefix" {
   description = "name."
   value       = aws_kms_alias.aws_kms_alias.name_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "target_key_id" {
   description = "(Required) Identifier for the key for which the alias is for, can be either an ARN or key_id.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_alias.aws_kms_alias.target_key_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the key alias."
   value       = aws_kms_alias.aws_kms_alias.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "(Optional) The display name of the alias. The name must start with the word \"alias\" followed by a forward slash (alias/)"
+  value       = aws_kms_alias.aws_kms_alias.name
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the key alias."
+  value       = aws_kms_alias.aws_kms_alias.arn
 }
 output "target_key_arn" {
   description = "The Amazon Resource Name (ARN) of the target key identifier."
@@ -190,7 +171,7 @@ output "target_key_arn" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

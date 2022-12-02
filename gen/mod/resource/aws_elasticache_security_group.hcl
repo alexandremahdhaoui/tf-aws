@@ -1,7 +1,7 @@
 resource "aws_elasticache_security_group" "aws_elasticache_security_group" {
+  security_group_names = var.security_group_names
   description          = var.description
   name                 = var.name
-  security_group_names = var.security_group_names
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -143,41 +143,21 @@ output "description" {
   description = ""
   value       = aws_elasticache_security_group.aws_elasticache_security_group.description
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "name" {
   description = ""
   value       = aws_elasticache_security_group.aws_elasticache_security_group.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "security_group_names" {
   description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_security_group.aws_elasticache_security_group.security_group_names
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "security_group_names" {
   description = ""
   value       = aws_elasticache_security_group.aws_elasticache_security_group.security_group_names
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "description" {
   description = ""
   value       = aws_elasticache_security_group.aws_elasticache_security_group.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = ""
@@ -185,7 +165,7 @@ output "name" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

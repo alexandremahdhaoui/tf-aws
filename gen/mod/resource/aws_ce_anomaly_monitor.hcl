@@ -11,10 +11,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "monitor_dimension" {
-  description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
-  type        = string
-}
 variable "monitor_specification" {
   description = "(Required, if monitor_type is CUSTOM) A valid JSON representation for the Expression object."
   type        = string
@@ -30,6 +26,7 @@ variable "name" {
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "ARN of the anomaly monitor."
@@ -37,6 +34,10 @@ variable "arn" {
 }
 variable "id" {
   description = "Unique ID of the anomaly monitor. Same as arn."
+  type        = string
+}
+variable "monitor_dimension" {
+  description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,77 +160,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "monitor_specification" {
-  description = "(Required, if monitor_type is CUSTOM) A valid JSON representation for the Expression object."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_specification
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "monitor_type" {
-  description = "(Required) The possible type values. Valid values: DIMENSIONAL | CUSTOM."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "(Required) The name of the monitor."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the anomaly monitor."
-  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Unique ID of the anomaly monitor. Same as arn."
   value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "monitor_dimension" {
   description = "(Required, if monitor_type is DIMENSIONAL) The dimensions to evaluate. Valid values: SERVICE."
   value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_dimension
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "monitor_specification" {
+  description = "(Required, if monitor_type is CUSTOM) A valid JSON representation for the Expression object."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_specification
+}
+output "monitor_type" {
+  description = "(Required) The possible type values. Valid values: DIMENSIONAL | CUSTOM."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.monitor_type
+}
+output "name" {
+  description = "(Required) The name of the monitor."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.name
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.tags
 }
 output "arn" {
   description = "ARN of the anomaly monitor."
   value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of the anomaly monitor."
+  value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.arn
 }
 output "id" {
   description = "Unique ID of the anomaly monitor. Same as arn."
   value       = aws_ce_anomaly_monitor.aws_ce_anomaly_monitor.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -237,7 +202,7 @@ output "tags_all" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

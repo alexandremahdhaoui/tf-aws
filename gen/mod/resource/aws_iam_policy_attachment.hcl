@@ -1,22 +1,19 @@
 resource "aws_iam_policy_attachment" "aws_iam_policy_attachment" {
-  roles      = var.roles
-  users      = var.users
   groups     = var.groups
   id         = var.id
   name       = var.name
   policy_arn = var.policy_arn
+  roles      = var.roles
+  users      = var.users
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "users" {
-  description = "   (Optional) - The user(s) the policy should be applied to"
-  type        = string
-}
 variable "groups" {
   description = "  (Optional) - The group(s) the policy should be applied to"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The policy's ID."
@@ -33,6 +30,12 @@ variable "policy_arn" {
 variable "roles" {
   description = "   (Optional) - The role(s) the policy should be applied to"
   type        = string
+  default     = ""
+}
+variable "users" {
+  description = "   (Optional) - The user(s) the policy should be applied to"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -154,53 +157,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "users" {
-  description = "   (Optional) - The user(s) the policy should be applied to"
-  value       = aws_iam_policy_attachment.aws_iam_policy_attachment.users
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "groups" {
   description = "  (Optional) - The group(s) the policy should be applied to"
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.groups
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The policy's ID."
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "name" {
   description = "    (Required) - The name of the attachment. This cannot be an empty string."
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_arn" {
   description = "  (Required) - The ARN of the policy you want to applyIn addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.policy_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "roles" {
   description = "   (Optional) - The role(s) the policy should be applied to"
   value       = aws_iam_policy_attachment.aws_iam_policy_attachment.roles
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "users" {
+  description = "   (Optional) - The user(s) the policy should be applied to"
+  value       = aws_iam_policy_attachment.aws_iam_policy_attachment.users
 }
 output "id" {
   description = "The policy's ID."
@@ -208,7 +187,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

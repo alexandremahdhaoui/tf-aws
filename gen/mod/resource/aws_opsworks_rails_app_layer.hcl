@@ -1,183 +1,206 @@
 resource "aws_opsworks_rails_app_layer" "aws_opsworks_rails_app_layer" {
-  custom_configure_recipes    = var.custom_configure_recipes
-  size                        = var.size
-  tags                        = var.tags
-  app_server                  = var.app_server
-  auto_healing                = var.auto_healing
-  custom_security_group_ids   = var.custom_security_group_ids
-  drain_elb_on_shutdown       = var.drain_elb_on_shutdown
+  custom_shutdown_recipes     = var.custom_shutdown_recipes
+  ebs_volume                  = var.ebs_volume
   elastic_load_balancer       = var.elastic_load_balancer
-  id                          = var.id
-  install_updates_on_boot     = var.install_updates_on_boot
-  iops                        = var.iops
-  auto_assign_elastic_ips     = var.auto_assign_elastic_ips
-  type                        = var.type
+  manage_bundler              = var.manage_bundler
+  number_of_disks             = var.number_of_disks
+  use_ebs_optimized_instances = var.use_ebs_optimized_instances
+  auto_healing                = var.auto_healing
+  custom_setup_recipes        = var.custom_setup_recipes
+  custom_undeploy_recipes     = var.custom_undeploy_recipes
   name                        = var.name
-  custom_deploy_recipes       = var.custom_deploy_recipes
+  type                        = var.type
+  arn                         = var.arn
+  bundler_version             = var.bundler_version
+  custom_security_group_ids   = var.custom_security_group_ids
+  instance_shutdown_timeout   = var.instance_shutdown_timeout
+  auto_assign_public_ips      = var.auto_assign_public_ips
+  custom_configure_recipes    = var.custom_configure_recipes
+  raid_level                  = var.raid_level
+  stack_id                    = var.stack_id
   custom_instance_profile_arn = var.custom_instance_profile_arn
   custom_json                 = var.custom_json
-  instance_shutdown_timeout   = var.instance_shutdown_timeout
-  number_of_disks             = var.number_of_disks
-  auto_assign_public_ips      = var.auto_assign_public_ips
   passenger_version           = var.passenger_version
-  custom_undeploy_recipes     = var.custom_undeploy_recipes
-  custom_shutdown_recipes     = var.custom_shutdown_recipes
-  stack_id                    = var.stack_id
-  arn                         = var.arn
-  raid_level                  = var.raid_level
-  ruby_version                = var.ruby_version
-  use_ebs_optimized_instances = var.use_ebs_optimized_instances
+  id                          = var.id
   mount_point                 = var.mount_point
-  manage_bundler              = var.manage_bundler
-  rubygems_version            = var.rubygems_version
-  bundler_version             = var.bundler_version
-  ebs_volume                  = var.ebs_volume
+  install_updates_on_boot     = var.install_updates_on_boot
+  app_server                  = var.app_server
+  auto_assign_elastic_ips     = var.auto_assign_elastic_ips
+  ruby_version                = var.ruby_version
+  drain_elb_on_shutdown       = var.drain_elb_on_shutdown
+  iops                        = var.iops
+  size                        = var.size
   system_packages             = var.system_packages
-  custom_setup_recipes        = var.custom_setup_recipes
+  tags                        = var.tags
+  custom_deploy_recipes       = var.custom_deploy_recipes
+  rubygems_version            = var.rubygems_version
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "custom_security_group_ids" {
-  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
-  type        = string
-}
-variable "drain_elb_on_shutdown" {
-  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
-  type        = string
-}
-variable "elastic_load_balancer" {
-  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
-  type        = string
-}
-variable "id" {
-  description = "The id of the layer."
-  type        = string
-}
-variable "install_updates_on_boot" {
-  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
-  type        = string
-}
-variable "iops" {
-  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "auto_assign_elastic_ips" {
-  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
-  type        = string
-}
-variable "auto_healing" {
-  description = "(Optional) Whether to enable auto-healing for the layer."
-  type        = string
-}
-variable "name" {
-  description = "(Optional) A human-readable name for the layer."
-  type        = string
-}
-variable "type" {
-  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
-  type        = string
-}
-variable "custom_instance_profile_arn" {
-  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
-  type        = string
-}
-variable "custom_json" {
-  description = "(Optional) Custom JSON attributes to apply to the layer."
-  type        = string
-}
-variable "instance_shutdown_timeout" {
-  description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
-  type        = string
-}
-variable "number_of_disks" {
-  description = "(Required) The number of disks to use for the EBS volume."
-  type        = string
-}
-variable "auto_assign_public_ips" {
-  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
   type        = string
 }
 variable "custom_deploy_recipes" {
   description = ""
   type        = string
 }
-variable "custom_undeploy_recipes" {
-  description = "An ebs_volume block supports the following arguments:"
+variable "rubygems_version" {
+  description = "(Optional) The version of RubyGems to use. Defaults to \"2.2.2\"."
+  type        = string
+  default     = ""
+}
+variable "size" {
+  description = "(Required) The size of the volume in gigabytes."
   type        = string
 }
-variable "passenger_version" {
-  description = "(Optional) The version of Passenger to use. Defaults to \"4.0.46\"."
+variable "system_packages" {
+  description = "(Optional) Names of a set of system packages to install on the layer's instances."
   type        = string
+  default     = ""
 }
-variable "stack_id" {
-  description = "(Required) ID of the stack the layer will belong to."
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
-variable "arn" {
-  description = "The Amazon Resource Name(ARN) of the layer."
+variable "use_ebs_optimized_instances" {
+  description = "(Optional) Whether to use EBS-optimized instances."
+  type        = string
+  default     = ""
+}
+variable "auto_healing" {
+  description = "(Optional) Whether to enable auto-healing for the layer."
+  type        = string
+  default     = ""
+}
+variable "custom_setup_recipes" {
+  description = ""
   type        = string
 }
 variable "custom_shutdown_recipes" {
   description = ""
   type        = string
 }
-variable "ruby_version" {
-  description = "(Optional) The version of Ruby to use. Defaults to \"2.0.0\"."
+variable "ebs_volume" {
+  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "elastic_load_balancer" {
+  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+  type        = string
+  default     = ""
+}
+variable "manage_bundler" {
+  description = "(Optional) Whether OpsWorks should manage bundler. On by default."
+  type        = string
+  default     = ""
+}
+variable "number_of_disks" {
+  description = "(Required) The number of disks to use for the EBS volume."
   type        = string
 }
-variable "use_ebs_optimized_instances" {
-  description = "(Optional) Whether to use EBS-optimized instances."
+variable "arn" {
+  description = "The Amazon Resource Name(ARN) of the layer."
+  type        = string
+}
+variable "bundler_version" {
+  description = "(Optional) When OpsWorks is managing Bundler, which version to use. Defaults to \"1.5.3\"."
+  type        = string
+  default     = ""
+}
+variable "custom_undeploy_recipes" {
+  description = "An ebs_volume block supports the following arguments:"
+  type        = string
+}
+variable "name" {
+  description = "(Optional) A human-readable name for the layer."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
+  type        = string
+  default     = ""
+}
+variable "auto_assign_public_ips" {
+  description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "custom_configure_recipes" {
+  description = ""
+  type        = string
+}
+variable "custom_security_group_ids" {
+  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "instance_shutdown_timeout" {
+  description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
+  type        = string
+  default     = ""
+}
+variable "custom_instance_profile_arn" {
+  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
+  type        = string
+  default     = ""
+}
+variable "custom_json" {
+  description = "(Optional) Custom JSON attributes to apply to the layer."
+  type        = string
+  default     = ""
+}
+variable "raid_level" {
+  description = "(Required) The RAID level to use for the volume."
+  type        = string
+}
+variable "stack_id" {
+  description = "(Required) ID of the stack the layer will belong to."
+  type        = string
+}
+variable "id" {
+  description = "The id of the layer."
   type        = string
 }
 variable "mount_point" {
   description = "(Required) The path to mount the EBS volume on the layer's instances."
   type        = string
 }
-variable "raid_level" {
-  description = "(Required) The RAID level to use for the volume."
+variable "passenger_version" {
+  description = "(Optional) The version of Passenger to use. Defaults to \"4.0.46\"."
   type        = string
-}
-variable "rubygems_version" {
-  description = "(Optional) The version of RubyGems to use. Defaults to \"2.2.2\"."
-  type        = string
-}
-variable "bundler_version" {
-  description = "(Optional) When OpsWorks is managing Bundler, which version to use. Defaults to \"1.5.3\"."
-  type        = string
-}
-variable "manage_bundler" {
-  description = "(Optional) Whether OpsWorks should manage bundler. On by default."
-  type        = string
-}
-variable "system_packages" {
-  description = "(Optional) Names of a set of system packages to install on the layer's instances."
-  type        = string
-}
-variable "custom_setup_recipes" {
-  description = ""
-  type        = string
-}
-variable "ebs_volume" {
-  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
-  type        = string
-}
-variable "size" {
-  description = "(Required) The size of the volume in gigabytes."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
+  default     = ""
 }
 variable "app_server" {
   description = "(Optional) Keyword for the app server to use. Defaults to \"apache_passenger\"."
   type        = string
+  default     = ""
 }
-variable "custom_configure_recipes" {
-  description = ""
+variable "auto_assign_elastic_ips" {
+  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
   type        = string
+  default     = ""
+}
+variable "install_updates_on_boot" {
+  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
+  type        = string
+  default     = ""
+}
+variable "drain_elb_on_shutdown" {
+  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
+  type        = string
+  default     = ""
+}
+variable "iops" {
+  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "ruby_version" {
+  description = "(Optional) The version of Ruby to use. Defaults to \"2.0.0\"."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -299,293 +322,149 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "custom_undeploy_recipes" {
-  description = "An ebs_volume block supports the following arguments:"
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_undeploy_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "passenger_version" {
-  description = "(Optional) The version of Passenger to use. Defaults to \"4.0.46\"."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.passenger_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "type" {
+  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.type
 }
 output "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_shutdown_recipes" {
-  description = ""
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_shutdown_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "stack_id" {
-  description = "(Required) ID of the stack the layer will belong to."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.stack_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "mount_point" {
-  description = "(Required) The path to mount the EBS volume on the layer's instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.mount_point
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "raid_level" {
-  description = "(Required) The RAID level to use for the volume."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.raid_level
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ruby_version" {
-  description = "(Optional) The version of Ruby to use. Defaults to \"2.0.0\"."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.ruby_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "use_ebs_optimized_instances" {
-  description = "(Optional) Whether to use EBS-optimized instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.use_ebs_optimized_instances
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "bundler_version" {
   description = "(Optional) When OpsWorks is managing Bundler, which version to use. Defaults to \"1.5.3\"."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.bundler_version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "manage_bundler" {
-  description = "(Optional) Whether OpsWorks should manage bundler. On by default."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.manage_bundler
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "rubygems_version" {
-  description = "(Optional) The version of RubyGems to use. Defaults to \"2.2.2\"."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.rubygems_version
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_setup_recipes" {
-  description = ""
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_setup_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ebs_volume" {
-  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.ebs_volume
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "system_packages" {
-  description = "(Optional) Names of a set of system packages to install on the layer's instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.system_packages
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "app_server" {
-  description = "(Optional) Keyword for the app server to use. Defaults to \"apache_passenger\"."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.app_server
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_configure_recipes" {
-  description = ""
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_configure_recipes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "size" {
-  description = "(Required) The size of the volume in gigabytes."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.size
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iops" {
-  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.iops
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_assign_elastic_ips" {
-  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.auto_assign_elastic_ips
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "auto_healing" {
-  description = "(Optional) Whether to enable auto-healing for the layer."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.auto_healing
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_security_group_ids" {
-  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "drain_elb_on_shutdown" {
-  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.drain_elb_on_shutdown
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "elastic_load_balancer" {
-  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.elastic_load_balancer
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The id of the layer."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "install_updates_on_boot" {
-  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.install_updates_on_boot
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "custom_undeploy_recipes" {
+  description = "An ebs_volume block supports the following arguments:"
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_undeploy_recipes
 }
 output "name" {
   description = "(Optional) A human-readable name for the layer."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "type" {
-  description = "(Optional) The type of volume to create. This may be standard (the default), io1 or gp2."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "auto_assign_public_ips" {
   description = "(Optional) For stacks belonging to a VPC, whether to automatically assign a public IP address to each of the layer's instances."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.auto_assign_public_ips
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_deploy_recipes" {
+output "custom_configure_recipes" {
   description = ""
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_deploy_recipes
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_configure_recipes
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_instance_profile_arn" {
-  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_instance_profile_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "custom_json" {
-  description = "(Optional) Custom JSON attributes to apply to the layer."
-  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_json
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "custom_security_group_ids" {
+  description = "(Optional) Ids for a set of security groups to apply to the layer's instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_security_group_ids
 }
 output "instance_shutdown_timeout" {
   description = "(Optional) The time, in seconds, that OpsWorks will wait for Chef to complete after triggering the Shutdown event."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.instance_shutdown_timeout
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "custom_instance_profile_arn" {
+  description = "(Optional) The ARN of an IAM profile that will be used for the layer's instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_instance_profile_arn
+}
+output "custom_json" {
+  description = "(Optional) Custom JSON attributes to apply to the layer."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_json
+}
+output "raid_level" {
+  description = "(Required) The RAID level to use for the volume."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.raid_level
+}
+output "stack_id" {
+  description = "(Required) ID of the stack the layer will belong to."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.stack_id
+}
+output "id" {
+  description = "The id of the layer."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.id
+}
+output "mount_point" {
+  description = "(Required) The path to mount the EBS volume on the layer's instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.mount_point
+}
+output "passenger_version" {
+  description = "(Optional) The version of Passenger to use. Defaults to \"4.0.46\"."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.passenger_version
+}
+output "app_server" {
+  description = "(Optional) Keyword for the app server to use. Defaults to \"apache_passenger\"."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.app_server
+}
+output "auto_assign_elastic_ips" {
+  description = "(Optional) Whether to automatically assign an elastic IP address to the layer's instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.auto_assign_elastic_ips
+}
+output "install_updates_on_boot" {
+  description = "(Optional) Whether to install OS and package updates on each instance when it boots."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.install_updates_on_boot
+}
+output "drain_elb_on_shutdown" {
+  description = "(Optional) Whether to enable Elastic Load Balancing connection draining."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.drain_elb_on_shutdown
+}
+output "iops" {
+  description = "(Optional) For PIOPS volumes, the IOPS per disk.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.iops
+}
+output "ruby_version" {
+  description = "(Optional) The version of Ruby to use. Defaults to \"2.0.0\"."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.ruby_version
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.tags
+}
+output "custom_deploy_recipes" {
+  description = ""
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_deploy_recipes
+}
+output "rubygems_version" {
+  description = "(Optional) The version of RubyGems to use. Defaults to \"2.2.2\"."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.rubygems_version
+}
+output "size" {
+  description = "(Required) The size of the volume in gigabytes."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.size
+}
+output "system_packages" {
+  description = "(Optional) Names of a set of system packages to install on the layer's instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.system_packages
+}
+output "elastic_load_balancer" {
+  description = "(Optional) Name of an Elastic Load Balancer to attach to this layer"
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.elastic_load_balancer
+}
+output "manage_bundler" {
+  description = "(Optional) Whether OpsWorks should manage bundler. On by default."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.manage_bundler
 }
 output "number_of_disks" {
   description = "(Required) The number of disks to use for the EBS volume."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.number_of_disks
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "use_ebs_optimized_instances" {
+  description = "(Optional) Whether to use EBS-optimized instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.use_ebs_optimized_instances
+}
+output "auto_healing" {
+  description = "(Optional) Whether to enable auto-healing for the layer."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.auto_healing
+}
+output "custom_setup_recipes" {
+  description = ""
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_setup_recipes
+}
+output "custom_shutdown_recipes" {
+  description = ""
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.custom_shutdown_recipes
+}
+output "ebs_volume" {
+  description = "(Optional) ebs_volume blocks, as described below, will each create an EBS volume and connect it to the layer's instances."
+  value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.ebs_volume
 }
 output "arn" {
   description = "The Amazon Resource Name(ARN) of the layer."
   value       = aws_opsworks_rails_app_layer.aws_opsworks_rails_app_layer.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The id of the layer."
@@ -593,7 +472,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,9 +1,9 @@
 resource "aws_vpc_ipam_scope" "aws_vpc_ipam_scope" {
-  is_default  = var.is_default
   description = var.description
   id          = var.id
   ipam_arn    = var.ipam_arn
   ipam_id     = var.ipam_id
+  is_default  = var.is_default
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -12,6 +12,7 @@ variable "provider_region" {
 variable "description" {
   description = "(Optional) A description for the scope you're creating.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The ID of the IPAM Scope."
@@ -149,69 +150,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) A description for the scope you're creating.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the IPAM Scope."
-  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "ipam_arn" {
-  description = "The ARN of the IPAM for which you're creating this scope."
-  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "ipam_id" {
   description = "The ID of the IPAM for which you're creating this scope."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "is_default" {
   description = "Defines if the scope is the default scope or not."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.is_default
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional) A description for the scope you're creating.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.description
 }
 output "id" {
   description = "The ID of the IPAM Scope."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "ipam_arn" {
+  description = "The ARN of the IPAM for which you're creating this scope."
+  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_arn
+}
+output "id" {
+  description = "The ID of the IPAM Scope."
+  value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.id
 }
 output "ipam_arn" {
   description = "The ARN of the IPAM for which you're creating this scope."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.ipam_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "is_default" {
   description = "Defines if the scope is the default scope or not."
   value       = aws_vpc_ipam_scope.aws_vpc_ipam_scope.is_default
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "pool_count" {
   description = "Count of pools under this scope"
@@ -219,7 +188,7 @@ output "pool_count" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

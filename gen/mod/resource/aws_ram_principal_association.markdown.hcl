@@ -134,21 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resource_share_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the resource share.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ram_principal_association.markdown.aws_ram_principal_association.markdown.resource_share_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "principal" {
   description = "(Required) The principal to associate with the resource share. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN."
   value       = aws_ram_principal_association.markdown.aws_ram_principal_association.markdown.principal
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "resource_share_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the resource share.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ram_principal_association.markdown.aws_ram_principal_association.markdown.resource_share_arn
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the Resource Share and the principal, separated by a comma."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

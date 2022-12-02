@@ -9,6 +9,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "invite" {
+  description = "(Optional) Boolean whether to invite the account to Security Hub as a member. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "master_id" {
   description = "The ID of the master Security Hub AWS account."
   type        = string
@@ -23,10 +28,6 @@ variable "email" {
 }
 variable "id" {
   description = "The ID of the member AWS account (matches account_id)."
-  type        = string
-}
-variable "invite" {
-  description = "(Optional) Boolean whether to invite the account to Security Hub as a member. Defaults to false.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -153,65 +154,37 @@ output "account_id" {
   description = "(Required) The ID of the member AWS account."
   value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "email" {
   description = "(Required) The email of the member AWS account."
   value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.email
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The ID of the member AWS account (matches account_id)."
   value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "invite" {
   description = "(Optional) Boolean whether to invite the account to Security Hub as a member. Defaults to false.In addition to all arguments above, the following attributes are exported:"
   value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.invite
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "master_id" {
   description = "The ID of the master Security Hub AWS account."
   value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.master_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "The ID of the member AWS account (matches account_id)."
-  value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_id" {
-  description = "The ID of the master Security Hub AWS account."
-  value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.master_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "member_status" {
   description = "The status of the member account relationship."
   value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.member_status
 }
+output "id" {
+  description = "The ID of the member AWS account (matches account_id)."
+  value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.id
+}
+output "master_id" {
+  description = "The ID of the master Security Hub AWS account."
+  value       = aws_securityhub_member.markdown.aws_securityhub_member.markdown.master_id
+}
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

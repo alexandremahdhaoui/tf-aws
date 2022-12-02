@@ -8,37 +8,35 @@ import (
 )
 
 const (
-	variableIdent           = "variable"
-	outputIdent             = "output"
-	providerIdent           = "provider"
-	terraformIdent          = "terraform"
-	backendIdent            = "backend"
-	lifecycleIdent          = "lifecycle"
-	assumeRoleIdent         = "assume_role"
-	regionIdent             = "region"
-	defaultBackendIdent     = "local"
-	varIdent                = "var"
-	providerAssumeRoleIdent = "provider_assume_role"
-	providerRegionIdent     = "provider_region"
-	roleArnIdent            = "role_arn"
-	ignoreChangesIdent      = "ignore_changes"
-	descriptionIdent        = "description"
-	typeIdent               = "type"
-	defaultIdent            = "default"
-	valueIdent              = "value"
-	defaultTagsIdent        = "default_tags"
-	tagsIdent               = "tags"
-	sensitiveIdent          = "sensitive"
-	requiredProvidersIdent  = "required_providers"
-	sourceIdent             = "source"
-	versionIdent            = "version"
-	requiredVersionIdent    = "required_version"
-
+	variableIdent                 = "variable"
+	outputIdent                   = "output"
+	providerIdent                 = "provider"
+	terraformIdent                = "terraform"
+	backendIdent                  = "backend"
+	lifecycleIdent                = "lifecycle"
+	assumeRoleIdent               = "assume_role"
+	regionIdent                   = "region"
+	defaultBackendIdent           = "local"
+	varIdent                      = "var"
+	providerAssumeRoleIdent       = "provider_assume_role"
+	providerRegionIdent           = "provider_region"
+	roleArnIdent                  = "role_arn"
+	ignoreChangesIdent            = "ignore_changes"
+	descriptionIdent              = "description"
+	typeIdent                     = "type"
+	defaultIdent                  = "default"
+	valueIdent                    = "value"
+	defaultTagsIdent              = "default_tags"
+	tagsIdent                     = "tags"
+	sensitiveIdent                = "sensitive"
+	requiredProvidersIdent        = "required_providers"
+	sourceIdent                   = "source"
+	versionIdent                  = "version"
+	requiredVersionIdent          = "required_version"
 	providerAssumeRoleDescription = "Role the provider should assume to execute the module."
 	providerRegionDescription     = "Region where the provider should be executed."
 	SpecTagDescription            = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
-
-	versionConstraintFormat = ">= %s"
+	versionConstraintFormat       = ">= %s"
 )
 
 // ToHCL serializes struct to `hcl` format returning a slice of bytes.
@@ -58,22 +56,22 @@ func (t *TerraformModuleDefinition) ToHCL() []byte {
 // hclKind conditionally serialize `resource`,`datasource` block.
 func (t *TerraformModuleDefinition) hclKind(root *hclwrite.Body) *TerraformModuleDefinition {
 	kind := root.AppendNewBlock(KindSlug(t.Kind), []string{t.Metadata.Name, t.Metadata.Name}).Body()
-
 	for k, _ := range t.Spec.Args {
 		kind.SetAttributeTraversal(k, hcl.Traversal{
 			hcl.TraverseRoot{Name: varIdent},
 			hcl.TraverseAttr{Name: k},
 		})
 	}
-
 	// lifecycle.ignore_changes
-	if toIgnore := t.Spec.Lifecycle.IgnoreChanges; t.Kind == Resource && len(toIgnore) > 0 {
-		l := kind.AppendNewBlock(lifecycleIdent, nil).Body()
-		var vals []cty.Value
-		for _, s := range toIgnore {
-			vals = append(vals, cty.StringVal(s))
+	if t.Spec.Lifecycle != nil {
+		if toIgnore := t.Spec.Lifecycle.IgnoreChanges; t.Kind == Resource && len(toIgnore) > 0 {
+			l := kind.AppendNewBlock(lifecycleIdent, nil).Body()
+			var vals []cty.Value
+			for _, s := range toIgnore {
+				vals = append(vals, cty.StringVal(s))
+			}
+			l.SetAttributeValue(ignoreChangesIdent, cty.ListVal(vals))
 		}
-		l.SetAttributeValue(ignoreChangesIdent, cty.ListVal(vals))
 	}
 	return t
 }
@@ -98,7 +96,7 @@ func (t *TerraformModuleDefinition) hclVariable(root *hclwrite.Body) *TerraformM
 		variable.SetAttributeValue(descriptionIdent, cty.StringVal(v.Description))
 		setTypeString(variable)
 
-		if v.IsDefaultSet {
+		if v.Optional {
 			variable.SetAttributeValue(defaultIdent, cty.StringVal(v.Default))
 		}
 	}
@@ -124,6 +122,13 @@ func (t *TerraformModuleDefinition) hclOutput(root *hclwrite.Body) *TerraformMod
 		t.hclOutputInternal(k, v, root)
 	}
 
+	// output "provider_region"
+	region := root.AppendNewBlock(outputIdent, []string{providerRegionIdent}).Body()
+	region.SetAttributeValue(descriptionIdent, cty.StringVal(providerRegionDescription))
+	region.SetAttributeTraversal(valueIdent, hcl.Traversal{
+		hcl.TraverseRoot{Name: varIdent},
+		hcl.TraverseAttr{Name: providerRegionIdent},
+	})
 	return t
 }
 
@@ -147,13 +152,11 @@ func (t *TerraformModuleDefinition) hclOutputInternal(k string, v ArgumentOrAttr
 	if t.Spec.Terraform.Provider.AssumeRole {
 		role := root.AppendNewBlock(outputIdent, []string{providerAssumeRoleIdent}).Body()
 		role.SetAttributeValue(descriptionIdent, cty.StringVal(providerAssumeRoleDescription))
-		setTypeString(role)
+		role.SetAttributeTraversal(valueIdent, hcl.Traversal{
+			hcl.TraverseRoot{Name: varIdent},
+			hcl.TraverseAttr{Name: providerAssumeRoleIdent},
+		})
 	}
-
-	// output "provider_region"
-	region := root.AppendNewBlock(outputIdent, []string{providerRegionIdent}).Body()
-	region.SetAttributeValue(descriptionIdent, cty.StringVal(providerRegionDescription))
-	setTypeString(region)
 }
 
 // hclTerraform serialize `terraform` block

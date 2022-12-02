@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "resource_arn" {
-  description = "(Required) The ARN of the Project or ReportGroup resource you want to associate with a resource policy."
-  type        = string
-}
 variable "policy" {
   description = "(Required) A JSON-formatted resource policy. For more information, see Sharing a Projec and Sharing a Report Group.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "resource_arn" {
+  description = "(Required) The ARN of the Project or ReportGroup resource you want to associate with a resource policy."
   type        = string
 }
 variable "tag_instance_id" {
@@ -138,17 +138,9 @@ output "policy" {
   description = "(Required) A JSON-formatted resource policy. For more information, see Sharing a Projec and Sharing a Report Group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_codebuild_resource_policy.aws_codebuild_resource_policy.policy
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "resource_arn" {
   description = "(Required) The ARN of the Project or ReportGroup resource you want to associate with a resource policy."
   value       = aws_codebuild_resource_policy.aws_codebuild_resource_policy.resource_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The ARN of Resource."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

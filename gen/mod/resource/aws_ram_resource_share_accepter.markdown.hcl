@@ -1,11 +1,11 @@
 resource "aws_ram_resource_share_accepter.markdown" "aws_ram_resource_share_accepter.markdown" {
+  invitation_arn      = var.invitation_arn
+  receiver_account_id = var.receiver_account_id
+  sender_account_id   = var.sender_account_id
   share_arn           = var.share_arn
   share_id            = var.share_id
   share_name          = var.share_name
   status              = var.status
-  invitation_arn      = var.invitation_arn
-  receiver_account_id = var.receiver_account_id
-  sender_account_id   = var.sender_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -159,77 +159,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "share_name" {
+  description = "The name of the resource share."
+  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_name
+}
+output "status" {
+  description = "The status of the resource share (ACTIVE, PENDING, FAILED, DELETING, DELETED)."
+  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.status
+}
 output "invitation_arn" {
   description = "The ARN of the resource share invitation."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.invitation_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "receiver_account_id" {
   description = "The account ID of the receiver account which accepts the invitation."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.receiver_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "sender_account_id" {
   description = "The account ID of the sender account which submits the invitation."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.sender_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "share_arn" {
   description = "(Required) The ARN of the resource share.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "share_id" {
+  description = "The ID of the resource share as displayed in the console."
+  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_id
+}
+output "resources" {
+  description = "A list of the resource ARNs shared via the resource share."
+  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.resources
+}
+output "sender_account_id" {
+  description = "The account ID of the sender account which submits the invitation."
+  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.sender_account_id
 }
 output "share_id" {
   description = "The ID of the resource share as displayed in the console."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "share_name" {
   description = "The name of the resource share."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_name
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "status" {
   description = "The status of the resource share (ACTIVE, PENDING, FAILED, DELETING, DELETED)."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "The status of the resource share (ACTIVE, PENDING, FAILED, DELETING, DELETED)."
-  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "invitation_arn" {
   description = "The ARN of the resource share invitation."
   value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.invitation_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "receiver_account_id" {
   description = "The account ID of the receiver account which accepts the invitation."
@@ -237,39 +217,7 @@ output "receiver_account_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "resources" {
-  description = "A list of the resource ARNs shared via the resource share."
-  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.resources
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "sender_account_id" {
-  description = "The account ID of the sender account which submits the invitation."
-  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.sender_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "share_id" {
-  description = "The ID of the resource share as displayed in the console."
-  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "share_name" {
-  description = "The name of the resource share."
-  value       = aws_ram_resource_share_accepter.markdown.aws_ram_resource_share_accepter.markdown.share_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

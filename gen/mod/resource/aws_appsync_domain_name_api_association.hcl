@@ -1,6 +1,6 @@
 resource "aws_appsync_domain_name_api_association" "aws_appsync_domain_name_api_association" {
-  api_id      = var.api_id
   domain_name = var.domain_name
+  api_id      = var.api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -138,17 +138,9 @@ output "api_id" {
   description = "(Required) API ID."
   value       = aws_appsync_domain_name_api_association.aws_appsync_domain_name_api_association.api_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "domain_name" {
   description = "(Required) Appsync domain name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appsync_domain_name_api_association.aws_appsync_domain_name_api_association.domain_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "Appsync domain name."
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

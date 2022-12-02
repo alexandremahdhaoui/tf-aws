@@ -1,33 +1,37 @@
 resource "aws_lambda_function_event_invoke_config" "aws_lambda_function_event_invoke_config" {
-  function_name                = var.function_name
-  maximum_event_age_in_seconds = var.maximum_event_age_in_seconds
   maximum_retry_attempts       = var.maximum_retry_attempts
   on_failure                   = var.on_failure
   qualifier                    = var.qualifier
   destination                  = var.destination
+  maximum_event_age_in_seconds = var.maximum_event_age_in_seconds
   id                           = var.id
   on_success                   = var.on_success
   destination_config           = var.destination_config
+  function_name                = var.function_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "destination_config" {
-  description = "(Optional) Configuration block with destination configuration. See below for details."
+variable "maximum_event_age_in_seconds" {
+  description = "(Optional) Maximum age of a request that Lambda sends to a function for processing in seconds. Valid values between 60 and 21600."
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "Fully qualified Lambda Function name or Amazon Resource Name (ARN)"
+variable "maximum_retry_attempts" {
+  description = "(Optional) Maximum number of times to retry when the function returns an error. Valid values between 0 and 2. Defaults to 2."
   type        = string
+  default     = ""
 }
-variable "on_success" {
-  description = "(Optional) Configuration block with destination configuration for successful asynchronous invocations. See below for details.destination_config on_failure Configuration Block"
+variable "on_failure" {
+  description = "(Optional) Configuration block with destination configuration for failed asynchronous invocations. See below for details."
   type        = string
+  default     = ""
 }
 variable "qualifier" {
   description = "(Optional) Lambda Function published version, $LATEST, or Lambda Alias name.destination_config Configuration Block~> strongNOTE: At least one of on_failure or on_success must be configured when using this configuration block, otherwise remove it completely to prevent perpetual differences in Terraform runs."
   type        = string
+  default     = ""
 }
 variable "destination" {
   description = "(Required) Amazon Resource Name (ARN) of the destination resource. See the Lambda Developer Guide for acceptable resource types and associated IAM permissions.In addition to all arguments above, the following attributes are exported:"
@@ -37,17 +41,20 @@ variable "function_name" {
   description = "(Required) Name or Amazon Resource Name (ARN) of the Lambda Function, omitting any version or alias qualifier."
   type        = string
 }
-variable "maximum_event_age_in_seconds" {
-  description = "(Optional) Maximum age of a request that Lambda sends to a function for processing in seconds. Valid values between 60 and 21600."
+variable "id" {
+  description = "Fully qualified Lambda Function name or Amazon Resource Name (ARN)"
   type        = string
+  default     = ""
 }
-variable "maximum_retry_attempts" {
-  description = "(Optional) Maximum number of times to retry when the function returns an error. Valid values between 0 and 2. Defaults to 2."
+variable "on_success" {
+  description = "(Optional) Configuration block with destination configuration for successful asynchronous invocations. See below for details.destination_config on_failure Configuration Block"
   type        = string
+  default     = ""
 }
-variable "on_failure" {
-  description = "(Optional) Configuration block with destination configuration for failed asynchronous invocations. See below for details."
+variable "destination_config" {
+  description = "(Optional) Configuration block with destination configuration. See below for details."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -173,81 +180,45 @@ output "destination" {
   description = "(Required) Amazon Resource Name (ARN) of the destination resource. See the Lambda Developer Guide for acceptable resource types and associated IAM permissions.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.destination
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "function_name" {
-  description = "(Required) Name or Amazon Resource Name (ARN) of the Lambda Function, omitting any version or alias qualifier."
-  value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.function_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "maximum_event_age_in_seconds" {
   description = "(Optional) Maximum age of a request that Lambda sends to a function for processing in seconds. Valid values between 60 and 21600."
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.maximum_event_age_in_seconds
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "maximum_retry_attempts" {
   description = "(Optional) Maximum number of times to retry when the function returns an error. Valid values between 0 and 2. Defaults to 2."
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.maximum_retry_attempts
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "on_failure" {
   description = "(Optional) Configuration block with destination configuration for failed asynchronous invocations. See below for details."
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.on_failure
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "qualifier" {
   description = "(Optional) Lambda Function published version, $LATEST, or Lambda Alias name.destination_config Configuration Block~> strongNOTE: At least one of on_failure or on_success must be configured when using this configuration block, otherwise remove it completely to prevent perpetual differences in Terraform runs."
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.qualifier
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "destination_config" {
   description = "(Optional) Configuration block with destination configuration. See below for details."
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.destination_config
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "function_name" {
+  description = "(Required) Name or Amazon Resource Name (ARN) of the Lambda Function, omitting any version or alias qualifier."
+  value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.function_name
 }
 output "id" {
   description = "Fully qualified Lambda Function name or Amazon Resource Name (ARN)"
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "on_success" {
   description = "(Optional) Configuration block with destination configuration for successful asynchronous invocations. See below for details.destination_config on_failure Configuration Block"
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.on_success
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "Fully qualified Lambda Function name or Amazon Resource Name (ARN)"
   value       = aws_lambda_function_event_invoke_config.aws_lambda_function_event_invoke_config.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

@@ -1,30 +1,51 @@
 resource "aws_appconfig_deployment" "aws_appconfig_deployment" {
-  configuration_version    = var.configuration_version
-  deployment_number        = var.deployment_number
-  deployment_strategy_id   = var.deployment_strategy_id
+  environment_id           = var.environment_id
   id                       = var.id
   state                    = var.state
-  tags                     = var.tags
   application_id           = var.application_id
+  deployment_number        = var.deployment_number
+  configuration_version    = var.configuration_version
+  deployment_strategy_id   = var.deployment_strategy_id
+  description              = var.description
+  tags                     = var.tags
   arn                      = var.arn
   configuration_profile_id = var.configuration_profile_id
-  description              = var.description
-  environment_id           = var.environment_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "configuration_profile_id" {
+  description = "(Required, Forces new resource) Configuration profile ID. Must be between 4 and 7 characters in length."
   type        = string
 }
 variable "configuration_version" {
   description = "(Required, Forces new resource) Configuration version to deploy. Can be at most 1024 characters."
   type        = string
 }
+variable "deployment_strategy_id" {
+  description = "(Required, Forces new resource) Deployment strategy ID or name of a predefined deployment strategy. See Predefined Deployment Strategies for more details."
+  type        = string
+}
+variable "description" {
+  description = "(Optional, Forces new resource) Description of the deployment. Can be at most 1024 characters."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the AppConfig Deployment."
+  type        = string
+}
 variable "deployment_number" {
   description = "Deployment number."
   type        = string
 }
-variable "deployment_strategy_id" {
-  description = "(Required, Forces new resource) Deployment strategy ID or name of a predefined deployment strategy. See Predefined Deployment Strategies for more details."
+variable "environment_id" {
+  description = "(Required, Forces new resource) Environment ID. Must be between 4 and 7 characters in length."
   type        = string
 }
 variable "id" {
@@ -35,28 +56,8 @@ variable "state" {
   description = "State of the deployment."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "application_id" {
   description = "(Required, Forces new resource) Application ID. Must be between 4 and 7 characters in length."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the AppConfig Deployment."
-  type        = string
-}
-variable "configuration_profile_id" {
-  description = "(Required, Forces new resource) Configuration profile ID. Must be between 4 and 7 characters in length."
-  type        = string
-}
-variable "description" {
-  description = "(Optional, Forces new resource) Description of the deployment. Can be at most 1024 characters."
-  type        = string
-}
-variable "environment_id" {
-  description = "(Required, Forces new resource) Environment ID. Must be between 4 and 7 characters in length."
   type        = string
 }
 variable "tag_instance_id" {
@@ -179,125 +180,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "environment_id" {
-  description = "(Required, Forces new resource) Environment ID. Must be between 4 and 7 characters in length."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.environment_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "AppConfig application ID, environment ID, and deployment number separated by a slash (/)."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "state" {
-  description = "State of the deployment."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.state
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "application_id" {
-  description = "(Required, Forces new resource) Application ID. Must be between 4 and 7 characters in length."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.application_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the AppConfig Deployment."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "configuration_profile_id" {
   description = "(Required, Forces new resource) Configuration profile ID. Must be between 4 and 7 characters in length."
   value       = aws_appconfig_deployment.aws_appconfig_deployment.configuration_profile_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "description" {
-  description = "(Optional, Forces new resource) Description of the deployment. Can be at most 1024 characters."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.description
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "configuration_version" {
   description = "(Required, Forces new resource) Configuration version to deploy. Can be at most 1024 characters."
   value       = aws_appconfig_deployment.aws_appconfig_deployment.configuration_version
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "deployment_number" {
-  description = "Deployment number."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.deployment_number
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "deployment_strategy_id" {
   description = "(Required, Forces new resource) Deployment strategy ID or name of a predefined deployment strategy. See Predefined Deployment Strategies for more details."
   value       = aws_appconfig_deployment.aws_appconfig_deployment.deployment_strategy_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "description" {
+  description = "(Optional, Forces new resource) Description of the deployment. Can be at most 1024 characters."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.description
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_appconfig_deployment.aws_appconfig_deployment.tags_all
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.tags
 }
 output "arn" {
   description = "ARN of the AppConfig Deployment."
   value       = aws_appconfig_deployment.aws_appconfig_deployment.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "deployment_number" {
   description = "Deployment number."
   value       = aws_appconfig_deployment.aws_appconfig_deployment.deployment_number
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "environment_id" {
+  description = "(Required, Forces new resource) Environment ID. Must be between 4 and 7 characters in length."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.environment_id
 }
 output "id" {
   description = "AppConfig application ID, environment ID, and deployment number separated by a slash (/)."
   value       = aws_appconfig_deployment.aws_appconfig_deployment.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "state" {
+  description = "State of the deployment."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.state
+}
+output "application_id" {
+  description = "(Required, Forces new resource) Application ID. Must be between 4 and 7 characters in length."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.application_id
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.tags_all
+}
+output "arn" {
+  description = "ARN of the AppConfig Deployment."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.arn
+}
+output "deployment_number" {
+  description = "Deployment number."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.deployment_number
+}
+output "id" {
+  description = "AppConfig application ID, environment ID, and deployment number separated by a slash (/)."
+  value       = aws_appconfig_deployment.aws_appconfig_deployment.id
 }
 output "state" {
   description = "State of the deployment."
@@ -305,7 +246,7 @@ output "state" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

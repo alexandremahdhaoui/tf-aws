@@ -1,22 +1,38 @@
 resource "aws_organizations_organization" "aws_organizations_organization" {
-  feature_set                   = var.feature_set
+  email                         = var.email
   name                          = var.name
-  aws_service_access_principals = var.aws_service_access_principals
-  id                            = var.id
+  roots                         = var.roots
+  status                        = var.status
   master_account_id             = var.master_account_id
   non_master_accounts           = var.non_master_accounts
-  policy_types                  = var.policy_types
-  roots                         = var.roots
-  email                         = var.email
-  arn                           = var.arn
-  enabled_policy_types          = var.enabled_policy_types
-  master_account_arn            = var.master_account_arn
-  master_account_email          = var.master_account_email
-  status                        = var.status
   accounts                      = var.accounts
+  arn                           = var.arn
+  aws_service_access_principals = var.aws_service_access_principals
+  enabled_policy_types          = var.enabled_policy_types
+  master_account_email          = var.master_account_email
+  id                            = var.id
+  feature_set                   = var.feature_set
+  master_account_arn            = var.master_account_arn
+  policy_types                  = var.policy_types
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "email" {
+  description = "Email of the account"
+  type        = string
+}
+variable "name" {
+  description = "The name of the policy type"
+  type        = string
+}
+variable "roots" {
+  description = "List of organization roots. All elements have these attributes:\n"
+  type        = string
+}
+variable "status" {
+  description = "Current status of the account"
   type        = string
 }
 variable "accounts" {
@@ -27,40 +43,18 @@ variable "arn" {
   description = "ARN of the root"
   type        = string
 }
-variable "enabled_policy_types" {
-  description = "(Optional) List of Organizations policy types to enable in the Organization Root. Organization must have feature_set set to ALL. For additional information about valid policy types (e.g., AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY, and TAG_POLICY), see the AWS Organizations API Reference."
-  type        = string
-}
-variable "master_account_arn" {
-  description = "ARN of the master account"
-  type        = string
-}
-variable "master_account_email" {
-  description = "Email address of the master account"
-  type        = string
-}
-variable "status" {
-  description = "Current status of the account"
-  type        = string
-}
-variable "feature_set" {
-  description = "(Optional) Specify \"ALL\" (default) or \"CONSOLIDATED_BILLING\".In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "aws_service_access_principals" {
   description = "(Optional) List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must have feature_set set to ALL. Some services do not support enablement via this endpoint, see warning in aws docs."
   type        = string
+  default     = ""
 }
-variable "name" {
-  description = "The name of the policy type"
+variable "enabled_policy_types" {
+  description = "(Optional) List of Organizations policy types to enable in the Organization Root. Organization must have feature_set set to ALL. For additional information about valid policy types (e.g., AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY, and TAG_POLICY), see the AWS Organizations API Reference."
   type        = string
+  default     = ""
 }
-variable "email" {
-  description = "Email of the account"
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the root"
+variable "master_account_email" {
+  description = "Email address of the master account"
   type        = string
 }
 variable "master_account_id" {
@@ -71,12 +65,21 @@ variable "non_master_accounts" {
   description = "List of organization accounts excluding the master account. For a list including the master account, see the accounts"
   type        = string
 }
-variable "policy_types" {
-  description = ""
+variable "id" {
+  description = "Identifier of the root"
   type        = string
 }
-variable "roots" {
-  description = "List of organization roots. All elements have these attributes:\n"
+variable "feature_set" {
+  description = "(Optional) Specify \"ALL\" (default) or \"CONSOLIDATED_BILLING\".In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "master_account_arn" {
+  description = "ARN of the master account"
+  type        = string
+}
+variable "policy_types" {
+  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -199,197 +202,109 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "accounts" {
-  description = "List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts"
-  value       = aws_organizations_organization.aws_organizations_organization.accounts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of the root"
-  value       = aws_organizations_organization.aws_organizations_organization.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "enabled_policy_types" {
-  description = "(Optional) List of Organizations policy types to enable in the Organization Root. Organization must have feature_set set to ALL. For additional information about valid policy types (e.g., AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY, and TAG_POLICY), see the AWS Organizations API Reference."
-  value       = aws_organizations_organization.aws_organizations_organization.enabled_policy_types
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_account_arn" {
-  description = "ARN of the master account"
-  value       = aws_organizations_organization.aws_organizations_organization.master_account_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_account_email" {
-  description = "Email address of the master account"
-  value       = aws_organizations_organization.aws_organizations_organization.master_account_email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "status" {
-  description = "Current status of the account"
-  value       = aws_organizations_organization.aws_organizations_organization.status
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "id" {
+  description = "Identifier of the root"
+  value       = aws_organizations_organization.aws_organizations_organization.id
 }
 output "feature_set" {
   description = "(Optional) Specify \"ALL\" (default) or \"CONSOLIDATED_BILLING\".In addition to all arguments above, the following attributes are exported:"
   value       = aws_organizations_organization.aws_organizations_organization.feature_set
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "master_account_arn" {
+  description = "ARN of the master account"
+  value       = aws_organizations_organization.aws_organizations_organization.master_account_arn
 }
-output "aws_service_access_principals" {
-  description = "(Optional) List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must have feature_set set to ALL. Some services do not support enablement via this endpoint, see warning in aws docs."
-  value       = aws_organizations_organization.aws_organizations_organization.aws_service_access_principals
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The name of the policy type"
-  value       = aws_organizations_organization.aws_organizations_organization.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "policy_types" {
+  description = ""
+  value       = aws_organizations_organization.aws_organizations_organization.policy_types
 }
 output "email" {
   description = "Email of the account"
   value       = aws_organizations_organization.aws_organizations_organization.email
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "id" {
-  description = "Identifier of the root"
-  value       = aws_organizations_organization.aws_organizations_organization.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_account_id" {
-  description = "Identifier of the master account"
-  value       = aws_organizations_organization.aws_organizations_organization.master_account_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "non_master_accounts" {
-  description = "List of organization accounts excluding the master account. For a list including the master account, see the accounts"
-  value       = aws_organizations_organization.aws_organizations_organization.non_master_accounts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "policy_types" {
-  description = ""
-  value       = aws_organizations_organization.aws_organizations_organization.policy_types
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "name" {
+  description = "The name of the policy type"
+  value       = aws_organizations_organization.aws_organizations_organization.name
 }
 output "roots" {
   description = "List of organization roots. All elements have these attributes:\n"
   value       = aws_organizations_organization.aws_organizations_organization.roots
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_account_email" {
-  description = "Email address of the master account"
-  value       = aws_organizations_organization.aws_organizations_organization.master_account_email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "status" {
+  description = "Current status of the account"
+  value       = aws_organizations_organization.aws_organizations_organization.status
 }
 output "master_account_id" {
   description = "Identifier of the master account"
   value       = aws_organizations_organization.aws_organizations_organization.master_account_id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "name" {
-  description = "The name of the policy type"
-  value       = aws_organizations_organization.aws_organizations_organization.name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "non_master_accounts" {
   description = "List of organization accounts excluding the master account. For a list including the master account, see the accounts"
   value       = aws_organizations_organization.aws_organizations_organization.non_master_accounts
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "accounts" {
+  description = "List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts"
+  value       = aws_organizations_organization.aws_organizations_organization.accounts
 }
 output "arn" {
   description = "ARN of the root"
   value       = aws_organizations_organization.aws_organizations_organization.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "aws_service_access_principals" {
+  description = "(Optional) List of AWS service principal names for which you want to enable integration with your organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must have feature_set set to ALL. Some services do not support enablement via this endpoint, see warning in aws docs."
+  value       = aws_organizations_organization.aws_organizations_organization.aws_service_access_principals
+}
+output "enabled_policy_types" {
+  description = "(Optional) List of Organizations policy types to enable in the Organization Root. Organization must have feature_set set to ALL. For additional information about valid policy types (e.g., AISERVICES_OPT_OUT_POLICY, BACKUP_POLICY, SERVICE_CONTROL_POLICY, and TAG_POLICY), see the AWS Organizations API Reference."
+  value       = aws_organizations_organization.aws_organizations_organization.enabled_policy_types
+}
+output "master_account_email" {
+  description = "Email address of the master account"
+  value       = aws_organizations_organization.aws_organizations_organization.master_account_email
+}
+output "email" {
+  description = "Email of the account"
+  value       = aws_organizations_organization.aws_organizations_organization.email
 }
 output "master_account_arn" {
   description = "ARN of the master account"
   value       = aws_organizations_organization.aws_organizations_organization.master_account_arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "master_account_email" {
+  description = "Email address of the master account"
+  value       = aws_organizations_organization.aws_organizations_organization.master_account_email
+}
+output "master_account_id" {
+  description = "Identifier of the master account"
+  value       = aws_organizations_organization.aws_organizations_organization.master_account_id
+}
+output "name" {
+  description = "The name of the policy type"
+  value       = aws_organizations_organization.aws_organizations_organization.name
+}
+output "non_master_accounts" {
+  description = "List of organization accounts excluding the master account. For a list including the master account, see the accounts"
+  value       = aws_organizations_organization.aws_organizations_organization.non_master_accounts
+}
+output "accounts" {
+  description = "List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts"
+  value       = aws_organizations_organization.aws_organizations_organization.accounts
+}
+output "arn" {
+  description = "ARN of the root"
+  value       = aws_organizations_organization.aws_organizations_organization.arn
 }
 output "id" {
   description = "Identifier of the root"
   value       = aws_organizations_organization.aws_organizations_organization.id
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_types" {
   description = ""
   value       = aws_organizations_organization.aws_organizations_organization.policy_types
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "roots" {
   description = "List of organization roots. All elements have these attributes:\n"
   value       = aws_organizations_organization.aws_organizations_organization.roots
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "status" {
   description = "The status of the policy type as it relates to the associated root"
@@ -397,23 +312,7 @@ output "status" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "accounts" {
-  description = "List of organization accounts including the master account. For a list excluding the master account, see the non_master_accounts"
-  value       = aws_organizations_organization.aws_organizations_organization.accounts
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "email" {
-  description = "Email of the account"
-  value       = aws_organizations_organization.aws_organizations_organization.email
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

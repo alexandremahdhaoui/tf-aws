@@ -1,127 +1,75 @@
 datasource "aws_redshift_cluster" "aws_redshift_cluster" {
+  cluster_identifier                   = var.cluster_identifier
+  cluster_security_groups              = var.cluster_security_groups
+  node_role                            = var.node_role
+  node_type                            = var.node_type
+  tags                                 = var.tags
+  iam_roles                            = var.iam_roles
+  automated_snapshot_retention_period  = var.automated_snapshot_retention_period
   bucket_name                          = var.bucket_name
   cluster_parameter_group_name         = var.cluster_parameter_group_name
-  cluster_security_groups              = var.cluster_security_groups
-  default_iam_role_arn                 = var.default_iam_role_arn
-  master_username                      = var.master_username
-  node_role                            = var.node_role
-  arn                                  = var.arn
-  cluster_public_key                   = var.cluster_public_key
-  log_destination_type                 = var.log_destination_type
-  manual_snapshot_retention_period     = var.manual_snapshot_retention_period
-  node_type                            = var.node_type
-  publicly_accessible                  = var.publicly_accessible
-  availability_zone_relocation_enabled = var.availability_zone_relocation_enabled
-  enhanced_vpc_routing                 = var.enhanced_vpc_routing
-  kms_key_id                           = var.kms_key_id
-  s3_key_prefix                        = var.s3_key_prefix
-  availability_zone                    = var.availability_zone
-  cluster_nodes                        = var.cluster_nodes
-  cluster_subnet_group_name            = var.cluster_subnet_group_name
-  log_exports                          = var.log_exports
-  maintenance_track_name               = var.maintenance_track_name
-  iam_roles                            = var.iam_roles
-  number_of_nodes                      = var.number_of_nodes
-  private_ip_address                   = var.private_ip_address
-  cluster_identifier                   = var.cluster_identifier
   database_name                        = var.database_name
-  tags                                 = var.tags
-  vpc_id                               = var.vpc_id
+  log_destination_type                 = var.log_destination_type
+  s3_key_prefix                        = var.s3_key_prefix
   vpc_security_group_ids               = var.vpc_security_group_ids
-  allow_version_upgrade                = var.allow_version_upgrade
+  cluster_nodes                        = var.cluster_nodes
+  default_iam_role_arn                 = var.default_iam_role_arn
+  encrypted                            = var.encrypted
+  kms_key_id                           = var.kms_key_id
+  maintenance_track_name               = var.maintenance_track_name
+  preferred_maintenance_window         = var.preferred_maintenance_window
+  publicly_accessible                  = var.publicly_accessible
   aqua_configuration_status            = var.aqua_configuration_status
+  cluster_type                         = var.cluster_type
+  master_username                      = var.master_username
+  vpc_id                               = var.vpc_id
+  availability_zone_relocation_enabled = var.availability_zone_relocation_enabled
+  cluster_public_key                   = var.cluster_public_key
   cluster_revision_number              = var.cluster_revision_number
   elastic_ip                           = var.elastic_ip
-  port                                 = var.port
-  automated_snapshot_retention_period  = var.automated_snapshot_retention_period
-  cluster_type                         = var.cluster_type
-  enable_logging                       = var.enable_logging
-  encrypted                            = var.encrypted
   endpoint                             = var.endpoint
-  preferred_maintenance_window         = var.preferred_maintenance_window
+  log_exports                          = var.log_exports
+  arn                                  = var.arn
+  availability_zone                    = var.availability_zone
+  cluster_subnet_group_name            = var.cluster_subnet_group_name
+  manual_snapshot_retention_period     = var.manual_snapshot_retention_period
+  number_of_nodes                      = var.number_of_nodes
+  port                                 = var.port
+  allow_version_upgrade                = var.allow_version_upgrade
+  enable_logging                       = var.enable_logging
+  enhanced_vpc_routing                 = var.enhanced_vpc_routing
+  private_ip_address                   = var.private_ip_address
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "Tags associated to the cluster"
-  type        = string
-}
-variable "vpc_id" {
-  description = "VPC Id associated with the cluster"
-  type        = string
-}
-variable "vpc_security_group_ids" {
-  description = "The VPC security group Ids associated with the clusterCluster nodes (for cluster_nodes) support the following attributes:"
   type        = string
 }
 variable "cluster_identifier" {
   description = "Cluster identifier"
   type        = string
 }
-variable "database_name" {
-  description = "Name of the default database in the cluster"
-  type        = string
-}
-variable "cluster_revision_number" {
-  description = "The cluster revision number"
-  type        = string
-}
-variable "elastic_ip" {
-  description = "Elastic IP of the cluster"
-  type        = string
-}
-variable "port" {
-  description = "Port the cluster responds on"
-  type        = string
-}
-variable "allow_version_upgrade" {
-  description = "Whether major version upgrades can be applied during maintenance period"
-  type        = string
-}
-variable "aqua_configuration_status" {
-  description = "The value represents how the cluster is configured to use AQUA."
-  type        = string
-}
-variable "enable_logging" {
-  description = "Whether cluster logging is enabled"
-  type        = string
-}
-variable "encrypted" {
-  description = "Whether the cluster data is encrypted"
-  type        = string
-}
-variable "endpoint" {
-  description = "Cluster endpoint"
-  type        = string
-}
-variable "preferred_maintenance_window" {
-  description = "The maintenance window"
-  type        = string
-}
-variable "automated_snapshot_retention_period" {
-  description = "The backup retention period"
-  type        = string
-}
-variable "cluster_type" {
-  description = "Cluster type"
-  type        = string
-}
 variable "cluster_security_groups" {
   description = "The security groups associated with the cluster"
   type        = string
 }
-variable "default_iam_role_arn" {
-  description = "∂The ARN for the IAM role that was set as default for the cluster when the cluster was created."
-  type        = string
-}
-variable "master_username" {
-  description = "Username for the master DB user"
-  type        = string
-}
 variable "node_role" {
   description = "Whether the node is a leader node or a compute node"
+  type        = string
+}
+variable "node_type" {
+  description = "Cluster node type"
+  type        = string
+}
+variable "tags" {
+  description = "Tags associated to the cluster"
+  type        = string
+}
+variable "iam_roles" {
+  description = "IAM roles associated to the cluster"
+  type        = string
+}
+variable "automated_snapshot_retention_period" {
+  description = "The backup retention period"
   type        = string
 }
 variable "bucket_name" {
@@ -132,261 +80,286 @@ variable "cluster_parameter_group_name" {
   description = "The name of the parameter group to be associated with this cluster"
   type        = string
 }
+variable "database_name" {
+  description = "Name of the default database in the cluster"
+  type        = string
+}
 variable "log_destination_type" {
   description = "The log destination type."
-  type        = string
-}
-variable "manual_snapshot_retention_period" {
-  description = "(Optional)  The default number of days to retain a manual snapshot."
-  type        = string
-}
-variable "node_type" {
-  description = "Cluster node type"
-  type        = string
-}
-variable "publicly_accessible" {
-  description = "Whether the cluster is publicly accessible"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of cluster."
-  type        = string
-}
-variable "cluster_public_key" {
-  description = "Public key for the cluster"
-  type        = string
-}
-variable "kms_key_id" {
-  description = "KMS encryption key associated to the cluster"
   type        = string
 }
 variable "s3_key_prefix" {
   description = "Folder inside the S3 bucket where the log files are stored"
   type        = string
 }
-variable "availability_zone_relocation_enabled" {
-  description = "Indicates whether the cluster is able to be relocated to another availability zone."
-  type        = string
-}
-variable "enhanced_vpc_routing" {
-  description = "Whether enhanced VPC routing is enabled"
-  type        = string
-}
-variable "cluster_subnet_group_name" {
-  description = "The name of a cluster subnet group to be associated with this cluster"
-  type        = string
-}
-variable "log_exports" {
-  description = "Collection of exported log types. Log types include the connection log, user log and user activity log."
-  type        = string
-}
-variable "maintenance_track_name" {
-  description = "The name of the maintenance track for the restored cluster."
-  type        = string
-}
-variable "availability_zone" {
-  description = "Availability zone of the cluster"
+variable "vpc_security_group_ids" {
+  description = "The VPC security group Ids associated with the clusterCluster nodes (for cluster_nodes) support the following attributes:"
   type        = string
 }
 variable "cluster_nodes" {
   description = "Nodes in the cluster. Cluster node blocks are documented below"
   type        = string
 }
-variable "private_ip_address" {
-  description = "Private IP address of a node within a cluster"
+variable "default_iam_role_arn" {
+  description = "∂The ARN for the IAM role that was set as default for the cluster when the cluster was created."
   type        = string
 }
-variable "iam_roles" {
-  description = "IAM roles associated to the cluster"
+variable "encrypted" {
+  description = "Whether the cluster data is encrypted"
   type        = string
+}
+variable "kms_key_id" {
+  description = "KMS encryption key associated to the cluster"
+  type        = string
+}
+variable "maintenance_track_name" {
+  description = "The name of the maintenance track for the restored cluster."
+  type        = string
+}
+variable "preferred_maintenance_window" {
+  description = "The maintenance window"
+  type        = string
+}
+variable "publicly_accessible" {
+  description = "Whether the cluster is publicly accessible"
+  type        = string
+}
+variable "aqua_configuration_status" {
+  description = "The value represents how the cluster is configured to use AQUA."
+  type        = string
+}
+variable "cluster_type" {
+  description = "Cluster type"
+  type        = string
+}
+variable "master_username" {
+  description = "Username for the master DB user"
+  type        = string
+}
+variable "vpc_id" {
+  description = "VPC Id associated with the cluster"
+  type        = string
+}
+variable "availability_zone_relocation_enabled" {
+  description = "Indicates whether the cluster is able to be relocated to another availability zone."
+  type        = string
+}
+variable "cluster_public_key" {
+  description = "Public key for the cluster"
+  type        = string
+}
+variable "cluster_revision_number" {
+  description = "The cluster revision number"
+  type        = string
+}
+variable "elastic_ip" {
+  description = "Elastic IP of the cluster"
+  type        = string
+}
+variable "endpoint" {
+  description = "Cluster endpoint"
+  type        = string
+}
+variable "log_exports" {
+  description = "Collection of exported log types. Log types include the connection log, user log and user activity log."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of cluster."
+  type        = string
+}
+variable "availability_zone" {
+  description = "Availability zone of the cluster"
+  type        = string
+}
+variable "cluster_subnet_group_name" {
+  description = "The name of a cluster subnet group to be associated with this cluster"
+  type        = string
+}
+variable "manual_snapshot_retention_period" {
+  description = "(Optional)  The default number of days to retain a manual snapshot."
+  type        = string
+  default     = ""
 }
 variable "number_of_nodes" {
   description = "Number of nodes in the cluster"
   type        = string
 }
-output "availability_zone_relocation_enabled" {
-  description = "Indicates whether the cluster is able to be relocated to another availability zone."
-  value       = aws_redshift_cluster.aws_redshift_cluster.availability_zone_relocation_enabled
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
+variable "port" {
+  description = "Port the cluster responds on"
   type        = string
 }
-output "enhanced_vpc_routing" {
-  description = "Whether enhanced VPC routing is enabled"
-  value       = aws_redshift_cluster.aws_redshift_cluster.enhanced_vpc_routing
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "kms_key_id" {
-  description = "KMS encryption key associated to the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.kms_key_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "s3_key_prefix" {
-  description = "Folder inside the S3 bucket where the log files are stored"
-  value       = aws_redshift_cluster.aws_redshift_cluster.s3_key_prefix
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "availability_zone" {
-  description = "Availability zone of the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.availability_zone
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_nodes" {
-  description = "Nodes in the cluster. Cluster node blocks are documented below"
-  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_nodes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_subnet_group_name" {
-  description = "The name of a cluster subnet group to be associated with this cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_subnet_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_exports" {
-  description = "Collection of exported log types. Log types include the connection log, user log and user activity log."
-  value       = aws_redshift_cluster.aws_redshift_cluster.log_exports
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "maintenance_track_name" {
-  description = "The name of the maintenance track for the restored cluster."
-  value       = aws_redshift_cluster.aws_redshift_cluster.maintenance_track_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "iam_roles" {
-  description = "IAM roles associated to the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.iam_roles
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "number_of_nodes" {
-  description = "Number of nodes in the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.number_of_nodes
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "private_ip_address" {
-  description = "Private IP address of a node within a cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.private_ip_address
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_identifier" {
-  description = "Cluster identifier"
-  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_identifier
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "database_name" {
-  description = "Name of the default database in the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.database_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "tags" {
-  description = "Tags associated to the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.tags
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_id" {
-  description = "VPC Id associated with the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.vpc_id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "vpc_security_group_ids" {
-  description = "The VPC security group Ids associated with the clusterCluster nodes (for cluster_nodes) support the following attributes:"
-  value       = aws_redshift_cluster.aws_redshift_cluster.vpc_security_group_ids
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "allow_version_upgrade" {
+variable "allow_version_upgrade" {
   description = "Whether major version upgrades can be applied during maintenance period"
-  value       = aws_redshift_cluster.aws_redshift_cluster.allow_version_upgrade
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
   type        = string
 }
-output "aqua_configuration_status" {
-  description = "The value represents how the cluster is configured to use AQUA."
-  value       = aws_redshift_cluster.aws_redshift_cluster.aqua_configuration_status
+variable "enable_logging" {
+  description = "Whether cluster logging is enabled"
+  type        = string
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
+variable "enhanced_vpc_routing" {
+  description = "Whether enhanced VPC routing is enabled"
+  type        = string
+}
+variable "private_ip_address" {
+  description = "Private IP address of a node within a cluster"
   type        = string
 }
 output "cluster_revision_number" {
   description = "The cluster revision number"
   value       = aws_redshift_cluster.aws_redshift_cluster.cluster_revision_number
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "elastic_ip" {
   description = "Elastic IP of the cluster"
   value       = aws_redshift_cluster.aws_redshift_cluster.elastic_ip
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "endpoint" {
+  description = "Cluster endpoint"
+  value       = aws_redshift_cluster.aws_redshift_cluster.endpoint
+}
+output "log_exports" {
+  description = "Collection of exported log types. Log types include the connection log, user log and user activity log."
+  value       = aws_redshift_cluster.aws_redshift_cluster.log_exports
+}
+output "availability_zone_relocation_enabled" {
+  description = "Indicates whether the cluster is able to be relocated to another availability zone."
+  value       = aws_redshift_cluster.aws_redshift_cluster.availability_zone_relocation_enabled
+}
+output "cluster_public_key" {
+  description = "Public key for the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_public_key
+}
+output "cluster_subnet_group_name" {
+  description = "The name of a cluster subnet group to be associated with this cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_subnet_group_name
+}
+output "manual_snapshot_retention_period" {
+  description = "(Optional)  The default number of days to retain a manual snapshot."
+  value       = aws_redshift_cluster.aws_redshift_cluster.manual_snapshot_retention_period
+}
+output "number_of_nodes" {
+  description = "Number of nodes in the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.number_of_nodes
 }
 output "port" {
   description = "Port the cluster responds on"
   value       = aws_redshift_cluster.aws_redshift_cluster.port
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "arn" {
+  description = "ARN of cluster."
+  value       = aws_redshift_cluster.aws_redshift_cluster.arn
+}
+output "availability_zone" {
+  description = "Availability zone of the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.availability_zone
+}
+output "enhanced_vpc_routing" {
+  description = "Whether enhanced VPC routing is enabled"
+  value       = aws_redshift_cluster.aws_redshift_cluster.enhanced_vpc_routing
+}
+output "private_ip_address" {
+  description = "Private IP address of a node within a cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.private_ip_address
+}
+output "allow_version_upgrade" {
+  description = "Whether major version upgrades can be applied during maintenance period"
+  value       = aws_redshift_cluster.aws_redshift_cluster.allow_version_upgrade
+}
+output "enable_logging" {
+  description = "Whether cluster logging is enabled"
+  value       = aws_redshift_cluster.aws_redshift_cluster.enable_logging
+}
+output "node_role" {
+  description = "Whether the node is a leader node or a compute node"
+  value       = aws_redshift_cluster.aws_redshift_cluster.node_role
+}
+output "node_type" {
+  description = "Cluster node type"
+  value       = aws_redshift_cluster.aws_redshift_cluster.node_type
+}
+output "tags" {
+  description = "Tags associated to the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.tags
+}
+output "cluster_identifier" {
+  description = "Cluster identifier"
+  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_identifier
+}
+output "cluster_security_groups" {
+  description = "The security groups associated with the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_security_groups
+}
+output "iam_roles" {
+  description = "IAM roles associated to the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.iam_roles
+}
+output "cluster_parameter_group_name" {
+  description = "The name of the parameter group to be associated with this cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_parameter_group_name
+}
+output "database_name" {
+  description = "Name of the default database in the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.database_name
+}
+output "log_destination_type" {
+  description = "The log destination type."
+  value       = aws_redshift_cluster.aws_redshift_cluster.log_destination_type
+}
+output "s3_key_prefix" {
+  description = "Folder inside the S3 bucket where the log files are stored"
+  value       = aws_redshift_cluster.aws_redshift_cluster.s3_key_prefix
+}
+output "vpc_security_group_ids" {
+  description = "The VPC security group Ids associated with the clusterCluster nodes (for cluster_nodes) support the following attributes:"
+  value       = aws_redshift_cluster.aws_redshift_cluster.vpc_security_group_ids
 }
 output "automated_snapshot_retention_period" {
   description = "The backup retention period"
   value       = aws_redshift_cluster.aws_redshift_cluster.automated_snapshot_retention_period
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+output "bucket_name" {
+  description = "Name of the S3 bucket where the log files are to be stored"
+  value       = aws_redshift_cluster.aws_redshift_cluster.bucket_name
+}
+output "encrypted" {
+  description = "Whether the cluster data is encrypted"
+  value       = aws_redshift_cluster.aws_redshift_cluster.encrypted
+}
+output "kms_key_id" {
+  description = "KMS encryption key associated to the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.kms_key_id
+}
+output "maintenance_track_name" {
+  description = "The name of the maintenance track for the restored cluster."
+  value       = aws_redshift_cluster.aws_redshift_cluster.maintenance_track_name
+}
+output "preferred_maintenance_window" {
+  description = "The maintenance window"
+  value       = aws_redshift_cluster.aws_redshift_cluster.preferred_maintenance_window
+}
+output "publicly_accessible" {
+  description = "Whether the cluster is publicly accessible"
+  value       = aws_redshift_cluster.aws_redshift_cluster.publicly_accessible
+}
+output "cluster_nodes" {
+  description = "Nodes in the cluster. Cluster node blocks are documented below"
+  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_nodes
+}
+output "default_iam_role_arn" {
+  description = "∂The ARN for the IAM role that was set as default for the cluster when the cluster was created."
+  value       = aws_redshift_cluster.aws_redshift_cluster.default_iam_role_arn
+}
+output "master_username" {
+  description = "Username for the master DB user"
+  value       = aws_redshift_cluster.aws_redshift_cluster.master_username
+}
+output "vpc_id" {
+  description = "VPC Id associated with the cluster"
+  value       = aws_redshift_cluster.aws_redshift_cluster.vpc_id
+}
+output "aqua_configuration_status" {
+  description = "The value represents how the cluster is configured to use AQUA."
+  value       = aws_redshift_cluster.aws_redshift_cluster.aqua_configuration_status
 }
 output "cluster_type" {
   description = "Cluster type"
@@ -394,135 +367,7 @@ output "cluster_type" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-output "enable_logging" {
-  description = "Whether cluster logging is enabled"
-  value       = aws_redshift_cluster.aws_redshift_cluster.enable_logging
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "encrypted" {
-  description = "Whether the cluster data is encrypted"
-  value       = aws_redshift_cluster.aws_redshift_cluster.encrypted
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "endpoint" {
-  description = "Cluster endpoint"
-  value       = aws_redshift_cluster.aws_redshift_cluster.endpoint
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "preferred_maintenance_window" {
-  description = "The maintenance window"
-  value       = aws_redshift_cluster.aws_redshift_cluster.preferred_maintenance_window
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "bucket_name" {
-  description = "Name of the S3 bucket where the log files are to be stored"
-  value       = aws_redshift_cluster.aws_redshift_cluster.bucket_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_parameter_group_name" {
-  description = "The name of the parameter group to be associated with this cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_parameter_group_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_security_groups" {
-  description = "The security groups associated with the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_security_groups
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "default_iam_role_arn" {
-  description = "∂The ARN for the IAM role that was set as default for the cluster when the cluster was created."
-  value       = aws_redshift_cluster.aws_redshift_cluster.default_iam_role_arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "master_username" {
-  description = "Username for the master DB user"
-  value       = aws_redshift_cluster.aws_redshift_cluster.master_username
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "node_role" {
-  description = "Whether the node is a leader node or a compute node"
-  value       = aws_redshift_cluster.aws_redshift_cluster.node_role
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "arn" {
-  description = "ARN of cluster."
-  value       = aws_redshift_cluster.aws_redshift_cluster.arn
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "cluster_public_key" {
-  description = "Public key for the cluster"
-  value       = aws_redshift_cluster.aws_redshift_cluster.cluster_public_key
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "log_destination_type" {
-  description = "The log destination type."
-  value       = aws_redshift_cluster.aws_redshift_cluster.log_destination_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "manual_snapshot_retention_period" {
-  description = "(Optional)  The default number of days to retain a manual snapshot."
-  value       = aws_redshift_cluster.aws_redshift_cluster.manual_snapshot_retention_period
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "node_type" {
-  description = "Cluster node type"
-  value       = aws_redshift_cluster.aws_redshift_cluster.node_type
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
-output "publicly_accessible" {
-  description = "Whether the cluster is publicly accessible"
-  value       = aws_redshift_cluster.aws_redshift_cluster.publicly_accessible
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

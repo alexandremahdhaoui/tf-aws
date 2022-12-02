@@ -138,17 +138,9 @@ output "ecr_repository_prefix" {
   description = "(Required, Forces new resource) The repository name prefix to use when caching images from the source registry."
   value       = aws_ecr_pull_through_cache_rule.aws_ecr_pull_through_cache_rule.ecr_repository_prefix
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "upstream_registry_url" {
   description = "(Required, Forces new resource) The registry URL of the upstream public registry to use as the source.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecr_pull_through_cache_rule.aws_ecr_pull_through_cache_rule.upstream_registry_url
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "registry_id" {
   description = "The registry ID where the repository was created."
@@ -156,7 +148,7 @@ output "registry_id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

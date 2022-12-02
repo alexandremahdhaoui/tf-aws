@@ -138,17 +138,9 @@ output "policy_document" {
   description = "(Required) Details of the resource policy, including the identity of the principal that is enabled to put logs to this account. This is formatted as a JSON string. Maximum length of 5120 characters."
   value       = aws_cloudwatch_log_resource_policy.aws_cloudwatch_log_resource_policy.policy_document
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy_name" {
   description = "(Required) Name of the resource policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_log_resource_policy.aws_cloudwatch_log_resource_policy.policy_name
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "id" {
   description = "The name of the CloudWatch log resource policy"
@@ -156,7 +148,7 @@ output "id" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

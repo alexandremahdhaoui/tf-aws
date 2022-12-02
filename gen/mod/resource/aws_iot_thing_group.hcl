@@ -128,17 +128,9 @@ output "arn" {
   description = "The ARN of the Thing Group."
   value       = aws_iot_thing_group.aws_iot_thing_group.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "id" {
   description = "The Thing Group ID."
   value       = aws_iot_thing_group.aws_iot_thing_group.id
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "version" {
   description = "The current version of the Thing Group record in the registry."
@@ -146,7 +138,7 @@ output "version" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {

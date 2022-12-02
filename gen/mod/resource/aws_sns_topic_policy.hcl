@@ -138,17 +138,9 @@ output "arn" {
   description = "(Required) The ARN of the SNS topic"
   value       = aws_sns_topic_policy.aws_sns_topic_policy.arn
 }
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
-}
 output "policy" {
   description = "(Required) The fully-formed AWS policy as JSON. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
   value       = aws_sns_topic_policy.aws_sns_topic_policy.policy
-}
-output "provider_region" {
-  description = "Region where the provider should be executed."
-  type        = string
 }
 output "owner" {
   description = "The AWS Account ID of the SNS topic owner"
@@ -156,7 +148,7 @@ output "owner" {
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
+  value       = var.provider_region
 }
 terraform {
   backend "local" {
