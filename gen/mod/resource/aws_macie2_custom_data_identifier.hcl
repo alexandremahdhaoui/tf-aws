@@ -1,22 +1,18 @@
 resource "aws_macie2_custom_data_identifier" "aws_macie2_custom_data_identifier" {
-  created_at             = var.created_at
-  ignore_words           = var.ignore_words
-  keywords               = var.keywords
-  regex                  = var.regex
-  tags                   = var.tags
-  deleted                = var.deleted
-  description            = var.description
-  id                     = var.id
-  maximum_match_distance = var.maximum_match_distance
   name                   = var.name
   name_prefix            = var.name_prefix
+  regex                  = var.regex
+  id                     = var.id
+  ignore_words           = var.ignore_words
+  keywords               = var.keywords
+  maximum_match_distance = var.maximum_match_distance
+  tags                   = var.tags
+  created_at             = var.created_at
+  deleted                = var.deleted
+  description            = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "created_at" {
-  description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
   type        = string
 }
 variable "ignore_words" {
@@ -29,13 +25,8 @@ variable "keywords" {
   type        = string
   default     = ""
 }
-variable "regex" {
-  description = "(Optional) The regular expression (regex) that defines the pattern to match. The expression can contain as many as 512 characters."
-  type        = string
-  default     = ""
-}
-variable "name_prefix" {
-  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+variable "maximum_match_distance" {
+  description = "(Optional) The maximum number of characters that can exist between text that matches the regex pattern and the character sequences specified by the keywords array. Macie includes or excludes a result based on the proximity of a keyword to text that matches the regex pattern. The distance can be 1 - 300 characters. The default value is 50."
   type        = string
   default     = ""
 }
@@ -43,6 +34,10 @@ variable "tags" {
   description = "(Optional) A map of key-value pairs that specifies the tags to associate with the custom data identifier.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "created_at" {
+  description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
+  type        = string
 }
 variable "deleted" {
   description = "Specifies whether the custom data identifier was deleted. If you delete a custom data identifier, Amazon Macie doesn't delete it permanently. Instead, it soft deletes the identifier."
@@ -57,13 +52,18 @@ variable "id" {
   description = "The unique identifier (ID) of the macie custom data identifier."
   type        = string
 }
-variable "maximum_match_distance" {
-  description = "(Optional) The maximum number of characters that can exist between text that matches the regex pattern and the character sequences specified by the keywords array. Macie includes or excludes a result based on the proximity of a keyword to text that matches the regex pattern. The distance can be 1 - 300 characters. The default value is 50."
+variable "name" {
+  description = "(Optional) A custom name for the custom data identifier. The name can contain as many as 128 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Optional) A custom name for the custom data identifier. The name can contain as many as 128 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
+variable "name_prefix" {
+  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+  default     = ""
+}
+variable "regex" {
+  description = "(Optional) The regular expression (regex) that defines the pattern to match. The expression can contain as many as 512 characters."
   type        = string
   default     = ""
 }
@@ -187,10 +187,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "deleted" {
-  description = "Specifies whether the custom data identifier was deleted. If you delete a custom data identifier, Amazon Macie doesn't delete it permanently. Instead, it soft deletes the identifier."
-  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.deleted
-}
 output "description" {
   description = "(Optional) A custom description of the custom data identifier. The description can contain as many as 512 characters."
   value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.description
@@ -198,26 +194,6 @@ output "description" {
 output "id" {
   description = "The unique identifier (ID) of the macie custom data identifier."
   value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.id
-}
-output "maximum_match_distance" {
-  description = "(Optional) The maximum number of characters that can exist between text that matches the regex pattern and the character sequences specified by the keywords array. Macie includes or excludes a result based on the proximity of a keyword to text that matches the regex pattern. The distance can be 1 - 300 characters. The default value is 50."
-  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.maximum_match_distance
-}
-output "name" {
-  description = "(Optional) A custom name for the custom data identifier. The name can contain as many as 128 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
-  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.name
-}
-output "name_prefix" {
-  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.name_prefix
-}
-output "tags" {
-  description = "(Optional) A map of key-value pairs that specifies the tags to associate with the custom data identifier.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.tags
-}
-output "created_at" {
-  description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
-  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.created_at
 }
 output "ignore_words" {
   description = "(Optional) An array that lists specific character sequences (ignore words) to exclude from the results. If the text matched by the regular expression is the same as any string in this array, Amazon Macie ignores it. The array can contain as many as 10 ignore words. Each ignore word can contain 4 - 90 characters. Ignore words are case sensitive."
@@ -227,9 +203,33 @@ output "keywords" {
   description = " (Optional) An array that lists specific character sequences (keywords), one of which must be within proximity (maximum_match_distance) of the regular expression to match. The array can contain as many as 50 keywords. Each keyword can contain 3 - 90 characters. Keywords aren't case sensitive."
   value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.keywords
 }
+output "maximum_match_distance" {
+  description = "(Optional) The maximum number of characters that can exist between text that matches the regex pattern and the character sequences specified by the keywords array. Macie includes or excludes a result based on the proximity of a keyword to text that matches the regex pattern. The distance can be 1 - 300 characters. The default value is 50."
+  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.maximum_match_distance
+}
+output "tags" {
+  description = "(Optional) A map of key-value pairs that specifies the tags to associate with the custom data identifier.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.tags
+}
+output "created_at" {
+  description = "The date and time, in UTC and extended RFC 3339 format, when the Amazon Macie account was created."
+  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.created_at
+}
+output "deleted" {
+  description = "Specifies whether the custom data identifier was deleted. If you delete a custom data identifier, Amazon Macie doesn't delete it permanently. Instead, it soft deletes the identifier."
+  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.deleted
+}
 output "regex" {
   description = "(Optional) The regular expression (regex) that defines the pattern to match. The expression can contain as many as 512 characters."
   value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.regex
+}
+output "name" {
+  description = "(Optional) A custom name for the custom data identifier. The name can contain as many as 128 characters. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
+  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.name
+}
+output "name_prefix" {
+  description = " (Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_macie2_custom_data_identifier.aws_macie2_custom_data_identifier.name_prefix
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the custom data identifier."

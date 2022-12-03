@@ -144,10 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN assigned by AWS for this group."
-  value       = aws_iam_group.aws_iam_group.arn
-}
 output "id" {
   description = "The group's ID."
   value       = aws_iam_group.aws_iam_group.id
@@ -160,9 +156,9 @@ output "path" {
   description = "The path of the group in IAM."
   value       = aws_iam_group.aws_iam_group.path
 }
-output "id" {
-  description = "The group's ID."
-  value       = aws_iam_group.aws_iam_group.id
+output "arn" {
+  description = "The ARN assigned by AWS for this group."
+  value       = aws_iam_group.aws_iam_group.arn
 }
 output "name" {
   description = "The group's name."
@@ -179,6 +175,10 @@ output "unique_id" {
 output "arn" {
   description = "The ARN assigned by AWS for this group."
   value       = aws_iam_group.aws_iam_group.arn
+}
+output "id" {
+  description = "The group's ID."
+  value       = aws_iam_group.aws_iam_group.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -124,6 +124,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "vpc_id" {
+  description = "The ID of the VPC the subnet is in"
+  value       = aws_default_subnet.aws_default_subnet.vpc_id
+}
 output "availability_zone_id" {
   description = "The AZ ID of the subnet"
   value       = aws_default_subnet.aws_default_subnet.availability_zone_id
@@ -131,10 +135,6 @@ output "availability_zone_id" {
 output "cidr_block" {
   description = "The IPv4 CIDR block assigned to the subnet"
   value       = aws_default_subnet.aws_default_subnet.cidr_block
-}
-output "vpc_id" {
-  description = "The ID of the VPC the subnet is in"
-  value       = aws_default_subnet.aws_default_subnet.vpc_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

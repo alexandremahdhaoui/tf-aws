@@ -12,7 +12,7 @@ variable "id" {
   type        = string
 }
 variable "route_table_id" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+  description = "(Required) The ID of the Route Table to set as the new\nmain route table for the target VPCIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "vpc_id" {
@@ -144,7 +144,7 @@ output "id" {
   value       = aws_main_route_table_association.aws_main_route_table_association.id
 }
 output "route_table_id" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+  description = "(Required) The ID of the Route Table to set as the new\nmain route table for the target VPCIn addition to all arguments above, the following attributes are exported:"
   value       = aws_main_route_table_association.aws_main_route_table_association.route_table_id
 }
 output "vpc_id" {

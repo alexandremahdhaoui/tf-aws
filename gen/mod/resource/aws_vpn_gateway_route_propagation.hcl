@@ -1,7 +1,7 @@
 resource "aws_vpn_gateway_route_propagation" "aws_vpn_gateway_route_propagation" {
+  create         = var.create
   route_table_id = var.route_table_id
   vpn_gateway_id = var.vpn_gateway_id
-  create         = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 2m)"
-  value       = aws_vpn_gateway_route_propagation.aws_vpn_gateway_route_propagation.create
-}
 output "route_table_id" {
   description = "The id of the aws_route_table to propagate routes into.No additional attributes are exported.TimeoutsConfiguration options:"
   value       = aws_vpn_gateway_route_propagation.aws_vpn_gateway_route_propagation.route_table_id
@@ -150,6 +146,10 @@ output "route_table_id" {
 output "vpn_gateway_id" {
   description = "The id of the aws_vpn_gateway to propagate routes from."
   value       = aws_vpn_gateway_route_propagation.aws_vpn_gateway_route_propagation.vpn_gateway_id
+}
+output "create" {
+  description = "(Default 2m)"
+  value       = aws_vpn_gateway_route_propagation.aws_vpn_gateway_route_propagation.create
 }
 output "create" {
   description = "(Default 2m)"

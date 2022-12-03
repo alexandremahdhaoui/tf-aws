@@ -1,63 +1,44 @@
 resource "aws_imagebuilder_image_pipeline" "aws_imagebuilder_image_pipeline" {
-  date_next_run                      = var.date_next_run
-  image_tests_configuration          = var.image_tests_configuration
-  name                               = var.name
-  schedule                           = var.schedule
   status                             = var.status
-  arn                                = var.arn
-  date_created                       = var.date_created
-  image_tests_enabled                = var.image_tests_enabled
-  platform                           = var.platform
-  schedule_expression                = var.schedule_expression
-  tags_all                           = var.tags_all
-  timezone                           = var.timezone
-  date_last_run                      = var.date_last_run
-  date_updated                       = var.date_updated
-  enhanced_image_metadata_enabled    = var.enhanced_image_metadata_enabled
-  image_recipe_arn                   = var.image_recipe_arn
-  container_recipe_arn               = var.container_recipe_arn
-  description                        = var.description
-  distribution_configuration_arn     = var.distribution_configuration_arn
-  infrastructure_configuration_arn   = var.infrastructure_configuration_arn
-  pipeline_execution_start_condition = var.pipeline_execution_start_condition
-  tags                               = var.tags
   timeout_minutes                    = var.timeout_minutes
+  arn                                = var.arn
+  container_recipe_arn               = var.container_recipe_arn
+  date_updated                       = var.date_updated
+  image_tests_enabled                = var.image_tests_enabled
+  name                               = var.name
+  description                        = var.description
+  image_tests_configuration          = var.image_tests_configuration
+  pipeline_execution_start_condition = var.pipeline_execution_start_condition
+  platform                           = var.platform
+  schedule                           = var.schedule
+  tags_all                           = var.tags_all
+  date_last_run                      = var.date_last_run
+  enhanced_image_metadata_enabled    = var.enhanced_image_metadata_enabled
+  infrastructure_configuration_arn   = var.infrastructure_configuration_arn
+  schedule_expression                = var.schedule_expression
+  tags                               = var.tags
+  date_created                       = var.date_created
+  date_next_run                      = var.date_next_run
+  distribution_configuration_arn     = var.distribution_configuration_arn
+  image_recipe_arn                   = var.image_recipe_arn
+  timezone                           = var.timezone
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the image pipeline."
+  type        = string
+  default     = ""
 }
 variable "image_tests_configuration" {
   description = "(Optional) Configuration block with image tests configuration. Detailed below."
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Name of the image pipeline."
-  type        = string
-}
-variable "schedule" {
-  description = "(Optional) Configuration block with schedule settings. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "status" {
-  description = "(Optional) Status of the image pipeline. Valid values are DISABLED and ENABLED. Defaults to ENABLED."
-  type        = string
-  default     = ""
-}
-variable "date_next_run" {
-  description = "Date the image pipeline will run next."
-  type        = string
-  default     = ""
-}
-variable "date_created" {
-  description = "Date the image pipeline was created."
-  type        = string
-  default     = ""
-}
-variable "image_tests_enabled" {
-  description = "(Optional) Whether image tests are enabled. Defaults to true."
+variable "pipeline_execution_start_condition" {
+  description = "(Optional) Condition when the pipeline should trigger a new image build. Valid values are EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE and EXPRESSION_MATCH_ONLY. Defaults to EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE."
   type        = string
   default     = ""
 }
@@ -66,12 +47,56 @@ variable "platform" {
   type        = string
   default     = ""
 }
+variable "schedule" {
+  description = "(Optional) Configuration block with schedule settings. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "date_last_run" {
+  description = "Date the image pipeline was last run."
+  type        = string
+  default     = ""
+}
+variable "enhanced_image_metadata_enabled" {
+  description = "(Optional) Whether additional information about the image being created is collected. Defaults to true."
+  type        = string
+  default     = ""
+}
+variable "infrastructure_configuration_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration."
+  type        = string
+}
 variable "schedule_expression" {
   description = "(Required) Cron expression of how often the pipeline start condition is evaluated. For example, cron(0 0 * * ? *) is evaluated every day at midnight UTC. Configurations using the five field syntax that was previously accepted by the API, such as cron(0 0 * * *), must be updated to the six field syntax. For more information, see the Image Builder User Guide."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags for the image pipeline. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration"
+  type        = string
+  default     = ""
+}
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "date_created" {
+  description = "Date the image pipeline was created."
+  type        = string
+  default     = ""
+}
+variable "date_next_run" {
+  description = "Date the image pipeline will run next."
+  type        = string
+  default     = ""
+}
+variable "distribution_configuration_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
+  type        = string
+  default     = ""
+}
+variable "image_recipe_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
   type        = string
   default     = ""
 }
@@ -85,57 +110,32 @@ variable "arn" {
   type        = string
   default     = ""
 }
+variable "container_recipe_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the container recipe."
+  type        = string
+  default     = ""
+}
 variable "date_updated" {
   description = "Date the image pipeline was updated."
   type        = string
   default     = ""
 }
-variable "enhanced_image_metadata_enabled" {
-  description = "(Optional) Whether additional information about the image being created is collected. Defaults to true."
+variable "image_tests_enabled" {
+  description = "(Optional) Whether image tests are enabled. Defaults to true."
   type        = string
   default     = ""
 }
-variable "image_recipe_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
-  type        = string
-  default     = ""
-}
-variable "date_last_run" {
-  description = "Date the image pipeline was last run."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Description of the image pipeline."
-  type        = string
-  default     = ""
-}
-variable "distribution_configuration_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
-  type        = string
-  default     = ""
-}
-variable "infrastructure_configuration_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration."
+variable "name" {
+  description = "(Required) Name of the image pipeline."
   type        = string
 }
-variable "pipeline_execution_start_condition" {
-  description = "(Optional) Condition when the pipeline should trigger a new image build. Valid values are EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE and EXPRESSION_MATCH_ONLY. Defaults to EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags for the image pipeline. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration"
+variable "status" {
+  description = "(Optional) Status of the image pipeline. Valid values are DISABLED and ENABLED. Defaults to ENABLED."
   type        = string
   default     = ""
 }
 variable "timeout_minutes" {
   description = "(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.schedule"
-  type        = string
-  default     = ""
-}
-variable "container_recipe_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the container recipe."
   type        = string
   default     = ""
 }
@@ -259,18 +259,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "image_recipe_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.image_recipe_arn
-}
-output "date_last_run" {
-  description = "Date the image pipeline was last run."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.date_last_run
-}
-output "date_updated" {
-  description = "Date the image pipeline was updated."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.date_updated
-}
 output "enhanced_image_metadata_enabled" {
   description = "(Optional) Whether additional information about the image being created is collected. Defaults to true."
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.enhanced_image_metadata_enabled
@@ -279,77 +267,89 @@ output "infrastructure_configuration_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the Image Builder Infrastructure Configuration."
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.infrastructure_configuration_arn
 }
-output "pipeline_execution_start_condition" {
-  description = "(Optional) Condition when the pipeline should trigger a new image build. Valid values are EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE and EXPRESSION_MATCH_ONLY. Defaults to EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.pipeline_execution_start_condition
+output "schedule_expression" {
+  description = "(Required) Cron expression of how often the pipeline start condition is evaluated. For example, cron(0 0 * * ? *) is evaluated every day at midnight UTC. Configurations using the five field syntax that was previously accepted by the API, such as cron(0 0 * * *), must be updated to the six field syntax. For more information, see the Image Builder User Guide."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.schedule_expression
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags for the image pipeline. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.image_tests_configuration"
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.tags
 }
-output "timeout_minutes" {
-  description = "(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.schedule"
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.timeout_minutes
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.tags_all
 }
-output "container_recipe_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the container recipe."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.container_recipe_arn
-}
-output "description" {
-  description = "(Optional) Description of the image pipeline."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.description
-}
-output "distribution_configuration_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.distribution_configuration_arn
-}
-output "schedule" {
-  description = "(Optional) Configuration block with schedule settings. Detailed below."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.schedule
-}
-output "status" {
-  description = "(Optional) Status of the image pipeline. Valid values are DISABLED and ENABLED. Defaults to ENABLED."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.status
+output "date_last_run" {
+  description = "Date the image pipeline was last run."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.date_last_run
 }
 output "date_next_run" {
   description = "Date the image pipeline will run next."
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.date_next_run
 }
-output "image_tests_configuration" {
-  description = "(Optional) Configuration block with image tests configuration. Detailed below."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.image_tests_configuration
+output "distribution_configuration_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Image Builder Distribution Configuration."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.distribution_configuration_arn
 }
-output "name" {
-  description = "(Required) Name of the image pipeline."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.name
-}
-output "platform" {
-  description = "Platform of the image pipeline."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.platform
-}
-output "schedule_expression" {
-  description = "(Required) Cron expression of how often the pipeline start condition is evaluated. For example, cron(0 0 * * ? *) is evaluated every day at midnight UTC. Configurations using the five field syntax that was previously accepted by the API, such as cron(0 0 * * *), must be updated to the six field syntax. For more information, see the Image Builder User Guide."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.schedule_expression
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.tags_all
+output "image_recipe_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the image recipe."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.image_recipe_arn
 }
 output "timezone" {
   description = "(Optional) The timezone that applies to the scheduling expression. For example, \"Etc/UTC\", \"America/Los_Angeles\" in the IANA timezone format. If not specified this defaults to UTC.In addition to all arguments above, the following attributes are exported:"
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.timezone
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the image pipeline."
-  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.arn
-}
 output "date_created" {
   description = "Date the image pipeline was created."
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.date_created
 }
+output "container_recipe_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the container recipe."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.container_recipe_arn
+}
+output "date_updated" {
+  description = "Date the image pipeline was updated."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.date_updated
+}
 output "image_tests_enabled" {
   description = "(Optional) Whether image tests are enabled. Defaults to true."
   value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.image_tests_enabled
+}
+output "name" {
+  description = "(Required) Name of the image pipeline."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.name
+}
+output "status" {
+  description = "(Optional) Status of the image pipeline. Valid values are DISABLED and ENABLED. Defaults to ENABLED."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.status
+}
+output "timeout_minutes" {
+  description = "(Optional) Number of minutes before image tests time out. Valid values are between 60 and 1440. Defaults to 720.schedule"
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.timeout_minutes
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the image pipeline."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.arn
+}
+output "image_tests_configuration" {
+  description = "(Optional) Configuration block with image tests configuration. Detailed below."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.image_tests_configuration
+}
+output "pipeline_execution_start_condition" {
+  description = "(Optional) Condition when the pipeline should trigger a new image build. Valid values are EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE and EXPRESSION_MATCH_ONLY. Defaults to EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.pipeline_execution_start_condition
+}
+output "platform" {
+  description = "Platform of the image pipeline."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.platform
+}
+output "schedule" {
+  description = "(Optional) Configuration block with schedule settings. Detailed below."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.schedule
+}
+output "description" {
+  description = "(Optional) Description of the image pipeline."
+  value       = aws_imagebuilder_image_pipeline.aws_imagebuilder_image_pipeline.description
 }
 output "date_updated" {
   description = "Date the image pipeline was updated."

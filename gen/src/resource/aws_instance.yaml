@@ -182,10 +182,7 @@ spec:
             optional: true
             type: string
         launch_template:
-            description: |-
-                (Optional) Specifies a Launch Template to configure the instance. Parameters configured on this resource will override the corresponding parameters in the Launch Template.
-                See Launch Template Specification below for more details.
-            optional: true
+            description: Launch Template Specification below for more details.
             type: string
         maintenance_options:
             description: (Optional) Maintenance and recovery options for the instance. See Maintenance Options below for more details.

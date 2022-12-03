@@ -1,12 +1,20 @@
 resource "aws_ec2_carrier_gateway" "aws_ec2_carrier_gateway" {
+  vpc_id   = var.vpc_id
   arn      = var.arn
   id       = var.id
   owner_id = var.owner_id
   tags     = var.tags
-  vpc_id   = var.vpc_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the carrier gateway."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the carrier gateway."
   type        = string
 }
 variable "owner_id" {
@@ -20,14 +28,6 @@ variable "tags" {
 }
 variable "vpc_id" {
   description = "(Required) The ID of the VPC to associate with the carrier gateway.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the carrier gateway."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the carrier gateway."
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,6 +150,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The ARN of the carrier gateway."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.arn
+}
+output "id" {
+  description = "The ID of the carrier gateway."
+  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
+}
 output "owner_id" {
   description = "The AWS account ID of the owner of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.owner_id
@@ -170,10 +178,6 @@ output "id" {
   description = "The ID of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
 }
-output "id" {
-  description = "The ID of the carrier gateway."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.id
-}
 output "owner_id" {
   description = "The AWS account ID of the owner of the carrier gateway."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.owner_id
@@ -181,10 +185,6 @@ output "owner_id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.tags_all
-}
-output "arn" {
-  description = "The ARN of the carrier gateway."
-  value       = aws_ec2_carrier_gateway.aws_ec2_carrier_gateway.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

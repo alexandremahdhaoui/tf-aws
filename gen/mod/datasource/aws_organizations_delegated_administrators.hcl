@@ -4,22 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "delegated_administrators" {
-  description = "The list of delegated administrators in your organization, which have the following attributes:\n"
-  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegated_administrators
-}
-output "delegation_enabled_date" {
-  description = "The date when the account was made a delegated administrator."
-  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegation_enabled_date
-}
-output "email" {
-  description = "The email address that is associated with the delegated administrator's AWS account."
-  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.email
-}
-output "id" {
-  description = "The unique identifier (ID) of the delegated administrator's account."
-  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.id
-}
 output "joined_method" {
   description = "The method by which the delegated administrator's account joined the organization."
   value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.joined_method
@@ -35,6 +19,22 @@ output "name" {
 output "arn" {
   description = "The ARN of the delegated administrator's account."
   value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.arn
+}
+output "delegated_administrators" {
+  description = "The list of delegated administrators in your organization, which have the following attributes:\n"
+  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegated_administrators
+}
+output "delegation_enabled_date" {
+  description = "The date when the account was made a delegated administrator."
+  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.delegation_enabled_date
+}
+output "email" {
+  description = "The email address that is associated with the delegated administrator's AWS account."
+  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.email
+}
+output "id" {
+  description = "The unique identifier (ID) of the delegated administrator's account."
+  value       = aws_organizations_delegated_administrators.aws_organizations_delegated_administrators.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

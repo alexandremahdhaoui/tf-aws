@@ -1,25 +1,38 @@
 resource "aws_sagemaker_model" "aws_sagemaker_model" {
-  arn                                 = var.arn
-  execution_role_arn                  = var.execution_role_arn
+  vpc_config                          = var.vpc_config
   mode                                = var.mode
-  repository_access_mode              = var.repository_access_mode
-  repository_auth_config              = var.repository_auth_config
-  container                           = var.container
-  container_hostname                  = var.container_hostname
-  environment                         = var.environment
-  model_data_url                      = var.model_data_url
-  enable_network_isolation            = var.enable_network_isolation
+  name                                = var.name
   image                               = var.image
+  repository_access_mode              = var.repository_access_mode
+  enable_network_isolation            = var.enable_network_isolation
+  execution_role_arn                  = var.execution_role_arn
+  environment                         = var.environment
   primary_container                   = var.primary_container
   repository_credentials_provider_arn = var.repository_credentials_provider_arn
-  image_config                        = var.image_config
-  inference_execution_config          = var.inference_execution_config
-  name                                = var.name
   tags                                = var.tags
-  vpc_config                          = var.vpc_config
+  arn                                 = var.arn
+  container                           = var.container
+  inference_execution_config          = var.inference_execution_config
+  model_data_url                      = var.model_data_url
+  repository_auth_config              = var.repository_auth_config
+  container_hostname                  = var.container_hostname
+  image_config                        = var.image_config
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "environment" {
+  description = ""
+  type        = string
+}
+variable "primary_container" {
+  description = "(Optional) The primary docker image containing inference code that is used when the model is deployed for predictions.  If not specified, the container argument is required. Fields are documented below."
+  type        = string
+  default     = ""
+}
+variable "repository_credentials_provider_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of an AWS Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an AWS Lambda function, see Create a Lambda function with the console in the emAWS Lambda Developer Guide.Inference Execution Config"
   type        = string
 }
 variable "tags" {
@@ -27,13 +40,12 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "vpc_config" {
-  description = " (Optional) - Specifies the VPC that you want your model to connect to. VpcConfig is used in hosting services and in batch transform."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this model."
   type        = string
-  default     = ""
 }
-variable "image_config" {
-  description = "(Optional) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). For more information see Using a Private Docker Registry for Real-Time Inference Containers. see Image Config.Image Config"
+variable "container" {
+  description = " (Optional) -  Specifies containers in the inference pipeline. If not specified, the primary_container argument is required. Fields are documented below."
   type        = string
   default     = ""
 }
@@ -42,38 +54,13 @@ variable "inference_execution_config" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "The name of the model."
-  type        = string
-}
-variable "repository_access_mode" {
-  description = "(Required) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). Allowed values are: Platform and Vpc."
-  type        = string
-}
-variable "repository_auth_config" {
-  description = "(Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication. see Repository Auth Config.Repository Auth Config"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this model."
-  type        = string
-}
-variable "execution_role_arn" {
-  description = "(Required) A role that SageMaker can assume to access model artifacts and docker images for deployment."
-  type        = string
-}
-variable "mode" {
-  description = "(Required) How containers in a multi-container are run. The following values are valid Serial and Direct.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "model_data_url" {
   description = "(Optional) The URL for the S3 location where model artifacts are stored."
   type        = string
   default     = ""
 }
-variable "container" {
-  description = " (Optional) -  Specifies containers in the inference pipeline. If not specified, the primary_container argument is required. Fields are documented below."
+variable "repository_auth_config" {
+  description = "(Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication. see Repository Auth Config.Repository Auth Config"
   type        = string
   default     = ""
 }
@@ -82,13 +69,30 @@ variable "container_hostname" {
   type        = string
   default     = ""
 }
-variable "environment" {
-  description = "(Optional) Environment variables for the Docker container.\nA list of key value pairs."
+variable "image_config" {
+  description = "(Optional) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). For more information see Using a Private Docker Registry for Real-Time Inference Containers. see Image Config.Image Config"
   type        = string
   default     = ""
 }
-variable "repository_credentials_provider_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of an AWS Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an AWS Lambda function, see Create a Lambda function with the console in the emAWS Lambda Developer Guide.Inference Execution Config"
+variable "vpc_config" {
+  description = " (Optional) - Specifies the VPC that you want your model to connect to. VpcConfig is used in hosting services and in batch transform."
+  type        = string
+  default     = ""
+}
+variable "mode" {
+  description = "(Required) How containers in a multi-container are run. The following values are valid Serial and Direct.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "name" {
+  description = "The name of the model."
+  type        = string
+}
+variable "image" {
+  description = "(Required) The registry path where the inference code image is stored in Amazon ECR."
+  type        = string
+}
+variable "repository_access_mode" {
+  description = "(Required) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). Allowed values are: Platform and Vpc."
   type        = string
 }
 variable "enable_network_isolation" {
@@ -96,14 +100,9 @@ variable "enable_network_isolation" {
   type        = string
   default     = ""
 }
-variable "image" {
-  description = "(Required) The registry path where the inference code image is stored in Amazon ECR."
+variable "execution_role_arn" {
+  description = "(Required) A role that SageMaker can assume to access model artifacts and docker images for deployment."
   type        = string
-}
-variable "primary_container" {
-  description = "(Optional) The primary docker image containing inference code that is used when the model is deployed for predictions.  If not specified, the container argument is required. Fields are documented below."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -225,17 +224,65 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "mode" {
+  description = "(Required) How containers in a multi-container are run. The following values are valid Serial and Direct.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_model.aws_sagemaker_model.mode
+}
 output "name" {
   description = "The name of the model."
   value       = aws_sagemaker_model.aws_sagemaker_model.name
+}
+output "vpc_config" {
+  description = " (Optional) - Specifies the VPC that you want your model to connect to. VpcConfig is used in hosting services and in batch transform."
+  value       = aws_sagemaker_model.aws_sagemaker_model.vpc_config
+}
+output "enable_network_isolation" {
+  description = " (Optional) - Isolates the model container. No inbound or outbound network calls can be made to or from the model container."
+  value       = aws_sagemaker_model.aws_sagemaker_model.enable_network_isolation
+}
+output "execution_role_arn" {
+  description = "(Required) A role that SageMaker can assume to access model artifacts and docker images for deployment."
+  value       = aws_sagemaker_model.aws_sagemaker_model.execution_role_arn
+}
+output "image" {
+  description = "(Required) The registry path where the inference code image is stored in Amazon ECR."
+  value       = aws_sagemaker_model.aws_sagemaker_model.image
+}
+output "repository_access_mode" {
+  description = "(Required) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). Allowed values are: Platform and Vpc."
+  value       = aws_sagemaker_model.aws_sagemaker_model.repository_access_mode
+}
+output "repository_credentials_provider_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of an AWS Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an AWS Lambda function, see Create a Lambda function with the console in the emAWS Lambda Developer Guide.Inference Execution Config"
+  value       = aws_sagemaker_model.aws_sagemaker_model.repository_credentials_provider_arn
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The primary_container and container block both support:"
   value       = aws_sagemaker_model.aws_sagemaker_model.tags
 }
-output "vpc_config" {
-  description = " (Optional) - Specifies the VPC that you want your model to connect to. VpcConfig is used in hosting services and in batch transform."
-  value       = aws_sagemaker_model.aws_sagemaker_model.vpc_config
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this model."
+  value       = aws_sagemaker_model.aws_sagemaker_model.arn
+}
+output "container" {
+  description = " (Optional) -  Specifies containers in the inference pipeline. If not specified, the primary_container argument is required. Fields are documented below."
+  value       = aws_sagemaker_model.aws_sagemaker_model.container
+}
+output "environment" {
+  description = ""
+  value       = aws_sagemaker_model.aws_sagemaker_model.environment
+}
+output "primary_container" {
+  description = "(Optional) The primary docker image containing inference code that is used when the model is deployed for predictions.  If not specified, the container argument is required. Fields are documented below."
+  value       = aws_sagemaker_model.aws_sagemaker_model.primary_container
+}
+output "repository_auth_config" {
+  description = "(Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication. see Repository Auth Config.Repository Auth Config"
+  value       = aws_sagemaker_model.aws_sagemaker_model.repository_auth_config
+}
+output "container_hostname" {
+  description = "(Optional) The DNS host name for the container."
+  value       = aws_sagemaker_model.aws_sagemaker_model.container_hostname
 }
 output "image_config" {
   description = "(Optional) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). For more information see Using a Private Docker Registry for Real-Time Inference Containers. see Image Config.Image Config"
@@ -245,57 +292,9 @@ output "inference_execution_config" {
   description = "(Optional) Specifies details of how containers in a multi-container endpoint are called. see Inference Execution Config."
   value       = aws_sagemaker_model.aws_sagemaker_model.inference_execution_config
 }
-output "mode" {
-  description = "(Required) How containers in a multi-container are run. The following values are valid Serial and Direct.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_model.aws_sagemaker_model.mode
-}
-output "repository_access_mode" {
-  description = "(Required) Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). Allowed values are: Platform and Vpc."
-  value       = aws_sagemaker_model.aws_sagemaker_model.repository_access_mode
-}
-output "repository_auth_config" {
-  description = "(Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication. see Repository Auth Config.Repository Auth Config"
-  value       = aws_sagemaker_model.aws_sagemaker_model.repository_auth_config
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this model."
-  value       = aws_sagemaker_model.aws_sagemaker_model.arn
-}
-output "execution_role_arn" {
-  description = "(Required) A role that SageMaker can assume to access model artifacts and docker images for deployment."
-  value       = aws_sagemaker_model.aws_sagemaker_model.execution_role_arn
-}
-output "environment" {
-  description = "(Optional) Environment variables for the Docker container.\nA list of key value pairs."
-  value       = aws_sagemaker_model.aws_sagemaker_model.environment
-}
 output "model_data_url" {
   description = "(Optional) The URL for the S3 location where model artifacts are stored."
   value       = aws_sagemaker_model.aws_sagemaker_model.model_data_url
-}
-output "container" {
-  description = " (Optional) -  Specifies containers in the inference pipeline. If not specified, the primary_container argument is required. Fields are documented below."
-  value       = aws_sagemaker_model.aws_sagemaker_model.container
-}
-output "container_hostname" {
-  description = "(Optional) The DNS host name for the container."
-  value       = aws_sagemaker_model.aws_sagemaker_model.container_hostname
-}
-output "primary_container" {
-  description = "(Optional) The primary docker image containing inference code that is used when the model is deployed for predictions.  If not specified, the container argument is required. Fields are documented below."
-  value       = aws_sagemaker_model.aws_sagemaker_model.primary_container
-}
-output "repository_credentials_provider_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of an AWS Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an AWS Lambda function, see Create a Lambda function with the console in the emAWS Lambda Developer Guide.Inference Execution Config"
-  value       = aws_sagemaker_model.aws_sagemaker_model.repository_credentials_provider_arn
-}
-output "enable_network_isolation" {
-  description = " (Optional) - Isolates the model container. No inbound or outbound network calls can be made to or from the model container."
-  value       = aws_sagemaker_model.aws_sagemaker_model.enable_network_isolation
-}
-output "image" {
-  description = "(Required) The registry path where the inference code image is stored in Amazon ECR."
-  value       = aws_sagemaker_model.aws_sagemaker_model.image
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this model."

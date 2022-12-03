@@ -124,22 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "version" {
-  description = "The current version of the signing profile."
-  value       = aws_signer_signing_profile.aws_signer_signing_profile.version
-}
-output "version_arn" {
-  description = "The signing profile ARN, including the profile version."
-  value       = aws_signer_signing_profile.aws_signer_signing_profile.version_arn
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) for the signing profile."
-  value       = aws_signer_signing_profile.aws_signer_signing_profile.arn
-}
-output "name" {
-  description = "The name of the target signing profile."
-  value       = aws_signer_signing_profile.aws_signer_signing_profile.name
-}
 output "platform_display_name" {
   description = "A human-readable name for the signing platform associated with the signing profile."
   value       = aws_signer_signing_profile.aws_signer_signing_profile.platform_display_name
@@ -155,6 +139,22 @@ output "status" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_signer_signing_profile.aws_signer_signing_profile.tags_all
+}
+output "version" {
+  description = "The current version of the signing profile."
+  value       = aws_signer_signing_profile.aws_signer_signing_profile.version
+}
+output "version_arn" {
+  description = "The signing profile ARN, including the profile version."
+  value       = aws_signer_signing_profile.aws_signer_signing_profile.version_arn
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) for the signing profile."
+  value       = aws_signer_signing_profile.aws_signer_signing_profile.arn
+}
+output "name" {
+  description = "The name of the target signing profile."
+  value       = aws_signer_signing_profile.aws_signer_signing_profile.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

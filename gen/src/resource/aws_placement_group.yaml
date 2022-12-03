@@ -14,7 +14,10 @@ spec:
             description: (Required) The name of the placement group.
             type: string
         partition_count:
-            description: strategy"partition".  Valid values are 1 - 7 (default is 2).
+            description: |-
+                (Optional) The number of partitions to create in the
+                placement group.  Can only be specified when the strategy"partition".  Valid values are 1 - 7 (default is 2).
+            optional: true
             type: string
         placement_group_id:
             description: The ID of the placement group.

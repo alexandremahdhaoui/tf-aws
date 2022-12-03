@@ -1,15 +1,15 @@
 resource "aws_config_organization_conformance_pack" "aws_config_organization_conformance_pack" {
-  delivery_s3_key_prefix = var.delivery_s3_key_prefix
   id                     = var.id
   input_parameter        = var.input_parameter
   name                   = var.name
-  parameter_name         = var.parameter_name
-  delivery_s3_bucket     = var.delivery_s3_bucket
-  create                 = var.create
-  excluded_accounts      = var.excluded_accounts
-  parameter_value        = var.parameter_value
   template_body          = var.template_body
   template_s3_uri        = var.template_s3_uri
+  delivery_s3_key_prefix = var.delivery_s3_key_prefix
+  create                 = var.create
+  delivery_s3_bucket     = var.delivery_s3_bucket
+  excluded_accounts      = var.excluded_accounts
+  parameter_name         = var.parameter_name
+  parameter_value        = var.parameter_value
   update                 = var.update
   arn                    = var.arn
 }
@@ -17,10 +17,35 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "delivery_s3_key_prefix" {
-  description = "(Optional) The prefix for the Amazon S3 bucket. Maximum length of 1024."
+variable "create" {
+  description = "(Default 10m)"
+  type        = string
+}
+variable "delivery_s3_bucket" {
+  description = "(Optional) Amazon S3 bucket where AWS Config stores conformance pack templates. Delivery bucket must begin with awsconfigconforms prefix. Maximum length of 63."
   type        = string
   default     = ""
+}
+variable "excluded_accounts" {
+  description = "(Optional) Set of AWS accounts to be excluded from an organization conformance pack while deploying a conformance pack. Maximum of 1000 accounts."
+  type        = string
+  default     = ""
+}
+variable "parameter_name" {
+  description = "(Required) The input key."
+  type        = string
+}
+variable "parameter_value" {
+  description = "(Required) The input value.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 10m)"
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the organization conformance pack."
+  type        = string
 }
 variable "id" {
   description = "The name of the organization conformance pack.TimeoutsConfiguration options:"
@@ -35,28 +60,6 @@ variable "name" {
   description = "(Required, Forces new resource) The name of the organization conformance pack. Must begin with a letter and contain from 1 to 128 alphanumeric characters and hyphens."
   type        = string
 }
-variable "parameter_name" {
-  description = "(Required) The input key."
-  type        = string
-}
-variable "delivery_s3_bucket" {
-  description = "(Optional) Amazon S3 bucket where AWS Config stores conformance pack templates. Delivery bucket must begin with awsconfigconforms prefix. Maximum length of 63."
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "excluded_accounts" {
-  description = "(Optional) Set of AWS accounts to be excluded from an organization conformance pack while deploying a conformance pack. Maximum of 1000 accounts."
-  type        = string
-  default     = ""
-}
-variable "parameter_value" {
-  description = "(Required) The input value.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "template_body" {
   description = "(Optional, Conflicts with template_s3_uri) A string containing full conformance pack template body. Maximum length of 51200. Drift detection is not possible with this argument."
   type        = string
@@ -65,13 +68,10 @@ variable "template_s3_uri" {
   description = "(Optional, Conflicts with template_body) Location of file, e.g., s3://bucketname/prefix, containing the template body. The uri must point to the conformance pack template that is located in an Amazon S3 bucket in the same region as the conformance pack. Maximum length of 1024. Drift detection is not possible with this argument.input_parameter Argument ReferenceThe input_parameter configuration block supports the following arguments:"
   type        = string
 }
-variable "update" {
-  description = "(Default 10m)"
+variable "delivery_s3_key_prefix" {
+  description = "(Optional) The prefix for the Amazon S3 bucket. Maximum length of 1024."
   type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the organization conformance pack."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -193,33 +193,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "parameter_name" {
-  description = "(Required) The input key."
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.parameter_name
-}
 output "delivery_s3_bucket" {
   description = "(Optional) Amazon S3 bucket where AWS Config stores conformance pack templates. Delivery bucket must begin with awsconfigconforms prefix. Maximum length of 63."
   value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.delivery_s3_bucket
 }
-output "delivery_s3_key_prefix" {
-  description = "(Optional) The prefix for the Amazon S3 bucket. Maximum length of 1024."
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.delivery_s3_key_prefix
+output "excluded_accounts" {
+  description = "(Optional) Set of AWS accounts to be excluded from an organization conformance pack while deploying a conformance pack. Maximum of 1000 accounts."
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.excluded_accounts
 }
-output "id" {
-  description = "The name of the organization conformance pack.TimeoutsConfiguration options:"
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.id
+output "parameter_name" {
+  description = "(Required) The input key."
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.parameter_name
 }
-output "input_parameter" {
-  description = "(Optional) Set of configuration blocks describing input parameters passed to the conformance pack template. Documented below. When configured, the parameters must also be included in the template_body or in the template stored in Amazon S3 if using template_s3_uri."
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.input_parameter
-}
-output "name" {
-  description = "(Required, Forces new resource) The name of the organization conformance pack. Must begin with a letter and contain from 1 to 128 alphanumeric characters and hyphens."
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.name
-}
-output "template_s3_uri" {
-  description = "(Optional, Conflicts with template_body) Location of file, e.g., s3://bucketname/prefix, containing the template body. The uri must point to the conformance pack template that is located in an Amazon S3 bucket in the same region as the conformance pack. Maximum length of 1024. Drift detection is not possible with this argument.input_parameter Argument ReferenceThe input_parameter configuration block supports the following arguments:"
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.template_s3_uri
+output "parameter_value" {
+  description = "(Required) The input value.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.parameter_value
 }
 output "update" {
   description = "(Default 10m)"
@@ -233,17 +221,37 @@ output "create" {
   description = "(Default 10m)"
   value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.create
 }
-output "excluded_accounts" {
-  description = "(Optional) Set of AWS accounts to be excluded from an organization conformance pack while deploying a conformance pack. Maximum of 1000 accounts."
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.excluded_accounts
+output "input_parameter" {
+  description = "(Optional) Set of configuration blocks describing input parameters passed to the conformance pack template. Documented below. When configured, the parameters must also be included in the template_body or in the template stored in Amazon S3 if using template_s3_uri."
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.input_parameter
 }
-output "parameter_value" {
-  description = "(Required) The input value.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.parameter_value
+output "name" {
+  description = "(Required, Forces new resource) The name of the organization conformance pack. Must begin with a letter and contain from 1 to 128 alphanumeric characters and hyphens."
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.name
 }
 output "template_body" {
   description = "(Optional, Conflicts with template_s3_uri) A string containing full conformance pack template body. Maximum length of 51200. Drift detection is not possible with this argument."
   value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.template_body
+}
+output "template_s3_uri" {
+  description = "(Optional, Conflicts with template_body) Location of file, e.g., s3://bucketname/prefix, containing the template body. The uri must point to the conformance pack template that is located in an Amazon S3 bucket in the same region as the conformance pack. Maximum length of 1024. Drift detection is not possible with this argument.input_parameter Argument ReferenceThe input_parameter configuration block supports the following arguments:"
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.template_s3_uri
+}
+output "delivery_s3_key_prefix" {
+  description = "(Optional) The prefix for the Amazon S3 bucket. Maximum length of 1024."
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.delivery_s3_key_prefix
+}
+output "id" {
+  description = "The name of the organization conformance pack.TimeoutsConfiguration options:"
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.id
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the organization conformance pack."
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.create
 }
 output "delete" {
   description = "(Default 20m)"
@@ -256,14 +264,6 @@ output "id" {
 output "update" {
   description = "(Default 10m)"
   value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.update
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the organization conformance pack."
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.arn
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_config_organization_conformance_pack.aws_config_organization_conformance_pack.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

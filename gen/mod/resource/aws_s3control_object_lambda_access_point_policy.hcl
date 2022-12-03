@@ -8,14 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the Object Lambda Access Point."
-  type        = string
-}
-variable "policy" {
-  description = "(Required) The Object Lambda Access Point resource policy document.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "account_id" {
   description = "(Optional) The AWS account ID for the account that owns the Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
   type        = string
@@ -23,6 +15,14 @@ variable "account_id" {
 }
 variable "has_public_access_policy" {
   description = "Indicates whether this access point currently has a policy that allows public access."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the Object Lambda Access Point."
+  type        = string
+}
+variable "policy" {
+  description = "(Required) The Object Lambda Access Point resource policy document.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -145,10 +145,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "account_id" {
-  description = "(Optional) The AWS account ID for the account that owns the Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
-  value       = aws_s3control_object_lambda_access_point_policy.aws_s3control_object_lambda_access_point_policy.account_id
-}
 output "has_public_access_policy" {
   description = "Indicates whether this access point currently has a policy that allows public access."
   value       = aws_s3control_object_lambda_access_point_policy.aws_s3control_object_lambda_access_point_policy.has_public_access_policy
@@ -160,6 +156,10 @@ output "name" {
 output "policy" {
   description = "(Required) The Object Lambda Access Point resource policy document.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3control_object_lambda_access_point_policy.aws_s3control_object_lambda_access_point_policy.policy
+}
+output "account_id" {
+  description = "(Optional) The AWS account ID for the account that owns the Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
+  value       = aws_s3control_object_lambda_access_point_policy.aws_s3control_object_lambda_access_point_policy.account_id
 }
 output "has_public_access_policy" {
   description = "Indicates whether this access point currently has a policy that allows public access."

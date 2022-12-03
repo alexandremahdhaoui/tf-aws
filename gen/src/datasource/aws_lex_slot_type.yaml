@@ -16,7 +16,10 @@ spec:
             description: Description of the slot type.
             type: string
         enumeration_value:
-            description: ""
+            description: |-
+                Set of EnumerationValue objects that defines the values that
+                the slot type can take. Each value can have a set of synonyms, which are additional values that help
+                train the machine learning model about the values that it resolves for a slot.
             type: string
         last_updated_date:
             description: Date when the $LATEST version of this slot type was updated.
@@ -25,9 +28,7 @@ spec:
             description: Name of the slot type. The name is not case sensitive.
             type: string
         value_selection_strategy:
-            description: |-
-                Determines the slot resolution strategy that Amazon Lex
-                uses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION
+            description: ORIGINAL_VALUETOP_RESOLUTION
             type: string
         version:
             description: (Optional) Version of the slot type.The following attributes are exported.
@@ -46,7 +47,10 @@ spec:
             description: Description of the slot type.
             type: string
         enumeration_value:
-            description: ""
+            description: |-
+                Set of EnumerationValue objects that defines the values that
+                the slot type can take. Each value can have a set of synonyms, which are additional values that help
+                train the machine learning model about the values that it resolves for a slot.
             type: string
         last_updated_date:
             description: Date when the $LATEST version of this slot type was updated.
@@ -55,9 +59,7 @@ spec:
             description: Name of the slot type. The name is not case sensitive.
             type: string
         value_selection_strategy:
-            description: |-
-                Determines the slot resolution strategy that Amazon Lex
-                uses to return slot type values. ORIGINAL_VALUETOP_RESOLUTION
+            description: ORIGINAL_VALUETOP_RESOLUTION
             type: string
     terraform:
         backend: ""

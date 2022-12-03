@@ -1,61 +1,27 @@
 resource "aws_secretsmanager_secret" "aws_secretsmanager_secret" {
-  name_prefix                    = var.name_prefix
+  name                           = var.name
+  replica                        = var.replica
   rotation_enabled               = var.rotation_enabled
-  rotation_lambda_arn            = var.rotation_lambda_arn
+  tags                           = var.tags
   tags_all                       = var.tags_all
   arn                            = var.arn
-  automatically_after_days       = var.automatically_after_days
-  region                         = var.region
-  replica                        = var.replica
-  status                         = var.status
-  id                             = var.id
-  name                           = var.name
-  recovery_window_in_days        = var.recovery_window_in_days
-  rotation_rules                 = var.rotation_rules
-  tags                           = var.tags
   description                    = var.description
-  force_overwrite_replica_secret = var.force_overwrite_replica_secret
+  name_prefix                    = var.name_prefix
+  region                         = var.region
+  rotation_lambda_arn            = var.rotation_lambda_arn
+  automatically_after_days       = var.automatically_after_days
+  id                             = var.id
+  recovery_window_in_days        = var.recovery_window_in_days
   kms_key_id                     = var.kms_key_id
   last_accessed_date             = var.last_accessed_date
+  rotation_rules                 = var.rotation_rules
+  status                         = var.status
+  force_overwrite_replica_secret = var.force_overwrite_replica_secret
   policy                         = var.policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "region" {
-  description = "(Required) Region for replicating the secret.rotation_rules"
-  type        = string
-}
-variable "replica" {
-  description = "Attributes of a replica are described below."
-  type        = string
-}
-variable "status" {
-  description = "Status can be InProgress, Failed, or InSync."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the secret."
-  type        = string
-}
-variable "automatically_after_days" {
-  description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "recovery_window_in_days" {
-  description = "(Optional) Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "ARN of the secret."
-  type        = string
-}
-variable "name" {
-  description = "(Optional) Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix."
-  type        = string
-  default     = ""
 }
 variable "kms_key_id" {
   description = "(Optional) ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent."
@@ -66,6 +32,16 @@ variable "last_accessed_date" {
   description = "Date that you last accessed the secret in the Region."
   type        = string
 }
+variable "recovery_window_in_days" {
+  description = "(Optional) Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30."
+  type        = string
+  default     = ""
+}
+variable "force_overwrite_replica_secret" {
+  description = "(Optional) Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region."
+  type        = string
+  default     = ""
+}
 variable "policy" {
   description = "(Optional) Valid JSON document representing a resource policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide. Removing policy from your configuration or setting policy to null or an empty string (i.e., policy = \"\") emwill not delete the policy since it could have been set by aws_secretsmanager_secret_policy. To delete the policy, set it to \"{}\" (an empty JSON document)."
   type        = string
@@ -75,27 +51,47 @@ variable "rotation_rules" {
   description = "(Optional, strongDEPRECATED) Configuration block for the rotation configuration of this secret. Defined below. Use the aws_secretsmanager_secret_rotation resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation."
   type        = string
 }
+variable "status" {
+  description = "Status can be InProgress, Failed, or InSync."
+  type        = string
+}
 variable "tags" {
   description = "(Optional) Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.replica"
   type        = string
   default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.replica"
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the secret."
+  type        = string
 }
 variable "description" {
   description = "(Optional) Description of the secret."
   type        = string
   default     = ""
 }
-variable "force_overwrite_replica_secret" {
-  description = "(Optional) Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region."
+variable "name" {
+  description = "(Optional) Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix."
   type        = string
   default     = ""
 }
-variable "rotation_lambda_arn" {
-  description = "(Optional, strongDEPRECATED) ARN of the Lambda function that can rotate the secret. Use the aws_secretsmanager_secret_rotation resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation."
+variable "replica" {
+  description = "Attributes of a replica are described below."
   type        = string
 }
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.replica"
+variable "rotation_enabled" {
+  description = "Whether automatic rotation is enabled for this secret."
+  type        = string
+}
+variable "automatically_after_days" {
+  description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "ARN of the secret."
   type        = string
 }
 variable "name_prefix" {
@@ -103,8 +99,12 @@ variable "name_prefix" {
   type        = string
   default     = ""
 }
-variable "rotation_enabled" {
-  description = "Whether automatic rotation is enabled for this secret."
+variable "region" {
+  description = "(Required) Region for replicating the secret.rotation_rules"
+  type        = string
+}
+variable "rotation_lambda_arn" {
+  description = "(Optional, strongDEPRECATED) ARN of the Lambda function that can rotate the secret. Use the aws_secretsmanager_secret_rotation resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation."
   type        = string
 }
 variable "tag_instance_id" {
@@ -227,6 +227,26 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "automatically_after_days" {
+  description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.automatically_after_days
+}
+output "id" {
+  description = "ARN of the secret."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.id
+}
+output "name_prefix" {
+  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.name_prefix
+}
+output "region" {
+  description = "(Required) Region for replicating the secret.rotation_rules"
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.region
+}
+output "rotation_lambda_arn" {
+  description = "(Optional, strongDEPRECATED) ARN of the Lambda function that can rotate the secret. Use the aws_secretsmanager_secret_rotation resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.rotation_lambda_arn
+}
 output "kms_key_id" {
   description = "(Optional) ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to. If one is not specified, then Secrets Manager defaults to using the AWS account's default KMS key (aws/secretsmanager) in the region or creates one for use if non-existent."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.kms_key_id
@@ -234,6 +254,14 @@ output "kms_key_id" {
 output "last_accessed_date" {
   description = "Date that you last accessed the secret in the Region."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.last_accessed_date
+}
+output "recovery_window_in_days" {
+  description = "(Optional) Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.recovery_window_in_days
+}
+output "force_overwrite_replica_secret" {
+  description = "(Optional) Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.force_overwrite_replica_secret
 }
 output "policy" {
   description = "(Optional) Valid JSON document representing a resource policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide. Removing policy from your configuration or setting policy to null or an empty string (i.e., policy = \"\") emwill not delete the policy since it could have been set by aws_secretsmanager_secret_policy. To delete the policy, set it to \"{}\" (an empty JSON document)."
@@ -243,73 +271,37 @@ output "rotation_rules" {
   description = "(Optional, strongDEPRECATED) Configuration block for the rotation configuration of this secret. Defined below. Use the aws_secretsmanager_secret_rotation resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.rotation_rules
 }
+output "status" {
+  description = "Status can be InProgress, Failed, or InSync."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.status
+}
 output "tags" {
   description = "(Optional) Key-value map of user-defined tags that are attached to the secret. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.replica"
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.tags
-}
-output "description" {
-  description = "(Optional) Description of the secret."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.description
-}
-output "force_overwrite_replica_secret" {
-  description = "(Optional) Accepts boolean value to specify whether to overwrite a secret with the same name in the destination Region."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.force_overwrite_replica_secret
-}
-output "rotation_lambda_arn" {
-  description = "(Optional, strongDEPRECATED) ARN of the Lambda function that can rotate the secret. Use the aws_secretsmanager_secret_rotation resource to manage this configuration instead. As of version 2.67.0, removal of this configuration will no longer remove rotation due to supporting the new resource. Either import the new resource and remove the configuration or manually remove rotation."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.rotation_lambda_arn
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.replica"
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.tags_all
 }
-output "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.name_prefix
-}
-output "rotation_enabled" {
-  description = "Whether automatic rotation is enabled for this secret."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.rotation_enabled
-}
-output "region" {
-  description = "(Required) Region for replicating the secret.rotation_rules"
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.region
-}
-output "replica" {
-  description = "Attributes of a replica are described below."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.replica
-}
-output "status" {
-  description = "Status can be InProgress, Failed, or InSync."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.status
-}
 output "arn" {
   description = "ARN of the secret."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.arn
 }
-output "automatically_after_days" {
-  description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.automatically_after_days
-}
-output "recovery_window_in_days" {
-  description = "(Optional) Number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.recovery_window_in_days
-}
-output "id" {
-  description = "ARN of the secret."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.id
+output "description" {
+  description = "(Optional) Description of the secret."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.description
 }
 output "name" {
   description = "(Optional) Friendly name of the new secret. The secret name can consist of uppercase letters, lowercase letters, digits, and any of the following characters: /_+=.@- Conflicts with name_prefix."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.name
 }
-output "last_accessed_date" {
-  description = "Date that you last accessed the secret in the Region."
-  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.last_accessed_date
-}
 output "replica" {
   description = "Attributes of a replica are described below."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.replica
+}
+output "rotation_enabled" {
+  description = "Whether automatic rotation is enabled for this secret."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.rotation_enabled
 }
 output "rotation_enabled" {
   description = "Whether automatic rotation is enabled for this secret."
@@ -334,6 +326,14 @@ output "arn" {
 output "id" {
   description = "ARN of the secret."
   value       = aws_secretsmanager_secret.aws_secretsmanager_secret.id
+}
+output "last_accessed_date" {
+  description = "Date that you last accessed the secret in the Region."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.last_accessed_date
+}
+output "replica" {
+  description = "Attributes of a replica are described below."
+  value       = aws_secretsmanager_secret.aws_secretsmanager_secret.replica
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

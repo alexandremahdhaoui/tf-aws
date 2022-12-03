@@ -1,27 +1,40 @@
 resource "aws_efs_replication_configuration" "aws_efs_replication_configuration" {
-  destination[0].status           = var.destination[0].status
-  original_source_file_system_arn = var.original_source_file_system_arn
   source_file_system_id           = var.source_file_system_id
-  availability_zone_name          = var.availability_zone_name
-  create                          = var.create
+  source_file_system_region       = var.source_file_system_region
   creation_time                   = var.creation_time
+  kms_key_id                      = var.kms_key_id
   destination                     = var.destination
   destination[0].file_system_id   = var.destination[0].file_system_id
-  kms_key_id                      = var.kms_key_id
+  destination[0].status           = var.destination[0].status
+  original_source_file_system_arn = var.original_source_file_system_arn
   region                          = var.region
   source_file_system_arn          = var.source_file_system_arn
-  source_file_system_region       = var.source_file_system_region
+  availability_zone_name          = var.availability_zone_name
+  create                          = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "original_source_file_system_arn" {
-  description = "The Amazon Resource Name (ARN) of the original source Amazon EFS file system in the replication configuration."
+variable "creation_time" {
+  description = "When the replication configuration was created."
   type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional) The Key ID, ARN, alias, or alias ARN of the KMS key that should be used to encrypt the replica file system. If omitted, the default KMS key for EFS /aws/elasticfilesystem will be used."
+  type        = string
+  default     = ""
 }
 variable "source_file_system_id" {
   description = "(Required) The ID of the file system that is to be replicated."
+  type        = string
+}
+variable "source_file_system_region" {
+  description = "The AWS Region in which the source Amazon EFS file system is located."
+  type        = string
+}
+variable "source_file_system_arn" {
+  description = "The Amazon Resource Name (ARN) of the current source file system in the replication configuration."
   type        = string
 }
 variable "availability_zone_name" {
@@ -31,10 +44,6 @@ variable "availability_zone_name" {
 }
 variable "create" {
   description = "(Default 10m)"
-  type        = string
-}
-variable "creation_time" {
-  description = "When the replication configuration was created."
   type        = string
 }
 variable "destination" {
@@ -49,23 +58,14 @@ variable "destination[0].status" {
   description = "The status of the replication.TimeoutsConfiguration options:"
   type        = string
 }
-variable "kms_key_id" {
-  description = "(Optional) The Key ID, ARN, alias, or alias ARN of the KMS key that should be used to encrypt the replica file system. If omitted, the default KMS key for EFS /aws/elasticfilesystem will be used."
+variable "original_source_file_system_arn" {
+  description = "The Amazon Resource Name (ARN) of the original source Amazon EFS file system in the replication configuration."
   type        = string
-  default     = ""
 }
 variable "region" {
   description = "(Optional) The region in which the replica should be created.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "source_file_system_arn" {
-  description = "The Amazon Resource Name (ARN) of the current source file system in the replication configuration."
-  type        = string
-}
-variable "source_file_system_region" {
-  description = "The AWS Region in which the source Amazon EFS file system is located."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -187,21 +187,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_id" {
-  description = "(Optional) The Key ID, ARN, alias, or alias ARN of the KMS key that should be used to encrypt the replica file system. If omitted, the default KMS key for EFS /aws/elasticfilesystem will be used."
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.kms_key_id
-}
-output "region" {
-  description = "(Optional) The region in which the replica should be created.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.region
-}
-output "source_file_system_arn" {
-  description = "The Amazon Resource Name (ARN) of the current source file system in the replication configuration."
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_arn
+output "source_file_system_id" {
+  description = "(Required) The ID of the file system that is to be replicated."
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_id
 }
 output "source_file_system_region" {
   description = "The AWS Region in which the source Amazon EFS file system is located."
   value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_region
+}
+output "creation_time" {
+  description = "When the replication configuration was created."
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.creation_time
+}
+output "kms_key_id" {
+  description = "(Optional) The Key ID, ARN, alias, or alias ARN of the KMS key that should be used to encrypt the replica file system. If omitted, the default KMS key for EFS /aws/elasticfilesystem will be used."
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.kms_key_id
+}
+output "destination" {
+  description = "(Required) A destination configuration block (documented below).Destination ArgumentsFor strongdestination the following attributes are supported:"
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.destination
 }
 output "destination[0].file_system_id" {
   description = "The fs ID of the replica."
@@ -215,9 +219,13 @@ output "original_source_file_system_arn" {
   description = "The Amazon Resource Name (ARN) of the original source Amazon EFS file system in the replication configuration."
   value       = aws_efs_replication_configuration.aws_efs_replication_configuration.original_source_file_system_arn
 }
-output "source_file_system_id" {
-  description = "(Required) The ID of the file system that is to be replicated."
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_id
+output "region" {
+  description = "(Optional) The region in which the replica should be created.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.region
+}
+output "source_file_system_arn" {
+  description = "The Amazon Resource Name (ARN) of the current source file system in the replication configuration."
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_arn
 }
 output "availability_zone_name" {
   description = "(Optional) The availability zone in which the replica should be created. If specified, the replica will be created with One Zone storage. If omitted, regional storage will be used."
@@ -227,13 +235,17 @@ output "create" {
   description = "(Default 10m)"
   value       = aws_efs_replication_configuration.aws_efs_replication_configuration.create
 }
-output "creation_time" {
-  description = "When the replication configuration was created."
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.creation_time
+output "destination[0].status" {
+  description = "The status of the replication.TimeoutsConfiguration options:"
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.destination[0].status
 }
-output "destination" {
-  description = "(Required) A destination configuration block (documented below).Destination ArgumentsFor strongdestination the following attributes are supported:"
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.destination
+output "original_source_file_system_arn" {
+  description = "The Amazon Resource Name (ARN) of the original source Amazon EFS file system in the replication configuration."
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.original_source_file_system_arn
+}
+output "source_file_system_arn" {
+  description = "The Amazon Resource Name (ARN) of the current source file system in the replication configuration."
+  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_arn
 }
 output "source_file_system_region" {
   description = "The AWS Region in which the source Amazon EFS file system is located."
@@ -254,18 +266,6 @@ output "delete" {
 output "destination[0].file_system_id" {
   description = "The fs ID of the replica."
   value       = aws_efs_replication_configuration.aws_efs_replication_configuration.destination[0].file_system_id
-}
-output "destination[0].status" {
-  description = "The status of the replication.TimeoutsConfiguration options:"
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.destination[0].status
-}
-output "original_source_file_system_arn" {
-  description = "The Amazon Resource Name (ARN) of the original source Amazon EFS file system in the replication configuration."
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.original_source_file_system_arn
-}
-output "source_file_system_arn" {
-  description = "The Amazon Resource Name (ARN) of the current source file system in the replication configuration."
-  value       = aws_efs_replication_configuration.aws_efs_replication_configuration.source_file_system_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,24 +1,19 @@
 resource "aws_appconfig_environment" "aws_appconfig_environment" {
+  id             = var.id
+  name           = var.name
+  state          = var.state
   alarm_arn      = var.alarm_arn
   arn            = var.arn
-  state          = var.state
-  id             = var.id
+  environment_id = var.environment_id
   monitor        = var.monitor
-  name           = var.name
   tags           = var.tags
   alarm_role_arn = var.alarm_role_arn
   application_id = var.application_id
   description    = var.description
-  environment_id = var.environment_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.MonitorThe monitor block supports the following:"
-  type        = string
-  default     = ""
 }
 variable "alarm_role_arn" {
   description = "(Optional) ARN of an IAM role for AWS AppConfig to monitor alarm_arn.In addition to all arguments above, the following attributes are exported:"
@@ -34,6 +29,24 @@ variable "description" {
   type        = string
   default     = ""
 }
+variable "monitor" {
+  description = "(Optional) Set of Amazon CloudWatch alarms to monitor during the deployment process. Maximum of 5. See Monitor below for more details."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.MonitorThe monitor block supports the following:"
+  type        = string
+  default     = ""
+}
+variable "alarm_arn" {
+  description = "(Required) ARN of the Amazon CloudWatch alarm."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the AppConfig Environment."
+  type        = string
+}
 variable "environment_id" {
   description = "AppConfig environment ID."
   type        = string
@@ -42,21 +55,8 @@ variable "id" {
   description = "AppConfig environment ID and application ID separated by a colon (:)."
   type        = string
 }
-variable "monitor" {
-  description = "(Optional) Set of Amazon CloudWatch alarms to monitor during the deployment process. Maximum of 5. See Monitor below for more details."
-  type        = string
-  default     = ""
-}
 variable "name" {
   description = "(Required) Name for the environment. Must be between 1 and 64 characters in length."
-  type        = string
-}
-variable "alarm_arn" {
-  description = "(Required) ARN of the Amazon CloudWatch alarm."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the AppConfig Environment."
   type        = string
 }
 variable "state" {
@@ -191,10 +191,6 @@ output "arn" {
   description = "ARN of the AppConfig Environment."
   value       = aws_appconfig_environment.aws_appconfig_environment.arn
 }
-output "state" {
-  description = "State of the environment. Possible values are READY_FOR_DEPLOYMENT, DEPLOYING, ROLLING_BACKROLLED_BACK."
-  value       = aws_appconfig_environment.aws_appconfig_environment.state
-}
 output "environment_id" {
   description = "AppConfig environment ID."
   value       = aws_appconfig_environment.aws_appconfig_environment.environment_id
@@ -203,17 +199,13 @@ output "id" {
   description = "AppConfig environment ID and application ID separated by a colon (:)."
   value       = aws_appconfig_environment.aws_appconfig_environment.id
 }
-output "monitor" {
-  description = "(Optional) Set of Amazon CloudWatch alarms to monitor during the deployment process. Maximum of 5. See Monitor below for more details."
-  value       = aws_appconfig_environment.aws_appconfig_environment.monitor
-}
 output "name" {
   description = "(Required) Name for the environment. Must be between 1 and 64 characters in length."
   value       = aws_appconfig_environment.aws_appconfig_environment.name
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.MonitorThe monitor block supports the following:"
-  value       = aws_appconfig_environment.aws_appconfig_environment.tags
+output "state" {
+  description = "State of the environment. Possible values are READY_FOR_DEPLOYMENT, DEPLOYING, ROLLING_BACKROLLED_BACK."
+  value       = aws_appconfig_environment.aws_appconfig_environment.state
 }
 output "alarm_role_arn" {
   description = "(Optional) ARN of an IAM role for AWS AppConfig to monitor alarm_arn.In addition to all arguments above, the following attributes are exported:"
@@ -227,9 +219,13 @@ output "description" {
   description = "(Optional) Description of the environment. Can be at most 1024 characters."
   value       = aws_appconfig_environment.aws_appconfig_environment.description
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_appconfig_environment.aws_appconfig_environment.tags_all
+output "monitor" {
+  description = "(Optional) Set of Amazon CloudWatch alarms to monitor during the deployment process. Maximum of 5. See Monitor below for more details."
+  value       = aws_appconfig_environment.aws_appconfig_environment.monitor
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.MonitorThe monitor block supports the following:"
+  value       = aws_appconfig_environment.aws_appconfig_environment.tags
 }
 output "arn" {
   description = "ARN of the AppConfig Environment."
@@ -246,6 +242,10 @@ output "id" {
 output "state" {
   description = "State of the environment. Possible values are READY_FOR_DEPLOYMENT, DEPLOYING, ROLLING_BACKROLLED_BACK."
   value       = aws_appconfig_environment.aws_appconfig_environment.state
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_appconfig_environment.aws_appconfig_environment.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

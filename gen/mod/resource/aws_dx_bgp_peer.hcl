@@ -1,18 +1,22 @@
 resource "aws_dx_bgp_peer" "aws_dx_bgp_peer" {
-  create               = var.create
-  customer_address     = var.customer_address
-  id                   = var.id
-  address_family       = var.address_family
   amazon_address       = var.amazon_address
   aws_device           = var.aws_device
-  bgp_asn              = var.bgp_asn
-  bgp_status           = var.bgp_status
-  virtual_interface_id = var.virtual_interface_id
-  bgp_auth_key         = var.bgp_auth_key
   bgp_peer_id          = var.bgp_peer_id
+  customer_address     = var.customer_address
+  id                   = var.id
+  virtual_interface_id = var.virtual_interface_id
+  address_family       = var.address_family
+  bgp_auth_key         = var.bgp_auth_key
+  bgp_status           = var.bgp_status
+  create               = var.create
+  bgp_asn              = var.bgp_asn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "bgp_asn" {
+  description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
   type        = string
 }
 variable "bgp_auth_key" {
@@ -20,16 +24,20 @@ variable "bgp_auth_key" {
   type        = string
   default     = ""
 }
-variable "bgp_peer_id" {
-  description = "The ID of the BGP peer."
+variable "bgp_status" {
+  description = "The Up/Down state of the BGP peer."
   type        = string
 }
-variable "customer_address" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+variable "create" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "id" {
   description = "The ID of the BGP peer resource."
+  type        = string
+}
+variable "virtual_interface_id" {
+  description = "(Required) The ID of the Direct Connect virtual interface on which to create the BGP peer."
   type        = string
 }
 variable "address_family" {
@@ -45,21 +53,14 @@ variable "aws_device" {
   description = "The Direct Connect endpoint on which the BGP peer terminates.TimeoutsConfiguration options:"
   type        = string
 }
-variable "bgp_asn" {
-  description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
+variable "bgp_peer_id" {
+  description = "The ID of the BGP peer."
   type        = string
 }
-variable "bgp_status" {
-  description = "The Up/Down state of the BGP peer."
+variable "customer_address" {
+  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic.\nRequired for IPv4 BGP peers on public virtual interfaces.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "virtual_interface_id" {
-  description = "(Required) The ID of the Direct Connect virtual interface on which to create the BGP peer."
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -181,21 +182,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bgp_status" {
-  description = "The Up/Down state of the BGP peer."
-  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.bgp_status
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.create
+output "bgp_peer_id" {
+  description = "The ID of the BGP peer."
+  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.bgp_peer_id
 }
 output "customer_address" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+  description = "(Optional) The IPv4 CIDR destination address to which Amazon should send traffic.\nRequired for IPv4 BGP peers on public virtual interfaces.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dx_bgp_peer.aws_dx_bgp_peer.customer_address
 }
 output "id" {
   description = "The ID of the BGP peer resource."
   value       = aws_dx_bgp_peer.aws_dx_bgp_peer.id
+}
+output "virtual_interface_id" {
+  description = "(Required) The ID of the Direct Connect virtual interface on which to create the BGP peer."
+  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.virtual_interface_id
 }
 output "address_family" {
   description = "(Required) The address family for the BGP peer. ipv4  or ipv6."
@@ -209,21 +210,21 @@ output "aws_device" {
   description = "The Direct Connect endpoint on which the BGP peer terminates.TimeoutsConfiguration options:"
   value       = aws_dx_bgp_peer.aws_dx_bgp_peer.aws_device
 }
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.create
+}
 output "bgp_asn" {
   description = "(Required) The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration."
   value       = aws_dx_bgp_peer.aws_dx_bgp_peer.bgp_asn
-}
-output "virtual_interface_id" {
-  description = "(Required) The ID of the Direct Connect virtual interface on which to create the BGP peer."
-  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.virtual_interface_id
 }
 output "bgp_auth_key" {
   description = "(Optional) The authentication key for BGP configuration."
   value       = aws_dx_bgp_peer.aws_dx_bgp_peer.bgp_auth_key
 }
-output "bgp_peer_id" {
-  description = "The ID of the BGP peer."
-  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.bgp_peer_id
+output "bgp_status" {
+  description = "The Up/Down state of the BGP peer."
+  value       = aws_dx_bgp_peer.aws_dx_bgp_peer.bgp_status
 }
 output "aws_device" {
   description = "The Direct Connect endpoint on which the BGP peer terminates.TimeoutsConfiguration options:"

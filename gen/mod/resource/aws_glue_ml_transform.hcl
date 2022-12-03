@@ -1,121 +1,69 @@
 resource "aws_glue_ml_transform" "aws_glue_ml_transform" {
-  id                         = var.id
-  precision_recall_trade_off = var.precision_recall_trade_off
-  schema                     = var.schema
-  transform_type             = var.transform_type
-  database_name              = var.database_name
-  description                = var.description
-  number_of_workers          = var.number_of_workers
-  worker_type                = var.worker_type
-  accuracy_cost_trade_off    = var.accuracy_cost_trade_off
-  label_count                = var.label_count
   name                       = var.name
-  timeout                    = var.timeout
-  connection_name            = var.connection_name
-  find_matches_parameters    = var.find_matches_parameters
   parameters                 = var.parameters
-  arn                        = var.arn
-  max_retries                = var.max_retries
-  max_capacity               = var.max_capacity
-  tags_all                   = var.tags_all
-  primary_key_column_name    = var.primary_key_column_name
-  tags                       = var.tags
-  glue_version               = var.glue_version
-  input_record_tables        = var.input_record_tables
   role_arn                   = var.role_arn
+  worker_type                = var.worker_type
+  arn                        = var.arn
+  database_name              = var.database_name
+  find_matches_parameters    = var.find_matches_parameters
+  glue_version               = var.glue_version
+  connection_name            = var.connection_name
+  precision_recall_trade_off = var.precision_recall_trade_off
+  tags                       = var.tags
+  tags_all                   = var.tags_all
+  timeout                    = var.timeout
+  id                         = var.id
+  primary_key_column_name    = var.primary_key_column_name
   table_name                 = var.table_name
   catalog_id                 = var.catalog_id
+  description                = var.description
+  label_count                = var.label_count
+  max_capacity               = var.max_capacity
+  transform_type             = var.transform_type
+  accuracy_cost_trade_off    = var.accuracy_cost_trade_off
+  input_record_tables        = var.input_record_tables
+  number_of_workers          = var.number_of_workers
+  schema                     = var.schema
   enforce_provided_labels    = var.enforce_provided_labels
+  max_retries                = var.max_retries
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema"
-  type        = string
-}
-variable "max_capacity" {
-  description = " – (Optional) The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. max_capacity is a mutually exclusive option with number_of_workers and worker_type."
+variable "max_retries" {
+  description = " – (Optional) The maximum number of times to retry this ML Transform if it fails."
   type        = string
   default     = ""
 }
-variable "glue_version" {
-  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
-  type        = string
-  default     = ""
-}
-variable "input_record_tables" {
-  description = "(Required)  A list of AWS Glue table definitions used by the transform. see Input Record Tables."
-  type        = string
-}
-variable "primary_key_column_name" {
-  description = "(Optional) The name of a column that uniquely identifies rows in the source table.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "catalog_id" {
-  description = "(Optional) A unique identifier for the AWS Glue Data Catalog."
-  type        = string
-  default     = ""
-}
-variable "enforce_provided_labels" {
-  description = "(Optional) The value to switch on or off to force the output to match the provided labels from users."
-  type        = string
-  default     = ""
-}
-variable "role_arn" {
-  description = " – (Required) The ARN of the IAM role associated with this ML Transform."
-  type        = string
-}
-variable "table_name" {
-  description = "(Required) A table name in the AWS Glue Data Catalog."
-  type        = string
-}
-variable "transform_type" {
-  description = "(Required) The type of machine learning transform. For information about the types of machine learning transforms, see Creating Machine Learning Transforms."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of Glue ML Transform."
   type        = string
 }
 variable "database_name" {
   description = "(Required) A database name in the AWS Glue Data Catalog."
   type        = string
 }
-variable "description" {
-  description = " – (Optional) Description of the ML Transform."
+variable "find_matches_parameters" {
+  description = "(Required) The parameters for the find matches algorithm. see Find Matches Parameters.find_matches_parameters"
+  type        = string
+}
+variable "glue_version" {
+  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "Glue ML Transform ID."
+variable "name" {
+  description = "The name of the column."
   type        = string
 }
-variable "precision_recall_trade_off" {
-  description = "(Optional) The value selected when tuning your transform for a balance between precision and recall."
-  type        = string
-  default     = ""
-}
-variable "schema" {
-  description = "The object that represents the schema that this transform accepts. see Schema."
+variable "parameters" {
+  description = "(Required) The algorithmic parameters that are specific to the transform type used. Conditionally dependent on the transform type. see Parameters."
   type        = string
 }
-variable "accuracy_cost_trade_off" {
-  description = "(Optional) The value that is selected when tuning your transform for a balance between accuracy and cost."
+variable "role_arn" {
+  description = " – (Required) The ARN of the IAM role associated with this ML Transform."
   type        = string
-  default     = ""
-}
-variable "label_count" {
-  description = "The number of labels available for this transform."
-  type        = string
-}
-variable "number_of_workers" {
-  description = "(Optional) The number of workers of a defined worker_type that are allocated when an ML Transform runs. Required with worker_type.input_record_tables"
-  type        = string
-  default     = ""
 }
 variable "worker_type" {
   description = "(Optional) The type of predefined worker that is allocated when an ML Transform runs. Accepts a value of Standard, G.1X, or G.2X. Required with number_of_workers."
@@ -127,12 +75,31 @@ variable "connection_name" {
   type        = string
   default     = ""
 }
-variable "find_matches_parameters" {
-  description = "(Required) The parameters for the find matches algorithm. see Find Matches Parameters.find_matches_parameters"
+variable "precision_recall_trade_off" {
+  description = "(Optional) The value selected when tuning your transform for a balance between precision and recall."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema"
   type        = string
 }
-variable "name" {
-  description = "The name of the column."
+variable "id" {
+  description = "Glue ML Transform ID."
+  type        = string
+}
+variable "primary_key_column_name" {
+  description = "(Optional) The name of a column that uniquely identifies rows in the source table.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "table_name" {
+  description = "(Required) A table name in the AWS Glue Data Catalog."
   type        = string
 }
 variable "timeout" {
@@ -140,18 +107,51 @@ variable "timeout" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of Glue ML Transform."
-  type        = string
-}
-variable "max_retries" {
-  description = " – (Optional) The maximum number of times to retry this ML Transform if it fails."
+variable "catalog_id" {
+  description = "(Optional) A unique identifier for the AWS Glue Data Catalog."
   type        = string
   default     = ""
 }
-variable "parameters" {
-  description = "(Required) The algorithmic parameters that are specific to the transform type used. Conditionally dependent on the transform type. see Parameters."
+variable "description" {
+  description = " – (Optional) Description of the ML Transform."
   type        = string
+  default     = ""
+}
+variable "label_count" {
+  description = "The number of labels available for this transform."
+  type        = string
+}
+variable "max_capacity" {
+  description = " – (Optional) The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. max_capacity is a mutually exclusive option with number_of_workers and worker_type."
+  type        = string
+  default     = ""
+}
+variable "accuracy_cost_trade_off" {
+  description = "(Optional) The value that is selected when tuning your transform for a balance between accuracy and cost."
+  type        = string
+  default     = ""
+}
+variable "input_record_tables" {
+  description = "(Required)  A list of AWS Glue table definitions used by the transform. see Input Record Tables."
+  type        = string
+}
+variable "number_of_workers" {
+  description = "(Optional) The number of workers of a defined worker_type that are allocated when an ML Transform runs. Required with worker_type.input_record_tables"
+  type        = string
+  default     = ""
+}
+variable "schema" {
+  description = "The object that represents the schema that this transform accepts. see Schema."
+  type        = string
+}
+variable "transform_type" {
+  description = "(Required) The type of machine learning transform. For information about the types of machine learning transforms, see Creating Machine Learning Transforms."
+  type        = string
+}
+variable "enforce_provided_labels" {
+  description = "(Optional) The value to switch on or off to force the output to match the provided labels from users."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -273,113 +273,133 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "connection_name" {
-  description = "- (Optional) The name of the connection to the AWS Glue Data Catalog.parameters"
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.connection_name
-}
-output "find_matches_parameters" {
-  description = "(Required) The parameters for the find matches algorithm. see Find Matches Parameters.find_matches_parameters"
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.find_matches_parameters
-}
-output "name" {
-  description = "The name of the column."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.name
-}
-output "timeout" {
-  description = " – (Optional) The ML Transform timeout in minutes. The default is 2880 minutes (48 hours)."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.timeout
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue ML Transform."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.arn
-}
-output "max_retries" {
-  description = " – (Optional) The maximum number of times to retry this ML Transform if it fails."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.max_retries
-}
-output "parameters" {
-  description = "(Required) The algorithmic parameters that are specific to the transform type used. Conditionally dependent on the transform type. see Parameters."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.parameters
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema"
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.tags_all
-}
-output "max_capacity" {
-  description = " – (Optional) The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. max_capacity is a mutually exclusive option with number_of_workers and worker_type."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.max_capacity
-}
-output "glue_version" {
-  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.glue_version
-}
-output "input_record_tables" {
-  description = "(Required)  A list of AWS Glue table definitions used by the transform. see Input Record Tables."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.input_record_tables
+output "id" {
+  description = "Glue ML Transform ID."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.id
 }
 output "primary_key_column_name" {
   description = "(Optional) The name of a column that uniquely identifies rows in the source table.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glue_ml_transform.aws_glue_ml_transform.primary_key_column_name
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.tags
+output "table_name" {
+  description = "(Required) A table name in the AWS Glue Data Catalog."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.table_name
+}
+output "timeout" {
+  description = " – (Optional) The ML Transform timeout in minutes. The default is 2880 minutes (48 hours)."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.timeout
 }
 output "catalog_id" {
   description = "(Optional) A unique identifier for the AWS Glue Data Catalog."
   value       = aws_glue_ml_transform.aws_glue_ml_transform.catalog_id
 }
-output "enforce_provided_labels" {
-  description = "(Optional) The value to switch on or off to force the output to match the provided labels from users."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.enforce_provided_labels
-}
-output "role_arn" {
-  description = " – (Required) The ARN of the IAM role associated with this ML Transform."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.role_arn
-}
-output "table_name" {
-  description = "(Required) A table name in the AWS Glue Data Catalog."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.table_name
-}
-output "transform_type" {
-  description = "(Required) The type of machine learning transform. For information about the types of machine learning transforms, see Creating Machine Learning Transforms."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.transform_type
-}
-output "database_name" {
-  description = "(Required) A database name in the AWS Glue Data Catalog."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.database_name
-}
 output "description" {
   description = " – (Optional) Description of the ML Transform."
   value       = aws_glue_ml_transform.aws_glue_ml_transform.description
-}
-output "id" {
-  description = "Glue ML Transform ID."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.id
-}
-output "precision_recall_trade_off" {
-  description = "(Optional) The value selected when tuning your transform for a balance between precision and recall."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.precision_recall_trade_off
-}
-output "schema" {
-  description = "The object that represents the schema that this transform accepts. see Schema."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.schema
-}
-output "accuracy_cost_trade_off" {
-  description = "(Optional) The value that is selected when tuning your transform for a balance between accuracy and cost."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.accuracy_cost_trade_off
 }
 output "label_count" {
   description = "The number of labels available for this transform."
   value       = aws_glue_ml_transform.aws_glue_ml_transform.label_count
 }
+output "max_capacity" {
+  description = " – (Optional) The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. max_capacity is a mutually exclusive option with number_of_workers and worker_type."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.max_capacity
+}
+output "accuracy_cost_trade_off" {
+  description = "(Optional) The value that is selected when tuning your transform for a balance between accuracy and cost."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.accuracy_cost_trade_off
+}
+output "input_record_tables" {
+  description = "(Required)  A list of AWS Glue table definitions used by the transform. see Input Record Tables."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.input_record_tables
+}
 output "number_of_workers" {
   description = "(Optional) The number of workers of a defined worker_type that are allocated when an ML Transform runs. Required with worker_type.input_record_tables"
   value       = aws_glue_ml_transform.aws_glue_ml_transform.number_of_workers
 }
+output "schema" {
+  description = "The object that represents the schema that this transform accepts. see Schema."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.schema
+}
+output "transform_type" {
+  description = "(Required) The type of machine learning transform. For information about the types of machine learning transforms, see Creating Machine Learning Transforms."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.transform_type
+}
+output "enforce_provided_labels" {
+  description = "(Optional) The value to switch on or off to force the output to match the provided labels from users."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.enforce_provided_labels
+}
+output "max_retries" {
+  description = " – (Optional) The maximum number of times to retry this ML Transform if it fails."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.max_retries
+}
+output "role_arn" {
+  description = " – (Required) The ARN of the IAM role associated with this ML Transform."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.role_arn
+}
 output "worker_type" {
   description = "(Optional) The type of predefined worker that is allocated when an ML Transform runs. Accepts a value of Standard, G.1X, or G.2X. Required with number_of_workers."
   value       = aws_glue_ml_transform.aws_glue_ml_transform.worker_type
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue ML Transform."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.arn
+}
+output "database_name" {
+  description = "(Required) A database name in the AWS Glue Data Catalog."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.database_name
+}
+output "find_matches_parameters" {
+  description = "(Required) The parameters for the find matches algorithm. see Find Matches Parameters.find_matches_parameters"
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.find_matches_parameters
+}
+output "glue_version" {
+  description = "(Optional) The version of glue to use, for example \"1.0\". For information about available versions, see the AWS Glue Release Notes."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.glue_version
+}
+output "name" {
+  description = "The name of the column."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.name
+}
+output "parameters" {
+  description = "(Required) The algorithmic parameters that are specific to the transform type used. Conditionally dependent on the transform type. see Parameters."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.parameters
+}
+output "connection_name" {
+  description = "- (Optional) The name of the connection to the AWS Glue Data Catalog.parameters"
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.connection_name
+}
+output "precision_recall_trade_off" {
+  description = "(Optional) The value selected when tuning your transform for a balance between precision and recall."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.precision_recall_trade_off
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema"
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.tags_all
+}
+output "label_count" {
+  description = "The number of labels available for this transform."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.label_count
+}
+output "name" {
+  description = "The name of the column."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.name
+}
+output "schema" {
+  description = "The object that represents the schema that this transform accepts. see Schema."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.schema
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema"
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue ML Transform."
+  value       = aws_glue_ml_transform.aws_glue_ml_transform.arn
 }
 output "data_type" {
   description = "The type of data in the column."
@@ -388,26 +408,6 @@ output "data_type" {
 output "id" {
   description = "Glue ML Transform ID."
   value       = aws_glue_ml_transform.aws_glue_ml_transform.id
-}
-output "label_count" {
-  description = "The number of labels available for this transform."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.label_count
-}
-output "name" {
-  description = "The name of the column."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.name
-}
-output "schema" {
-  description = "The object that represents the schema that this transform accepts. see Schema."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.schema
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.schema"
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.tags_all
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue ML Transform."
-  value       = aws_glue_ml_transform.aws_glue_ml_transform.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

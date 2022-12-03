@@ -1,16 +1,12 @@
 resource "aws_iam_saml_provider" "aws_iam_saml_provider" {
+  tags_all               = var.tags_all
   arn                    = var.arn
   name                   = var.name
   saml_metadata_document = var.saml_metadata_document
   tags                   = var.tags
-  tags_all               = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the provider to create."
   type        = string
 }
 variable "saml_metadata_document" {
@@ -28,6 +24,10 @@ variable "tags_all" {
 }
 variable "arn" {
   description = "The ARN assigned by AWS for this provider."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the provider to create."
   type        = string
 }
 variable "tag_instance_id" {

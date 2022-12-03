@@ -1,10 +1,10 @@
 resource "aws_appstream_directory_config" "aws_appstream_directory_config" {
+  account_name                            = var.account_name
+  account_password                        = var.account_password
   directory_name                          = var.directory_name
   id                                      = var.id
   organizational_unit_distinguished_names = var.organizational_unit_distinguished_names
   service_account_credentials             = var.service_account_credentials
-  account_name                            = var.account_name
-  account_password                        = var.account_password
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -178,13 +178,13 @@ output "account_password" {
   description = "(Required) Password for the account.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appstream_directory_config.aws_appstream_directory_config.account_password
 }
-output "id" {
-  description = "Unique identifier (ID) of the appstream directory config."
-  value       = aws_appstream_directory_config.aws_appstream_directory_config.id
-}
 output "created_time" {
   description = " Date and time, in UTC and extended RFC 3339 format, when the directory config was created."
   value       = aws_appstream_directory_config.aws_appstream_directory_config.created_time
+}
+output "id" {
+  description = "Unique identifier (ID) of the appstream directory config."
+  value       = aws_appstream_directory_config.aws_appstream_directory_config.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

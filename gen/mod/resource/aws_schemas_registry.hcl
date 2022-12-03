@@ -1,8 +1,8 @@
 resource "aws_schemas_registry" "aws_schemas_registry" {
-  description = var.description
-  name        = var.name
   tags        = var.tags
   arn         = var.arn
+  description = var.description
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

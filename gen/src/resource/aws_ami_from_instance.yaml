@@ -17,12 +17,7 @@ spec:
             description: (Required) Region-unique name for the AMI.
             type: string
         snapshot_without_reboot:
-            description: |-
-                (Optional) Boolean that overrides the behavior of stopping
-                the instance before snapshotting. This is risky since it may cause a snapshot of an
-                inconsistent filesystem state, but can be used to avoid downtime if the user otherwise
-                guarantees that no filesystem writes will be underway at the time of snapshot.
-            optional: true
+            description: ""
             type: string
         source_instance_id:
             description: (Required) ID of the instance to use as the basis of the AMI.

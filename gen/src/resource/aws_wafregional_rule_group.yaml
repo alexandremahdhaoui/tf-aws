@@ -5,7 +5,8 @@ metadata:
 spec:
     args:
         action:
-            description: ""
+            description: |
+                (Required) Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule.
             type: string
         activated_rule:
             description: (Optional) A list of activated rules, see below

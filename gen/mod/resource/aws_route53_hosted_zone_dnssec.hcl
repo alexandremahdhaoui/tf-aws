@@ -1,16 +1,11 @@
 resource "aws_route53_hosted_zone_dnssec" "aws_route53_hosted_zone_dnssec" {
+  hosted_zone_id = var.hosted_zone_id
   id             = var.id
   signing_status = var.signing_status
-  hosted_zone_id = var.hosted_zone_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "signing_status" {
-  description = "(Optional) Hosted Zone signing status. Valid values: SIGNING, NOT_SIGNING. Defaults to SIGNING.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "hosted_zone_id" {
   description = "(Required) Identifier of the Route 53 Hosted Zone."
@@ -18,6 +13,11 @@ variable "hosted_zone_id" {
 }
 variable "id" {
   description = "Route 53 Hosted Zone identifier."
+  type        = string
+  default     = ""
+}
+variable "signing_status" {
+  description = "(Optional) Hosted Zone signing status. Valid values: SIGNING, NOT_SIGNING. Defaults to SIGNING.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -141,6 +141,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "signing_status" {
+  description = "(Optional) Hosted Zone signing status. Valid values: SIGNING, NOT_SIGNING. Defaults to SIGNING.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_hosted_zone_dnssec.aws_route53_hosted_zone_dnssec.signing_status
+}
 output "hosted_zone_id" {
   description = "(Required) Identifier of the Route 53 Hosted Zone."
   value       = aws_route53_hosted_zone_dnssec.aws_route53_hosted_zone_dnssec.hosted_zone_id
@@ -148,10 +152,6 @@ output "hosted_zone_id" {
 output "id" {
   description = "Route 53 Hosted Zone identifier."
   value       = aws_route53_hosted_zone_dnssec.aws_route53_hosted_zone_dnssec.id
-}
-output "signing_status" {
-  description = "(Optional) Hosted Zone signing status. Valid values: SIGNING, NOT_SIGNING. Defaults to SIGNING.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_hosted_zone_dnssec.aws_route53_hosted_zone_dnssec.signing_status
 }
 output "id" {
   description = "Route 53 Hosted Zone identifier."

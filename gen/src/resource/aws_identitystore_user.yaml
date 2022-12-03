@@ -20,7 +20,8 @@ spec:
             optional: true
             type: string
         external_ids:
-            description: ""
+            description: |
+                A list of identifiers issued to this resource by an external identity provider.
             optional: true
             type: string
         family_name:
@@ -128,7 +129,8 @@ spec:
             type: string
     attrs:
         external_ids:
-            description: ""
+            description: |
+                A list of identifiers issued to this resource by an external identity provider.
             type: string
         id:
             description: The identifier issued to this resource by an external identity provider.

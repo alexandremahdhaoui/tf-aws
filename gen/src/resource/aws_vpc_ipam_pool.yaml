@@ -28,7 +28,10 @@ spec:
             description: Amazon Resource Name (ARN) of IPAM
             type: string
         auto_import:
-            description: ""
+            description: |-
+                (Optional) If you include this argument, IPAM automatically imports any VPCs you have in your scope that fall
+                within the CIDR range in the pool.
+            optional: true
             type: string
         aws_service:
             description: '(Optional) Limits which AWS service the pool can be used in. Only useable on public scopes. Valid Values: ec2.'

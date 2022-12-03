@@ -1,27 +1,14 @@
 resource "aws_glue_workflow" "aws_glue_workflow" {
-  name                   = var.name
-  tags                   = var.tags
   arn                    = var.arn
   default_run_properties = var.default_run_properties
   description            = var.description
   id                     = var.id
   max_concurrent_runs    = var.max_concurrent_runs
+  name                   = var.name
+  tags                   = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "Workflow name"
-  type        = string
-}
-variable "max_concurrent_runs" {
-  description = "(Optional) Prevents exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = " – (Required) The name you assign to this workflow."
   type        = string
 }
 variable "tags" {
@@ -42,6 +29,19 @@ variable "description" {
   description = " – (Optional) Description of the workflow."
   type        = string
   default     = ""
+}
+variable "id" {
+  description = "Workflow name"
+  type        = string
+}
+variable "max_concurrent_runs" {
+  description = "(Optional) Prevents exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = " – (Required) The name you assign to this workflow."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -163,14 +163,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of Glue Workflow"
-  value       = aws_glue_workflow.aws_glue_workflow.arn
-}
-output "default_run_properties" {
-  description = " – (Optional) A map of default run properties for this workflow. These properties are passed to all jobs associated to the workflow."
-  value       = aws_glue_workflow.aws_glue_workflow.default_run_properties
-}
 output "description" {
   description = " – (Optional) Description of the workflow."
   value       = aws_glue_workflow.aws_glue_workflow.description
@@ -191,9 +183,13 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_glue_workflow.aws_glue_workflow.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_glue_workflow.aws_glue_workflow.tags_all
+output "arn" {
+  description = "Amazon Resource Name (ARN) of Glue Workflow"
+  value       = aws_glue_workflow.aws_glue_workflow.arn
+}
+output "default_run_properties" {
+  description = " – (Optional) A map of default run properties for this workflow. These properties are passed to all jobs associated to the workflow."
+  value       = aws_glue_workflow.aws_glue_workflow.default_run_properties
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of Glue Workflow"
@@ -202,6 +198,10 @@ output "arn" {
 output "id" {
   description = "Workflow name"
   value       = aws_glue_workflow.aws_glue_workflow.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_glue_workflow.aws_glue_workflow.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -118,7 +118,10 @@ spec:
                 instances. Only available on ELBs launched in a VPC.
             type: string
         ssl_certificate_id:
-            description: 'strongNote ECDSA-specific restrictions below.  Only valid when lb_protocol is either HTTPS or SSLHealth Check (health_check) supports the following:'
+            description: |-
+                (Optional) The ARN of an SSL certificate you have
+                uploaded to AWS IAM. strongNote ECDSA-specific restrictions below.  Only valid when lb_protocol is either HTTPS or SSLHealth Check (health_check) supports the following:
+            optional: true
             type: string
         subnets:
             description: (Required for a VPC ELB) A list of subnet IDs to attach to the ELB.
@@ -128,7 +131,9 @@ spec:
             optional: true
             type: string
         target:
-            description: ""
+            description: |
+                (Required) The target of the check. Valid pattern is "${PROTOCOL}:${PORT}${PATH}", where PROTOCOL
+                values are:
             type: string
         timeout:
             description: '(Required) The length of time before the check times out.Note on ECDSA Key AlgorithmIf the ARN of the ssl_certificate_idERR_SSL_VERSION_OR_CIPHER_MISMATCHIn addition to all arguments above, the following attributes are exported:'

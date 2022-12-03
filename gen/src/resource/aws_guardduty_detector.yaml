@@ -18,9 +18,7 @@ spec:
             optional: true
             type: string
         ebs_volumes:
-            description: |-
-                (Required) Configure whether scanning EBS volumes is enabled as data source for the detector for instances with findings.
-                See EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:
+            description: 'EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:'
             type: string
         enable:
             description: '(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:'

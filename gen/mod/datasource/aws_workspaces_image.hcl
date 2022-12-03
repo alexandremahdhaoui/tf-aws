@@ -1,12 +1,20 @@
 datasource "aws_workspaces_image" "aws_workspaces_image" {
-  required_tenancy = var.required_tenancy
   description      = var.description
   image_id         = var.image_id
   name             = var.name
   os               = var.os
+  required_tenancy = var.required_tenancy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "os" {
+  description = " – The operating system that the image is running."
+  type        = string
+}
+variable "required_tenancy" {
+  description = " – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images."
   type        = string
 }
 variable "description" {
@@ -19,14 +27,6 @@ variable "image_id" {
 }
 variable "name" {
   description = " – The name of the image."
-  type        = string
-}
-variable "os" {
-  description = " – The operating system that the image is running."
-  type        = string
-}
-variable "required_tenancy" {
-  description = " – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images."
   type        = string
 }
 output "description" {
@@ -49,14 +49,6 @@ output "required_tenancy" {
   description = " – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images."
   value       = aws_workspaces_image.aws_workspaces_image.required_tenancy
 }
-output "required_tenancy" {
-  description = " – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images."
-  value       = aws_workspaces_image.aws_workspaces_image.required_tenancy
-}
-output "description" {
-  description = " – The description of the image."
-  value       = aws_workspaces_image.aws_workspaces_image.description
-}
 output "name" {
   description = " – The name of the image."
   value       = aws_workspaces_image.aws_workspaces_image.name
@@ -64,6 +56,14 @@ output "name" {
 output "os" {
   description = " – The operating system that the image is running."
   value       = aws_workspaces_image.aws_workspaces_image.os
+}
+output "required_tenancy" {
+  description = " – Specifies whether the image is running on dedicated hardware. When Bring Your Own License (BYOL) is enabled, this value is set to DEDICATED. For more information, see Bring Your Own Windows Desktop Images."
+  value       = aws_workspaces_image.aws_workspaces_image.required_tenancy
+}
+output "description" {
+  description = " – The description of the image."
+  value       = aws_workspaces_image.aws_workspaces_image.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

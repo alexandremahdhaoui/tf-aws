@@ -1,16 +1,21 @@
 resource "aws_lambda_layer_version_permission" "aws_lambda_layer_version_permission" {
-  revision_id     = var.revision_id
-  statement_id    = var.statement_id
   version_number  = var.version_number
   action          = var.action
   id              = var.id
   layer_name      = var.layer_name
   organization_id = var.organization_id
   principal       = var.principal
+  revision_id     = var.revision_id
+  statement_id    = var.statement_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "organization_id" {
+  description = "(Optional) An identifier of AWS Organization, which should be able to use your Lambda Layer. principal should be equal to * if organization_id provided."
+  type        = string
+  default     = ""
 }
 variable "principal" {
   description = "(Required) AWS account ID which should be able to use your Lambda Layer. * can be used here, if you want to share your Lambda Layer widely."
@@ -39,11 +44,6 @@ variable "id" {
 variable "layer_name" {
   description = " (Required) The name or ARN of the Lambda Layer, which you want to grant access to."
   type        = string
-}
-variable "organization_id" {
-  description = "(Optional) An identifier of AWS Organization, which should be able to use your Lambda Layer. principal should be equal to * if organization_id provided."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -165,6 +165,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "action" {
+  description = "(Required) Action, which will be allowed. lambda:GetLayerVersion value is suggested by AWS documantation."
+  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.action
+}
+output "id" {
+  description = "The layer_name and version_number, separated by a comma (,)."
+  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.id
+}
 output "layer_name" {
   description = " (Required) The name or ARN of the Lambda Layer, which you want to grant access to."
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.layer_name
@@ -188,14 +196,6 @@ output "statement_id" {
 output "version_number" {
   description = " (Required) Version of Lambda Layer, which you want to grant access to. Note: permissions only apply to a single version of a layer.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.version_number
-}
-output "action" {
-  description = "(Required) Action, which will be allowed. lambda:GetLayerVersion value is suggested by AWS documantation."
-  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.action
-}
-output "id" {
-  description = "The layer_name and version_number, separated by a comma (,)."
-  value       = aws_lambda_layer_version_permission.aws_lambda_layer_version_permission.id
 }
 output "id" {
   description = "The layer_name and version_number, separated by a comma (,)."

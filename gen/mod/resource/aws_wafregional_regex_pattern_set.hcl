@@ -6,14 +6,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name or description of the Regex Pattern Set."
-  type        = string
-}
 variable "regex_pattern_strings" {
   description = "(Optional) A list of regular expression (regex) patterns that you want AWS WAF to search for, such as B[a@]dB[o0]t.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "name" {
+  description = "(Required) The name or description of the Regex Pattern Set."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

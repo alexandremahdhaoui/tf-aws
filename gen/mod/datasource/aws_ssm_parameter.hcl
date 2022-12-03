@@ -1,18 +1,13 @@
 datasource "aws_ssm_parameter" "aws_ssm_parameter" {
-  type            = var.type
-  value           = var.value
   with_decryption = var.with_decryption
   arn             = var.arn
   name            = var.name
+  type            = var.type
+  value           = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "with_decryption" {
-  description = "(Optional) Whether to return decrypted SecureString value. Defaults to true.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "ARN of the parameter."
@@ -30,9 +25,10 @@ variable "value" {
   description = "Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide."
   type        = string
 }
-output "arn" {
-  description = "ARN of the parameter."
-  value       = aws_ssm_parameter.aws_ssm_parameter.arn
+variable "with_decryption" {
+  description = "(Optional) Whether to return decrypted SecureString value. Defaults to true.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 output "name" {
   description = "Name of the parameter."
@@ -49,6 +45,10 @@ output "value" {
 output "with_decryption" {
   description = "(Optional) Whether to return decrypted SecureString value. Defaults to true.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ssm_parameter.aws_ssm_parameter.with_decryption
+}
+output "arn" {
+  description = "ARN of the parameter."
+  value       = aws_ssm_parameter.aws_ssm_parameter.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

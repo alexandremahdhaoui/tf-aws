@@ -26,7 +26,10 @@ spec:
             description: ARN for the KMS encryption key.
             type: string
         most_recent:
-            description: ""
+            description: |-
+                (Optional) If more than one result is returned, use the most
+                recent Volume.
+            optional: true
             type: string
         multi_attach_enabled:
             description: (Optional) Specifies whether Amazon EBS Multi-Attach is enabled.

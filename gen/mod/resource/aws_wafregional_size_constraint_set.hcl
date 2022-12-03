@@ -12,14 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "type" {
-  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "comparison_operator" {
-  description = "EQ, NE, LT, GTdocs for all supported values."
-  type        = string
-}
 variable "data" {
   description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
   type        = string
@@ -44,6 +36,14 @@ variable "size_constraints" {
 }
 variable "text_transformation" {
   description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
+  type        = string
+}
+variable "type" {
+  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "comparison_operator" {
+  description = "EQ, NE, LT, GTdocs for all supported values."
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,22 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name or description of the Size Constraint Set."
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.name
-}
-output "size" {
-  description = "(Required) The size in bytes that you want to compare against the size of the specified field_to_match"
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.size
-}
-output "size_constraints" {
-  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.size_constraints
-}
-output "text_transformation" {
-  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
-  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.text_transformation
-}
 output "type" {
   description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.type
@@ -197,6 +181,22 @@ output "data" {
 output "field_to_match" {
   description = "(Required) Specifies where in a web request to look for the size constraint."
   value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.field_to_match
+}
+output "name" {
+  description = "(Required) The name or description of the Size Constraint Set."
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.name
+}
+output "size" {
+  description = "(Required) The size in bytes that you want to compare against the size of the specified field_to_match"
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.size
+}
+output "size_constraints" {
+  description = "(Optional) Specifies the parts of web requests that you want to inspect the size of.Nested Blockssize_constraintsArguments"
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.size_constraints
+}
+output "text_transformation" {
+  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsstrongNote: if you choose BODY as type, you must choose NONE because CloudFront forwards only the first 8192 bytes for inspection.field_to_matchArguments"
+  value       = aws_wafregional_size_constraint_set.aws_wafregional_size_constraint_set.text_transformation
 }
 output "id" {
   description = "The ID of the WAF Size Constraint Set."

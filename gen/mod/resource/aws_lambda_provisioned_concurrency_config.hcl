@@ -1,9 +1,9 @@
 resource "aws_lambda_provisioned_concurrency_config" "aws_lambda_provisioned_concurrency_config" {
-  provisioned_concurrent_executions = var.provisioned_concurrent_executions
-  qualifier                         = var.qualifier
   create                            = var.create
   function_name                     = var.function_name
   id                                = var.id
+  provisioned_concurrent_executions = var.provisioned_concurrent_executions
+  qualifier                         = var.qualifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -169,10 +169,6 @@ output "create" {
   description = "(Default 15m)"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
 }
-output "create" {
-  description = "(Default 15m)"
-  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
-}
 output "id" {
   description = "Lambda Function name and qualifier separated by a colon (:).TimeoutsConfiguration options:"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.id
@@ -180,6 +176,10 @@ output "id" {
 output "update" {
   description = "(Default 15m)"
   value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.update
+}
+output "create" {
+  description = "(Default 15m)"
+  value       = aws_lambda_provisioned_concurrency_config.aws_lambda_provisioned_concurrency_config.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

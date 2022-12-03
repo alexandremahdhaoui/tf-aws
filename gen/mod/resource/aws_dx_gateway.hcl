@@ -149,18 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ID of the gateway."
-  value       = aws_dx_gateway.aws_dx_gateway.id
-}
-output "name" {
-  description = "(Required) The name of the connection."
-  value       = aws_dx_gateway.aws_dx_gateway.name
-}
-output "owner_account_id" {
-  description = "AWS Account ID of the gateway.TimeoutsConfiguration options:"
-  value       = aws_dx_gateway.aws_dx_gateway.owner_account_id
-}
 output "amazon_side_asn" {
   description = "(Required) The ASN to be configured on the Amazon side of the connection. The ASN must be in the private range of 64,512 to 65,534 or 4,200,000,000 to 4,294,967,294.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dx_gateway.aws_dx_gateway.amazon_side_asn
@@ -168,6 +156,14 @@ output "amazon_side_asn" {
 output "create" {
   description = "(Default 10m)"
   value       = aws_dx_gateway.aws_dx_gateway.create
+}
+output "id" {
+  description = "The ID of the gateway."
+  value       = aws_dx_gateway.aws_dx_gateway.id
+}
+output "name" {
+  description = "(Required) The name of the connection."
+  value       = aws_dx_gateway.aws_dx_gateway.name
 }
 output "owner_account_id" {
   description = "AWS Account ID of the gateway.TimeoutsConfiguration options:"
@@ -184,6 +180,10 @@ output "delete" {
 output "id" {
   description = "The ID of the gateway."
   value       = aws_dx_gateway.aws_dx_gateway.id
+}
+output "owner_account_id" {
+  description = "AWS Account ID of the gateway.TimeoutsConfiguration options:"
+  value       = aws_dx_gateway.aws_dx_gateway.owner_account_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

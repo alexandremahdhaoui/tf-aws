@@ -1,16 +1,20 @@
 resource "aws_globalaccelerator_listener" "aws_globalaccelerator_listener" {
-  create          = var.create
-  id              = var.id
-  protocol        = var.protocol
   accelerator_arn = var.accelerator_arn
   client_affinity = var.client_affinity
   from_port       = var.from_port
+  protocol        = var.protocol
+  create          = var.create
+  id              = var.id
   port_range      = var.port_range
   to_port         = var.to_port
   update          = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "update" {
+  description = "(Default 30m)"
   type        = string
 }
 variable "create" {
@@ -21,8 +25,13 @@ variable "id" {
   description = "The Amazon Resource Name (ARN) of the listener.TimeoutsConfiguration options:"
   type        = string
 }
-variable "protocol" {
-  description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
+variable "port_range" {
+  description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
+  type        = string
+  default     = ""
+}
+variable "to_port" {
+  description = "(Optional) The last port in the range of ports, inclusive.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -40,19 +49,10 @@ variable "from_port" {
   type        = string
   default     = ""
 }
-variable "port_range" {
-  description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
+variable "protocol" {
+  description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
   type        = string
   default     = ""
-}
-variable "to_port" {
-  description = "(Optional) The last port in the range of ports, inclusive.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -174,25 +174,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The Amazon Resource Name (ARN) of the listener.TimeoutsConfiguration options:"
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.id
-}
-output "protocol" {
-  description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.protocol
-}
 output "create" {
   description = "(Default 30m)"
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.create
 }
-output "client_affinity" {
-  description = "(Optional) Direct all requests from a user to the same endpoint. Valid values are NONE, SOURCE_IP. Default: NONE. If NONE, Global Accelerator uses the \"five-tuple\" properties of source IP address, source port, destination IP address, destination port, and protocol to select the hash value. If SOURCE_IP, Global Accelerator uses the \"two-tuple\" properties of source (client) IP address and destination IP address to select the hash value."
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.client_affinity
-}
-output "from_port" {
-  description = "(Optional) The first port in the range of ports, inclusive."
-  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.from_port
+output "id" {
+  description = "The Amazon Resource Name (ARN) of the listener.TimeoutsConfiguration options:"
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.id
 }
 output "port_range" {
   description = "(Optional) The list of port ranges for the connections from clients to the accelerator. Fields documented below.strongport_range supports the following attributes:"
@@ -209,6 +197,18 @@ output "update" {
 output "accelerator_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of your accelerator."
   value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.accelerator_arn
+}
+output "client_affinity" {
+  description = "(Optional) Direct all requests from a user to the same endpoint. Valid values are NONE, SOURCE_IP. Default: NONE. If NONE, Global Accelerator uses the \"five-tuple\" properties of source IP address, source port, destination IP address, destination port, and protocol to select the hash value. If SOURCE_IP, Global Accelerator uses the \"two-tuple\" properties of source (client) IP address and destination IP address to select the hash value."
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.client_affinity
+}
+output "from_port" {
+  description = "(Optional) The first port in the range of ports, inclusive."
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.from_port
+}
+output "protocol" {
+  description = "(Optional) The protocol for the connections from clients to the accelerator. Valid values are TCP, UDP."
+  value       = aws_globalaccelerator_listener.aws_globalaccelerator_listener.protocol
 }
 output "create" {
   description = "(Default 30m)"

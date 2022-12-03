@@ -1,106 +1,44 @@
 resource "aws_sagemaker_flow_definition" "aws_sagemaker_flow_definition" {
+  arn                                     = var.arn
+  human_loop_config                       = var.human_loop_config
+  task_description                        = var.task_description
+  s3_output_path                          = var.s3_output_path
   tags                                    = var.tags
   task_availability_lifetime_in_seconds   = var.task_availability_lifetime_in_seconds
-  amount_in_usd                           = var.amount_in_usd
   aws_managed_human_loop_request_source   = var.aws_managed_human_loop_request_source
-  human_loop_activation_conditions_config = var.human_loop_activation_conditions_config
-  public_workforce_task_price             = var.public_workforce_task_price
-  flow_definition_name                    = var.flow_definition_name
-  human_task_ui_arn                       = var.human_task_ui_arn
-  output_config                           = var.output_config
-  kms_key_id                              = var.kms_key_id
-  role_arn                                = var.role_arn
-  task_keywords                           = var.task_keywords
-  human_loop_activation_config            = var.human_loop_activation_config
-  id                                      = var.id
-  tenth_fractions_of_a_cent               = var.tenth_fractions_of_a_cent
-  task_count                              = var.task_count
-  task_description                        = var.task_description
-  task_time_limit_in_seconds              = var.task_time_limit_in_seconds
-  cents                                   = var.cents
-  human_loop_config                       = var.human_loop_config
-  human_loop_request_source               = var.human_loop_request_source
-  s3_output_path                          = var.s3_output_path
-  workteam_arn                            = var.workteam_arn
-  arn                                     = var.arn
   dollars                                 = var.dollars
-  human_loop_activation_conditions        = var.human_loop_activation_conditions
+  human_loop_request_source               = var.human_loop_request_source
+  task_count                              = var.task_count
+  task_time_limit_in_seconds              = var.task_time_limit_in_seconds
+  flow_definition_name                    = var.flow_definition_name
+  id                                      = var.id
+  human_task_ui_arn                       = var.human_task_ui_arn
+  kms_key_id                              = var.kms_key_id
+  tenth_fractions_of_a_cent               = var.tenth_fractions_of_a_cent
+  cents                                   = var.cents
+  human_loop_activation_conditions_config = var.human_loop_activation_conditions_config
+  human_loop_activation_config            = var.human_loop_activation_config
+  output_config                           = var.output_config
+  role_arn                                = var.role_arn
   task_title                              = var.task_title
+  task_keywords                           = var.task_keywords
+  amount_in_usd                           = var.amount_in_usd
+  human_loop_activation_conditions        = var.human_loop_activation_conditions
+  public_workforce_task_price             = var.public_workforce_task_price
+  workteam_arn                            = var.workteam_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "flow_definition_name" {
-  description = "(Required) The name of your flow definition."
+variable "human_loop_activation_conditions" {
+  description = "(Required) A JSON expressing use-case specific conditions declaratively. If any condition is matched, atomic tasks are created against the configured work team. For more information about how to structure the JSON, see JSON Schema for Human Loop Activation Conditions in Amazon Augmented AI.Human Loop Request Source"
   type        = string
 }
-variable "human_task_ui_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the human task user interface."
-  type        = string
-}
-variable "output_config" {
-  description = "(Required) An object containing information about where the human review results will be uploaded. See Output Config details below."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) The Amazon Key Management Service (KMS) key ARN for server-side encryption.In addition to all arguments above, the following attributes are exported:"
+variable "public_workforce_task_price" {
+  description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker for each task performed. See Public Workforce Task Price details below."
   type        = string
   default     = ""
-}
-variable "role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the role needed to call other services on your behalf."
-  type        = string
-}
-variable "task_keywords" {
-  description = "(Optional) An array of keywords used to describe the task so that workers can discover the task."
-  type        = string
-  default     = ""
-}
-variable "human_loop_activation_config" {
-  description = "(Optional) An object containing information about the events that trigger a human workflow. See Human Loop Activation Config details below."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The name of the Flow Definition."
-  type        = string
-}
-variable "tenth_fractions_of_a_cent" {
-  description = "(Optional) Fractions of a cent, in tenths. Valid value range between 0 and 9.Human Loop Activation Config"
-  type        = string
-  default     = ""
-}
-variable "task_time_limit_in_seconds" {
-  description = "(Optional) The amount of time that a worker has to complete a task. The default value is 3600 seconds."
-  type        = string
-  default     = ""
-}
-variable "task_count" {
-  description = "(Required) The number of distinct workers who will perform the same task on each object. Valid value range between 1 and 3."
-  type        = string
-}
-variable "task_description" {
-  description = "(Required) A description for the human worker task."
-  type        = string
-}
-variable "cents" {
-  description = "(Optional) The fractional portion, in cents, of the amount. Valid value range between 0 and 99."
-  type        = string
-  default     = ""
-}
-variable "human_loop_config" {
-  description = "(Required)  An object containing information about the tasks the human reviewers will perform. See Human Loop Config details below."
-  type        = string
-}
-variable "human_loop_request_source" {
-  description = "(Optional) Container for configuring the source of human task requests. Use to specify if Amazon Rekognition or Amazon Textract is used as an integration source. See Human Loop Request Source details below."
-  type        = string
-  default     = ""
-}
-variable "s3_output_path" {
-  description = "(Required) The Amazon S3 path where the object containing human output will be made available."
-  type        = string
 }
 variable "workteam_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the human task user interface. Amazon Resource Name (ARN) of a team of workers. For Public workforces see AWS Docs.Public Workforce Task Price"
@@ -110,23 +48,17 @@ variable "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Flow Definition."
   type        = string
 }
-variable "dollars" {
-  description = "(Optional) The whole number of dollars in the amount. Valid value range between 0 and 2."
-  type        = string
-  default     = ""
-}
-variable "human_loop_activation_conditions" {
-  description = "(Required) A JSON expressing use-case specific conditions declaratively. If any condition is matched, atomic tasks are created against the configured work team. For more information about how to structure the JSON, see JSON Schema for Human Loop Activation Conditions in Amazon Augmented AI.Human Loop Request Source"
+variable "human_loop_config" {
+  description = "(Required)  An object containing information about the tasks the human reviewers will perform. See Human Loop Config details below."
   type        = string
 }
-variable "task_title" {
-  description = "(Required) A title for the human worker task."
+variable "task_description" {
+  description = "(Required) A description for the human worker task."
   type        = string
 }
-variable "public_workforce_task_price" {
-  description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker for each task performed. See Public Workforce Task Price details below."
+variable "s3_output_path" {
+  description = "(Required) The Amazon S3 path where the object containing human output will be made available."
   type        = string
-  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Human Loop Config"
@@ -137,18 +69,86 @@ variable "task_availability_lifetime_in_seconds" {
   description = "(Required) The length of time that a task remains available for review by human workers. Valid value range between 1 and 864000."
   type        = string
 }
-variable "amount_in_usd" {
-  description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker in United States dollars. See Amount In Usd details below.Amount In Usd"
-  type        = string
-  default     = ""
-}
 variable "aws_managed_human_loop_request_source" {
   description = "(Required) Specifies whether Amazon Rekognition or Amazon Textract are used as the integration source. Valid values are: AWS/Rekognition/DetectModerationLabels/Image/V3 and AWS/Textract/AnalyzeDocument/Forms/V1.Output Config"
   type        = string
 }
+variable "dollars" {
+  description = "(Optional) The whole number of dollars in the amount. Valid value range between 0 and 2."
+  type        = string
+  default     = ""
+}
+variable "human_loop_request_source" {
+  description = "(Optional) Container for configuring the source of human task requests. Use to specify if Amazon Rekognition or Amazon Textract is used as an integration source. See Human Loop Request Source details below."
+  type        = string
+  default     = ""
+}
+variable "task_count" {
+  description = "(Required) The number of distinct workers who will perform the same task on each object. Valid value range between 1 and 3."
+  type        = string
+}
+variable "task_time_limit_in_seconds" {
+  description = "(Optional) The amount of time that a worker has to complete a task. The default value is 3600 seconds."
+  type        = string
+  default     = ""
+}
+variable "flow_definition_name" {
+  description = "(Required) The name of your flow definition."
+  type        = string
+}
+variable "id" {
+  description = "The name of the Flow Definition."
+  type        = string
+}
+variable "human_task_ui_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the human task user interface."
+  type        = string
+}
+variable "kms_key_id" {
+  description = "(Optional) The Amazon Key Management Service (KMS) key ARN for server-side encryption.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tenth_fractions_of_a_cent" {
+  description = "(Optional) Fractions of a cent, in tenths. Valid value range between 0 and 9.Human Loop Activation Config"
+  type        = string
+  default     = ""
+}
+variable "cents" {
+  description = "(Optional) The fractional portion, in cents, of the amount. Valid value range between 0 and 99."
+  type        = string
+  default     = ""
+}
 variable "human_loop_activation_conditions_config" {
   description = "(Required) defines under what conditions SageMaker creates a human loop. See Human Loop Activation Conditions Config details below.Human Loop Activation Conditions Config"
   type        = string
+}
+variable "human_loop_activation_config" {
+  description = "(Optional) An object containing information about the events that trigger a human workflow. See Human Loop Activation Config details below."
+  type        = string
+  default     = ""
+}
+variable "output_config" {
+  description = "(Required) An object containing information about where the human review results will be uploaded. See Output Config details below."
+  type        = string
+}
+variable "role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the role needed to call other services on your behalf."
+  type        = string
+}
+variable "task_title" {
+  description = "(Required) A title for the human worker task."
+  type        = string
+}
+variable "task_keywords" {
+  description = "(Optional) An array of keywords used to describe the task so that workers can discover the task."
+  type        = string
+  default     = ""
+}
+variable "amount_in_usd" {
+  description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker in United States dollars. See Amount In Usd details below.Amount In Usd"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -270,93 +270,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "amount_in_usd" {
-  description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker in United States dollars. See Amount In Usd details below.Amount In Usd"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.amount_in_usd
-}
-output "aws_managed_human_loop_request_source" {
-  description = "(Required) Specifies whether Amazon Rekognition or Amazon Textract are used as the integration source. Valid values are: AWS/Rekognition/DetectModerationLabels/Image/V3 and AWS/Textract/AnalyzeDocument/Forms/V1.Output Config"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.aws_managed_human_loop_request_source
-}
-output "human_loop_activation_conditions_config" {
-  description = "(Required) defines under what conditions SageMaker creates a human loop. See Human Loop Activation Conditions Config details below.Human Loop Activation Conditions Config"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_activation_conditions_config
+output "human_loop_activation_conditions" {
+  description = "(Required) A JSON expressing use-case specific conditions declaratively. If any condition is matched, atomic tasks are created against the configured work team. For more information about how to structure the JSON, see JSON Schema for Human Loop Activation Conditions in Amazon Augmented AI.Human Loop Request Source"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_activation_conditions
 }
 output "public_workforce_task_price" {
   description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker for each task performed. See Public Workforce Task Price details below."
   value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.public_workforce_task_price
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Human Loop Config"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.tags
-}
-output "task_availability_lifetime_in_seconds" {
-  description = "(Required) The length of time that a task remains available for review by human workers. Valid value range between 1 and 864000."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_availability_lifetime_in_seconds
-}
-output "flow_definition_name" {
-  description = "(Required) The name of your flow definition."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.flow_definition_name
-}
-output "human_task_ui_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the human task user interface."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_task_ui_arn
-}
-output "output_config" {
-  description = "(Required) An object containing information about where the human review results will be uploaded. See Output Config details below."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.output_config
-}
-output "kms_key_id" {
-  description = "(Optional) The Amazon Key Management Service (KMS) key ARN for server-side encryption.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.kms_key_id
-}
-output "role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the role needed to call other services on your behalf."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.role_arn
-}
-output "task_keywords" {
-  description = "(Optional) An array of keywords used to describe the task so that workers can discover the task."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_keywords
-}
-output "human_loop_activation_config" {
-  description = "(Optional) An object containing information about the events that trigger a human workflow. See Human Loop Activation Config details below."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_activation_config
-}
-output "id" {
-  description = "The name of the Flow Definition."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.id
-}
-output "tenth_fractions_of_a_cent" {
-  description = "(Optional) Fractions of a cent, in tenths. Valid value range between 0 and 9.Human Loop Activation Config"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.tenth_fractions_of_a_cent
-}
-output "task_count" {
-  description = "(Required) The number of distinct workers who will perform the same task on each object. Valid value range between 1 and 3."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_count
-}
-output "task_description" {
-  description = "(Required) A description for the human worker task."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_description
-}
-output "task_time_limit_in_seconds" {
-  description = "(Optional) The amount of time that a worker has to complete a task. The default value is 3600 seconds."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_time_limit_in_seconds
-}
-output "cents" {
-  description = "(Optional) The fractional portion, in cents, of the amount. Valid value range between 0 and 99."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.cents
-}
-output "human_loop_config" {
-  description = "(Required)  An object containing information about the tasks the human reviewers will perform. See Human Loop Config details below."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_config
-}
-output "human_loop_request_source" {
-  description = "(Optional) Container for configuring the source of human task requests. Use to specify if Amazon Rekognition or Amazon Textract is used as an integration source. See Human Loop Request Source details below."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_request_source
-}
-output "s3_output_path" {
-  description = "(Required) The Amazon S3 path where the object containing human output will be made available."
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.s3_output_path
 }
 output "workteam_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the human task user interface. Amazon Resource Name (ARN) of a team of workers. For Public workforces see AWS Docs.Public Workforce Task Price"
@@ -366,17 +286,97 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Flow Definition."
   value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.arn
 }
+output "human_loop_config" {
+  description = "(Required)  An object containing information about the tasks the human reviewers will perform. See Human Loop Config details below."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_config
+}
+output "task_description" {
+  description = "(Required) A description for the human worker task."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_description
+}
+output "s3_output_path" {
+  description = "(Required) The Amazon S3 path where the object containing human output will be made available."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.s3_output_path
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Human Loop Config"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.tags
+}
+output "task_availability_lifetime_in_seconds" {
+  description = "(Required) The length of time that a task remains available for review by human workers. Valid value range between 1 and 864000."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_availability_lifetime_in_seconds
+}
+output "aws_managed_human_loop_request_source" {
+  description = "(Required) Specifies whether Amazon Rekognition or Amazon Textract are used as the integration source. Valid values are: AWS/Rekognition/DetectModerationLabels/Image/V3 and AWS/Textract/AnalyzeDocument/Forms/V1.Output Config"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.aws_managed_human_loop_request_source
+}
 output "dollars" {
   description = "(Optional) The whole number of dollars in the amount. Valid value range between 0 and 2."
   value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.dollars
 }
-output "human_loop_activation_conditions" {
-  description = "(Required) A JSON expressing use-case specific conditions declaratively. If any condition is matched, atomic tasks are created against the configured work team. For more information about how to structure the JSON, see JSON Schema for Human Loop Activation Conditions in Amazon Augmented AI.Human Loop Request Source"
-  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_activation_conditions
+output "human_loop_request_source" {
+  description = "(Optional) Container for configuring the source of human task requests. Use to specify if Amazon Rekognition or Amazon Textract is used as an integration source. See Human Loop Request Source details below."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_request_source
+}
+output "task_time_limit_in_seconds" {
+  description = "(Optional) The amount of time that a worker has to complete a task. The default value is 3600 seconds."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_time_limit_in_seconds
+}
+output "flow_definition_name" {
+  description = "(Required) The name of your flow definition."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.flow_definition_name
+}
+output "id" {
+  description = "The name of the Flow Definition."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.id
+}
+output "task_count" {
+  description = "(Required) The number of distinct workers who will perform the same task on each object. Valid value range between 1 and 3."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_count
+}
+output "human_task_ui_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the human task user interface."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_task_ui_arn
+}
+output "tenth_fractions_of_a_cent" {
+  description = "(Optional) Fractions of a cent, in tenths. Valid value range between 0 and 9.Human Loop Activation Config"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.tenth_fractions_of_a_cent
+}
+output "cents" {
+  description = "(Optional) The fractional portion, in cents, of the amount. Valid value range between 0 and 99."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.cents
+}
+output "human_loop_activation_conditions_config" {
+  description = "(Required) defines under what conditions SageMaker creates a human loop. See Human Loop Activation Conditions Config details below.Human Loop Activation Conditions Config"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_activation_conditions_config
+}
+output "human_loop_activation_config" {
+  description = "(Optional) An object containing information about the events that trigger a human workflow. See Human Loop Activation Config details below."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.human_loop_activation_config
+}
+output "kms_key_id" {
+  description = "(Optional) The Amazon Key Management Service (KMS) key ARN for server-side encryption.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.kms_key_id
+}
+output "role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the role needed to call other services on your behalf."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.role_arn
+}
+output "output_config" {
+  description = "(Required) An object containing information about where the human review results will be uploaded. See Output Config details below."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.output_config
 }
 output "task_title" {
   description = "(Required) A title for the human worker task."
   value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_title
+}
+output "task_keywords" {
+  description = "(Optional) An array of keywords used to describe the task so that workers can discover the task."
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.task_keywords
+}
+output "amount_in_usd" {
+  description = "(Optional) Defines the amount of money paid to an Amazon Mechanical Turk worker in United States dollars. See Amount In Usd details below.Amount In Usd"
+  value       = aws_sagemaker_flow_definition.aws_sagemaker_flow_definition.amount_in_usd
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Flow Definition."

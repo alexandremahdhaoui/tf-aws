@@ -1,8 +1,8 @@
 datasource "aws_imagebuilder_distribution_configurations" "aws_imagebuilder_distribution_configurations" {
-  arns   = var.arns
   filter = var.filter
   name   = var.name
   values = var.values
+  arns   = var.arns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -24,6 +24,10 @@ variable "arns" {
   description = "Set of ARNs of the matched Image Builder Distribution Configurations."
   type        = string
 }
+output "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
+  value       = aws_imagebuilder_distribution_configurations.aws_imagebuilder_distribution_configurations.values
+}
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Distribution Configurations."
   value       = aws_imagebuilder_distribution_configurations.aws_imagebuilder_distribution_configurations.arns
@@ -35,10 +39,6 @@ output "filter" {
 output "name" {
   description = "(Required) Name of the filter field. Valid values can be found in the Image Builder ListDistributionConfigurations API Reference."
   value       = aws_imagebuilder_distribution_configurations.aws_imagebuilder_distribution_configurations.name
-}
-output "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
-  value       = aws_imagebuilder_distribution_configurations.aws_imagebuilder_distribution_configurations.values
 }
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Distribution Configurations."

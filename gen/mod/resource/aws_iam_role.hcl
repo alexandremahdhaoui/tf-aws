@@ -1,37 +1,32 @@
 resource "aws_iam_role" "aws_iam_role" {
-  inline_policy         = var.inline_policy
-  arn                   = var.arn
-  managed_policy_arns   = var.managed_policy_arns
-  name_prefix           = var.name_prefix
-  permissions_boundary  = var.permissions_boundary
-  create_date           = var.create_date
-  id                    = var.id
-  max_session_duration  = var.max_session_duration
-  tags_all              = var.tags_all
-  unique_id             = var.unique_id
   description           = var.description
   force_detach_policies = var.force_detach_policies
   name                  = var.name
-  path                  = var.path
   policy                = var.policy
   tags                  = var.tags
+  name_prefix           = var.name_prefix
+  path                  = var.path
+  permissions_boundary  = var.permissions_boundary
+  unique_id             = var.unique_id
+  create_date           = var.create_date
+  inline_policy         = var.inline_policy
+  managed_policy_arns   = var.managed_policy_arns
+  tags_all              = var.tags_all
+  arn                   = var.arn
+  id                    = var.id
+  max_session_duration  = var.max_session_duration
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) specifying the role."
-  type        = string
-  default     = ""
-}
-variable "managed_policy_arns" {
-  description = "(Optional) Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Terraform will ignore policy attachments to this resource. When configured, Terraform will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Terraform to remove emall managed policy attachments."
-  type        = string
-  default     = ""
-}
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique friendly name beginning with the specified prefix. Conflicts with name."
+  type        = string
+  default     = ""
+}
+variable "path" {
+  description = "(Optional) Path to the role. See IAM Identifiers for more information."
   type        = string
   default     = ""
 }
@@ -40,8 +35,33 @@ variable "permissions_boundary" {
   type        = string
   default     = ""
 }
+variable "unique_id" {
+  description = "Stable and unique string identifying the role."
+  type        = string
+  default     = ""
+}
 variable "create_date" {
   description = "Creation date of the IAM role."
+  type        = string
+  default     = ""
+}
+variable "inline_policy" {
+  description = "(Optional) Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Terraform will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Terraform to remove emall inline policies added out of band on apply."
+  type        = string
+  default     = ""
+}
+variable "managed_policy_arns" {
+  description = "(Optional) Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Terraform will ignore policy attachments to this resource. When configured, Terraform will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Terraform to remove emall managed policy attachments."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) specifying the role."
   type        = string
   default     = ""
 }
@@ -52,21 +72,6 @@ variable "id" {
 }
 variable "max_session_duration" {
   description = "(Optional) Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.inline_policyThis configuration block supports the following:~> strongNOTE: Since one empty block (i.e., inline_policy {}) is valid syntactically to remove out of band policies on apply, name and policy are technically emoptional. However, they are both emrequired in order to manage actual inline policies. Not including one or the other may not result in Terraform errors but will result in unpredictable and incorrect behavior."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "unique_id" {
-  description = "Stable and unique string identifying the role."
   type        = string
   default     = ""
 }
@@ -85,17 +90,12 @@ variable "name" {
   type        = string
   default     = ""
 }
-variable "path" {
-  description = "(Optional) Path to the role. See IAM Identifiers for more information."
-  type        = string
-  default     = ""
-}
 variable "policy" {
   description = "(Required) Policy document as a JSON formatted string. For more information about building IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "inline_policy" {
-  description = "(Optional) Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Terraform will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Terraform to remove emall inline policies added out of band on apply."
+variable "tags" {
+  description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.inline_policyThis configuration block supports the following:~> strongNOTE: Since one empty block (i.e., inline_policy {}) is valid syntactically to remove out of band policies on apply, name and policy are technically emoptional. However, they are both emrequired in order to manage actual inline policies. Not including one or the other may not result in Terraform errors but will result in unpredictable and incorrect behavior."
   type        = string
   default     = ""
 }
@@ -219,53 +219,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "inline_policy" {
-  description = "(Optional) Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Terraform will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Terraform to remove emall inline policies added out of band on apply."
-  value       = aws_iam_role.aws_iam_role.inline_policy
+output "max_session_duration" {
+  description = "(Optional) Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours."
+  value       = aws_iam_role.aws_iam_role.max_session_duration
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) specifying the role."
   value       = aws_iam_role.aws_iam_role.arn
 }
-output "managed_policy_arns" {
-  description = "(Optional) Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Terraform will ignore policy attachments to this resource. When configured, Terraform will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Terraform to remove emall managed policy attachments."
-  value       = aws_iam_role.aws_iam_role.managed_policy_arns
-}
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique friendly name beginning with the specified prefix. Conflicts with name."
-  value       = aws_iam_role.aws_iam_role.name_prefix
-}
-output "permissions_boundary" {
-  description = "(Optional) ARN of the policy that is used to set the permissions boundary for the role."
-  value       = aws_iam_role.aws_iam_role.permissions_boundary
-}
-output "create_date" {
-  description = "Creation date of the IAM role."
-  value       = aws_iam_role.aws_iam_role.create_date
-}
 output "id" {
   description = "Name of the role."
   value       = aws_iam_role.aws_iam_role.id
 }
-output "max_session_duration" {
-  description = "(Optional) Maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours."
-  value       = aws_iam_role.aws_iam_role.max_session_duration
-}
-output "description" {
-  description = "(Optional) Description of the role."
-  value       = aws_iam_role.aws_iam_role.description
-}
-output "force_detach_policies" {
-  description = "(Optional) Whether to force detaching any policies the role has before destroying it. Defaults to false."
-  value       = aws_iam_role.aws_iam_role.force_detach_policies
-}
 output "name" {
   description = "Name of the role."
   value       = aws_iam_role.aws_iam_role.name
-}
-output "path" {
-  description = "(Optional) Path to the role. See IAM Identifiers for more information."
-  value       = aws_iam_role.aws_iam_role.path
 }
 output "policy" {
   description = "(Required) Policy document as a JSON formatted string. For more information about building IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
@@ -275,13 +243,45 @@ output "tags" {
   description = "Key-value mapping of tags for the IAM role. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.inline_policyThis configuration block supports the following:~> strongNOTE: Since one empty block (i.e., inline_policy {}) is valid syntactically to remove out of band policies on apply, name and policy are technically emoptional. However, they are both emrequired in order to manage actual inline policies. Not including one or the other may not result in Terraform errors but will result in unpredictable and incorrect behavior."
   value       = aws_iam_role.aws_iam_role.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_role.aws_iam_role.tags_all
+output "description" {
+  description = "(Optional) Description of the role."
+  value       = aws_iam_role.aws_iam_role.description
+}
+output "force_detach_policies" {
+  description = "(Optional) Whether to force detaching any policies the role has before destroying it. Defaults to false."
+  value       = aws_iam_role.aws_iam_role.force_detach_policies
+}
+output "permissions_boundary" {
+  description = "(Optional) ARN of the policy that is used to set the permissions boundary for the role."
+  value       = aws_iam_role.aws_iam_role.permissions_boundary
 }
 output "unique_id" {
   description = "Stable and unique string identifying the role."
   value       = aws_iam_role.aws_iam_role.unique_id
+}
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique friendly name beginning with the specified prefix. Conflicts with name."
+  value       = aws_iam_role.aws_iam_role.name_prefix
+}
+output "path" {
+  description = "(Optional) Path to the role. See IAM Identifiers for more information."
+  value       = aws_iam_role.aws_iam_role.path
+}
+output "managed_policy_arns" {
+  description = "(Optional) Set of exclusive IAM managed policy ARNs to attach to the IAM role. If this attribute is not configured, Terraform will ignore policy attachments to this resource. When configured, Terraform will align the role's managed policy attachments with this set by attaching or detaching managed policies. Configuring an empty set (i.e., managed_policy_arns = []) will cause Terraform to remove emall managed policy attachments."
+  value       = aws_iam_role.aws_iam_role.managed_policy_arns
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_role.aws_iam_role.tags_all
+}
+output "create_date" {
+  description = "Creation date of the IAM role."
+  value       = aws_iam_role.aws_iam_role.create_date
+}
+output "inline_policy" {
+  description = "(Optional) Configuration block defining an exclusive set of IAM inline policies associated with the IAM role. See below. If no blocks are configured, Terraform will not manage any inline policies in this resource. Configuring one empty block (i.e., inline_policy {}) will cause Terraform to remove emall inline policies added out of band on apply."
+  value       = aws_iam_role.aws_iam_role.inline_policy
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) specifying the role."

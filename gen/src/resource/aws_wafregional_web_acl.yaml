@@ -42,9 +42,7 @@ spec:
             optional: true
             type: string
         priority:
-            description: |-
-                (Required) Specifies the order in which the rules in a WebACL are evaluated.
-                Rules with a lower value are evaluated before rules with a higher value.
+            description: ""
             type: string
         redacted_fields:
             description: (Optional) Configuration block containing parts of the request that you want redacted from the logs. Detailed below.redacted_fields Configuration Block

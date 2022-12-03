@@ -156,6 +156,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "region" {
+  description = "(Required) Region with the bucket targeted by the Resource Data Sync."
+  value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.region
+}
 output "s3_destination" {
   description = "(Required) Amazon S3 configuration details for the sync.s3_destinations3_destination supports the following:"
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.s3_destination
@@ -175,10 +179,6 @@ output "name" {
 output "prefix" {
   description = "(Optional) Prefix for the bucket."
   value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.prefix
-}
-output "region" {
-  description = "(Required) Region with the bucket targeted by the Resource Data Sync."
-  value       = aws_ssm_resource_data_sync.aws_ssm_resource_data_sync.region
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

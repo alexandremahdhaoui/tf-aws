@@ -29,9 +29,7 @@ spec:
             optional: true
             type: string
         type:
-            description: |-
-                (Required) The type of customer gateway. The only type AWS
-                supports at this time is "ipsec.1".
+            description: ""
             type: string
     attrs:
         arn:

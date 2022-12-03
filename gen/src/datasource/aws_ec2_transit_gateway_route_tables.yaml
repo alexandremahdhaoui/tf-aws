@@ -20,7 +20,10 @@ spec:
                 the underlying AWS API.
             type: string
         tags:
-            description: More complex filters can be expressed using one or more filter
+            description: |-
+                (Optional) Mapping of tags, each pair of which must exactly match
+                a pair on the desired transit gateway route table.More complex filters can be expressed using one or more filter
+            optional: true
             type: string
         values:
             description: |-

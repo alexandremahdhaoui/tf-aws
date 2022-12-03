@@ -1,10 +1,10 @@
 datasource "aws_identitystore_group" "aws_identitystore_group" {
+  identity_store_id = var.identity_store_id
   attribute_path    = var.attribute_path
   attribute_value   = var.attribute_value
   filter            = var.filter
   group_id          = var.group_id
   id                = var.id
-  identity_store_id = var.identity_store_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -35,18 +35,6 @@ variable "identity_store_id" {
   description = "(Required) Identity Store ID associated with the Single Sign-On Instance.filter Configuration Blockfilter configuration block:"
   type        = string
 }
-output "identity_store_id" {
-  description = "(Required) Identity Store ID associated with the Single Sign-On Instance.filter Configuration Blockfilter configuration block:"
-  value       = aws_identitystore_group.aws_identitystore_group.identity_store_id
-}
-output "attribute_path" {
-  description = "(Required) Attribute path that is used to specify which attribute name to search. Currently, DisplayName is the only valid attribute path."
-  value       = aws_identitystore_group.aws_identitystore_group.attribute_path
-}
-output "attribute_value" {
-  description = "(Required) Value for an attribute.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_identitystore_group.aws_identitystore_group.attribute_value
-}
 output "filter" {
   description = "(Required) Configuration block(s) for filtering. Currently, the AWS Identity Store API supports only 1 filter. Detailed below."
   value       = aws_identitystore_group.aws_identitystore_group.filter
@@ -58,6 +46,18 @@ output "group_id" {
 output "id" {
   description = "Identifier of the group in the Identity Store."
   value       = aws_identitystore_group.aws_identitystore_group.id
+}
+output "identity_store_id" {
+  description = "(Required) Identity Store ID associated with the Single Sign-On Instance.filter Configuration Blockfilter configuration block:"
+  value       = aws_identitystore_group.aws_identitystore_group.identity_store_id
+}
+output "attribute_path" {
+  description = "(Required) Attribute path that is used to specify which attribute name to search. Currently, DisplayName is the only valid attribute path."
+  value       = aws_identitystore_group.aws_identitystore_group.attribute_path
+}
+output "attribute_value" {
+  description = "(Required) Value for an attribute.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_identitystore_group.aws_identitystore_group.attribute_value
 }
 output "id" {
   description = "Identifier of the group in the Identity Store."

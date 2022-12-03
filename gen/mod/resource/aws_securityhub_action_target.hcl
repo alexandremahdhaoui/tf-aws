@@ -1,10 +1,14 @@
 resource "aws_securityhub_action_target" "aws_securityhub_action_target" {
+  identifier  = var.identifier
   name        = var.name
   description = var.description
-  identifier  = var.identifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The description for the custom action target."
   type        = string
 }
 variable "description" {
@@ -13,10 +17,6 @@ variable "description" {
 }
 variable "identifier" {
   description = "(Required) The ID for the custom action target."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The description for the custom action target."
   type        = string
 }
 variable "tag_instance_id" {

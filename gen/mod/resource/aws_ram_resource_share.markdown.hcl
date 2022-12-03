@@ -1,10 +1,10 @@
 resource "aws_ram_resource_share.markdown" "aws_ram_resource_share.markdown" {
-  tags                      = var.tags
   allow_external_principals = var.allow_external_principals
   arn                       = var.arn
   id                        = var.id
   name                      = var.name
   permission_arns           = var.permission_arns
+  tags                      = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -157,10 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource share. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ram_resource_share.markdown.aws_ram_resource_share.markdown.tags
-}
 output "allow_external_principals" {
   description = "(Optional) Indicates whether principals outside your organization can be associated with a resource share."
   value       = aws_ram_resource_share.markdown.aws_ram_resource_share.markdown.allow_external_principals
@@ -180,6 +176,10 @@ output "name" {
 output "permission_arns" {
   description = "(Optional) Specifies the Amazon Resource Names (ARNs) of the RAM permission to associate with the resource share. If you do not specify an ARN for the permission, RAM automatically attaches the default version of the permission for each resource type. You can associate only one permission with each resource type included in the resource share."
   value       = aws_ram_resource_share.markdown.aws_ram_resource_share.markdown.permission_arns
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource share. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ram_resource_share.markdown.aws_ram_resource_share.markdown.tags
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the resource share."

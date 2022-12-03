@@ -1,25 +1,21 @@
 resource "aws_vpc_peering_connection_accepter" "aws_vpc_peering_connection_accepter" {
-  peer_region                      = var.peer_region
-  accept_status                    = var.accept_status
-  peer_owner_id                    = var.peer_owner_id
-  auto_accept                      = var.auto_accept
-  allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
+  tags                             = var.tags
+  vpc_id                           = var.vpc_id
   allow_classic_link_to_remote_vpc = var.allow_classic_link_to_remote_vpc
+  allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
   id                               = var.id
+  tags_all                         = var.tags_all
+  vpc_peering_connection_id        = var.vpc_peering_connection_id
+  accepter                         = var.accepter
+  auto_accept                      = var.auto_accept
   peer_vpc_id                      = var.peer_vpc_id
   requester                        = var.requester
-  tags                             = var.tags
-  tags_all                         = var.tags_all
-  vpc_id                           = var.vpc_id
-  accepter                         = var.accepter
-  vpc_peering_connection_id        = var.vpc_peering_connection_id
+  accept_status                    = var.accept_status
+  peer_owner_id                    = var.peer_owner_id
+  peer_region                      = var.peer_region
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "allow_remote_vpc_dns_resolution" {
-  description = ""
   type        = string
 }
 variable "auto_accept" {
@@ -27,32 +23,44 @@ variable "auto_accept" {
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
-  type        = string
-}
-variable "vpc_id" {
-  description = "The ID of the accepter VPC."
-  type        = string
-}
-variable "accepter" {
-  description = ""
-  type        = string
-}
-variable "allow_classic_link_to_remote_vpc" {
-  description = ""
-  type        = string
-}
-variable "id" {
-  description = "The ID of the VPC Peering Connection."
-  type        = string
-}
 variable "peer_vpc_id" {
   description = "The ID of the requester VPC."
   type        = string
 }
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
+  type        = string
+}
+variable "vpc_peering_connection_id" {
+  description = "(Required) The VPC Peering Connection ID to manage."
+  type        = string
+}
+variable "accepter" {
+  description = "A configuration block that describes [VPC Peering Connection]\n(https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC."
+  type        = string
+}
+variable "peer_owner_id" {
+  description = "The AWS account ID of the owner of the requester VPC."
+  type        = string
+}
+variable "peer_region" {
+  description = "The region of the accepter VPC."
+  type        = string
+}
 variable "requester" {
-  description = ""
+  description = "A configuration block that describes [VPC Peering Connection]\n(https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC."
+  type        = string
+}
+variable "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  type        = string
+}
+variable "allow_remote_vpc_dns_resolution" {
+  description = "Indicates whether a local VPC can resolve public DNS hostnames to\nprivate IP addresses when queried from instances in a peer VPC."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the VPC Peering Connection."
   type        = string
 }
 variable "tags" {
@@ -60,20 +68,12 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "vpc_peering_connection_id" {
-  description = "(Required) The VPC Peering Connection ID to manage."
+variable "vpc_id" {
+  description = "The ID of the accepter VPC."
   type        = string
 }
-variable "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  type        = string
-}
-variable "peer_region" {
-  description = "The region of the accepter VPC."
-  type        = string
-}
-variable "peer_owner_id" {
-  description = "The AWS account ID of the owner of the requester VPC."
+variable "allow_classic_link_to_remote_vpc" {
+  description = ""
   type        = string
 }
 variable "tag_instance_id" {
@@ -196,49 +196,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "peer_owner_id" {
-  description = "The AWS account ID of the owner of the requester VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
-}
-output "allow_remote_vpc_dns_resolution" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
+output "accepter" {
+  description = "A configuration block that describes [VPC Peering Connection]\n(https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
 }
 output "auto_accept" {
   description = "(Optional) Whether or not to accept the peering request. Defaults to false."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.auto_accept
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Removing aws_vpc_peering_connection_accepter from your configurationaws_vpc_peering_connectionaws_vpc_peering_connection_accepterstrongbut will not destroy the VPC Peering Connection.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
-}
-output "vpc_id" {
-  description = "The ID of the accepter VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.vpc_id
-}
-output "accepter" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
-}
-output "allow_classic_link_to_remote_vpc" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
-}
-output "id" {
-  description = "The ID of the VPC Peering Connection."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
-}
 output "peer_vpc_id" {
   description = "The ID of the requester VPC."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_vpc_id
 }
-output "requester" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
 }
 output "vpc_peering_connection_id" {
   description = "(Required) The VPC Peering Connection ID to manage."
@@ -248,53 +220,81 @@ output "accept_status" {
   description = "The status of the VPC Peering Connection request."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
 }
+output "peer_owner_id" {
+  description = "The AWS account ID of the owner of the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
+}
 output "peer_region" {
   description = "The region of the accepter VPC."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
 }
-output "peer_vpc_id" {
-  description = "The ID of the requester VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_vpc_id
-}
 output "requester" {
-  description = ""
+  description = "A configuration block that describes [VPC Peering Connection]\n(https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
 }
-output "accepter" {
+output "allow_classic_link_to_remote_vpc" {
   description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
 }
 output "allow_remote_vpc_dns_resolution" {
-  description = ""
+  description = "Indicates whether a local VPC can resolve public DNS hostnames to\nprivate IP addresses when queried from instances in a peer VPC."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
 }
-output "allow_vpc_to_remote_classic_link" {
+output "id" {
+  description = "The ID of the VPC Peering Connection."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Removing aws_vpc_peering_connection_accepter from your configurationaws_vpc_peering_connectionaws_vpc_peering_connection_accepterstrongbut will not destroy the VPC Peering Connection.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags
+}
+output "vpc_id" {
+  description = "The ID of the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.vpc_id
+}
+output "accept_status" {
+  description = "The status of the VPC Peering Connection request."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
+}
+output "allow_remote_vpc_dns_resolution" {
+  description = "Indicates whether a local VPC can resolve public DNS hostnames to\nprivate IP addresses when queried from instances in a peer VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_remote_vpc_dns_resolution
+}
+output "peer_owner_id" {
+  description = "The AWS account ID of the owner of the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
+}
+output "peer_region" {
+  description = "The region of the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
+}
+output "accepter" {
+  description = "A configuration block that describes [VPC Peering Connection]\n(https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accepter
+}
+output "allow_classic_link_to_remote_vpc" {
   description = ""
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
+}
+output "allow_vpc_to_remote_classic_link" {
+  description = "Indicates whether a local VPC can communicate with a ClassicLink\nconnection in the peer VPC over the VPC Peering Connection."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_vpc_to_remote_classic_link
 }
 output "id" {
   description = "The ID of the VPC Peering Connection."
   value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.id
 }
-output "peer_region" {
-  description = "The region of the accepter VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_region
+output "peer_vpc_id" {
+  description = "The ID of the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_vpc_id
 }
-output "accept_status" {
-  description = "The status of the VPC Peering Connection request."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.accept_status
-}
-output "allow_classic_link_to_remote_vpc" {
-  description = ""
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.allow_classic_link_to_remote_vpc
-}
-output "peer_owner_id" {
-  description = "The AWS account ID of the owner of the requester VPC."
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.peer_owner_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference"
-  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.tags_all
+output "requester" {
+  description = "A configuration block that describes [VPC Peering Connection]\n(https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC."
+  value       = aws_vpc_peering_connection_accepter.aws_vpc_peering_connection_accepter.requester
 }
 output "vpc_id" {
   description = "The ID of the accepter VPC."

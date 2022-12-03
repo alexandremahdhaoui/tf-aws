@@ -1,8 +1,8 @@
 datasource "aws_mskconnect_worker_configuration" "aws_mskconnect_worker_configuration" {
+  arn             = var.arn
   description     = var.description
   latest_revision = var.latest_revision
   name            = var.name
-  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -24,6 +24,10 @@ variable "name" {
   description = "(Required) Name of the worker configuration.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+output "description" {
+  description = "a summary description of the worker configuration."
+  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.description
+}
 output "latest_revision" {
   description = "an ID of the latest successfully created revision of the worker configuration."
   value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.latest_revision
@@ -35,10 +39,6 @@ output "name" {
 output "arn" {
   description = "the ARN of the worker configuration."
   value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.arn
-}
-output "description" {
-  description = "a summary description of the worker configuration."
-  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

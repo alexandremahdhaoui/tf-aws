@@ -1,31 +1,18 @@
 resource "aws_resourcegroups_group" "aws_resourcegroups_group" {
   arn            = var.arn
-  name           = var.name
-  tags           = var.tags
-  type           = var.type
+  query          = var.query
+  resource_query = var.resource_query
   values         = var.values
   configuration  = var.configuration
   description    = var.description
+  name           = var.name
   parameters     = var.parameters
-  query          = var.query
-  resource_query = var.resource_query
+  tags           = var.tags
+  type           = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "resource_query" {
-  description = "(Required) A resource_query block. Resource queries are documented below."
-  type        = string
-}
-variable "type" {
-  description = "(Required) Specifies the type of group configuration item."
-  type        = string
-}
-variable "values" {
-  description = "(Optional) The value or values to be used for the specified parameter.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "configuration" {
   description = "(Optional) A configuration associates the resource group with an AWS service and specifies how the service can interact with the resources in the group. See below for details."
@@ -37,25 +24,38 @@ variable "description" {
   type        = string
   default     = ""
 }
+variable "name" {
+  description = "(Required) The name of the group configuration parameter."
+  type        = string
+}
 variable "parameters" {
   description = "(Optional) A collection of parameters for this group configuration item. See below for details.The parameters block supports the following arguments:"
   type        = string
   default     = ""
 }
-variable "query" {
-  description = "(Required) The resource query as a JSON string."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The resource_query block supports the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) Specifies the type of group configuration item."
   type        = string
 }
 variable "arn" {
   description = "The ARN assigned by AWS for this resource group."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the group configuration parameter."
+variable "query" {
+  description = "(Required) The resource query as a JSON string."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The resource_query block supports the following arguments:"
+variable "resource_query" {
+  description = "(Required) A resource_query block. Resource queries are documented below."
+  type        = string
+}
+variable "values" {
+  description = "(Optional) The value or values to be used for the specified parameter.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -179,53 +179,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN assigned by AWS for this resource group."
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.arn
-}
-output "name" {
-  description = "(Required) The name of the group configuration parameter."
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.name
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The resource_query block supports the following arguments:"
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.tags
+output "query" {
+  description = "(Required) The resource query as a JSON string."
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.query
 }
 output "resource_query" {
   description = "(Required) A resource_query block. Resource queries are documented below."
   value       = aws_resourcegroups_group.aws_resourcegroups_group.resource_query
 }
-output "type" {
-  description = "(Required) Specifies the type of group configuration item."
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.type
-}
 output "values" {
   description = "(Optional) The value or values to be used for the specified parameter.In addition to all arguments above, the following attributes are exported:"
   value       = aws_resourcegroups_group.aws_resourcegroups_group.values
-}
-output "configuration" {
-  description = "(Optional) A configuration associates the resource group with an AWS service and specifies how the service can interact with the resources in the group. See below for details."
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.configuration
-}
-output "description" {
-  description = "(Optional) A description of the resource group."
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.description
-}
-output "parameters" {
-  description = "(Optional) A collection of parameters for this group configuration item. See below for details.The parameters block supports the following arguments:"
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.parameters
-}
-output "query" {
-  description = "(Required) The resource query as a JSON string."
-  value       = aws_resourcegroups_group.aws_resourcegroups_group.query
 }
 output "arn" {
   description = "The ARN assigned by AWS for this resource group."
   value       = aws_resourcegroups_group.aws_resourcegroups_group.arn
 }
+output "description" {
+  description = "(Optional) A description of the resource group."
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.description
+}
+output "name" {
+  description = "(Required) The name of the group configuration parameter."
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.name
+}
+output "parameters" {
+  description = "(Optional) A collection of parameters for this group configuration item. See below for details.The parameters block supports the following arguments:"
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.parameters
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The resource_query block supports the following arguments:"
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.tags
+}
+output "type" {
+  description = "(Required) Specifies the type of group configuration item."
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.type
+}
+output "configuration" {
+  description = "(Optional) A configuration associates the resource group with an AWS service and specifies how the service can interact with the resources in the group. See below for details."
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.configuration
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_resourcegroups_group.aws_resourcegroups_group.tags_all
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this resource group."
+  value       = aws_resourcegroups_group.aws_resourcegroups_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

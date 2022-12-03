@@ -1,23 +1,37 @@
 resource "aws_gamelift_script" "aws_gamelift_script" {
-  arn              = var.arn
+  bucket           = var.bucket
   key              = var.key
   object_version   = var.object_version
-  storage_location = var.storage_location
   tags             = var.tags
-  bucket           = var.bucket
+  storage_location = var.storage_location
+  version          = var.version
+  zip_file         = var.zip_file
+  arn              = var.arn
   id               = var.id
   name             = var.name
   role_arn         = var.role_arn
-  version          = var.version
-  zip_file         = var.zip_file
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "role_arn" {
-  description = "(Required) ARN of the access role that allows Amazon GameLift to access your S3 bucket."
+variable "bucket" {
+  description = "(Required) Name of your S3 bucket."
   type        = string
+}
+variable "key" {
+  description = "(Required) Name of the zip file containing your script files."
+  type        = string
+}
+variable "object_version" {
+  description = "(Optional) A specific version of the file. If not set, the latest version of the file is retrieved.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "version" {
   description = "(Optional) Version that is associated with this script."
@@ -29,8 +43,8 @@ variable "zip_file" {
   type        = string
   default     = ""
 }
-variable "bucket" {
-  description = "(Required) Name of your S3 bucket."
+variable "arn" {
+  description = "GameLift Script ARN."
   type        = string
 }
 variable "id" {
@@ -41,26 +55,12 @@ variable "name" {
   description = "(Required) Name of the script"
   type        = string
 }
+variable "role_arn" {
+  description = "(Required) ARN of the access role that allows Amazon GameLift to access your S3 bucket."
+  type        = string
+}
 variable "storage_location" {
   description = "(Optional) Information indicating where your game script files are stored. See below."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "GameLift Script ARN."
-  type        = string
-}
-variable "key" {
-  description = "(Required) Name of the zip file containing your script files."
-  type        = string
-}
-variable "object_version" {
-  description = "(Optional) A specific version of the file. If not set, the latest version of the file is retrieved.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -184,9 +184,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "object_version" {
+  description = "(Optional) A specific version of the file. If not set, the latest version of the file is retrieved.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_gamelift_script.aws_gamelift_script.object_version
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_gamelift_script.aws_gamelift_script.tags
+}
+output "bucket" {
+  description = "(Required) Name of your S3 bucket."
+  value       = aws_gamelift_script.aws_gamelift_script.bucket
+}
+output "key" {
+  description = "(Required) Name of the zip file containing your script files."
+  value       = aws_gamelift_script.aws_gamelift_script.key
+}
+output "name" {
+  description = "(Required) Name of the script"
+  value       = aws_gamelift_script.aws_gamelift_script.name
+}
 output "role_arn" {
   description = "(Required) ARN of the access role that allows Amazon GameLift to access your S3 bucket."
   value       = aws_gamelift_script.aws_gamelift_script.role_arn
+}
+output "storage_location" {
+  description = "(Optional) Information indicating where your game script files are stored. See below."
+  value       = aws_gamelift_script.aws_gamelift_script.storage_location
 }
 output "version" {
   description = "(Optional) Version that is associated with this script."
@@ -196,37 +220,13 @@ output "zip_file" {
   description = "(Optional) A data object containing your Realtime scripts and dependencies as a zip  file. The zip file can have one or multiple files. Maximum size of a zip file is 5 MB.Nested Fieldsstorage_location"
   value       = aws_gamelift_script.aws_gamelift_script.zip_file
 }
-output "bucket" {
-  description = "(Required) Name of your S3 bucket."
-  value       = aws_gamelift_script.aws_gamelift_script.bucket
-}
-output "id" {
-  description = "GameLift Script ID."
-  value       = aws_gamelift_script.aws_gamelift_script.id
-}
-output "name" {
-  description = "(Required) Name of the script"
-  value       = aws_gamelift_script.aws_gamelift_script.name
-}
-output "storage_location" {
-  description = "(Optional) Information indicating where your game script files are stored. See below."
-  value       = aws_gamelift_script.aws_gamelift_script.storage_location
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_gamelift_script.aws_gamelift_script.tags
-}
 output "arn" {
   description = "GameLift Script ARN."
   value       = aws_gamelift_script.aws_gamelift_script.arn
 }
-output "key" {
-  description = "(Required) Name of the zip file containing your script files."
-  value       = aws_gamelift_script.aws_gamelift_script.key
-}
-output "object_version" {
-  description = "(Optional) A specific version of the file. If not set, the latest version of the file is retrieved.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_gamelift_script.aws_gamelift_script.object_version
+output "id" {
+  description = "GameLift Script ID."
+  value       = aws_gamelift_script.aws_gamelift_script.id
 }
 output "arn" {
   description = "GameLift Script ARN."

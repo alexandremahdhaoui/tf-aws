@@ -36,7 +36,8 @@ spec:
             description: Whether or not EC2 Instance Termination Protection is enabled (Boolean).
             type: string
         ebs_block_device:
-            description: ""
+            description: |
+                EBS block device mappings of the Instance.
             type: string
         ebs_optimized:
             description: Whether the Instance is EBS optimized or not (Boolean).
@@ -106,8 +107,7 @@ spec:
             description: ""
             type: string
         metadata_options:
-            description: |
-                Metadata options of the Instance.
+            description: ""
             type: string
         monitoring:
             description: Whether detailed monitoring is enabled or disabled for the Instance (Boolean).

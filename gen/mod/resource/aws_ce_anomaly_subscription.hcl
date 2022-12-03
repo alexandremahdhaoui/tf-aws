@@ -1,22 +1,22 @@
 resource "aws_ce_anomaly_subscription" "aws_ce_anomaly_subscription" {
-  threshold        = var.threshold
-  arn              = var.arn
-  id               = var.id
-  name             = var.name
   subscriber       = var.subscriber
-  tags             = var.tags
-  type             = var.type
   account_id       = var.account_id
   address          = var.address
+  arn              = var.arn
   frequency        = var.frequency
+  id               = var.id
   monitor_arn_list = var.monitor_arn_list
+  name             = var.name
+  threshold        = var.threshold
+  type             = var.type
+  tags             = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "Unique ID of the anomaly subscription. Same as arn."
+variable "monitor_arn_list" {
+  description = "(Required) A list of cost anomaly monitors."
   type        = string
 }
 variable "name" {
@@ -24,40 +24,40 @@ variable "name" {
   type        = string
 }
 variable "subscriber" {
-  description = ""
+  description = "(Required) A subscriber configuration. Multiple subscribers can be defined.\n"
   type        = string
 }
-variable "threshold" {
-  description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
+variable "account_id" {
+  description = "(Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created."
+  type        = string
+  default     = ""
+}
+variable "address" {
+  description = "(Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address."
   type        = string
 }
 variable "arn" {
   description = "ARN of the anomaly subscription."
   type        = string
 }
-variable "address" {
-  description = "(Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address."
-  type        = string
-}
 variable "frequency" {
   description = "(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY."
   type        = string
 }
-variable "monitor_arn_list" {
-  description = "(Required) A list of cost anomaly monitors."
+variable "id" {
+  description = "Unique ID of the anomaly subscription. Same as arn."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "threshold" {
+  description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
   type        = string
-  default     = ""
 }
 variable "type" {
   description = "(Required) The type of subscription. Valid Values: SNS | EMAIL."
   type        = string
 }
-variable "account_id" {
-  description = "(Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created."
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -181,41 +181,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name for the subscription."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.name
-}
-output "subscriber" {
-  description = ""
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.subscriber
-}
-output "threshold" {
-  description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.threshold
-}
 output "arn" {
   description = "ARN of the anomaly subscription."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.arn
-}
-output "id" {
-  description = "Unique ID of the anomaly subscription. Same as arn."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.id
 }
 output "frequency" {
   description = "(Required) The frequency that anomaly reports are sent. Valid Values: DAILY | IMMEDIATE | WEEKLY."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.frequency
 }
+output "id" {
+  description = "Unique ID of the anomaly subscription. Same as arn."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.id
+}
 output "monitor_arn_list" {
   description = "(Required) A list of cost anomaly monitors."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.monitor_arn_list
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags
+output "name" {
+  description = "(Required) The name for the subscription."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.name
 }
-output "type" {
-  description = "(Required) The type of subscription. Valid Values: SNS | EMAIL."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.type
+output "subscriber" {
+  description = "(Required) A subscriber configuration. Multiple subscribers can be defined.\n"
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.subscriber
 }
 output "account_id" {
   description = "(Optional) The unique identifier for the AWS account in which the anomaly subscription ought to be created."
@@ -225,9 +213,17 @@ output "address" {
   description = "(Required) The address of the subscriber. If type is SNS, this will be the arn of the sns topic. If type is EMAIL, this will be the destination email address."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.address
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags_all
+output "threshold" {
+  description = "(Required) The dollar value that triggers a notification if the threshold is exceeded."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.threshold
+}
+output "type" {
+  description = "(Required) The type of subscription. Valid Values: SNS | EMAIL."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.type
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags
 }
 output "arn" {
   description = "ARN of the anomaly subscription."
@@ -236,6 +232,10 @@ output "arn" {
 output "id" {
   description = "Unique ID of the anomaly subscription. Same as arn."
   value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ce_anomaly_subscription.aws_ce_anomaly_subscription.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

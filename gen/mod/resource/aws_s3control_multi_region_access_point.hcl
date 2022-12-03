@@ -1,26 +1,26 @@
 resource "aws_s3control_multi_region_access_point" "aws_s3control_multi_region_access_point" {
-  ignore_public_acls                                                                     = var.ignore_public_acls
-  PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.           = var.PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.
-  details                                                                                = var.details
-  domain_name                                                                            = var.domain_name
-  id                                                                                     = var.id
-  PUT Object calls fail if the request includes a public ACL.                            = var.PUT Object calls fail if the request includes a public ACL.
-  create                                                                                 = var.create
-  arn                                                                                    = var.arn
-  block_public_policy                                                                    = var.block_public_policy
-  bucket                                                                                 = var.bucket
-  delete                                                                                 = var.delete
-  region                                                                                 = var.region
-  Only the bucket owner and AWS Services can access buckets with public policies.        = var.Only the bucket owner and AWS Services can access buckets with public policies.
-  Reject calls to PUT Bucket policy if the specified bucket policy allows public access. = var.Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
-  account_id                                                                             = var.account_id
-  alias                                                                                  = var.alias
-  block_public_acls                                                                      = var.block_public_acls
-  name                                                                                   = var.name
-  public_access_block                                                                    = var.public_access_block
-  restrict_public_buckets                                                                = var.restrict_public_buckets
-  Ignore all public ACLs on buckets in this account and any objects that they contain.   = var.Ignore all public ACLs on buckets in this account and any objects that they contain.
   PUT Bucket calls fail if the request includes a public ACL.                            = var.PUT Bucket calls fail if the request includes a public ACL.
+  Reject calls to PUT Bucket policy if the specified bucket policy allows public access. = var.Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
+  bucket                                                                                 = var.bucket
+  create                                                                                 = var.create
+  delete                                                                                 = var.delete
+  restrict_public_buckets                                                                = var.restrict_public_buckets
+  name                                                                                   = var.name
+  Ignore all public ACLs on buckets in this account and any objects that they contain.   = var.Ignore all public ACLs on buckets in this account and any objects that they contain.
+  Only the bucket owner and AWS Services can access buckets with public policies.        = var.Only the bucket owner and AWS Services can access buckets with public policies.
+  PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.           = var.PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.
+  block_public_acls                                                                      = var.block_public_acls
+  block_public_policy                                                                    = var.block_public_policy
+  domain_name                                                                            = var.domain_name
+  ignore_public_acls                                                                     = var.ignore_public_acls
+  account_id                                                                             = var.account_id
+  region                                                                                 = var.region
+  PUT Object calls fail if the request includes a public ACL.                            = var.PUT Object calls fail if the request includes a public ACL.
+  alias                                                                                  = var.alias
+  arn                                                                                    = var.arn
+  details                                                                                = var.details
+  id                                                                                     = var.id
+  public_access_block                                                                    = var.public_access_block
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -30,33 +30,64 @@ variable "Reject calls to PUT Bucket policy if the specified bucket policy allow
   description = ""
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Multi-Region Access Point."
-  type        = string
-}
-variable "block_public_policy" {
-  description = "(Optional) Whether Amazon S3 should block public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect existing bucket policies. When set to true"
-  type        = string
-  default     = ""
-}
 variable "bucket" {
   description = "(Required) The name of the associated bucket for the Region.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "create" {
+  description = "(Default 60m)"
   type        = string
 }
 variable "delete" {
   description = "(Default 15m)Details ConfigurationThe details block supports the following:"
   type        = string
 }
-variable "region" {
-  description = "(Required) The Region configuration block to specify the bucket associated with the Multi-Region Access Point. See Region Configuration below for more details.For more information, see the documentation on Multi-Region Access Points.Public Access Block ConfigurationThe public_access_block block supports the following:"
+variable "restrict_public_buckets" {
+  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
+  type        = string
+  default     = ""
+}
+variable "PUT Bucket calls fail if the request includes a public ACL." {
+  description = ""
   type        = string
 }
 variable "Only the bucket owner and AWS Services can access buckets with public policies." {
   description = "Region ConfigurationThe region block supports the following:"
   type        = string
 }
-variable "PUT Bucket calls fail if the request includes a public ACL." {
+variable "PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public." {
   description = ""
+  type        = string
+}
+variable "block_public_acls" {
+  description = "(Optional) Whether Amazon S3 should block public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect existing policies or ACLs. When set to true"
+  type        = string
+  default     = ""
+}
+variable "block_public_policy" {
+  description = "(Optional) Whether Amazon S3 should block public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect existing bucket policies. When set to true"
+  type        = string
+  default     = ""
+}
+variable "domain_name" {
+  description = "The DNS domain name of the S3 Multi-Region Access Point in the format emalias.accesspoint.s3-global.amazonaws.com. For more information, see the documentation on Multi-Region Access Point Requests."
+  type        = string
+}
+variable "ignore_public_acls" {
+  description = "(Optional) Whether Amazon S3 should ignore public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the Multi-Region Access Point."
+  type        = string
+}
+variable "Ignore all public ACLs on buckets in this account and any objects that they contain." {
+  description = ""
+  type        = string
+}
+variable "region" {
+  description = "(Required) The Region configuration block to specify the bucket associated with the Multi-Region Access Point. See Region Configuration below for more details.For more information, see the documentation on Multi-Region Access Points.Public Access Block ConfigurationThe public_access_block block supports the following:"
   type        = string
 }
 variable "account_id" {
@@ -68,53 +99,22 @@ variable "alias" {
   description = "The alias for the Multi-Region Access Point."
   type        = string
 }
-variable "block_public_acls" {
-  description = "(Optional) Whether Amazon S3 should block public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect existing policies or ACLs. When set to true"
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) The name of the Multi-Region Access Point."
-  type        = string
-}
-variable "public_access_block" {
-  description = "(Optional) Configuration block to manage the PublicAccessBlock configuration that you want to apply to this Multi-Region Access Point. You can enable the configuration options in any combination. See Public Access Block Configuration below for more details."
-  type        = string
-  default     = ""
-}
-variable "restrict_public_buckets" {
-  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
-  type        = string
-  default     = ""
-}
-variable "Ignore all public ACLs on buckets in this account and any objects that they contain." {
-  description = ""
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Multi-Region Access Point."
   type        = string
 }
 variable "details" {
   description = "(Required) A configuration block containing details about the Multi-Region Access Point. See Details Configuration Block below for more detailsTimeoutsConfiguration options:"
   type        = string
 }
-variable "ignore_public_acls" {
-  description = "(Optional) Whether Amazon S3 should ignore public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
-  type        = string
-  default     = ""
-}
-variable "PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public." {
-  description = ""
-  type        = string
-}
-variable "create" {
-  description = "(Default 60m)"
-  type        = string
-}
-variable "domain_name" {
-  description = "The DNS domain name of the S3 Multi-Region Access Point in the format emalias.accesspoint.s3-global.amazonaws.com. For more information, see the documentation on Multi-Region Access Point Requests."
-  type        = string
-}
 variable "id" {
   description = "The AWS account ID and access point name separated by a colon (:)."
   type        = string
+}
+variable "public_access_block" {
+  description = "(Optional) Configuration block to manage the PublicAccessBlock configuration that you want to apply to this Multi-Region Access Point. You can enable the configuration options in any combination. See Public Access Block Configuration below for more details."
+  type        = string
+  default     = ""
 }
 variable "PUT Object calls fail if the request includes a public ACL." {
   description = ""
@@ -240,93 +240,93 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public." {
-  description = ""
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.
-}
-output "details" {
-  description = "(Required) A configuration block containing details about the Multi-Region Access Point. See Details Configuration Block below for more detailsTimeoutsConfiguration options:"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.details
-}
-output "ignore_public_acls" {
-  description = "(Optional) Whether Amazon S3 should ignore public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.ignore_public_acls
-}
-output "PUT Object calls fail if the request includes a public ACL." {
-  description = ""
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.PUT Object calls fail if the request includes a public ACL.
-}
-output "create" {
-  description = "(Default 60m)"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.create
-}
-output "domain_name" {
-  description = "The DNS domain name of the S3 Multi-Region Access Point in the format emalias.accesspoint.s3-global.amazonaws.com. For more information, see the documentation on Multi-Region Access Point Requests."
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.domain_name
-}
-output "id" {
-  description = "The AWS account ID and access point name separated by a colon (:)."
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.id
-}
-output "delete" {
-  description = "(Default 15m)Details ConfigurationThe details block supports the following:"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.delete
+output "account_id" {
+  description = "(Optional) The AWS account ID for the owner of the buckets for which you want to create a Multi-Region Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.account_id
 }
 output "region" {
   description = "(Required) The Region configuration block to specify the bucket associated with the Multi-Region Access Point. See Region Configuration below for more details.For more information, see the documentation on Multi-Region Access Points.Public Access Block ConfigurationThe public_access_block block supports the following:"
   value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.region
 }
-output "Only the bucket owner and AWS Services can access buckets with public policies." {
-  description = "Region ConfigurationThe region block supports the following:"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.Only the bucket owner and AWS Services can access buckets with public policies.
-}
-output "Reject calls to PUT Bucket policy if the specified bucket policy allows public access." {
+output "PUT Object calls fail if the request includes a public ACL." {
   description = ""
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Multi-Region Access Point."
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.arn
-}
-output "block_public_policy" {
-  description = "(Optional) Whether Amazon S3 should block public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect existing bucket policies. When set to true"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.block_public_policy
-}
-output "bucket" {
-  description = "(Required) The name of the associated bucket for the Region.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.bucket
-}
-output "name" {
-  description = "(Required) The name of the Multi-Region Access Point."
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.name
-}
-output "public_access_block" {
-  description = "(Optional) Configuration block to manage the PublicAccessBlock configuration that you want to apply to this Multi-Region Access Point. You can enable the configuration options in any combination. See Public Access Block Configuration below for more details."
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.public_access_block
-}
-output "restrict_public_buckets" {
-  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.restrict_public_buckets
-}
-output "Ignore all public ACLs on buckets in this account and any objects that they contain." {
-  description = ""
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.Ignore all public ACLs on buckets in this account and any objects that they contain.
-}
-output "PUT Bucket calls fail if the request includes a public ACL." {
-  description = ""
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.PUT Bucket calls fail if the request includes a public ACL.
-}
-output "account_id" {
-  description = "(Optional) The AWS account ID for the owner of the buckets for which you want to create a Multi-Region Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
-  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.account_id
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.PUT Object calls fail if the request includes a public ACL.
 }
 output "alias" {
   description = "The alias for the Multi-Region Access Point."
   value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.alias
 }
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Multi-Region Access Point."
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.arn
+}
+output "details" {
+  description = "(Required) A configuration block containing details about the Multi-Region Access Point. See Details Configuration Block below for more detailsTimeoutsConfiguration options:"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.details
+}
+output "id" {
+  description = "The AWS account ID and access point name separated by a colon (:)."
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.id
+}
+output "public_access_block" {
+  description = "(Optional) Configuration block to manage the PublicAccessBlock configuration that you want to apply to this Multi-Region Access Point. You can enable the configuration options in any combination. See Public Access Block Configuration below for more details."
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.public_access_block
+}
+output "PUT Bucket calls fail if the request includes a public ACL." {
+  description = ""
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.PUT Bucket calls fail if the request includes a public ACL.
+}
+output "Reject calls to PUT Bucket policy if the specified bucket policy allows public access." {
+  description = ""
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.Reject calls to PUT Bucket policy if the specified bucket policy allows public access.
+}
+output "bucket" {
+  description = "(Required) The name of the associated bucket for the Region.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.bucket
+}
+output "create" {
+  description = "(Default 60m)"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.create
+}
+output "delete" {
+  description = "(Default 15m)Details ConfigurationThe details block supports the following:"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.delete
+}
+output "restrict_public_buckets" {
+  description = "(Optional) Whether Amazon S3 should restrict public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked. When set to true"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.restrict_public_buckets
+}
+output "name" {
+  description = "(Required) The name of the Multi-Region Access Point."
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.name
+}
+output "Ignore all public ACLs on buckets in this account and any objects that they contain." {
+  description = ""
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.Ignore all public ACLs on buckets in this account and any objects that they contain.
+}
+output "Only the bucket owner and AWS Services can access buckets with public policies." {
+  description = "Region ConfigurationThe region block supports the following:"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.Only the bucket owner and AWS Services can access buckets with public policies.
+}
+output "PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public." {
+  description = ""
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.PUT Bucket acl and PUT Object acl calls fail if the specified ACL is public.
+}
 output "block_public_acls" {
   description = "(Optional) Whether Amazon S3 should block public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect existing policies or ACLs. When set to true"
   value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.block_public_acls
+}
+output "block_public_policy" {
+  description = "(Optional) Whether Amazon S3 should block public bucket policies for buckets in this account. Defaults to true. Enabling this setting does not affect existing bucket policies. When set to true"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.block_public_policy
+}
+output "domain_name" {
+  description = "The DNS domain name of the S3 Multi-Region Access Point in the format emalias.accesspoint.s3-global.amazonaws.com. For more information, see the documentation on Multi-Region Access Point Requests."
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.domain_name
+}
+output "ignore_public_acls" {
+  description = "(Optional) Whether Amazon S3 should ignore public ACLs for buckets in this account. Defaults to true. Enabling this setting does not affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set. When set to true"
+  value       = aws_s3control_multi_region_access_point.aws_s3control_multi_region_access_point.ignore_public_acls
 }
 output "status" {
   description = "The current status of the Multi-Region Access Point. One of: READY, INCONSISTENT_ACROSS_REGIONS, CREATING, PARTIALLY_CREATED, PARTIALLY_DELETED, DELETING."

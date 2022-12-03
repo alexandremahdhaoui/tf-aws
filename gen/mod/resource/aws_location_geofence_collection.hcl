@@ -1,21 +1,50 @@
 resource "aws_location_geofence_collection" "aws_location_geofence_collection" {
-  update_time     = var.update_time
+  create          = var.create
+  description     = var.description
+  kms_key_id      = var.kms_key_id
+  tags            = var.tags
+  update          = var.update
   collection_arn  = var.collection_arn
   collection_name = var.collection_name
-  create          = var.create
+  update_time     = var.update_time
   create_time     = var.create_time
   delete          = var.delete
-  description     = var.description
-  tags            = var.tags
-  kms_key_id      = var.kms_key_id
-  update          = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "collection_arn" {
+  description = "The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all AWS."
+  type        = string
+  default     = ""
+}
+variable "collection_name" {
+  description = "(Required) The name of the geofence collection."
+  type        = string
+}
 variable "create" {
   description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The optional description for the geofence collection."
+  type        = string
+  default     = ""
+}
+variable "kms_key_id" {
+  description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the geofence collection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -29,37 +58,8 @@ variable "delete" {
   type        = string
   default     = ""
 }
-variable "description" {
-  description = "(Optional) The optional description for the geofence collection."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the geofence collection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "update_time" {
   description = "The timestamp for when the geofence collection resource was last updated in ISO 8601 format.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "collection_arn" {
-  description = "The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all AWS."
-  type        = string
-  default     = ""
-}
-variable "collection_name" {
-  description = "(Required) The name of the geofence collection."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 30m)"
   type        = string
   default     = ""
 }
@@ -183,29 +183,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_id" {
-  description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.kms_key_id
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.update
+output "create_time" {
+  description = "The timestamp for when the geofence collection resource was created in ISO 8601 format."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
 }
 output "delete" {
   description = "(Default 30m)"
   value       = aws_location_geofence_collection.aws_location_geofence_collection.delete
 }
-output "description" {
-  description = "(Optional) The optional description for the geofence collection."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.description
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the geofence collection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.tags
-}
 output "update_time" {
   description = "The timestamp for when the geofence collection resource was last updated in ISO 8601 format.TimeoutsConfiguration options:"
   value       = aws_location_geofence_collection.aws_location_geofence_collection.update_time
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.update
 }
 output "collection_arn" {
   description = "The Amazon Resource Name (ARN) for the geofence collection resource. Used when you need to specify a resource across all AWS."
@@ -219,9 +211,17 @@ output "create" {
   description = "(Default 30m)"
   value       = aws_location_geofence_collection.aws_location_geofence_collection.create
 }
-output "create_time" {
-  description = "The timestamp for when the geofence collection resource was created in ISO 8601 format."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
+output "description" {
+  description = "(Optional) The optional description for the geofence collection."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.description
+}
+output "kms_key_id" {
+  description = "(Optional) A key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.kms_key_id
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the geofence collection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.tags
 }
 output "delete" {
   description = "(Default 30m)"

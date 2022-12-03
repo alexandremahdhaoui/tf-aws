@@ -1,14 +1,19 @@
 resource "aws_accessanalyzer_analyzer" "aws_accessanalyzer_analyzer" {
+  type          = var.type
   analyzer_name = var.analyzer_name
   arn           = var.arn
   id            = var.id
   tags          = var.tags
   tags_all      = var.tags_all
-  type          = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "type" {
+  description = "(Optional) Type of Analyzer. Valid values are ACCOUNT or ORGANIZATION. Defaults to ACCOUNT.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "analyzer_name" {
   description = "(NOW ITS OPTIONAL) Name of the Analyzer."
@@ -32,11 +37,6 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Optional) Type of Analyzer. Valid values are ACCOUNT or ORGANIZATION. Defaults to ACCOUNT.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -184,10 +184,6 @@ output "id" {
   description = "yolo."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.id
 }
-output "arn" {
-  description = "ARN of the Analyzer."
-  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.arn
-}
 output "id" {
   description = "Analyzer name."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.id
@@ -195,6 +191,10 @@ output "id" {
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.tags_all
+}
+output "arn" {
+  description = "ARN of the Analyzer."
+  value       = aws_accessanalyzer_analyzer.aws_accessanalyzer_analyzer.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

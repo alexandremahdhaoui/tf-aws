@@ -1,44 +1,28 @@
 resource "aws_medialive_multiplex" "aws_medialive_multiplex" {
-  transport_stream_id                     = var.transport_stream_id
-  availability_zones                      = var.availability_zones
-  delete                                  = var.delete
   maximum_video_buffer_delay_milliseconds = var.maximum_video_buffer_delay_milliseconds
-  multiplex_settings                      = var.multiplex_settings
-  name                                    = var.name
-  transport_stream_bitrate                = var.transport_stream_bitrate
+  tags                                    = var.tags
+  transport_stream_id                     = var.transport_stream_id
+  transport_stream_reserved_bitrate       = var.transport_stream_reserved_bitrate
   arn                                     = var.arn
   create                                  = var.create
-  transport_stream_reserved_bitrate       = var.transport_stream_reserved_bitrate
   update                                  = var.update
-  example_attribute                       = var.example_attribute
-  tags                                    = var.tags
+  delete                                  = var.delete
   start_multiplex                         = var.start_multiplex
+  multiplex_settings                      = var.multiplex_settings
+  transport_stream_bitrate                = var.transport_stream_bitrate
+  availability_zones                      = var.availability_zones
+  example_attribute                       = var.example_attribute
+  name                                    = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "multiplex_settings" {
-  description = "- (Required) Multiplex settings. See Multiplex Settings for more details."
   type        = string
 }
 variable "name" {
   description = "(Required) name of Multiplex."
   type        = string
 }
-variable "transport_stream_bitrate" {
-  description = "(Required) Transport stream bit rate."
-  type        = string
-}
-variable "transport_stream_id" {
-  description = "(Required) Unique ID for each multiplex."
-  type        = string
-}
-variable "availability_zones" {
-  description = "(Required) A list of availability zones. You must specify exactly two."
-  type        = string
-}
-variable "delete" {
+variable "create" {
   description = "(Default 30m)"
   type        = string
   default     = ""
@@ -48,8 +32,17 @@ variable "maximum_video_buffer_delay_milliseconds" {
   type        = string
   default     = ""
 }
-variable "update" {
-  description = "(Default 30m)"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the Multiplex. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Multiplex Settings"
+  type        = string
+  default     = ""
+}
+variable "transport_stream_id" {
+  description = "(Required) Unique ID for each multiplex."
+  type        = string
+}
+variable "transport_stream_reserved_bitrate" {
+  description = "(Optional) Transport stream reserved bit rate."
   type        = string
   default     = ""
 }
@@ -58,13 +51,18 @@ variable "arn" {
   type        = string
   default     = ""
 }
-variable "create" {
+variable "start_multiplex" {
+  description = "(Optional) Whether to start the Multiplex. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "update" {
   description = "(Default 30m)"
   type        = string
   default     = ""
 }
-variable "transport_stream_reserved_bitrate" {
-  description = "(Optional) Transport stream reserved bit rate."
+variable "delete" {
+  description = "(Default 30m)"
   type        = string
   default     = ""
 }
@@ -73,15 +71,17 @@ variable "example_attribute" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the Multiplex. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Multiplex Settings"
+variable "multiplex_settings" {
+  description = "- (Required) Multiplex settings. See Multiplex Settings for more details."
   type        = string
-  default     = ""
 }
-variable "start_multiplex" {
-  description = "(Optional) Whether to start the Multiplex. Defaults to false."
+variable "transport_stream_bitrate" {
+  description = "(Required) Transport stream bit rate."
   type        = string
-  default     = ""
+}
+variable "availability_zones" {
+  description = "(Required) A list of availability zones. You must specify exactly two."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -203,65 +203,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the Multiplex."
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.arn
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.create
-}
-output "transport_stream_reserved_bitrate" {
-  description = "(Optional) Transport stream reserved bit rate."
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.transport_stream_reserved_bitrate
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.update
-}
-output "example_attribute" {
-  description = "Concise description.TimeoutsConfiguration options:"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.example_attribute
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the Multiplex. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Multiplex Settings"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.tags
-}
-output "start_multiplex" {
-  description = "(Optional) Whether to start the Multiplex. Defaults to false."
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.start_multiplex
-}
-output "name" {
-  description = "(Required) name of Multiplex."
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.name
-}
-output "transport_stream_bitrate" {
-  description = "(Required) Transport stream bit rate."
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.transport_stream_bitrate
-}
-output "transport_stream_id" {
-  description = "(Required) Unique ID for each multiplex."
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.transport_stream_id
-}
 output "availability_zones" {
   description = "(Required) A list of availability zones. You must specify exactly two."
   value       = aws_medialive_multiplex.aws_medialive_multiplex.availability_zones
 }
-output "delete" {
-  description = "(Default 30m)"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.delete
-}
-output "maximum_video_buffer_delay_milliseconds" {
-  description = "(Optional) Maximum video buffer delay.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.maximum_video_buffer_delay_milliseconds
+output "example_attribute" {
+  description = "Concise description.TimeoutsConfiguration options:"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.example_attribute
 }
 output "multiplex_settings" {
   description = "- (Required) Multiplex settings. See Multiplex Settings for more details."
   value       = aws_medialive_multiplex.aws_medialive_multiplex.multiplex_settings
 }
-output "example_attribute" {
-  description = "Concise description.TimeoutsConfiguration options:"
-  value       = aws_medialive_multiplex.aws_medialive_multiplex.example_attribute
+output "transport_stream_bitrate" {
+  description = "(Required) Transport stream bit rate."
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.transport_stream_bitrate
+}
+output "name" {
+  description = "(Required) name of Multiplex."
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.name
+}
+output "transport_stream_id" {
+  description = "(Required) Unique ID for each multiplex."
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.transport_stream_id
+}
+output "transport_stream_reserved_bitrate" {
+  description = "(Optional) Transport stream reserved bit rate."
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.transport_stream_reserved_bitrate
+}
+output "arn" {
+  description = "ARN of the Multiplex."
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.arn
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.create
+}
+output "maximum_video_buffer_delay_milliseconds" {
+  description = "(Optional) Maximum video buffer delay.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.maximum_video_buffer_delay_milliseconds
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the Multiplex. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Multiplex Settings"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.tags
+}
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.delete
+}
+output "start_multiplex" {
+  description = "(Optional) Whether to start the Multiplex. Defaults to false."
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.start_multiplex
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.update
 }
 output "update" {
   description = "(Default 30m)"
@@ -278,6 +274,10 @@ output "create" {
 output "delete" {
   description = "(Default 30m)"
   value       = aws_medialive_multiplex.aws_medialive_multiplex.delete
+}
+output "example_attribute" {
+  description = "Concise description.TimeoutsConfiguration options:"
+  value       = aws_medialive_multiplex.aws_medialive_multiplex.example_attribute
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,13 +1,22 @@
 resource "aws_iam_openid_connect_provider" "aws_iam_openid_connect_provider" {
-  arn             = var.arn
   client_id_list  = var.client_id_list
   tags            = var.tags
   thumbprint_list = var.thumbprint_list
   url             = var.url
+  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "client_id_list" {
+  description = "(Required) A list of client IDs (also known as audiences). When a mobile or web app registers with an OpenID Connect provider, they establish a value that identifies the application. (This is the value that's sent as the client_id parameter on OAuth requests.)"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags for the IAM OIDC provider. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "thumbprint_list" {
   description = "(Required) A list of server certificate thumbprints for the OpenID Connect (OIDC) identity provider's server certificate(s)."
@@ -20,15 +29,6 @@ variable "url" {
 variable "arn" {
   description = "The ARN assigned by AWS for this provider."
   type        = string
-}
-variable "client_id_list" {
-  description = "(Required) A list of client IDs (also known as audiences). When a mobile or web app registers with an OpenID Connect provider, they establish a value that identifies the application. (This is the value that's sent as the client_id parameter on OAuth requests.)"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of resource tags for the IAM OIDC provider. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

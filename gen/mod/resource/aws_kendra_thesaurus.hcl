@@ -1,30 +1,67 @@
 resource "aws_kendra_thesaurus" "aws_kendra_thesaurus" {
+  update         = var.update
+  bucket         = var.bucket
+  create         = var.create
+  index_id       = var.index_id
+  tags_all       = var.tags_all
+  delete         = var.delete
+  id             = var.id
   source_s3_path = var.source_s3_path
   status         = var.status
   arn            = var.arn
-  role_arn       = var.role_arn
+  description    = var.description
   key            = var.key
   name           = var.name
-  tags_all       = var.tags_all
-  update         = var.update
-  bucket         = var.bucket
-  index_id       = var.index_id
+  role_arn       = var.role_arn
   tags           = var.tags
-  description    = var.description
-  id             = var.id
-  create         = var.create
-  delete         = var.delete
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "delete" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The unique identifiers of the thesaurus and index separated by a slash (/)."
+  type        = string
+  default     = ""
+}
+variable "source_s3_path" {
+  description = "(Required) The S3 path where your thesaurus file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
+  type        = string
+}
+variable "status" {
+  description = "The current status of the thesaurus."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the thesaurus."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) The description for a thesaurus."
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Required) The name of the file."
   type        = string
 }
 variable "name" {
   description = "(Required) The name for the thesaurus."
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "role_arn" {
+  description = "(Required) The IAM (Identity and Access Management) role used to access the thesaurus file in S3."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -37,56 +74,19 @@ variable "bucket" {
   description = "(Required) The name of the S3 bucket that contains the file."
   type        = string
 }
-variable "index_id" {
-  description = "- (Required, Forces new resource) The identifier of the index for a thesaurus."
-  type        = string
-}
-variable "key" {
-  description = "(Required) The name of the file."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description for a thesaurus."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The unique identifiers of the thesaurus and index separated by a slash (/)."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "create" {
   description = "(Default 30m)"
   type        = string
   default     = ""
 }
-variable "delete" {
-  description = "(Default 30m)"
+variable "index_id" {
+  description = "- (Required, Forces new resource) The identifier of the index for a thesaurus."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
   default     = ""
-}
-variable "status" {
-  description = "The current status of the thesaurus."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the thesaurus."
-  type        = string
-  default     = ""
-}
-variable "role_arn" {
-  description = "(Required) The IAM (Identity and Access Management) role used to access the thesaurus file in S3."
-  type        = string
-}
-variable "source_s3_path" {
-  description = "(Required) The S3 path where your thesaurus file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -208,21 +208,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.tags_all
+output "id" {
+  description = "The unique identifiers of the thesaurus and index separated by a slash (/)."
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.id
 }
-output "update" {
+output "source_s3_path" {
+  description = "(Required) The S3 path where your thesaurus file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.source_s3_path
+}
+output "status" {
+  description = "The current status of the thesaurus."
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.status
+}
+output "delete" {
   description = "(Default 30m)"
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.update
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.delete
 }
-output "bucket" {
-  description = "(Required) The name of the S3 bucket that contains the file."
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.bucket
-}
-output "index_id" {
-  description = "- (Required, Forces new resource) The identifier of the index for a thesaurus."
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.index_id
+output "description" {
+  description = "(Optional) The description for a thesaurus."
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.description
 }
 output "key" {
   description = "(Required) The name of the file."
@@ -232,41 +236,37 @@ output "name" {
   description = "(Required) The name for the thesaurus."
   value       = aws_kendra_thesaurus.aws_kendra_thesaurus.name
 }
-output "description" {
-  description = "(Optional) The description for a thesaurus."
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.description
-}
-output "id" {
-  description = "The unique identifiers of the thesaurus and index separated by a slash (/)."
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.id
+output "role_arn" {
+  description = "(Required) The IAM (Identity and Access Management) role used to access the thesaurus file in S3."
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.role_arn
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kendra_thesaurus.aws_kendra_thesaurus.tags
 }
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.create
-}
-output "delete" {
-  description = "(Default 30m)"
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.delete
-}
 output "arn" {
   description = "ARN of the thesaurus."
   value       = aws_kendra_thesaurus.aws_kendra_thesaurus.arn
 }
-output "role_arn" {
-  description = "(Required) The IAM (Identity and Access Management) role used to access the thesaurus file in S3."
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.role_arn
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.update
 }
-output "source_s3_path" {
-  description = "(Required) The S3 path where your thesaurus file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.source_s3_path
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.create
 }
-output "status" {
-  description = "The current status of the thesaurus."
-  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.status
+output "index_id" {
+  description = "- (Required, Forces new resource) The identifier of the index for a thesaurus."
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.index_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.tags_all
+}
+output "bucket" {
+  description = "(Required) The name of the S3 bucket that contains the file."
+  value       = aws_kendra_thesaurus.aws_kendra_thesaurus.bucket
 }
 output "arn" {
   description = "ARN of the thesaurus."

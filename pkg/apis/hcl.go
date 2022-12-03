@@ -5,6 +5,7 @@ import (
 	"github.com/hashicorp/hcl/v2"
 	"github.com/hashicorp/hcl/v2/hclwrite"
 	"github.com/zclconf/go-cty/cty"
+	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/logger"
 )
 
 const (
@@ -41,9 +42,10 @@ const (
 
 // ToHCL serializes struct to `hcl` format returning a slice of bytes.
 func (t *TerraformModuleDefinition) ToHCL() []byte {
+	sf, _ := logger.Trace("render", "to hcl", t.Metadata.Name, string(t.Kind), t.ApiVersion)
+	defer sf()
 	f := hclwrite.NewEmptyFile()
 	root := f.Body()
-
 	t.
 		hclKind(root).
 		hclVariable(root).

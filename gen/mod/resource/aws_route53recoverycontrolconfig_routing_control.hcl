@@ -1,13 +1,23 @@
 resource "aws_route53recoverycontrolconfig_routing_control" "aws_route53recoverycontrolconfig_routing_control" {
+  status            = var.status
+  arn               = var.arn
   cluster_arn       = var.cluster_arn
   control_panel_arn = var.control_panel_arn
   name              = var.name
-  status            = var.status
-  arn               = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "status" {
+  description = "Status of routing control. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the routing control."
+  type        = string
+  default     = ""
 }
 variable "cluster_arn" {
   description = "(Required) ARN of the cluster in which this routing control will reside."
@@ -21,16 +31,6 @@ variable "control_panel_arn" {
 variable "name" {
   description = "(Required) The name describing the routing control."
   type        = string
-}
-variable "status" {
-  description = "Status of routing control. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the routing control."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -172,13 +172,13 @@ output "name" {
   description = "(Required) The name describing the routing control."
   value       = aws_route53recoverycontrolconfig_routing_control.aws_route53recoverycontrolconfig_routing_control.name
 }
-output "status" {
-  description = "Status of routing control. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
-  value       = aws_route53recoverycontrolconfig_routing_control.aws_route53recoverycontrolconfig_routing_control.status
-}
 output "arn" {
   description = "ARN of the routing control."
   value       = aws_route53recoverycontrolconfig_routing_control.aws_route53recoverycontrolconfig_routing_control.arn
+}
+output "status" {
+  description = "Status of routing control. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
+  value       = aws_route53recoverycontrolconfig_routing_control.aws_route53recoverycontrolconfig_routing_control.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

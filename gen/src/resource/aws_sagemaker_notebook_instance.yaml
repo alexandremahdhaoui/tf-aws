@@ -9,10 +9,7 @@ spec:
             optional: true
             type: string
         additional_code_repositories:
-            description: |-
-                (Optional) An array of up to three Git repositories to associate with the notebook instance.
-                These can be either the names of Git repositories stored as resources in your account, or the URL of Git repositories in AWS CodeCommit or in any other Git repository. These repositories are cloned at the same level as the default repository of your notebook instance.
-            optional: true
+            description: AWS CodeCommit or in any other Git repository. These repositories are cloned at the same level as the default repository of your notebook instance.
             type: string
         arn:
             description: The Amazon Resource Name (ARN) assigned by AWS to this notebook instance.

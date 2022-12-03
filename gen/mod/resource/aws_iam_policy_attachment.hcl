@@ -1,19 +1,14 @@
 resource "aws_iam_policy_attachment" "aws_iam_policy_attachment" {
-  groups     = var.groups
-  id         = var.id
   name       = var.name
   policy_arn = var.policy_arn
   roles      = var.roles
   users      = var.users
+  groups     = var.groups
+  id         = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "groups" {
-  description = "  (Optional) - The group(s) the policy should be applied to"
-  type        = string
-  default     = ""
 }
 variable "id" {
   description = "The policy's ID."
@@ -34,6 +29,11 @@ variable "roles" {
 }
 variable "users" {
   description = "   (Optional) - The user(s) the policy should be applied to"
+  type        = string
+  default     = ""
+}
+variable "groups" {
+  description = "  (Optional) - The group(s) the policy should be applied to"
   type        = string
   default     = ""
 }

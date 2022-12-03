@@ -1,7 +1,7 @@
 datasource "aws_outposts_site" "aws_outposts_site" {
+  id         = var.id
   name       = var.name
   account_id = var.account_id
-  id         = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,7 +1,7 @@
 resource "aws_proxy_protocol_policy" "aws_proxy_protocol_policy" {
+  load_balancer  = var.load_balancer
   id             = var.id
   instance_ports = var.instance_ports
-  load_balancer  = var.load_balancer
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -16,7 +16,7 @@ variable "instance_ports" {
   type        = string
 }
 variable "load_balancer" {
-  description = ""
+  description = "(Required) The load balancer to which the policy\nshould be attached."
   type        = string
 }
 variable "tag_instance_id" {
@@ -148,7 +148,7 @@ output "instance_ports" {
   value       = aws_proxy_protocol_policy.aws_proxy_protocol_policy.instance_ports
 }
 output "load_balancer" {
-  description = ""
+  description = "(Required) The load balancer to which the policy\nshould be attached."
   value       = aws_proxy_protocol_policy.aws_proxy_protocol_policy.load_balancer
 }
 output "id" {

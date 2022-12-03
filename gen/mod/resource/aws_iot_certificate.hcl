@@ -124,14 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The internal ID assigned to this certificate."
-  value       = aws_iot_certificate.aws_iot_certificate.id
-}
-output "public_key" {
-  description = "When neither CSR nor certificate is provided, the public key."
-  value       = aws_iot_certificate.aws_iot_certificate.public_key
-}
 output "arn" {
   description = "The ARN of the created certificate."
   value       = aws_iot_certificate.aws_iot_certificate.arn
@@ -139,6 +131,14 @@ output "arn" {
 output "certificate_pem" {
   description = "The certificate data, in PEM format."
   value       = aws_iot_certificate.aws_iot_certificate.certificate_pem
+}
+output "id" {
+  description = "The internal ID assigned to this certificate."
+  value       = aws_iot_certificate.aws_iot_certificate.id
+}
+output "public_key" {
+  description = "When neither CSR nor certificate is provided, the public key."
+  value       = aws_iot_certificate.aws_iot_certificate.public_key
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

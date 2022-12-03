@@ -1,32 +1,25 @@
 resource "aws_route53recoverycontrolconfig_safety_rule" "aws_route53recoverycontrolconfig_safety_rule" {
-  arn               = var.arn
   gating_controls   = var.gating_controls
-  inverted          = var.inverted
-  name              = var.name
+  rule_config       = var.rule_config
   status            = var.status
-  target_controls   = var.target_controls
+  threshold         = var.threshold
+  wait_period_ms    = var.wait_period_ms
+  arn               = var.arn
   asserted_controls = var.asserted_controls
   control_panel_arn = var.control_panel_arn
-  rule_config       = var.rule_config
-  threshold         = var.threshold
+  inverted          = var.inverted
+  name              = var.name
+  target_controls   = var.target_controls
   type              = var.type
-  wait_period_ms    = var.wait_period_ms
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "threshold" {
-  description = "(Required) Number of controls that must be set when you specify an ATLEAST type rule."
+variable "arn" {
+  description = "ARN of the safety rule."
   type        = string
-}
-variable "type" {
-  description = "(Required) Rule type. Valid values are ATLEAST, AND, and OR.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "wait_period_ms" {
-  description = "(Required) Evaluation period, in milliseconds (ms), during which any request against the target routing controls will fail."
-  type        = string
+  default     = ""
 }
 variable "asserted_controls" {
   description = "(Optional) Routing controls that are part of transactions that are evaluated to determine if a request to change a routing control state is allowed."
@@ -37,12 +30,30 @@ variable "control_panel_arn" {
   description = "(Required) ARN of the control panel in which this safety rule will reside."
   type        = string
 }
-variable "rule_config" {
-  description = "(Required) Configuration block for safety rule criteria. See below."
+variable "inverted" {
+  description = "(Required) Logical negation of the rule."
   type        = string
 }
 variable "name" {
   description = "(Required) Name describing the safety rule."
+  type        = string
+}
+variable "target_controls" {
+  description = "(Optional) Routing controls that can only be set or unset if the specified rule_config evaluates to true for the specified gating_controls.rule_config"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) Rule type. Valid values are ATLEAST, AND, and OR.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "gating_controls" {
+  description = "(Optional) Gating controls for the new gating rule. That is, routing controls that are evaluated by the rule configuration that you specify."
+  type        = string
+  default     = ""
+}
+variable "rule_config" {
+  description = "(Required) Configuration block for safety rule criteria. See below."
   type        = string
 }
 variable "status" {
@@ -50,23 +61,12 @@ variable "status" {
   type        = string
   default     = ""
 }
-variable "target_controls" {
-  description = "(Optional) Routing controls that can only be set or unset if the specified rule_config evaluates to true for the specified gating_controls.rule_config"
+variable "threshold" {
+  description = "(Required) Number of controls that must be set when you specify an ATLEAST type rule."
   type        = string
-  default     = ""
 }
-variable "arn" {
-  description = "ARN of the safety rule."
-  type        = string
-  default     = ""
-}
-variable "gating_controls" {
-  description = "(Optional) Gating controls for the new gating rule. That is, routing controls that are evaluated by the rule configuration that you specify."
-  type        = string
-  default     = ""
-}
-variable "inverted" {
-  description = "(Required) Logical negation of the rule."
+variable "wait_period_ms" {
+  description = "(Required) Evaluation period, in milliseconds (ms), during which any request against the target routing controls will fail."
   type        = string
 }
 variable "tag_instance_id" {
@@ -189,33 +189,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "control_panel_arn" {
-  description = "(Required) ARN of the control panel in which this safety rule will reside."
-  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.control_panel_arn
-}
 output "rule_config" {
   description = "(Required) Configuration block for safety rule criteria. See below."
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.rule_config
+}
+output "status" {
+  description = "Status of the safety rule. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
+  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.status
 }
 output "threshold" {
   description = "(Required) Number of controls that must be set when you specify an ATLEAST type rule."
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.threshold
 }
-output "type" {
-  description = "(Required) Rule type. Valid values are ATLEAST, AND, and OR.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.type
-}
 output "wait_period_ms" {
   description = "(Required) Evaluation period, in milliseconds (ms), during which any request against the target routing controls will fail."
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.wait_period_ms
+}
+output "gating_controls" {
+  description = "(Optional) Gating controls for the new gating rule. That is, routing controls that are evaluated by the rule configuration that you specify."
+  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.gating_controls
 }
 output "asserted_controls" {
   description = "(Optional) Routing controls that are part of transactions that are evaluated to determine if a request to change a routing control state is allowed."
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.asserted_controls
 }
-output "gating_controls" {
-  description = "(Optional) Gating controls for the new gating rule. That is, routing controls that are evaluated by the rule configuration that you specify."
-  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.gating_controls
+output "control_panel_arn" {
+  description = "(Required) ARN of the control panel in which this safety rule will reside."
+  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.control_panel_arn
 }
 output "inverted" {
   description = "(Required) Logical negation of the rule."
@@ -225,17 +225,13 @@ output "name" {
   description = "(Required) Name describing the safety rule."
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.name
 }
-output "status" {
-  description = "Status of the safety rule. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
-  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.status
-}
 output "target_controls" {
   description = "(Optional) Routing controls that can only be set or unset if the specified rule_config evaluates to true for the specified gating_controls.rule_config"
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.target_controls
 }
-output "arn" {
-  description = "ARN of the safety rule."
-  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.arn
+output "type" {
+  description = "(Required) Rule type. Valid values are ATLEAST, AND, and OR.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.type
 }
 output "arn" {
   description = "ARN of the safety rule."
@@ -244,6 +240,10 @@ output "arn" {
 output "status" {
   description = "Status of the safety rule. PENDING when it is being created/updated, PENDING_DELETION when it is being deleted, and DEPLOYED otherwise."
   value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.status
+}
+output "arn" {
+  description = "ARN of the safety rule."
+  value       = aws_route53recoverycontrolconfig_safety_rule.aws_route53recoverycontrolconfig_safety_rule.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

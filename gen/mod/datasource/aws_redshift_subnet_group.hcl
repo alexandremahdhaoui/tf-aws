@@ -9,6 +9,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "ARN of the Redshift Subnet Group name."
+  type        = string
+}
+variable "description" {
+  description = "Description of the Redshift Subnet group."
+  type        = string
+}
 variable "id" {
   description = "Redshift Subnet group Name."
   type        = string
@@ -19,14 +27,6 @@ variable "name" {
 }
 variable "subnet_ids" {
   description = "An array of VPC subnet IDs."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the Redshift Subnet Group name."
-  type        = string
-}
-variable "description" {
-  description = "Description of the Redshift Subnet group."
   type        = string
 }
 output "arn" {

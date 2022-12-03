@@ -1,30 +1,18 @@
 resource "aws_glue_user_defined_function" "aws_glue_user_defined_function" {
+  arn           = var.arn
+  class_name    = var.class_name
   id            = var.id
+  resource_uris = var.resource_uris
   owner_type    = var.owner_type
   resource_type = var.resource_type
   uri           = var.uri
   catalog_id    = var.catalog_id
-  class_name    = var.class_name
   database_name = var.database_name
-  resource_uris = var.resource_uris
-  arn           = var.arn
   name          = var.name
   owner_name    = var.owner_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "database_name" {
-  description = "(Required) The name of the Database to create the Function."
-  type        = string
-}
-variable "id" {
-  description = "- The id of the Glue User Defined Function."
-  type        = string
-}
-variable "owner_type" {
-  description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."
   type        = string
 }
 variable "resource_type" {
@@ -40,26 +28,38 @@ variable "catalog_id" {
   type        = string
   default     = ""
 }
-variable "class_name" {
-  description = "(Required) The Java class that contains the function code."
+variable "database_name" {
+  description = "(Required) The name of the Database to create the Function."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the function."
   type        = string
 }
 variable "owner_name" {
   description = "(Required) The owner of the function."
   type        = string
 }
-variable "resource_uris" {
-  description = "(Optional) The configuration block for Resource URIs. See resource uris below for more details.Resource URIs"
+variable "owner_type" {
+  description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."
   type        = string
-  default     = ""
 }
 variable "arn" {
   description = "- The ARN of the Glue User Defined Function."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the function."
+variable "class_name" {
+  description = "(Required) The Java class that contains the function code."
   type        = string
+}
+variable "id" {
+  description = "- The id of the Glue User Defined Function."
+  type        = string
+}
+variable "resource_uris" {
+  description = "(Optional) The configuration block for Resource URIs. See resource uris below for more details.Resource URIs"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -185,13 +185,13 @@ output "arn" {
   description = "- The ARN of the Glue User Defined Function."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.arn
 }
-output "name" {
-  description = "(Required) The name of the function."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.name
+output "class_name" {
+  description = "(Required) The Java class that contains the function code."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.class_name
 }
-output "owner_name" {
-  description = "(Required) The owner of the function."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.owner_name
+output "id" {
+  description = "- The id of the Glue User Defined Function."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.id
 }
 output "resource_uris" {
   description = "(Optional) The configuration block for Resource URIs. See resource uris below for more details.Resource URIs"
@@ -201,17 +201,17 @@ output "catalog_id" {
   description = "(Optional) ID of the Glue Catalog to create the function in. If omitted, this defaults to the AWS Account ID."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.catalog_id
 }
-output "class_name" {
-  description = "(Required) The Java class that contains the function code."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.class_name
-}
 output "database_name" {
   description = "(Required) The name of the Database to create the Function."
   value       = aws_glue_user_defined_function.aws_glue_user_defined_function.database_name
 }
-output "id" {
-  description = "- The id of the Glue User Defined Function."
-  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.id
+output "name" {
+  description = "(Required) The name of the function."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.name
+}
+output "owner_name" {
+  description = "(Required) The owner of the function."
+  value       = aws_glue_user_defined_function.aws_glue_user_defined_function.owner_name
 }
 output "owner_type" {
   description = "(Required) The owner type. can be one of USER, ROLE, and GROUP."

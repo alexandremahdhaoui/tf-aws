@@ -1,15 +1,25 @@
 resource "aws_config_delivery_channel" "aws_config_delivery_channel" {
+  name                         = var.name
+  s3_bucket_name               = var.s3_bucket_name
+  s3_key_prefix                = var.s3_key_prefix
   s3_kms_key_arn               = var.s3_kms_key_arn
   snapshot_delivery_properties = var.snapshot_delivery_properties
   sns_topic_arn                = var.sns_topic_arn
   delivery_frequency           = var.delivery_frequency
-  name                         = var.name
-  s3_bucket_name               = var.s3_bucket_name
-  s3_key_prefix                = var.s3_key_prefix
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "s3_kms_key_arn" {
+  description = "(Optional) The ARN of the AWS KMS key used to encrypt objects delivered by AWS Config. Must belong to the same Region as the destination S3 bucket."
+  type        = string
+  default     = ""
+}
+variable "snapshot_delivery_properties" {
+  description = "(Optional) Options for how AWS Config delivers configuration snapshots. See belowsnapshot_delivery_properties"
+  type        = string
+  default     = ""
 }
 variable "sns_topic_arn" {
   description = "(Optional) The ARN of the SNS topic that AWS Config delivers notifications to."
@@ -32,16 +42,6 @@ variable "s3_bucket_name" {
 }
 variable "s3_key_prefix" {
   description = "(Optional) The prefix for the specified S3 bucket."
-  type        = string
-  default     = ""
-}
-variable "s3_kms_key_arn" {
-  description = "(Optional) The ARN of the AWS KMS key used to encrypt objects delivered by AWS Config. Must belong to the same Region as the destination S3 bucket."
-  type        = string
-  default     = ""
-}
-variable "snapshot_delivery_properties" {
-  description = "(Optional) Options for how AWS Config delivers configuration snapshots. See belowsnapshot_delivery_properties"
   type        = string
   default     = ""
 }
@@ -165,18 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "snapshot_delivery_properties" {
-  description = "(Optional) Options for how AWS Config delivers configuration snapshots. See belowsnapshot_delivery_properties"
-  value       = aws_config_delivery_channel.aws_config_delivery_channel.snapshot_delivery_properties
-}
-output "sns_topic_arn" {
-  description = "(Optional) The ARN of the SNS topic that AWS Config delivers notifications to."
-  value       = aws_config_delivery_channel.aws_config_delivery_channel.sns_topic_arn
-}
-output "delivery_frequency" {
-  description = "(Optional) - The frequency with which AWS Config recurringly delivers configuration snapshotsE.g., One_Hour or Three_Hours. Valid values are listed here.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_config_delivery_channel.aws_config_delivery_channel.delivery_frequency
-}
 output "name" {
   description = "(Optional) The name of the delivery channel. Defaults to default. Changing it recreates the resource."
   value       = aws_config_delivery_channel.aws_config_delivery_channel.name
@@ -192,6 +180,18 @@ output "s3_key_prefix" {
 output "s3_kms_key_arn" {
   description = "(Optional) The ARN of the AWS KMS key used to encrypt objects delivered by AWS Config. Must belong to the same Region as the destination S3 bucket."
   value       = aws_config_delivery_channel.aws_config_delivery_channel.s3_kms_key_arn
+}
+output "snapshot_delivery_properties" {
+  description = "(Optional) Options for how AWS Config delivers configuration snapshots. See belowsnapshot_delivery_properties"
+  value       = aws_config_delivery_channel.aws_config_delivery_channel.snapshot_delivery_properties
+}
+output "sns_topic_arn" {
+  description = "(Optional) The ARN of the SNS topic that AWS Config delivers notifications to."
+  value       = aws_config_delivery_channel.aws_config_delivery_channel.sns_topic_arn
+}
+output "delivery_frequency" {
+  description = "(Optional) - The frequency with which AWS Config recurringly delivers configuration snapshotsE.g., One_Hour or Three_Hours. Valid values are listed here.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_config_delivery_channel.aws_config_delivery_channel.delivery_frequency
 }
 output "id" {
   description = "The name of the delivery channel."

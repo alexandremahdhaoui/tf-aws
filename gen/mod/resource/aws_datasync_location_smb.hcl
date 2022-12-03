@@ -1,30 +1,29 @@
 resource "aws_datasync_location_smb" "aws_datasync_location_smb" {
-  mount_options   = var.mount_options
   subdirectory    = var.subdirectory
+  tags            = var.tags
   user            = var.user
-  agent_arns      = var.agent_arns
+  version         = var.version
   arn             = var.arn
   domain          = var.domain
-  password        = var.password
+  mount_options   = var.mount_options
   server_hostname = var.server_hostname
-  tags            = var.tags
-  version         = var.version
+  agent_arns      = var.agent_arns
+  password        = var.password
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "user" {
-  description = "(Required) The user who can mount the share and has file and folder permissions in the SMB share.mount_options Argument Referencemount_options configuration block:"
+variable "agent_arns" {
+  description = "(Required) A list of DataSync Agent ARNs with which this location will be associated."
   type        = string
 }
-variable "mount_options" {
-  description = "(Optional) Configuration block containing mount options used by DataSync to access the SMB Server. Can be AUTOMATIC, SMB2, or SMB3."
+variable "password" {
+  description = "(Required) The password of the user who can mount the share and has file permissions in the SMB."
   type        = string
-  default     = ""
 }
-variable "subdirectory" {
-  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
   type        = string
 }
 variable "domain" {
@@ -32,12 +31,17 @@ variable "domain" {
   type        = string
   default     = ""
 }
-variable "password" {
-  description = "(Required) The password of the user who can mount the share and has file permissions in the SMB."
+variable "mount_options" {
+  description = "(Optional) Configuration block containing mount options used by DataSync to access the SMB Server. Can be AUTOMATIC, SMB2, or SMB3."
   type        = string
+  default     = ""
 }
 variable "server_hostname" {
   description = "(Required) Specifies the IP address or DNS name of the SMB server. The DataSync Agent(s) use this to mount the SMB share."
+  type        = string
+}
+variable "subdirectory" {
+  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
   type        = string
 }
 variable "tags" {
@@ -45,18 +49,14 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "user" {
+  description = "(Required) The user who can mount the share and has file and folder permissions in the SMB share.mount_options Argument Referencemount_options configuration block:"
+  type        = string
+}
 variable "version" {
   description = "(Optional) The specific SMB version that you want DataSync to use for mounting your SMB share. Valid values: AUTOMATIC, SMB2, and SMB3. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "agent_arns" {
-  description = "(Required) A list of DataSync Agent ARNs with which this location will be associated."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -182,6 +182,34 @@ output "agent_arns" {
   description = "(Required) A list of DataSync Agent ARNs with which this location will be associated."
   value       = aws_datasync_location_smb.aws_datasync_location_smb.agent_arns
 }
+output "password" {
+  description = "(Required) The password of the user who can mount the share and has file permissions in the SMB."
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.password
+}
+output "mount_options" {
+  description = "(Optional) Configuration block containing mount options used by DataSync to access the SMB Server. Can be AUTOMATIC, SMB2, or SMB3."
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.mount_options
+}
+output "server_hostname" {
+  description = "(Required) Specifies the IP address or DNS name of the SMB server. The DataSync Agent(s) use this to mount the SMB share."
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.server_hostname
+}
+output "subdirectory" {
+  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.subdirectory
+}
+output "tags" {
+  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.tags
+}
+output "user" {
+  description = "(Required) The user who can mount the share and has file and folder permissions in the SMB share.mount_options Argument Referencemount_options configuration block:"
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.user
+}
+output "version" {
+  description = "(Optional) The specific SMB version that you want DataSync to use for mounting your SMB share. Valid values: AUTOMATIC, SMB2, and SMB3. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_datasync_location_smb.aws_datasync_location_smb.version
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_smb.aws_datasync_location_smb.arn
@@ -189,34 +217,6 @@ output "arn" {
 output "domain" {
   description = "(Optional) The name of the Windows domain the SMB server belongs to."
   value       = aws_datasync_location_smb.aws_datasync_location_smb.domain
-}
-output "password" {
-  description = "(Required) The password of the user who can mount the share and has file permissions in the SMB."
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.password
-}
-output "server_hostname" {
-  description = "(Required) Specifies the IP address or DNS name of the SMB server. The DataSync Agent(s) use this to mount the SMB share."
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.server_hostname
-}
-output "tags" {
-  description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.tags
-}
-output "version" {
-  description = "(Optional) The specific SMB version that you want DataSync to use for mounting your SMB share. Valid values: AUTOMATIC, SMB2, and SMB3. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.version
-}
-output "mount_options" {
-  description = "(Optional) Configuration block containing mount options used by DataSync to access the SMB Server. Can be AUTOMATIC, SMB2, or SMB3."
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.mount_options
-}
-output "subdirectory" {
-  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.subdirectory
-}
-output "user" {
-  description = "(Required) The user who can mount the share and has file and folder permissions in the SMB share.mount_options Argument Referencemount_options configuration block:"
-  value       = aws_datasync_location_smb.aws_datasync_location_smb.user
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."

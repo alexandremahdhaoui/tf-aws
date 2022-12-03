@@ -17,15 +17,15 @@ spec:
                 example: d604721fxaaqy9.cloudfront.net.
             type: string
         etag:
-            description: E2QWRUHAPOMQZL.
+            description: |-
+                Current version of the distribution's information. For example:
+                E2QWRUHAPOMQZL.
             type: string
         id:
             description: 'Identifier for the distribution. For example: EDFDVBD632BHDS5.'
             type: string
         in_progress_validation_batches:
-            description: |-
-                The number of invalidation batches
-                currently in progress.
+            description: ""
             type: string
         last_modified_time:
             description: Date and time the distribution was last modified.

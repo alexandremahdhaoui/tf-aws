@@ -1,17 +1,12 @@
 resource "aws_dax_subnet_group" "aws_dax_subnet_group" {
-  id          = var.id
-  name        = var.name
   subnet_ids  = var.subnet_ids
   description = var.description
+  id          = var.id
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "description" {
-  description = "(Optional) A description of the subnet group."
-  type        = string
-  default     = ""
 }
 variable "id" {
   description = "The name of the subnet group."
@@ -24,6 +19,11 @@ variable "name" {
 variable "subnet_ids" {
   description = " – (Required) A list of VPC subnet IDs for the subnet group.In addition to all arguments above, the following attributes are exported:"
   type        = string
+}
+variable "description" {
+  description = "(Optional) A description of the subnet group."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

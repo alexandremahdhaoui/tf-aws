@@ -31,7 +31,10 @@ spec:
             optional: true
             type: string
         buffer_size:
-            description: ""
+            description: |-
+                (Optional) Buffer incoming data to the specified size, in MBs, before delivering it to the destination. The default value is 5.
+                We recommend setting SizeInMBs to a value greater than the amount of data you typically ingest into the delivery stream in 10 seconds. For example, if you typically ingest data at 1 MB/sec set SizeInMBs to be 10 MB or higher.
+            optional: true
             type: string
         buffering_interval:
             description: (Optional) Buffer incoming data for the specified period of time, in seconds, before delivering it to the destination. The default value is 300 (5 minutes).
@@ -304,7 +307,10 @@ spec:
             description: '(Required) Nested argument that specifies which serializer to use. You can choose either the ORC SerDe or the Parquet SerDe. More details below.serializer~> strongNOTE: One of the serializers must be configured. If no nested configuration needs to occur simply declare as XXX_ser_de = [] or XXX_ser_de {}.'
             type: string
         server_side_encryption:
-            description: ""
+            description: |-
+                (Optional) Encrypt at rest options.
+                Server-side encryption should not be enabled when a kinesis stream is configured as the source of the firehose delivery stream.
+            optional: true
             type: string
         splunk_configuration:
             description: (Optional) Configuration options if splunk is the destination. More details are given below.

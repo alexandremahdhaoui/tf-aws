@@ -1,4 +1,5 @@
 resource "aws_directory_service_shared_directory" "aws_directory_service_shared_directory" {
+  directory_id        = var.directory_id
   id                  = var.id
   method              = var.method
   notes               = var.notes
@@ -6,25 +7,10 @@ resource "aws_directory_service_shared_directory" "aws_directory_service_shared_
   target              = var.target
   type                = var.type
   delete              = var.delete
-  directory_id        = var.directory_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "directory_id" {
-  description = "(Required) Identifier of the Managed Microsoft AD directory that you want to share with other accounts."
-  type        = string
-}
-variable "id" {
-  description = "Identifier of the shared directory."
-  type        = string
-  default     = ""
-}
-variable "method" {
-  description = "(Optional) Method used when sharing a directory. Valid values are ORGANIZATIONS and HANDSHAKE. Default is HANDSHAKE."
-  type        = string
-  default     = ""
 }
 variable "notes" {
   description = "(Optional, Sensitive) Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation.target"
@@ -47,6 +33,20 @@ variable "type" {
 }
 variable "delete" {
   description = "(Default 60 minutes) Used for shared directory deletion"
+  type        = string
+  default     = ""
+}
+variable "directory_id" {
+  description = "(Required) Identifier of the Managed Microsoft AD directory that you want to share with other accounts."
+  type        = string
+}
+variable "id" {
+  description = "Identifier of the shared directory."
+  type        = string
+  default     = ""
+}
+variable "method" {
+  description = "(Optional) Method used when sharing a directory. Valid values are ORGANIZATIONS and HANDSHAKE. Default is HANDSHAKE."
   type        = string
   default     = ""
 }
@@ -170,6 +170,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "notes" {
+  description = "(Optional, Sensitive) Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation.target"
+  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.notes
+}
+output "shared_directory_id" {
+  description = "Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.Timeoutsaws_directory_service_shared_directory provides the following Timeouts configuration options:"
+  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.shared_directory_id
+}
+output "target" {
+  description = "(Required) Identifier for the directory consumer account with whom the directory is to be shared. See below."
+  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.target
+}
 output "type" {
   description = "(Optional) Type of identifier to be used in the id field. Valid value is ACCOUNT. Default is ACCOUNT.In addition to all arguments above, the following attributes are exported:"
   value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.type
@@ -190,22 +202,6 @@ output "method" {
   description = "(Optional) Method used when sharing a directory. Valid values are ORGANIZATIONS and HANDSHAKE. Default is HANDSHAKE."
   value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.method
 }
-output "notes" {
-  description = "(Optional, Sensitive) Message sent by the directory owner to the directory consumer to help the directory consumer administrator determine whether to approve or reject the share invitation.target"
-  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.notes
-}
-output "shared_directory_id" {
-  description = "Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.Timeoutsaws_directory_service_shared_directory provides the following Timeouts configuration options:"
-  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.shared_directory_id
-}
-output "target" {
-  description = "(Required) Identifier for the directory consumer account with whom the directory is to be shared. See below."
-  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.target
-}
-output "shared_directory_id" {
-  description = "Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.Timeoutsaws_directory_service_shared_directory provides the following Timeouts configuration options:"
-  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.shared_directory_id
-}
 output "delete" {
   description = "(Default 60 minutes) Used for shared directory deletion"
   value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.delete
@@ -213,6 +209,10 @@ output "delete" {
 output "id" {
   description = "Identifier of the shared directory."
   value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.id
+}
+output "shared_directory_id" {
+  description = "Identifier of the directory that is stored in the directory consumer account that corresponds to the shared directory in the owner account.Timeoutsaws_directory_service_shared_directory provides the following Timeouts configuration options:"
+  value       = aws_directory_service_shared_directory.aws_directory_service_shared_directory.shared_directory_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

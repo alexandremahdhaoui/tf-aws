@@ -1,47 +1,34 @@
 resource "aws_route53_resolver_rule" "aws_route53_resolver_rule" {
-  arn                  = var.arn
-  owner_id             = var.owner_id
-  resolver_endpoint_id = var.resolver_endpoint_id
-  target_ip            = var.target_ip
-  tags                 = var.tags
-  domain_name          = var.domain_name
-  id                   = var.id
-  ip                   = var.ip
-  name                 = var.name
-  port                 = var.port
-  rule_type            = var.rule_type
   share_status         = var.share_status
+  tags                 = var.tags
+  id                   = var.id
+  port                 = var.port
+  resolver_endpoint_id = var.resolver_endpoint_id
+  name                 = var.name
+  owner_id             = var.owner_id
+  rule_type            = var.rule_type
+  target_ip            = var.target_ip
+  arn                  = var.arn
+  domain_name          = var.domain_name
+  ip                   = var.ip
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The ARN (Amazon Resource Name) for the resolver rule."
+variable "id" {
+  description = "The ID of the resolver rule."
   type        = string
-}
-variable "owner_id" {
-  description = "When a rule is shared with another AWS account, the account ID of the account that the rule is shared with."
-  type        = string
-}
-variable "resolver_endpoint_id" {
-  description = " (Optional) The ID of the outbound resolver endpoint that you want to use to route DNS queries to the IP addresses that you specify using target_ipFORWARD type rules."
-  type        = string
-  default     = ""
-}
-variable "target_ip" {
-  description = "(Optional) Configuration block(s) indicating the IPs that you want Resolver to forward DNS queries to (documented below).\nThis argument should only be specified for FORWARD type rules."
-  type        = string
-  default     = ""
 }
 variable "port" {
   description = "(Optional) The port at ip that you want to forward DNS queries to. Default value is 53In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
-variable "rule_type" {
-  description = "(Required) The rule type. Valid values are FORWARD, SYSTEM and RECURSIVE."
+variable "resolver_endpoint_id" {
+  description = " (Optional) The ID of the outbound resolver endpoint that you want to use to route DNS queries to the IP addresses that you specify using target_ipFORWARD type rules."
   type        = string
+  default     = ""
 }
 variable "share_status" {
   description = "Whether the rules is shared and, if so, whether the current account is sharing the rule with another account, or another account is sharing the rule with the current account.\nValues are NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME"
@@ -52,12 +39,17 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "domain_name" {
-  description = "(Required) DNS queries for this domain name are forwarded to the IP addresses that are specified using target_ip."
+variable "target_ip" {
+  description = "(Optional) Configuration block(s) indicating the IPs that you want Resolver to forward DNS queries to (documented below).\nThis argument should only be specified for FORWARD type rules."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN (Amazon Resource Name) for the resolver rule."
   type        = string
 }
-variable "id" {
-  description = "The ID of the resolver rule."
+variable "domain_name" {
+  description = "(Required) DNS queries for this domain name are forwarded to the IP addresses that are specified using target_ip."
   type        = string
 }
 variable "ip" {
@@ -68,6 +60,14 @@ variable "name" {
   description = "(Optional) A friendly name that lets you easily find a rule in the Resolver dashboard in the Route 53 console."
   type        = string
   default     = ""
+}
+variable "owner_id" {
+  description = "When a rule is shared with another AWS account, the account ID of the account that the rule is shared with."
+  type        = string
+}
+variable "rule_type" {
+  description = "(Required) The rule type. Valid values are FORWARD, SYSTEM and RECURSIVE."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -189,17 +189,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The target_ip object supports the following:"
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.tags
+output "arn" {
+  description = "The ARN (Amazon Resource Name) for the resolver rule."
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.arn
 }
 output "domain_name" {
   description = "(Required) DNS queries for this domain name are forwarded to the IP addresses that are specified using target_ip."
   value       = aws_route53_resolver_rule.aws_route53_resolver_rule.domain_name
-}
-output "id" {
-  description = "The ID of the resolver rule."
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.id
 }
 output "ip" {
   description = "(Required) One IP address that you want to forward DNS queries to. You can specify only IPv4 addresses."
@@ -209,33 +205,41 @@ output "name" {
   description = "(Optional) A friendly name that lets you easily find a rule in the Resolver dashboard in the Route 53 console."
   value       = aws_route53_resolver_rule.aws_route53_resolver_rule.name
 }
-output "port" {
-  description = "(Optional) The port at ip that you want to forward DNS queries to. Default value is 53In addition to all arguments above, the following attributes are exported:"
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.port
+output "owner_id" {
+  description = "When a rule is shared with another AWS account, the account ID of the account that the rule is shared with."
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.owner_id
 }
 output "rule_type" {
   description = "(Required) The rule type. Valid values are FORWARD, SYSTEM and RECURSIVE."
   value       = aws_route53_resolver_rule.aws_route53_resolver_rule.rule_type
 }
-output "share_status" {
-  description = "Whether the rules is shared and, if so, whether the current account is sharing the rule with another account, or another account is sharing the rule with the current account.\nValues are NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME"
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.share_status
+output "target_ip" {
+  description = "(Optional) Configuration block(s) indicating the IPs that you want Resolver to forward DNS queries to (documented below).\nThis argument should only be specified for FORWARD type rules."
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.target_ip
 }
-output "arn" {
-  description = "The ARN (Amazon Resource Name) for the resolver rule."
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.arn
+output "id" {
+  description = "The ID of the resolver rule."
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.id
 }
-output "owner_id" {
-  description = "When a rule is shared with another AWS account, the account ID of the account that the rule is shared with."
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.owner_id
+output "port" {
+  description = "(Optional) The port at ip that you want to forward DNS queries to. Default value is 53In addition to all arguments above, the following attributes are exported:"
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.port
 }
 output "resolver_endpoint_id" {
   description = " (Optional) The ID of the outbound resolver endpoint that you want to use to route DNS queries to the IP addresses that you specify using target_ipFORWARD type rules."
   value       = aws_route53_resolver_rule.aws_route53_resolver_rule.resolver_endpoint_id
 }
-output "target_ip" {
-  description = "(Optional) Configuration block(s) indicating the IPs that you want Resolver to forward DNS queries to (documented below).\nThis argument should only be specified for FORWARD type rules."
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.target_ip
+output "share_status" {
+  description = "Whether the rules is shared and, if so, whether the current account is sharing the rule with another account, or another account is sharing the rule with the current account.\nValues are NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME"
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.share_status
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The target_ip object supports the following:"
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.tags_all
 }
 output "arn" {
   description = "The ARN (Amazon Resource Name) for the resolver rule."
@@ -252,10 +256,6 @@ output "owner_id" {
 output "share_status" {
   description = "Whether the rules is shared and, if so, whether the current account is sharing the rule with another account, or another account is sharing the rule with the current account.\nValues are NOT_SHARED, SHARED_BY_ME or SHARED_WITH_ME"
   value       = aws_route53_resolver_rule.aws_route53_resolver_rule.share_status
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_route53_resolver_rule.aws_route53_resolver_rule.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

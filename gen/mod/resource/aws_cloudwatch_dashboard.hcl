@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_dashboard" "aws_cloudwatch_dashboard" {
-  dashboard_body = var.dashboard_body
   dashboard_name = var.dashboard_name
+  dashboard_body = var.dashboard_body
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,7 +1,7 @@
 resource "aws_cognito_identity_pool_provider_principal_tag.markdown" "aws_cognito_identity_pool_provider_principal_tag.markdown" {
-  identity_pool_id       = var.identity_pool_id
   identity_provider_name = var.identity_provider_name
   principal_tags         = var.principal_tags
+  identity_pool_id       = var.identity_pool_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

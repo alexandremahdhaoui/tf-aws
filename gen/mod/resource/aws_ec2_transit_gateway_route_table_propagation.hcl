@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "EC2 Transit Gateway Route Table identifier combined with EC2 Transit Gateway Attachment identifier"
-  type        = string
-}
 variable "resource_id" {
   description = "Identifier of the resource"
   type        = string
@@ -22,6 +18,10 @@ variable "transit_gateway_attachment_id" {
 }
 variable "transit_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Transit Gateway Route Table.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "EC2 Transit Gateway Route Table identifier combined with EC2 Transit Gateway Attachment identifier"
   type        = string
 }
 variable "tag_instance_id" {

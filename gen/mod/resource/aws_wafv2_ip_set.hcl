@@ -1,5 +1,4 @@
 resource "aws_wafv2_ip_set" "aws_wafv2_ip_set" {
-  tags               = var.tags
   addresses          = var.addresses
   arn                = var.arn
   description        = var.description
@@ -7,10 +6,20 @@ resource "aws_wafv2_ip_set" "aws_wafv2_ip_set" {
   ip_address_version = var.ip_address_version
   name               = var.name
   scope              = var.scope
+  tags               = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "scope" {
+  description = "(Required) Specifies whether this is for an AWS CloudFront distribution or for a regional application. Valid values are CLOUDFRONT or REGIONAL. To work with CloudFront, you must also specify the Region US East (N. Virginia)."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) An array of key:value pairs to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "addresses" {
   description = "(Required) Contains an array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. AWS WAF supports all address ranges for IP versions IPv4 and IPv6."
@@ -36,15 +45,6 @@ variable "ip_address_version" {
 variable "name" {
   description = "(Required) A friendly name of the IP set."
   type        = string
-}
-variable "scope" {
-  description = "(Required) Specifies whether this is for an AWS CloudFront distribution or for a regional application. Valid values are CLOUDFRONT or REGIONAL. To work with CloudFront, you must also specify the Region US East (N. Virginia)."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) An array of key:value pairs to associate with the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -198,6 +198,10 @@ output "scope" {
   description = "(Required) Specifies whether this is for an AWS CloudFront distribution or for a regional application. Valid values are CLOUDFRONT or REGIONAL. To work with CloudFront, you must also specify the Region US East (N. Virginia)."
   value       = aws_wafv2_ip_set.aws_wafv2_ip_set.scope
 }
+output "arn" {
+  description = "The Amazon Resource Name (ARN) that identifies the cluster."
+  value       = aws_wafv2_ip_set.aws_wafv2_ip_set.arn
+}
 output "id" {
   description = "A unique identifier for the set."
   value       = aws_wafv2_ip_set.aws_wafv2_ip_set.id
@@ -205,10 +209,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_wafv2_ip_set.aws_wafv2_ip_set.tags_all
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) that identifies the cluster."
-  value       = aws_wafv2_ip_set.aws_wafv2_ip_set.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,30 +1,38 @@
 resource "aws_guardduty_organization_configuration" "aws_guardduty_organization_configuration" {
   datasources                     = var.datasources
-  detector_id                     = var.detector_id
-  ebs_volumes                     = var.ebs_volumes
   enable                          = var.enable
   kubernetes                      = var.kubernetes
+  malware_protection              = var.malware_protection
   scan_ec2_instance_with_findings = var.scan_ec2_instance_with_findings
   audit_logs                      = var.audit_logs
   auto_enable                     = var.auto_enable
-  malware_protection              = var.malware_protection
+  detector_id                     = var.detector_id
+  ebs_volumes                     = var.ebs_volumes
   s3_logs                         = var.s3_logs
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "datasources" {
-  description = "(Optional) Configuration for the collected datasources.datasources supports the following:"
+variable "auto_enable" {
+  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
   type        = string
-  default     = ""
 }
 variable "detector_id" {
   description = "(Required) The detector ID of the GuardDuty account."
   type        = string
 }
 variable "ebs_volumes" {
-  description = "(Required) Configure whether scanning EBS volumes should be auto-enabled for new members joining the organization\nSee EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
+  description = "EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
+  type        = string
+}
+variable "s3_logs" {
+  description = "(Optional) Enable S3 Protection automatically for new member accounts."
+  type        = string
+  default     = ""
+}
+variable "audit_logs" {
+  description = "(Required) Enable Kubernetes Audit Logs Monitoring automatically for new member accounts. Kubernetes protectionKubernetes Audit Logs below for more details.Kubernetes Audit LogsThe audit_logs block supports the following:"
   type        = string
 }
 variable "enable" {
@@ -36,25 +44,17 @@ variable "kubernetes" {
   type        = string
   default     = ""
 }
-variable "scan_ec2_instance_with_findings" {
-  description = "(Required) Configure whether Malware ProtectionScan EC2 instance with findings below for more details.Scan EC2 instance with findingsThe scan_ec2_instance_with_findings block supports the following:"
-  type        = string
-}
-variable "audit_logs" {
-  description = "(Required) Enable Kubernetes Audit Logs Monitoring automatically for new member accounts. Kubernetes protectionKubernetes Audit Logs below for more details.Kubernetes Audit LogsThe audit_logs block supports the following:"
-  type        = string
-}
-variable "auto_enable" {
-  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "malware_protection" {
   description = "(Optional) Enable Malware Protection automatically for new member accounts.S3 Logss3_logs block supports the following:"
   type        = string
   default     = ""
 }
-variable "s3_logs" {
-  description = "(Optional) Enable S3 Protection automatically for new member accounts."
+variable "scan_ec2_instance_with_findings" {
+  description = "(Required) Configure whether Malware ProtectionScan EC2 instance with findings below for more details.Scan EC2 instance with findingsThe scan_ec2_instance_with_findings block supports the following:"
+  type        = string
+}
+variable "datasources" {
+  description = "(Optional) Configuration for the collected datasources.datasources supports the following:"
   type        = string
   default     = ""
 }
@@ -178,33 +178,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "audit_logs" {
-  description = "(Required) Enable Kubernetes Audit Logs Monitoring automatically for new member accounts. Kubernetes protectionKubernetes Audit Logs below for more details.Kubernetes Audit LogsThe audit_logs block supports the following:"
-  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.audit_logs
-}
-output "auto_enable" {
-  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.auto_enable
-}
-output "malware_protection" {
-  description = "(Optional) Enable Malware Protection automatically for new member accounts.S3 Logss3_logs block supports the following:"
-  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.malware_protection
-}
-output "s3_logs" {
-  description = "(Optional) Enable S3 Protection automatically for new member accounts."
-  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.s3_logs
-}
 output "datasources" {
   description = "(Optional) Configuration for the collected datasources.datasources supports the following:"
   value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.datasources
-}
-output "detector_id" {
-  description = "(Required) The detector ID of the GuardDuty account."
-  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.detector_id
-}
-output "ebs_volumes" {
-  description = "(Required) Configure whether scanning EBS volumes should be auto-enabled for new members joining the organization\nSee EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
-  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.ebs_volumes
 }
 output "enable" {
   description = "(Required) If true, enables Kubernetes audit logs as a data source for Kubernetes protectiontrue.Malware Protectionmalware_protection block supports the following:"
@@ -214,9 +190,33 @@ output "kubernetes" {
   description = "(Optional) Enable Kubernetes Audit Logs Monitoring automatically for new member accounts."
   value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.kubernetes
 }
+output "malware_protection" {
+  description = "(Optional) Enable Malware Protection automatically for new member accounts.S3 Logss3_logs block supports the following:"
+  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.malware_protection
+}
 output "scan_ec2_instance_with_findings" {
   description = "(Required) Configure whether Malware ProtectionScan EC2 instance with findings below for more details.Scan EC2 instance with findingsThe scan_ec2_instance_with_findings block supports the following:"
   value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.scan_ec2_instance_with_findings
+}
+output "audit_logs" {
+  description = "(Required) Enable Kubernetes Audit Logs Monitoring automatically for new member accounts. Kubernetes protectionKubernetes Audit Logs below for more details.Kubernetes Audit LogsThe audit_logs block supports the following:"
+  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.audit_logs
+}
+output "auto_enable" {
+  description = "(Required) If true, enables Malware Protectiontrue.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.auto_enable
+}
+output "detector_id" {
+  description = "(Required) The detector ID of the GuardDuty account."
+  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.detector_id
+}
+output "ebs_volumes" {
+  description = "EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:"
+  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.ebs_volumes
+}
+output "s3_logs" {
+  description = "(Optional) Enable S3 Protection automatically for new member accounts."
+  value       = aws_guardduty_organization_configuration.aws_guardduty_organization_configuration.s3_logs
 }
 output "id" {
   description = "Identifier of the GuardDuty Detector."

@@ -1,12 +1,17 @@
 datasource "aws_codeartifact_authorization_token" "aws_codeartifact_authorization_token" {
-  duration_seconds    = var.duration_seconds
   authorization_token = var.authorization_token
   domain              = var.domain
   domain_owner        = var.domain_owner
+  duration_seconds    = var.duration_seconds
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "duration_seconds" {
+  description = "(Optional) Time, in seconds, that the generated authorization token is valid. Valid values are 0 and between 900 and 43200.In addition to the argument above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "authorization_token" {
   description = "Temporary authorization token."
@@ -21,10 +26,13 @@ variable "domain_owner" {
   type        = string
   default     = ""
 }
-variable "duration_seconds" {
+output "duration_seconds" {
   description = "(Optional) Time, in seconds, that the generated authorization token is valid. Valid values are 0 and between 900 and 43200.In addition to the argument above, the following attributes are exported:"
-  type        = string
-  default     = ""
+  value       = aws_codeartifact_authorization_token.aws_codeartifact_authorization_token.duration_seconds
+}
+output "authorization_token" {
+  description = "Temporary authorization token."
+  value       = aws_codeartifact_authorization_token.aws_codeartifact_authorization_token.authorization_token
 }
 output "domain" {
   description = "(Required) Name of the domain that is in scope for the generated authorization token."
@@ -33,14 +41,6 @@ output "domain" {
 output "domain_owner" {
   description = "(Optional) Account number of the AWS account that owns the domain."
   value       = aws_codeartifact_authorization_token.aws_codeartifact_authorization_token.domain_owner
-}
-output "duration_seconds" {
-  description = "(Optional) Time, in seconds, that the generated authorization token is valid. Valid values are 0 and between 900 and 43200.In addition to the argument above, the following attributes are exported:"
-  value       = aws_codeartifact_authorization_token.aws_codeartifact_authorization_token.duration_seconds
-}
-output "authorization_token" {
-  description = "Temporary authorization token."
-  value       = aws_codeartifact_authorization_token.aws_codeartifact_authorization_token.authorization_token
 }
 output "authorization_token" {
   description = "Temporary authorization token."

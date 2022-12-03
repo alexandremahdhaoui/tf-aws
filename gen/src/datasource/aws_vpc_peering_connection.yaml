@@ -6,24 +6,16 @@ spec:
     args: {}
     attrs:
         accepter:
-            description: |-
-                Configuration block that describes [VPC Peering Connection]
-                (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC.
+            description: ""
             type: string
         allow_classic_link_to_remote_vpc:
-            description: |-
-                Indicates whether a local ClassicLink connection can communicate
-                with the peer VPC over the VPC peering connection.
+            description: ""
             type: string
         allow_remote_vpc_dns_resolution:
-            description: |-
-                Indicates whether a local VPC can resolve public DNS hostnames to
-                private IP addresses when queried from instances in a peer VPC.
+            description: ""
             type: string
         allow_vpc_to_remote_classic_link:
-            description: |-
-                Indicates whether a local VPC can communicate with a ClassicLink
-                connection in the peer VPC over the VPC peering connection.CIDR block set Attributes Reference
+            description: CIDR block set Attributes Reference
             type: string
         cidr_block:
             description: 'CIDR block associated to the VPC of the specific VPC Peering Connection.TimeoutsConfiguration options:'
@@ -35,9 +27,7 @@ spec:
             description: List of objects with CIDR blocks of the accepter VPC.
             type: string
         requester:
-            description: |-
-                Configuration block that describes [VPC Peering Connection]
-                (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC.Accepter and Requester Attributes Reference
+            description: Accepter and Requester Attributes Reference
             type: string
     terraform:
         backend: ""

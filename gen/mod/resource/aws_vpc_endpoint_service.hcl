@@ -1,21 +1,21 @@
 resource "aws_vpc_endpoint_service" "aws_vpc_endpoint_service" {
-  arn                            = var.arn
-  supported_ip_address_types     = var.supported_ip_address_types
   acceptance_required            = var.acceptance_required
-  allowed_principals             = var.allowed_principals
+  arn                            = var.arn
   base_endpoint_dns_names        = var.base_endpoint_dns_names
   name                           = var.name
-  private_dns_name               = var.private_dns_name
+  network_load_balancer_arns     = var.network_load_balancer_arns
   state                          = var.state
   gateway_load_balancer_arns     = var.gateway_load_balancer_arns
   id                             = var.id
-  private_dns_name_configuration = var.private_dns_name_configuration
+  service_name                   = var.service_name
   service_type                   = var.service_type
   value                          = var.value
   availability_zones             = var.availability_zones
   manages_vpc_endpoints          = var.manages_vpc_endpoints
-  network_load_balancer_arns     = var.network_load_balancer_arns
-  service_name                   = var.service_name
+  private_dns_name_configuration = var.private_dns_name_configuration
+  allowed_principals             = var.allowed_principals
+  private_dns_name               = var.private_dns_name
+  supported_ip_address_types     = var.supported_ip_address_types
   tags                           = var.tags
   type                           = var.type
 }
@@ -23,8 +23,40 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "supported_ip_address_types" {
+  description = "(Optional) The supported IP address types. The possible values are ipv4 and ipv6.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "Endpoint service verification type, for example TXT."
+  type        = string
+}
+variable "allowed_principals" {
+  description = "(Optional) The ARNs of one or more principals allowed to discover the endpoint service."
+  type        = string
+  default     = ""
+}
 variable "private_dns_name" {
   description = "(Optional) The private DNS name for the service."
+  type        = string
+  default     = ""
+}
+variable "base_endpoint_dns_names" {
+  description = "A set of DNS names for the service."
+  type        = string
+}
+variable "name" {
+  description = "Name of the record subdomain the service provider needs to create."
+  type        = string
+}
+variable "network_load_balancer_arns" {
+  description = "(Optional) Amazon Resource Names (ARNs) of one or more Network Load Balancers for the endpoint service."
   type        = string
   default     = ""
 }
@@ -36,17 +68,20 @@ variable "acceptance_required" {
   description = "(Required) Whether or not VPC endpoint connection requests to the service must be accepted by the service owner - true or false."
   type        = string
 }
-variable "allowed_principals" {
-  description = "(Optional) The ARNs of one or more principals allowed to discover the endpoint service."
-  type        = string
-  default     = ""
-}
-variable "base_endpoint_dns_names" {
-  description = "A set of DNS names for the service."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the VPC endpoint service."
   type        = string
 }
-variable "name" {
-  description = "Name of the record subdomain the service provider needs to create."
+variable "service_name" {
+  description = "The service name."
+  type        = string
+}
+variable "service_type" {
+  description = "The service type, Gateway or Interface."
+  type        = string
+}
+variable "value" {
+  description = "Value the service provider adds to the private DNS name domain record before verification."
   type        = string
 }
 variable "gateway_load_balancer_arns" {
@@ -59,24 +94,7 @@ variable "id" {
   type        = string
 }
 variable "private_dns_name_configuration" {
-  description = "List of objects containing information about the endpoint service private DNS name configuration.\n"
-  type        = string
-}
-variable "service_type" {
-  description = "The service type, Gateway or Interface."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "Endpoint service verification type, for example TXT."
-  type        = string
-}
-variable "value" {
-  description = "Value the service provider adds to the private DNS name domain record before verification."
+  description = ""
   type        = string
 }
 variable "availability_zones" {
@@ -86,24 +104,6 @@ variable "availability_zones" {
 variable "manages_vpc_endpoints" {
   description = "Whether or not the service manages its VPC endpoints - true or false."
   type        = string
-}
-variable "network_load_balancer_arns" {
-  description = "(Optional) Amazon Resource Names (ARNs) of one or more Network Load Balancers for the endpoint service."
-  type        = string
-  default     = ""
-}
-variable "service_name" {
-  description = "The service name."
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the VPC endpoint service."
-  type        = string
-}
-variable "supported_ip_address_types" {
-  description = "(Optional) The supported IP address types. The possible values are ipv4 and ipv6.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -225,50 +225,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "service_name" {
-  description = "The service name."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.service_name
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.tags
-}
-output "type" {
-  description = "Endpoint service verification type, for example TXT."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.type
-}
-output "value" {
-  description = "Value the service provider adds to the private DNS name domain record before verification."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.value
-}
-output "availability_zones" {
-  description = "A set of Availability Zones in which the service is available."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.availability_zones
-}
-output "manages_vpc_endpoints" {
-  description = "Whether or not the service manages its VPC endpoints - true or false."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.manages_vpc_endpoints
-}
-output "network_load_balancer_arns" {
-  description = "(Optional) Amazon Resource Names (ARNs) of one or more Network Load Balancers for the endpoint service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.network_load_balancer_arns
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the VPC endpoint service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.arn
-}
-output "supported_ip_address_types" {
-  description = "(Optional) The supported IP address types. The possible values are ipv4 and ipv6.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.supported_ip_address_types
-}
-output "name" {
-  description = "Name of the record subdomain the service provider needs to create."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.name
-}
-output "private_dns_name" {
-  description = "(Optional) The private DNS name for the service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.private_dns_name
-}
 output "state" {
   description = "Verification state of the VPC endpoint service. Consumers of the endpoint service can use the private name only when the state is verified."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.state
@@ -277,17 +233,21 @@ output "acceptance_required" {
   description = "(Required) Whether or not VPC endpoint connection requests to the service must be accepted by the service owner - true or false."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.acceptance_required
 }
-output "allowed_principals" {
-  description = "(Optional) The ARNs of one or more principals allowed to discover the endpoint service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.allowed_principals
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the VPC endpoint service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.arn
 }
 output "base_endpoint_dns_names" {
   description = "A set of DNS names for the service."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.base_endpoint_dns_names
 }
-output "service_type" {
-  description = "The service type, Gateway or Interface."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.service_type
+output "name" {
+  description = "Name of the record subdomain the service provider needs to create."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.name
+}
+output "network_load_balancer_arns" {
+  description = "(Optional) Amazon Resource Names (ARNs) of one or more Network Load Balancers for the endpoint service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.network_load_balancer_arns
 }
 output "gateway_load_balancer_arns" {
   description = "(Optional) Amazon Resource Names (ARNs) of one or more Gateway Load Balancers for the endpoint service."
@@ -297,25 +257,45 @@ output "id" {
   description = "The ID of the VPC endpoint service."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.id
 }
-output "private_dns_name_configuration" {
-  description = "List of objects containing information about the endpoint service private DNS name configuration.\n"
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.private_dns_name_configuration
-}
-output "base_endpoint_dns_names" {
-  description = "A set of DNS names for the service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.base_endpoint_dns_names
-}
-output "id" {
-  description = "The ID of the VPC endpoint service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.id
+output "service_name" {
+  description = "The service name."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.service_name
 }
 output "service_type" {
   description = "The service type, Gateway or Interface."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.service_type
 }
-output "state" {
-  description = "Verification state of the VPC endpoint service. Consumers of the endpoint service can use the private name only when the state is verified."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.state
+output "value" {
+  description = "Value the service provider adds to the private DNS name domain record before verification."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.value
+}
+output "availability_zones" {
+  description = "A set of Availability Zones in which the service is available."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.availability_zones
+}
+output "manages_vpc_endpoints" {
+  description = "Whether or not the service manages its VPC endpoints - true or false."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.manages_vpc_endpoints
+}
+output "private_dns_name_configuration" {
+  description = ""
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.private_dns_name_configuration
+}
+output "allowed_principals" {
+  description = "(Optional) The ARNs of one or more principals allowed to discover the endpoint service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.allowed_principals
+}
+output "private_dns_name" {
+  description = "(Optional) The private DNS name for the service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.private_dns_name
+}
+output "supported_ip_address_types" {
+  description = "(Optional) The supported IP address types. The possible values are ipv4 and ipv6.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.supported_ip_address_types
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.tags
 }
 output "type" {
   description = "Endpoint service verification type, for example TXT."
@@ -325,17 +305,41 @@ output "service_name" {
   description = "The service name."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.service_name
 }
+output "service_type" {
+  description = "The service type, Gateway or Interface."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.service_type
+}
+output "state" {
+  description = "Verification state of the VPC endpoint service. Consumers of the endpoint service can use the private name only when the state is verified."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.state
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.tags_all
+}
+output "type" {
+  description = "Endpoint service verification type, for example TXT."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.type
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the VPC endpoint service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.arn
+}
+output "base_endpoint_dns_names" {
+  description = "A set of DNS names for the service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.base_endpoint_dns_names
+}
+output "id" {
+  description = "The ID of the VPC endpoint service."
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.id
 }
 output "value" {
   description = "Value the service provider adds to the private DNS name domain record before verification."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.value
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the VPC endpoint service."
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.arn
+output "private_dns_name_configuration" {
+  description = ""
+  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.private_dns_name_configuration
 }
 output "availability_zones" {
   description = "A set of Availability Zones in which the service is available."
@@ -348,10 +352,6 @@ output "manages_vpc_endpoints" {
 output "name" {
   description = "Name of the record subdomain the service provider needs to create."
   value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.name
-}
-output "private_dns_name_configuration" {
-  description = "List of objects containing information about the endpoint service private DNS name configuration.\n"
-  value       = aws_vpc_endpoint_service.aws_vpc_endpoint_service.private_dns_name_configuration
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

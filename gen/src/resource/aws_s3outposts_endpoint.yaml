@@ -17,7 +17,8 @@ spec:
             description: Amazon Resource Name (ARN) of the endpoint.
             type: string
         network_interfaces:
-            description: ""
+            description: |
+                Set of nested attributes for associated Elastic Network Interfaces (ENIs).
             type: string
         outpost_id:
             description: (Required) Identifier of the Outpost to contain this endpoint.
@@ -45,7 +46,8 @@ spec:
             description: Identifier of the Elastic Network Interface (ENI).
             type: string
         network_interfaces:
-            description: ""
+            description: |
+                Set of nested attributes for associated Elastic Network Interfaces (ENIs).
             type: string
     terraform:
         backend: ""

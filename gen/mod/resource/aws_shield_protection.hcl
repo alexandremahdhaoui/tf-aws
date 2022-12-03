@@ -1,9 +1,9 @@
 resource "aws_shield_protection" "aws_shield_protection" {
-  resource_arn = var.resource_arn
-  tags         = var.tags
   arn          = var.arn
   id           = var.id
   name         = var.name
+  resource_arn = var.resource_arn
+  tags         = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,6 +150,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The unique identifier (ID) for the Protection object that is created."
+  value       = aws_shield_protection.aws_shield_protection.id
+}
+output "name" {
+  description = "(Required) A friendly name for the Protection you are creating."
+  value       = aws_shield_protection.aws_shield_protection.name
+}
 output "resource_arn" {
   description = "(Required) The ARN (Amazon Resource Name) of the resource to be protected."
   value       = aws_shield_protection.aws_shield_protection.resource_arn
@@ -161,14 +169,6 @@ output "tags" {
 output "arn" {
   description = "The ARN of the Protection."
   value       = aws_shield_protection.aws_shield_protection.arn
-}
-output "id" {
-  description = "The unique identifier (ID) for the Protection object that is created."
-  value       = aws_shield_protection.aws_shield_protection.id
-}
-output "name" {
-  description = "(Required) A friendly name for the Protection you are creating."
-  value       = aws_shield_protection.aws_shield_protection.name
 }
 output "arn" {
   description = "The ARN of the Protection."

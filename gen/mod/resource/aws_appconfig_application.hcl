@@ -1,9 +1,9 @@
 resource "aws_appconfig_application" "aws_appconfig_application" {
-  name        = var.name
-  tags        = var.tags
   arn         = var.arn
   description = var.description
   id          = var.id
+  name        = var.name
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

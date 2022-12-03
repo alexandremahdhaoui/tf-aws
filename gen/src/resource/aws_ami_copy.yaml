@@ -36,9 +36,7 @@ spec:
                 given by source_ami_region.
             type: string
         source_ami_region:
-            description: |-
-                (Required) Region from which the AMI will be copied. This may be the
-                same as the AWS provider region in order to create a copy within the same region.
+            description: ""
             type: string
         tags:
             description: '(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.This resource also exposes the full set of arguments from the aws_ami resource.In addition to all arguments above, the following attributes are exported:'

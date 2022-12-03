@@ -8,7 +8,9 @@ spec:
             description: As above
             type: string
         allow_reassociation:
-            description: true in VPC.
+            description: |-
+                (Optional, Boolean) Whether to allow an Elastic IP to
+                be re-associated. Defaults to true in VPC.
             type: string
         association_id:
             description: |-

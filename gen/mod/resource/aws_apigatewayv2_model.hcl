@@ -1,9 +1,9 @@
 resource "aws_apigatewayv2_model" "aws_apigatewayv2_model" {
+  schema       = var.schema
   api_id       = var.api_id
   content_type = var.content_type
   description  = var.description
   name         = var.name
-  schema       = var.schema
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,14 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the model. Must be alphanumeric. Must be between 1 and 128 characters in length."
-  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.name
-}
-output "schema" {
-  description = "(Required) Schema for the model. This should be a JSON schema draft 4 model. Must be less than or equal to 32768 characters in length."
-  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.schema
-}
 output "api_id" {
   description = "(Required) API identifier."
   value       = aws_apigatewayv2_model.aws_apigatewayv2_model.api_id
@@ -169,6 +161,14 @@ output "content_type" {
 output "description" {
   description = "(Optional) Description of the model. Must be between 1 and 128 characters in length.In addition to all arguments above, the following attributes are exported:"
   value       = aws_apigatewayv2_model.aws_apigatewayv2_model.description
+}
+output "name" {
+  description = "(Required) Name of the model. Must be alphanumeric. Must be between 1 and 128 characters in length."
+  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.name
+}
+output "schema" {
+  description = "(Required) Schema for the model. This should be a JSON schema draft 4 model. Must be less than or equal to 32768 characters in length."
+  value       = aws_apigatewayv2_model.aws_apigatewayv2_model.schema
 }
 output "id" {
   description = "Model identifier."

@@ -1,9 +1,9 @@
 resource "aws_iam_user_policy" "aws_iam_user_policy" {
+  id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
   policy      = var.policy
   user        = var.user
-  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,14 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The user policy ID, in the form of user_name:user_policy_name."
-  value       = aws_iam_user_policy.aws_iam_user_policy.id
-}
-output "name" {
-  description = "(Optional) The name of the policy. If omitted, Terraform will assign a random, unique name."
-  value       = aws_iam_user_policy.aws_iam_user_policy.name
-}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_iam_user_policy.aws_iam_user_policy.name_prefix
@@ -169,6 +161,14 @@ output "policy" {
 output "user" {
   description = "(Required) IAM user to which to attach this policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_user_policy.aws_iam_user_policy.user
+}
+output "id" {
+  description = "The user policy ID, in the form of user_name:user_policy_name."
+  value       = aws_iam_user_policy.aws_iam_user_policy.id
+}
+output "name" {
+  description = "(Optional) The name of the policy. If omitted, Terraform will assign a random, unique name."
+  value       = aws_iam_user_policy.aws_iam_user_policy.name
 }
 output "id" {
   description = "The user policy ID, in the form of user_name:user_policy_name."

@@ -1,17 +1,17 @@
 resource "aws_kinesis_video_stream" "aws_kinesis_video_stream" {
+  version                 = var.version
   arn                     = var.arn
   data_retention_in_hours = var.data_retention_in_hours
   device_name             = var.device_name
-  tags                    = var.tags
-  tags_all                = var.tags_all
-  update                  = var.update
-  version                 = var.version
-  create                  = var.create
-  creation_time           = var.creation_time
   id                      = var.id
   kms_key_id              = var.kms_key_id
   media_type              = var.media_type
+  update                  = var.update
+  create                  = var.create
+  creation_time           = var.creation_time
   name                    = var.name
+  tags                    = var.tags
+  tags_all                = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -21,6 +21,15 @@ variable "name" {
   description = "(Required) A name to identify the stream. This is unique to the\nAWS account and region the Stream is created in."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
 variable "create" {
   description = "(Default 5m)"
   type        = string
@@ -28,6 +37,11 @@ variable "create" {
 variable "creation_time" {
   description = "A time stamp that indicates when the stream was created."
   type        = string
+}
+variable "device_name" {
+  description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "The unique Stream id"
@@ -59,20 +73,6 @@ variable "data_retention_in_hours" {
   description = " – (Optional) The number of hours that you want to retain the data in the stream. Kinesis Video Streams retains the data in a data store that is associated with the stream. The default value is 0, indicating that the stream does not persist data."
   type        = string
   default     = ""
-}
-variable "device_name" {
-  description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -194,18 +194,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_id" {
-  description = "(Optional) The ID of the AWS Key Management Service (AWS KMS) key that you want Kinesis Video Streams to use to encrypt stream data. If no key ID is specified, the default, Kinesis Video-managed key (aws/kinesisvideo) is used."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.kms_key_id
-}
-output "media_type" {
-  description = "(Optional) The media type of the stream. Consumers of the stream can use this information when processing the stream. For more information about media types, see Media Types. If you choose to specify the MediaType, see Naming Requirements for guidelines."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.media_type
-}
-output "name" {
-  description = "(Required) A name to identify the stream. This is unique to the\nAWS account and region the Stream is created in."
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.name
-}
 output "create" {
   description = "(Default 5m)"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
@@ -214,9 +202,9 @@ output "creation_time" {
   description = "A time stamp that indicates when the stream was created."
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.creation_time
 }
-output "id" {
-  description = "The unique Stream id"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.id
+output "name" {
+  description = "(Required) A name to identify the stream. This is unique to the\nAWS account and region the Stream is created in."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.name
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -225,10 +213,6 @@ output "tags" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.tags_all
-}
-output "update" {
-  description = "(Default 120m)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.update
 }
 output "version" {
   description = "The version of the stream."
@@ -245,6 +229,26 @@ output "data_retention_in_hours" {
 output "device_name" {
   description = "(Optional) The name of the device that is writing to the stream. strongIn the current implementation, Kinesis Video Streams does not use this name."
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.device_name
+}
+output "id" {
+  description = "The unique Stream id"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.id
+}
+output "kms_key_id" {
+  description = "(Optional) The ID of the AWS Key Management Service (AWS KMS) key that you want Kinesis Video Streams to use to encrypt stream data. If no key ID is specified, the default, Kinesis Video-managed key (aws/kinesisvideo) is used."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.kms_key_id
+}
+output "media_type" {
+  description = "(Optional) The media type of the stream. Consumers of the stream can use this information when processing the stream. For more information about media types, see Media Types. If you choose to specify the MediaType, see Naming Requirements for guidelines."
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.media_type
+}
+output "update" {
+  description = "(Default 120m)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.update
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
 }
 output "creation_time" {
   description = "A time stamp that indicates when the stream was created."
@@ -273,10 +277,6 @@ output "version" {
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
   value       = aws_kinesis_video_stream.aws_kinesis_video_stream.arn
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_kinesis_video_stream.aws_kinesis_video_stream.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

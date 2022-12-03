@@ -1,21 +1,66 @@
 resource "aws_connect_phone_number" "aws_connect_phone_number" {
   arn          = var.arn
-  create       = var.create
-  prefix       = var.prefix
-  country_code = var.country_code
-  id           = var.id
   message      = var.message
   phone_number = var.phone_number
-  status       = var.status
   target_arn   = var.target_arn
-  update       = var.update
-  description  = var.description
-  tags         = var.tags
+  create       = var.create
+  status       = var.status
   tags_all     = var.tags_all
+  update       = var.update
+  country_code = var.country_code
+  description  = var.description
+  id           = var.id
   type         = var.type
+  prefix       = var.prefix
+  tags         = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "create" {
+  description = "(Default 2m)"
+  type        = string
+}
+variable "status" {
+  description = "The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.statusThe status configuration block supports the following attributes:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 2m)"
+  type        = string
+}
+variable "country_code" {
+  description = "(Required, Forces new resource) The ISO country code. For a list of Valid values, refer to PhoneNumberCountryCode."
+  type        = string
+}
+variable "description" {
+  description = "(Optional, Forces new resource) The description of the phone number."
+  type        = string
+}
+variable "id" {
+  description = "The identifier of the phone number."
+  type        = string
+}
+variable "type" {
+  description = "(Required, Forces new resource) The type of phone number. Valid Values: TOLL_FREE | DID.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "prefix" {
+  description = "(Optional, Forces new resource) The prefix of the phone number that is used to filter available phone numbers. If provided, it must contain + as part of the country code. Do not specify this argument when importing the resource."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the Phone Number. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the phone number."
   type        = string
 }
 variable "message" {
@@ -26,53 +71,8 @@ variable "phone_number" {
   description = "The phone number. Phone numbers are formatted [+] [country code] [subscriber number including area code]."
   type        = string
 }
-variable "status" {
-  description = "The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:"
-  type        = string
-}
 variable "target_arn" {
   description = "(Required) The Amazon Resource Name (ARN) for Amazon Connect instances that phone numbers are claimed to."
-  type        = string
-}
-variable "update" {
-  description = "(Default 2m)"
-  type        = string
-}
-variable "description" {
-  description = "(Optional, Forces new resource) The description of the phone number."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the Phone Number. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.statusThe status configuration block supports the following attributes:"
-  type        = string
-}
-variable "type" {
-  description = "(Required, Forces new resource) The type of phone number. Valid Values: TOLL_FREE | DID.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the phone number."
-  type        = string
-}
-variable "create" {
-  description = "(Default 2m)"
-  type        = string
-}
-variable "prefix" {
-  description = "(Optional, Forces new resource) The prefix of the phone number that is used to filter available phone numbers. If provided, it must contain + as part of the country code. Do not specify this argument when importing the resource."
-  type        = string
-}
-variable "country_code" {
-  description = "(Required, Forces new resource) The ISO country code. For a list of Valid values, refer to PhoneNumberCountryCode."
-  type        = string
-}
-variable "id" {
-  description = "The identifier of the phone number."
   type        = string
 }
 variable "tag_instance_id" {
@@ -195,85 +195,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "message" {
-  description = "The status message."
-  value       = aws_connect_phone_number.aws_connect_phone_number.message
-}
-output "phone_number" {
-  description = "The phone number. Phone numbers are formatted [+] [country code] [subscriber number including area code]."
-  value       = aws_connect_phone_number.aws_connect_phone_number.phone_number
-}
-output "status" {
-  description = "The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:"
-  value       = aws_connect_phone_number.aws_connect_phone_number.status
-}
-output "target_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) for Amazon Connect instances that phone numbers are claimed to."
-  value       = aws_connect_phone_number.aws_connect_phone_number.target_arn
-}
-output "update" {
-  description = "(Default 2m)"
-  value       = aws_connect_phone_number.aws_connect_phone_number.update
-}
-output "description" {
-  description = "(Optional, Forces new resource) The description of the phone number."
-  value       = aws_connect_phone_number.aws_connect_phone_number.description
+output "prefix" {
+  description = "(Optional, Forces new resource) The prefix of the phone number that is used to filter available phone numbers. If provided, it must contain + as part of the country code. Do not specify this argument when importing the resource."
+  value       = aws_connect_phone_number.aws_connect_phone_number.prefix
 }
 output "tags" {
   description = "(Optional) Tags to apply to the Phone Number. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_connect_phone_number.aws_connect_phone_number.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.statusThe status configuration block supports the following attributes:"
-  value       = aws_connect_phone_number.aws_connect_phone_number.tags_all
-}
-output "type" {
-  description = "(Required, Forces new resource) The type of phone number. Valid Values: TOLL_FREE | DID.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_phone_number.aws_connect_phone_number.type
-}
 output "arn" {
   description = "The ARN of the phone number."
   value       = aws_connect_phone_number.aws_connect_phone_number.arn
-}
-output "create" {
-  description = "(Default 2m)"
-  value       = aws_connect_phone_number.aws_connect_phone_number.create
-}
-output "prefix" {
-  description = "(Optional, Forces new resource) The prefix of the phone number that is used to filter available phone numbers. If provided, it must contain + as part of the country code. Do not specify this argument when importing the resource."
-  value       = aws_connect_phone_number.aws_connect_phone_number.prefix
-}
-output "country_code" {
-  description = "(Required, Forces new resource) The ISO country code. For a list of Valid values, refer to PhoneNumberCountryCode."
-  value       = aws_connect_phone_number.aws_connect_phone_number.country_code
-}
-output "id" {
-  description = "The identifier of the phone number."
-  value       = aws_connect_phone_number.aws_connect_phone_number.id
-}
-output "arn" {
-  description = "The ARN of the phone number."
-  value       = aws_connect_phone_number.aws_connect_phone_number.arn
-}
-output "create" {
-  description = "(Default 2m)"
-  value       = aws_connect_phone_number.aws_connect_phone_number.create
-}
-output "delete" {
-  description = "(Default 2m)"
-  value       = aws_connect_phone_number.aws_connect_phone_number.delete
-}
-output "status" {
-  description = "The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:"
-  value       = aws_connect_phone_number.aws_connect_phone_number.status
-}
-output "update" {
-  description = "(Default 2m)"
-  value       = aws_connect_phone_number.aws_connect_phone_number.update
-}
-output "id" {
-  description = "The identifier of the phone number."
-  value       = aws_connect_phone_number.aws_connect_phone_number.id
 }
 output "message" {
   description = "The status message."
@@ -283,9 +215,77 @@ output "phone_number" {
   description = "The phone number. Phone numbers are formatted [+] [country code] [subscriber number including area code]."
   value       = aws_connect_phone_number.aws_connect_phone_number.phone_number
 }
+output "target_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) for Amazon Connect instances that phone numbers are claimed to."
+  value       = aws_connect_phone_number.aws_connect_phone_number.target_arn
+}
+output "create" {
+  description = "(Default 2m)"
+  value       = aws_connect_phone_number.aws_connect_phone_number.create
+}
+output "status" {
+  description = "The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:"
+  value       = aws_connect_phone_number.aws_connect_phone_number.status
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.statusThe status configuration block supports the following attributes:"
   value       = aws_connect_phone_number.aws_connect_phone_number.tags_all
+}
+output "update" {
+  description = "(Default 2m)"
+  value       = aws_connect_phone_number.aws_connect_phone_number.update
+}
+output "country_code" {
+  description = "(Required, Forces new resource) The ISO country code. For a list of Valid values, refer to PhoneNumberCountryCode."
+  value       = aws_connect_phone_number.aws_connect_phone_number.country_code
+}
+output "description" {
+  description = "(Optional, Forces new resource) The description of the phone number."
+  value       = aws_connect_phone_number.aws_connect_phone_number.description
+}
+output "id" {
+  description = "The identifier of the phone number."
+  value       = aws_connect_phone_number.aws_connect_phone_number.id
+}
+output "type" {
+  description = "(Required, Forces new resource) The type of phone number. Valid Values: TOLL_FREE | DID.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_phone_number.aws_connect_phone_number.type
+}
+output "status" {
+  description = "The status of the phone number. Valid Values: CLAIMED | IN_PROGRESS | FAILED.TimeoutsConfiguration options:"
+  value       = aws_connect_phone_number.aws_connect_phone_number.status
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.statusThe status configuration block supports the following attributes:"
+  value       = aws_connect_phone_number.aws_connect_phone_number.tags_all
+}
+output "create" {
+  description = "(Default 2m)"
+  value       = aws_connect_phone_number.aws_connect_phone_number.create
+}
+output "phone_number" {
+  description = "The phone number. Phone numbers are formatted [+] [country code] [subscriber number including area code]."
+  value       = aws_connect_phone_number.aws_connect_phone_number.phone_number
+}
+output "id" {
+  description = "The identifier of the phone number."
+  value       = aws_connect_phone_number.aws_connect_phone_number.id
+}
+output "message" {
+  description = "The status message."
+  value       = aws_connect_phone_number.aws_connect_phone_number.message
+}
+output "update" {
+  description = "(Default 2m)"
+  value       = aws_connect_phone_number.aws_connect_phone_number.update
+}
+output "arn" {
+  description = "The ARN of the phone number."
+  value       = aws_connect_phone_number.aws_connect_phone_number.arn
+}
+output "delete" {
+  description = "(Default 2m)"
+  value       = aws_connect_phone_number.aws_connect_phone_number.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

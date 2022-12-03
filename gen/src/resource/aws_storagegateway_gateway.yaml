@@ -32,10 +32,7 @@ spec:
             optional: true
             type: string
         domain_controllers:
-            description: |-
-                (Optional) List of IPv4 addresses, NetBIOS names, or host names of your domain server.
-                If you need to specify the port number include it after the colon (“:”). For example, mydc.mydomain.com:389.In addition to all arguments above, the following attributes are exported:
-            optional: true
+            description: 'mydc.mydomain.com:389.In addition to all arguments above, the following attributes are exported:'
             type: string
         domain_name:
             description: (Required) The name of the domain that you want the gateway to join.
@@ -94,10 +91,7 @@ spec:
             description: '(Required) The minute component of the maintenance start time represented as emmm, where emmm is the minute (00 to 59). The minute of the hour is in the time zone of the gateway.smb_active_directory_settingsInformation to join the gateway to an Active Directory domain for Server Message Block (SMB) file shares.~> strongNOTE It is not possible to unconfigure this setting without recreating the gateway. Also, Terraform can only detect drift of the domain_name argument from the gateway.~> strongNOTE: The Storage Gateway needs to be able to resolve the name of your Active Directory Domain Controller. If the gateway is hosted on EC2, ensure that DNS/DHCP is configured prior to creating the EC2 instance. If you are receiving NETWORK_ERROR errors during resource creation (gateway joining the domain), ensure your gateway instance meets the FSx File Gateway requirements.'
             type: string
         organizational_unit:
-            description: |-
-                (Optional) The organizational unit (OU) is a container in an Active Directory that can hold users, groups,
-                computers, and other OUs and this parameter specifies the OU that the gateway will join within the AD domain.
-            optional: true
+            description: ""
             type: string
         password:
             description: (Required) The password of the user who has permission to add the gateway to the Active Directory domain.

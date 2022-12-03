@@ -1,20 +1,20 @@
 resource "aws_servicecatalog_tag_option" "aws_servicecatalog_tag_option" {
-  update   = var.update
-  active   = var.active
-  id       = var.id
-  key      = var.key
   read     = var.read
   value    = var.value
-  create   = var.create
+  active   = var.active
   delete   = var.delete
+  key      = var.key
   owner_id = var.owner_id
+  update   = var.update
+  create   = var.create
+  id       = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "active" {
-  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
+variable "create" {
+  description = "(Default 3m)"
   type        = string
   default     = ""
 }
@@ -27,23 +27,23 @@ variable "key" {
   description = "(Required) Tag option key."
   type        = string
 }
+variable "owner_id" {
+  description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
 variable "update" {
   description = "(Default 3m)"
   type        = string
   default     = ""
 }
-variable "create" {
-  description = "(Default 3m)"
+variable "active" {
+  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
 variable "delete" {
   description = "(Default 3m)"
-  type        = string
-  default     = ""
-}
-variable "owner_id" {
-  description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
   type        = string
   default     = ""
 }
@@ -176,9 +176,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "active" {
-  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.active
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.create
 }
 output "id" {
   description = "Identifier (e.g., tag-pjtvagohlyo3m)."
@@ -188,21 +188,21 @@ output "key" {
   description = "(Required) Tag option key."
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.key
 }
+output "owner_id" {
+  description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.owner_id
+}
 output "update" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.update
 }
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.create
+output "active" {
+  description = "(Optional) Whether tag option is active. Default is true.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.active
 }
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.delete
-}
-output "owner_id" {
-  description = "AWS account ID of the owner account that created the tag option.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.owner_id
 }
 output "read" {
   description = "(Default 10m)"
@@ -211,10 +211,6 @@ output "read" {
 output "value" {
   description = "(Required) Tag option value."
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.value
-}
-output "delete" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.delete
 }
 output "id" {
   description = "Identifier (e.g., tag-pjtvagohlyo3m)."
@@ -235,6 +231,10 @@ output "update" {
 output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.create
+}
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_tag_option.aws_servicecatalog_tag_option.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

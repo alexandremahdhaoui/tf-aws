@@ -1,18 +1,18 @@
 resource "aws_kendra_query_suggestions_block_list" "aws_kendra_query_suggestions_block_list" {
-  arn                             = var.arn
-  key                             = var.key
-  role_arn                        = var.role_arn
   bucket                          = var.bucket
-  name                            = var.name
-  tags                            = var.tags
+  role_arn                        = var.role_arn
+  source_s3_path                  = var.source_s3_path
+  arn                             = var.arn
   create                          = var.create
   delete                          = var.delete
-  index_id                        = var.index_id
+  key                             = var.key
+  name                            = var.name
   query_suggestions_block_list_id = var.query_suggestions_block_list_id
-  source_s3_path                  = var.source_s3_path
   tags_all                        = var.tags_all
-  description                     = var.description
+  tags                            = var.tags
   update                          = var.update
+  description                     = var.description
+  index_id                        = var.index_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,34 +23,29 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "ARN of the block list."
-  type        = string
-  default     = ""
-}
-variable "key" {
-  description = "(Required) The name of the file."
-  type        = string
-}
-variable "role_arn" {
-  description = "(Required) The IAM (Identity and Access Management) role used to access the block list text file in S3."
+variable "index_id" {
+  description = "- (Required, Forces new resource) The identifier of the index for a block list."
   type        = string
 }
 variable "bucket" {
   description = "(Required) The name of the S3 bucket that contains the file."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name for the block list."
+variable "role_arn" {
+  description = "(Required) The IAM (Identity and Access Management) role used to access the block list text file in S3."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "source_s3_path" {
+  description = "(Required) The S3 path where your block list text file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the block list."
   type        = string
   default     = ""
 }
@@ -64,8 +59,12 @@ variable "delete" {
   type        = string
   default     = ""
 }
-variable "index_id" {
-  description = "- (Required, Forces new resource) The identifier of the index for a block list."
+variable "key" {
+  description = "(Required) The name of the file."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name for the block list."
   type        = string
 }
 variable "query_suggestions_block_list_id" {
@@ -73,12 +72,13 @@ variable "query_suggestions_block_list_id" {
   type        = string
   default     = ""
 }
-variable "source_s3_path" {
-  description = "(Required) The S3 path where your block list text file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "update" {
+  description = "(Default 30m)"
   type        = string
   default     = ""
 }
@@ -202,21 +202,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "query_suggestions_block_list_id" {
+  description = "The unique indentifier of the block list."
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.query_suggestions_block_list_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.tags_all
+}
 output "arn" {
   description = "ARN of the block list."
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.arn
 }
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.create
+}
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.delete
+}
 output "key" {
   description = "(Required) The name of the file."
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.key
-}
-output "role_arn" {
-  description = "(Required) The IAM (Identity and Access Management) role used to access the block list text file in S3."
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.role_arn
-}
-output "bucket" {
-  description = "(Required) The name of the S3 bucket that contains the file."
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.bucket
 }
 output "name" {
   description = "(Required) The name for the block list."
@@ -226,33 +234,41 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.tags
 }
-output "create" {
+output "update" {
   description = "(Default 30m)"
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.create
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.update
 }
-output "delete" {
-  description = "(Default 30m)"
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.delete
+output "description" {
+  description = "(Optional) The description for a block list."
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.description
 }
 output "index_id" {
   description = "- (Required, Forces new resource) The identifier of the index for a block list."
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.index_id
 }
-output "query_suggestions_block_list_id" {
-  description = "The unique indentifier of the block list."
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.query_suggestions_block_list_id
+output "bucket" {
+  description = "(Required) The name of the S3 bucket that contains the file."
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.bucket
+}
+output "role_arn" {
+  description = "(Required) The IAM (Identity and Access Management) role used to access the block list text file in S3."
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.role_arn
 }
 output "source_s3_path" {
   description = "(Required) The S3 path where your block list text file sits in S3. Detailed below.The source_s3_path configuration block supports the following arguments:"
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.source_s3_path
 }
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.delete
+}
+output "query_suggestions_block_list_id" {
+  description = "The unique indentifier of the block list."
+  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.query_suggestions_block_list_id
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.tags_all
-}
-output "description" {
-  description = "(Optional) The description for a block list."
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.description
 }
 output "update" {
   description = "(Default 30m)"
@@ -265,22 +281,6 @@ output "arn" {
 output "create" {
   description = "(Default 30m)"
   value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.create
-}
-output "delete" {
-  description = "(Default 30m)"
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.delete
-}
-output "query_suggestions_block_list_id" {
-  description = "The unique indentifier of the block list."
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.query_suggestions_block_list_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.tags_all
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_kendra_query_suggestions_block_list.aws_kendra_query_suggestions_block_list.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

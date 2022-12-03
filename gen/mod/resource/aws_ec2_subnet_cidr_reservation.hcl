@@ -9,6 +9,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "id" {
+  description = "ID of the CIDR reservation."
+  type        = string
+}
+variable "reservation_type" {
+  description = "(Required) The type of reservation to create. Valid values: explicit, prefix"
+  type        = string
+}
 variable "subnet_id" {
   description = "(Required) The ID of the subnet to create the reservation for."
   type        = string
@@ -21,14 +29,6 @@ variable "description" {
   description = "(Optional) A brief description of the reservation.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "id" {
-  description = "ID of the CIDR reservation."
-  type        = string
-}
-variable "reservation_type" {
-  description = "(Required) The type of reservation to create. Valid values: explicit, prefix"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -150,10 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cidr_block" {
-  description = "(Required) The CIDR block for the reservation."
-  value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.cidr_block
-}
 output "description" {
   description = "(Optional) A brief description of the reservation.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.description
@@ -170,13 +166,17 @@ output "subnet_id" {
   description = "(Required) The ID of the subnet to create the reservation for."
   value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.subnet_id
 }
-output "owner_id" {
-  description = "ID of the AWS account that owns this CIDR reservation."
-  value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.owner_id
+output "cidr_block" {
+  description = "(Required) The CIDR block for the reservation."
+  value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.cidr_block
 }
 output "id" {
   description = "ID of the CIDR reservation."
   value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.id
+}
+output "owner_id" {
+  description = "ID of the AWS account that owns this CIDR reservation."
+  value       = aws_ec2_subnet_cidr_reservation.aws_ec2_subnet_cidr_reservation.owner_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

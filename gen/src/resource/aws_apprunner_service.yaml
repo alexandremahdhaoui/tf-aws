@@ -5,9 +5,7 @@ metadata:
 spec:
     args:
         API:
-            description: |-
-                App Runner uses configuration values provided in the CodeConfigurationValues
-                parameter and ignores the apprunner.yaml file in the source code repository.Code Configuration ValuesThe code_configuration_values blocks supports the following arguments:
+            description: 'Code Configuration ValuesThe code_configuration_values blocks supports the following arguments:'
             optional: true
             type: string
         REPOSITORY:

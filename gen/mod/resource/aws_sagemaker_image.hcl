@@ -162,18 +162,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) The description of the image."
-  value       = aws_sagemaker_image.aws_sagemaker_image.description
-}
-output "display_name" {
-  description = "(Optional) The display name of the image. When the image is added to a domain (must be unique to the domain)."
-  value       = aws_sagemaker_image.aws_sagemaker_image.display_name
-}
-output "id" {
-  description = "The name of the Image."
-  value       = aws_sagemaker_image.aws_sagemaker_image.id
-}
 output "image_name" {
   description = "(Required) The name of the image. Must be unique to your account."
   value       = aws_sagemaker_image.aws_sagemaker_image.image_name
@@ -190,6 +178,22 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
   value       = aws_sagemaker_image.aws_sagemaker_image.arn
 }
+output "description" {
+  description = "(Optional) The description of the image."
+  value       = aws_sagemaker_image.aws_sagemaker_image.description
+}
+output "display_name" {
+  description = "(Optional) The display name of the image. When the image is added to a domain (must be unique to the domain)."
+  value       = aws_sagemaker_image.aws_sagemaker_image.display_name
+}
+output "id" {
+  description = "The name of the Image."
+  value       = aws_sagemaker_image.aws_sagemaker_image.id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
+  value       = aws_sagemaker_image.aws_sagemaker_image.arn
+}
 output "id" {
   description = "The name of the Image."
   value       = aws_sagemaker_image.aws_sagemaker_image.id
@@ -197,10 +201,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_sagemaker_image.aws_sagemaker_image.tags_all
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Image."
-  value       = aws_sagemaker_image.aws_sagemaker_image.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

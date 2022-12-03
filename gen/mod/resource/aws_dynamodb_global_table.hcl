@@ -1,8 +1,8 @@
 resource "aws_dynamodb_global_table" "aws_dynamodb_global_table" {
-  replica     = var.replica
   id          = var.id
   name        = var.name
   region_name = var.region_name
+  replica     = var.replica
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

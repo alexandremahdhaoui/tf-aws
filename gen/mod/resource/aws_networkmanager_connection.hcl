@@ -1,16 +1,21 @@
 resource "aws_networkmanager_connection" "aws_networkmanager_connection" {
-  global_network_id   = var.global_network_id
-  link_id             = var.link_id
-  tags                = var.tags
-  arn                 = var.arn
   connected_device_id = var.connected_device_id
   connected_link_id   = var.connected_link_id
   description         = var.description
   device_id           = var.device_id
+  global_network_id   = var.global_network_id
+  link_id             = var.link_id
+  tags                = var.tags
+  arn                 = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "link_id" {
+  description = "(Optional) The ID of the link for the first device."
+  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value tags for the connection. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -42,11 +47,6 @@ variable "device_id" {
 variable "global_network_id" {
   description = "(Required) The ID of the global network."
   type        = string
-}
-variable "link_id" {
-  description = "(Optional) The ID of the link for the first device."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -168,6 +168,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = "(Optional) A description of the connection."
+  value       = aws_networkmanager_connection.aws_networkmanager_connection.description
+}
 output "device_id" {
   description = "(Required) The ID of the first device in the connection."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.device_id
@@ -195,10 +199,6 @@ output "connected_device_id" {
 output "connected_link_id" {
   description = "(Optional) The ID of the link for the second device."
   value       = aws_networkmanager_connection.aws_networkmanager_connection.connected_link_id
-}
-output "description" {
-  description = "(Optional) A description of the connection."
-  value       = aws_networkmanager_connection.aws_networkmanager_connection.description
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the connection."

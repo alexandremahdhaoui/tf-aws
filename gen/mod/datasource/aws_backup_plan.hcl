@@ -1,8 +1,8 @@
 datasource "aws_backup_plan" "aws_backup_plan" {
+  tags    = var.tags
   arn     = var.arn
   name    = var.name
   plan_id = var.plan_id
-  tags    = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -23,10 +23,6 @@ variable "plan_id" {
 variable "tags" {
   description = "Metadata that you can assign to help organize the plans you create."
   type        = string
-}
-output "arn" {
-  description = "ARN of the backup plan."
-  value       = aws_backup_plan.aws_backup_plan.arn
 }
 output "name" {
   description = "Display name of a backup plan."
@@ -51,6 +47,10 @@ output "name" {
 output "tags" {
   description = "Metadata that you can assign to help organize the plans you create."
   value       = aws_backup_plan.aws_backup_plan.tags
+}
+output "arn" {
+  description = "ARN of the backup plan."
+  value       = aws_backup_plan.aws_backup_plan.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -12,20 +12,17 @@ spec:
             optional: true
             type: string
         allow_classic_link_to_remote_vpc:
-            description: ""
+            description: |-
+                (Optional) Allow a local linked EC2-Classic instance to communicate
+                with instances in a peer VPC. This enables an outbound communication from the local ClassicLink connection
+                to the remote VPC.
+            optional: true
             type: string
         allow_remote_vpc_dns_resolution:
-            description: |-
-                (Optional) Allow a local VPC to resolve public DNS hostnames to
-                private IP addresses when queried from instances in the peer VPC.
-            optional: true
+            description: ""
             type: string
         allow_vpc_to_remote_classic_link:
-            description: |-
-                (Optional) Allow a local VPC to communicate with a linked EC2-Classic
-                instance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink
-                connection.In addition to all arguments above, the following attributes are exported:
-            optional: true
+            description: 'In addition to all arguments above, the following attributes are exported:'
             type: string
         auto_accept:
             description: (Optional) Accept the peering (both VPCs need to be in the same AWS account and region).
@@ -38,7 +35,10 @@ spec:
             description: The ID of the VPC Peering Connection.
             type: string
         peer_owner_id:
-            description: AWS provider is currently connected to.
+            description: |-
+                (Optional) The AWS account ID of the owner of the peer VPC.
+                Defaults to the account ID the AWS provider is currently connected to.
+            optional: true
             type: string
         peer_region:
             description: (Optional) The region of the accepter VPC of the VPC Peering Connection. auto_accept must be falseaws_vpc_peering_connection_accepter to manage the accepter side.

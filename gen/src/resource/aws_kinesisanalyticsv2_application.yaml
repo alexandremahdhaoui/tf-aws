@@ -123,7 +123,10 @@ spec:
             optional: true
             type: string
         input_processing_configuration:
-            description: ""
+            description: |-
+                (Optional) The input processing configuration for the input.
+                An input processor transforms records as they are received from the stream, before the application's SQL code executes.
+            optional: true
             type: string
         input_schema:
             description: (Required) Describes the format of the data in the streaming source, and how each data element maps to corresponding columns in the in-application stream that is being created.

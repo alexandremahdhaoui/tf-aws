@@ -124,14 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "api_stages" {
-  description = "Associated API stages of the usage plan."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.api_stages
-}
-output "throttle_settings" {
-  description = "Throttling limits of the usage plan."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.throttle_settings
-}
 output "id" {
   description = "ID of the API resource"
   value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.id
@@ -144,13 +136,13 @@ output "product_code" {
   description = "AWS Marketplace product identifier to associate with the usage plan as a SaaS product on AWS Marketplace."
   value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.product_code
 }
-output "quota_settings" {
-  description = "Quota of the usage plan."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.quota_settings
+output "throttle_settings" {
+  description = "Throttling limits of the usage plan."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.throttle_settings
 }
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.tags_all
+output "api_stages" {
+  description = "Associated API stages of the usage plan."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.api_stages
 }
 output "arn" {
   description = "ARN"
@@ -159,6 +151,14 @@ output "arn" {
 output "description" {
   description = "Description of a usage plan."
   value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.description
+}
+output "quota_settings" {
+  description = "Quota of the usage plan."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.quota_settings
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_api_gateway_usage_plan.aws_api_gateway_usage_plan.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

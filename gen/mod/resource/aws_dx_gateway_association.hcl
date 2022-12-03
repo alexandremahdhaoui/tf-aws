@@ -1,31 +1,24 @@
 resource "aws_dx_gateway_association" "aws_dx_gateway_association" {
-  create                              = var.create
   dx_gateway_id                       = var.dx_gateway_id
-  id                                  = var.id
-  update                              = var.update
-  associated_gateway_type             = var.associated_gateway_type
-  associated_gateway_id               = var.associated_gateway_id
-  associated_gateway_owner_account_id = var.associated_gateway_owner_account_id
-  dx_gateway_association_id           = var.dx_gateway_association_id
   dx_gateway_owner_account_id         = var.dx_gateway_owner_account_id
   proposal_id                         = var.proposal_id
+  associated_gateway_owner_account_id = var.associated_gateway_owner_account_id
+  create                              = var.create
+  associated_gateway_type             = var.associated_gateway_type
+  dx_gateway_association_id           = var.dx_gateway_association_id
+  id                                  = var.id
+  update                              = var.update
   allowed_prefixes                    = var.allowed_prefixes
+  associated_gateway_id               = var.associated_gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The ID of the Direct Connect gateway association resource."
+variable "associated_gateway_owner_account_id" {
+  description = "(Optional) The ID of the AWS account that owns the VGW or transit gateway with which to associate the Direct Connect gateway.\nUsed for cross-account Direct Connect gateway associations."
   type        = string
-}
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "associated_gateway_type" {
-  description = "The type of the associated gateway, transitGateway or virtualPrivateGateway."
-  type        = string
+  default     = ""
 }
 variable "create" {
   description = "(Default 30m)"
@@ -33,10 +26,6 @@ variable "create" {
 }
 variable "dx_gateway_id" {
   description = "(Required) The ID of the Direct Connect gateway."
-  type        = string
-}
-variable "dx_gateway_association_id" {
-  description = "The ID of the Direct Connect gateway association."
   type        = string
 }
 variable "dx_gateway_owner_account_id" {
@@ -54,13 +43,25 @@ variable "allowed_prefixes" {
   default     = ""
 }
 variable "associated_gateway_id" {
-  description = ""
-  type        = string
-}
-variable "associated_gateway_owner_account_id" {
-  description = "(Optional) The ID of the AWS account that owns the VGW or transit gateway with which to associate the Direct Connect gateway.\nUsed for cross-account Direct Connect gateway associations."
+  description = "(Optional) The ID of the VGW or transit gateway with which to associate the Direct Connect gateway.\nUsed for single account Direct Connect gateway associations."
   type        = string
   default     = ""
+}
+variable "associated_gateway_type" {
+  description = "The type of the associated gateway, transitGateway or virtualPrivateGateway."
+  type        = string
+}
+variable "dx_gateway_association_id" {
+  description = "The ID of the Direct Connect gateway association."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the Direct Connect gateway association resource."
+  type        = string
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -182,21 +183,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_dx_gateway_association.aws_dx_gateway_association.update
+}
 output "allowed_prefixes" {
   description = "(Optional) VPC prefixes (CIDRs) to advertise to the Direct Connect gateway. Defaults to the CIDR block of the VPC associated with the Virtual Gateway. To enable drift detection, must be configured.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dx_gateway_association.aws_dx_gateway_association.allowed_prefixes
 }
 output "associated_gateway_id" {
-  description = ""
+  description = "(Optional) The ID of the VGW or transit gateway with which to associate the Direct Connect gateway.\nUsed for single account Direct Connect gateway associations."
   value       = aws_dx_gateway_association.aws_dx_gateway_association.associated_gateway_id
+}
+output "associated_gateway_type" {
+  description = "The type of the associated gateway, transitGateway or virtualPrivateGateway."
+  value       = aws_dx_gateway_association.aws_dx_gateway_association.associated_gateway_type
+}
+output "dx_gateway_association_id" {
+  description = "The ID of the Direct Connect gateway association."
+  value       = aws_dx_gateway_association.aws_dx_gateway_association.dx_gateway_association_id
+}
+output "id" {
+  description = "The ID of the Direct Connect gateway association resource."
+  value       = aws_dx_gateway_association.aws_dx_gateway_association.id
 }
 output "associated_gateway_owner_account_id" {
   description = "(Optional) The ID of the AWS account that owns the VGW or transit gateway with which to associate the Direct Connect gateway.\nUsed for cross-account Direct Connect gateway associations."
   value       = aws_dx_gateway_association.aws_dx_gateway_association.associated_gateway_owner_account_id
 }
-output "dx_gateway_association_id" {
-  description = "The ID of the Direct Connect gateway association."
-  value       = aws_dx_gateway_association.aws_dx_gateway_association.dx_gateway_association_id
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_dx_gateway_association.aws_dx_gateway_association.create
+}
+output "dx_gateway_id" {
+  description = "(Required) The ID of the Direct Connect gateway."
+  value       = aws_dx_gateway_association.aws_dx_gateway_association.dx_gateway_id
 }
 output "dx_gateway_owner_account_id" {
   description = "The ID of the AWS account that owns the Direct Connect gateway.TimeoutsConfiguration options:"
@@ -209,22 +230,6 @@ output "proposal_id" {
 output "associated_gateway_type" {
   description = "The type of the associated gateway, transitGateway or virtualPrivateGateway."
   value       = aws_dx_gateway_association.aws_dx_gateway_association.associated_gateway_type
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_dx_gateway_association.aws_dx_gateway_association.create
-}
-output "dx_gateway_id" {
-  description = "(Required) The ID of the Direct Connect gateway."
-  value       = aws_dx_gateway_association.aws_dx_gateway_association.dx_gateway_id
-}
-output "id" {
-  description = "The ID of the Direct Connect gateway association resource."
-  value       = aws_dx_gateway_association.aws_dx_gateway_association.id
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_dx_gateway_association.aws_dx_gateway_association.update
 }
 output "create" {
   description = "(Default 30m)"
@@ -249,10 +254,6 @@ output "id" {
 output "update" {
   description = "(Default 30m)"
   value       = aws_dx_gateway_association.aws_dx_gateway_association.update
-}
-output "associated_gateway_type" {
-  description = "The type of the associated gateway, transitGateway or virtualPrivateGateway."
-  value       = aws_dx_gateway_association.aws_dx_gateway_association.associated_gateway_type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

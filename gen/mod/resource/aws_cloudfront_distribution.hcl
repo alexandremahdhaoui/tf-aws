@@ -128,29 +128,29 @@ output "arn" {
   description = "The ARN (Amazon Resource Name) for the distribution. For example: arn:aws:cloudfront::123456789012:distribution/EDFDVBD632BHDS5, where 123456789012 is your AWS account ID."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.arn
 }
-output "etag" {
-  description = "E2QWRUHAPOMQZL."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.etag
+output "caller_reference" {
+  description = "Internal value used by CloudFront to allow future\nupdates to the distribution configuration."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.caller_reference
 }
-output "id" {
-  description = "The identifier for the distribution. For example: EDFDVBD632BHDS5."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.id
-}
-output "key_pair_ids" {
-  description = "Set of active CloudFront key pairs associated with the signer account"
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.key_pair_ids
+output "enabled" {
+  description = "true if any of the AWS accounts listed as trusted signers have active CloudFront key pairs"
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.enabled
 }
 output "last_modified_time" {
   description = "The date and time the distribution was last modified."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.last_modified_time
 }
-output "trusted_signers" {
-  description = "List of nested attributes for active trusted signers, if the distribution is set up to serve private content with signed URLs"
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.trusted_signers
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.tags_all
 }
-output "caller_reference" {
-  description = "Internal value used by CloudFront to allow future\nupdates to the distribution configuration."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.caller_reference
+output "domain_name" {
+  description = "The domain name corresponding to the distribution. For\nexample: d604721fxaaqy9.cloudfront.net."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.domain_name
+}
+output "key_group_id" {
+  description = "The ID of the key group that contains the public keys"
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.key_group_id
 }
 output "status" {
   description = "The current status of the distribution. Deployed"
@@ -160,37 +160,37 @@ output "aws_account_number" {
   description = "AWS account ID or self"
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.aws_account_number
 }
-output "domain_name" {
-  description = "d604721fxaaqy9.cloudfront.net."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.domain_name
+output "id" {
+  description = "The identifier for the distribution. For example: EDFDVBD632BHDS5."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.id
 }
-output "enabled" {
-  description = "true if any of the AWS accounts listed as trusted signers have active CloudFront key pairs"
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.enabled
+output "items" {
+  description = "List of nested attributes for each trusted signer\n"
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.items
+}
+output "key_pair_ids" {
+  description = "Set of active CloudFront key pairs associated with the signer account"
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.key_pair_ids
+}
+output "trusted_key_groups" {
+  description = "List of nested attributes for active trusted key groups, if the distribution is set up to serve private content with signed URLs"
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.trusted_key_groups
+}
+output "etag" {
+  description = "The current version of the distribution's information. For example:\nE2QWRUHAPOMQZL."
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.etag
 }
 output "hosted_zone_id" {
-  description = "Alias Resource Record SetZ2FDTNDATAQYW2."
+  description = "The CloudFront Route 53 zone ID that can be used to\nroute an Alias Resource Record SetZ2FDTNDATAQYW2."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.hosted_zone_id
 }
 output "in_progress_validation_batches" {
   description = "The number of invalidation batches\ncurrently in progress."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.in_progress_validation_batches
 }
-output "key_group_id" {
-  description = "The ID of the key group that contains the public keys"
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.key_group_id
-}
-output "items" {
-  description = "List of nested attributes for each trusted signer\n"
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.items
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.tags_all
-}
-output "trusted_key_groups" {
-  description = "List of nested attributes for active trusted key groups, if the distribution is set up to serve private content with signed URLs"
-  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.trusted_key_groups
+output "trusted_signers" {
+  description = "List of nested attributes for active trusted signers, if the distribution is set up to serve private content with signed URLs"
+  value       = aws_cloudfront_distribution.aws_cloudfront_distribution.trusted_signers
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

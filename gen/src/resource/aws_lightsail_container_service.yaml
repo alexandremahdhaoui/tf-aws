@@ -29,10 +29,15 @@ spec:
             optional: true
             type: string
         name:
-            description: ""
+            description: |-
+                (Required) The name for the container service. Names must be of length 1 to 63, and be
+                unique within each AWS Region in your Lightsail account.
             type: string
         power:
-            description: nano, micro, small, medium, large, xlarge.
+            description: |-
+                (Required) The power specification for the container service. The power specifies the amount of memory,
+                the number of vCPUs, and the monthly price of each node of the container service.
+                Possible values: nano, micro, small, medium, large, xlarge.
             type: string
         power_id:
             description: The ID of the power of the container service.
@@ -41,7 +46,9 @@ spec:
             description: ""
             type: string
         private_domain_name:
-            description: ""
+            description: |-
+                The private domain name of the container service. The private domain name is accessible only
+                by other resources within the default virtual private cloud (VPC) of your Lightsail account.
             type: string
         private_registry_access:
             description: (Optional) An object to describe the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. See Private Registry Access below for more details.
@@ -101,7 +108,9 @@ spec:
             description: ""
             type: string
         private_domain_name:
-            description: ""
+            description: |-
+                The private domain name of the container service. The private domain name is accessible only
+                by other resources within the default virtual private cloud (VPC) of your Lightsail account.
             type: string
         region_name:
             description: The AWS Region name.

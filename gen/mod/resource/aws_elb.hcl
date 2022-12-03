@@ -1,61 +1,90 @@
 resource "aws_elb" "aws_elb" {
-  id                          = var.id
-  tags                        = var.tags
-  connection_draining         = var.connection_draining
-  lb_port                     = var.lb_port
-  name                        = var.name
-  access_logs                 = var.access_logs
+  bucket_prefix               = var.bucket_prefix
   dns_name                    = var.dns_name
   enabled                     = var.enabled
   healthy_threshold           = var.healthy_threshold
-  instance_port               = var.instance_port
-  lb_protocol                 = var.lb_protocol
-  arn                         = var.arn
-  internal                    = var.internal
-  cross_zone_load_balancing   = var.cross_zone_load_balancing
+  name                        = var.name
+  connection_draining_timeout = var.connection_draining_timeout
+  HTTP                        = var.HTTP
+  TCP                         = var.TCP
   idle_timeout                = var.idle_timeout
+  source_security_group       = var.source_security_group
+  zone_id                     = var.zone_id
+  source_security_group_id    = var.source_security_group_id
+  access_logs                 = var.access_logs
+  arn                         = var.arn
+  health_check                = var.health_check
+  id                          = var.id
   instances                   = var.instances
   interval                    = var.interval
-  security_groups             = var.security_groups
+  lb_port                     = var.lb_port
   subnets                     = var.subnets
-  health_check                = var.health_check
-  connection_draining_timeout = var.connection_draining_timeout
-  listener                    = var.listener
-  source_security_group       = var.source_security_group
-  source_security_group_id    = var.source_security_group_id
   target                      = var.target
-  bucket_prefix               = var.bucket_prefix
-  TCP                         = var.TCP
   availability_zones          = var.availability_zones
-  bucket                      = var.bucket
-  name_prefix                 = var.name_prefix
-  ssl_certificate_id          = var.ssl_certificate_id
-  unhealthy_threshold         = var.unhealthy_threshold
-  zone_id                     = var.zone_id
-  HTTP                        = var.HTTP
-  instance_protocol           = var.instance_protocol
-  timeout                     = var.timeout
+  cross_zone_load_balancing   = var.cross_zone_load_balancing
   desync_mitigation_mode      = var.desync_mitigation_mode
+  listener                    = var.listener
+  security_groups             = var.security_groups
+  bucket                      = var.bucket
+  tags                        = var.tags
+  unhealthy_threshold         = var.unhealthy_threshold
+  instance_port               = var.instance_port
+  instance_protocol           = var.instance_protocol
+  lb_protocol                 = var.lb_protocol
+  name_prefix                 = var.name_prefix
+  connection_draining         = var.connection_draining
+  internal                    = var.internal
+  ssl_certificate_id          = var.ssl_certificate_id
+  timeout                     = var.timeout
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "desync_mitigation_mode" {
-  description = "(Optional) Determines how the load balancer handles requests that might pose a security risk to an application due to HTTP desync. Valid values are monitor, defensive (default), strictest."
+variable "HTTP" {
+  description = ", HTTPSPORT and PATH are required"
+  type        = string
+}
+variable "TCP" {
+  description = ", SSLPORT is required, PATH is not supported"
+  type        = string
+}
+variable "idle_timeout" {
+  description = "(Optional) The time in seconds that the connection is allowed to be idle. Default: 60"
   type        = string
   default     = ""
 }
-variable "instance_protocol" {
-  description = "(Required) The protocol to use to the instance. Valid\nvalues are HTTP, HTTPS, TCP, or SSL"
+variable "source_security_group" {
+  description = "The name of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Use this for Classic or Default VPC only."
   type        = string
 }
-variable "timeout" {
-  description = "(Required) The length of time before the check times out.Note on ECDSA Key AlgorithmIf the ARN of the ssl_certificate_idERR_SSL_VERSION_OR_CIPHER_MISMATCHIn addition to all arguments above, the following attributes are exported:"
+variable "zone_id" {
+  description = "The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)"
   type        = string
 }
-variable "connection_draining" {
-  description = "(Optional) Boolean to enable connection draining. Default: false"
+variable "interval" {
+  description = "(Required) The interval between checks."
+  type        = string
+}
+variable "lb_port" {
+  description = "(Required) The port to listen on for the load balancer"
+  type        = string
+}
+variable "source_security_group_id" {
+  description = "The ID of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Only available on ELBs launched in a VPC."
+  type        = string
+}
+variable "access_logs" {
+  description = "(Optional) An Access Logs block. Access Logs documented below."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the ELB"
+  type        = string
+}
+variable "health_check" {
+  description = "(Optional) A health_check block. Health Check documented below."
   type        = string
   default     = ""
 }
@@ -63,31 +92,93 @@ variable "id" {
   description = "The name of the ELB"
   type        = string
 }
+variable "instances" {
+  description = "The list of instances in the ELB"
+  type        = string
+}
+variable "subnets" {
+  description = "(Required for a VPC ELB) A list of subnet IDs to attach to the ELB."
+  type        = string
+}
+variable "target" {
+  description = "(Required) The target of the check. Valid pattern is \"$${PROTOCOL}:$${PORT}$${PATH}\", where PROTOCOL\nvalues are:\n"
+  type        = string
+}
+variable "availability_zones" {
+  description = "(Required for an EC2-classic ELB) The AZ's to serve traffic in."
+  type        = string
+}
+variable "cross_zone_load_balancing" {
+  description = "(Optional) Enable cross-zone load balancing. Default: true"
+  type        = string
+  default     = ""
+}
+variable "desync_mitigation_mode" {
+  description = "(Optional) Determines how the load balancer handles requests that might pose a security risk to an application due to HTTP desync. Valid values are monitor, defensive (default), strictest."
+  type        = string
+  default     = ""
+}
+variable "listener" {
+  description = "(Required) A list of listener blocks. Listeners documented below."
+  type        = string
+}
+variable "security_groups" {
+  description = "(Optional) A list of security group IDs to assign to the ELB.\nOnly valid if creating an ELB within a VPC"
+  type        = string
+  default     = ""
+}
+variable "bucket" {
+  description = "(Required) The S3 bucket name to store the logs in."
+  type        = string
+}
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Exactly one of availability_zones or subnetsAccess Logs (access_logs) support the following:"
   type        = string
   default     = ""
 }
-variable "access_logs" {
-  description = "(Optional) An Access Logs block. Access Logs documented below."
-  type        = string
-  default     = ""
-}
-variable "lb_port" {
-  description = "(Required) The port to listen on for the load balancer"
+variable "unhealthy_threshold" {
+  description = "(Required) The number of checks before the instance is declared unhealthy."
   type        = string
 }
-variable "name" {
-  description = "The name of the ELB"
+variable "instance_port" {
+  description = "(Required) The port on the instance to route to"
+  type        = string
+}
+variable "instance_protocol" {
+  description = "(Required) The protocol to use to the instance. Valid\nvalues are HTTP, HTTPS, TCP, or SSL"
   type        = string
 }
 variable "lb_protocol" {
   description = "(Required) The protocol to listen on. Valid values are HTTPHTTPS, TCP, or SSL"
   type        = string
 }
-variable "arn" {
-  description = "The ARN of the ELB"
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
   type        = string
+}
+variable "connection_draining" {
+  description = "(Optional) Boolean to enable connection draining. Default: false"
+  type        = string
+  default     = ""
+}
+variable "internal" {
+  description = "(Optional) If true, ELB will be an internal ELB."
+  type        = string
+  default     = ""
+}
+variable "ssl_certificate_id" {
+  description = "(Optional) The ARN of an SSL certificate you have\nuploaded to AWS IAM. strongNote ECDSA-specific restrictions below.  Only valid when lb_protocol is either HTTPS or SSLHealth Check (health_check) supports the following:"
+  type        = string
+  default     = ""
+}
+variable "timeout" {
+  description = "(Required) The length of time before the check times out.Note on ECDSA Key AlgorithmIf the ARN of the ssl_certificate_idERR_SSL_VERSION_OR_CIPHER_MISMATCHIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "bucket_prefix" {
+  description = "(Optional) The S3 bucket prefix. Logs are stored in the root if not configured."
+  type        = string
+  default     = ""
 }
 variable "dns_name" {
   description = "The DNS name of the ELB"
@@ -102,104 +193,14 @@ variable "healthy_threshold" {
   description = "(Required) The number of checks before the instance is declared healthy."
   type        = string
 }
-variable "instance_port" {
-  description = "(Required) The port on the instance to route to"
+variable "name" {
+  description = "The name of the ELB"
   type        = string
-}
-variable "cross_zone_load_balancing" {
-  description = "(Optional) Enable cross-zone load balancing. Default: true"
-  type        = string
-  default     = ""
-}
-variable "internal" {
-  description = "(Optional) If true, ELB will be an internal ELB."
-  type        = string
-  default     = ""
-}
-variable "subnets" {
-  description = "(Required for a VPC ELB) A list of subnet IDs to attach to the ELB."
-  type        = string
-}
-variable "health_check" {
-  description = "(Optional) A health_check block. Health Check documented below."
-  type        = string
-  default     = ""
-}
-variable "idle_timeout" {
-  description = "(Optional) The time in seconds that the connection is allowed to be idle. Default: 60"
-  type        = string
-  default     = ""
-}
-variable "instances" {
-  description = "The list of instances in the ELB"
-  type        = string
-}
-variable "interval" {
-  description = "(Required) The interval between checks."
-  type        = string
-}
-variable "security_groups" {
-  description = "(Optional) A list of security group IDs to assign to the ELB.\nOnly valid if creating an ELB within a VPC"
-  type        = string
-  default     = ""
-}
-variable "target" {
-  description = ""
-  type        = string
-}
-variable "bucket_prefix" {
-  description = "(Optional) The S3 bucket prefix. Logs are stored in the root if not configured."
-  type        = string
-  default     = ""
 }
 variable "connection_draining_timeout" {
   description = "(Optional) The time in seconds to allow for connections to drain. Default: 300"
   type        = string
   default     = ""
-}
-variable "listener" {
-  description = "(Required) A list of listener blocks. Listeners documented below."
-  type        = string
-}
-variable "source_security_group" {
-  description = "The name of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Use this for Classic or Default VPC only."
-  type        = string
-}
-variable "source_security_group_id" {
-  description = "The ID of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Only available on ELBs launched in a VPC."
-  type        = string
-}
-variable "ssl_certificate_id" {
-  description = "strongNote ECDSA-specific restrictions below.  Only valid when lb_protocol is either HTTPS or SSLHealth Check (health_check) supports the following:"
-  type        = string
-}
-variable "unhealthy_threshold" {
-  description = "(Required) The number of checks before the instance is declared unhealthy."
-  type        = string
-}
-variable "zone_id" {
-  description = "The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)"
-  type        = string
-}
-variable "HTTP" {
-  description = ", HTTPSPORT and PATH are required"
-  type        = string
-}
-variable "TCP" {
-  description = ", SSLPORT is required, PATH is not supported"
-  type        = string
-}
-variable "availability_zones" {
-  description = "(Required for an EC2-classic ELB) The AZ's to serve traffic in."
-  type        = string
-}
-variable "bucket" {
-  description = "(Required) The S3 bucket name to store the logs in."
-  type        = string
-}
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -321,41 +322,133 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "connection_draining" {
-  description = "(Optional) Boolean to enable connection draining. Default: false"
-  value       = aws_elb.aws_elb.connection_draining
+output "connection_draining_timeout" {
+  description = "(Optional) The time in seconds to allow for connections to drain. Default: 300"
+  value       = aws_elb.aws_elb.connection_draining_timeout
+}
+output "TCP" {
+  description = ", SSLPORT is required, PATH is not supported"
+  value       = aws_elb.aws_elb.TCP
+}
+output "idle_timeout" {
+  description = "(Optional) The time in seconds that the connection is allowed to be idle. Default: 60"
+  value       = aws_elb.aws_elb.idle_timeout
+}
+output "source_security_group" {
+  description = "The name of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Use this for Classic or Default VPC only."
+  value       = aws_elb.aws_elb.source_security_group
+}
+output "zone_id" {
+  description = "The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)"
+  value       = aws_elb.aws_elb.zone_id
+}
+output "HTTP" {
+  description = ", HTTPSPORT and PATH are required"
+  value       = aws_elb.aws_elb.HTTP
+}
+output "arn" {
+  description = "The ARN of the ELB"
+  value       = aws_elb.aws_elb.arn
+}
+output "health_check" {
+  description = "(Optional) A health_check block. Health Check documented below."
+  value       = aws_elb.aws_elb.health_check
 }
 output "id" {
   description = "The name of the ELB"
   value       = aws_elb.aws_elb.id
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Exactly one of availability_zones or subnetsAccess Logs (access_logs) support the following:"
-  value       = aws_elb.aws_elb.tags
+output "instances" {
+  description = "The list of instances in the ELB"
+  value       = aws_elb.aws_elb.instances
 }
-output "access_logs" {
-  description = "(Optional) An Access Logs block. Access Logs documented below."
-  value       = aws_elb.aws_elb.access_logs
+output "interval" {
+  description = "(Required) The interval between checks."
+  value       = aws_elb.aws_elb.interval
 }
 output "lb_port" {
   description = "(Required) The port to listen on for the load balancer"
   value       = aws_elb.aws_elb.lb_port
 }
-output "name" {
-  description = "The name of the ELB"
-  value       = aws_elb.aws_elb.name
+output "source_security_group_id" {
+  description = "The ID of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Only available on ELBs launched in a VPC."
+  value       = aws_elb.aws_elb.source_security_group_id
 }
-output "instance_port" {
-  description = "(Required) The port on the instance to route to"
-  value       = aws_elb.aws_elb.instance_port
+output "access_logs" {
+  description = "(Optional) An Access Logs block. Access Logs documented below."
+  value       = aws_elb.aws_elb.access_logs
+}
+output "target" {
+  description = "(Required) The target of the check. Valid pattern is \"$${PROTOCOL}:$${PORT}$${PATH}\", where PROTOCOL\nvalues are:\n"
+  value       = aws_elb.aws_elb.target
+}
+output "subnets" {
+  description = "(Required for a VPC ELB) A list of subnet IDs to attach to the ELB."
+  value       = aws_elb.aws_elb.subnets
+}
+output "cross_zone_load_balancing" {
+  description = "(Optional) Enable cross-zone load balancing. Default: true"
+  value       = aws_elb.aws_elb.cross_zone_load_balancing
+}
+output "desync_mitigation_mode" {
+  description = "(Optional) Determines how the load balancer handles requests that might pose a security risk to an application due to HTTP desync. Valid values are monitor, defensive (default), strictest."
+  value       = aws_elb.aws_elb.desync_mitigation_mode
+}
+output "listener" {
+  description = "(Required) A list of listener blocks. Listeners documented below."
+  value       = aws_elb.aws_elb.listener
+}
+output "security_groups" {
+  description = "(Optional) A list of security group IDs to assign to the ELB.\nOnly valid if creating an ELB within a VPC"
+  value       = aws_elb.aws_elb.security_groups
+}
+output "availability_zones" {
+  description = "(Required for an EC2-classic ELB) The AZ's to serve traffic in."
+  value       = aws_elb.aws_elb.availability_zones
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Exactly one of availability_zones or subnetsAccess Logs (access_logs) support the following:"
+  value       = aws_elb.aws_elb.tags
+}
+output "unhealthy_threshold" {
+  description = "(Required) The number of checks before the instance is declared unhealthy."
+  value       = aws_elb.aws_elb.unhealthy_threshold
+}
+output "bucket" {
+  description = "(Required) The S3 bucket name to store the logs in."
+  value       = aws_elb.aws_elb.bucket
+}
+output "instance_protocol" {
+  description = "(Required) The protocol to use to the instance. Valid\nvalues are HTTP, HTTPS, TCP, or SSL"
+  value       = aws_elb.aws_elb.instance_protocol
 }
 output "lb_protocol" {
   description = "(Required) The protocol to listen on. Valid values are HTTPHTTPS, TCP, or SSL"
   value       = aws_elb.aws_elb.lb_protocol
 }
-output "arn" {
-  description = "The ARN of the ELB"
-  value       = aws_elb.aws_elb.arn
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
+  value       = aws_elb.aws_elb.name_prefix
+}
+output "instance_port" {
+  description = "(Required) The port on the instance to route to"
+  value       = aws_elb.aws_elb.instance_port
+}
+output "internal" {
+  description = "(Optional) If true, ELB will be an internal ELB."
+  value       = aws_elb.aws_elb.internal
+}
+output "ssl_certificate_id" {
+  description = "(Optional) The ARN of an SSL certificate you have\nuploaded to AWS IAM. strongNote ECDSA-specific restrictions below.  Only valid when lb_protocol is either HTTPS or SSLHealth Check (health_check) supports the following:"
+  value       = aws_elb.aws_elb.ssl_certificate_id
+}
+output "timeout" {
+  description = "(Required) The length of time before the check times out.Note on ECDSA Key AlgorithmIf the ARN of the ssl_certificate_idERR_SSL_VERSION_OR_CIPHER_MISMATCHIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_elb.aws_elb.timeout
+}
+output "connection_draining" {
+  description = "(Optional) Boolean to enable connection draining. Default: false"
+  value       = aws_elb.aws_elb.connection_draining
 }
 output "dns_name" {
   description = "The DNS name of the ELB"
@@ -369,141 +462,49 @@ output "healthy_threshold" {
   description = "(Required) The number of checks before the instance is declared healthy."
   value       = aws_elb.aws_elb.healthy_threshold
 }
-output "cross_zone_load_balancing" {
-  description = "(Optional) Enable cross-zone load balancing. Default: true"
-  value       = aws_elb.aws_elb.cross_zone_load_balancing
-}
-output "internal" {
-  description = "(Optional) If true, ELB will be an internal ELB."
-  value       = aws_elb.aws_elb.internal
-}
-output "security_groups" {
-  description = "(Optional) A list of security group IDs to assign to the ELB.\nOnly valid if creating an ELB within a VPC"
-  value       = aws_elb.aws_elb.security_groups
-}
-output "subnets" {
-  description = "(Required for a VPC ELB) A list of subnet IDs to attach to the ELB."
-  value       = aws_elb.aws_elb.subnets
-}
-output "health_check" {
-  description = "(Optional) A health_check block. Health Check documented below."
-  value       = aws_elb.aws_elb.health_check
-}
-output "idle_timeout" {
-  description = "(Optional) The time in seconds that the connection is allowed to be idle. Default: 60"
-  value       = aws_elb.aws_elb.idle_timeout
-}
-output "instances" {
-  description = "The list of instances in the ELB"
-  value       = aws_elb.aws_elb.instances
-}
-output "interval" {
-  description = "(Required) The interval between checks."
-  value       = aws_elb.aws_elb.interval
-}
-output "source_security_group_id" {
-  description = "The ID of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Only available on ELBs launched in a VPC."
-  value       = aws_elb.aws_elb.source_security_group_id
-}
-output "target" {
-  description = ""
-  value       = aws_elb.aws_elb.target
+output "name" {
+  description = "The name of the ELB"
+  value       = aws_elb.aws_elb.name
 }
 output "bucket_prefix" {
   description = "(Optional) The S3 bucket prefix. Logs are stored in the root if not configured."
   value       = aws_elb.aws_elb.bucket_prefix
 }
-output "connection_draining_timeout" {
-  description = "(Optional) The time in seconds to allow for connections to drain. Default: 300"
-  value       = aws_elb.aws_elb.connection_draining_timeout
-}
-output "listener" {
-  description = "(Required) A list of listener blocks. Listeners documented below."
-  value       = aws_elb.aws_elb.listener
-}
-output "source_security_group" {
-  description = "The name of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Use this for Classic or Default VPC only."
-  value       = aws_elb.aws_elb.source_security_group
-}
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
-  value       = aws_elb.aws_elb.name_prefix
-}
-output "ssl_certificate_id" {
-  description = "strongNote ECDSA-specific restrictions below.  Only valid when lb_protocol is either HTTPS or SSLHealth Check (health_check) supports the following:"
-  value       = aws_elb.aws_elb.ssl_certificate_id
-}
-output "unhealthy_threshold" {
-  description = "(Required) The number of checks before the instance is declared unhealthy."
-  value       = aws_elb.aws_elb.unhealthy_threshold
-}
-output "zone_id" {
-  description = "The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)"
-  value       = aws_elb.aws_elb.zone_id
-}
-output "HTTP" {
-  description = ", HTTPSPORT and PATH are required"
-  value       = aws_elb.aws_elb.HTTP
-}
-output "TCP" {
-  description = ", SSLPORT is required, PATH is not supported"
-  value       = aws_elb.aws_elb.TCP
-}
-output "availability_zones" {
-  description = "(Required for an EC2-classic ELB) The AZ's to serve traffic in."
-  value       = aws_elb.aws_elb.availability_zones
-}
-output "bucket" {
-  description = "(Required) The S3 bucket name to store the logs in."
-  value       = aws_elb.aws_elb.bucket
-}
-output "desync_mitigation_mode" {
-  description = "(Optional) Determines how the load balancer handles requests that might pose a security risk to an application due to HTTP desync. Valid values are monitor, defensive (default), strictest."
-  value       = aws_elb.aws_elb.desync_mitigation_mode
-}
-output "instance_protocol" {
-  description = "(Required) The protocol to use to the instance. Valid\nvalues are HTTP, HTTPS, TCP, or SSL"
-  value       = aws_elb.aws_elb.instance_protocol
-}
-output "timeout" {
-  description = "(Required) The length of time before the check times out.Note on ECDSA Key AlgorithmIf the ARN of the ssl_certificate_idERR_SSL_VERSION_OR_CIPHER_MISMATCHIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_elb.aws_elb.timeout
-}
-output "zone_id" {
-  description = "The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)"
-  value       = aws_elb.aws_elb.zone_id
+output "dns_name" {
+  description = "The DNS name of the ELB"
+  value       = aws_elb.aws_elb.dns_name
 }
 output "instances" {
   description = "The list of instances in the ELB"
   value       = aws_elb.aws_elb.instances
 }
-output "dns_name" {
-  description = "The DNS name of the ELB"
-  value       = aws_elb.aws_elb.dns_name
-}
-output "id" {
-  description = "The name of the ELB"
-  value       = aws_elb.aws_elb.id
-}
 output "name" {
   description = "The name of the ELB"
   value       = aws_elb.aws_elb.name
-}
-output "source_security_group" {
-  description = "The name of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Use this for Classic or Default VPC only."
-  value       = aws_elb.aws_elb.source_security_group
 }
 output "source_security_group_id" {
   description = "The ID of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Only available on ELBs launched in a VPC."
   value       = aws_elb.aws_elb.source_security_group_id
 }
+output "arn" {
+  description = "The ARN of the ELB"
+  value       = aws_elb.aws_elb.arn
+}
+output "id" {
+  description = "The name of the ELB"
+  value       = aws_elb.aws_elb.id
+}
+output "source_security_group" {
+  description = "The name of the security group that you can use as\npart of your inbound rules for your load balancer's back-end application\ninstances. Use this for Classic or Default VPC only."
+  value       = aws_elb.aws_elb.source_security_group
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_elb.aws_elb.tags_all
 }
-output "arn" {
-  description = "The ARN of the ELB"
-  value       = aws_elb.aws_elb.arn
+output "zone_id" {
+  description = "The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record)"
+  value       = aws_elb.aws_elb.zone_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

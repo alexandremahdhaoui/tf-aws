@@ -1,29 +1,16 @@
 resource "aws_waf_byte_match_set" "aws_waf_byte_match_set" {
+  byte_match_tuples     = var.byte_match_tuples
+  data                  = var.data
+  field_to_match        = var.field_to_match
   name                  = var.name
   positional_constraint = var.positional_constraint
   target_string         = var.target_string
   text_transformation   = var.text_transformation
   type                  = var.type
-  byte_match_tuples     = var.byte_match_tuples
-  data                  = var.data
-  field_to_match        = var.field_to_match
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "type" {
-  description = "HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "byte_match_tuples" {
-  description = "Nested blocksbyte_match_tuplesArguments"
-  type        = string
-}
-variable "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  type        = string
-  default     = ""
 }
 variable "field_to_match" {
   description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
@@ -45,6 +32,19 @@ variable "target_string" {
 variable "text_transformation" {
   description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments"
   type        = string
+}
+variable "type" {
+  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "byte_match_tuples" {
+  description = "Specifies the bytes (typically a string that corresponds\nwith ASCII characters) that you want to search for in web requests,\nthe location in requests that you want to search, and other settings.Nested blocksbyte_match_tuplesArguments"
+  type        = string
+}
+variable "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,14 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "byte_match_tuples" {
-  description = "Nested blocksbyte_match_tuplesArguments"
-  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.byte_match_tuples
-}
-output "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.data
-}
 output "field_to_match" {
   description = "(Required) The part of a web request that you want to search, such as a specified header or a query string."
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.field_to_match
@@ -195,8 +187,16 @@ output "text_transformation" {
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.text_transformation
 }
 output "type" {
-  description = "HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
+  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_byte_match_set.aws_waf_byte_match_set.type
+}
+output "byte_match_tuples" {
+  description = "Specifies the bytes (typically a string that corresponds\nwith ASCII characters) that you want to search for in web requests,\nthe location in requests that you want to search, and other settings.Nested blocksbyte_match_tuplesArguments"
+  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.byte_match_tuples
+}
+output "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  value       = aws_waf_byte_match_set.aws_waf_byte_match_set.data
 }
 output "id" {
   description = "The ID of the WAF Byte Match Set."

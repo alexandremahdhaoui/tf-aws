@@ -1,24 +1,41 @@
 resource "aws_connect_security_profile" "aws_connect_security_profile" {
+  name                     = var.name
+  tags                     = var.tags
+  description              = var.description
+  id                       = var.id
+  organization_resource_id = var.organization_resource_id
   permissions              = var.permissions
   security_profile_id      = var.security_profile_id
   arn                      = var.arn
-  id                       = var.id
-  organization_resource_id = var.organization_resource_id
-  tags                     = var.tags
-  description              = var.description
   instance_id              = var.instance_id
-  name                     = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Specifies the description of the Security Profile."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Security Profile separated by a colon (:)."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Specifies the name of the Security Profile."
+  type        = string
+}
+variable "tags" {
+  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the Security Profile."
   type        = string
 }
-variable "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Security Profile separated by a colon (:)."
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   type        = string
 }
 variable "organization_resource_id" {
@@ -33,24 +50,6 @@ variable "permissions" {
 variable "security_profile_id" {
   description = "The identifier for the Security Profile."
   type        = string
-}
-variable "description" {
-  description = "(Optional) Specifies the description of the Security Profile."
-  type        = string
-  default     = ""
-}
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Specifies the name of the Security Profile."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the Security Profile. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -172,26 +171,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Specifies the name of the Security Profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.name
-}
-output "tags" {
-  description = "(Optional) Tags to apply to the Security Profile. If configured with a provider\ndefault_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_security_profile.aws_connect_security_profile.tags
-}
-output "description" {
-  description = "(Optional) Specifies the description of the Security Profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.description
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_security_profile.aws_connect_security_profile.instance_id
-}
-output "organization_resource_id" {
-  description = "The organization resource identifier for the security profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.organization_resource_id
-}
 output "permissions" {
   description = "(Optional) Specifies a list of permissions assigned to the security profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.permissions
@@ -204,13 +183,29 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) of the Security Profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.arn
 }
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_security_profile.aws_connect_security_profile.instance_id
+}
+output "organization_resource_id" {
+  description = "The organization resource identifier for the security profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.organization_resource_id
+}
+output "tags" {
+  description = "default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_security_profile.aws_connect_security_profile.tags
+}
+output "description" {
+  description = "(Optional) Specifies the description of the Security Profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.description
+}
 output "id" {
   description = "The identifier of the hosting Amazon Connect Instance and identifier of the Security Profile separated by a colon (:)."
   value       = aws_connect_security_profile.aws_connect_security_profile.id
 }
-output "security_profile_id" {
-  description = "The identifier for the Security Profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.security_profile_id
+output "name" {
+  description = "(Required) Specifies the name of the Security Profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.name
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -227,6 +222,10 @@ output "id" {
 output "organization_resource_id" {
   description = "The organization resource identifier for the security profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.organization_resource_id
+}
+output "security_profile_id" {
+  description = "The identifier for the Security Profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.security_profile_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

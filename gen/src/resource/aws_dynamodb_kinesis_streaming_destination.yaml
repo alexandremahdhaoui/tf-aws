@@ -8,7 +8,9 @@ spec:
             description: (Required) The ARN for a Kinesis data stream. This must exist in the same account and region as the DynamoDB table.
             type: string
         table_name:
-            description: 'In addition to all arguments above, the following attributes are exported:'
+            description: |-
+                (Required) The name of the DynamoDB table. There
+                can only be one Kinesis streaming destination for a given DynamoDB table.In addition to all arguments above, the following attributes are exported:
             type: string
     attrs:
         id:

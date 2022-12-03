@@ -1,17 +1,22 @@
 resource "aws_batch_scheduling_policy" "aws_batch_scheduling_policy" {
-  compute_reservation = var.compute_reservation
-  name                = var.name
-  share_distribution  = var.share_distribution
-  share_identifier    = var.share_identifier
   arn                 = var.arn
   fairshare_policy    = var.fairshare_policy
   share_delay_seconds = var.share_delay_seconds
+  share_distribution  = var.share_distribution
+  compute_reservation = var.compute_reservation
+  name                = var.name
+  share_identifier    = var.share_identifier
   tags                = var.tags
   weight_factor       = var.weight_factor
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "weight_factor" {
+  description = "(Optional) The weight factor for the fair share identifier. For more information, see ShareAttributes.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "compute_reservation" {
   description = "(Optional) A value used to reserve some of the available maximum vCPU for fair share identifiers that have not yet been used. For more information, see FairsharePolicy."
@@ -22,14 +27,14 @@ variable "name" {
   description = "(Required) Specifies the name of the scheduling policy."
   type        = string
 }
-variable "share_distribution" {
-  description = "(Optional) One or more share distribution blocks which define the weights for the fair share identifiers for the fair share policy. For more information, see FairsharePolicy. The share_distribution block is documented below.A share_distribution block supports the following arguments:"
-  type        = string
-  default     = ""
-}
 variable "share_identifier" {
   description = "(Required) A fair share identifier or fair share identifier prefix. For more information, see ShareAttributes."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A fairshare_policy block supports the following arguments:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name of the scheduling policy."
@@ -45,13 +50,8 @@ variable "share_delay_seconds" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A fairshare_policy block supports the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "weight_factor" {
-  description = "(Optional) The weight factor for the fair share identifier. For more information, see ShareAttributes.In addition to all arguments above, the following attributes are exported:"
+variable "share_distribution" {
+  description = "(Optional) One or more share distribution blocks which define the weights for the fair share identifiers for the fair share policy. For more information, see FairsharePolicy. The share_distribution block is documented below.A share_distribution block supports the following arguments:"
   type        = string
   default     = ""
 }
@@ -175,9 +175,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "fairshare_policy" {
+  description = "(Optional) A fairshare policy block specifies the compute_reservation, share_delay_seconds, and share_distribution of the scheduling policy. The fairshare_policy block is documented below."
+  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.fairshare_policy
+}
 output "share_delay_seconds" {
   description = "(Optional) The time period to use to calculate a fair share percentage for each fair share identifier in use, in seconds. For more information, see FairsharePolicy."
   value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.share_delay_seconds
+}
+output "share_distribution" {
+  description = "(Optional) One or more share distribution blocks which define the weights for the fair share identifiers for the fair share policy. For more information, see FairsharePolicy. The share_distribution block is documented below.A share_distribution block supports the following arguments:"
+  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.share_distribution
+}
+output "arn" {
+  description = "The Amazon Resource Name of the scheduling policy."
+  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.arn
+}
+output "name" {
+  description = "(Required) Specifies the name of the scheduling policy."
+  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.name
+}
+output "share_identifier" {
+  description = "(Required) A fair share identifier or fair share identifier prefix. For more information, see ShareAttributes."
+  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.share_identifier
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A fairshare_policy block supports the following arguments:"
@@ -187,29 +207,9 @@ output "weight_factor" {
   description = "(Optional) The weight factor for the fair share identifier. For more information, see ShareAttributes.In addition to all arguments above, the following attributes are exported:"
   value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.weight_factor
 }
-output "arn" {
-  description = "The Amazon Resource Name of the scheduling policy."
-  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.arn
-}
-output "fairshare_policy" {
-  description = "(Optional) A fairshare policy block specifies the compute_reservation, share_delay_seconds, and share_distribution of the scheduling policy. The fairshare_policy block is documented below."
-  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.fairshare_policy
-}
-output "share_distribution" {
-  description = "(Optional) One or more share distribution blocks which define the weights for the fair share identifiers for the fair share policy. For more information, see FairsharePolicy. The share_distribution block is documented below.A share_distribution block supports the following arguments:"
-  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.share_distribution
-}
-output "share_identifier" {
-  description = "(Required) A fair share identifier or fair share identifier prefix. For more information, see ShareAttributes."
-  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.share_identifier
-}
 output "compute_reservation" {
   description = "(Optional) A value used to reserve some of the available maximum vCPU for fair share identifiers that have not yet been used. For more information, see FairsharePolicy."
   value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.compute_reservation
-}
-output "name" {
-  description = "(Required) Specifies the name of the scheduling policy."
-  value       = aws_batch_scheduling_policy.aws_batch_scheduling_policy.name
 }
 output "arn" {
   description = "The Amazon Resource Name of the scheduling policy."

@@ -5,7 +5,9 @@ metadata:
 spec:
     args:
         attribute:
-            description: ""
+            description: |
+                (Optional) An SSL Negotiation policy attribute. Each has two properties:
+            optional: true
             type: string
         id:
             description: The ID of the policy.

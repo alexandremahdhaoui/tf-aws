@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "SES receipt rule set ARN."
-  type        = string
-}
 variable "rule_set_name" {
   description = "(Required) Name of the rule set.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "arn" {
+  description = "SES receipt rule set ARN."
   type        = string
 }
 variable "tag_instance_id" {

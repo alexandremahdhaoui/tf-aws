@@ -1,9 +1,9 @@
 resource "aws_macie2_account" "aws_macie2_account" {
-  created_at                   = var.created_at
-  finding_publishing_frequency = var.finding_publishing_frequency
   id                           = var.id
   service_role                 = var.service_role
   status                       = var.status
+  created_at                   = var.created_at
+  finding_publishing_frequency = var.finding_publishing_frequency
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

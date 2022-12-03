@@ -1,10 +1,10 @@
 resource "aws_cloudfront_origin_access_control" "aws_cloudfront_origin_access_control" {
-  name                              = var.name
   origin_access_control_origin_type = var.origin_access_control_origin_type
   signing_behavior                  = var.signing_behavior
   signing_protocol                  = var.signing_protocol
   description                       = var.description
   id                                = var.id
+  name                              = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -154,10 +154,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "origin_access_control_origin_type" {
-  description = "(Required) The type of origin that this Origin Access Control is for. The only valid value is s3."
-  value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.origin_access_control_origin_type
-}
 output "signing_behavior" {
   description = "(Required) Specifies which requests CloudFront signs. Specify always for the most common use case. Allowed values: always, never, no-override."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.signing_behavior
@@ -177,6 +173,10 @@ output "id" {
 output "name" {
   description = "(Required) A name that identifies the Origin Access Control."
   value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.name
+}
+output "origin_access_control_origin_type" {
+  description = "(Required) The type of origin that this Origin Access Control is for. The only valid value is s3."
+  value       = aws_cloudfront_origin_access_control.aws_cloudfront_origin_access_control.origin_access_control_origin_type
 }
 output "etag" {
   description = "The current version of this Origin Access Control."

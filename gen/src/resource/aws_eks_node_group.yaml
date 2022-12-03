@@ -13,8 +13,7 @@ spec:
             optional: true
             type: string
         autoscaling_groups:
-            description: |
-                List of objects containing information about AutoScaling Groups.
+            description: ""
             optional: true
             type: string
         capacity_type:
@@ -111,8 +110,7 @@ spec:
             optional: true
             type: string
         resources:
-            description: |
-                List of objects containing information about underlying resources.
+            description: ""
             optional: true
             type: string
         scaling_config:
@@ -157,8 +155,7 @@ spec:
             description: Amazon Resource Name (ARN) of the EKS Node Group.
             type: string
         autoscaling_groups:
-            description: |
-                List of objects containing information about AutoScaling Groups.
+            description: ""
             type: string
         create:
             description: (Default 60m)
@@ -176,8 +173,7 @@ spec:
             description: Identifier of the remote access EC2 Security Group.
             type: string
         resources:
-            description: |
-                List of objects containing information about underlying resources.
+            description: ""
             type: string
         status:
             description: 'Status of the EKS Node Group.TimeoutsConfiguration options:'

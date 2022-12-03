@@ -1,7 +1,7 @@
 resource "aws_service_discovery_instance" "aws_service_discovery_instance" {
-  attributes  = var.attributes
   instance_id = var.instance_id
   service_id  = var.service_id
+  attributes  = var.attributes
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -147,7 +147,7 @@ output "arn" {
   value       = aws_ses_domain_identity.aws_ses_domain_identity.arn
 }
 output "verification_token" {
-  description = "A code which when added to the domain as a TXT record\nwill signal to SES that the owner of the domain has authorised SES to act on\ntheir behalf. The domain identity will be in state \"verification pending\"\nuntil this is done. See below for an example of how this might be achieved\nwhen the domain is hosted in Route 53 and managed by Terraform.  Find out\nmore about verifying domains in Amazon SES in the .Example Usage"
+  description = ".Example Usage"
   value       = aws_ses_domain_identity.aws_ses_domain_identity.verification_token
 }
 output "provider_region" {

@@ -1,20 +1,12 @@
 resource "aws_cloudwatch_log_subscription_filter" "aws_cloudwatch_log_subscription_filter" {
-  destination_arn = var.destination_arn
   filter_pattern  = var.filter_pattern
   log_group_name  = var.log_group_name
   name            = var.name
   role_arn        = var.role_arn
+  destination_arn = var.destination_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "destination_arn" {
-  description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
-  type        = string
-}
-variable "filter_pattern" {
-  description = "(Required) A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Use empty string \"\" to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
   type        = string
 }
 variable "log_group_name" {
@@ -29,6 +21,14 @@ variable "role_arn" {
   description = "(Optional) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to deliver ingested log events to the destination. If you use Lambda as a destination, you should skip this argument and use aws_lambda_permission resource for granting access from CloudWatch logs to the destination Lambda function."
   type        = string
   default     = ""
+}
+variable "destination_arn" {
+  description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
+  type        = string
+}
+variable "filter_pattern" {
+  description = "(Required) A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Use empty string \"\" to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -150,6 +150,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "destination_arn" {
+  description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
+  value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.destination_arn
+}
 output "filter_pattern" {
   description = "(Required) A valid CloudWatch Logs filter pattern for subscribing to a filtered stream of log events. Use empty string \"\" to match everything. For more information, see the Amazon CloudWatch Logs User Guide."
   value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.filter_pattern
@@ -165,10 +169,6 @@ output "name" {
 output "role_arn" {
   description = "(Optional) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to deliver ingested log events to the destination. If you use Lambda as a destination, you should skip this argument and use aws_lambda_permission resource for granting access from CloudWatch logs to the destination Lambda function."
   value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.role_arn
-}
-output "destination_arn" {
-  description = "(Required) The ARN of the destination to deliver matching log events to. Kinesis stream or Lambda function ARN."
-  value       = aws_cloudwatch_log_subscription_filter.aws_cloudwatch_log_subscription_filter.destination_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

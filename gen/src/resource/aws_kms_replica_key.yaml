@@ -8,7 +8,11 @@ spec:
             description: The Amazon Resource Name (ARN) of the replica key. The key ARNs of related multi-Region keys differ only in the Region value.
             type: string
         bypass_policy_lockout_safety_check:
-            description: Default Key Policy section in the emAWS Key Management Service Developer Guidefalse.
+            description: |-
+                (Optional) A flag to indicate whether to bypass the key policy lockout safety check.
+                Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.
+                For more information, refer to the scenario in the Default Key Policy section in the emAWS Key Management Service Developer Guidefalse.
+            optional: true
             type: string
         deletion_window_in_days:
             description: 7 and 30, inclusive. If you do not specify a value, it defaults to 30.

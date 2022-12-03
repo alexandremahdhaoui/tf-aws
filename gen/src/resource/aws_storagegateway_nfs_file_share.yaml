@@ -20,11 +20,7 @@ spec:
             optional: true
             type: string
         cache_stale_timeout_in_seconds:
-            description: |-
-                (Optional) Refreshes a file share's cache by using Time To Live (TTL).
-                TTL is the length of time since the last refresh after which access to the directory would cause the file gateway
-                to first refresh that directory's contents from the Amazon S3 bucket. Valid Values: 300 to 2,592,000 seconds (5 minutes to 30 days)In addition to all arguments above, the following attributes are exported:
-            optional: true
+            description: 'In addition to all arguments above, the following attributes are exported:'
             type: string
         client_list:
             description: (Required) The list of clients that are allowed to access the file gateway. The list must contain either valid IP addresses or valid CIDR blocks. Set to ["0.0.0.0/0"] to not limit access. Minimum 1 item. Maximum 100 items.

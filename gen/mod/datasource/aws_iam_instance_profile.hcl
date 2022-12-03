@@ -4,14 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "arn" {
-  description = "ARN."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
-}
-output "create_date" {
-  description = "String representation of the date the instance profile was created."
-  value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
-}
 output "path" {
   description = "Path to the instance profile."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.path
@@ -23,6 +15,14 @@ output "role_arn" {
 output "role_id" {
   description = "Role ID associated with this instance profile."
   value       = aws_iam_instance_profile.aws_iam_instance_profile.role_id
+}
+output "arn" {
+  description = "ARN."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.arn
+}
+output "create_date" {
+  description = "String representation of the date the instance profile was created."
+  value       = aws_iam_instance_profile.aws_iam_instance_profile.create_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

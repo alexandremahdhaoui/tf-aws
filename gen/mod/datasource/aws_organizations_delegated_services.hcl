@@ -5,7 +5,7 @@ variable "provider_region" {
   type        = string
 }
 output "delegated_services" {
-  description = "Services for which the account is a delegated administrator, which have the following attributes:\n"
+  description = ""
   value       = aws_organizations_delegated_services.aws_organizations_delegated_services.delegated_services
 }
 output "delegation_enabled_date" {

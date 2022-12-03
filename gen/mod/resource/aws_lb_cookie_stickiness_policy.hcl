@@ -1,12 +1,16 @@
 resource "aws_lb_cookie_stickiness_policy" "aws_lb_cookie_stickiness_policy" {
-  cookie_expiration_period = var.cookie_expiration_period
   id                       = var.id
   lb_port                  = var.lb_port
   load_balancer            = var.load_balancer
   name                     = var.name
+  cookie_expiration_period = var.cookie_expiration_period
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "lb_port" {
+  description = "The load balancer port to which the policy is applied."
   type        = string
 }
 variable "load_balancer" {
@@ -23,10 +27,6 @@ variable "cookie_expiration_period" {
 }
 variable "id" {
   description = "The ID of the policy."
-  type        = string
-}
-variable "lb_port" {
-  description = "The load balancer port to which the policy is applied."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,10 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cookie_expiration_period" {
-  description = "In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.cookie_expiration_period
-}
 output "id" {
   description = "The ID of the policy."
   value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.id
@@ -168,6 +164,10 @@ output "load_balancer" {
 output "name" {
   description = "The name of the stickiness policy."
   value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.name
+}
+output "cookie_expiration_period" {
+  description = "In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lb_cookie_stickiness_policy.aws_lb_cookie_stickiness_policy.cookie_expiration_period
 }
 output "id" {
   description = "The ID of the policy."

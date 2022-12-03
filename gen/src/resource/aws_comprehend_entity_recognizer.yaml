@@ -22,9 +22,7 @@ spec:
             description: (Required) The JSON attribute that contains the annotations for the training documents.
             type: string
         augmented_manifests:
-            description: |-
-                (Optional) List of training datasets produced by Amazon SageMaker Ground Truth.
-                Used if data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below.
+            description: data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below.
             optional: true
             type: string
         create:
@@ -70,14 +68,19 @@ spec:
             optional: true
             type: string
         language_code:
-            description: en, es, fr, it, de, or pt.
+            description: |-
+                (Required) Two-letter language code for the language.
+                One of en, es, fr, it, de, or pt.
             type: string
         model_kms_key_id:
             description: (Optional) The ID or ARN of a KMS Key used to encrypt trained Entity Recognizers.
             optional: true
             type: string
         name:
-            description: -).
+            description: |-
+                (Required) Name for the Entity Recognizer.
+                Has a maximum length of 63 characters.
+                Can contain upper- and lower-case letters, numbers, and hypen (-).
             type: string
         s3_uri:
             description: (Required) Location of entity list.entity_types Configuration Block
@@ -109,15 +112,20 @@ spec:
             optional: true
             type: string
         type:
-            description: \n), carriage return (\r), or tab (\t).vpc_config Configuration Block
-            optional: true
+            description: |-
+                (Required) An entity type to be matched by the Entity Recognizer.
+                Cannot contain a newline (\n), carriage return (\r), or tab (\t).vpc_config Configuration Block
             type: string
         update:
             description: '(Optional, Default: 60m)'
             optional: true
             type: string
         version_name:
-            description: '""-version_name_prefix.'
+            description: |-
+                (Optional) Name for the version of the Entity Recognizer.
+                Each version must have a unique name within the Entity Recognizer.
+                If omitted, Terraform will assign a random, unique version name.
+                If explicitly set to ""-version_name_prefix.
             optional: true
             type: string
         version_name_prefix:

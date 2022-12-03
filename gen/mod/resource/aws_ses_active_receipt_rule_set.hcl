@@ -1,6 +1,6 @@
 resource "aws_ses_active_receipt_rule_set" "aws_ses_active_receipt_rule_set" {
-  rule_set_name = var.rule_set_name
   id            = var.id
+  rule_set_name = var.rule_set_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

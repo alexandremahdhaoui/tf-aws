@@ -1,24 +1,33 @@
 resource "aws_iam_policy" "aws_iam_policy" {
-  description = var.description
-  id          = var.id
+  name        = var.name
+  name_prefix = var.name_prefix
   path        = var.path
   policy      = var.policy
   policy_id   = var.policy_id
   arn         = var.arn
-  name        = var.name
-  name_prefix = var.name_prefix
+  description = var.description
+  id          = var.id
   tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
+variable "tags" {
+  description = "(Optional) Map of resource tags for the IAM Policy. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
   description = "The ARN assigned by AWS to this policy."
   type        = string
 }
-variable "path" {
-  description = "The path of the policy in IAM."
+variable "description" {
+  description = "The description of the policy."
+  type        = string
+}
+variable "id" {
+  description = "The ARN assigned by AWS to this policy."
   type        = string
 }
 variable "policy" {
@@ -29,10 +38,6 @@ variable "policy_id" {
   description = "The policy's ID."
   type        = string
 }
-variable "description" {
-  description = "The description of the policy."
-  type        = string
-}
 variable "name" {
   description = "The name of the policy."
   type        = string
@@ -41,13 +46,8 @@ variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of resource tags for the IAM Policy. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN assigned by AWS to this policy."
+variable "path" {
+  description = "The path of the policy in IAM."
   type        = string
 }
 variable "tag_instance_id" {
@@ -170,6 +170,22 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "The ARN assigned by AWS to this policy."
+  value       = aws_iam_policy.aws_iam_policy.arn
+}
+output "description" {
+  description = "The description of the policy."
+  value       = aws_iam_policy.aws_iam_policy.description
+}
+output "id" {
+  description = "The ARN assigned by AWS to this policy."
+  value       = aws_iam_policy.aws_iam_policy.id
+}
+output "tags" {
+  description = "(Optional) Map of resource tags for the IAM Policy. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_iam_policy.aws_iam_policy.tags
+}
 output "name" {
   description = "The name of the policy."
   value       = aws_iam_policy.aws_iam_policy.name
@@ -177,18 +193,6 @@ output "name" {
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_iam_policy.aws_iam_policy.name_prefix
-}
-output "tags" {
-  description = "(Optional) Map of resource tags for the IAM Policy. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_iam_policy.aws_iam_policy.tags
-}
-output "arn" {
-  description = "The ARN assigned by AWS to this policy."
-  value       = aws_iam_policy.aws_iam_policy.arn
-}
-output "id" {
-  description = "The ARN assigned by AWS to this policy."
-  value       = aws_iam_policy.aws_iam_policy.id
 }
 output "path" {
   description = "The path of the policy in IAM."
@@ -233,10 +237,6 @@ output "tags_all" {
 output "arn" {
   description = "The ARN assigned by AWS to this policy."
   value       = aws_iam_policy.aws_iam_policy.arn
-}
-output "description" {
-  description = "The description of the policy."
-  value       = aws_iam_policy.aws_iam_policy.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -40,10 +40,6 @@ variable "accept_language" {
   type        = string
   default     = ""
 }
-output "portfolio_id" {
-  description = "Identifier of the portfolio the product resides in. The constraint applies only to the instance of the product that lives within this portfolio."
-  value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.portfolio_id
-}
 output "product_id" {
   description = "Identifier of the product the constraint applies to. A constraint applies to a specific instance of a product within a certain portfolio."
   value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.product_id
@@ -64,6 +60,14 @@ output "details" {
   description = "List of information about the constraints. See details below.details"
   value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.details
 }
+output "portfolio_id" {
+  description = "Identifier of the portfolio the product resides in. The constraint applies only to the instance of the product that lives within this portfolio."
+  value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.portfolio_id
+}
+output "constraint_id" {
+  description = "Identifier of the constraint."
+  value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.constraint_id
+}
 output "description" {
   description = "Description of the constraint."
   value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.description
@@ -79,10 +83,6 @@ output "portfolio_id" {
 output "product_id" {
   description = "Identifier of the product the constraint applies to. A constraint applies to a specific instance of a product within a certain portfolio."
   value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.product_id
-}
-output "constraint_id" {
-  description = "Identifier of the constraint."
-  value       = aws_servicecatalog_portfolio_constraints.aws_servicecatalog_portfolio_constraints.constraint_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

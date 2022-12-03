@@ -1,11 +1,15 @@
 datasource "aws_secretsmanager_secrets" "aws_secretsmanager_secrets" {
+  arns   = var.arns
   filter = var.filter
   name   = var.name
   values = var.values
-  arns   = var.arns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arns" {
+  description = "Set of ARNs of the matched Secrets Manager secrets."
   type        = string
 }
 variable "filter" {
@@ -18,10 +22,6 @@ variable "name" {
 }
 variable "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
-  type        = string
-}
-variable "arns" {
-  description = "Set of ARNs of the matched Secrets Manager secrets."
   type        = string
 }
 output "arns" {

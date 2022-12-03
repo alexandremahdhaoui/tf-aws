@@ -1,32 +1,41 @@
 resource "aws_s3_bucket_logging" "aws_s3_bucket_logging" {
-  expected_bucket_owner = var.expected_bucket_owner
   grantee               = var.grantee
   id                    = var.id
+  target_bucket         = var.target_bucket
+  target_prefix         = var.target_prefix
+  type                  = var.type
+  uri                   = var.uri
+  bucket                = var.bucket
+  email_address         = var.email_address
+  expected_bucket_owner = var.expected_bucket_owner
   permission            = var.permission
   target_grant          = var.target_grant
-  target_prefix         = var.target_prefix
-  uri                   = var.uri
-  email_address         = var.email_address
-  target_bucket         = var.target_bucket
-  type                  = var.type
-  bucket                = var.bucket
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "expected_bucket_owner" {
-  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
-  type        = string
-}
-variable "grantee" {
-  description = "(Required) A configuration block for the person being granted permissions documented below."
   type        = string
 }
 variable "id" {
   description = "(Optional) The canonical user ID of the grantee."
   type        = string
   default     = ""
+}
+variable "target_bucket" {
+  description = "(Required) The name of the bucket where you want Amazon S3 to store server access logs."
+  type        = string
+}
+variable "grantee" {
+  description = "(Required) A configuration block for the person being granted permissions documented below."
+  type        = string
+}
+variable "email_address" {
+  description = "(Optional) Email address of the grantee. See Regions and Endpoints for supported AWS regions where this argument can be specified."
+  type        = string
+  default     = ""
+}
+variable "expected_bucket_owner" {
+  description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
+  type        = string
 }
 variable "permission" {
   description = "(Required) Logging permissions assigned to the grantee for the bucket. Valid values: FULL_CONTROL, READ, WRITE.granteeThe grantee configuration block supports the following arguments:"
@@ -41,23 +50,14 @@ variable "target_prefix" {
   description = "(Required) A prefix for all log object keys."
   type        = string
 }
+variable "type" {
+  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
+  type        = string
+}
 variable "uri" {
   description = "(Optional) URI of the grantee group.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "email_address" {
-  description = "(Optional) Email address of the grantee. See Regions and Endpoints for supported AWS regions where this argument can be specified."
-  type        = string
-  default     = ""
-}
-variable "target_bucket" {
-  description = "(Required) The name of the bucket where you want Amazon S3 to store server access logs."
-  type        = string
-}
-variable "type" {
-  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
-  type        = string
 }
 variable "bucket" {
   description = "(Required, Forces new resource) The name of the bucket."
@@ -183,25 +183,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.bucket
-}
-output "target_bucket" {
-  description = "(Required) The name of the bucket where you want Amazon S3 to store server access logs."
-  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.target_bucket
-}
-output "type" {
-  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
-  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.type
+output "grantee" {
+  description = "(Required) A configuration block for the person being granted permissions documented below."
+  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.grantee
 }
 output "id" {
   description = "(Optional) The canonical user ID of the grantee."
   value       = aws_s3_bucket_logging.aws_s3_bucket_logging.id
 }
-output "permission" {
-  description = "(Required) Logging permissions assigned to the grantee for the bucket. Valid values: FULL_CONTROL, READ, WRITE.granteeThe grantee configuration block supports the following arguments:"
-  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.permission
+output "target_bucket" {
+  description = "(Required) The name of the bucket where you want Amazon S3 to store server access logs."
+  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.target_bucket
 }
 output "target_grant" {
   description = "(Optional) Set of configuration blocks with information for granting permissions documented below.target_grantThe target_grant configuration block supports the following arguments:"
@@ -211,9 +203,17 @@ output "target_prefix" {
   description = "(Required) A prefix for all log object keys."
   value       = aws_s3_bucket_logging.aws_s3_bucket_logging.target_prefix
 }
+output "type" {
+  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
+  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.type
+}
 output "uri" {
   description = "(Optional) URI of the grantee group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3_bucket_logging.aws_s3_bucket_logging.uri
+}
+output "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.bucket
 }
 output "email_address" {
   description = "(Optional) Email address of the grantee. See Regions and Endpoints for supported AWS regions where this argument can be specified."
@@ -223,9 +223,9 @@ output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   value       = aws_s3_bucket_logging.aws_s3_bucket_logging.expected_bucket_owner
 }
-output "grantee" {
-  description = "(Required) A configuration block for the person being granted permissions documented below."
-  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.grantee
+output "permission" {
+  description = "(Required) Logging permissions assigned to the grantee for the bucket. Valid values: FULL_CONTROL, READ, WRITE.granteeThe grantee configuration block supports the following arguments:"
+  value       = aws_s3_bucket_logging.aws_s3_bucket_logging.permission
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."

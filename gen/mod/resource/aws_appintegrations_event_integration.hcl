@@ -12,19 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) Name of the Event Integration."
-  type        = string
-}
-variable "source" {
-  description = "(Required) Source of the events.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the Event Integration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A event_filter block supports the following arguments:"
-  type        = string
-  default     = ""
-}
 variable "arn" {
   description = "ARN of the Event Integration."
   type        = string
@@ -45,6 +32,19 @@ variable "eventbridge_bus" {
 variable "id" {
   description = "Identifier of the Event Integration which is the name of the Event Integration."
   type        = string
+}
+variable "name" {
+  description = "(Required) Name of the Event Integration."
+  type        = string
+}
+variable "source" {
+  description = "(Required) Source of the events.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the Event Integration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A event_filter block supports the following arguments:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,14 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the Event Integration."
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.name
-}
-output "source" {
-  description = "(Required) Source of the events.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.source
-}
 output "tags" {
   description = "(Optional) Tags to apply to the Event Integration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A event_filter block supports the following arguments:"
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.tags
@@ -197,6 +189,14 @@ output "eventbridge_bus" {
 output "id" {
   description = "Identifier of the Event Integration which is the name of the Event Integration."
   value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.id
+}
+output "name" {
+  description = "(Required) Name of the Event Integration."
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.name
+}
+output "source" {
+  description = "(Required) Source of the events.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appintegrations_event_integration.aws_appintegrations_event_integration.source
 }
 output "arn" {
   description = "ARN of the Event Integration."

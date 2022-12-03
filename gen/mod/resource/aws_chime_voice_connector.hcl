@@ -140,6 +140,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "require_encryption" {
+  description = "(Required) When enabled, requires encryption for the Amazon Chime Voice Connector."
+  value       = aws_chime_voice_connector.aws_chime_voice_connector.require_encryption
+}
 output "aws_region" {
   description = "(Optional) The AWS Region in which the Amazon Chime Voice Connector is created. Default value: us-east-1In addition to all arguments above, the following attributes are exported:"
   value       = aws_chime_voice_connector.aws_chime_voice_connector.aws_region
@@ -147,10 +151,6 @@ output "aws_region" {
 output "name" {
   description = "(Required) The name of the Amazon Chime Voice Connector."
   value       = aws_chime_voice_connector.aws_chime_voice_connector.name
-}
-output "require_encryption" {
-  description = "(Required) When enabled, requires encryption for the Amazon Chime Voice Connector."
-  value       = aws_chime_voice_connector.aws_chime_voice_connector.require_encryption
 }
 output "outbound_host_name" {
   description = "The outbound host name for the Amazon Chime Voice Connector."

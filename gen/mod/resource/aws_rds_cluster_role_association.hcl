@@ -1,7 +1,7 @@
 resource "aws_rds_cluster_role_association" "aws_rds_cluster_role_association" {
+  role_arn              = var.role_arn
   db_cluster_identifier = var.db_cluster_identifier
   feature_name          = var.feature_name
-  role_arn              = var.role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

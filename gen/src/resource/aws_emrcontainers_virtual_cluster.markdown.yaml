@@ -11,8 +11,7 @@ spec:
             description: (Required) Configuration block for the container provider associated with your cluster.
             type: string
         eks_info:
-            description: |
-                Nested list containing EKS-specific information about the cluster where the EMR Containers cluster is running
+            description: ""
             type: string
         id:
             description: The ID of the cluster.

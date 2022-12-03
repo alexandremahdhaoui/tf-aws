@@ -1,17 +1,22 @@
 resource "aws_ssoadmin_permission_set" "aws_ssoadmin_permission_set" {
   description      = var.description
-  instance_arn     = var.instance_arn
-  session_duration = var.session_duration
-  arn              = var.arn
   created_date     = var.created_date
   id               = var.id
+  instance_arn     = var.instance_arn
   name             = var.name
   relay_state      = var.relay_state
+  session_duration = var.session_duration
   tags             = var.tags
+  arn              = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the Permission Set."
@@ -25,6 +30,10 @@ variable "id" {
   description = "The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (,)."
   type        = string
 }
+variable "instance_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
+  type        = string
+}
 variable "name" {
   description = "(Required, Forces new resource) The name of the Permission Set."
   type        = string
@@ -34,22 +43,13 @@ variable "relay_state" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "session_duration" {
+  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
   type        = string
   default     = ""
 }
 variable "description" {
   description = "(Optional) The description of the Permission Set."
-  type        = string
-  default     = ""
-}
-variable "instance_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
-  type        = string
-}
-variable "session_duration" {
-  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
   type        = string
   default     = ""
 }
@@ -173,6 +173,26 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "instance_arn" {
+  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.instance_arn
+}
+output "name" {
+  description = "(Required, Forces new resource) The name of the Permission Set."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.name
+}
+output "relay_state" {
+  description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.relay_state
+}
+output "session_duration" {
+  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.session_duration
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.tags
+}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Permission Set."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.arn
@@ -185,29 +205,9 @@ output "id" {
   description = "The Amazon Resource Names (ARNs) of the Permission Set and SSO Instance, separated by a comma (,)."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.id
 }
-output "name" {
-  description = "(Required, Forces new resource) The name of the Permission Set."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.name
-}
-output "relay_state" {
-  description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.relay_state
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.tags
-}
 output "description" {
   description = "(Optional) The description of the Permission Set."
   value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.description
-}
-output "instance_arn" {
-  description = "(Required, Forces new resource) The Amazon Resource Name (ARN) of the SSO Instance under which the operation will be executed."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.instance_arn
-}
-output "session_duration" {
-  description = "(Optional) The length of time that the application user sessions are valid in the ISO-8601 standard. Default: PT1H."
-  value       = aws_ssoadmin_permission_set.aws_ssoadmin_permission_set.session_duration
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Permission Set."

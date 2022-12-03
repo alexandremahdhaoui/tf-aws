@@ -1,31 +1,15 @@
 resource "aws_servicequotas_service_quota" "aws_servicequotas_service_quota" {
-  value         = var.value
-  adjustable    = var.adjustable
   arn           = var.arn
   default_value = var.default_value
   id            = var.id
   quota_code    = var.quota_code
   quota_name    = var.quota_name
   service_code  = var.service_code
+  value         = var.value
+  adjustable    = var.adjustable
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "adjustable" {
-  description = "Whether the service quota can be increased."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the service quota."
-  type        = string
-}
-variable "default_value" {
-  description = "Default value of the service quota."
-  type        = string
-}
-variable "id" {
-  description = "Service code and quota code, separated by a front slash (/)"
   type        = string
 }
 variable "quota_code" {
@@ -42,6 +26,22 @@ variable "service_code" {
 }
 variable "value" {
   description = "(Required) Float specifying the desired value for the service quota. If the desired value is higher than the current value, a quota increase request is submitted. When a known request is submitted and pending, the value reflects the desired value of the pending request.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "adjustable" {
+  description = "Whether the service quota can be increased."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the service quota."
+  type        = string
+}
+variable "default_value" {
+  description = "Default value of the service quota."
+  type        = string
+}
+variable "id" {
+  description = "Service code and quota code, separated by a front slash (/)"
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,6 +164,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "default_value" {
+  description = "Default value of the service quota."
+  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.default_value
+}
 output "id" {
   description = "Service code and quota code, separated by a front slash (/)"
   value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.id
@@ -192,9 +196,9 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of the service quota."
   value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.arn
 }
-output "default_value" {
-  description = "Default value of the service quota."
-  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.default_value
+output "service_name" {
+  description = "Name of the service."
+  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.service_name
 }
 output "adjustable" {
   description = "Whether the service quota can be increased."
@@ -215,10 +219,6 @@ output "id" {
 output "quota_name" {
   description = "Name of the quota."
   value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.quota_name
-}
-output "service_name" {
-  description = "Name of the service."
-  value       = aws_servicequotas_service_quota.aws_servicequotas_service_quota.service_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

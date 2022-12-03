@@ -124,14 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "share_status" {
-  description = "Whether the rule group is shared with other AWS accounts, or was shared with the current account by another AWS account. Sharing is configured through AWS Resource Access Manager (AWS RAM). Valid values: NOT_SHARED, SHARED_BY_ME, SHARED_WITH_ME"
-  value       = aws_route53_resolver_firewall_rule_group.markdown.aws_route53_resolver_firewall_rule_group.markdown.share_status
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_route53_resolver_firewall_rule_group.markdown.aws_route53_resolver_firewall_rule_group.markdown.tags_all
-}
 output "arn" {
   description = "The ARN (Amazon Resource Name) of the rule group."
   value       = aws_route53_resolver_firewall_rule_group.markdown.aws_route53_resolver_firewall_rule_group.markdown.arn
@@ -143,6 +135,14 @@ output "id" {
 output "owner_id" {
   description = "The AWS account ID for the account that created the rule group. When a rule group is shared with your account, this is the account that has shared the rule group with you."
   value       = aws_route53_resolver_firewall_rule_group.markdown.aws_route53_resolver_firewall_rule_group.markdown.owner_id
+}
+output "share_status" {
+  description = "Whether the rule group is shared with other AWS accounts, or was shared with the current account by another AWS account. Sharing is configured through AWS Resource Access Manager (AWS RAM). Valid values: NOT_SHARED, SHARED_BY_ME, SHARED_WITH_ME"
+  value       = aws_route53_resolver_firewall_rule_group.markdown.aws_route53_resolver_firewall_rule_group.markdown.share_status
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_route53_resolver_firewall_rule_group.markdown.aws_route53_resolver_firewall_rule_group.markdown.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

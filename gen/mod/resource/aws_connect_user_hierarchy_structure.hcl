@@ -1,17 +1,21 @@
 resource "aws_connect_user_hierarchy_structure" "aws_connect_user_hierarchy_structure" {
-  hierarchy_structure = var.hierarchy_structure
-  instance_id         = var.instance_id
-  level_four          = var.level_four
-  level_one           = var.level_one
-  level_two           = var.level_two
-  name                = var.name
-  arn                 = var.arn
   id                  = var.id
   level_five          = var.level_five
+  level_four          = var.level_four
+  level_one           = var.level_one
+  name                = var.name
+  arn                 = var.arn
+  hierarchy_structure = var.hierarchy_structure
+  instance_id         = var.instance_id
   level_three         = var.level_three
+  level_two           = var.level_two
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = " The Amazon Resource Name (ARN) of the hierarchy level."
   type        = string
 }
 variable "hierarchy_structure" {
@@ -22,13 +26,8 @@ variable "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance.A hierarchy_structure block supports the following arguments:"
   type        = string
 }
-variable "level_four" {
-  description = "(Optional) A block that defines the details of level four. The level block is documented below."
-  type        = string
-  default     = ""
-}
-variable "level_one" {
-  description = "(Optional) A block that defines the details of level one. The level block is documented below."
+variable "level_three" {
+  description = "(Optional) A block that defines the details of level three. The level block is documented below."
   type        = string
   default     = ""
 }
@@ -41,10 +40,6 @@ variable "name" {
   description = "(Required) The name of the user hierarchy level. Must not be more than 50 characters.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "arn" {
-  description = " The Amazon Resource Name (ARN) of the hierarchy level."
-  type        = string
-}
 variable "id" {
   description = "The identifier of the hosting Amazon Connect Instance.A level block supports the following additional attributes:"
   type        = string
@@ -54,8 +49,13 @@ variable "level_five" {
   type        = string
   default     = ""
 }
-variable "level_three" {
-  description = "(Optional) A block that defines the details of level three. The level block is documented below."
+variable "level_four" {
+  description = "(Optional) A block that defines the details of level four. The level block is documented below."
+  type        = string
+  default     = ""
+}
+variable "level_one" {
+  description = "(Optional) A block that defines the details of level one. The level block is documented below."
   type        = string
   default     = ""
 }
@@ -179,10 +179,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = " The Amazon Resource Name (ARN) of the hierarchy level."
-  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.arn
-}
 output "id" {
   description = "The identifier of the hosting Amazon Connect Instance.A level block supports the following additional attributes:"
   value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.id
@@ -190,18 +186,6 @@ output "id" {
 output "level_five" {
   description = "(Optional) A block that defines the details of level five. The level block is documented below.Each level block supports the following arguments:"
   value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.level_five
-}
-output "level_three" {
-  description = "(Optional) A block that defines the details of level three. The level block is documented below."
-  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.level_three
-}
-output "hierarchy_structure" {
-  description = "In addition to the arguments defined initially, there are attributes added to the levels created. These additional attributes are documented below."
-  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.hierarchy_structure
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance.A hierarchy_structure block supports the following arguments:"
-  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.instance_id
 }
 output "level_four" {
   description = "(Optional) A block that defines the details of level four. The level block is documented below."
@@ -218,6 +202,22 @@ output "level_two" {
 output "name" {
   description = "(Required) The name of the user hierarchy level. Must not be more than 50 characters.In addition to all arguments above, the following attributes are exported:"
   value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.name
+}
+output "arn" {
+  description = " The Amazon Resource Name (ARN) of the hierarchy level."
+  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.arn
+}
+output "hierarchy_structure" {
+  description = "In addition to the arguments defined initially, there are attributes added to the levels created. These additional attributes are documented below."
+  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.hierarchy_structure
+}
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance.A hierarchy_structure block supports the following arguments:"
+  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.instance_id
+}
+output "level_three" {
+  description = "(Optional) A block that defines the details of level three. The level block is documented below."
+  value       = aws_connect_user_hierarchy_structure.aws_connect_user_hierarchy_structure.level_three
 }
 output "arn" {
   description = " The Amazon Resource Name (ARN) of the hierarchy level."

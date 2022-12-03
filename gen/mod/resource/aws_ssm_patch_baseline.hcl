@@ -1,38 +1,37 @@
 resource "aws_ssm_patch_baseline" "aws_ssm_patch_baseline" {
-  id                                   = var.id
-  operating_system                     = var.operating_system
+  approved_patches_compliance_level    = var.approved_patches_compliance_level
+  enable_non_security                  = var.enable_non_security
   products                             = var.products
-  approve_until_date                   = var.approve_until_date
-  compliance_level                     = var.compliance_level
-  configuration                        = var.configuration
-  description                          = var.description
-  rejected_patches_action              = var.rejected_patches_action
   source                               = var.source
   tags                                 = var.tags
-  PATCH_SET                            = var.PATCH_SET
-  approved_patches_compliance_level    = var.approved_patches_compliance_level
-  approved_patches_enable_non_security = var.approved_patches_enable_non_security
-  rejected_patches                     = var.rejected_patches
-  enable_non_security                  = var.enable_non_security
+  approved_patches                     = var.approved_patches
+  compliance_level                     = var.compliance_level
+  configuration                        = var.configuration
   global_filter                        = var.global_filter
-  name                                 = var.name
+  operating_system                     = var.operating_system
+  rejected_patches_action              = var.rejected_patches_action
+  approve_until_date                   = var.approve_until_date
+  id                                   = var.id
+  rejected_patches                     = var.rejected_patches
   approval_rule                        = var.approval_rule
   approve_after_days                   = var.approve_after_days
-  approved_patches                     = var.approved_patches
+  approved_patches_enable_non_security = var.approved_patches_enable_non_security
   arn                                  = var.arn
+  description                          = var.description
+  name                                 = var.name
   patch_filter                         = var.patch_filter
+  PATCH_SET                            = var.PATCH_SET
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "approved_patches_compliance_level" {
-  description = "(Optional) The compliance level for approved patches.\nThis means that if an approved patch is reported as missing, this is the severity of the compliance violation.\nValid values are CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, UNSPECIFIEDUNSPECIFIED."
+variable "approval_rule" {
+  description = "approval_rule below."
   type        = string
-  default     = ""
 }
-variable "approved_patches_enable_non_security" {
-  description = ""
+variable "id" {
+  description = "The ID of the patch baseline."
   type        = string
 }
 variable "rejected_patches" {
@@ -40,10 +39,50 @@ variable "rejected_patches" {
   type        = string
   default     = ""
 }
-variable "rejected_patches_action" {
-  description = "(Optional) The action for Patch Manager to take on patches included in the rejected_patchesALLOW_AS_DEPENDENCY and BLOCK."
+variable "PATCH_SET" {
+  description = " defaults to OS if unspecified"
+  type        = string
+}
+variable "approve_after_days" {
+  description = "approve_until_date."
+  type        = string
+}
+variable "approved_patches_enable_non_security" {
+  description = ""
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the patch baseline."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the patch baseline."
   type        = string
   default     = ""
+}
+variable "name" {
+  description = "(Required) The name specified to identify the patch source."
+  type        = string
+}
+variable "patch_filter" {
+  description = "(Required) The patch filter group that defines the criteria for the rule.\nUp to 5 patch filters can be specified per approval rule using Key/Value pairs.\nValid combinations of these Keys and the operating_system value can be found in the SSM DescribePatchProperties API Reference*"
+  type        = string
+}
+variable "approved_patches" {
+  description = "approval_rule."
+  type        = string
+}
+variable "approved_patches_compliance_level" {
+  description = "CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, UNSPECIFIEDUNSPECIFIED."
+  type        = string
+}
+variable "enable_non_security" {
+  description = "falsesource BlockThe source block supports:"
+  type        = string
+}
+variable "products" {
+  description = "(Required) The specific operating system versions a patch repository applies to, such as \"Ubuntu16.04\", \"AmazonLinux2016.09\", \"RedhatEnterpriseLinux7.2\" or \"Suse12.7\"PatchFilter.In addition to all arguments above, the following attributes are exported:"
+  type        = string
 }
 variable "source" {
   description = "source below."
@@ -54,61 +93,21 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "PATCH_SET" {
-  description = " defaults to OS if unspecified"
-  type        = string
-}
-variable "approve_after_days" {
-  description = "(Optional) The number of days after the release date of each patch matched by the rule the patch is marked as approved in the patch baseline.\nValid Range: 0 to 100.\nConflicts with approve_until_date."
+variable "approve_until_date" {
+  description = "(Optional) The cutoff date for auto approval of released patches.\nAny patches released on or before this date are installed automatically.\nDate is formatted as YYYY-MM-DDapprove_after_days"
   type        = string
   default     = ""
-}
-variable "approved_patches" {
-  description = "(Optional) A list of explicitly approved patches for the baseline.\nCannot be specified with approval_rule."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the patch baseline."
-  type        = string
-}
-variable "enable_non_security" {
-  description = "(Optional) Boolean enabling the application of non-security updates.\nThe default value is falsesource BlockThe source block supports:"
-  type        = string
-  default     = ""
-}
-variable "global_filter" {
-  description = "PRODUCT, CLASSIFICATION, MSRC_SEVERITY, and PATCH_ID."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name specified to identify the patch source."
-  type        = string
-}
-variable "approval_rule" {
-  description = "(Optional) A set of rules used to include patches in the baseline.\nUp to 10 approval rules can be specified.\nSee approval_rule below."
-  type        = string
-  default     = ""
-}
-variable "patch_filter" {
-  description = "operating_system value can be found in the SSM DescribePatchProperties API Reference*"
-  type        = string
 }
 variable "compliance_level" {
   description = "CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, and UNSPECIFIEDUNSPECIFIED."
   type        = string
 }
 variable "configuration" {
-  description = "(Required) The value of the yum repo configuration.\nFor information about other options available for your yum repository configuration, see the dnf.conf documentation"
+  description = "dnf.conf documentation"
   type        = string
 }
-variable "description" {
-  description = "(Optional) The description of the patch baseline."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The ID of the patch baseline."
+variable "global_filter" {
+  description = "PRODUCT, CLASSIFICATION, MSRC_SEVERITY, and PATCH_ID."
   type        = string
 }
 variable "operating_system" {
@@ -116,13 +115,10 @@ variable "operating_system" {
   type        = string
   default     = ""
 }
-variable "products" {
-  description = "(Required) The specific operating system versions a patch repository applies to, such as \"Ubuntu16.04\", \"AmazonLinux2016.09\", \"RedhatEnterpriseLinux7.2\" or \"Suse12.7\"PatchFilter.In addition to all arguments above, the following attributes are exported:"
+variable "rejected_patches_action" {
+  description = "(Optional) The action for Patch Manager to take on patches included in the rejected_patchesALLOW_AS_DEPENDENCY and BLOCK."
   type        = string
-}
-variable "approve_until_date" {
-  description = "YYYY-MM-DDapprove_after_days"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -244,93 +240,93 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "products" {
-  description = "(Required) The specific operating system versions a patch repository applies to, such as \"Ubuntu16.04\", \"AmazonLinux2016.09\", \"RedhatEnterpriseLinux7.2\" or \"Suse12.7\"PatchFilter.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.products
+output "id" {
+  description = "The ID of the patch baseline."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.id
 }
-output "approve_until_date" {
-  description = "YYYY-MM-DDapprove_after_days"
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approve_until_date
+output "rejected_patches" {
+  description = "(Optional) A list of rejected patches."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.rejected_patches
 }
-output "compliance_level" {
-  description = "CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, and UNSPECIFIEDUNSPECIFIED."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.compliance_level
+output "approval_rule" {
+  description = "approval_rule below."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approval_rule
 }
-output "configuration" {
-  description = "(Required) The value of the yum repo configuration.\nFor information about other options available for your yum repository configuration, see the dnf.conf documentation"
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.configuration
+output "approve_after_days" {
+  description = "approve_until_date."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approve_after_days
+}
+output "approved_patches_enable_non_security" {
+  description = ""
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approved_patches_enable_non_security
+}
+output "arn" {
+  description = "The ARN of the patch baseline."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.arn
 }
 output "description" {
   description = "(Optional) The description of the patch baseline."
   value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.description
 }
-output "id" {
-  description = "The ID of the patch baseline."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.id
+output "name" {
+  description = "(Required) The name specified to identify the patch source."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.name
 }
-output "operating_system" {
-  description = "(Optional) The operating system the patch baseline applies to.\nValid values are\nAMAZON_LINUXAMAZON_LINUX_2AMAZON_LINUX_2022CENTOSDEBIANMACOSORACLE_LINUXRASPBIANREDHAT_ENTERPRISE_LINUXROCKY_LINUXSUSEUBUNTUWINDOWSWINDOWS."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.operating_system
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.approval_rule BlockThe approval_rule block supports:"
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.tags
+output "patch_filter" {
+  description = "(Required) The patch filter group that defines the criteria for the rule.\nUp to 5 patch filters can be specified per approval rule using Key/Value pairs.\nValid combinations of these Keys and the operating_system value can be found in the SSM DescribePatchProperties API Reference*"
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.patch_filter
 }
 output "PATCH_SET" {
   description = " defaults to OS if unspecified"
   value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.PATCH_SET
 }
 output "approved_patches_compliance_level" {
-  description = "(Optional) The compliance level for approved patches.\nThis means that if an approved patch is reported as missing, this is the severity of the compliance violation.\nValid values are CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, UNSPECIFIEDUNSPECIFIED."
+  description = "CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, UNSPECIFIEDUNSPECIFIED."
   value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approved_patches_compliance_level
 }
-output "approved_patches_enable_non_security" {
-  description = ""
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approved_patches_enable_non_security
+output "enable_non_security" {
+  description = "falsesource BlockThe source block supports:"
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.enable_non_security
 }
-output "rejected_patches" {
-  description = "(Optional) A list of rejected patches."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.rejected_patches
-}
-output "rejected_patches_action" {
-  description = "(Optional) The action for Patch Manager to take on patches included in the rejected_patchesALLOW_AS_DEPENDENCY and BLOCK."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.rejected_patches_action
+output "products" {
+  description = "(Required) The specific operating system versions a patch repository applies to, such as \"Ubuntu16.04\", \"AmazonLinux2016.09\", \"RedhatEnterpriseLinux7.2\" or \"Suse12.7\"PatchFilter.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.products
 }
 output "source" {
   description = "source below."
   value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.source
 }
-output "name" {
-  description = "(Required) The name specified to identify the patch source."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.name
-}
-output "approval_rule" {
-  description = "(Optional) A set of rules used to include patches in the baseline.\nUp to 10 approval rules can be specified.\nSee approval_rule below."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approval_rule
-}
-output "approve_after_days" {
-  description = "(Optional) The number of days after the release date of each patch matched by the rule the patch is marked as approved in the patch baseline.\nValid Range: 0 to 100.\nConflicts with approve_until_date."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approve_after_days
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.approval_rule BlockThe approval_rule block supports:"
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.tags
 }
 output "approved_patches" {
-  description = "(Optional) A list of explicitly approved patches for the baseline.\nCannot be specified with approval_rule."
+  description = "approval_rule."
   value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approved_patches
 }
-output "arn" {
-  description = "The ARN of the patch baseline."
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.arn
+output "compliance_level" {
+  description = "CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, and UNSPECIFIEDUNSPECIFIED."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.compliance_level
 }
-output "enable_non_security" {
-  description = "(Optional) Boolean enabling the application of non-security updates.\nThe default value is falsesource BlockThe source block supports:"
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.enable_non_security
+output "configuration" {
+  description = "dnf.conf documentation"
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.configuration
 }
 output "global_filter" {
   description = "PRODUCT, CLASSIFICATION, MSRC_SEVERITY, and PATCH_ID."
   value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.global_filter
 }
-output "patch_filter" {
-  description = "operating_system value can be found in the SSM DescribePatchProperties API Reference*"
-  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.patch_filter
+output "operating_system" {
+  description = "(Optional) The operating system the patch baseline applies to.\nValid values are\nAMAZON_LINUXAMAZON_LINUX_2AMAZON_LINUX_2022CENTOSDEBIANMACOSORACLE_LINUXRASPBIANREDHAT_ENTERPRISE_LINUXROCKY_LINUXSUSEUBUNTUWINDOWSWINDOWS."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.operating_system
+}
+output "rejected_patches_action" {
+  description = "(Optional) The action for Patch Manager to take on patches included in the rejected_patchesALLOW_AS_DEPENDENCY and BLOCK."
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.rejected_patches_action
+}
+output "approve_until_date" {
+  description = "(Optional) The cutoff date for auto approval of released patches.\nAny patches released on or before this date are installed automatically.\nDate is formatted as YYYY-MM-DDapprove_after_days"
+  value       = aws_ssm_patch_baseline.aws_ssm_patch_baseline.approve_until_date
 }
 output "arn" {
   description = "The ARN of the patch baseline."

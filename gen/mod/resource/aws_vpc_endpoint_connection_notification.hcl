@@ -1,25 +1,13 @@
 resource "aws_vpc_endpoint_connection_notification" "aws_vpc_endpoint_connection_notification" {
-  connection_events           = var.connection_events
-  connection_notification_arn = var.connection_notification_arn
   id                          = var.id
   state                       = var.state
   vpc_endpoint_id             = var.vpc_endpoint_id
   vpc_endpoint_service_id     = var.vpc_endpoint_service_id
+  connection_events           = var.connection_events
+  connection_notification_arn = var.connection_notification_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "connection_events" {
-  description = "(Required) One or more endpoint events for which to receive notifications.~> strongNOTE: One of vpc_endpoint_service_id or vpc_endpoint_id must be specified.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "connection_notification_arn" {
-  description = "(Required) The ARN of the SNS topic for the notifications."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the VPC connection notification."
   type        = string
 }
 variable "state" {
@@ -35,6 +23,18 @@ variable "vpc_endpoint_service_id" {
   description = "(Optional) The ID of the VPC Endpoint Service to receive notifications for."
   type        = string
   default     = ""
+}
+variable "connection_events" {
+  description = "(Required) One or more endpoint events for which to receive notifications.~> strongNOTE: One of vpc_endpoint_service_id or vpc_endpoint_id must be specified.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "connection_notification_arn" {
+  description = "(Required) The ARN of the SNS topic for the notifications."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the VPC connection notification."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

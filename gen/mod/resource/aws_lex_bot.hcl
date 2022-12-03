@@ -1,37 +1,146 @@
 resource "aws_lex_bot" "aws_lex_bot" {
-  process_behavior                = var.process_behavior
-  status                          = var.status
-  intent                          = var.intent
-  message                         = var.message
-  content                         = var.content
-  delete                          = var.delete
   enable_model_improvements       = var.enable_model_improvements
-  intent_name                     = var.intent_name
-  nlu_intent_confidence_threshold = var.nlu_intent_confidence_threshold
-  checksum                        = var.checksum
-  child_directed                  = var.child_directed
-  locale                          = var.locale
+  failure_reason                  = var.failure_reason
   max_attempts                    = var.max_attempts
+  status                          = var.status
+  content_type                    = var.content_type
   created_date                    = var.created_date
   last_updated_date               = var.last_updated_date
-  failure_reason                  = var.failure_reason
-  voice_id                        = var.voice_id
-  clarification_prompt            = var.clarification_prompt
+  abort_statement                 = var.abort_statement
+  intent                          = var.intent
+  update                          = var.update
   create_version                  = var.create_version
   response_card                   = var.response_card
-  update                          = var.update
-  abort_statement                 = var.abort_statement
   detect_sentiment                = var.detect_sentiment
-  description                     = var.description
-  intent_version                  = var.intent_version
-  name                            = var.name
-  content_type                    = var.content_type
+  locale                          = var.locale
+  process_behavior                = var.process_behavior
   create                          = var.create
-  group_number                    = var.group_number
+  description                     = var.description
   idle_session_ttl_in_seconds     = var.idle_session_ttl_in_seconds
+  intent_version                  = var.intent_version
+  message                         = var.message
+  name                            = var.name
+  delete                          = var.delete
+  group_number                    = var.group_number
+  nlu_intent_confidence_threshold = var.nlu_intent_confidence_threshold
+  checksum                        = var.checksum
+  content                         = var.content
+  intent_name                     = var.intent_name
+  voice_id                        = var.voice_id
+  child_directed                  = var.child_directed
+  clarification_prompt            = var.clarification_prompt
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "checksum" {
+  description = "Checksum identifying the version of the bot that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the bot."
+  type        = string
+}
+variable "content" {
+  description = "(Required) The text of the message."
+  type        = string
+}
+variable "nlu_intent_confidence_threshold" {
+  description = "(Optional) Determines the threshold where Amazon Lex will insert the AMAZON.FallbackIntent, AMAZON.KendraSearchIntent, or both when returning alternative intents in a PostContent or PostText response. AMAZON.FallbackIntent and AMAZON.KendraSearchIntent are only inserted if they are configured for the bot. For more information see Amazon Lex Bot PutBot API Docs This value requires enable_model_improvements to be set to true and the default is 0. Must be a float between 0 and 1."
+  type        = string
+  default     = ""
+}
+variable "child_directed" {
+  description = "(Required) By specifying true, you confirm that your use of Amazon Lex is related to a website, program, or other application that is directed or targeted, in whole or in part, to children under age 13 and subject to COPPA. For more information see the Amazon Lex FAQ and the Amazon Lex PutBot API Docs."
+  type        = string
+}
+variable "clarification_prompt" {
+  description = "(Required) The message that Amazon Lex uses when it doesn't understand the user's request. Attributes are documented under prompt."
+  type        = string
+}
+variable "intent_name" {
+  description = "(Required) The name of the intent. Must be less than or equal to 100 characters in length."
+  type        = string
+}
+variable "voice_id" {
+  description = "(Optional) The Amazon Polly voice ID that you want Amazon Lex to use for voice interactions with the user. The locale configured for the voice must match the locale of the bot. For more information, see Available Voices in the Amazon Polly Developer Guide.intentIdentifies the specific version of an intent."
+  type        = string
+  default     = ""
+}
+variable "enable_model_improvements" {
+  description = "(Optional) Set to true to enable access to natural language understanding improvements. When you set the enable_model_improvements parameter to true you can use the nlu_intent_confidence_threshold parameter to configure confidence scores. For more information, see Confidence Scores. You can only set the enable_model_improvements parameter in certain Regions. If you set the parameter to true, your bot has access to accuracy improvements. For more information see the Amazon Lex Bot PutBot API Docs."
+  type        = string
+  default     = ""
+}
+variable "content_type" {
+  description = "(Required) The content type of the message string."
+  type        = string
+}
+variable "created_date" {
+  description = "The date when the bot version was created."
+  type        = string
+}
+variable "failure_reason" {
+  description = "If status is FAILED, Amazon Lex provides the reason that it failed to build the bot."
+  type        = string
+}
+variable "max_attempts" {
+  description = "(Required) The number of times to prompt the user for information."
+  type        = string
+}
+variable "status" {
+  description = "When you send a request to create or update a bot, Amazon Lex sets the status response\nelement to BUILDING. After Amazon Lex builds the bot, it sets status to READY. If Amazon Lex can't\nbuild the bot, it sets status to FAILED. Amazon Lex returns the reason for the failure in the\nfailure_reason response element."
+  type        = string
+}
+variable "abort_statement" {
+  description = "(Required) The message that Amazon Lex uses to abort a conversation. Attributes are documented under statement."
+  type        = string
+}
+variable "intent" {
+  description = "(Required) A set of Intent objects. Each intent represents a command that a user can express. Attributes are documented under intent. Can have up to 250 Intent objects."
+  type        = string
+}
+variable "last_updated_date" {
+  description = "The date when the $LATEST version of this bot was updated."
+  type        = string
+}
+variable "create_version" {
+  description = "(Optional) Determines if a new bot version is created when the initial resource is created and on each update. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "response_card" {
+  description = "(Optional) The response card. Amazon Lex will substitute session attributes and\nslot values into the response card. For more information, see\nExample: Using a Response Card.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "create" {
+  description = "(Default 5m)"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) A description of the bot. Must be less than or equal to 200 characters in length."
+  type        = string
+  default     = ""
+}
+variable "detect_sentiment" {
+  description = "(Optional) When set to true user utterances are sent to Amazon Comprehend for sentiment analysis. If you don't specify detectSentiment, the default is false."
+  type        = string
+  default     = ""
+}
+variable "locale" {
+  description = "(Optional) Specifies the target locale for the bot. Any intent used in the bot must be compatible with the locale of the bot. For available locales, see Amazon Lex Bot PutBot API Docs. Default is en-US."
+  type        = string
+  default     = ""
+}
+variable "process_behavior" {
+  description = "(Optional) If you set the process_behavior element to BUILD, Amazon Lex builds the bot so that it can be run. If you set the element to SAVE Amazon Lex saves the bot, but doesn't build it. Default is SAVE."
+  type        = string
+  default     = ""
+}
+variable "delete" {
+  description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "group_number" {
@@ -44,120 +153,12 @@ variable "idle_session_ttl_in_seconds" {
   type        = string
   default     = ""
 }
-variable "status" {
-  description = ""
-  type        = string
-}
-variable "intent" {
-  description = "(Required) A set of Intent objects. Each intent represents a command that a user can express. Attributes are documented under intent. Can have up to 250 Intent objects."
-  type        = string
-}
-variable "message" {
-  description = "(Required) A set of messages, each of which provides a message string and its type. You\ncan specify the message string in plain text or in Speech Synthesis Markup Language (SSML). Attributes\nare documented under message."
-  type        = string
-}
-variable "process_behavior" {
-  description = "(Optional) If you set the process_behavior element to BUILD, Amazon Lex builds the bot so that it can be run. If you set the element to SAVE Amazon Lex saves the bot, but doesn't build it. Default is SAVE."
-  type        = string
-  default     = ""
-}
-variable "delete" {
-  description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "enable_model_improvements" {
-  description = "(Optional) Set to true to enable access to natural language understanding improvements. When you set the enable_model_improvements parameter to true you can use the nlu_intent_confidence_threshold parameter to configure confidence scores. For more information, see Confidence Scores. You can only set the enable_model_improvements parameter in certain Regions. If you set the parameter to true, your bot has access to accuracy improvements. For more information see the Amazon Lex Bot PutBot API Docs."
-  type        = string
-  default     = ""
-}
-variable "intent_name" {
-  description = "(Required) The name of the intent. Must be less than or equal to 100 characters in length."
-  type        = string
-}
-variable "nlu_intent_confidence_threshold" {
-  description = "(Optional) Determines the threshold where Amazon Lex will insert the AMAZON.FallbackIntent, AMAZON.KendraSearchIntent, or both when returning alternative intents in a PostContent or PostText response. AMAZON.FallbackIntent and AMAZON.KendraSearchIntent are only inserted if they are configured for the bot. For more information see Amazon Lex Bot PutBot API Docs This value requires enable_model_improvements to be set to true and the default is 0. Must be a float between 0 and 1."
-  type        = string
-  default     = ""
-}
-variable "checksum" {
-  description = "Checksum identifying the version of the bot that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the bot."
-  type        = string
-}
-variable "child_directed" {
-  description = "(Required) By specifying true, you confirm that your use of Amazon Lex is related to a website, program, or other application that is directed or targeted, in whole or in part, to children under age 13 and subject to COPPA. For more information see the Amazon Lex FAQ and the Amazon Lex PutBot API Docs."
-  type        = string
-}
-variable "content" {
-  description = "(Required) The text of the message."
-  type        = string
-}
-variable "max_attempts" {
-  description = "(Required) The number of times to prompt the user for information."
-  type        = string
-}
-variable "created_date" {
-  description = "The date when the bot version was created."
-  type        = string
-}
-variable "last_updated_date" {
-  description = "The date when the $LATEST version of this bot was updated."
-  type        = string
-}
-variable "locale" {
-  description = "(Optional) Specifies the target locale for the bot. Any intent used in the bot must be compatible with the locale of the bot. For available locales, see Amazon Lex Bot PutBot API Docs. Default is en-US."
-  type        = string
-  default     = ""
-}
-variable "voice_id" {
-  description = "(Optional) The Amazon Polly voice ID that you want Amazon Lex to use for voice interactions with the user. The locale configured for the voice must match the locale of the bot. For more information, see Available Voices in the Amazon Polly Developer Guide.intentIdentifies the specific version of an intent."
-  type        = string
-  default     = ""
-}
-variable "clarification_prompt" {
-  description = "(Required) The message that Amazon Lex uses when it doesn't understand the user's request. Attributes are documented under prompt."
-  type        = string
-}
-variable "create_version" {
-  description = "(Optional) Determines if a new bot version is created when the initial resource is created and on each update. Defaults to false."
-  type        = string
-  default     = ""
-}
-variable "failure_reason" {
-  description = "If status is FAILED, Amazon Lex provides the reason that it failed to build the bot."
-  type        = string
-}
-variable "update" {
-  description = "(Default 5m)"
-  type        = string
-}
-variable "abort_statement" {
-  description = "(Required) The message that Amazon Lex uses to abort a conversation. Attributes are documented under statement."
-  type        = string
-}
-variable "detect_sentiment" {
-  description = "(Optional) When set to true user utterances are sent to Amazon Comprehend for sentiment analysis. If you don't specify detectSentiment, the default is false."
-  type        = string
-  default     = ""
-}
-variable "response_card" {
-  description = "Example: Using a Response Card.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A description of the bot. Must be less than or equal to 200 characters in length."
-  type        = string
-  default     = ""
-}
 variable "intent_version" {
   description = "(Required) The version of the intent. Must be less than or equal to 64 characters in length.messageThe message object that provides the message text and its type."
   type        = string
 }
-variable "content_type" {
-  description = "(Required) The content type of the message string."
-  type        = string
-}
-variable "create" {
-  description = "(Default 5m)"
+variable "message" {
+  description = "(Required) A set of messages, each of which provides a message string and its type. You\ncan specify the message string in plain text or in Speech Synthesis Markup Language (SSML). Attributes\nare documented under message."
   type        = string
 }
 variable "name" {
@@ -288,13 +289,69 @@ output "content_type" {
   description = "(Required) The content type of the message string."
   value       = aws_lex_bot.aws_lex_bot.content_type
 }
+output "created_date" {
+  description = "The date when the bot version was created."
+  value       = aws_lex_bot.aws_lex_bot.created_date
+}
+output "failure_reason" {
+  description = "If status is FAILED, Amazon Lex provides the reason that it failed to build the bot."
+  value       = aws_lex_bot.aws_lex_bot.failure_reason
+}
+output "max_attempts" {
+  description = "(Required) The number of times to prompt the user for information."
+  value       = aws_lex_bot.aws_lex_bot.max_attempts
+}
+output "status" {
+  description = "When you send a request to create or update a bot, Amazon Lex sets the status response\nelement to BUILDING. After Amazon Lex builds the bot, it sets status to READY. If Amazon Lex can't\nbuild the bot, it sets status to FAILED. Amazon Lex returns the reason for the failure in the\nfailure_reason response element."
+  value       = aws_lex_bot.aws_lex_bot.status
+}
+output "abort_statement" {
+  description = "(Required) The message that Amazon Lex uses to abort a conversation. Attributes are documented under statement."
+  value       = aws_lex_bot.aws_lex_bot.abort_statement
+}
+output "intent" {
+  description = "(Required) A set of Intent objects. Each intent represents a command that a user can express. Attributes are documented under intent. Can have up to 250 Intent objects."
+  value       = aws_lex_bot.aws_lex_bot.intent
+}
+output "last_updated_date" {
+  description = "The date when the $LATEST version of this bot was updated."
+  value       = aws_lex_bot.aws_lex_bot.last_updated_date
+}
+output "create_version" {
+  description = "(Optional) Determines if a new bot version is created when the initial resource is created and on each update. Defaults to false."
+  value       = aws_lex_bot.aws_lex_bot.create_version
+}
+output "response_card" {
+  description = "(Optional) The response card. Amazon Lex will substitute session attributes and\nslot values into the response card. For more information, see\nExample: Using a Response Card.TimeoutsConfiguration options:"
+  value       = aws_lex_bot.aws_lex_bot.response_card
+}
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_lex_bot.aws_lex_bot.update
+}
 output "create" {
   description = "(Default 5m)"
   value       = aws_lex_bot.aws_lex_bot.create
 }
-output "name" {
-  description = "(Required) The name of the bot that you want to create, case sensitive. Must be between 2 and 50 characters in length."
-  value       = aws_lex_bot.aws_lex_bot.name
+output "description" {
+  description = "(Optional) A description of the bot. Must be less than or equal to 200 characters in length."
+  value       = aws_lex_bot.aws_lex_bot.description
+}
+output "detect_sentiment" {
+  description = "(Optional) When set to true user utterances are sent to Amazon Comprehend for sentiment analysis. If you don't specify detectSentiment, the default is false."
+  value       = aws_lex_bot.aws_lex_bot.detect_sentiment
+}
+output "locale" {
+  description = "(Optional) Specifies the target locale for the bot. Any intent used in the bot must be compatible with the locale of the bot. For available locales, see Amazon Lex Bot PutBot API Docs. Default is en-US."
+  value       = aws_lex_bot.aws_lex_bot.locale
+}
+output "process_behavior" {
+  description = "(Optional) If you set the process_behavior element to BUILD, Amazon Lex builds the bot so that it can be run. If you set the element to SAVE Amazon Lex saves the bot, but doesn't build it. Default is SAVE."
+  value       = aws_lex_bot.aws_lex_bot.process_behavior
+}
+output "delete" {
+  description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lex_bot.aws_lex_bot.delete
 }
 output "group_number" {
   description = "(Optional) Identifies the message group that the message belongs to. When a group\nis assigned to a message, Amazon Lex returns one message from each group in the response.prompt"
@@ -304,113 +361,49 @@ output "idle_session_ttl_in_seconds" {
   description = "(Optional) The maximum time in seconds that Amazon Lex retains the data gathered in a conversation. Default is 300. Must be a number between 60 and 86400 (inclusive)."
   value       = aws_lex_bot.aws_lex_bot.idle_session_ttl_in_seconds
 }
-output "intent" {
-  description = "(Required) A set of Intent objects. Each intent represents a command that a user can express. Attributes are documented under intent. Can have up to 250 Intent objects."
-  value       = aws_lex_bot.aws_lex_bot.intent
+output "intent_version" {
+  description = "(Required) The version of the intent. Must be less than or equal to 64 characters in length.messageThe message object that provides the message text and its type."
+  value       = aws_lex_bot.aws_lex_bot.intent_version
 }
 output "message" {
   description = "(Required) A set of messages, each of which provides a message string and its type. You\ncan specify the message string in plain text or in Speech Synthesis Markup Language (SSML). Attributes\nare documented under message."
   value       = aws_lex_bot.aws_lex_bot.message
 }
-output "process_behavior" {
-  description = "(Optional) If you set the process_behavior element to BUILD, Amazon Lex builds the bot so that it can be run. If you set the element to SAVE Amazon Lex saves the bot, but doesn't build it. Default is SAVE."
-  value       = aws_lex_bot.aws_lex_bot.process_behavior
-}
-output "status" {
-  description = ""
-  value       = aws_lex_bot.aws_lex_bot.status
-}
-output "nlu_intent_confidence_threshold" {
-  description = "(Optional) Determines the threshold where Amazon Lex will insert the AMAZON.FallbackIntent, AMAZON.KendraSearchIntent, or both when returning alternative intents in a PostContent or PostText response. AMAZON.FallbackIntent and AMAZON.KendraSearchIntent are only inserted if they are configured for the bot. For more information see Amazon Lex Bot PutBot API Docs This value requires enable_model_improvements to be set to true and the default is 0. Must be a float between 0 and 1."
-  value       = aws_lex_bot.aws_lex_bot.nlu_intent_confidence_threshold
+output "name" {
+  description = "(Required) The name of the bot that you want to create, case sensitive. Must be between 2 and 50 characters in length."
+  value       = aws_lex_bot.aws_lex_bot.name
 }
 output "checksum" {
   description = "Checksum identifying the version of the bot that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the bot."
   value       = aws_lex_bot.aws_lex_bot.checksum
-}
-output "child_directed" {
-  description = "(Required) By specifying true, you confirm that your use of Amazon Lex is related to a website, program, or other application that is directed or targeted, in whole or in part, to children under age 13 and subject to COPPA. For more information see the Amazon Lex FAQ and the Amazon Lex PutBot API Docs."
-  value       = aws_lex_bot.aws_lex_bot.child_directed
 }
 output "content" {
   description = "(Required) The text of the message."
   value       = aws_lex_bot.aws_lex_bot.content
 }
-output "delete" {
-  description = "(Default 5m)In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lex_bot.aws_lex_bot.delete
+output "nlu_intent_confidence_threshold" {
+  description = "(Optional) Determines the threshold where Amazon Lex will insert the AMAZON.FallbackIntent, AMAZON.KendraSearchIntent, or both when returning alternative intents in a PostContent or PostText response. AMAZON.FallbackIntent and AMAZON.KendraSearchIntent are only inserted if they are configured for the bot. For more information see Amazon Lex Bot PutBot API Docs This value requires enable_model_improvements to be set to true and the default is 0. Must be a float between 0 and 1."
+  value       = aws_lex_bot.aws_lex_bot.nlu_intent_confidence_threshold
 }
-output "enable_model_improvements" {
-  description = "(Optional) Set to true to enable access to natural language understanding improvements. When you set the enable_model_improvements parameter to true you can use the nlu_intent_confidence_threshold parameter to configure confidence scores. For more information, see Confidence Scores. You can only set the enable_model_improvements parameter in certain Regions. If you set the parameter to true, your bot has access to accuracy improvements. For more information see the Amazon Lex Bot PutBot API Docs."
-  value       = aws_lex_bot.aws_lex_bot.enable_model_improvements
-}
-output "intent_name" {
-  description = "(Required) The name of the intent. Must be less than or equal to 100 characters in length."
-  value       = aws_lex_bot.aws_lex_bot.intent_name
-}
-output "created_date" {
-  description = "The date when the bot version was created."
-  value       = aws_lex_bot.aws_lex_bot.created_date
-}
-output "last_updated_date" {
-  description = "The date when the $LATEST version of this bot was updated."
-  value       = aws_lex_bot.aws_lex_bot.last_updated_date
-}
-output "locale" {
-  description = "(Optional) Specifies the target locale for the bot. Any intent used in the bot must be compatible with the locale of the bot. For available locales, see Amazon Lex Bot PutBot API Docs. Default is en-US."
-  value       = aws_lex_bot.aws_lex_bot.locale
-}
-output "max_attempts" {
-  description = "(Required) The number of times to prompt the user for information."
-  value       = aws_lex_bot.aws_lex_bot.max_attempts
+output "child_directed" {
+  description = "(Required) By specifying true, you confirm that your use of Amazon Lex is related to a website, program, or other application that is directed or targeted, in whole or in part, to children under age 13 and subject to COPPA. For more information see the Amazon Lex FAQ and the Amazon Lex PutBot API Docs."
+  value       = aws_lex_bot.aws_lex_bot.child_directed
 }
 output "clarification_prompt" {
   description = "(Required) The message that Amazon Lex uses when it doesn't understand the user's request. Attributes are documented under prompt."
   value       = aws_lex_bot.aws_lex_bot.clarification_prompt
 }
-output "create_version" {
-  description = "(Optional) Determines if a new bot version is created when the initial resource is created and on each update. Defaults to false."
-  value       = aws_lex_bot.aws_lex_bot.create_version
-}
-output "failure_reason" {
-  description = "If status is FAILED, Amazon Lex provides the reason that it failed to build the bot."
-  value       = aws_lex_bot.aws_lex_bot.failure_reason
+output "intent_name" {
+  description = "(Required) The name of the intent. Must be less than or equal to 100 characters in length."
+  value       = aws_lex_bot.aws_lex_bot.intent_name
 }
 output "voice_id" {
   description = "(Optional) The Amazon Polly voice ID that you want Amazon Lex to use for voice interactions with the user. The locale configured for the voice must match the locale of the bot. For more information, see Available Voices in the Amazon Polly Developer Guide.intentIdentifies the specific version of an intent."
   value       = aws_lex_bot.aws_lex_bot.voice_id
 }
-output "abort_statement" {
-  description = "(Required) The message that Amazon Lex uses to abort a conversation. Attributes are documented under statement."
-  value       = aws_lex_bot.aws_lex_bot.abort_statement
-}
-output "detect_sentiment" {
-  description = "(Optional) When set to true user utterances are sent to Amazon Comprehend for sentiment analysis. If you don't specify detectSentiment, the default is false."
-  value       = aws_lex_bot.aws_lex_bot.detect_sentiment
-}
-output "response_card" {
-  description = "Example: Using a Response Card.TimeoutsConfiguration options:"
-  value       = aws_lex_bot.aws_lex_bot.response_card
-}
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_lex_bot.aws_lex_bot.update
-}
-output "description" {
-  description = "(Optional) A description of the bot. Must be less than or equal to 200 characters in length."
-  value       = aws_lex_bot.aws_lex_bot.description
-}
-output "intent_version" {
-  description = "(Required) The version of the intent. Must be less than or equal to 64 characters in length.messageThe message object that provides the message text and its type."
-  value       = aws_lex_bot.aws_lex_bot.intent_version
-}
-output "status" {
-  description = ""
-  value       = aws_lex_bot.aws_lex_bot.status
-}
-output "version" {
-  description = "The version of the bot."
-  value       = aws_lex_bot.aws_lex_bot.version
+output "enable_model_improvements" {
+  description = "(Optional) Set to true to enable access to natural language understanding improvements. When you set the enable_model_improvements parameter to true you can use the nlu_intent_confidence_threshold parameter to configure confidence scores. For more information, see Confidence Scores. You can only set the enable_model_improvements parameter in certain Regions. If you set the parameter to true, your bot has access to accuracy improvements. For more information see the Amazon Lex Bot PutBot API Docs."
+  value       = aws_lex_bot.aws_lex_bot.enable_model_improvements
 }
 output "checksum" {
   description = "Checksum identifying the version of the bot that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the bot."
@@ -427,6 +420,14 @@ output "failure_reason" {
 output "last_updated_date" {
   description = "The date when the $LATEST version of this bot was updated."
   value       = aws_lex_bot.aws_lex_bot.last_updated_date
+}
+output "status" {
+  description = "When you send a request to create or update a bot, Amazon Lex sets the status response\nelement to BUILDING. After Amazon Lex builds the bot, it sets status to READY. If Amazon Lex can't\nbuild the bot, it sets status to FAILED. Amazon Lex returns the reason for the failure in the\nfailure_reason response element."
+  value       = aws_lex_bot.aws_lex_bot.status
+}
+output "version" {
+  description = "The version of the bot."
+  value       = aws_lex_bot.aws_lex_bot.version
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "opt_in_status" {
-  description = "(Required) Indicates whether to enable or disable Availability Zone Group. Valid values: opted-in or not-opted-in.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_availability_zone_group.aws_ec2_availability_zone_group.opt_in_status
-}
 output "group_name" {
   description = "(Required) Name of the Availability Zone Group."
   value       = aws_ec2_availability_zone_group.aws_ec2_availability_zone_group.group_name
+}
+output "opt_in_status" {
+  description = "(Required) Indicates whether to enable or disable Availability Zone Group. Valid values: opted-in or not-opted-in.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_availability_zone_group.aws_ec2_availability_zone_group.opt_in_status
 }
 output "id" {
   description = "Name of the Availability Zone Group."

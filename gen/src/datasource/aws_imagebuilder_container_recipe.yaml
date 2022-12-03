@@ -8,11 +8,11 @@ spec:
             description: '(Required) ARN of the container recipe.In addition to all arguments above, the following attributes are exported:'
             type: string
         block_device_mapping:
-            description: ""
+            description: |
+                Set of objects with block device mappings for the instance configuration.
             type: string
         component:
-            description: |
-                List of objects with components for the container recipe.
+            description: ""
             type: string
         component_arn:
             description: ARN of the Image Builder Component.
@@ -36,8 +36,7 @@ spec:
             description: Dockerfile template used to build the image.
             type: string
         ebs:
-            description: |
-                Single list of object with Elastic Block Storage (EBS) block device mapping settings.
+            description: ""
             type: string
         encrypted:
             description: Whether to encrypt the volume. Defaults to unset, which is the value inherited from the parent image.
@@ -46,7 +45,8 @@ spec:
             description: AMI ID of the base image for container build and test instance.
             type: string
         instance_configuration:
-            description: ""
+            description: |
+                List of objects with instance configurations for building and testing container images.
             type: string
         iops:
             description: Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume.
@@ -85,7 +85,8 @@ spec:
             description: Key-value map of resource tags for the container recipe.
             type: string
         target_repository:
-            description: ""
+            description: |
+                Destination repository for the container image.
             type: string
         throughput:
             description: For GP3 volumes only. The throughput in MiB/s that the volume supports.
@@ -107,11 +108,11 @@ spec:
             type: string
     attrs:
         block_device_mapping:
-            description: ""
+            description: |
+                Set of objects with block device mappings for the instance configuration.
             type: string
         component:
-            description: |
-                List of objects with components for the container recipe.
+            description: ""
             type: string
         component_arn:
             description: ARN of the Image Builder Component.
@@ -135,8 +136,7 @@ spec:
             description: Dockerfile template used to build the image.
             type: string
         ebs:
-            description: |
-                Single list of object with Elastic Block Storage (EBS) block device mapping settings.
+            description: ""
             type: string
         encrypted:
             description: Whether to encrypt the volume. Defaults to unset, which is the value inherited from the parent image.
@@ -145,7 +145,8 @@ spec:
             description: AMI ID of the base image for container build and test instance.
             type: string
         instance_configuration:
-            description: ""
+            description: |
+                List of objects with instance configurations for building and testing container images.
             type: string
         iops:
             description: Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume.
@@ -184,7 +185,8 @@ spec:
             description: Key-value map of resource tags for the container recipe.
             type: string
         target_repository:
-            description: ""
+            description: |
+                Destination repository for the container image.
             type: string
         throughput:
             description: For GP3 volumes only. The throughput in MiB/s that the volume supports.

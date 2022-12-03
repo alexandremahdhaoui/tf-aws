@@ -1,36 +1,32 @@
 resource "aws_cloudwatch_event_rule" "aws_cloudwatch_event_rule" {
+  name                = var.name
+  schedule_expression = var.schedule_expression
   description         = var.description
   event_bus_name      = var.event_bus_name
-  id                  = var.id
-  name                = var.name
-  role_arn            = var.role_arn
-  arn                 = var.arn
   event_pattern       = var.event_pattern
-  is_enabled          = var.is_enabled
   name_prefix         = var.name_prefix
-  schedule_expression = var.schedule_expression
+  role_arn            = var.role_arn
   tags                = var.tags
+  arn                 = var.arn
+  id                  = var.id
+  is_enabled          = var.is_enabled
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "event_bus_name" {
-  description = "(Optional) The event bus to associate with this rule. If you omit this, the default event bus is used."
+variable "event_pattern" {
+  description = "(Optional) The event pattern described a JSON object. At least one of schedule_expression or event_pattern is required. See full documentation of Events and Event Patterns in EventBridge for details."
   type        = string
   default     = ""
-}
-variable "id" {
-  description = "The name of the rule."
-  type        = string
 }
 variable "name" {
   description = "(Optional) The name of the rule. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
   type        = string
   default     = ""
 }
-variable "role_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) associated with the role that is used for target invocation."
+variable "schedule_expression" {
+  description = "(Optional) The scheduling expression. For example, cron(0 20 * * ? *) or rate(5 minutes). At least one of schedule_expression or event_pattern is required. Can only be used on the default event bus. For more information, refer to the AWS documentation Schedule Expressions for Rules."
   type        = string
   default     = ""
 }
@@ -39,8 +35,8 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "event_pattern" {
-  description = "(Optional) The event pattern described a JSON object. At least one of schedule_expression or event_pattern is required. See full documentation of Events and Event Patterns in EventBridge for details."
+variable "event_bus_name" {
+  description = "(Optional) The event bus to associate with this rule. If you omit this, the default event bus is used."
   type        = string
   default     = ""
 }
@@ -54,8 +50,8 @@ variable "name_prefix" {
   type        = string
   default     = ""
 }
-variable "schedule_expression" {
-  description = "(Optional) The scheduling expression. For example, cron(0 20 * * ? *) or rate(5 minutes). At least one of schedule_expression or event_pattern is required. Can only be used on the default event bus. For more information, refer to the AWS documentation Schedule Expressions for Rules."
+variable "role_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) associated with the role that is used for target invocation."
   type        = string
   default     = ""
 }
@@ -66,6 +62,10 @@ variable "tags" {
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the rule."
+  type        = string
+}
+variable "id" {
+  description = "The name of the rule."
   type        = string
 }
 variable "tag_instance_id" {
@@ -188,29 +188,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name_prefix" {
+  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.name_prefix
+}
 output "role_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) associated with the role that is used for target invocation."
   value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.role_arn
-}
-output "description" {
-  description = "(Optional) The description of the rule."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.description
-}
-output "event_bus_name" {
-  description = "(Optional) The event bus to associate with this rule. If you omit this, the default event bus is used."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.event_bus_name
-}
-output "id" {
-  description = "The name of the rule."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.id
-}
-output "name" {
-  description = "(Optional) The name of the rule. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.name
-}
-output "schedule_expression" {
-  description = "(Optional) The scheduling expression. For example, cron(0 20 * * ? *) or rate(5 minutes). At least one of schedule_expression or event_pattern is required. Can only be used on the default event bus. For more information, refer to the AWS documentation Schedule Expressions for Rules."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.schedule_expression
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -220,17 +204,33 @@ output "arn" {
   description = "The Amazon Resource Name (ARN) of the rule."
   value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.arn
 }
-output "event_pattern" {
-  description = "(Optional) The event pattern described a JSON object. At least one of schedule_expression or event_pattern is required. See full documentation of Events and Event Patterns in EventBridge for details."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.event_pattern
+output "id" {
+  description = "The name of the rule."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.id
 }
 output "is_enabled" {
   description = "(Optional) Whether the rule should be enabled (defaults to true)."
   value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.is_enabled
 }
-output "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.name_prefix
+output "name" {
+  description = "(Optional) The name of the rule. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.name
+}
+output "schedule_expression" {
+  description = "(Optional) The scheduling expression. For example, cron(0 20 * * ? *) or rate(5 minutes). At least one of schedule_expression or event_pattern is required. Can only be used on the default event bus. For more information, refer to the AWS documentation Schedule Expressions for Rules."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.schedule_expression
+}
+output "description" {
+  description = "(Optional) The description of the rule."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.description
+}
+output "event_bus_name" {
+  description = "(Optional) The event bus to associate with this rule. If you omit this, the default event bus is used."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.event_bus_name
+}
+output "event_pattern" {
+  description = "(Optional) The event pattern described a JSON object. At least one of schedule_expression or event_pattern is required. See full documentation of Events and Event Patterns in EventBridge for details."
+  value       = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.event_pattern
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the rule."

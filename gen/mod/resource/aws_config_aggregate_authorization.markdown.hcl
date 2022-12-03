@@ -1,11 +1,19 @@
 resource "aws_config_aggregate_authorization.markdown" "aws_config_aggregate_authorization.markdown" {
+  arn        = var.arn
   region     = var.region
   tags       = var.tags
   account_id = var.account_id
-  arn        = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "account_id" {
+  description = "(Required) Account ID"
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the authorization"
   type        = string
 }
 variable "region" {
@@ -16,14 +24,6 @@ variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "account_id" {
-  description = "(Required) Account ID"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the authorization"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

@@ -1,9 +1,9 @@
 resource "aws_amplify_backend_environment" "aws_amplify_backend_environment" {
-  app_id               = var.app_id
   arn                  = var.arn
   deployment_artifacts = var.deployment_artifacts
   environment_name     = var.environment_name
   stack_name           = var.stack_name
+  app_id               = var.app_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -151,10 +151,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "stack_name" {
-  description = "(Optional) AWS CloudFormation stack name of a backend environment.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_amplify_backend_environment.aws_amplify_backend_environment.stack_name
-}
 output "app_id" {
   description = "(Required) Unique ID for an Amplify app."
   value       = aws_amplify_backend_environment.aws_amplify_backend_environment.app_id
@@ -170,6 +166,10 @@ output "deployment_artifacts" {
 output "environment_name" {
   description = "(Required) Name for the backend environment."
   value       = aws_amplify_backend_environment.aws_amplify_backend_environment.environment_name
+}
+output "stack_name" {
+  description = "(Optional) AWS CloudFormation stack name of a backend environment.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_amplify_backend_environment.aws_amplify_backend_environment.stack_name
 }
 output "arn" {
   description = "ARN for a backend environment that is part of an Amplify app."

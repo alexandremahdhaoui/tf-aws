@@ -12,10 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "bucket" {
-  description = "(Required) The name of the bucket this intelligent tiering configuration is associated with."
-  type        = string
-}
 variable "filter" {
   description = "(Optional) A bucket filter. The configuration only includes objects that meet the filter's criteria (documented below)."
   type        = string
@@ -46,6 +42,10 @@ variable "tiering" {
 }
 variable "access_tier" {
   description = "(Required) S3 Intelligent-Tiering access tier. Valid values: ARCHIVE_ACCESS, DEEP_ARCHIVE_ACCESS."
+  type        = string
+}
+variable "bucket" {
+  description = "(Required) The name of the bucket this intelligent tiering configuration is associated with."
   type        = string
 }
 variable "tag_instance_id" {
@@ -168,6 +168,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "status" {
+  description = "(Optional) Specifies the status of the configuration. Valid values: Enabled, Disabled."
+  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.status
+}
 output "tags" {
   description = "(Optional) All of these tags must exist in the object's tag set in order for the configuration to apply.The tiering configuration supports the following:"
   value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.tags
@@ -195,10 +199,6 @@ output "name" {
 output "prefix" {
   description = "(Optional) An object key name prefix that identifies the subset of objects to which the configuration applies."
   value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.prefix
-}
-output "status" {
-  description = "(Optional) Specifies the status of the configuration. Valid values: Enabled, Disabled."
-  value       = aws_s3_bucket_intelligent_tiering_configuration.aws_s3_bucket_intelligent_tiering_configuration.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -5,10 +5,7 @@ metadata:
 spec:
     args:
         capabilities:
-            description: |-
-                (Optional) A list of capabilities.
-                Valid values: CAPABILITY_IAM, CAPABILITY_NAMED_IAM, or CAPABILITY_AUTO_EXPAND
-            optional: true
+            description: CAPABILITY_IAM, CAPABILITY_NAMED_IAM, or CAPABILITY_AUTO_EXPAND
             type: string
         create:
             description: (Default 30m)
@@ -31,10 +28,7 @@ spec:
             optional: true
             type: string
         on_failure:
-            description: |-
-                (Optional) Action to be taken if stack creation fails. This must be
-                one of: DO_NOTHING, ROLLBACK, or DELETE. Conflicts with disable_rollback.
-            optional: true
+            description: DO_NOTHING, ROLLBACK, or DELETE. Conflicts with disable_rollback.
             type: string
         outputs:
             description: A map of outputs from the stack.
@@ -44,16 +38,10 @@ spec:
             optional: true
             type: string
         policy_body:
-            description: |-
-                (Optional) Structure containing the stack policy body.
-                Conflicts w/ policy_url.
-            optional: true
+            description: policy_url.
             type: string
         policy_url:
-            description: |-
-                (Optional) Location of a file containing the stack policy.
-                Conflicts w/ policy_body.
-            optional: true
+            description: policy_body.
             type: string
         tags:
             description: (Optional) Map of resource tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.

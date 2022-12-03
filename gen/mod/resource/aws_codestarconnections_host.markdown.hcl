@@ -1,25 +1,25 @@
 resource "aws_codestarconnections_host.markdown" "aws_codestarconnections_host.markdown" {
-  security_group_ids = var.security_group_ids
-  vpc_id             = var.vpc_id
   id                 = var.id
-  provider_type      = var.provider_type
-  provider_endpoint  = var.provider_endpoint
-  subnet_ids         = var.subnet_ids
-  tls_certificate    = var.tls_certificate
+  security_group_ids = var.security_group_ids
   vpc_configuration  = var.vpc_configuration
+  vpc_id             = var.vpc_id
   arn                = var.arn
   name               = var.name
+  provider_endpoint  = var.provider_endpoint
+  provider_type      = var.provider_type
+  subnet_ids         = var.subnet_ids
+  tls_certificate    = var.tls_certificate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the host to be created. The name must be unique in the calling AWS account."
-  type        = string
-}
 variable "provider_endpoint" {
   description = "(Required) The endpoint of the infrastructure to be represented by the host after it is created."
+  type        = string
+}
+variable "provider_type" {
+  description = "(Required) The name of the external provider where your third-party code repository is configured."
   type        = string
 }
 variable "subnet_ids" {
@@ -31,22 +31,18 @@ variable "tls_certificate" {
   type        = string
   default     = ""
 }
-variable "vpc_configuration" {
-  description = "(Optional) The VPC configuration to be provisioned for the host. A VPC must be configured, and the infrastructure to be represented by the host must already be connected to the VPC.A vpc_configuration block supports the following arguments:"
-  type        = string
-  default     = ""
-}
 variable "arn" {
   description = "The CodeStar Host ARN."
   type        = string
 }
-variable "provider_type" {
-  description = "(Required) The name of the external provider where your third-party code repository is configured."
+variable "name" {
+  description = "(Required) The name of the host to be created. The name must be unique in the calling AWS account."
   type        = string
 }
-variable "security_group_ids" {
-  description = "(Required) he ID of the security group or security groups associated with the Amazon VPC connected to the infrastructure where your provider type is installed."
+variable "vpc_configuration" {
+  description = "(Optional) The VPC configuration to be provisioned for the host. A VPC must be configured, and the infrastructure to be represented by the host must already be connected to the VPC.A vpc_configuration block supports the following arguments:"
   type        = string
+  default     = ""
 }
 variable "vpc_id" {
   description = "(Required) The ID of the Amazon VPC connected to the infrastructure where your provider type is installed.In addition to all arguments above, the following attributes are exported:"
@@ -54,6 +50,10 @@ variable "vpc_id" {
 }
 variable "id" {
   description = "The CodeStar Host ARN."
+  type        = string
+}
+variable "security_group_ids" {
+  description = "(Required) he ID of the security group or security groups associated with the Amazon VPC connected to the infrastructure where your provider type is installed."
   type        = string
 }
 variable "tag_instance_id" {
@@ -176,6 +176,26 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The CodeStar Host ARN."
+  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.id
+}
+output "security_group_ids" {
+  description = "(Required) he ID of the security group or security groups associated with the Amazon VPC connected to the infrastructure where your provider type is installed."
+  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.security_group_ids
+}
+output "vpc_configuration" {
+  description = "(Optional) The VPC configuration to be provisioned for the host. A VPC must be configured, and the infrastructure to be represented by the host must already be connected to the VPC.A vpc_configuration block supports the following arguments:"
+  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.vpc_configuration
+}
+output "vpc_id" {
+  description = "(Required) The ID of the Amazon VPC connected to the infrastructure where your provider type is installed.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.vpc_id
+}
+output "tls_certificate" {
+  description = "(Optional) The value of the Transport Layer Security (TLS) certificate associated with the infrastructure where your provider type is installed."
+  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.tls_certificate
+}
 output "arn" {
   description = "The CodeStar Host ARN."
   value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.arn
@@ -188,33 +208,13 @@ output "provider_endpoint" {
   description = "(Required) The endpoint of the infrastructure to be represented by the host after it is created."
   value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.provider_endpoint
 }
-output "subnet_ids" {
-  description = "(Required) The ID of the subnet or subnets associated with the Amazon VPC connected to the infrastructure where your provider type is installed."
-  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.subnet_ids
-}
-output "tls_certificate" {
-  description = "(Optional) The value of the Transport Layer Security (TLS) certificate associated with the infrastructure where your provider type is installed."
-  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.tls_certificate
-}
-output "vpc_configuration" {
-  description = "(Optional) The VPC configuration to be provisioned for the host. A VPC must be configured, and the infrastructure to be represented by the host must already be connected to the VPC.A vpc_configuration block supports the following arguments:"
-  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.vpc_configuration
-}
-output "id" {
-  description = "The CodeStar Host ARN."
-  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.id
-}
 output "provider_type" {
   description = "(Required) The name of the external provider where your third-party code repository is configured."
   value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.provider_type
 }
-output "security_group_ids" {
-  description = "(Required) he ID of the security group or security groups associated with the Amazon VPC connected to the infrastructure where your provider type is installed."
-  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.security_group_ids
-}
-output "vpc_id" {
-  description = "(Required) The ID of the Amazon VPC connected to the infrastructure where your provider type is installed.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.vpc_id
+output "subnet_ids" {
+  description = "(Required) The ID of the subnet or subnets associated with the Amazon VPC connected to the infrastructure where your provider type is installed."
+  value       = aws_codestarconnections_host.markdown.aws_codestarconnections_host.markdown.subnet_ids
 }
 output "arn" {
   description = "The CodeStar Host ARN."

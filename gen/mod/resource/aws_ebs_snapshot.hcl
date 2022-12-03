@@ -1,37 +1,24 @@
 resource "aws_ebs_snapshot" "aws_ebs_snapshot" {
-  id                     = var.id
-  temporary_restore_days = var.temporary_restore_days
-  volume_id              = var.volume_id
-  volume_size            = var.volume_size
-  arn                    = var.arn
-  create                 = var.create
-  owner_alias            = var.owner_alias
-  storage_tier           = var.storage_tier
-  kms_key_id             = var.kms_key_id
-  outpost_arn            = var.outpost_arn
-  permanent_restore      = var.permanent_restore
   tags                   = var.tags
   tags_all               = var.tags_all
-  data_encryption_key_id = var.data_encryption_key_id
+  volume_size            = var.volume_size
+  permanent_restore      = var.permanent_restore
+  storage_tier           = var.storage_tier
+  volume_id              = var.volume_id
   encrypted              = var.encrypted
-  description            = var.description
+  outpost_arn            = var.outpost_arn
   owner_id               = var.owner_id
+  temporary_restore_days = var.temporary_restore_days
+  kms_key_id             = var.kms_key_id
+  owner_alias            = var.owner_alias
+  data_encryption_key_id = var.data_encryption_key_id
+  description            = var.description
+  id                     = var.id
+  arn                    = var.arn
+  create                 = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) A description of what the snapshot is."
-  type        = string
-  default     = ""
-}
-variable "owner_id" {
-  description = "The AWS account ID of the EBS snapshot owner."
-  type        = string
-}
-variable "volume_size" {
-  description = "The size of the drive in GiBs."
   type        = string
 }
 variable "arn" {
@@ -42,47 +29,26 @@ variable "create" {
   description = "(Default 10m)"
   type        = string
 }
-variable "id" {
-  description = "The snapshot ID (e.g., snap-59fcb34e)."
-  type        = string
-}
-variable "temporary_restore_days" {
-  description = "(Optional) Specifies the number of days for which to temporarily restore an archived snapshot. Required for temporary restores only. The snapshot will be automatically re-archived after this period."
-  type        = string
-  default     = ""
-}
-variable "volume_id" {
-  description = "(Required) The Volume ID of which to make a snapshot."
-  type        = string
-}
-variable "kms_key_id" {
-  description = "The ARN for the KMS encryption key."
-  type        = string
-}
-variable "outpost_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create a local snapshot."
-  type        = string
-  default     = ""
-}
-variable "owner_alias" {
-  description = "Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners."
-  type        = string
-}
-variable "storage_tier" {
-  description = "(Optional) The name of the storage tier. Valid values are archive and standard. Default value is standard."
-  type        = string
-  default     = ""
-}
 variable "data_encryption_key_id" {
   description = "The data encryption key identifier for the snapshot."
   type        = string
 }
-variable "encrypted" {
-  description = "Whether the snapshot is encrypted."
+variable "description" {
+  description = "(Optional) A description of what the snapshot is."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The snapshot ID (e.g., snap-59fcb34e)."
   type        = string
 }
 variable "permanent_restore" {
   description = "(Optional) Indicates whether to permanently restore an archived snapshot."
+  type        = string
+  default     = ""
+}
+variable "storage_tier" {
+  description = "(Optional) The name of the storage tier. Valid values are archive and standard. Default value is standard."
   type        = string
   default     = ""
 }
@@ -94,6 +60,40 @@ variable "tags" {
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
+}
+variable "volume_size" {
+  description = "The size of the drive in GiBs."
+  type        = string
+}
+variable "encrypted" {
+  description = "Whether the snapshot is encrypted."
+  type        = string
+}
+variable "outpost_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create a local snapshot."
+  type        = string
+  default     = ""
+}
+variable "volume_id" {
+  description = "(Required) The Volume ID of which to make a snapshot."
+  type        = string
+}
+variable "kms_key_id" {
+  description = "The ARN for the KMS encryption key."
+  type        = string
+}
+variable "owner_alias" {
+  description = "Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners."
+  type        = string
+}
+variable "owner_id" {
+  description = "The AWS account ID of the EBS snapshot owner."
+  type        = string
+}
+variable "temporary_restore_days" {
+  description = "(Optional) Specifies the number of days for which to temporarily restore an archived snapshot. Required for temporary restores only. The snapshot will be automatically re-archived after this period."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -215,53 +215,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.create
-}
-output "id" {
-  description = "The snapshot ID (e.g., snap-59fcb34e)."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.id
-}
-output "temporary_restore_days" {
-  description = "(Optional) Specifies the number of days for which to temporarily restore an archived snapshot. Required for temporary restores only. The snapshot will be automatically re-archived after this period."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.temporary_restore_days
-}
-output "volume_id" {
-  description = "(Required) The Volume ID of which to make a snapshot."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.volume_id
-}
-output "volume_size" {
-  description = "The size of the drive in GiBs."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.volume_size
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the EBS Snapshot."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.arn
+output "encrypted" {
+  description = "Whether the snapshot is encrypted."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.encrypted
 }
 output "outpost_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) of the Outpost on which to create a local snapshot."
   value       = aws_ebs_snapshot.aws_ebs_snapshot.outpost_arn
 }
-output "owner_alias" {
-  description = "Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_alias
-}
-output "storage_tier" {
-  description = "(Optional) The name of the storage tier. Valid values are archive and standard. Default value is standard."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.storage_tier
+output "volume_id" {
+  description = "(Required) The Volume ID of which to make a snapshot."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.volume_id
 }
 output "kms_key_id" {
   description = "The ARN for the KMS encryption key."
   value       = aws_ebs_snapshot.aws_ebs_snapshot.kms_key_id
 }
-output "encrypted" {
-  description = "Whether the snapshot is encrypted."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.encrypted
+output "owner_alias" {
+  description = "Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_alias
+}
+output "owner_id" {
+  description = "The AWS account ID of the EBS snapshot owner."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_id
+}
+output "temporary_restore_days" {
+  description = "(Optional) Specifies the number of days for which to temporarily restore an archived snapshot. Required for temporary restores only. The snapshot will be automatically re-archived after this period."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.temporary_restore_days
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the EBS Snapshot."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.create
+}
+output "data_encryption_key_id" {
+  description = "The data encryption key identifier for the snapshot."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.data_encryption_key_id
+}
+output "description" {
+  description = "(Optional) A description of what the snapshot is."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.description
+}
+output "id" {
+  description = "The snapshot ID (e.g., snap-59fcb34e)."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.id
 }
 output "permanent_restore" {
   description = "(Optional) Indicates whether to permanently restore an archived snapshot."
   value       = aws_ebs_snapshot.aws_ebs_snapshot.permanent_restore
+}
+output "storage_tier" {
+  description = "(Optional) The name of the storage tier. Valid values are archive and standard. Default value is standard."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.storage_tier
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the snapshot. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -271,25 +279,37 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_ebs_snapshot.aws_ebs_snapshot.tags_all
 }
-output "data_encryption_key_id" {
-  description = "The data encryption key identifier for the snapshot."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.data_encryption_key_id
+output "volume_size" {
+  description = "The size of the drive in GiBs."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.volume_size
+}
+output "id" {
+  description = "The snapshot ID (e.g., snap-59fcb34e)."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.id
+}
+output "owner_alias" {
+  description = "Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_alias
 }
 output "owner_id" {
   description = "The AWS account ID of the EBS snapshot owner."
   value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_id
 }
-output "description" {
-  description = "(Optional) A description of what the snapshot is."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.description
+output "data_encryption_key_id" {
+  description = "The data encryption key identifier for the snapshot."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.data_encryption_key_id
 }
 output "delete" {
   description = "(Default 10m)"
   value       = aws_ebs_snapshot.aws_ebs_snapshot.delete
 }
-output "id" {
-  description = "The snapshot ID (e.g., snap-59fcb34e)."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.id
+output "encrypted" {
+  description = "Whether the snapshot is encrypted."
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.encrypted
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ebs_snapshot.aws_ebs_snapshot.tags_all
 }
 output "volume_size" {
   description = "The size of the drive in GiBs."
@@ -306,26 +326,6 @@ output "create" {
 output "kms_key_id" {
   description = "The ARN for the KMS encryption key."
   value       = aws_ebs_snapshot.aws_ebs_snapshot.kms_key_id
-}
-output "owner_alias" {
-  description = "Value from an Amazon-maintained list (amazon, aws-marketplace, microsoft) of snapshot owners."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_alias
-}
-output "owner_id" {
-  description = "The AWS account ID of the EBS snapshot owner."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.owner_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.tags_all
-}
-output "data_encryption_key_id" {
-  description = "The data encryption key identifier for the snapshot."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.data_encryption_key_id
-}
-output "encrypted" {
-  description = "Whether the snapshot is encrypted."
-  value       = aws_ebs_snapshot.aws_ebs_snapshot.encrypted
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

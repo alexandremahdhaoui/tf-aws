@@ -1,5 +1,4 @@
 resource "aws_ecr_replication_configuration" "aws_ecr_replication_configuration" {
-  repository_filter         = var.repository_filter
   rule                      = var.rule
   destination               = var.destination
   filter                    = var.filter
@@ -7,6 +6,7 @@ resource "aws_ecr_replication_configuration" "aws_ecr_replication_configuration"
   region                    = var.region
   registry_id               = var.registry_id
   replication_configuration = var.replication_configuration
+  repository_filter         = var.repository_filter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -165,10 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "replication_configuration" {
-  description = "(Required) Replication configuration for a registry. See Replication Configuration.Replication Configuration"
-  value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.replication_configuration
-}
 output "repository_filter" {
   description = "(Optional) filters for a replication rule. See Repository Filter.Destination"
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.repository_filter
@@ -196,6 +192,10 @@ output "region" {
 output "registry_id" {
   description = "(Required) The account ID of the destination registry to replicate to.Repository Filter"
   value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.registry_id
+}
+output "replication_configuration" {
+  description = "(Required) Replication configuration for a registry. See Replication Configuration.Replication Configuration"
+  value       = aws_ecr_replication_configuration.aws_ecr_replication_configuration.replication_configuration
 }
 output "registry_id" {
   description = "The registry ID where the replication configuration was created."

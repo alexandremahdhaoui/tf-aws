@@ -1,23 +1,15 @@
 resource "aws_codecommit_repository" "aws_codecommit_repository" {
-  default_branch  = var.default_branch
-  description     = var.description
   repository_id   = var.repository_id
   repository_name = var.repository_name
   tags            = var.tags
   arn             = var.arn
   clone_url_http  = var.clone_url_http
   clone_url_ssh   = var.clone_url_ssh
+  default_branch  = var.default_branch
+  description     = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "repository_id" {
-  description = "The ID of the repository"
-  type        = string
-}
-variable "repository_name" {
-  description = "(Required) The name for the repository. This needs to be less than 100 characters."
   type        = string
 }
 variable "tags" {
@@ -46,6 +38,14 @@ variable "description" {
   description = "(Optional) The description of the repository. This needs to be less than 1000 characters"
   type        = string
   default     = ""
+}
+variable "repository_id" {
+  description = "The ID of the repository"
+  type        = string
+}
+variable "repository_name" {
+  description = "(Required) The name for the repository. This needs to be less than 100 characters."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -167,14 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codecommit_repository.aws_codecommit_repository.tags
-}
-output "arn" {
-  description = "The ARN of the repository"
-  value       = aws_codecommit_repository.aws_codecommit_repository.arn
-}
 output "clone_url_http" {
   description = "The URL to use for cloning the repository over HTTPS."
   value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_http
@@ -199,13 +191,13 @@ output "repository_name" {
   description = "(Required) The name for the repository. This needs to be less than 100 characters."
   value       = aws_codecommit_repository.aws_codecommit_repository.repository_name
 }
-output "clone_url_http" {
-  description = "The URL to use for cloning the repository over HTTPS."
-  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_http
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codecommit_repository.aws_codecommit_repository.tags
 }
-output "clone_url_ssh" {
-  description = "The URL to use for cloning the repository over SSH."
-  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_ssh
+output "arn" {
+  description = "The ARN of the repository"
+  value       = aws_codecommit_repository.aws_codecommit_repository.arn
 }
 output "repository_id" {
   description = "The ID of the repository"
@@ -218,6 +210,14 @@ output "tags_all" {
 output "arn" {
   description = "The ARN of the repository"
   value       = aws_codecommit_repository.aws_codecommit_repository.arn
+}
+output "clone_url_http" {
+  description = "The URL to use for cloning the repository over HTTPS."
+  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_http
+}
+output "clone_url_ssh" {
+  description = "The URL to use for cloning the repository over SSH."
+  value       = aws_codecommit_repository.aws_codecommit_repository.clone_url_ssh
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

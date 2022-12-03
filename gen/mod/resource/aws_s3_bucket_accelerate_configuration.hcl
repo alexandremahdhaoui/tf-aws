@@ -1,7 +1,7 @@
 resource "aws_s3_bucket_accelerate_configuration" "aws_s3_bucket_accelerate_configuration" {
-  bucket                = var.bucket
   expected_bucket_owner = var.expected_bucket_owner
   status                = var.status
+  bucket                = var.bucket
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  value       = aws_s3_bucket_accelerate_configuration.aws_s3_bucket_accelerate_configuration.bucket
+}
 output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   value       = aws_s3_bucket_accelerate_configuration.aws_s3_bucket_accelerate_configuration.expected_bucket_owner
@@ -146,10 +150,6 @@ output "expected_bucket_owner" {
 output "status" {
   description = "(Required) The transfer acceleration state of the bucket. Valid values: Enabled, Suspended.In addition to all arguments above, the following attributes are exported:"
   value       = aws_s3_bucket_accelerate_configuration.aws_s3_bucket_accelerate_configuration.status
-}
-output "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  value       = aws_s3_bucket_accelerate_configuration.aws_s3_bucket_accelerate_configuration.bucket
 }
 output "id" {
   description = "The bucket or bucket and expected_bucket_owner separated by a comma (,) if the latter is provided."

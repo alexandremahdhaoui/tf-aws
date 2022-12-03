@@ -1,14 +1,23 @@
 resource "aws_pinpoint_email_channel.markdown" "aws_pinpoint_email_channel.markdown" {
+  identity          = var.identity
+  role_arn          = var.role_arn
   application_id    = var.application_id
   configuration_set = var.configuration_set
   enabled           = var.enabled
   from_address      = var.from_address
-  identity          = var.identity
-  role_arn          = var.role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "identity" {
+  description = "(Required) The ARN of an identity verified with SES."
+  type        = string
+}
+variable "role_arn" {
+  description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "application_id" {
   description = "(Required) The application ID."
@@ -27,15 +36,6 @@ variable "enabled" {
 variable "from_address" {
   description = "(Required) The email address used to send emails from. You can use email only (user@example.com) or friendly address (User <user@example.com>). This field comply with RFC 5322."
   type        = string
-}
-variable "identity" {
-  description = "(Required) The ARN of an identity verified with SES."
-  type        = string
-}
-variable "role_arn" {
-  description = "(Optional) The ARN of an IAM Role used to submit events to Mobile Analytics' event ingestion service.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

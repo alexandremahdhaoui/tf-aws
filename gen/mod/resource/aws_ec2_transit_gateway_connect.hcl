@@ -1,34 +1,27 @@
 resource "aws_ec2_transit_gateway_connect" "aws_ec2_transit_gateway_connect" {
-  create                                          = var.create
   id                                              = var.id
-  tags_all                                        = var.tags_all
+  protocol                                        = var.protocol
   transit_gateway_id                              = var.transit_gateway_id
   transport_attachment_id                         = var.transport_attachment_id
-  update                                          = var.update
-  protocol                                        = var.protocol
-  tags                                            = var.tags
+  create                                          = var.create
+  tags_all                                        = var.tags_all
   transit_gateway_default_route_table_association = var.transit_gateway_default_route_table_association
   transit_gateway_default_route_table_propagation = var.transit_gateway_default_route_table_propagation
+  update                                          = var.update
+  tags                                            = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "update" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "create" {
-  description = "(Default 10m)"
   type        = string
 }
 variable "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "protocol" {
+  description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
   type        = string
+  default     = ""
 }
 variable "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway."
@@ -38,15 +31,13 @@ variable "transport_attachment_id" {
   description = "(Required) The underlaying VPC attachmentIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "protocol" {
-  description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
+variable "create" {
+  description = "(Default 10m)"
   type        = string
-  default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
-  default     = ""
 }
 variable "transit_gateway_default_route_table_association" {
   description = "(Optional) Boolean whether the Connect should be associated with the EC2 Transit Gateway association default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
@@ -55,6 +46,15 @@ variable "transit_gateway_default_route_table_association" {
 }
 variable "transit_gateway_default_route_table_propagation" {
   description = "(Optional) Boolean whether the Connect should propagate routes with the EC2 Transit Gateway propagation default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 10m)"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
   default     = ""
 }
@@ -178,21 +178,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.update
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.create
-}
-output "id" {
-  description = "EC2 Transit Gateway Attachment identifier"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags_all
+output "protocol" {
+  description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.protocol
 }
 output "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway."
@@ -202,13 +190,13 @@ output "transport_attachment_id" {
   description = "(Required) The underlaying VPC attachmentIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transport_attachment_id
 }
-output "protocol" {
-  description = "(Optional) The tunnel protocol. Valida values: gre. Default is gre."
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.protocol
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.create
 }
-output "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags
+output "id" {
+  description = "EC2 Transit Gateway Attachment identifier"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.id
 }
 output "transit_gateway_default_route_table_association" {
   description = "(Optional) Boolean whether the Connect should be associated with the EC2 Transit Gateway association default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
@@ -217,6 +205,22 @@ output "transit_gateway_default_route_table_association" {
 output "transit_gateway_default_route_table_propagation" {
   description = "(Optional) Boolean whether the Connect should propagate routes with the EC2 Transit Gateway propagation default route table. This cannot be configured or perform drift detection with Resource Access Manager shared EC2 Transit Gateways. Default value: true."
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.transit_gateway_default_route_table_propagation
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.update
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags_all
+}
+output "update" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.update
 }
 output "create" {
   description = "(Default 10m)"
@@ -233,10 +237,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.tags_all
-}
-output "update" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

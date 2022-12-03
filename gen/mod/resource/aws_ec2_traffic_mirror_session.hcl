@@ -1,24 +1,44 @@
 resource "aws_ec2_traffic_mirror_session" "aws_ec2_traffic_mirror_session" {
-  tags_all                 = var.tags_all
-  traffic_mirror_filter_id = var.traffic_mirror_filter_id
-  traffic_mirror_target_id = var.traffic_mirror_target_id
-  arn                      = var.arn
   id                       = var.id
   network_interface_id     = var.network_interface_id
-  tags                     = var.tags
+  tags_all                 = var.tags_all
+  traffic_mirror_target_id = var.traffic_mirror_target_id
+  virtual_network_id       = var.virtual_network_id
+  arn                      = var.arn
   description              = var.description
   packet_length            = var.packet_length
   session_number           = var.session_number
-  virtual_network_id       = var.virtual_network_id
+  tags                     = var.tags
+  traffic_mirror_filter_id = var.traffic_mirror_filter_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "The name of the session."
+  type        = string
+}
+variable "network_interface_id" {
+  description = "(Required, Forces new) ID of the source network interface. Not all network interfaces are eligible as mirror sources. On EC2 instances only nitro based instances support mirroring."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "traffic_mirror_target_id" {
+  description = "(Required) ID of the traffic mirror target to be used"
   type        = string
 }
 variable "virtual_network_id" {
   description = "(Optional) - The VXLAN ID for the Traffic Mirror session. For more information about the VXLAN protocol, see RFC 7348. If you do not specify a VirtualNetworkId, an account-wide unique id is chosen at random."
   type        = string
   default     = ""
+}
+variable "arn" {
+  description = "The ARN of the traffic mirror session."
+  type        = string
 }
 variable "description" {
   description = "(Optional) A description of the traffic mirror session."
@@ -39,28 +59,8 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
 variable "traffic_mirror_filter_id" {
   description = "  - (Required) ID of the traffic mirror filter to be used"
-  type        = string
-}
-variable "traffic_mirror_target_id" {
-  description = "(Required) ID of the traffic mirror target to be used"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the traffic mirror session."
-  type        = string
-}
-variable "id" {
-  description = "The name of the session."
-  type        = string
-}
-variable "network_interface_id" {
-  description = "(Required, Forces new) ID of the source network interface. Not all network interfaces are eligible as mirror sources. On EC2 instances only nitro based instances support mirroring."
   type        = string
 }
 variable "tag_instance_id" {
@@ -183,9 +183,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "virtual_network_id" {
-  description = "(Optional) - The VXLAN ID for the Traffic Mirror session. For more information about the VXLAN protocol, see RFC 7348. If you do not specify a VirtualNetworkId, an account-wide unique id is chosen at random."
-  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.virtual_network_id
+output "arn" {
+  description = "The ARN of the traffic mirror session."
+  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.arn
 }
 output "description" {
   description = "(Optional) A description of the traffic mirror session."
@@ -203,21 +203,9 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.tags_all
-}
 output "traffic_mirror_filter_id" {
   description = "  - (Required) ID of the traffic mirror filter to be used"
   value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.traffic_mirror_filter_id
-}
-output "traffic_mirror_target_id" {
-  description = "(Required) ID of the traffic mirror target to be used"
-  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.traffic_mirror_target_id
-}
-output "arn" {
-  description = "The ARN of the traffic mirror session."
-  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.arn
 }
 output "id" {
   description = "The name of the session."
@@ -226,6 +214,22 @@ output "id" {
 output "network_interface_id" {
   description = "(Required, Forces new) ID of the source network interface. Not all network interfaces are eligible as mirror sources. On EC2 instances only nitro based instances support mirroring."
   value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.network_interface_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.tags_all
+}
+output "traffic_mirror_target_id" {
+  description = "(Required) ID of the traffic mirror target to be used"
+  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.traffic_mirror_target_id
+}
+output "virtual_network_id" {
+  description = "(Optional) - The VXLAN ID for the Traffic Mirror session. For more information about the VXLAN protocol, see RFC 7348. If you do not specify a VirtualNetworkId, an account-wide unique id is chosen at random."
+  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.virtual_network_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.tags_all
 }
 output "arn" {
   description = "The ARN of the traffic mirror session."
@@ -238,10 +242,6 @@ output "id" {
 output "owner_id" {
   description = "The AWS account ID of the session owner."
   value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.owner_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_traffic_mirror_session.aws_ec2_traffic_mirror_session.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

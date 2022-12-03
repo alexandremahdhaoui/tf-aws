@@ -33,7 +33,10 @@ spec:
             description: List of the Availability Zone names available to the account.
             type: string
         state:
-            description: '"available", "information", "impaired""unavailable"filter Configuration Blockfilter configuration block:'
+            description: |-
+                (Optional) Allows to filter list of Availability Zones based on their
+                current state. Can be either "available", "information", "impaired""unavailable"filter Configuration Blockfilter configuration block:
+            optional: true
             type: string
         values:
             description: '(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.In addition to all arguments above, the following attributes are exported:'

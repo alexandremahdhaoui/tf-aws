@@ -1,13 +1,22 @@
 resource "aws_wafregional_ipset" "aws_wafregional_ipset" {
-  type              = var.type
-  value             = var.value
   id                = var.id
   ip_set_descriptor = var.ip_set_descriptor
   name              = var.name
+  type              = var.type
+  value             = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "id" {
+  description = "The ID of the WAF IPSet."
+  type        = string
+}
+variable "ip_set_descriptor" {
+  description = "(Optional) One or more pairs specifying the IP address type (IPV4 or IPV6) and the IP address range (in CIDR notation) from which web requests originate.Nested Blocksip_set_descriptorArguments"
+  type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name or description of the IPSet."
@@ -20,15 +29,6 @@ variable "type" {
 variable "value" {
   description = "(Required) The CIDR notation.RemarksIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "id" {
-  description = "The ID of the WAF IPSet."
-  type        = string
-}
-variable "ip_set_descriptor" {
-  description = "(Optional) One or more pairs specifying the IP address type (IPV4 or IPV6) and the IP address range (in CIDR notation) from which web requests originate.Nested Blocksip_set_descriptorArguments"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -150,6 +150,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The ID of the WAF IPSet."
+  value       = aws_wafregional_ipset.aws_wafregional_ipset.id
+}
 output "ip_set_descriptor" {
   description = "(Optional) One or more pairs specifying the IP address type (IPV4 or IPV6) and the IP address range (in CIDR notation) from which web requests originate.Nested Blocksip_set_descriptorArguments"
   value       = aws_wafregional_ipset.aws_wafregional_ipset.ip_set_descriptor
@@ -165,10 +169,6 @@ output "type" {
 output "value" {
   description = "(Required) The CIDR notation.RemarksIn addition to all arguments above, the following attributes are exported:"
   value       = aws_wafregional_ipset.aws_wafregional_ipset.value
-}
-output "id" {
-  description = "The ID of the WAF IPSet."
-  value       = aws_wafregional_ipset.aws_wafregional_ipset.id
 }
 output "arn" {
   description = "The ARN of the WAF IPSet."

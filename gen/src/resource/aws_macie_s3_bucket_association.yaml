@@ -12,17 +12,17 @@ spec:
             optional: true
             type: string
         continuous:
-            description: |-
-                (Optional) A string value indicating that Macie perform a one-time classification of all of the existing objects in the bucket.
-                The only valid value is the default value, FULL.
-            optional: true
+            description: FULL.
             type: string
         member_account_id:
             description: (Optional) The ID of the Amazon Macie member account whose S3 resources you want to associate with Macie. If member_account_id isn't specified, the action associates specified S3 resources with Macie for the current master account.
             optional: true
             type: string
         one_time:
-            description: 'NONE and FULL. Defaults to NONE indicating that Macie only classifies objects that are added after the association was created.In addition to all arguments above, the following attributes are exported:'
+            description: |-
+                (Optional) A string value indicating whether or not Macie performs a one-time classification of all of the existing objects in the bucket.
+                Valid values are NONE and FULL. Defaults to NONE indicating that Macie only classifies objects that are added after the association was created.In addition to all arguments above, the following attributes are exported:
+            optional: true
             type: string
         prefix:
             description: '(Optional) Object key prefix identifying one or more S3 objects to which the association applies.The classification_type object supports the following:'

@@ -1,9 +1,9 @@
 datasource "aws_outposts_asset" "aws_outposts_asset" {
-  arn            = var.arn
   asset_id       = var.asset_id
   asset_type     = var.asset_type
   host_id        = var.host_id
   rack_elevation = var.rack_elevation
+  arn            = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

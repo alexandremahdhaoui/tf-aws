@@ -1,61 +1,85 @@
 resource "aws_imagebuilder_image_recipe" "aws_imagebuilder_image_recipe" {
-  block_device_mapping  = var.block_device_mapping
-  snapshot_id           = var.snapshot_id
-  tags_all              = var.tags_all
-  user_data_base64      = var.user_data_base64
-  value                 = var.value
-  component             = var.component
-  no_device             = var.no_device
-  throughput            = var.throughput
-  version               = var.version
-  parameter             = var.parameter
-  parent_image          = var.parent_image
-  owner                 = var.owner
-  systems_manager_agent = var.systems_manager_agent
-  encrypted             = var.encrypted
-  iops                  = var.iops
-  name                  = var.name
-  component_arn         = var.component_arn
-  date_created          = var.date_created
-  tags                  = var.tags
   delete_on_termination = var.delete_on_termination
-  device_name           = var.device_name
   kms_key_id            = var.kms_key_id
   platform              = var.platform
+  systems_manager_agent = var.systems_manager_agent
+  component_arn         = var.component_arn
+  parameter             = var.parameter
+  throughput            = var.throughput
+  user_data_base64      = var.user_data_base64
+  no_device             = var.no_device
+  date_created          = var.date_created
+  ebs                   = var.ebs
+  encrypted             = var.encrypted
+  block_device_mapping  = var.block_device_mapping
+  tags                  = var.tags
+  uninstall_after_build = var.uninstall_after_build
+  version               = var.version
+  iops                  = var.iops
+  snapshot_id           = var.snapshot_id
+  tags_all              = var.tags_all
   volume_size           = var.volume_size
+  parent_image          = var.parent_image
+  device_name           = var.device_name
+  name                  = var.name
+  owner                 = var.owner
   volume_type           = var.volume_type
   working_directory     = var.working_directory
-  arn                   = var.arn
-  description           = var.description
+  component             = var.component
   virtual_name          = var.virtual_name
-  ebs                   = var.ebs
-  uninstall_after_build = var.uninstall_after_build
+  value                 = var.value
+  description           = var.description
+  arn                   = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "ebs" {
-  description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
+variable "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the image recipe."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the image recipe."
   type        = string
   default     = ""
 }
-variable "uninstall_after_build" {
-  description = "(Required) Whether to remove the Systems Manager Agent after the image has been built. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+variable "component_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
   type        = string
 }
-variable "virtual_name" {
-  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
-  type        = string
-  default     = ""
-}
-variable "block_device_mapping" {
-  description = "(Optional) Configuration block(s) with block device mappings for the image recipe. Detailed below."
+variable "delete_on_termination" {
+  description = "(Optional) Whether to delete the volume on termination. Defaults to unset, which is the value inherited from the parent image."
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
+  type        = string
+  default     = ""
+}
+variable "platform" {
+  description = "Platform of the image recipe."
+  type        = string
+  default     = ""
+}
+variable "systems_manager_agent" {
+  description = "(Optional) Configuration block for the Systems Manager Agent installed by default by Image Builder. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "no_device" {
+  description = "(Optional) Set to true to remove a mapping from the parent image."
+  type        = string
+  default     = ""
+}
+variable "parameter" {
+  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
+  type        = string
+  default     = ""
+}
+variable "throughput" {
+  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
   type        = string
   default     = ""
 }
@@ -64,44 +88,18 @@ variable "user_data_base64" {
   type        = string
   default     = ""
 }
-variable "value" {
-  description = "(Required) The value for the named component parameter.systems_manager_agent"
-  type        = string
-}
-variable "component" {
-  description = "(Required) Ordered configuration block(s) with components for the image recipe. Detailed below."
-  type        = string
-}
-variable "no_device" {
-  description = "(Optional) Set to true to remove a mapping from the parent image."
+variable "block_device_mapping" {
+  description = "(Optional) Configuration block(s) with block device mappings for the image recipe. Detailed below."
   type        = string
   default     = ""
 }
-variable "snapshot_id" {
-  description = "(Optional) Identifier of the EC2 Volume Snapshot."
+variable "date_created" {
+  description = "Date the image recipe was created."
   type        = string
   default     = ""
 }
-variable "version" {
-  description = "(Required) Version of the image recipe.The following attributes are optional:"
-  type        = string
-}
-variable "parameter" {
-  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
-  type        = string
-  default     = ""
-}
-variable "parent_image" {
-  description = "(Required) Platform of the image recipe."
-  type        = string
-}
-variable "throughput" {
-  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
-  type        = string
-  default     = ""
-}
-variable "systems_manager_agent" {
-  description = "(Optional) Configuration block for the Systems Manager Agent installed by default by Image Builder. Detailed below."
+variable "ebs" {
+  description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
   type        = string
   default     = ""
 }
@@ -115,17 +113,44 @@ variable "iops" {
   type        = string
   default     = ""
 }
-variable "owner" {
-  description = "Owner of the image recipe."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags for the image recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
   default     = ""
 }
-variable "component_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
+variable "uninstall_after_build" {
+  description = "(Required) Whether to remove the Systems Manager Agent after the image has been built. Defaults to false.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "date_created" {
-  description = "Date the image recipe was created."
+variable "version" {
+  description = "(Required) Version of the image recipe.The following attributes are optional:"
+  type        = string
+}
+variable "parent_image" {
+  description = "(Required) Platform of the image recipe."
+  type        = string
+}
+variable "snapshot_id" {
+  description = "(Optional) Identifier of the EC2 Volume Snapshot."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "volume_size" {
+  description = "(Optional) Size of the volume, in GiB."
+  type        = string
+  default     = ""
+}
+variable "component" {
+  description = "(Required) Ordered configuration block(s) with components for the image recipe. Detailed below."
+  type        = string
+}
+variable "device_name" {
+  description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
   type        = string
   default     = ""
 }
@@ -133,28 +158,8 @@ variable "name" {
   description = "(Required) The name of the component parameter."
   type        = string
 }
-variable "delete_on_termination" {
-  description = "(Optional) Whether to delete the volume on termination. Defaults to unset, which is the value inherited from the parent image."
-  type        = string
-  default     = ""
-}
-variable "device_name" {
-  description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags for the image recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "platform" {
-  description = "Platform of the image recipe."
-  type        = string
-  default     = ""
-}
-variable "volume_size" {
-  description = "(Optional) Size of the volume, in GiB."
+variable "owner" {
+  description = "Owner of the image recipe."
   type        = string
   default     = ""
 }
@@ -168,17 +173,12 @@ variable "working_directory" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the image recipe."
+variable "value" {
+  description = "(Required) The value for the named component parameter.systems_manager_agent"
   type        = string
 }
-variable "description" {
-  description = "(Optional) Description of the image recipe."
-  type        = string
-  default     = ""
-}
-variable "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
+variable "virtual_name" {
+  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
   type        = string
   default     = ""
 }
@@ -302,105 +302,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "throughput" {
-  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.throughput
-}
-output "version" {
-  description = "(Required) Version of the image recipe.The following attributes are optional:"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.version
-}
-output "parameter" {
-  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.parameter
-}
 output "parent_image" {
   description = "(Required) Platform of the image recipe."
   value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.parent_image
-}
-output "owner" {
-  description = "Owner of the image recipe."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.owner
-}
-output "systems_manager_agent" {
-  description = "(Optional) Configuration block for the Systems Manager Agent installed by default by Image Builder. Detailed below."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.systems_manager_agent
-}
-output "encrypted" {
-  description = "(Optional) Whether to encrypt the volume. Defaults to unset, which is the value inherited from the parent image."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.encrypted
-}
-output "iops" {
-  description = "(Optional) Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.iops
-}
-output "name" {
-  description = "(Required) The name of the component parameter."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.name
-}
-output "component_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.component_arn
-}
-output "date_created" {
-  description = "Date the image recipe was created."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.date_created
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags for the image recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.tags
-}
-output "delete_on_termination" {
-  description = "(Optional) Whether to delete the volume on termination. Defaults to unset, which is the value inherited from the parent image."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.delete_on_termination
-}
-output "device_name" {
-  description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.device_name
-}
-output "kms_key_id" {
-  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.kms_key_id
-}
-output "platform" {
-  description = "Platform of the image recipe."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.platform
-}
-output "volume_size" {
-  description = "(Optional) Size of the volume, in GiB."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.volume_size
-}
-output "volume_type" {
-  description = "(Optional) Type of the volume. For example, gp2 or io2.componentThe component block supports the following arguments:"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.volume_type
-}
-output "working_directory" {
-  description = "(Optional) The working directory to be used during build and test workflows.block_device_mapping"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.working_directory
-}
-output "arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the image recipe."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.arn
-}
-output "description" {
-  description = "(Optional) Description of the image recipe."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.description
-}
-output "virtual_name" {
-  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.virtual_name
-}
-output "ebs" {
-  description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.ebs
-}
-output "uninstall_after_build" {
-  description = "(Required) Whether to remove the Systems Manager Agent after the image has been built. Defaults to false.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.uninstall_after_build
-}
-output "block_device_mapping" {
-  description = "(Optional) Configuration block(s) with block device mappings for the image recipe. Detailed below."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.block_device_mapping
 }
 output "snapshot_id" {
   description = "(Optional) Identifier of the EC2 Volume Snapshot."
@@ -410,21 +314,117 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.tags_all
 }
-output "user_data_base64" {
-  description = " (Optional) Base64 encoded user data. Use this to provide commands or a command script to run when you launch your build instance."
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.user_data_base64
-}
-output "value" {
-  description = "(Required) The value for the named component parameter.systems_manager_agent"
-  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.value
+output "volume_size" {
+  description = "(Optional) Size of the volume, in GiB."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.volume_size
 }
 output "component" {
   description = "(Required) Ordered configuration block(s) with components for the image recipe. Detailed below."
   value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.component
 }
+output "device_name" {
+  description = "(Optional) Name of the device. For example, /dev/sda or /dev/xvdb."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.device_name
+}
+output "name" {
+  description = "(Required) The name of the component parameter."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.name
+}
+output "owner" {
+  description = "Owner of the image recipe."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.owner
+}
+output "volume_type" {
+  description = "(Optional) Type of the volume. For example, gp2 or io2.componentThe component block supports the following arguments:"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.volume_type
+}
+output "working_directory" {
+  description = "(Optional) The working directory to be used during build and test workflows.block_device_mapping"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.working_directory
+}
+output "value" {
+  description = "(Required) The value for the named component parameter.systems_manager_agent"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.value
+}
+output "virtual_name" {
+  description = "(Optional) Virtual device name. For example, ephemeral0. Instance store volumes are numbered starting from 0.ebs"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.virtual_name
+}
+output "arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the image recipe."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.arn
+}
+output "description" {
+  description = "(Optional) Description of the image recipe."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.description
+}
+output "component_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the Image Builder Component to associate."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.component_arn
+}
+output "delete_on_termination" {
+  description = "(Optional) Whether to delete the volume on termination. Defaults to unset, which is the value inherited from the parent image."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.delete_on_termination
+}
+output "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the Key Management Service (KMS) Key for encryption."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.kms_key_id
+}
+output "platform" {
+  description = "Platform of the image recipe."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.platform
+}
+output "systems_manager_agent" {
+  description = "(Optional) Configuration block for the Systems Manager Agent installed by default by Image Builder. Detailed below."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.systems_manager_agent
+}
 output "no_device" {
   description = "(Optional) Set to true to remove a mapping from the parent image."
   value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.no_device
+}
+output "parameter" {
+  description = "(Optional) Configuration block(s) for parameters to configure the component. Detailed below.parameter"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.parameter
+}
+output "throughput" {
+  description = "(Optional) For GP3 volumes only. The throughput in MiB/s that the volume supports."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.throughput
+}
+output "user_data_base64" {
+  description = " (Optional) Base64 encoded user data. Use this to provide commands or a command script to run when you launch your build instance."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.user_data_base64
+}
+output "block_device_mapping" {
+  description = "(Optional) Configuration block(s) with block device mappings for the image recipe. Detailed below."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.block_device_mapping
+}
+output "date_created" {
+  description = "Date the image recipe was created."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.date_created
+}
+output "ebs" {
+  description = "(Optional) Configuration block with Elastic Block Storage (EBS) block device mapping settings. Detailed below."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.ebs
+}
+output "encrypted" {
+  description = "(Optional) Whether to encrypt the volume. Defaults to unset, which is the value inherited from the parent image."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.encrypted
+}
+output "iops" {
+  description = "(Optional) Number of Input/Output (I/O) operations per second to provision for an io1 or io2 volume."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.iops
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags for the image recipe. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.tags
+}
+output "uninstall_after_build" {
+  description = "(Required) Whether to remove the Systems Manager Agent after the image has been built. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.uninstall_after_build
+}
+output "version" {
+  description = "(Required) Version of the image recipe.The following attributes are optional:"
+  value       = aws_imagebuilder_image_recipe.aws_imagebuilder_image_recipe.version
 }
 output "arn" {
   description = "(Required) Amazon Resource Name (ARN) of the image recipe."

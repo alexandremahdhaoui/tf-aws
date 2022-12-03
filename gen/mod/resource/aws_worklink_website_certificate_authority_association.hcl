@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "certificate" {
-  description = "(Required, ForceNew) The root certificate of the Certificate Authority."
-  type        = string
-}
 variable "display_name" {
   description = "(Optional, ForceNew) The certificate name to display.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "fleet_arn" {
   description = "(Required, ForceNew) The ARN of the fleet."
+  type        = string
+}
+variable "certificate" {
+  description = "(Required, ForceNew) The root certificate of the Certificate Authority."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "fleet_arn" {
+  description = "(Required, ForceNew) The ARN of the fleet."
+  value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.fleet_arn
+}
 output "certificate" {
   description = "(Required, ForceNew) The root certificate of the Certificate Authority."
   value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.certificate
@@ -146,10 +150,6 @@ output "certificate" {
 output "display_name" {
   description = "(Optional, ForceNew) The certificate name to display.In addition to all arguments above, the following attributes are exported:"
   value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.display_name
-}
-output "fleet_arn" {
-  description = "(Required, ForceNew) The ARN of the fleet."
-  value       = aws_worklink_website_certificate_authority_association.aws_worklink_website_certificate_authority_association.fleet_arn
 }
 output "website_ca_id" {
   description = "A unique identifier for the Certificate Authority."

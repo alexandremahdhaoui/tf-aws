@@ -1,15 +1,20 @@
 datasource "aws_redshift_cluster_credentials" "aws_redshift_cluster_credentials" {
+  db_password        = var.db_password
+  db_user            = var.db_user
+  duration_seconds   = var.duration_seconds
   auto_create        = var.auto_create
   cluster_identifier = var.cluster_identifier
   db_groups          = var.db_groups
   db_name            = var.db_name
-  db_password        = var.db_password
-  db_user            = var.db_user
-  duration_seconds   = var.duration_seconds
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "auto_create" {
+  description = "(Optional)  Create a database user with the name specified for the user named in db_user if one does not exist."
+  type        = string
+  default     = ""
 }
 variable "cluster_identifier" {
   description = "(Required) Unique identifier of the cluster that contains the database for which your are requesting credentials."
@@ -35,11 +40,6 @@ variable "db_user" {
 }
 variable "duration_seconds" {
   description = "(Optional)  The number of seconds until the returned temporary password expires. Valid values are between 900 and 3600. Default value is 900.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "auto_create" {
-  description = "(Optional)  Create a database user with the name specified for the user named in db_user if one does not exist."
   type        = string
   default     = ""
 }

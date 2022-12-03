@@ -1,36 +1,19 @@
 resource "aws_datasync_location_fsx_openzfs_file_system" "aws_datasync_location_fsx_openzfs_file_system" {
-  fsx_filesystem_arn  = var.fsx_filesystem_arn
-  id                  = var.id
-  protocol            = var.protocol
-  security_group_arns = var.security_group_arns
-  uri                 = var.uri
   arn                 = var.arn
-  mount_options       = var.mount_options
+  id                  = var.id
   nfs                 = var.nfs
+  protocol            = var.protocol
+  tags_all            = var.tags_all
+  fsx_filesystem_arn  = var.fsx_filesystem_arn
+  mount_options       = var.mount_options
+  security_group_arns = var.security_group_arns
   subdirectory        = var.subdirectory
   tags                = var.tags
-  tags_all            = var.tags_all
+  uri                 = var.uri
   version             = var.version
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "version" {
-  description = "(Optional) The specific NFS version that you want DataSync to use for mounting your NFS share. Valid values: AUTOMATIC, NFS3, NFS4_0 and NFS4_1. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
-variable "mount_options" {
-  description = "(Required) Represents the mount options that are available for DataSync to access an NFS location. See below.mount_options"
-  type        = string
-}
-variable "nfs" {
-  description = "(Required) Represents the Network File System (NFS) protocol that DataSync uses to access your FSx for OpenZFS file system. See below.nfs"
   type        = string
 }
 variable "subdirectory" {
@@ -43,20 +26,21 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "uri" {
+  description = "The URL of the FSx for openzfs location that was described."
   type        = string
+}
+variable "version" {
+  description = "(Optional) The specific NFS version that you want DataSync to use for mounting your NFS share. Valid values: AUTOMATIC, NFS3, NFS4_0 and NFS4_1. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "fsx_filesystem_arn" {
   description = "(Required) The Amazon Resource Name (ARN) for the FSx for OpenZfs file system."
   type        = string
 }
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
-variable "protocol" {
-  description = "(Required) The type of protocol that DataSync uses to access your file system. See below."
+variable "mount_options" {
+  description = "(Required) Represents the mount options that are available for DataSync to access an NFS location. See below.mount_options"
   type        = string
 }
 variable "security_group_arns" {
@@ -64,8 +48,24 @@ variable "security_group_arns" {
   type        = string
   default     = ""
 }
-variable "uri" {
-  description = "The URL of the FSx for openzfs location that was described."
+variable "protocol" {
+  description = "(Required) The type of protocol that DataSync uses to access your file system. See below."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "nfs" {
+  description = "(Required) Represents the Network File System (NFS) protocol that DataSync uses to access your FSx for OpenZFS file system. See below.nfs"
   type        = string
 }
 variable "tag_instance_id" {
@@ -188,37 +188,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "fsx_filesystem_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) for the FSx for OpenZfs file system."
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.fsx_filesystem_arn
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.id
-}
-output "protocol" {
-  description = "(Required) The type of protocol that DataSync uses to access your file system. See below."
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.protocol
-}
 output "security_group_arns" {
   description = "(Optional) The Amazon Resource Names (ARNs) of the security groups that are to use to configure the FSx for openzfs file system."
   value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.security_group_arns
-}
-output "uri" {
-  description = "The URL of the FSx for openzfs location that was described."
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.uri
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.arn
-}
-output "mount_options" {
-  description = "(Required) Represents the mount options that are available for DataSync to access an NFS location. See below.mount_options"
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.mount_options
-}
-output "nfs" {
-  description = "(Required) Represents the Network File System (NFS) protocol that DataSync uses to access your FSx for OpenZFS file system. See below.nfs"
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.nfs
 }
 output "subdirectory" {
   description = "(Optional) Subdirectory to perform actions as source or destination. Must start with /fsx."
@@ -228,13 +200,41 @@ output "tags" {
   description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.protocol"
   value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.tags_all
+output "uri" {
+  description = "The URL of the FSx for openzfs location that was described."
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.uri
 }
 output "version" {
   description = "(Optional) The specific NFS version that you want DataSync to use for mounting your NFS share. Valid values: AUTOMATIC, NFS3, NFS4_0 and NFS4_1. Default: AUTOMATICIn addition to all arguments above, the following attributes are exported:"
   value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.version
+}
+output "fsx_filesystem_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) for the FSx for OpenZfs file system."
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.fsx_filesystem_arn
+}
+output "mount_options" {
+  description = "(Required) Represents the mount options that are available for DataSync to access an NFS location. See below.mount_options"
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.mount_options
+}
+output "nfs" {
+  description = "(Required) Represents the Network File System (NFS) protocol that DataSync uses to access your FSx for OpenZFS file system. See below.nfs"
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.nfs
+}
+output "protocol" {
+  description = "(Required) The type of protocol that DataSync uses to access your file system. See below."
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.protocol
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.arn
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_fsx_openzfs_file_system.aws_datasync_location_fsx_openzfs_file_system.id
 }
 output "uri" {
   description = "The URL of the FSx for openzfs location that was described."

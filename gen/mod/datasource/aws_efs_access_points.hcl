@@ -1,7 +1,7 @@
 datasource "aws_efs_access_points" "aws_efs_access_points" {
-  id             = var.id
   arns           = var.arns
   file_system_id = var.file_system_id
+  id             = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

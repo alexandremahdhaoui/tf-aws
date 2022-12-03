@@ -156,14 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
-  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.description
-}
-output "id" {
-  description = "The Redshift Subnet group ID."
-  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.id
-}
 output "name" {
   description = "(Required) The name of the Redshift Subnet group."
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.name
@@ -179,6 +171,14 @@ output "tags" {
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"
   value       = aws_redshift_subnet_group.aws_redshift_subnet_group.arn
+}
+output "description" {
+  description = "(Optional) The description of the Redshift Subnet group. Defaults to \"Managed by Terraform\"."
+  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.description
+}
+output "id" {
+  description = "The Redshift Subnet group ID."
+  value       = aws_redshift_subnet_group.aws_redshift_subnet_group.id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Subnet group name"

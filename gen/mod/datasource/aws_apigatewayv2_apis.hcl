@@ -7,6 +7,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "tags" {
+  description = "In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "name" {
   description = "(Optional) API name."
   type        = string
@@ -16,10 +20,6 @@ variable "protocol_type" {
   description = "(Optional) API protocol."
   type        = string
   default     = ""
-}
-variable "tags" {
-  description = "In addition to all arguments above, the following attributes are exported:"
-  type        = string
 }
 output "name" {
   description = "(Optional) API name."

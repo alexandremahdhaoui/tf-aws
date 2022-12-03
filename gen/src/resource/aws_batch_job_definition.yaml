@@ -54,7 +54,10 @@ spec:
             optional: true
             type: string
         retry_strategy:
-            description: retry_strategy is 1.  Defined below.
+            description: |-
+                (Optional) Specifies the retry strategy to use for failed jobs that are submitted with this job definition.
+                Maximum number of retry_strategy is 1.  Defined below.
+            optional: true
             type: string
         revision:
             description: The revision of the job definition.

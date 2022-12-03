@@ -1,90 +1,64 @@
 resource "aws_appmesh_gateway_route" "aws_appmesh_gateway_route" {
-  mesh_name               = var.mesh_name
-  suffix                  = var.suffix
+  action                  = var.action
+  created_date            = var.created_date
+  service_name            = var.service_name
+  target                  = var.target
+  value                   = var.value
+  default_target_hostname = var.default_target_hostname
   http_route              = var.http_route
   id                      = var.id
-  value                   = var.value
-  virtual_gateway_name    = var.virtual_gateway_name
-  grpc_route              = var.grpc_route
-  match                   = var.match
-  spec                    = var.spec
-  hostname                = var.hostname
   name                    = var.name
-  tags                    = var.tags
-  action                  = var.action
+  resource_owner          = var.resource_owner
+  spec                    = var.spec
   arn                     = var.arn
   default_prefix          = var.default_prefix
-  exact                   = var.exact
-  mesh_owner              = var.mesh_owner
+  tags                    = var.tags
   virtual_service_name    = var.virtual_service_name
-  created_date            = var.created_date
-  prefix                  = var.prefix
-  target                  = var.target
-  default_target_hostname = var.default_target_hostname
-  http2_route             = var.http2_route
+  hostname                = var.hostname
   last_updated_date       = var.last_updated_date
-  resource_owner          = var.resource_owner
-  service_name            = var.service_name
+  grpc_route              = var.grpc_route
+  http2_route             = var.http2_route
+  match                   = var.match
+  mesh_owner              = var.mesh_owner
+  prefix                  = var.prefix
   virtual_service         = var.virtual_service
+  mesh_name               = var.mesh_name
+  suffix                  = var.suffix
+  virtual_gateway_name    = var.virtual_gateway_name
+  exact                   = var.exact
   rewrite                 = var.rewrite
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "created_date" {
-  description = "Creation date of the gateway route."
-  type        = string
-}
-variable "prefix" {
-  description = "(Required) Path to match requests with. This parameter must always start with /, which by itself matches all requests to the virtual service name.The hostname object supports the following:"
-  type        = string
-}
 variable "target" {
   description = "(Required) Target that traffic is routed to when a request matches the gateway route.The target object supports the following:"
   type        = string
 }
-variable "resource_owner" {
-  description = "Resource owner's AWS account ID."
+variable "value" {
+  description = "(Optional) Value used to replace the incoming route prefix when rewritten.The grpc_route's match object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "action" {
+  description = "(Required) Action to take if a match is determined."
+  type        = string
+}
+variable "created_date" {
+  description = "Creation date of the gateway route."
   type        = string
 }
 variable "service_name" {
   description = "(Required) Fully qualified domain name for the service to match from the request.The http_route and http2_route's match object supports the following:"
   type        = string
 }
-variable "virtual_service" {
-  description = "(Required) Virtual service gateway route target.The virtual_service object supports the following:"
+variable "name" {
+  description = "(Required) Name to use for the gateway route. Must be between 1 and 255 characters in length."
   type        = string
 }
 variable "default_target_hostname" {
   description = "(Required) Default target host name to write to. Valid values: ENABLED, DISABLED.The prefix object supports the following:"
-  type        = string
-}
-variable "http2_route" {
-  description = "(Optional) Specification of an HTTP/2 gateway route.The grpc_route, http_route and http2_route objects supports the following:"
-  type        = string
-  default     = ""
-}
-variable "last_updated_date" {
-  description = "Last update date of the gateway route."
-  type        = string
-}
-variable "rewrite" {
-  description = "(Optional) Gateway route action to rewrite.The rewrite object supports the following:"
-  type        = string
-  default     = ""
-}
-variable "mesh_name" {
-  description = "(Required) Name of the service mesh in which to create the gateway route. Must be between 1 and 255 characters in length."
-  type        = string
-}
-variable "suffix" {
-  description = "(Optional) Specified ending characters of the host name to match on.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "virtual_gateway_name" {
-  description = "(Required) Name of the virtual gateway to associate the gateway route with. Must be between 1 and 255 characters in length."
   type        = string
 }
 variable "http_route" {
@@ -96,54 +70,16 @@ variable "id" {
   description = "ID of the gateway route."
   type        = string
 }
-variable "value" {
-  description = "(Optional) Value used to replace the incoming route prefix when rewritten.The grpc_route's match object supports the following:"
-  type        = string
-  default     = ""
-}
-variable "grpc_route" {
-  description = "(Optional) Specification of a gRPC gateway route."
-  type        = string
-  default     = ""
-}
-variable "match" {
-  description = "(Required) Criteria for determining a request match.The grpc_route, http_route and http2_route's action object supports the following:"
+variable "resource_owner" {
+  description = "Resource owner's AWS account ID."
   type        = string
 }
 variable "spec" {
   description = "(Required) Gateway route specification to apply."
   type        = string
 }
-variable "hostname" {
-  description = "(Optional) Host name to match on."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Name to use for the gateway route. Must be between 1 and 255 characters in length."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
-  type        = string
-  default     = ""
-}
-variable "exact" {
-  description = "(Optional) Exact host name to match on."
-  type        = string
-  default     = ""
-}
-variable "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
-  type        = string
-  default     = ""
-}
 variable "virtual_service_name" {
   description = "(Required) Name of the virtual service that traffic is routed to. Must be between 1 and 255 characters in length.The http_route and http2_route's action object additionally supports the following:"
-  type        = string
-}
-variable "action" {
-  description = "(Required) Action to take if a match is determined."
   type        = string
 }
 variable "arn" {
@@ -152,6 +88,70 @@ variable "arn" {
 }
 variable "default_prefix" {
   description = "(Optional) Default prefix used to replace the incoming route prefix when rewritten. Valid values: ENABLED, DISABLED."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "hostname" {
+  description = "(Optional) Host name to match on."
+  type        = string
+  default     = ""
+}
+variable "last_updated_date" {
+  description = "Last update date of the gateway route."
+  type        = string
+}
+variable "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
+  type        = string
+  default     = ""
+}
+variable "prefix" {
+  description = "(Required) Path to match requests with. This parameter must always start with /, which by itself matches all requests to the virtual service name.The hostname object supports the following:"
+  type        = string
+}
+variable "virtual_service" {
+  description = "(Required) Virtual service gateway route target.The virtual_service object supports the following:"
+  type        = string
+}
+variable "grpc_route" {
+  description = "(Optional) Specification of a gRPC gateway route."
+  type        = string
+  default     = ""
+}
+variable "http2_route" {
+  description = "(Optional) Specification of an HTTP/2 gateway route.The grpc_route, http_route and http2_route objects supports the following:"
+  type        = string
+  default     = ""
+}
+variable "match" {
+  description = "(Required) Criteria for determining a request match.The grpc_route, http_route and http2_route's action object supports the following:"
+  type        = string
+}
+variable "suffix" {
+  description = "(Optional) Specified ending characters of the host name to match on.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "virtual_gateway_name" {
+  description = "(Required) Name of the virtual gateway to associate the gateway route with. Must be between 1 and 255 characters in length."
+  type        = string
+}
+variable "mesh_name" {
+  description = "(Required) Name of the service mesh in which to create the gateway route. Must be between 1 and 255 characters in length."
+  type        = string
+}
+variable "exact" {
+  description = "(Optional) Exact host name to match on."
+  type        = string
+  default     = ""
+}
+variable "rewrite" {
+  description = "(Optional) Gateway route action to rewrite.The rewrite object supports the following:"
   type        = string
   default     = ""
 }
@@ -275,89 +275,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "hostname" {
-  description = "(Optional) Host name to match on."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.hostname
-}
-output "name" {
-  description = "(Required) Name to use for the gateway route. Must be between 1 and 255 characters in length."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.name
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.tags
-}
-output "virtual_service_name" {
-  description = "(Required) Name of the virtual service that traffic is routed to. Must be between 1 and 255 characters in length.The http_route and http2_route's action object additionally supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.virtual_service_name
-}
-output "action" {
-  description = "(Required) Action to take if a match is determined."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.action
-}
-output "arn" {
-  description = "ARN of the gateway route."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.arn
-}
-output "default_prefix" {
-  description = "(Optional) Default prefix used to replace the incoming route prefix when rewritten. Valid values: ENABLED, DISABLED."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.default_prefix
-}
 output "exact" {
   description = "(Optional) Exact host name to match on."
   value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.exact
-}
-output "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.mesh_owner
-}
-output "created_date" {
-  description = "Creation date of the gateway route."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.created_date
-}
-output "prefix" {
-  description = "(Required) Path to match requests with. This parameter must always start with /, which by itself matches all requests to the virtual service name.The hostname object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.prefix
-}
-output "target" {
-  description = "(Required) Target that traffic is routed to when a request matches the gateway route.The target object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.target
-}
-output "virtual_service" {
-  description = "(Required) Virtual service gateway route target.The virtual_service object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.virtual_service
-}
-output "default_target_hostname" {
-  description = "(Required) Default target host name to write to. Valid values: ENABLED, DISABLED.The prefix object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.default_target_hostname
-}
-output "http2_route" {
-  description = "(Optional) Specification of an HTTP/2 gateway route.The grpc_route, http_route and http2_route objects supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.http2_route
-}
-output "last_updated_date" {
-  description = "Last update date of the gateway route."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.last_updated_date
-}
-output "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.resource_owner
-}
-output "service_name" {
-  description = "(Required) Fully qualified domain name for the service to match from the request.The http_route and http2_route's match object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.service_name
 }
 output "rewrite" {
   description = "(Optional) Gateway route action to rewrite.The rewrite object supports the following:"
   value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.rewrite
 }
-output "mesh_name" {
-  description = "(Required) Name of the service mesh in which to create the gateway route. Must be between 1 and 255 characters in length."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.mesh_name
+output "action" {
+  description = "(Required) Action to take if a match is determined."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.action
 }
-output "suffix" {
-  description = "(Optional) Specified ending characters of the host name to match on.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.suffix
+output "created_date" {
+  description = "Creation date of the gateway route."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.created_date
+}
+output "service_name" {
+  description = "(Required) Fully qualified domain name for the service to match from the request.The http_route and http2_route's match object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.service_name
+}
+output "target" {
+  description = "(Required) Target that traffic is routed to when a request matches the gateway route.The target object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.target
+}
+output "value" {
+  description = "(Optional) Value used to replace the incoming route prefix when rewritten.The grpc_route's match object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.value
+}
+output "default_target_hostname" {
+  description = "(Required) Default target host name to write to. Valid values: ENABLED, DISABLED.The prefix object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.default_target_hostname
 }
 output "http_route" {
   description = "(Optional) Specification of an HTTP gateway route."
@@ -367,33 +315,77 @@ output "id" {
   description = "ID of the gateway route."
   value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.id
 }
-output "value" {
-  description = "(Optional) Value used to replace the incoming route prefix when rewritten.The grpc_route's match object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.value
+output "name" {
+  description = "(Required) Name to use for the gateway route. Must be between 1 and 255 characters in length."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.name
 }
-output "virtual_gateway_name" {
-  description = "(Required) Name of the virtual gateway to associate the gateway route with. Must be between 1 and 255 characters in length."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.virtual_gateway_name
-}
-output "grpc_route" {
-  description = "(Optional) Specification of a gRPC gateway route."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.grpc_route
-}
-output "match" {
-  description = "(Required) Criteria for determining a request match.The grpc_route, http_route and http2_route's action object supports the following:"
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.match
+output "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.resource_owner
 }
 output "spec" {
   description = "(Required) Gateway route specification to apply."
   value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.spec
 }
+output "arn" {
+  description = "ARN of the gateway route."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.arn
+}
+output "default_prefix" {
+  description = "(Optional) Default prefix used to replace the incoming route prefix when rewritten. Valid values: ENABLED, DISABLED."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.default_prefix
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.tags
+}
+output "virtual_service_name" {
+  description = "(Required) Name of the virtual service that traffic is routed to. Must be between 1 and 255 characters in length.The http_route and http2_route's action object additionally supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.virtual_service_name
+}
+output "hostname" {
+  description = "(Optional) Host name to match on."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.hostname
+}
 output "last_updated_date" {
   description = "Last update date of the gateway route."
   value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.last_updated_date
 }
-output "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.resource_owner
+output "grpc_route" {
+  description = "(Optional) Specification of a gRPC gateway route."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.grpc_route
+}
+output "http2_route" {
+  description = "(Optional) Specification of an HTTP/2 gateway route.The grpc_route, http_route and http2_route objects supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.http2_route
+}
+output "match" {
+  description = "(Required) Criteria for determining a request match.The grpc_route, http_route and http2_route's action object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.match
+}
+output "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.mesh_owner
+}
+output "prefix" {
+  description = "(Required) Path to match requests with. This parameter must always start with /, which by itself matches all requests to the virtual service name.The hostname object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.prefix
+}
+output "virtual_service" {
+  description = "(Required) Virtual service gateway route target.The virtual_service object supports the following:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.virtual_service
+}
+output "mesh_name" {
+  description = "(Required) Name of the service mesh in which to create the gateway route. Must be between 1 and 255 characters in length."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.mesh_name
+}
+output "suffix" {
+  description = "(Optional) Specified ending characters of the host name to match on.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.suffix
+}
+output "virtual_gateway_name" {
+  description = "(Required) Name of the virtual gateway to associate the gateway route with. Must be between 1 and 255 characters in length."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.virtual_gateway_name
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -410,6 +402,14 @@ output "created_date" {
 output "id" {
   description = "ID of the gateway route."
   value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.id
+}
+output "last_updated_date" {
+  description = "Last update date of the gateway route."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.last_updated_date
+}
+output "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  value       = aws_appmesh_gateway_route.aws_appmesh_gateway_route.resource_owner
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,19 +1,15 @@
 resource "aws_s3outposts_endpoint" "aws_s3outposts_endpoint" {
-  arn                = var.arn
-  cidr_block         = var.cidr_block
   creation_time      = var.creation_time
   id                 = var.id
   network_interfaces = var.network_interfaces
   outpost_id         = var.outpost_id
   security_group_id  = var.security_group_id
   subnet_id          = var.subnet_id
+  arn                = var.arn
+  cidr_block         = var.cidr_block
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "outpost_id" {
-  description = "(Required) Identifier of the Outpost to contain this endpoint."
   type        = string
 }
 variable "security_group_id" {
@@ -41,7 +37,11 @@ variable "id" {
   type        = string
 }
 variable "network_interfaces" {
-  description = ""
+  description = "Set of nested attributes for associated Elastic Network Interfaces (ENIs).\n"
+  type        = string
+}
+variable "outpost_id" {
+  description = "(Required) Identifier of the Outpost to contain this endpoint."
   type        = string
 }
 variable "tag_instance_id" {
@@ -164,22 +164,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "creation_time" {
-  description = "UTC creation time in RFC3339 format."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.creation_time
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.id
-}
-output "network_interfaces" {
-  description = ""
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interfaces
-}
-output "outpost_id" {
-  description = "(Required) Identifier of the Outpost to contain this endpoint."
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.outpost_id
-}
 output "security_group_id" {
   description = "(Required) Identifier of the EC2 Security Group."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.security_group_id
@@ -195,6 +179,26 @@ output "arn" {
 output "cidr_block" {
   description = "VPC CIDR block of the endpoint."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.cidr_block
+}
+output "creation_time" {
+  description = "UTC creation time in RFC3339 format."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.creation_time
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.id
+}
+output "network_interfaces" {
+  description = "Set of nested attributes for associated Elastic Network Interfaces (ENIs).\n"
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interfaces
+}
+output "outpost_id" {
+  description = "(Required) Identifier of the Outpost to contain this endpoint."
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.outpost_id
+}
+output "network_interfaces" {
+  description = "Set of nested attributes for associated Elastic Network Interfaces (ENIs).\n"
+  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interfaces
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the endpoint."
@@ -215,10 +219,6 @@ output "id" {
 output "network_interface_id" {
   description = "Identifier of the Elastic Network Interface (ENI)."
   value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interface_id
-}
-output "network_interfaces" {
-  description = ""
-  value       = aws_s3outposts_endpoint.aws_s3outposts_endpoint.network_interfaces
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

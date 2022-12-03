@@ -1,15 +1,20 @@
 resource "aws_organizations_organizational_unit" "aws_organizations_organizational_unit" {
+  tags      = var.tags
+  accounts  = var.accounts
+  arn       = var.arn
   email     = var.email
   id        = var.id
   name      = var.name
   parent_id = var.parent_id
-  tags      = var.tags
-  accounts  = var.accounts
-  arn       = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "accounts" {
   description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
@@ -34,11 +39,6 @@ variable "name" {
 variable "parent_id" {
   description = "ID of the parent organizational unit, which may be the root"
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -160,6 +160,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "accounts" {
+  description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.accounts
+}
+output "arn" {
+  description = "ARN of the organizational unit"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.arn
+}
+output "email" {
+  description = "Email of the account"
+  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.email
+}
 output "id" {
   description = "Identifier of the organization unit"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.id
@@ -175,10 +187,6 @@ output "parent_id" {
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.tags
-}
-output "accounts" {
-  description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.accounts
 }
 output "arn" {
   description = "ARN of the organizational unit"
@@ -203,14 +211,6 @@ output "tags_all" {
 output "accounts" {
   description = "List of child accounts for this Organizational Unit. Does not return account information for child Organizational Units. All elements have these attributes:\n"
   value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.accounts
-}
-output "arn" {
-  description = "ARN of the organizational unit"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.arn
-}
-output "email" {
-  description = "Email of the account"
-  value       = aws_organizations_organizational_unit.aws_organizations_organizational_unit.email
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

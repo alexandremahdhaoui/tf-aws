@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "match_criteria" {
-  description = " – A list of criteria that can be used in selecting this connection."
-  value       = aws_glue_connection.aws_glue_connection.match_criteria
-}
 output "name" {
   description = "Name of the Glue Connection."
   value       = aws_glue_connection.aws_glue_connection.name
@@ -31,6 +27,10 @@ output "connection_type" {
 output "description" {
   description = " – Description of the connection."
   value       = aws_glue_connection.aws_glue_connection.description
+}
+output "match_criteria" {
+  description = " – A list of criteria that can be used in selecting this connection."
+  value       = aws_glue_connection.aws_glue_connection.match_criteria
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

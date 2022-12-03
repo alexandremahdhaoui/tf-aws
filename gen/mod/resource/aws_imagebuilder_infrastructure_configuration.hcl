@@ -1,27 +1,27 @@
 resource "aws_imagebuilder_infrastructure_configuration" "aws_imagebuilder_infrastructure_configuration" {
-  logging                       = var.logging
-  s3_bucket_name                = var.s3_bucket_name
-  sns_topic_arn                 = var.sns_topic_arn
-  date_created                  = var.date_created
-  id                            = var.id
-  instance_profile_name         = var.instance_profile_name
-  key_pair                      = var.key_pair
-  subnet_id                     = var.subnet_id
+  arn                           = var.arn
   date_updated                  = var.date_updated
-  resource_tags                 = var.resource_tags
+  description                   = var.description
+  name                          = var.name
   s3_key_prefix                 = var.s3_key_prefix
   security_group_ids            = var.security_group_ids
-  tags                          = var.tags
-  terminate_instance_on_failure = var.terminate_instance_on_failure
-  description                   = var.description
-  instance_metadata_options     = var.instance_metadata_options
-  name                          = var.name
-  s3_logs                       = var.s3_logs
-  tags_all                      = var.tags_all
-  arn                           = var.arn
-  http_put_response_hop_limit   = var.http_put_response_hop_limit
+  date_created                  = var.date_created
   http_tokens                   = var.http_tokens
   instance_types                = var.instance_types
+  key_pair                      = var.key_pair
+  s3_bucket_name                = var.s3_bucket_name
+  sns_topic_arn                 = var.sns_topic_arn
+  instance_metadata_options     = var.instance_metadata_options
+  logging                       = var.logging
+  resource_tags                 = var.resource_tags
+  tags                          = var.tags
+  http_put_response_hop_limit   = var.http_put_response_hop_limit
+  id                            = var.id
+  instance_profile_name         = var.instance_profile_name
+  s3_logs                       = var.s3_logs
+  subnet_id                     = var.subnet_id
+  tags_all                      = var.tags_all
+  terminate_instance_on_failure = var.terminate_instance_on_failure
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -37,32 +37,8 @@ variable "instance_types" {
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the configuration."
-  type        = string
-  default     = ""
-}
-variable "http_put_response_hop_limit" {
-  description = "The number of hops that an instance can traverse to reach its destonation."
-  type        = string
-  default     = ""
-}
-variable "instance_profile_name" {
-  description = "(Required) Name of IAM Instance Profile."
-  type        = string
-}
 variable "key_pair" {
   description = "(Optional) Name of EC2 Key Pair."
-  type        = string
-  default     = ""
-}
-variable "logging" {
-  description = "(Optional) Configuration block with logging settings. Detailed below."
   type        = string
   default     = ""
 }
@@ -80,10 +56,72 @@ variable "date_created" {
   type        = string
   default     = ""
 }
+variable "logging" {
+  description = "(Optional) Configuration block with logging settings. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "resource_tags" {
+  description = "(Optional) Key-value map of resource tags to assign to infrastructure created by the configuration."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags to assign to the configuration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "instance_metadata_options" {
+  description = "(Optional) Configuration block with instance metadata options for the HTTP requests that pipeline builds use to launch EC2 build and test instances. Detailed below."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "Amazon Resource Name (ARN) of the configuration."
   type        = string
   default     = ""
+}
+variable "instance_profile_name" {
+  description = "(Required) Name of IAM Instance Profile."
+  type        = string
+}
+variable "s3_logs" {
+  description = "(Required) Configuration block with S3 logging settings. Detailed below.s3_logs"
+  type        = string
+}
+variable "subnet_id" {
+  description = "(Optional) EC2 Subnet identifier. Also requires security_group_ids argument."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "terminate_instance_on_failure" {
+  description = "(Optional) Enable if the instance should be terminated when the pipeline fails. Defaults to false.instance_metadata_options"
+  type        = string
+  default     = ""
+}
+variable "http_put_response_hop_limit" {
+  description = "The number of hops that an instance can traverse to reach its destonation."
+  type        = string
+  default     = ""
+}
+variable "date_updated" {
+  description = "Date when the configuration was updated."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) Description for the configuration."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name for the configuration."
+  type        = string
 }
 variable "s3_key_prefix" {
   description = "(Optional) Prefix to use for S3 logs. Defaults to /.In addition to all arguments above, the following attributes are exported:"
@@ -95,46 +133,8 @@ variable "security_group_ids" {
   type        = string
   default     = ""
 }
-variable "subnet_id" {
-  description = "(Optional) EC2 Subnet identifier. Also requires security_group_ids argument."
-  type        = string
-  default     = ""
-}
-variable "date_updated" {
-  description = "Date when the configuration was updated."
-  type        = string
-  default     = ""
-}
-variable "resource_tags" {
-  description = "(Optional) Key-value map of resource tags to assign to infrastructure created by the configuration."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Name for the configuration."
-  type        = string
-}
-variable "s3_logs" {
-  description = "(Required) Configuration block with S3 logging settings. Detailed below.s3_logs"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags to assign to the configuration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "terminate_instance_on_failure" {
-  description = "(Optional) Enable if the instance should be terminated when the pipeline fails. Defaults to false.instance_metadata_options"
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Description for the configuration."
-  type        = string
-  default     = ""
-}
-variable "instance_metadata_options" {
-  description = "(Optional) Configuration block with instance metadata options for the HTTP requests that pipeline builds use to launch EC2 build and test instances. Detailed below."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the configuration."
   type        = string
   default     = ""
 }
@@ -258,57 +258,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "date_updated" {
-  description = "Date when the configuration was updated."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.date_updated
-}
-output "resource_tags" {
-  description = "(Optional) Key-value map of resource tags to assign to infrastructure created by the configuration."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.resource_tags
-}
-output "s3_key_prefix" {
-  description = "(Optional) Prefix to use for S3 logs. Defaults to /.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.s3_key_prefix
-}
-output "security_group_ids" {
-  description = "(Optional) Set of EC2 Security Group identifiers."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.security_group_ids
-}
-output "subnet_id" {
-  description = "(Optional) EC2 Subnet identifier. Also requires security_group_ids argument."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.subnet_id
-}
-output "terminate_instance_on_failure" {
-  description = "(Optional) Enable if the instance should be terminated when the pipeline fails. Defaults to false.instance_metadata_options"
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.terminate_instance_on_failure
-}
-output "description" {
-  description = "(Optional) Description for the configuration."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.description
-}
-output "instance_metadata_options" {
-  description = "(Optional) Configuration block with instance metadata options for the HTTP requests that pipeline builds use to launch EC2 build and test instances. Detailed below."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.instance_metadata_options
-}
-output "name" {
-  description = "(Required) Name for the configuration."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.name
-}
-output "s3_logs" {
-  description = "(Required) Configuration block with S3 logging settings. Detailed below.s3_logs"
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.s3_logs
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags to assign to the configuration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.tags
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the configuration."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.arn
-}
-output "http_put_response_hop_limit" {
-  description = "The number of hops that an instance can traverse to reach its destonation."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.http_put_response_hop_limit
+output "date_created" {
+  description = "Date when the configuration was created."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.date_created
 }
 output "http_tokens" {
   description = "Whether a signed token is required for instance metadata retrieval requests. Valid values: required, optional.logging"
@@ -318,9 +270,9 @@ output "instance_types" {
   description = "(Optional) Set of EC2 Instance Types."
   value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.instance_types
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.tags_all
+output "key_pair" {
+  description = "(Optional) Name of EC2 Key Pair."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.key_pair
 }
 output "s3_bucket_name" {
   description = "(Required) Name of the S3 Bucket."
@@ -330,9 +282,25 @@ output "sns_topic_arn" {
   description = "(Optional) Amazon Resource Name (ARN) of SNS Topic."
   value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.sns_topic_arn
 }
-output "date_created" {
-  description = "Date when the configuration was created."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.date_created
+output "instance_metadata_options" {
+  description = "(Optional) Configuration block with instance metadata options for the HTTP requests that pipeline builds use to launch EC2 build and test instances. Detailed below."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.instance_metadata_options
+}
+output "logging" {
+  description = "(Optional) Configuration block with logging settings. Detailed below."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.logging
+}
+output "resource_tags" {
+  description = "(Optional) Key-value map of resource tags to assign to infrastructure created by the configuration."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.resource_tags
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags to assign to the configuration. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.tags
+}
+output "http_put_response_hop_limit" {
+  description = "The number of hops that an instance can traverse to reach its destonation."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.http_put_response_hop_limit
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the configuration."
@@ -342,13 +310,53 @@ output "instance_profile_name" {
   description = "(Required) Name of IAM Instance Profile."
   value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.instance_profile_name
 }
-output "key_pair" {
-  description = "(Optional) Name of EC2 Key Pair."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.key_pair
+output "s3_logs" {
+  description = "(Required) Configuration block with S3 logging settings. Detailed below.s3_logs"
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.s3_logs
 }
-output "logging" {
-  description = "(Optional) Configuration block with logging settings. Detailed below."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.logging
+output "subnet_id" {
+  description = "(Optional) EC2 Subnet identifier. Also requires security_group_ids argument."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.subnet_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.tags_all
+}
+output "terminate_instance_on_failure" {
+  description = "(Optional) Enable if the instance should be terminated when the pipeline fails. Defaults to false.instance_metadata_options"
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.terminate_instance_on_failure
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the configuration."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.arn
+}
+output "date_updated" {
+  description = "Date when the configuration was updated."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.date_updated
+}
+output "description" {
+  description = "(Optional) Description for the configuration."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.description
+}
+output "name" {
+  description = "(Required) Name for the configuration."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.name
+}
+output "s3_key_prefix" {
+  description = "(Optional) Prefix to use for S3 logs. Defaults to /.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.s3_key_prefix
+}
+output "security_group_ids" {
+  description = "(Optional) Set of EC2 Security Group identifiers."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.security_group_ids
+}
+output "id" {
+  description = "Amazon Resource Name (ARN) of the configuration."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the configuration."
@@ -361,14 +369,6 @@ output "date_created" {
 output "date_updated" {
   description = "Date when the configuration was updated."
   value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.date_updated
-}
-output "id" {
-  description = "Amazon Resource Name (ARN) of the configuration."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_imagebuilder_infrastructure_configuration.aws_imagebuilder_infrastructure_configuration.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,9 +1,9 @@
 datasource "aws_service_discovery_http_namespace" "aws_service_discovery_http_namespace" {
+  arn         = var.arn
   description = var.description
   http_name   = var.http_name
   id          = var.id
   name        = var.name
-  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

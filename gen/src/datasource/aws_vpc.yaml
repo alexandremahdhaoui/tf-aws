@@ -24,9 +24,7 @@ spec:
             description: Whether Network Address Usage metrics are enabled for your VPC
             type: string
         instance_tenancy:
-            description: |-
-                Allowed tenancy of instances launched into the
-                selected VPC. May be any of "default", "dedicated", or "host".
+            description: '"default", "dedicated", or "host".'
             type: string
         ipv6_association_id:
             description: Association ID for the IPv6 CIDR block.

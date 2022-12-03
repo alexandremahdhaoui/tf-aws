@@ -1,8 +1,8 @@
 datasource "aws_cloudcontrolapi_resource" "aws_cloudcontrolapi_resource" {
-  type_version_id = var.type_version_id
   identifier      = var.identifier
   role_arn        = var.role_arn
   type_name       = var.type_name
+  type_version_id = var.type_version_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -26,6 +26,10 @@ variable "type_version_id" {
   type        = string
   default     = ""
 }
+output "type_version_id" {
+  description = "(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_version_id
+}
 output "identifier" {
   description = "(Required) Identifier of the CloudFormation resource type. For example, vpc-12345678."
   value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.identifier
@@ -37,10 +41,6 @@ output "role_arn" {
 output "type_name" {
   description = "(Required) CloudFormation resource type name. For example, AWS::EC2::VPC."
   value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_name
-}
-output "type_version_id" {
-  description = "(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_version_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

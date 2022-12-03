@@ -1,41 +1,17 @@
 resource "aws_db_proxy_target" "aws_db_proxy_target" {
-  port                   = var.port
-  db_proxy_name          = var.db_proxy_name
-  id                     = var.id
-  endpoint               = var.endpoint
   rds_resource_id        = var.rds_resource_id
-  target_arn             = var.target_arn
   target_group_name      = var.target_group_name
+  port                   = var.port
+  db_instance_identifier = var.db_instance_identifier
+  db_proxy_name          = var.db_proxy_name
+  endpoint               = var.endpoint
+  id                     = var.id
+  target_arn             = var.target_arn
   tracked_cluster_id     = var.tracked_cluster_id
   db_cluster_identifier  = var.db_cluster_identifier
-  db_instance_identifier = var.db_instance_identifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "db_proxy_name" {
-  description = "(Required, Forces new resource) The name of the DB proxy."
-  type        = string
-}
-variable "id" {
-  description = "Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)."
-  type        = string
-}
-variable "port" {
-  description = "Port for the target RDS DB Instance or Aurora DB Cluster."
-  type        = string
-}
-variable "target_arn" {
-  description = "Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API."
-  type        = string
-}
-variable "target_group_name" {
-  description = "(Required, Forces new resource) The name of the target group."
-  type        = string
-}
-variable "tracked_cluster_id" {
-  description = "DB Cluster identifier for the DB Instance target. Not returned unless manually importing an RDS_INSTANCE target that is part of a DB Cluster."
   type        = string
 }
 variable "db_cluster_identifier" {
@@ -46,12 +22,36 @@ variable "db_instance_identifier" {
   description = "(Optional, Forces new resource) DB instance identifier."
   type        = string
 }
+variable "db_proxy_name" {
+  description = "(Required, Forces new resource) The name of the DB proxy."
+  type        = string
+}
 variable "endpoint" {
   description = "Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type."
   type        = string
 }
+variable "id" {
+  description = "Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)."
+  type        = string
+}
+variable "target_arn" {
+  description = "Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API."
+  type        = string
+}
+variable "tracked_cluster_id" {
+  description = "DB Cluster identifier for the DB Instance target. Not returned unless manually importing an RDS_INSTANCE target that is part of a DB Cluster."
+  type        = string
+}
+variable "port" {
+  description = "Port for the target RDS DB Instance or Aurora DB Cluster."
+  type        = string
+}
 variable "rds_resource_id" {
   description = "Identifier representing the DB Instance or DB Cluster target."
+  type        = string
+}
+variable "target_group_name" {
+  description = "(Required, Forces new resource) The name of the target group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -174,6 +174,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "target_arn" {
+  description = "Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API."
+  value       = aws_db_proxy_target.aws_db_proxy_target.target_arn
+}
 output "tracked_cluster_id" {
   description = "DB Cluster identifier for the DB Instance target. Not returned unless manually importing an RDS_INSTANCE target that is part of a DB Cluster."
   value       = aws_db_proxy_target.aws_db_proxy_target.tracked_cluster_id
@@ -186,25 +190,13 @@ output "db_instance_identifier" {
   description = "(Optional, Forces new resource) DB instance identifier."
   value       = aws_db_proxy_target.aws_db_proxy_target.db_instance_identifier
 }
-output "endpoint" {
-  description = "Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type."
-  value       = aws_db_proxy_target.aws_db_proxy_target.endpoint
-}
-output "rds_resource_id" {
-  description = "Identifier representing the DB Instance or DB Cluster target."
-  value       = aws_db_proxy_target.aws_db_proxy_target.rds_resource_id
-}
-output "target_arn" {
-  description = "Amazon Resource Name (ARN) for the DB instance or DB cluster. Currently not returned by the RDS API."
-  value       = aws_db_proxy_target.aws_db_proxy_target.target_arn
-}
-output "target_group_name" {
-  description = "(Required, Forces new resource) The name of the target group."
-  value       = aws_db_proxy_target.aws_db_proxy_target.target_group_name
-}
 output "db_proxy_name" {
   description = "(Required, Forces new resource) The name of the DB proxy."
   value       = aws_db_proxy_target.aws_db_proxy_target.db_proxy_name
+}
+output "endpoint" {
+  description = "Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type."
+  value       = aws_db_proxy_target.aws_db_proxy_target.endpoint
 }
 output "id" {
   description = "Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)."
@@ -213,6 +205,22 @@ output "id" {
 output "port" {
   description = "Port for the target RDS DB Instance or Aurora DB Cluster."
   value       = aws_db_proxy_target.aws_db_proxy_target.port
+}
+output "rds_resource_id" {
+  description = "Identifier representing the DB Instance or DB Cluster target."
+  value       = aws_db_proxy_target.aws_db_proxy_target.rds_resource_id
+}
+output "target_group_name" {
+  description = "(Required, Forces new resource) The name of the target group."
+  value       = aws_db_proxy_target.aws_db_proxy_target.target_group_name
+}
+output "endpoint" {
+  description = "Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type."
+  value       = aws_db_proxy_target.aws_db_proxy_target.endpoint
+}
+output "id" {
+  description = "Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)."
+  value       = aws_db_proxy_target.aws_db_proxy_target.id
 }
 output "port" {
   description = "Port for the target RDS DB Instance or Aurora DB Cluster."
@@ -233,14 +241,6 @@ output "tracked_cluster_id" {
 output "type" {
   description = "Type of targetE.g., RDS_INSTANCE or TRACKED_CLUSTER"
   value       = aws_db_proxy_target.aws_db_proxy_target.type
-}
-output "endpoint" {
-  description = "Hostname for the target RDS DB Instance. Only returned for RDS_INSTANCE type."
-  value       = aws_db_proxy_target.aws_db_proxy_target.endpoint
-}
-output "id" {
-  description = "Identifier of  db_proxy_name, target_group_name, target type (e.g., RDS_INSTANCE or TRACKED_CLUSTER), and resource identifier separated by forward slashes (/)."
-  value       = aws_db_proxy_target.aws_db_proxy_target.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resource_arn" {
-  description = "(Required) ARN of the resource associated with the license configuration.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_licensemanager_association.markdown.aws_licensemanager_association.markdown.resource_arn
-}
 output "license_configuration_arn" {
   description = "(Required) ARN of the license configuration."
   value       = aws_licensemanager_association.markdown.aws_licensemanager_association.markdown.license_configuration_arn
+}
+output "resource_arn" {
+  description = "(Required) ARN of the resource associated with the license configuration.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_licensemanager_association.markdown.aws_licensemanager_association.markdown.resource_arn
 }
 output "id" {
   description = "The license configuration ARN."

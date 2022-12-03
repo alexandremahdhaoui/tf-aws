@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "server_id" {
-  description = "(Requirement) The Server ID of the Transfer Server (e.g., s-12345678)"
-  type        = string
-}
 variable "user_name" {
   description = "(Requirement) The name of the user account that is assigned to one or more servers."
+  type        = string
+}
+variable "server_id" {
+  description = "(Requirement) The Server ID of the Transfer Server (e.g., s-12345678)"
   type        = string
 }
 variable "tag_instance_id" {

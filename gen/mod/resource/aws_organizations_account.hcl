@@ -1,28 +1,28 @@
 resource "aws_organizations_account" "aws_organizations_account" {
-  tags                       = var.tags
-  tags_all                   = var.tags_all
-  arn                        = var.arn
+  create_govcloud            = var.create_govcloud
   email                      = var.email
   govcloud_id                = var.govcloud_id
-  iam_user_access_to_billing = var.iam_user_access_to_billing
   id                         = var.id
-  close_on_deletion          = var.close_on_deletion
-  create_govcloud            = var.create_govcloud
   name                       = var.name
   parent_id                  = var.parent_id
   role_name                  = var.role_name
+  close_on_deletion          = var.close_on_deletion
+  iam_user_access_to_billing = var.iam_user_access_to_billing
+  tags                       = var.tags
+  tags_all                   = var.tags_all
+  arn                        = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "close_on_deletion" {
-  description = "(Optional) If true, a deletion event will close the account. Otherwise, it will only remove from the organization. This is not supported for GovCloud accounts."
+variable "govcloud_id" {
+  description = "ID for a GovCloud account created with the account."
   type        = string
   default     = ""
 }
-variable "create_govcloud" {
-  description = "(Optional) Whether to also create a GovCloud account. The GovCloud account is tied to the main (commercial) account this resource creates. If true, the GovCloud account ID is available in the govcloud_id attribute. The only way to manage the GovCloud account with Terraform is to subsequently import the account using this resource."
+variable "id" {
+  description = "The AWS account id"
   type        = string
   default     = ""
 }
@@ -40,8 +40,13 @@ variable "role_name" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "The ARN for this account."
+variable "close_on_deletion" {
+  description = "(Optional) If true, a deletion event will close the account. Otherwise, it will only remove from the organization. This is not supported for GovCloud accounts."
+  type        = string
+  default     = ""
+}
+variable "create_govcloud" {
+  description = "(Optional) Whether to also create a GovCloud account. The GovCloud account is tied to the main (commercial) account this resource creates. If true, the GovCloud account ID is available in the govcloud_id attribute. The only way to manage the GovCloud account with Terraform is to subsequently import the account using this resource."
   type        = string
   default     = ""
 }
@@ -49,8 +54,13 @@ variable "email" {
   description = "(Required) Email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account."
   type        = string
 }
-variable "govcloud_id" {
-  description = "ID for a GovCloud account created with the account."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN for this account."
   type        = string
   default     = ""
 }
@@ -59,18 +69,8 @@ variable "iam_user_access_to_billing" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The AWS account id"
-  type        = string
-  default     = ""
-}
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
   default     = ""
 }
@@ -194,17 +194,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "role_name" {
-  description = "(Optional) The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the root account, allowing users in the root account to assume the role, as permitted by the root account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore_changes is used."
-  value       = aws_organizations_account.aws_organizations_account.role_name
-}
-output "close_on_deletion" {
-  description = "(Optional) If true, a deletion event will close the account. Otherwise, it will only remove from the organization. This is not supported for GovCloud accounts."
-  value       = aws_organizations_account.aws_organizations_account.close_on_deletion
-}
 output "create_govcloud" {
   description = "(Optional) Whether to also create a GovCloud account. The GovCloud account is tied to the main (commercial) account this resource creates. If true, the GovCloud account ID is available in the govcloud_id attribute. The only way to manage the GovCloud account with Terraform is to subsequently import the account using this resource."
   value       = aws_organizations_account.aws_organizations_account.create_govcloud
+}
+output "email" {
+  description = "(Required) Email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account."
+  value       = aws_organizations_account.aws_organizations_account.email
+}
+output "govcloud_id" {
+  description = "ID for a GovCloud account created with the account."
+  value       = aws_organizations_account.aws_organizations_account.govcloud_id
+}
+output "id" {
+  description = "The AWS account id"
+  value       = aws_organizations_account.aws_organizations_account.id
 }
 output "name" {
   description = "(Required) Friendly name for the member account."
@@ -214,9 +218,17 @@ output "parent_id" {
   description = "(Optional) Parent Organizational Unit ID or Root ID for the account. Defaults to the Organization default Root ID. A configuration must be present for this argument to perform drift detection."
   value       = aws_organizations_account.aws_organizations_account.parent_id
 }
-output "id" {
-  description = "The AWS account id"
-  value       = aws_organizations_account.aws_organizations_account.id
+output "role_name" {
+  description = "(Optional) The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the root account, allowing users in the root account to assume the role, as permitted by the root account administrator. The role has administrator permissions in the new member account. The Organizations API provides no method for reading this information after account creation, so Terraform cannot perform drift detection on its value and will always show a difference for a configured value after import unless ignore_changes is used."
+  value       = aws_organizations_account.aws_organizations_account.role_name
+}
+output "close_on_deletion" {
+  description = "(Optional) If true, a deletion event will close the account. Otherwise, it will only remove from the organization. This is not supported for GovCloud accounts."
+  value       = aws_organizations_account.aws_organizations_account.close_on_deletion
+}
+output "iam_user_access_to_billing" {
+  description = "(Optional) If set to ALLOW, the new account enables IAM users and roles to access account billing information if they have the required permissions. If set to DENY, then only the root user (and no roles) of the new account can access account billing information. If this is unset, the AWS API will default this to ALLOW. If the resource is created and this option is changed, it will try to recreate the account."
+  value       = aws_organizations_account.aws_organizations_account.iam_user_access_to_billing
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -229,18 +241,6 @@ output "tags_all" {
 output "arn" {
   description = "The ARN for this account."
   value       = aws_organizations_account.aws_organizations_account.arn
-}
-output "email" {
-  description = "(Required) Email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account."
-  value       = aws_organizations_account.aws_organizations_account.email
-}
-output "govcloud_id" {
-  description = "ID for a GovCloud account created with the account."
-  value       = aws_organizations_account.aws_organizations_account.govcloud_id
-}
-output "iam_user_access_to_billing" {
-  description = "(Optional) If set to ALLOW, the new account enables IAM users and roles to access account billing information if they have the required permissions. If set to DENY, then only the root user (and no roles) of the new account can access account billing information. If this is unset, the AWS API will default this to ALLOW. If the resource is created and this option is changed, it will try to recreate the account."
-  value       = aws_organizations_account.aws_organizations_account.iam_user_access_to_billing
 }
 output "govcloud_id" {
   description = "ID for a GovCloud account created with the account."

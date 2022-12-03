@@ -1,70 +1,43 @@
 resource "aws_rds_cluster_instance" "aws_rds_cluster_instance" {
-  engine_version                        = var.engine_version
-  tags                                  = var.tags
-  auto_minor_version_upgrade            = var.auto_minor_version_upgrade
-  identifier                            = var.identifier
-  preferred_backup_window               = var.preferred_backup_window
-  preferred_maintenance_window          = var.preferred_maintenance_window
-  promotion_tier                        = var.promotion_tier
-  performance_insights_kms_key_id       = var.performance_insights_kms_key_id
-  performance_insights_retention_period = var.performance_insights_retention_period
-  apply_immediately                     = var.apply_immediately
-  availability_zone                     = var.availability_zone
-  monitoring_interval                   = var.monitoring_interval
-  kms_key_id                            = var.kms_key_id
-  network_type                          = var.network_type
-  storage_encrypted                     = var.storage_encrypted
-  writer                                = var.writer
-  arn                                   = var.arn
-  db_subnet_group_name                  = var.db_subnet_group_name
-  engine                                = var.engine
-  endpoint                              = var.endpoint
-  monitoring_role_arn                   = var.monitoring_role_arn
-  performance_insights_enabled          = var.performance_insights_enabled
-  ca_cert_identifier                    = var.ca_cert_identifier
-  copy_tags_to_snapshot                 = var.copy_tags_to_snapshot
-  dbi_resource_id                       = var.dbi_resource_id
-  port                                  = var.port
   tags_all                              = var.tags_all
-  cluster_identifier                    = var.cluster_identifier
-  create                                = var.create
-  identifier_prefix                     = var.identifier_prefix
-  instance_class                        = var.instance_class
-  publicly_accessible                   = var.publicly_accessible
-  update                                = var.update
-  db_parameter_group_name               = var.db_parameter_group_name
-  engine_version_actual                 = var.engine_version_actual
+  apply_immediately                     = var.apply_immediately
   id                                    = var.id
+  monitoring_role_arn                   = var.monitoring_role_arn
+  publicly_accessible                   = var.publicly_accessible
+  engine                                = var.engine
+  network_type                          = var.network_type
+  kms_key_id                            = var.kms_key_id
+  ca_cert_identifier                    = var.ca_cert_identifier
+  db_parameter_group_name               = var.db_parameter_group_name
+  dbi_resource_id                       = var.dbi_resource_id
+  engine_version                        = var.engine_version
+  monitoring_interval                   = var.monitoring_interval
+  preferred_maintenance_window          = var.preferred_maintenance_window
+  update                                = var.update
+  writer                                = var.writer
+  endpoint                              = var.endpoint
+  performance_insights_retention_period = var.performance_insights_retention_period
+  port                                  = var.port
+  preferred_backup_window               = var.preferred_backup_window
+  cluster_identifier                    = var.cluster_identifier
+  engine_version_actual                 = var.engine_version_actual
+  instance_class                        = var.instance_class
+  performance_insights_enabled          = var.performance_insights_enabled
+  storage_encrypted                     = var.storage_encrypted
+  arn                                   = var.arn
+  auto_minor_version_upgrade            = var.auto_minor_version_upgrade
+  copy_tags_to_snapshot                 = var.copy_tags_to_snapshot
+  performance_insights_kms_key_id       = var.performance_insights_kms_key_id
+  identifier_prefix                     = var.identifier_prefix
+  promotion_tier                        = var.promotion_tier
+  tags                                  = var.tags
+  availability_zone                     = var.availability_zone
+  create                                = var.create
+  db_subnet_group_name                  = var.db_subnet_group_name
+  identifier                            = var.identifier
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "preferred_maintenance_window" {
-  description = ""
-  type        = string
-}
-variable "promotion_tier" {
-  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoted to writer."
-  type        = string
-  default     = ""
-}
-variable "performance_insights_kms_key_id" {
-  description = "The ARN for the KMS encryption key used by Performance Insights."
-  type        = string
-}
-variable "performance_insights_retention_period" {
-  description = "(Optional) Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'."
-  type        = string
-  default     = ""
-}
-variable "apply_immediately" {
-  description = "(Optional) Specifies whether any database modifications\nare applied immediately, or during the next maintenance window. Default isfalse."
-  type        = string
-  default     = ""
-}
-variable "availability_zone" {
-  description = "The availability zone of the instance"
   type        = string
 }
 variable "monitoring_interval" {
@@ -72,85 +45,30 @@ variable "monitoring_interval" {
   type        = string
   default     = ""
 }
-variable "kms_key_id" {
-  description = "The ARN for the KMS encryption key if one is set to the cluster."
+variable "preferred_maintenance_window" {
+  description = "(Optional) The window to perform maintenance in.\nSyntax: \"ddd:hh24:mi-ddd:hh24:mi\". Eg: \"Mon:00:00-Mon:03:00\"."
   type        = string
-}
-variable "network_type" {
-  description = "The network type of the DB instance."
-  type        = string
-}
-variable "storage_encrypted" {
-  description = "Specifies whether the DB cluster is encrypted."
-  type        = string
+  default     = ""
 }
 variable "writer" {
   description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of cluster instance"
-  type        = string
-}
-variable "db_subnet_group_name" {
-  description = "(Required if publicly_accessible = false, Optional otherwise, Forces new resource) A DB subnet group to associate with this DB instance. strongNOTE: This must match the db_subnet_group_name of the attached aws_rds_cluster."
-  type        = string
-}
-variable "engine" {
-  description = "The database engine"
   type        = string
 }
 variable "endpoint" {
   description = "The DNS address for this instance. May not be writable"
   type        = string
 }
-variable "monitoring_role_arn" {
-  description = "AWS Documentation"
-  type        = string
-}
-variable "performance_insights_enabled" {
-  description = "Specifies whether Performance Insights is enabled or not."
-  type        = string
-}
-variable "ca_cert_identifier" {
-  description = "(Optional) The identifier of the CA certificate for the DB instance."
+variable "performance_insights_retention_period" {
+  description = "(Optional) Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'."
   type        = string
   default     = ""
-}
-variable "copy_tags_to_snapshot" {
-  description = " – (Optional, boolean) Indicates whether to copy all of the user-defined tags from the DB instance to snapshots of the DB instance. Default false."
-  type        = string
-}
-variable "dbi_resource_id" {
-  description = "The region-unique, immutable identifier for the DB instance."
-  type        = string
 }
 variable "port" {
   description = "The database port"
   type        = string
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "cluster_identifier" {
-  description = "The RDS Cluster Identifier"
-  type        = string
-}
-variable "create" {
-  description = "(Default 90m)"
-  type        = string
-}
-variable "identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
-  type        = string
-}
-variable "instance_class" {
-  description = "(Required) The instance class to use. For details on CPU\nand memory, see Scaling Aurora DB Instances. Aurora uses db.* instance classes/types. Please see AWS Documentation for currently available instance classes and complete details."
-  type        = string
-}
-variable "publicly_accessible" {
-  description = "(Optional) Bool to control if instance is publicly accessible.\nDefault false. See the documentation on Creating DB Instances"
+variable "preferred_backup_window" {
+  description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled. Eg: \"04:00-09:00\". strongNOTE: If preferred_backup_window is set at the cluster level, this argument strongmust be omitted."
   type        = string
   default     = ""
 }
@@ -158,21 +76,45 @@ variable "update" {
   description = "(Default 90m)"
   type        = string
 }
-variable "db_parameter_group_name" {
-  description = "(Optional) The name of the DB parameter group to associate with this instance."
+variable "cluster_identifier" {
+  description = "The RDS Cluster Identifier"
   type        = string
-  default     = ""
 }
 variable "engine_version_actual" {
   description = "The database engine version"
   type        = string
 }
-variable "id" {
-  description = "The Instance identifier"
+variable "instance_class" {
+  description = "(Required) The instance class to use. For details on CPU\nand memory, see Scaling Aurora DB Instances. Aurora uses db.* instance classes/types. Please see AWS Documentation for currently available instance classes and complete details."
   type        = string
 }
-variable "engine_version" {
-  description = "(Optional) The database engine version."
+variable "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights is enabled or not."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of cluster instance"
+  type        = string
+}
+variable "auto_minor_version_upgrade" {
+  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
+  type        = string
+  default     = ""
+}
+variable "copy_tags_to_snapshot" {
+  description = " – (Optional, boolean) Indicates whether to copy all of the user-defined tags from the DB instance to snapshots of the DB instance. Default false."
+  type        = string
+}
+variable "performance_insights_kms_key_id" {
+  description = "The ARN for the KMS encryption key used by Performance Insights."
+  type        = string
+}
+variable "storage_encrypted" {
+  description = "Specifies whether the DB cluster is encrypted."
+  type        = string
+}
+variable "promotion_tier" {
+  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoted to writer."
   type        = string
   default     = ""
 }
@@ -181,19 +123,78 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "auto_minor_version_upgrade" {
-  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
+variable "availability_zone" {
+  description = "The availability zone of the instance"
   type        = string
-  default     = ""
+}
+variable "create" {
+  description = "(Default 90m)"
+  type        = string
+}
+variable "db_subnet_group_name" {
+  description = "(Required if publicly_accessible = false, Optional otherwise, Forces new resource) A DB subnet group to associate with this DB instance. strongNOTE: This must match the db_subnet_group_name of the attached aws_rds_cluster."
+  type        = string
 }
 variable "identifier" {
   description = "The Instance identifier"
   type        = string
 }
-variable "preferred_backup_window" {
-  description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled. Eg: \"04:00-09:00\". strongNOTE: If preferred_backup_window is set at the cluster level, this argument strongmust be omitted."
+variable "identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
+  type        = string
+}
+variable "apply_immediately" {
+  description = "false."
+  type        = string
+}
+variable "id" {
+  description = "The Instance identifier"
+  type        = string
+}
+variable "monitoring_role_arn" {
+  description = "(Optional) The ARN for the IAM role that permits RDS to send\nenhanced monitoring metrics to CloudWatch Logs. You can find more information on the AWS Documentation"
   type        = string
   default     = ""
+}
+variable "publicly_accessible" {
+  description = "(Optional) Bool to control if instance is publicly accessible.\nDefault false. See the documentation on Creating DB Instances"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "engine" {
+  description = "The database engine"
+  type        = string
+}
+variable "network_type" {
+  description = "The network type of the DB instance."
+  type        = string
+}
+variable "ca_cert_identifier" {
+  description = "(Optional) The identifier of the CA certificate for the DB instance."
+  type        = string
+  default     = ""
+}
+variable "db_parameter_group_name" {
+  description = "(Optional) The name of the DB parameter group to associate with this instance."
+  type        = string
+  default     = ""
+}
+variable "dbi_resource_id" {
+  description = "The region-unique, immutable identifier for the DB instance."
+  type        = string
+}
+variable "engine_version" {
+  description = "(Optional) The database engine version."
+  type        = string
+  default     = ""
+}
+variable "kms_key_id" {
+  description = "The ARN for the KMS encryption key if one is set to the cluster."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -315,190 +316,22 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "preferred_maintenance_window" {
-  description = ""
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.preferred_maintenance_window
-}
-output "promotion_tier" {
-  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoted to writer."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.promotion_tier
-}
-output "apply_immediately" {
-  description = "(Optional) Specifies whether any database modifications\nare applied immediately, or during the next maintenance window. Default isfalse."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.apply_immediately
-}
-output "availability_zone" {
-  description = "The availability zone of the instance"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.availability_zone
-}
-output "monitoring_interval" {
-  description = "(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.monitoring_interval
-}
-output "performance_insights_kms_key_id" {
-  description = "The ARN for the KMS encryption key used by Performance Insights."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_kms_key_id
+output "endpoint" {
+  description = "The DNS address for this instance. May not be writable"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.endpoint
 }
 output "performance_insights_retention_period" {
   description = "(Optional) Amount of time in days to retain Performance Insights data. Valid values are 7, 731 (2 years) or a multiple of 31. When specifying performance_insights_retention_period, performance_insights_enabled needs to be set to true. Defaults to '7'."
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_retention_period
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of cluster instance"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.arn
-}
-output "db_subnet_group_name" {
-  description = "(Required if publicly_accessible = false, Optional otherwise, Forces new resource) A DB subnet group to associate with this DB instance. strongNOTE: This must match the db_subnet_group_name of the attached aws_rds_cluster."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.db_subnet_group_name
-}
-output "engine" {
-  description = "The database engine"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine
-}
-output "kms_key_id" {
-  description = "The ARN for the KMS encryption key if one is set to the cluster."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.kms_key_id
-}
-output "network_type" {
-  description = "The network type of the DB instance."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.network_type
-}
-output "storage_encrypted" {
-  description = "Specifies whether the DB cluster is encrypted."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.storage_encrypted
-}
-output "writer" {
-  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.writer
-}
-output "ca_cert_identifier" {
-  description = "(Optional) The identifier of the CA certificate for the DB instance."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.ca_cert_identifier
-}
-output "copy_tags_to_snapshot" {
-  description = " – (Optional, boolean) Indicates whether to copy all of the user-defined tags from the DB instance to snapshots of the DB instance. Default false."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.copy_tags_to_snapshot
-}
-output "dbi_resource_id" {
-  description = "The region-unique, immutable identifier for the DB instance."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.dbi_resource_id
-}
-output "endpoint" {
-  description = "The DNS address for this instance. May not be writable"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.endpoint
-}
-output "monitoring_role_arn" {
-  description = "AWS Documentation"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.monitoring_role_arn
-}
-output "performance_insights_enabled" {
-  description = "Specifies whether Performance Insights is enabled or not."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_enabled
-}
-output "cluster_identifier" {
-  description = "The RDS Cluster Identifier"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.cluster_identifier
-}
-output "create" {
-  description = "(Default 90m)"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.create
-}
-output "identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.identifier_prefix
-}
 output "port" {
   description = "The database port"
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.port
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.tags_all
-}
-output "db_parameter_group_name" {
-  description = "(Optional) The name of the DB parameter group to associate with this instance."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.db_parameter_group_name
-}
-output "engine_version_actual" {
-  description = "The database engine version"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine_version_actual
-}
-output "id" {
-  description = "The Instance identifier"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.id
-}
-output "instance_class" {
-  description = "(Required) The instance class to use. For details on CPU\nand memory, see Scaling Aurora DB Instances. Aurora uses db.* instance classes/types. Please see AWS Documentation for currently available instance classes and complete details."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.instance_class
-}
-output "publicly_accessible" {
-  description = "(Optional) Bool to control if instance is publicly accessible.\nDefault false. See the documentation on Creating DB Instances"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.publicly_accessible
-}
-output "update" {
-  description = "(Default 90m)"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.update
-}
-output "engine_version" {
-  description = "(Optional) The database engine version."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine_version
-}
-output "auto_minor_version_upgrade" {
-  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.auto_minor_version_upgrade
-}
-output "identifier" {
-  description = "The Instance identifier"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.identifier
 }
 output "preferred_backup_window" {
   description = "(Optional) The daily time range during which automated backups are created if automated backups are enabled. Eg: \"04:00-09:00\". strongNOTE: If preferred_backup_window is set at the cluster level, this argument strongmust be omitted."
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.preferred_backup_window
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.tags
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of cluster instance"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.arn
-}
-output "availability_zone" {
-  description = "The availability zone of the instance"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.availability_zone
-}
-output "cluster_identifier" {
-  description = "The RDS Cluster Identifier"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.cluster_identifier
-}
-output "create" {
-  description = "(Default 90m)"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.create
-}
-output "dbi_resource_id" {
-  description = "The region-unique, immutable identifier for the DB instance."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.dbi_resource_id
-}
-output "id" {
-  description = "The Instance identifier"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.id
-}
-output "port" {
-  description = "The database port"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.port
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.tags_all
-}
-output "kms_key_id" {
-  description = "The ARN for the KMS encryption key if one is set to the cluster."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.kms_key_id
-}
-output "storage_encrypted" {
-  description = "Specifies whether the DB cluster is encrypted."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.storage_encrypted
-}
 output "update" {
   description = "(Default 90m)"
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.update
@@ -507,25 +340,125 @@ output "writer" {
   description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.writer
 }
-output "engine" {
-  description = "The database engine"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine
+output "cluster_identifier" {
+  description = "The RDS Cluster Identifier"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.cluster_identifier
 }
-output "identifier" {
-  description = "The Instance identifier"
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.identifier
+output "engine_version_actual" {
+  description = "The database engine version"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine_version_actual
 }
-output "network_type" {
-  description = "The network type of the DB instance."
-  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.network_type
+output "instance_class" {
+  description = "(Required) The instance class to use. For details on CPU\nand memory, see Scaling Aurora DB Instances. Aurora uses db.* instance classes/types. Please see AWS Documentation for currently available instance classes and complete details."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.instance_class
 }
 output "performance_insights_enabled" {
   description = "Specifies whether Performance Insights is enabled or not."
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_enabled
 }
+output "arn" {
+  description = "Amazon Resource Name (ARN) of cluster instance"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.arn
+}
+output "auto_minor_version_upgrade" {
+  description = "(Optional) Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Default true."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.auto_minor_version_upgrade
+}
+output "copy_tags_to_snapshot" {
+  description = " – (Optional, boolean) Indicates whether to copy all of the user-defined tags from the DB instance to snapshots of the DB instance. Default false."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.copy_tags_to_snapshot
+}
 output "performance_insights_kms_key_id" {
   description = "The ARN for the KMS encryption key used by Performance Insights."
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_kms_key_id
+}
+output "storage_encrypted" {
+  description = "Specifies whether the DB cluster is encrypted."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.storage_encrypted
+}
+output "availability_zone" {
+  description = "The availability zone of the instance"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.availability_zone
+}
+output "create" {
+  description = "(Default 90m)"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.create
+}
+output "db_subnet_group_name" {
+  description = "(Required if publicly_accessible = false, Optional otherwise, Forces new resource) A DB subnet group to associate with this DB instance. strongNOTE: This must match the db_subnet_group_name of the attached aws_rds_cluster."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.db_subnet_group_name
+}
+output "identifier" {
+  description = "The Instance identifier"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.identifier
+}
+output "identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique identifier beginning with the specified prefix. Conflicts with identifier."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.identifier_prefix
+}
+output "promotion_tier" {
+  description = "(Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoted to writer."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.promotion_tier
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.tags
+}
+output "apply_immediately" {
+  description = "false."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.apply_immediately
+}
+output "id" {
+  description = "The Instance identifier"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.id
+}
+output "monitoring_role_arn" {
+  description = "(Optional) The ARN for the IAM role that permits RDS to send\nenhanced monitoring metrics to CloudWatch Logs. You can find more information on the AWS Documentation"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.monitoring_role_arn
+}
+output "publicly_accessible" {
+  description = "(Optional) Bool to control if instance is publicly accessible.\nDefault false. See the documentation on Creating DB Instances"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.publicly_accessible
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.tags_all
+}
+output "engine" {
+  description = "The database engine"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine
+}
+output "network_type" {
+  description = "The network type of the DB instance."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.network_type
+}
+output "ca_cert_identifier" {
+  description = "(Optional) The identifier of the CA certificate for the DB instance."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.ca_cert_identifier
+}
+output "db_parameter_group_name" {
+  description = "(Optional) The name of the DB parameter group to associate with this instance."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.db_parameter_group_name
+}
+output "dbi_resource_id" {
+  description = "The region-unique, immutable identifier for the DB instance."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.dbi_resource_id
+}
+output "engine_version" {
+  description = "(Optional) The database engine version."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine_version
+}
+output "kms_key_id" {
+  description = "The ARN for the KMS encryption key if one is set to the cluster."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.kms_key_id
+}
+output "monitoring_interval" {
+  description = "(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.monitoring_interval
+}
+output "preferred_maintenance_window" {
+  description = "(Optional) The window to perform maintenance in.\nSyntax: \"ddd:hh24:mi-ddd:hh24:mi\". Eg: \"Mon:00:00-Mon:03:00\"."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.preferred_maintenance_window
 }
 output "delete" {
   description = "(Default 90m)"
@@ -535,9 +468,77 @@ output "endpoint" {
   description = "The DNS address for this instance. May not be writable"
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.endpoint
 }
+output "network_type" {
+  description = "The network type of the DB instance."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.network_type
+}
+output "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights is enabled or not."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_enabled
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of cluster instance"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.arn
+}
+output "availability_zone" {
+  description = "The availability zone of the instance"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.availability_zone
+}
+output "cluster_identifier" {
+  description = "The RDS Cluster Identifier"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.cluster_identifier
+}
+output "dbi_resource_id" {
+  description = "The region-unique, immutable identifier for the DB instance."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.dbi_resource_id
+}
+output "performance_insights_kms_key_id" {
+  description = "The ARN for the KMS encryption key used by Performance Insights."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.performance_insights_kms_key_id
+}
+output "port" {
+  description = "The database port"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.port
+}
+output "update" {
+  description = "(Default 90m)"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.update
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.tags_all
+}
+output "writer" {
+  description = " – Boolean indicating if this instance is writable. False indicates this instance is a read replica."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.writer
+}
+output "identifier" {
+  description = "The Instance identifier"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.identifier
+}
+output "kms_key_id" {
+  description = "The ARN for the KMS encryption key if one is set to the cluster."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.kms_key_id
+}
+output "storage_encrypted" {
+  description = "Specifies whether the DB cluster is encrypted."
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.storage_encrypted
+}
+output "create" {
+  description = "(Default 90m)"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.create
+}
+output "engine" {
+  description = "The database engine"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine
+}
 output "engine_version_actual" {
   description = "The database engine version"
   value       = aws_rds_cluster_instance.aws_rds_cluster_instance.engine_version_actual
+}
+output "id" {
+  description = "The Instance identifier"
+  value       = aws_rds_cluster_instance.aws_rds_cluster_instance.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

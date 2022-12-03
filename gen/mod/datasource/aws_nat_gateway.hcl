@@ -4,6 +4,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "allocation_id" {
+  description = "ID of the EIP allocated to the selected Nat Gateway."
+  value       = aws_nat_gateway.aws_nat_gateway.allocation_id
+}
+output "connectivity_type" {
+  description = "Connectivity type of the NAT Gateway."
+  value       = aws_nat_gateway.aws_nat_gateway.connectivity_type
+}
 output "network_interface_id" {
   description = "The ID of the ENI allocated to the selected Nat Gateway."
   value       = aws_nat_gateway.aws_nat_gateway.network_interface_id
@@ -15,14 +23,6 @@ output "private_ip" {
 output "public_ip" {
   description = "Public Ip (EIP) address of the selected Nat Gateway.TimeoutsConfiguration options:"
   value       = aws_nat_gateway.aws_nat_gateway.public_ip
-}
-output "allocation_id" {
-  description = "ID of the EIP allocated to the selected Nat Gateway."
-  value       = aws_nat_gateway.aws_nat_gateway.allocation_id
-}
-output "connectivity_type" {
-  description = "Connectivity type of the NAT Gateway."
-  value       = aws_nat_gateway.aws_nat_gateway.connectivity_type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

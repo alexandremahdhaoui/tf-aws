@@ -1,14 +1,14 @@
 resource "aws_neptune_cluster_parameter_group" "aws_neptune_cluster_parameter_group" {
-  description  = var.description
   id           = var.id
-  name         = var.name
-  parameter    = var.parameter
-  apply_method = var.apply_method
-  arn          = var.arn
   tags         = var.tags
-  value        = var.value
-  family       = var.family
+  apply_method = var.apply_method
+  description  = var.description
+  name         = var.name
   name_prefix  = var.name_prefix
+  parameter    = var.parameter
+  value        = var.value
+  arn          = var.arn
+  family       = var.family
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -19,10 +19,6 @@ variable "apply_method" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "The ARN of the neptune cluster parameter group."
-  type        = string
-}
 variable "description" {
   description = "(Optional) The description of the neptune cluster parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
@@ -32,30 +28,34 @@ variable "id" {
   description = "The neptune cluster parameter group name."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the neptune parameter."
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
   type        = string
+  default     = ""
 }
 variable "parameter" {
   description = "(Optional) A list of neptune parameters to apply."
   type        = string
   default     = ""
 }
+variable "value" {
+  description = "(Required) The value of the neptune parameter."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the neptune cluster parameter group."
+  type        = string
+}
 variable "family" {
   description = "(Required) The family of the neptune cluster parameter group."
   type        = string
 }
+variable "name" {
+  description = "(Required) The name of the neptune parameter."
+  type        = string
+}
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
-  type        = string
-  default     = ""
-}
-variable "value" {
-  description = "(Required) The value of the neptune parameter."
   type        = string
 }
 variable "tag_instance_id" {
@@ -182,10 +182,6 @@ output "apply_method" {
   description = "(Optional) Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.apply_method
 }
-output "arn" {
-  description = "The ARN of the neptune cluster parameter group."
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.arn
-}
 output "description" {
   description = "(Optional) The description of the neptune cluster parameter group. Defaults to \"Managed by Terraform\"."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.description
@@ -194,25 +190,29 @@ output "id" {
   description = "The neptune cluster parameter group name."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.id
 }
-output "name" {
-  description = "(Required) The name of the neptune parameter."
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.name
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.tags
 }
-output "parameter" {
-  description = "(Optional) A list of neptune parameters to apply."
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.parameter
+output "arn" {
+  description = "The ARN of the neptune cluster parameter group."
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.arn
 }
 output "family" {
   description = "(Required) The family of the neptune cluster parameter group."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.family
 }
+output "name" {
+  description = "(Required) The name of the neptune parameter."
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.name
+}
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.name_prefix
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
-  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.tags
+output "parameter" {
+  description = "(Optional) A list of neptune parameters to apply."
+  value       = aws_neptune_cluster_parameter_group.aws_neptune_cluster_parameter_group.parameter
 }
 output "value" {
   description = "(Required) The value of the neptune parameter."

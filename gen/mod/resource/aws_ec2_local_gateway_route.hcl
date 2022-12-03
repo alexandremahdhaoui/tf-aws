@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "local_gateway_virtual_interface_group_id" {
-  description = "(Required) Identifier of EC2 Local Gateway Virtual Interface Group.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "destination_cidr_block" {
   description = "(Required) IPv4 CIDR range used for destination matches. Routing decisions are based on the most specific match."
   type        = string
 }
 variable "local_gateway_route_table_id" {
   description = "(Required) Identifier of EC2 Local Gateway Route Table."
+  type        = string
+}
+variable "local_gateway_virtual_interface_group_id" {
+  description = "(Required) Identifier of EC2 Local Gateway Virtual Interface Group.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

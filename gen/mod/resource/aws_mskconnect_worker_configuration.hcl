@@ -1,16 +1,12 @@
 resource "aws_mskconnect_worker_configuration" "aws_mskconnect_worker_configuration" {
-  arn                     = var.arn
-  description             = var.description
   latest_revision         = var.latest_revision
   name                    = var.name
   properties_file_content = var.properties_file_content
+  arn                     = var.arn
+  description             = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the worker configuration."
   type        = string
 }
 variable "properties_file_content" {
@@ -31,6 +27,10 @@ variable "latest_revision" {
   description = "an ID of the latest successfully created revision of the worker configuration."
   type        = string
   default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the worker configuration."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -172,13 +172,13 @@ output "properties_file_content" {
   description = "(Required) Contents of connect-distributed.properties file. The value can be either base64 encoded or in raw format."
   value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.properties_file_content
 }
-output "latest_revision" {
-  description = "an ID of the latest successfully created revision of the worker configuration."
-  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.latest_revision
-}
 output "arn" {
   description = "the Amazon Resource Name (ARN) of the worker configuration."
   value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.arn
+}
+output "latest_revision" {
+  description = "an ID of the latest successfully created revision of the worker configuration."
+  value       = aws_mskconnect_worker_configuration.aws_mskconnect_worker_configuration.latest_revision
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

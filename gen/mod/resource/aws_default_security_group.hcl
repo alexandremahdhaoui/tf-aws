@@ -1,35 +1,49 @@
 resource "aws_default_security_group" "aws_default_security_group" {
-  prefix_list_ids  = var.prefix_list_ids
-  description      = var.description
-  id               = var.id
   security_groups  = var.security_groups
   tags_all         = var.tags_all
-  vpc_id           = var.vpc_id
-  egress           = var.egress
-  owner_id         = var.owner_id
-  protocol         = var.protocol
-  self             = var.self
-  tags             = var.tags
-  to_port          = var.to_port
   arn              = var.arn
-  from_port        = var.from_port
-  ingress          = var.ingress
-  ipv6_cidr_blocks = var.ipv6_cidr_blocks
-  name             = var.name
+  description      = var.description
+  id               = var.id
+  owner_id         = var.owner_id
+  vpc_id           = var.vpc_id
   cidr_blocks      = var.cidr_blocks
+  ipv6_cidr_blocks = var.ipv6_cidr_blocks
+  prefix_list_ids  = var.prefix_list_ids
+  protocol         = var.protocol
+  from_port        = var.from_port
+  to_port          = var.to_port
+  tags             = var.tags
+  egress           = var.egress
+  ingress          = var.ingress
+  name             = var.name
+  self             = var.self
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "owner_id" {
-  description = "Owner ID."
+variable "from_port" {
+  description = "(Required) Start port (or ICMP type number if protocol is icmp)"
+  type        = string
+}
+variable "to_port" {
+  description = "(Required) End range port (or ICMP code if protocol is icmp).In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "egress" {
+  description = "(Optional, VPC only) Configuration block. Detailed below."
   type        = string
   default     = ""
 }
-variable "protocol" {
-  description = "(Required) Protocol. If you select a protocol of \"-1\" (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0. If not icmp, tcp, udp, or -1 use the protocol number."
+variable "ingress" {
+  description = "(Optional) Configuration block. Detailed below."
   type        = string
+  default     = ""
+}
+variable "name" {
+  description = "Name of the security group."
+  type        = string
+  default     = ""
 }
 variable "self" {
   description = "(Optional) Whether the security group itself will be added as a source to this egress rule."
@@ -41,41 +55,13 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "to_port" {
-  description = "(Required) End range port (or ICMP code if protocol is icmp).In addition to all arguments above, the following attributes are exported:"
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
+  default     = ""
 }
 variable "arn" {
   description = "ARN of the security group."
-  type        = string
-  default     = ""
-}
-variable "from_port" {
-  description = "(Required) Start port (or ICMP type number if protocol is icmp)"
-  type        = string
-}
-variable "ingress" {
-  description = "(Optional) Configuration block. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "ipv6_cidr_blocks" {
-  description = "(Optional) List of IPv6 CIDR blocks."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "Name of the security group."
-  type        = string
-  default     = ""
-}
-variable "cidr_blocks" {
-  description = "(Optional) List of CIDR blocks."
-  type        = string
-  default     = ""
-}
-variable "prefix_list_ids" {
-  description = "(Optional) List of prefix list IDs (for allowing access to VPC endpoints)"
   type        = string
   default     = ""
 }
@@ -89,23 +75,37 @@ variable "id" {
   type        = string
   default     = ""
 }
+variable "owner_id" {
+  description = "Owner ID."
+  type        = string
+  default     = ""
+}
 variable "security_groups" {
   description = "(Optional) List of security groups. A group name can be used relative to the default VPC. Otherwise, group ID."
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "cidr_blocks" {
+  description = "(Optional) List of CIDR blocks."
   type        = string
   default     = ""
+}
+variable "ipv6_cidr_blocks" {
+  description = "(Optional) List of IPv6 CIDR blocks."
+  type        = string
+  default     = ""
+}
+variable "prefix_list_ids" {
+  description = "(Optional) List of prefix list IDs (for allowing access to VPC endpoints)"
+  type        = string
+  default     = ""
+}
+variable "protocol" {
+  description = "(Required) Protocol. If you select a protocol of \"-1\" (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0. If not icmp, tcp, udp, or -1 use the protocol number."
+  type        = string
 }
 variable "vpc_id" {
   description = "(Optional, Forces new resource) VPC ID. strongNote that changing the vpc_id will emnot restore any default security group rules that were modified, added, or removed. It will be left in its current state.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress objects have the same arguments."
-  type        = string
-  default     = ""
-}
-variable "egress" {
-  description = "(Optional, VPC only) Configuration block. Detailed below."
   type        = string
   default     = ""
 }
@@ -229,53 +229,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "egress" {
-  description = "(Optional, VPC only) Configuration block. Detailed below."
-  value       = aws_default_security_group.aws_default_security_group.egress
-}
-output "id" {
-  description = "ID of the security group."
-  value       = aws_default_security_group.aws_default_security_group.id
-}
-output "security_groups" {
-  description = "(Optional) List of security groups. A group name can be used relative to the default VPC. Otherwise, group ID."
-  value       = aws_default_security_group.aws_default_security_group.security_groups
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_default_security_group.aws_default_security_group.tags_all
-}
-output "vpc_id" {
-  description = "(Optional, Forces new resource) VPC ID. strongNote that changing the vpc_id will emnot restore any default security group rules that were modified, added, or removed. It will be left in its current state.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress objects have the same arguments."
-  value       = aws_default_security_group.aws_default_security_group.vpc_id
-}
-output "arn" {
-  description = "ARN of the security group."
-  value       = aws_default_security_group.aws_default_security_group.arn
-}
-output "owner_id" {
-  description = "Owner ID."
-  value       = aws_default_security_group.aws_default_security_group.owner_id
-}
-output "protocol" {
-  description = "(Required) Protocol. If you select a protocol of \"-1\" (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0. If not icmp, tcp, udp, or -1 use the protocol number."
-  value       = aws_default_security_group.aws_default_security_group.protocol
-}
-output "self" {
-  description = "(Optional) Whether the security group itself will be added as a source to this egress rule."
-  value       = aws_default_security_group.aws_default_security_group.self
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_default_security_group.aws_default_security_group.tags
-}
 output "to_port" {
   description = "(Required) End range port (or ICMP code if protocol is icmp).In addition to all arguments above, the following attributes are exported:"
   value       = aws_default_security_group.aws_default_security_group.to_port
-}
-output "cidr_blocks" {
-  description = "(Optional) List of CIDR blocks."
-  value       = aws_default_security_group.aws_default_security_group.cidr_blocks
 }
 output "from_port" {
   description = "(Required) Start port (or ICMP type number if protocol is icmp)"
@@ -285,21 +241,73 @@ output "ingress" {
   description = "(Optional) Configuration block. Detailed below."
   value       = aws_default_security_group.aws_default_security_group.ingress
 }
-output "ipv6_cidr_blocks" {
-  description = "(Optional) List of IPv6 CIDR blocks."
-  value       = aws_default_security_group.aws_default_security_group.ipv6_cidr_blocks
-}
 output "name" {
   description = "Name of the security group."
   value       = aws_default_security_group.aws_default_security_group.name
+}
+output "self" {
+  description = "(Optional) Whether the security group itself will be added as a source to this egress rule."
+  value       = aws_default_security_group.aws_default_security_group.self
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_default_security_group.aws_default_security_group.tags
+}
+output "egress" {
+  description = "(Optional, VPC only) Configuration block. Detailed below."
+  value       = aws_default_security_group.aws_default_security_group.egress
 }
 output "description" {
   description = "Description of the security group."
   value       = aws_default_security_group.aws_default_security_group.description
 }
+output "id" {
+  description = "ID of the security group."
+  value       = aws_default_security_group.aws_default_security_group.id
+}
+output "owner_id" {
+  description = "Owner ID."
+  value       = aws_default_security_group.aws_default_security_group.owner_id
+}
+output "security_groups" {
+  description = "(Optional) List of security groups. A group name can be used relative to the default VPC. Otherwise, group ID."
+  value       = aws_default_security_group.aws_default_security_group.security_groups
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_default_security_group.aws_default_security_group.tags_all
+}
+output "arn" {
+  description = "ARN of the security group."
+  value       = aws_default_security_group.aws_default_security_group.arn
+}
+output "ipv6_cidr_blocks" {
+  description = "(Optional) List of IPv6 CIDR blocks."
+  value       = aws_default_security_group.aws_default_security_group.ipv6_cidr_blocks
+}
 output "prefix_list_ids" {
   description = "(Optional) List of prefix list IDs (for allowing access to VPC endpoints)"
   value       = aws_default_security_group.aws_default_security_group.prefix_list_ids
+}
+output "protocol" {
+  description = "(Required) Protocol. If you select a protocol of \"-1\" (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0. If not icmp, tcp, udp, or -1 use the protocol number."
+  value       = aws_default_security_group.aws_default_security_group.protocol
+}
+output "vpc_id" {
+  description = "(Optional, Forces new resource) VPC ID. strongNote that changing the vpc_id will emnot restore any default security group rules that were modified, added, or removed. It will be left in its current state.egress and ingressBoth arguments are processed in attribute-as-blocks mode.Both egress and ingress objects have the same arguments."
+  value       = aws_default_security_group.aws_default_security_group.vpc_id
+}
+output "cidr_blocks" {
+  description = "(Optional) List of CIDR blocks."
+  value       = aws_default_security_group.aws_default_security_group.cidr_blocks
+}
+output "arn" {
+  description = "ARN of the security group."
+  value       = aws_default_security_group.aws_default_security_group.arn
+}
+output "description" {
+  description = "Description of the security group."
+  value       = aws_default_security_group.aws_default_security_group.description
 }
 output "id" {
   description = "ID of the security group."
@@ -316,14 +324,6 @@ output "owner_id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_default_security_group.aws_default_security_group.tags_all
-}
-output "arn" {
-  description = "ARN of the security group."
-  value       = aws_default_security_group.aws_default_security_group.arn
-}
-output "description" {
-  description = "Description of the security group."
-  value       = aws_default_security_group.aws_default_security_group.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

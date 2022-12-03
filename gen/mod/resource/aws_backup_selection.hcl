@@ -1,43 +1,17 @@
 resource "aws_backup_selection" "aws_backup_selection" {
-  condition     = var.condition
   iam_role_arn  = var.iam_role_arn
-  key           = var.key
+  name          = var.name
   not_resources = var.not_resources
   plan_id       = var.plan_id
-  resources     = var.resources
   selection_tag = var.selection_tag
-  value         = var.value
-  name          = var.name
+  condition     = var.condition
+  key           = var.key
+  resources     = var.resources
   type          = var.type
+  value         = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The display name of a resource selection document."
-  type        = string
-}
-variable "type" {
-  description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
-  type        = string
-}
-variable "plan_id" {
-  description = "(Required) The backup plan ID to be associated with the selection of resources."
-  type        = string
-}
-variable "resources" {
-  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to assign to a backup plan."
-  type        = string
-  default     = ""
-}
-variable "selection_tag" {
-  description = "(Optional) Tag-based conditions used to specify a set of resources to assign to a backup plan."
-  type        = string
-  default     = ""
-}
-variable "value" {
-  description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "condition" {
@@ -45,16 +19,42 @@ variable "condition" {
   type        = string
   default     = ""
 }
-variable "iam_role_arn" {
-  description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
-  type        = string
-}
 variable "key" {
   description = "(Required) The key in a key-value pair."
   type        = string
 }
+variable "resources" {
+  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to assign to a backup plan."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
+  type        = string
+}
+variable "value" {
+  description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "iam_role_arn" {
+  description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The display name of a resource selection document."
+  type        = string
+}
 variable "not_resources" {
   description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
+  type        = string
+  default     = ""
+}
+variable "plan_id" {
+  description = "(Required) The backup plan ID to be associated with the selection of resources."
+  type        = string
+}
+variable "selection_tag" {
+  description = "(Optional) Tag-based conditions used to specify a set of resources to assign to a backup plan."
   type        = string
   default     = ""
 }
@@ -178,21 +178,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "not_resources" {
-  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
-  value       = aws_backup_selection.aws_backup_selection.not_resources
-}
-output "plan_id" {
-  description = "(Required) The backup plan ID to be associated with the selection of resources."
-  value       = aws_backup_selection.aws_backup_selection.plan_id
+output "key" {
+  description = "(Required) The key in a key-value pair."
+  value       = aws_backup_selection.aws_backup_selection.key
 }
 output "resources" {
   description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to assign to a backup plan."
   value       = aws_backup_selection.aws_backup_selection.resources
 }
-output "selection_tag" {
-  description = "(Optional) Tag-based conditions used to specify a set of resources to assign to a backup plan."
-  value       = aws_backup_selection.aws_backup_selection.selection_tag
+output "type" {
+  description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
+  value       = aws_backup_selection.aws_backup_selection.type
 }
 output "value" {
   description = "(Required) The value in a key-value pair.In addition to all arguments above, the following attributes are exported:"
@@ -202,21 +198,25 @@ output "condition" {
   description = "(Optional) A list of conditions that you define to assign resources to your backup plans using tags."
   value       = aws_backup_selection.aws_backup_selection.condition
 }
-output "iam_role_arn" {
-  description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
-  value       = aws_backup_selection.aws_backup_selection.iam_role_arn
-}
-output "key" {
-  description = "(Required) The key in a key-value pair."
-  value       = aws_backup_selection.aws_backup_selection.key
-}
 output "name" {
   description = "(Required) The display name of a resource selection document."
   value       = aws_backup_selection.aws_backup_selection.name
 }
-output "type" {
-  description = "(Required) An operation, such as StringEquals, that is applied to a key-value pair used to filter resources in a selection."
-  value       = aws_backup_selection.aws_backup_selection.type
+output "not_resources" {
+  description = "(Optional) An array of strings that either contain Amazon Resource Names (ARNs) or match patterns of resources to exclude from a backup plan.Tag conditions (selection_tag) support the following:"
+  value       = aws_backup_selection.aws_backup_selection.not_resources
+}
+output "plan_id" {
+  description = "(Required) The backup plan ID to be associated with the selection of resources."
+  value       = aws_backup_selection.aws_backup_selection.plan_id
+}
+output "selection_tag" {
+  description = "(Optional) Tag-based conditions used to specify a set of resources to assign to a backup plan."
+  value       = aws_backup_selection.aws_backup_selection.selection_tag
+}
+output "iam_role_arn" {
+  description = "(Required) The ARN of the IAM role that AWS Backup uses to authenticate when restoring and backing up the target resource. See the AWS Backup Developer Guide for additional information about using AWS managed policies or creating custom policies attached to the IAM role."
+  value       = aws_backup_selection.aws_backup_selection.iam_role_arn
 }
 output "id" {
   description = "Backup Selection identifier"

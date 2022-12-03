@@ -1,15 +1,24 @@
 datasource "aws_ec2_instance_type_offering" "aws_ec2_instance_type_offering" {
+  instance_type            = var.instance_type
+  location_type            = var.location_type
   name                     = var.name
   preferred_instance_types = var.preferred_instance_types
   values                   = var.values
   filter                   = var.filter
   id                       = var.id
-  instance_type            = var.instance_type
-  location_type            = var.location_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "name" {
+  description = "(Required) Name of the filter. The location filter depends on the top-level location_type argument and if not specified, defaults to the current region."
+  type        = string
+}
+variable "preferred_instance_types" {
+  description = "(Optional) Ordered list of preferred EC2 Instance Types. The first match in this list will be returned. If no preferred matches are found and the original search returned more than one result, an error is returned.filter Argument Reference"
+  type        = string
+  default     = ""
 }
 variable "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
@@ -33,23 +42,6 @@ variable "location_type" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Name of the filter. The location filter depends on the top-level location_type argument and if not specified, defaults to the current region."
-  type        = string
-}
-variable "preferred_instance_types" {
-  description = "(Optional) Ordered list of preferred EC2 Instance Types. The first match in this list will be returned. If no preferred matches are found and the original search returned more than one result, an error is returned.filter Argument Reference"
-  type        = string
-  default     = ""
-}
-output "filter" {
-  description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
-  value       = aws_ec2_instance_type_offering.aws_ec2_instance_type_offering.filter
-}
-output "id" {
-  description = "EC2 Instance Type."
-  value       = aws_ec2_instance_type_offering.aws_ec2_instance_type_offering.id
-}
 output "instance_type" {
   description = "EC2 Instance Type.TimeoutsConfiguration options:"
   value       = aws_ec2_instance_type_offering.aws_ec2_instance_type_offering.instance_type
@@ -69,6 +61,14 @@ output "preferred_instance_types" {
 output "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_instance_type_offering.aws_ec2_instance_type_offering.values
+}
+output "filter" {
+  description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below."
+  value       = aws_ec2_instance_type_offering.aws_ec2_instance_type_offering.filter
+}
+output "id" {
+  description = "EC2 Instance Type."
+  value       = aws_ec2_instance_type_offering.aws_ec2_instance_type_offering.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

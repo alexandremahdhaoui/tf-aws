@@ -1,18 +1,13 @@
 resource "aws_cloudcontrolapi_resource" "aws_cloudcontrolapi_resource" {
-  desired_state   = var.desired_state
   role_arn        = var.role_arn
   schema          = var.schema
   type_name       = var.type_name
   type_version_id = var.type_version_id
+  desired_state   = var.desired_state
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "role_arn" {
-  description = "(Optional) Amazon Resource Name (ARN) of the IAM Role to assume for operations."
-  type        = string
-  default     = ""
 }
 variable "schema" {
   description = "(Optional) JSON string of the CloudFormation resource type schema which is used for plan time validation where possible. Automatically fetched if not provided. In large scale environments with multiple resources using the same type_name, it is recommended to fetch the schema once via the aws_cloudformation_type data source and use this argument to reduce DescribeType API operation throttling. This value is marked sensitive only to prevent large plan differences from showing."
@@ -31,6 +26,11 @@ variable "type_version_id" {
 variable "desired_state" {
   description = "(Required) JSON string matching the CloudFormation resource type schema with desired configuration. Terraform configuration expressions can be converted into JSON using the jsonencode() function."
   type        = string
+}
+variable "role_arn" {
+  description = "(Optional) Amazon Resource Name (ARN) of the IAM Role to assume for operations."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -152,14 +152,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "type_name" {
-  description = "(Required) CloudFormation resource type name. For example, AWS::EC2::VPC."
-  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_name
-}
-output "type_version_id" {
-  description = "(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_version_id
-}
 output "desired_state" {
   description = "(Required) JSON string matching the CloudFormation resource type schema with desired configuration. Terraform configuration expressions can be converted into JSON using the jsonencode() function."
   value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.desired_state
@@ -171,6 +163,14 @@ output "role_arn" {
 output "schema" {
   description = "(Optional) JSON string of the CloudFormation resource type schema which is used for plan time validation where possible. Automatically fetched if not provided. In large scale environments with multiple resources using the same type_name, it is recommended to fetch the schema once via the aws_cloudformation_type data source and use this argument to reduce DescribeType API operation throttling. This value is marked sensitive only to prevent large plan differences from showing."
   value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.schema
+}
+output "type_name" {
+  description = "(Required) CloudFormation resource type name. For example, AWS::EC2::VPC."
+  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_name
+}
+output "type_version_id" {
+  description = "(Optional) Identifier of the CloudFormation resource type version.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudcontrolapi_resource.aws_cloudcontrolapi_resource.type_version_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

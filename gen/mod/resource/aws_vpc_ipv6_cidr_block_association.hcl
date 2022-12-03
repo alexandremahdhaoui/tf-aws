@@ -1,13 +1,21 @@
 resource "aws_vpc_ipv6_cidr_block_association" "aws_vpc_ipv6_cidr_block_association" {
+  ipv6_cidr_block     = var.ipv6_cidr_block
   ipv6_ipam_pool_id   = var.ipv6_ipam_pool_id
   ipv6_netmask_length = var.ipv6_netmask_length
   vpc_id              = var.vpc_id
   create              = var.create
   delete              = var.delete
-  ipv6_cidr_block     = var.ipv6_cidr_block
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "vpc_id" {
+  description = "(Required) The ID of the VPC to make the association with.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "create" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "delete" {
@@ -27,14 +35,6 @@ variable "ipv6_netmask_length" {
   description = "(Optional) The netmask length of the IPv6 CIDR you want to allocate to this VPC. Requires specifying a ipv6_ipam_pool_id. This parameter is optional if the IPAM pool has allocation_default_netmask set, otherwise it or cidr_block are required"
   type        = string
   default     = ""
-}
-variable "vpc_id" {
-  description = "(Required) The ID of the VPC to make the association with.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,10 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.create
-}
 output "delete" {
   description = "(Default 10m)In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.delete
@@ -179,6 +175,10 @@ output "ipv6_netmask_length" {
 output "vpc_id" {
   description = "(Required) The ID of the VPC to make the association with.TimeoutsConfiguration options:"
   value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.vpc_id
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_vpc_ipv6_cidr_block_association.aws_vpc_ipv6_cidr_block_association.create
 }
 output "id" {
   description = "The ID of the VPC CIDR association"

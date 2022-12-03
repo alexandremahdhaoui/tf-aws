@@ -1,11 +1,11 @@
 resource "aws_service_discovery_private_dns_namespace" "aws_service_discovery_private_dns_namespace" {
-  name        = var.name
-  tags        = var.tags
-  vpc         = var.vpc
   arn         = var.arn
   description = var.description
   hosted_zone = var.hosted_zone
   id          = var.id
+  name        = var.name
+  tags        = var.tags
+  vpc         = var.vpc
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -161,18 +161,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.arn
-}
-output "description" {
-  description = "(Optional) The description that you specify for the namespace when you create it."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.description
-}
-output "hosted_zone" {
-  description = "The ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.hosted_zone
-}
 output "id" {
   description = "The ID of a namespace."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.id
@@ -189,9 +177,17 @@ output "vpc" {
   description = "(Required) The ID of VPC that you want to associate the namespace with."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.vpc
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.tags_all
+output "arn" {
+  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.arn
+}
+output "description" {
+  description = "(Optional) The description that you specify for the namespace when you create it."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.description
+}
+output "hosted_zone" {
+  description = "The ID for the hosted zone that Amazon Route 53 creates when you create a namespace."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.hosted_zone
 }
 output "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
@@ -204,6 +200,10 @@ output "hosted_zone" {
 output "id" {
   description = "The ID of a namespace."
   value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_service_discovery_private_dns_namespace.aws_service_discovery_private_dns_namespace.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

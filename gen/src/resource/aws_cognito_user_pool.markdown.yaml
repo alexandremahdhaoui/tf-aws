@@ -239,8 +239,8 @@ spec:
             description: (Required) Positive integer specifying priority of a method with 1 being the highest priority.admin_create_user_config
             type: string
         recovery_mechanism:
-            description: |
-                (Required) List of Account Recovery Options of the following structure:
+            description: ""
+            optional: true
             type: string
         reply_to_email_address:
             description: (Optional) REPLY-TO email address.

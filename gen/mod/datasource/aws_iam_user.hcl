@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "user_id" {
+  description = "Unique ID assigned by AWS for this user."
+  value       = aws_iam_user.aws_iam_user.user_id
+}
 output "user_name" {
   description = "Name associated to this User"
   value       = aws_iam_user.aws_iam_user.user_name
@@ -19,10 +23,6 @@ output "path" {
 output "permissions_boundary" {
   description = "The ARN of the policy that is used to set the permissions boundary for the user."
   value       = aws_iam_user.aws_iam_user.permissions_boundary
-}
-output "user_id" {
-  description = "Unique ID assigned by AWS for this user."
-  value       = aws_iam_user.aws_iam_user.user_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

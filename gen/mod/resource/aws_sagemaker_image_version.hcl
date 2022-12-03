@@ -1,12 +1,20 @@
 resource "aws_sagemaker_image_version" "aws_sagemaker_image_version" {
+  image_arn  = var.image_arn
+  image_name = var.image_name
   arn        = var.arn
   base_image = var.base_image
   id         = var.id
-  image_arn  = var.image_arn
-  image_name = var.image_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "The name of the Image."
+  type        = string
+}
+variable "image_arn" {
+  description = "- The Amazon Resource Name (ARN) of the image the version is based on."
   type        = string
 }
 variable "image_name" {
@@ -19,14 +27,6 @@ variable "arn" {
 }
 variable "base_image" {
   description = "(Required) The registry path of the container image on which this image version is based.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "The name of the Image."
-  type        = string
-}
-variable "image_arn" {
-  description = "- The Amazon Resource Name (ARN) of the image the version is based on."
   type        = string
 }
 variable "tag_instance_id" {

@@ -1,15 +1,32 @@
 resource "aws_elasticache_parameter_group" "aws_elasticache_parameter_group" {
+  tags        = var.tags
+  value       = var.value
+  arn         = var.arn
   description = var.description
   family      = var.family
   id          = var.id
   name        = var.name
   parameter   = var.parameter
-  tags        = var.tags
-  value       = var.value
-  arn         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the ElastiCache parameter group. Defaults to \"Managed by Terraform\"."
+  type        = string
+  default     = ""
+}
+variable "family" {
+  description = "(Required) The family of the ElastiCache parameter group."
+  type        = string
+}
+variable "id" {
+  description = "The ElastiCache parameter group name."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the ElastiCache parameter."
   type        = string
 }
 variable "parameter" {
@@ -28,23 +45,6 @@ variable "value" {
 }
 variable "arn" {
   description = "The AWS ARN associated with the parameter group."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the ElastiCache parameter group. Defaults to \"Managed by Terraform\"."
-  type        = string
-  default     = ""
-}
-variable "family" {
-  description = "(Required) The family of the ElastiCache parameter group."
-  type        = string
-}
-variable "id" {
-  description = "The ElastiCache parameter group name."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the ElastiCache parameter."
   type        = string
 }
 variable "tag_instance_id" {

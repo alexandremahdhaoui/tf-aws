@@ -1,23 +1,14 @@
 resource "aws_apigatewayv2_integration_response" "aws_apigatewayv2_integration_response" {
+  api_id                        = var.api_id
   content_handling_strategy     = var.content_handling_strategy
   integration_id                = var.integration_id
   integration_response_key      = var.integration_response_key
   response_templates            = var.response_templates
   template_selection_expression = var.template_selection_expression
-  api_id                        = var.api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "api_id" {
-  description = "(Required) API identifier."
-  type        = string
-}
-variable "content_handling_strategy" {
-  description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT."
-  type        = string
-  default     = ""
 }
 variable "integration_id" {
   description = "(Required) Identifier of the aws_apigatewayv2_integration."
@@ -34,6 +25,15 @@ variable "response_templates" {
 }
 variable "template_selection_expression" {
   description = "(Optional) The template selection expression for the integration response.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "api_id" {
+  description = "(Required) API identifier."
+  type        = string
+}
+variable "content_handling_strategy" {
+  description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT."
   type        = string
   default     = ""
 }
@@ -157,18 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "content_handling_strategy" {
-  description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT."
-  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.content_handling_strategy
-}
-output "integration_id" {
-  description = "(Required) Identifier of the aws_apigatewayv2_integration."
-  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.integration_id
-}
-output "integration_response_key" {
-  description = "(Required) Integration response key."
-  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.integration_response_key
-}
 output "response_templates" {
   description = "(Optional) Map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client."
   value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.response_templates
@@ -180,6 +168,18 @@ output "template_selection_expression" {
 output "api_id" {
   description = "(Required) API identifier."
   value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.api_id
+}
+output "content_handling_strategy" {
+  description = "(Optional) How to handle response payload content type conversions. Valid values: CONVERT_TO_BINARY, CONVERT_TO_TEXT."
+  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.content_handling_strategy
+}
+output "integration_id" {
+  description = "(Required) Identifier of the aws_apigatewayv2_integration."
+  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.integration_id
+}
+output "integration_response_key" {
+  description = "(Required) Integration response key."
+  value       = aws_apigatewayv2_integration_response.aws_apigatewayv2_integration_response.integration_response_key
 }
 output "id" {
   description = "Integration response identifier."

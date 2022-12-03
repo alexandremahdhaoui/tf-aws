@@ -1,61 +1,105 @@
 resource "aws_dms_replication_instance" "aws_dms_replication_instance" {
+  replication_instance_class                                                                                                     = var.replication_instance_class
+  replication_instance_id                                                                                                        = var.replication_instance_id
+  replication_instance_private_ips                                                                                               = var.replication_instance_private_ips
+  Cannot end with a hyphen                                                                                                       = var.Cannot end with a hyphen
+  Valid Days:                                                                                                                    = var.Valid Days: 
+  allow_major_version_upgrade                                                                                                    = var.allow_major_version_upgrade
+  Constraints: Minimum 30-minute window.                                                                                         = var.Constraints: Minimum 30-minute window.
+  replication_subnet_group_id                                                                                                    = var.replication_subnet_group_id
+  update                                                                                                                         = var.update
+  publicly_accessible                                                                                                            = var.publicly_accessible
+  Format:                                                                                                                        = var.Format: 
+  auto_minor_version_upgrade                                                                                                     = var.auto_minor_version_upgrade
+  kms_key_arn                                                                                                                    = var.kms_key_arn
+  tags_all                                                                                                                       = var.tags_all
+  Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week. = var.Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week.
+  apply_immediately                                                                                                              = var.apply_immediately
+  replication_instance_public_ips                                                                                                = var.replication_instance_public_ips
+  multi_az                                                                                                                       = var.multi_az
+  replication_instance_arn                                                                                                       = var.replication_instance_arn
+  Must contain from 1 to 63 alphanumeric characters or hyphens.                                                                  = var.Must contain from 1 to 63 alphanumeric characters or hyphens.
   availability_zone                                                                                                              = var.availability_zone
   create                                                                                                                         = var.create
-  replication_subnet_group_id                                                                                                    = var.replication_subnet_group_id
-  Cannot end with a hyphen                                                                                                       = var.Cannot end with a hyphen
-  Constraints: Minimum 30-minute window.                                                                                         = var.Constraints: Minimum 30-minute window.
-  allocated_storage                                                                                                              = var.allocated_storage
-  replication_instance_class                                                                                                     = var.replication_instance_class
   vpc_security_group_ids                                                                                                         = var.vpc_security_group_ids
-  First character must be a letter.                                                                                              = var.First character must be a letter.
-  tags                                                                                                                           = var.tags
-  update                                                                                                                         = var.update
-  apply_immediately                                                                                                              = var.apply_immediately
-  tags_all                                                                                                                       = var.tags_all
-  Valid Days:                                                                                                                    = var.Valid Days: 
-  auto_minor_version_upgrade                                                                                                     = var.auto_minor_version_upgrade
-  preferred_maintenance_window                                                                                                   = var.preferred_maintenance_window
-  replication_instance_private_ips                                                                                               = var.replication_instance_private_ips
-  Must contain from 1 to 63 alphanumeric characters or hyphens.                                                                  = var.Must contain from 1 to 63 alphanumeric characters or hyphens.
-  publicly_accessible                                                                                                            = var.publicly_accessible
-  replication_instance_arn                                                                                                       = var.replication_instance_arn
-  replication_instance_id                                                                                                        = var.replication_instance_id
-  Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week. = var.Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week.
-  Format:                                                                                                                        = var.Format: 
-  replication_instance_public_ips                                                                                                = var.replication_instance_public_ips
   Cannot contain two consecutive hyphens.                                                                                        = var.Cannot contain two consecutive hyphens.
-  allow_major_version_upgrade                                                                                                    = var.allow_major_version_upgrade
+  First character must be a letter.                                                                                              = var.First character must be a letter.
+  preferred_maintenance_window                                                                                                   = var.preferred_maintenance_window
+  allocated_storage                                                                                                              = var.allocated_storage
   engine_version                                                                                                                 = var.engine_version
-  kms_key_arn                                                                                                                    = var.kms_key_arn
-  multi_az                                                                                                                       = var.multi_az
+  tags                                                                                                                           = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "allocated_storage" {
-  description = "(Optional, Default: 50, Min: 5, Max: 6144) The amount of storage (in gigabytes) to be initially allocated for the replication instance."
+variable "kms_key_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) for the KMS key that will be used to encrypt the connection parameters. If you do not specify a value for kms_key_arn, then AWS DMS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region."
+  type        = string
+  default     = ""
+}
+variable "publicly_accessible" {
+  description = "(Optional, Default: false) Specifies the accessibility options for the replication instance. A value of true represents an instance with a public IP address. A value of false represents an instance with a private IP address."
   type        = string
 }
-variable "replication_instance_class" {
-  description = "(Required) The compute and memory capacity of the replication instance as specified by the replication instance class. See AWS DMS User Guide for available instance sizes and advice on which one to choose."
+variable "Format: " {
+  description = "ddd:hh24:mi-ddd:hh24:mi"
   type        = string
+}
+variable "auto_minor_version_upgrade" {
+  description = "(Optional, Default: false) Indicates that minor engine upgrades will be applied automatically to the replication instance during the maintenance window."
+  type        = string
+}
+variable "replication_instance_public_ips" {
+  description = "A list of the public IP addresses of the replication instance."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week." {
+  description = ""
+  type        = string
+}
+variable "apply_immediately" {
+  description = "(Optional, Default: false) Indicates whether the changes should be applied immediately or during the next maintenance window. Only used when updating an existing resource."
+  type        = string
+}
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+}
+variable "multi_az" {
+  description = "(Optional) Specifies if the replication instance is a multi-az deployment. You cannot set the availability_zone parameter if the multi_az parameter is set to true."
+  type        = string
+  default     = ""
+}
+variable "replication_instance_arn" {
+  description = "The Amazon Resource Name (ARN) of the replication instance."
+  type        = string
+}
+variable "Must contain from 1 to 63 alphanumeric characters or hyphens." {
+  description = ""
+  type        = string
+}
+variable "availability_zone" {
+  description = "(Optional) The EC2 Availability Zone that the replication instance will be created in."
+  type        = string
+  default     = ""
+}
+variable "preferred_maintenance_window" {
+  description = "(Optional) The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC)."
+  type        = string
+  default     = ""
 }
 variable "vpc_security_group_ids" {
   description = "(Optional) A list of VPC security group IDs to be used with the replication instance. The VPC security groups must work with the VPC containing the replication instance.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
-variable "Cannot end with a hyphen" {
+variable "Cannot contain two consecutive hyphens." {
   description = ""
-  type        = string
-}
-variable "Constraints: Minimum 30-minute window." {
-  description = ""
-  type        = string
-}
-variable "update" {
-  description = "(Default 30m)"
   type        = string
 }
 variable "First character must be a letter." {
@@ -67,57 +111,8 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "apply_immediately" {
-  description = "(Optional, Default: false) Indicates whether the changes should be applied immediately or during the next maintenance window. Only used when updating an existing resource."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "preferred_maintenance_window" {
-  description = "(Optional) The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC)."
-  type        = string
-  default     = ""
-}
-variable "replication_instance_private_ips" {
-  description = " A list of the private IP addresses of the replication instance."
-  type        = string
-}
-variable "Valid Days: " {
-  description = "mon, tue, wed, thu, fri, sat, sun"
-  type        = string
-}
-variable "auto_minor_version_upgrade" {
-  description = "(Optional, Default: false) Indicates that minor engine upgrades will be applied automatically to the replication instance during the maintenance window."
-  type        = string
-}
-variable "replication_instance_arn" {
-  description = "The Amazon Resource Name (ARN) of the replication instance."
-  type        = string
-}
-variable "replication_instance_id" {
-  description = "(Required) The replication instance identifier. This parameter is stored as a lowercase string."
-  type        = string
-}
-variable "Must contain from 1 to 63 alphanumeric characters or hyphens." {
-  description = ""
-  type        = string
-}
-variable "publicly_accessible" {
-  description = "(Optional, Default: false) Specifies the accessibility options for the replication instance. A value of true represents an instance with a public IP address. A value of false represents an instance with a private IP address."
-  type        = string
-}
-variable "replication_instance_public_ips" {
-  description = "A list of the public IP addresses of the replication instance."
-  type        = string
-}
-variable "Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week." {
-  description = ""
-  type        = string
-}
-variable "Format: " {
-  description = "ddd:hh24:mi-ddd:hh24:mi"
+variable "allocated_storage" {
+  description = "(Optional, Default: 50, Min: 5, Max: 6144) The amount of storage (in gigabytes) to be initially allocated for the replication instance."
   type        = string
 }
 variable "engine_version" {
@@ -125,37 +120,42 @@ variable "engine_version" {
   type        = string
   default     = ""
 }
-variable "kms_key_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) for the KMS key that will be used to encrypt the connection parameters. If you do not specify a value for kms_key_arn, then AWS DMS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region."
+variable "allow_major_version_upgrade" {
+  description = "(Optional, Default: false) Indicates that major version upgrades are allowed."
   type        = string
-  default     = ""
 }
-variable "multi_az" {
-  description = "(Optional) Specifies if the replication instance is a multi-az deployment. You cannot set the availability_zone parameter if the multi_az parameter is set to true."
+variable "replication_instance_class" {
+  description = "(Required) The compute and memory capacity of the replication instance as specified by the replication instance class. See AWS DMS User Guide for available instance sizes and advice on which one to choose."
   type        = string
-  default     = ""
 }
-variable "Cannot contain two consecutive hyphens." {
+variable "replication_instance_id" {
+  description = "(Required) The replication instance identifier. This parameter is stored as a lowercase string."
+  type        = string
+}
+variable "replication_instance_private_ips" {
+  description = " A list of the private IP addresses of the replication instance."
+  type        = string
+}
+variable "Cannot end with a hyphen" {
   description = ""
   type        = string
 }
-variable "allow_major_version_upgrade" {
-  description = "(Optional, Default: false) Indicates that major version upgrades are allowed."
+variable "Valid Days: " {
+  description = "mon, tue, wed, thu, fri, sat, sun"
+  type        = string
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+}
+variable "Constraints: Minimum 30-minute window." {
+  description = ""
   type        = string
 }
 variable "replication_subnet_group_id" {
   description = "(Optional) A subnet group to associate with the replication instance."
   type        = string
   default     = ""
-}
-variable "availability_zone" {
-  description = "(Optional) The EC2 Availability Zone that the replication instance will be created in."
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 30m)"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -277,53 +277,53 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "Must contain from 1 to 63 alphanumeric characters or hyphens." {
+output "Constraints: Minimum 30-minute window." {
   description = ""
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.Must contain from 1 to 63 alphanumeric characters or hyphens.
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.Constraints: Minimum 30-minute window.
 }
-output "publicly_accessible" {
-  description = "(Optional, Default: false) Specifies the accessibility options for the replication instance. A value of true represents an instance with a public IP address. A value of false represents an instance with a private IP address."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.publicly_accessible
+output "replication_subnet_group_id" {
+  description = "(Optional) A subnet group to associate with the replication instance."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_subnet_group_id
 }
-output "replication_instance_arn" {
-  description = "The Amazon Resource Name (ARN) of the replication instance."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_arn
-}
-output "replication_instance_id" {
-  description = "(Required) The replication instance identifier. This parameter is stored as a lowercase string."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_id
-}
-output "Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week." {
-  description = ""
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week.
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.update
 }
 output "Format: " {
   description = "ddd:hh24:mi-ddd:hh24:mi"
   value       = aws_dms_replication_instance.aws_dms_replication_instance.Format: 
 }
-output "replication_instance_public_ips" {
-  description = "A list of the public IP addresses of the replication instance."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_public_ips
-}
-output "Cannot contain two consecutive hyphens." {
-  description = ""
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.Cannot contain two consecutive hyphens.
-}
-output "allow_major_version_upgrade" {
-  description = "(Optional, Default: false) Indicates that major version upgrades are allowed."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.allow_major_version_upgrade
-}
-output "engine_version" {
-  description = "(Optional) The engine version number of the replication instance."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.engine_version
+output "auto_minor_version_upgrade" {
+  description = "(Optional, Default: false) Indicates that minor engine upgrades will be applied automatically to the replication instance during the maintenance window."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.auto_minor_version_upgrade
 }
 output "kms_key_arn" {
   description = "(Optional) The Amazon Resource Name (ARN) for the KMS key that will be used to encrypt the connection parameters. If you do not specify a value for kms_key_arn, then AWS DMS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region."
   value       = aws_dms_replication_instance.aws_dms_replication_instance.kms_key_arn
 }
-output "multi_az" {
-  description = "(Optional) Specifies if the replication instance is a multi-az deployment. You cannot set the availability_zone parameter if the multi_az parameter is set to true."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.multi_az
+output "publicly_accessible" {
+  description = "(Optional, Default: false) Specifies the accessibility options for the replication instance. A value of true represents an instance with a public IP address. A value of false represents an instance with a private IP address."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.publicly_accessible
+}
+output "Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week." {
+  description = ""
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week.
+}
+output "apply_immediately" {
+  description = "(Optional, Default: false) Indicates whether the changes should be applied immediately or during the next maintenance window. Only used when updating an existing resource."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.apply_immediately
+}
+output "replication_instance_public_ips" {
+  description = "A list of the public IP addresses of the replication instance."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_public_ips
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.tags_all
+}
+output "Must contain from 1 to 63 alphanumeric characters or hyphens." {
+  description = ""
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.Must contain from 1 to 63 alphanumeric characters or hyphens.
 }
 output "availability_zone" {
   description = "(Optional) The EC2 Availability Zone that the replication instance will be created in."
@@ -333,65 +333,69 @@ output "create" {
   description = "(Default 30m)"
   value       = aws_dms_replication_instance.aws_dms_replication_instance.create
 }
-output "replication_subnet_group_id" {
-  description = "(Optional) A subnet group to associate with the replication instance."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_subnet_group_id
+output "multi_az" {
+  description = "(Optional) Specifies if the replication instance is a multi-az deployment. You cannot set the availability_zone parameter if the multi_az parameter is set to true."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.multi_az
 }
-output "Cannot end with a hyphen" {
+output "replication_instance_arn" {
+  description = "The Amazon Resource Name (ARN) of the replication instance."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_arn
+}
+output "Cannot contain two consecutive hyphens." {
   description = ""
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.Cannot end with a hyphen
-}
-output "Constraints: Minimum 30-minute window." {
-  description = ""
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.Constraints: Minimum 30-minute window.
-}
-output "allocated_storage" {
-  description = "(Optional, Default: 50, Min: 5, Max: 6144) The amount of storage (in gigabytes) to be initially allocated for the replication instance."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.allocated_storage
-}
-output "replication_instance_class" {
-  description = "(Required) The compute and memory capacity of the replication instance as specified by the replication instance class. See AWS DMS User Guide for available instance sizes and advice on which one to choose."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_class
-}
-output "vpc_security_group_ids" {
-  description = "(Optional) A list of VPC security group IDs to be used with the replication instance. The VPC security groups must work with the VPC containing the replication instance.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.vpc_security_group_ids
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.Cannot contain two consecutive hyphens.
 }
 output "First character must be a letter." {
   description = ""
   value       = aws_dms_replication_instance.aws_dms_replication_instance.First character must be a letter.
 }
+output "preferred_maintenance_window" {
+  description = "(Optional) The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC)."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.preferred_maintenance_window
+}
+output "vpc_security_group_ids" {
+  description = "(Optional) A list of VPC security group IDs to be used with the replication instance. The VPC security groups must work with the VPC containing the replication instance.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.vpc_security_group_ids
+}
+output "allocated_storage" {
+  description = "(Optional, Default: 50, Min: 5, Max: 6144) The amount of storage (in gigabytes) to be initially allocated for the replication instance."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.allocated_storage
+}
+output "engine_version" {
+  description = "(Optional) The engine version number of the replication instance."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.engine_version
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_dms_replication_instance.aws_dms_replication_instance.tags
 }
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.update
-}
-output "apply_immediately" {
-  description = "(Optional, Default: false) Indicates whether the changes should be applied immediately or during the next maintenance window. Only used when updating an existing resource."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.apply_immediately
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.tags_all
+output "Cannot end with a hyphen" {
+  description = ""
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.Cannot end with a hyphen
 }
 output "Valid Days: " {
   description = "mon, tue, wed, thu, fri, sat, sun"
   value       = aws_dms_replication_instance.aws_dms_replication_instance.Valid Days: 
 }
-output "auto_minor_version_upgrade" {
-  description = "(Optional, Default: false) Indicates that minor engine upgrades will be applied automatically to the replication instance during the maintenance window."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.auto_minor_version_upgrade
+output "allow_major_version_upgrade" {
+  description = "(Optional, Default: false) Indicates that major version upgrades are allowed."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.allow_major_version_upgrade
 }
-output "preferred_maintenance_window" {
-  description = "(Optional) The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC)."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.preferred_maintenance_window
+output "replication_instance_class" {
+  description = "(Required) The compute and memory capacity of the replication instance as specified by the replication instance class. See AWS DMS User Guide for available instance sizes and advice on which one to choose."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_class
+}
+output "replication_instance_id" {
+  description = "(Required) The replication instance identifier. This parameter is stored as a lowercase string."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_id
 }
 output "replication_instance_private_ips" {
   description = " A list of the private IP addresses of the replication instance."
   value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_private_ips
+}
+output "replication_instance_public_ips" {
+  description = "A list of the public IP addresses of the replication instance."
+  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_public_ips
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -416,10 +420,6 @@ output "replication_instance_arn" {
 output "replication_instance_private_ips" {
   description = " A list of the private IP addresses of the replication instance."
   value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_private_ips
-}
-output "replication_instance_public_ips" {
-  description = "A list of the public IP addresses of the replication instance."
-  value       = aws_dms_replication_instance.aws_dms_replication_instance.replication_instance_public_ips
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

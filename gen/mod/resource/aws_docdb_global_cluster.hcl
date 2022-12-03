@@ -1,64 +1,82 @@
 resource "aws_docdb_global_cluster" "aws_docdb_global_cluster" {
-  arn                          = var.arn
-  engine                       = var.engine
-  is_writer                    = var.is_writer
-  storage_encrypted            = var.storage_encrypted
   create                       = var.create
   db_cluster_arn               = var.db_cluster_arn
-  engine_version               = var.engine_version
-  global_cluster_members       = var.global_cluster_members
   source_db_cluster_identifier = var.source_db_cluster_identifier
-  id                           = var.id
-  update                       = var.update
-  database_name                = var.database_name
   deletion_protection          = var.deletion_protection
-  global_cluster_identifier    = var.global_cluster_identifier
+  global_cluster_members       = var.global_cluster_members
   global_cluster_resource_id   = var.global_cluster_resource_id
+  id                           = var.id
+  is_writer                    = var.is_writer
+  arn                          = var.arn
+  database_name                = var.database_name
+  engine                       = var.engine
+  engine_version               = var.engine_version
+  global_cluster_identifier    = var.global_cluster_identifier
+  storage_encrypted            = var.storage_encrypted
   strong                       = var.strong
+  update                       = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "DocDB Global Cluster.TimeoutsConfiguration options:"
+variable "db_cluster_arn" {
+  description = "Amazon Resource Name (ARN) of member DB Cluster."
   type        = string
 }
-variable "update" {
-  description = "(Default 5m)"
+variable "source_db_cluster_identifier" {
+  description = "(Optional) Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation. Terraform cannot perform drift detection of this value."
   type        = string
-}
-variable "database_name" {
-  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
-  type        = string
+  default     = ""
 }
 variable "deletion_protection" {
   description = "(Optional) If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false."
   type        = string
   default     = ""
 }
-variable "global_cluster_identifier" {
-  description = "(Required, Forces new resources) The global cluster identifier."
+variable "global_cluster_members" {
+  description = ""
   type        = string
 }
 variable "global_cluster_resource_id" {
   description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed."
   type        = string
 }
+variable "id" {
+  description = "DocDB Global Cluster.TimeoutsConfiguration options:"
+  type        = string
+}
+variable "is_writer" {
+  description = "Whether the member is the primary DB Cluster."
+  type        = string
+}
 variable "strong" {
   description = "NOTE: Upgrading major versions is not supported."
+  type        = string
+}
+variable "update" {
+  description = "(Default 5m)"
   type        = string
 }
 variable "arn" {
   description = "Global Cluster Amazon Resource Name (ARN)"
   type        = string
 }
+variable "database_name" {
+  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
+  type        = string
+}
 variable "engine" {
   description = "(Optional, Forces new resources) Name of the database engine to be used for this DB cluster. Terraform will only perform drift detection if a configuration value is provided. Current Valid values: docdb. Defaults to docdb. Conflicts with source_db_cluster_identifier."
   type        = string
 }
-variable "is_writer" {
-  description = "Whether the member is the primary DB Cluster."
+variable "engine_version" {
+  description = "(Optional) Engine version of the global database. Upgrading the engine version will result in all cluster members being immediately updated and will.\n"
+  type        = string
+  default     = ""
+}
+variable "global_cluster_identifier" {
+  description = "(Required, Forces new resources) The global cluster identifier."
   type        = string
 }
 variable "storage_encrypted" {
@@ -68,24 +86,6 @@ variable "storage_encrypted" {
 variable "create" {
   description = "(Default 5m)"
   type        = string
-}
-variable "db_cluster_arn" {
-  description = "Amazon Resource Name (ARN) of member DB Cluster."
-  type        = string
-}
-variable "engine_version" {
-  description = "(Optional) Engine version of the global database. Upgrading the engine version will result in all cluster members being immediately updated and will.\n"
-  type        = string
-  default     = ""
-}
-variable "global_cluster_members" {
-  description = ""
-  type        = string
-}
-variable "source_db_cluster_identifier" {
-  description = "(Optional) Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation. Terraform cannot perform drift detection of this value."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -207,21 +207,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.update
+}
 output "arn" {
   description = "Global Cluster Amazon Resource Name (ARN)"
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.arn
+}
+output "database_name" {
+  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.database_name
 }
 output "engine" {
   description = "(Optional, Forces new resources) Name of the database engine to be used for this DB cluster. Terraform will only perform drift detection if a configuration value is provided. Current Valid values: docdb. Defaults to docdb. Conflicts with source_db_cluster_identifier."
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.engine
 }
-output "is_writer" {
-  description = "Whether the member is the primary DB Cluster."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.is_writer
+output "engine_version" {
+  description = "(Optional) Engine version of the global database. Upgrading the engine version will result in all cluster members being immediately updated and will.\n"
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.engine_version
+}
+output "global_cluster_identifier" {
+  description = "(Required, Forces new resources) The global cluster identifier."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_identifier
 }
 output "storage_encrypted" {
   description = "(Optional, Forces new resources) Specifies whether the DB cluster is encrypted. The default is false unless source_db_cluster_identifier is specified and encrypted. Terraform will only perform drift detection if a configuration value is provided.In addition to all arguments above, the following attributes are exported:"
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.storage_encrypted
+}
+output "strong" {
+  description = "NOTE: Upgrading major versions is not supported."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.strong
 }
 output "create" {
   description = "(Default 5m)"
@@ -231,49 +247,49 @@ output "db_cluster_arn" {
   description = "Amazon Resource Name (ARN) of member DB Cluster."
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.db_cluster_arn
 }
-output "engine_version" {
-  description = "(Optional) Engine version of the global database. Upgrading the engine version will result in all cluster members being immediately updated and will.\n"
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.engine_version
-}
-output "global_cluster_members" {
-  description = ""
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_members
-}
 output "source_db_cluster_identifier" {
   description = "(Optional) Amazon Resource Name (ARN) to use as the primary DB Cluster of the Global Cluster on creation. Terraform cannot perform drift detection of this value."
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.source_db_cluster_identifier
-}
-output "id" {
-  description = "DocDB Global Cluster.TimeoutsConfiguration options:"
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.id
-}
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.update
-}
-output "database_name" {
-  description = "(Optional, Forces new resources) Name for an automatically created database on cluster creation."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.database_name
 }
 output "deletion_protection" {
   description = "(Optional) If the Global Cluster should have deletion protection enabled. The database can't be deleted when this value is set to true. The default is false."
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.deletion_protection
 }
-output "global_cluster_identifier" {
-  description = "(Required, Forces new resources) The global cluster identifier."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_identifier
+output "global_cluster_members" {
+  description = ""
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_members
 }
 output "global_cluster_resource_id" {
   description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed."
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_resource_id
 }
-output "strong" {
-  description = "NOTE: Upgrading major versions is not supported."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.strong
+output "id" {
+  description = "DocDB Global Cluster.TimeoutsConfiguration options:"
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.id
 }
-output "update" {
+output "is_writer" {
+  description = "Whether the member is the primary DB Cluster."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.is_writer
+}
+output "db_cluster_arn" {
+  description = "Amazon Resource Name (ARN) of member DB Cluster."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.db_cluster_arn
+}
+output "global_cluster_resource_id" {
+  description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_resource_id
+}
+output "is_writer" {
+  description = "Whether the member is the primary DB Cluster."
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.is_writer
+}
+output "arn" {
+  description = "Global Cluster Amazon Resource Name (ARN)"
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.arn
+}
+output "create" {
   description = "(Default 5m)"
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.update
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.create
 }
 output "delete" {
   description = "(Default 5m)"
@@ -283,29 +299,13 @@ output "global_cluster_members" {
   description = ""
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_members
 }
-output "global_cluster_resource_id" {
-  description = "AWS Region-unique, immutable identifier for the global database cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.global_cluster_resource_id
-}
-output "is_writer" {
-  description = "Whether the member is the primary DB Cluster."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.is_writer
-}
-output "arn" {
-  description = "Global Cluster Amazon Resource Name (ARN)"
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.arn
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.create
-}
-output "db_cluster_arn" {
-  description = "Amazon Resource Name (ARN) of member DB Cluster."
-  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.db_cluster_arn
-}
 output "id" {
   description = "DocDB Global Cluster.TimeoutsConfiguration options:"
   value       = aws_docdb_global_cluster.aws_docdb_global_cluster.id
+}
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_docdb_global_cluster.aws_docdb_global_cluster.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

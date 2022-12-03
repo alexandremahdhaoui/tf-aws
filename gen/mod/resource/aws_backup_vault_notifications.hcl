@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "sns_topic_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events"
-  type        = string
-}
 variable "backup_vault_events" {
   description = "(Required) An array of events that indicate the status of jobs to back up resources to the backup vault.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -22,6 +18,10 @@ variable "backup_vault_name" {
 }
 variable "id" {
   description = "The name of the vault."
+  type        = string
+}
+variable "sns_topic_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,6 +144,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "sns_topic_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events"
+  value       = aws_backup_vault_notifications.aws_backup_vault_notifications.sns_topic_arn
+}
 output "backup_vault_events" {
   description = "(Required) An array of events that indicate the status of jobs to back up resources to the backup vault.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_vault_notifications.aws_backup_vault_notifications.backup_vault_events
@@ -155,10 +159,6 @@ output "backup_vault_name" {
 output "id" {
   description = "The name of the vault."
   value       = aws_backup_vault_notifications.aws_backup_vault_notifications.id
-}
-output "sns_topic_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) that specifies the topic for a backup vault’s events"
-  value       = aws_backup_vault_notifications.aws_backup_vault_notifications.sns_topic_arn
 }
 output "backup_vault_arn" {
   description = "The ARN of the vault."

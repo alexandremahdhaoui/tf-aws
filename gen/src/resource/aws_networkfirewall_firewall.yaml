@@ -8,7 +8,8 @@ spec:
             description: The Amazon Resource Name (ARN) that identifies the firewall.
             type: string
         attachment:
-            description: ""
+            description: |
+                Nested list describing the attachment status of the firewall's association with a single VPC subnet.
             type: string
         availability_zone:
             description: The Availability Zone where the subnet is configured.
@@ -67,7 +68,8 @@ spec:
             description: The Amazon Resource Name (ARN) that identifies the firewall.
             type: string
         attachment:
-            description: ""
+            description: |
+                Nested list describing the attachment status of the firewall's association with a single VPC subnet.
             type: string
         availability_zone:
             description: The Availability Zone where the subnet is configured.

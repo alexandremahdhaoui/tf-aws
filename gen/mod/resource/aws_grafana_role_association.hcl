@@ -1,17 +1,12 @@
 resource "aws_grafana_role_association" "aws_grafana_role_association" {
+  workspace_id = var.workspace_id
   group_ids    = var.group_ids
   role         = var.role
   user_ids     = var.user_ids
-  workspace_id = var.workspace_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "group_ids" {
-  description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
-  type        = string
-  default     = ""
 }
 variable "role" {
   description = "(Required) The grafana role. Valid values can be found here."
@@ -25,6 +20,11 @@ variable "user_ids" {
 variable "workspace_id" {
   description = "(Required) The workspace id."
   type        = string
+}
+variable "group_ids" {
+  description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,6 +146,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "role" {
+  description = "(Required) The grafana role. Valid values can be found here."
+  value       = aws_grafana_role_association.aws_grafana_role_association.role
+}
 output "user_ids" {
   description = "(Optional) The AWS SSO user ids to be assigned the role given in role."
   value       = aws_grafana_role_association.aws_grafana_role_association.user_ids
@@ -157,10 +161,6 @@ output "workspace_id" {
 output "group_ids" {
   description = "(Optional) The AWS SSO group ids to be assigned the role given in role."
   value       = aws_grafana_role_association.aws_grafana_role_association.group_ids
-}
-output "role" {
-  description = "(Required) The grafana role. Valid values can be found here."
-  value       = aws_grafana_role_association.aws_grafana_role_association.role
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

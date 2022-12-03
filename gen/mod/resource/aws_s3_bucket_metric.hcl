@@ -8,6 +8,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "prefix" {
+  description = "(Optional) Object prefix for filtering (singular)."
+  type        = string
+  default     = ""
+}
 variable "bucket" {
   description = "(Required) The name of the bucket to put metric configuration."
   type        = string
@@ -20,11 +25,6 @@ variable "filter" {
 variable "name" {
   description = "(Required) Unique identifier of the metrics configuration for the bucket. Must be less than or equal to 64 characters in length."
   type        = string
-}
-variable "prefix" {
-  description = "(Optional) Object prefix for filtering (singular)."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -146,6 +146,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "prefix" {
+  description = "(Optional) Object prefix for filtering (singular)."
+  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.prefix
+}
 output "bucket" {
   description = "(Required) The name of the bucket to put metric configuration."
   value       = aws_s3_bucket_metric.aws_s3_bucket_metric.bucket
@@ -157,10 +161,6 @@ output "filter" {
 output "name" {
   description = "(Required) Unique identifier of the metrics configuration for the bucket. Must be less than or equal to 64 characters in length."
   value       = aws_s3_bucket_metric.aws_s3_bucket_metric.name
-}
-output "prefix" {
-  description = "(Optional) Object prefix for filtering (singular)."
-  value       = aws_s3_bucket_metric.aws_s3_bucket_metric.prefix
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

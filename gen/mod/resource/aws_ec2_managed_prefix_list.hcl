@@ -1,31 +1,22 @@
 resource "aws_ec2_managed_prefix_list" "aws_ec2_managed_prefix_list" {
+  name           = var.name
+  tags           = var.tags
+  tags_all       = var.tags_all
+  max_entries    = var.max_entries
   arn            = var.arn
+  cidr           = var.cidr
+  description    = var.description
   entry          = var.entry
   id             = var.id
   owner_id       = var.owner_id
-  tags           = var.tags
-  tags_all       = var.tags_all
   address_family = var.address_family
-  cidr           = var.cidr
-  description    = var.description
-  max_entries    = var.max_entries
-  name           = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.entry"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "address_family" {
-  description = "(Required, Forces new resource) Address family (IPv4 or IPv6) of this prefix list."
+variable "arn" {
+  description = "ARN of the prefix list."
   type        = string
 }
 variable "cidr" {
@@ -36,18 +27,6 @@ variable "description" {
   description = "(Optional) Description of this entry. Due to API limitations, updating only the description of an existing entry requires temporarily removing and re-adding the entry.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "max_entries" {
-  description = "(Required) Maximum number of entries that this prefix list can contain."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of this resource. The name must not start with com.amazonaws."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the prefix list."
-  type        = string
 }
 variable "entry" {
   description = "(Optional) Configuration block for prefix list entry. Detailed below. Different entries may have overlapping CIDR blocks, but a particular CIDR should not be duplicated."
@@ -60,6 +39,27 @@ variable "id" {
 }
 variable "owner_id" {
   description = "ID of the AWS account that owns this prefix list."
+  type        = string
+}
+variable "address_family" {
+  description = "(Required, Forces new resource) Address family (IPv4 or IPv6) of this prefix list."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of this resource. The name must not start with com.amazonaws."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.entry"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "max_entries" {
+  description = "(Required) Maximum number of entries that this prefix list can contain."
   type        = string
 }
 variable "tag_instance_id" {
@@ -182,30 +182,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "ID of the prefix list."
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.id
-}
-output "owner_id" {
-  description = "ID of the AWS account that owns this prefix list."
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.owner_id
-}
-output "arn" {
-  description = "ARN of the prefix list."
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.arn
-}
-output "entry" {
-  description = "(Optional) Configuration block for prefix list entry. Detailed below. Different entries may have overlapping CIDR blocks, but a particular CIDR should not be duplicated."
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.entry
-}
-output "description" {
-  description = "(Optional) Description of this entry. Due to API limitations, updating only the description of an existing entry requires temporarily removing and re-adding the entry.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.description
-}
-output "max_entries" {
-  description = "(Required) Maximum number of entries that this prefix list can contain."
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.max_entries
-}
 output "name" {
   description = "(Required) Name of this resource. The name must not start with com.amazonaws."
   value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.name
@@ -218,13 +194,37 @@ output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.tags_all
 }
-output "address_family" {
-  description = "(Required, Forces new resource) Address family (IPv4 or IPv6) of this prefix list."
-  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.address_family
+output "max_entries" {
+  description = "(Required) Maximum number of entries that this prefix list can contain."
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.max_entries
+}
+output "arn" {
+  description = "ARN of the prefix list."
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.arn
 }
 output "cidr" {
   description = "(Required) CIDR block of this entry."
   value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.cidr
+}
+output "description" {
+  description = "(Optional) Description of this entry. Due to API limitations, updating only the description of an existing entry requires temporarily removing and re-adding the entry.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.description
+}
+output "entry" {
+  description = "(Optional) Configuration block for prefix list entry. Detailed below. Different entries may have overlapping CIDR blocks, but a particular CIDR should not be duplicated."
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.entry
+}
+output "id" {
+  description = "ID of the prefix list."
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.id
+}
+output "owner_id" {
+  description = "ID of the AWS account that owns this prefix list."
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.owner_id
+}
+output "address_family" {
+  description = "(Required, Forces new resource) Address family (IPv4 or IPv6) of this prefix list."
+  value       = aws_ec2_managed_prefix_list.aws_ec2_managed_prefix_list.address_family
 }
 output "arn" {
   description = "ARN of the prefix list."

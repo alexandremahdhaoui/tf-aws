@@ -10,6 +10,15 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "window_id" {
+  description = "(Required) The Id of the maintenance window to register the target with."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) The description of the maintenance window target."
+  type        = string
+  default     = ""
+}
 variable "name" {
   description = "(Optional) The name of the maintenance window target."
   type        = string
@@ -25,17 +34,8 @@ variable "resource_type" {
   type        = string
 }
 variable "targets" {
-  description = "(Required) The targets to register with the maintenance window. In other words, the instances to run commands on when the maintenance window runs. You can specify targets using instance IDs, resource group names, or tags that have been applied to instances. For more information about these examples formats see\n(https://docs.aws.amazon.com/systems-manager/latest/userguide/mw-cli-tutorial-targets-examples.html)"
+  description = ""
   type        = string
-}
-variable "window_id" {
-  description = "(Required) The Id of the maintenance window to register the target with."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) The description of the maintenance window target."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -157,14 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "window_id" {
-  description = "(Required) The Id of the maintenance window to register the target with."
-  value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.window_id
-}
-output "description" {
-  description = "(Optional) The description of the maintenance window target."
-  value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.description
-}
 output "name" {
   description = "(Optional) The name of the maintenance window target."
   value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.name
@@ -178,8 +170,16 @@ output "resource_type" {
   value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.resource_type
 }
 output "targets" {
-  description = "(Required) The targets to register with the maintenance window. In other words, the instances to run commands on when the maintenance window runs. You can specify targets using instance IDs, resource group names, or tags that have been applied to instances. For more information about these examples formats see\n(https://docs.aws.amazon.com/systems-manager/latest/userguide/mw-cli-tutorial-targets-examples.html)"
+  description = ""
   value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.targets
+}
+output "window_id" {
+  description = "(Required) The Id of the maintenance window to register the target with."
+  value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.window_id
+}
+output "description" {
+  description = "(Optional) The description of the maintenance window target."
+  value       = aws_ssm_maintenance_window_target.aws_ssm_maintenance_window_target.description
 }
 output "id" {
   description = "The ID of the maintenance window target."

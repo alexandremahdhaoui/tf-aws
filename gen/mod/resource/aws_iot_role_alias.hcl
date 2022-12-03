@@ -7,6 +7,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "role_arn" {
+  description = "(Required) The identity of the role to which the alias refers."
+  type        = string
+}
 variable "alias" {
   description = "(Required) The name of the role alias."
   type        = string
@@ -15,10 +19,6 @@ variable "credential_duration" {
   description = "(Optional) The duration of the credential, in seconds. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 900 seconds (15 minutes) to 43200 seconds (12 hours).In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "role_arn" {
-  description = "(Required) The identity of the role to which the alias refers."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

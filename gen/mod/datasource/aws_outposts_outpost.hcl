@@ -1,15 +1,20 @@
 datasource "aws_outposts_outpost" "aws_outposts_outpost" {
-  owner_id             = var.owner_id
-  arn                  = var.arn
   availability_zone    = var.availability_zone
   availability_zone_id = var.availability_zone_id
   description          = var.description
   id                   = var.id
   name                 = var.name
+  owner_id             = var.owner_id
+  arn                  = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "owner_id" {
+  description = "(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "arn" {
   description = "(Optional) ARN."
@@ -38,23 +43,6 @@ variable "name" {
   type        = string
   default     = ""
 }
-variable "owner_id" {
-  description = "(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-output "name" {
-  description = "(Optional) Name of the Outpost."
-  value       = aws_outposts_outpost.aws_outposts_outpost.name
-}
-output "owner_id" {
-  description = "(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_outposts_outpost.aws_outposts_outpost.owner_id
-}
-output "arn" {
-  description = "(Optional) ARN."
-  value       = aws_outposts_outpost.aws_outposts_outpost.arn
-}
 output "availability_zone" {
   description = "Availability Zone name."
   value       = aws_outposts_outpost.aws_outposts_outpost.availability_zone
@@ -70,6 +58,18 @@ output "description" {
 output "id" {
   description = "(Optional) Identifier of the Outpost."
   value       = aws_outposts_outpost.aws_outposts_outpost.id
+}
+output "name" {
+  description = "(Optional) Name of the Outpost."
+  value       = aws_outposts_outpost.aws_outposts_outpost.name
+}
+output "owner_id" {
+  description = "(Optional) AWS Account identifier of the Outpost owner.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_outposts_outpost.aws_outposts_outpost.owner_id
+}
+output "arn" {
+  description = "(Optional) ARN."
+  value       = aws_outposts_outpost.aws_outposts_outpost.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

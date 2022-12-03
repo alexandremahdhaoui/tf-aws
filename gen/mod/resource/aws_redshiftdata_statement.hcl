@@ -1,11 +1,11 @@
 resource "aws_redshiftdata_statement" "aws_redshiftdata_statement" {
+  secret_arn         = var.secret_arn
+  sql                = var.sql
   statement_name     = var.statement_name
   with_event         = var.with_event
   cluster_identifier = var.cluster_identifier
   database           = var.database
   db_user            = var.db_user
-  secret_arn         = var.secret_arn
-  sql                = var.sql
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -163,6 +163,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "cluster_identifier" {
+  description = "(Required) The cluster identifier."
+  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.cluster_identifier
+}
+output "database" {
+  description = "(Required) The name of the database."
+  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.database
+}
+output "db_user" {
+  description = "(Optional) The database user name."
+  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.db_user
+}
 output "secret_arn" {
   description = "(Optional) The name or ARN of the secret that enables access to the database."
   value       = aws_redshiftdata_statement.aws_redshiftdata_statement.secret_arn
@@ -178,18 +190,6 @@ output "statement_name" {
 output "with_event" {
   description = "(Optional) A value that indicates whether to send an event to the Amazon EventBridge event bus after the SQL statement runs.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshiftdata_statement.aws_redshiftdata_statement.with_event
-}
-output "cluster_identifier" {
-  description = "(Required) The cluster identifier."
-  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.cluster_identifier
-}
-output "database" {
-  description = "(Required) The name of the database."
-  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.database
-}
-output "db_user" {
-  description = "(Optional) The database user name."
-  value       = aws_redshiftdata_statement.aws_redshiftdata_statement.db_user
 }
 output "id" {
   description = "The Redshift Data Statement ID."

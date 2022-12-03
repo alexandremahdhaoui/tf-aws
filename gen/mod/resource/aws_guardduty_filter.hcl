@@ -1,43 +1,32 @@
 resource "aws_guardduty_filter" "aws_guardduty_filter" {
-  arn                   = var.arn
-  equals                = var.equals
-  less_than             = var.less_than
-  not_equals            = var.not_equals
-  description           = var.description
+  detector_id           = var.detector_id
   finding_criteria      = var.finding_criteria
+  less_than             = var.less_than
+  action                = var.action
+  description           = var.description
+  equals                = var.equals
+  field                 = var.field
+  arn                   = var.arn
   greater_than          = var.greater_than
   greater_than_or_equal = var.greater_than_or_equal
-  rank                  = var.rank
-  field                 = var.field
   id                    = var.id
-  action                = var.action
-  detector_id           = var.detector_id
   less_than_or_equal    = var.less_than_or_equal
   name                  = var.name
+  not_equals            = var.not_equals
+  rank                  = var.rank
   tags                  = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "less_than" {
-  description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
+variable "field" {
+  description = "(Required) The name of the field to be evaluated. The full list of field names can be found in AWS documentation."
   type        = string
-  default     = ""
-}
-variable "not_equals" {
-  description = "(Optional) List of string values to be evaluated."
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The ARN of the GuardDuty filter."
   type        = string
-}
-variable "equals" {
-  description = "(Optional) List of string values to be evaluated."
-  type        = string
-  default     = ""
 }
 variable "greater_than" {
   description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
@@ -48,23 +37,6 @@ variable "greater_than_or_equal" {
   description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
   type        = string
   default     = ""
-}
-variable "rank" {
-  description = "(Required) Specifies the position of the filter in the list of current filters. Also specifies the order in which this filter is applied to the findings."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the filter."
-  type        = string
-  default     = ""
-}
-variable "finding_criteria" {
-  description = " (Required) - Represents the criteria to be used in the filter for querying findings. Contains one or more criterion blocks, documented below.criterionThe criterion block suports the following:"
-  type        = string
-}
-variable "field" {
-  description = "(Required) The name of the field to be evaluated. The full list of field names can be found in AWS documentation."
-  type        = string
 }
 variable "id" {
   description = "A compound field, consisting of the ID of the GuardDuty detector and the name of the filter."
@@ -79,8 +51,30 @@ variable "name" {
   description = "(Required) The name of your filter."
   type        = string
 }
+variable "not_equals" {
+  description = "(Optional) List of string values to be evaluated."
+  type        = string
+  default     = ""
+}
+variable "rank" {
+  description = "(Required) Specifies the position of the filter in the list of current filters. Also specifies the order in which this filter is applied to the findings."
+  type        = string
+}
 variable "tags" {
   description = " (Optional) - The tags that you want to add to the Filter resource. A tag consists of a key and a value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "detector_id" {
+  description = "(Required) ID of a GuardDuty detector, attached to your account."
+  type        = string
+}
+variable "finding_criteria" {
+  description = " (Required) - Represents the criteria to be used in the filter for querying findings. Contains one or more criterion blocks, documented below.criterionThe criterion block suports the following:"
+  type        = string
+}
+variable "less_than" {
+  description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
   type        = string
   default     = ""
 }
@@ -88,9 +82,15 @@ variable "action" {
   description = "(Required) Specifies the action that is to be applied to the findings that match the filter. Can be one of ARCHIVE or NOOP."
   type        = string
 }
-variable "detector_id" {
-  description = "(Required) ID of a GuardDuty detector, attached to your account."
+variable "description" {
+  description = "(Optional) Description of the filter."
   type        = string
+  default     = ""
+}
+variable "equals" {
+  description = "(Optional) List of string values to be evaluated."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -212,57 +212,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "field" {
-  description = "(Required) The name of the field to be evaluated. The full list of field names can be found in AWS documentation."
-  value       = aws_guardduty_filter.aws_guardduty_filter.field
-}
-output "id" {
-  description = "A compound field, consisting of the ID of the GuardDuty detector and the name of the filter."
-  value       = aws_guardduty_filter.aws_guardduty_filter.id
-}
-output "action" {
-  description = "(Required) Specifies the action that is to be applied to the findings that match the filter. Can be one of ARCHIVE or NOOP."
-  value       = aws_guardduty_filter.aws_guardduty_filter.action
-}
-output "detector_id" {
-  description = "(Required) ID of a GuardDuty detector, attached to your account."
-  value       = aws_guardduty_filter.aws_guardduty_filter.detector_id
-}
-output "less_than_or_equal" {
-  description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_guardduty_filter.aws_guardduty_filter.less_than_or_equal
-}
 output "name" {
   description = "(Required) The name of your filter."
   value       = aws_guardduty_filter.aws_guardduty_filter.name
-}
-output "tags" {
-  description = " (Optional) - The tags that you want to add to the Filter resource. A tag consists of a key and a value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_guardduty_filter.aws_guardduty_filter.tags
-}
-output "arn" {
-  description = "The ARN of the GuardDuty filter."
-  value       = aws_guardduty_filter.aws_guardduty_filter.arn
-}
-output "equals" {
-  description = "(Optional) List of string values to be evaluated."
-  value       = aws_guardduty_filter.aws_guardduty_filter.equals
-}
-output "less_than" {
-  description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
-  value       = aws_guardduty_filter.aws_guardduty_filter.less_than
 }
 output "not_equals" {
   description = "(Optional) List of string values to be evaluated."
   value       = aws_guardduty_filter.aws_guardduty_filter.not_equals
 }
-output "description" {
-  description = "(Optional) Description of the filter."
-  value       = aws_guardduty_filter.aws_guardduty_filter.description
+output "rank" {
+  description = "(Required) Specifies the position of the filter in the list of current filters. Also specifies the order in which this filter is applied to the findings."
+  value       = aws_guardduty_filter.aws_guardduty_filter.rank
 }
-output "finding_criteria" {
-  description = " (Required) - Represents the criteria to be used in the filter for querying findings. Contains one or more criterion blocks, documented below.criterionThe criterion block suports the following:"
-  value       = aws_guardduty_filter.aws_guardduty_filter.finding_criteria
+output "arn" {
+  description = "The ARN of the GuardDuty filter."
+  value       = aws_guardduty_filter.aws_guardduty_filter.arn
 }
 output "greater_than" {
   description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
@@ -272,9 +236,45 @@ output "greater_than_or_equal" {
   description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
   value       = aws_guardduty_filter.aws_guardduty_filter.greater_than_or_equal
 }
-output "rank" {
-  description = "(Required) Specifies the position of the filter in the list of current filters. Also specifies the order in which this filter is applied to the findings."
-  value       = aws_guardduty_filter.aws_guardduty_filter.rank
+output "id" {
+  description = "A compound field, consisting of the ID of the GuardDuty detector and the name of the filter."
+  value       = aws_guardduty_filter.aws_guardduty_filter.id
+}
+output "less_than_or_equal" {
+  description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_guardduty_filter.aws_guardduty_filter.less_than_or_equal
+}
+output "tags" {
+  description = " (Optional) - The tags that you want to add to the Filter resource. A tag consists of a key and a value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_guardduty_filter.aws_guardduty_filter.tags
+}
+output "detector_id" {
+  description = "(Required) ID of a GuardDuty detector, attached to your account."
+  value       = aws_guardduty_filter.aws_guardduty_filter.detector_id
+}
+output "finding_criteria" {
+  description = " (Required) - Represents the criteria to be used in the filter for querying findings. Contains one or more criterion blocks, documented below.criterionThe criterion block suports the following:"
+  value       = aws_guardduty_filter.aws_guardduty_filter.finding_criteria
+}
+output "less_than" {
+  description = "(Optional) A value to be evaluated. Accepts either an integer or a date in RFC 3339 format."
+  value       = aws_guardduty_filter.aws_guardduty_filter.less_than
+}
+output "action" {
+  description = "(Required) Specifies the action that is to be applied to the findings that match the filter. Can be one of ARCHIVE or NOOP."
+  value       = aws_guardduty_filter.aws_guardduty_filter.action
+}
+output "description" {
+  description = "(Optional) Description of the filter."
+  value       = aws_guardduty_filter.aws_guardduty_filter.description
+}
+output "equals" {
+  description = "(Optional) List of string values to be evaluated."
+  value       = aws_guardduty_filter.aws_guardduty_filter.equals
+}
+output "field" {
+  description = "(Required) The name of the field to be evaluated. The full list of field names can be found in AWS documentation."
+  value       = aws_guardduty_filter.aws_guardduty_filter.field
 }
 output "arn" {
   description = "The ARN of the GuardDuty filter."

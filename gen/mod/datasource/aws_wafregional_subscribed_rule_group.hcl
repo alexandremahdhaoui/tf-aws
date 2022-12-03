@@ -6,13 +6,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "metric_name" {
-  description = "(Optional) Name of the WAF rule group.In addition to all arguments above, the following attributes are exported:"
+variable "name" {
+  description = "(Optional) Name of the WAF rule group."
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Optional) Name of the WAF rule group."
+variable "metric_name" {
+  description = "(Optional) Name of the WAF rule group.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }

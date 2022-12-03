@@ -1,19 +1,14 @@
 resource "aws_config_configuration_recorder" "aws_config_configuration_recorder" {
-  resource_types                = var.resource_types
-  role_arn                      = var.role_arn
   all_supported                 = var.all_supported
   include_global_resource_types = var.include_global_resource_types
   name                          = var.name
   recording_group               = var.recording_group
+  resource_types                = var.resource_types
+  role_arn                      = var.role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "resource_types" {
-  description = "(Optional) A list that specifies the types of AWS resources for which AWS Config records configuration changes (for example, AWS::EC2::Instance or AWS::CloudTrail::Trail). See relevant part of AWS Docs for available types. In order to use this attribute, all_supported must be set to false.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "role_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the IAM role. Used to make read or write requests to the delivery channel and to describe the AWS resources associated with the account. See AWS Docs for more details."
@@ -36,6 +31,11 @@ variable "name" {
 }
 variable "recording_group" {
   description = "(Optional) Recording group - see below.recording_group"
+  type        = string
+  default     = ""
+}
+variable "resource_types" {
+  description = "(Optional) A list that specifies the types of AWS resources for which AWS Config records configuration changes (for example, AWS::EC2::Instance or AWS::CloudTrail::Trail). See relevant part of AWS Docs for available types. In order to use this attribute, all_supported must be set to false.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -159,6 +159,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Optional) The name of the recorder. Defaults to default. Changing it recreates the resource."
+  value       = aws_config_configuration_recorder.aws_config_configuration_recorder.name
+}
 output "recording_group" {
   description = "(Optional) Recording group - see below.recording_group"
   value       = aws_config_configuration_recorder.aws_config_configuration_recorder.recording_group
@@ -178,10 +182,6 @@ output "all_supported" {
 output "include_global_resource_types" {
   description = "(Optional) Specifies whether AWS Config includes all supported types of emglobal resources with the resources that it records. Requires all_supported = true. Conflicts with resource_types."
   value       = aws_config_configuration_recorder.aws_config_configuration_recorder.include_global_resource_types
-}
-output "name" {
-  description = "(Optional) The name of the recorder. Defaults to default. Changing it recreates the resource."
-  value       = aws_config_configuration_recorder.aws_config_configuration_recorder.name
 }
 output "id" {
   description = "Name of the recorder"

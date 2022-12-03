@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "id" {
-  description = "AWS Region."
-  value       = aws_nat_gateways.aws_nat_gateways.id
-}
 output "ids" {
   description = "List of all the NAT gateway ids found.TimeoutsConfiguration options:"
   value       = aws_nat_gateways.aws_nat_gateways.ids
+}
+output "id" {
+  description = "AWS Region."
+  value       = aws_nat_gateways.aws_nat_gateways.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

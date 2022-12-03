@@ -1,4 +1,5 @@
 resource "aws_ami_from_instance" "aws_ami_from_instance" {
+  update                  = var.update
   arn                     = var.arn
   create                  = var.create
   delete                  = var.delete
@@ -6,10 +7,17 @@ resource "aws_ami_from_instance" "aws_ami_from_instance" {
   snapshot_without_reboot = var.snapshot_without_reboot
   source_instance_id      = var.source_instance_id
   tags                    = var.tags
-  update                  = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Region-unique name for the AMI."
+  type        = string
+}
+variable "snapshot_without_reboot" {
+  description = ""
   type        = string
 }
 variable "source_instance_id" {
@@ -36,15 +44,6 @@ variable "create" {
 variable "delete" {
   description = "(Default 90m)In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "name" {
-  description = "(Required) Region-unique name for the AMI."
-  type        = string
-}
-variable "snapshot_without_reboot" {
-  description = "(Optional) Boolean that overrides the behavior of stopping\nthe instance before snapshotting. This is risky since it may cause a snapshot of an\ninconsistent filesystem state, but can be used to avoid downtime if the user otherwise\nguarantees that no filesystem writes will be underway at the time of snapshot."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -171,7 +170,7 @@ output "name" {
   value       = aws_ami_from_instance.aws_ami_from_instance.name
 }
 output "snapshot_without_reboot" {
-  description = "(Optional) Boolean that overrides the behavior of stopping\nthe instance before snapshotting. This is risky since it may cause a snapshot of an\ninconsistent filesystem state, but can be used to avoid downtime if the user otherwise\nguarantees that no filesystem writes will be underway at the time of snapshot."
+  description = ""
   value       = aws_ami_from_instance.aws_ami_from_instance.snapshot_without_reboot
 }
 output "source_instance_id" {

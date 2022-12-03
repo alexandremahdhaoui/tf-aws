@@ -1,13 +1,21 @@
 datasource "aws_location_geofence_collection" "aws_location_geofence_collection" {
-  create_time     = var.create_time
-  description     = var.description
-  kms_key_id      = var.kms_key_id
   tags            = var.tags
   collection_arn  = var.collection_arn
   collection_name = var.collection_name
+  create_time     = var.create_time
+  description     = var.description
+  kms_key_id      = var.kms_key_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "collection_arn" {
+  description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
+  type        = string
+}
+variable "collection_name" {
+  description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "create_time" {
@@ -26,22 +34,6 @@ variable "tags" {
   description = "Key-value map of resource tags for the geofence collection."
   type        = string
 }
-variable "collection_arn" {
-  description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."
-  type        = string
-}
-variable "collection_name" {
-  description = "(Required) Name of the geofence collection.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-output "description" {
-  description = "Optional description of the geofence collection resource."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.description
-}
-output "kms_key_id" {
-  description = "Key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
-  value       = aws_location_geofence_collection.aws_location_geofence_collection.kms_key_id
-}
 output "tags" {
   description = "Key-value map of resource tags for the geofence collection."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.tags
@@ -57,6 +49,14 @@ output "collection_name" {
 output "create_time" {
   description = "Timestamp for when the geofence collection resource was created in ISO 8601 format."
   value       = aws_location_geofence_collection.aws_location_geofence_collection.create_time
+}
+output "description" {
+  description = "Optional description of the geofence collection resource."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.description
+}
+output "kms_key_id" {
+  description = "Key identifier for an AWS KMS customer managed key assigned to the Amazon Location resource."
+  value       = aws_location_geofence_collection.aws_location_geofence_collection.kms_key_id
 }
 output "collection_arn" {
   description = "ARN for the geofence collection resource. Used when you need to specify a resource across all AWS."

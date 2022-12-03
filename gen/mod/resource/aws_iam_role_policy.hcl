@@ -1,16 +1,12 @@
 resource "aws_iam_role_policy" "aws_iam_role_policy" {
+  role        = var.role
   id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
   policy      = var.policy
-  role        = var.role
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "The role policy ID, in the form of role_name:role_policy_name."
   type        = string
 }
 variable "name" {
@@ -28,6 +24,10 @@ variable "policy" {
 }
 variable "role" {
   description = "(Required) The name of the IAM role to attach to the policy.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "The role policy ID, in the form of role_name:role_policy_name."
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,18 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "The name of the policy."
-  value       = aws_iam_role_policy.aws_iam_role_policy.name
-}
-output "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
-  value       = aws_iam_role_policy.aws_iam_role_policy.name_prefix
-}
-output "policy" {
-  description = "The policy document attached to the role."
-  value       = aws_iam_role_policy.aws_iam_role_policy.policy
-}
 output "role" {
   description = "(Required) The name of the IAM role to attach to the policy.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_role_policy.aws_iam_role_policy.role
@@ -174,6 +162,14 @@ output "name" {
   description = "The name of the policy."
   value       = aws_iam_role_policy.aws_iam_role_policy.name
 }
+output "name_prefix" {
+  description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
+  value       = aws_iam_role_policy.aws_iam_role_policy.name_prefix
+}
+output "policy" {
+  description = "The policy document attached to the role."
+  value       = aws_iam_role_policy.aws_iam_role_policy.policy
+}
 output "policy" {
   description = "The policy document attached to the role."
   value       = aws_iam_role_policy.aws_iam_role_policy.policy
@@ -185,6 +181,10 @@ output "role" {
 output "id" {
   description = "The role policy ID, in the form of role_name:role_policy_name."
   value       = aws_iam_role_policy.aws_iam_role_policy.id
+}
+output "name" {
+  description = "The name of the policy."
+  value       = aws_iam_role_policy.aws_iam_role_policy.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

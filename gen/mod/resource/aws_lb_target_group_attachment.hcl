@@ -146,10 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "availability_zone" {
-  description = "(Optional) The Availability Zone where the IP address of the target is to be registered. If the private ip address is outside of the VPC scope, this value must be set to 'all'.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.availability_zone
-}
 output "port" {
   description = "(Optional) The port on which targets receive traffic."
   value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.port
@@ -161,6 +157,10 @@ output "target_group_arn" {
 output "target_id" {
   description = " (Required) The ID of the target. This is the Instance ID for an instance, or the container ID for an ECS container. If the target type is ip, specify an IP address. If the target type is lambda, specify the arn of lambda. If the target type is alb, specify the arn of alb."
   value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.target_id
+}
+output "availability_zone" {
+  description = "(Optional) The Availability Zone where the IP address of the target is to be registered. If the private ip address is outside of the VPC scope, this value must be set to 'all'.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_lb_target_group_attachment.aws_lb_target_group_attachment.availability_zone
 }
 output "id" {
   description = "A unique identifier for the attachment"

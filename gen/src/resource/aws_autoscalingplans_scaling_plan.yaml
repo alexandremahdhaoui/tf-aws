@@ -97,10 +97,7 @@ spec:
             optional: true
             type: string
         scale_out_cooldown:
-            description: |-
-                (Optional) Amount of time, in seconds, after a scale-out activity completes before another scale-out activity can start.
-                This value is not used if the scalable resource is an Auto Scaling group.The customized_scaling_metric_specification object supports the following:
-            optional: true
+            description: 'The customized_scaling_metric_specification object supports the following:'
             type: string
         scaling_instruction:
             description: '(Required) Scaling instructions. More details can be found in the AWS Auto Scaling API Reference.The application_source object supports the following:'
@@ -124,9 +121,7 @@ spec:
             optional: true
             type: string
         target_tracking_configuration:
-            description: |-
-                (Required) Structure that defines new target tracking configurations. Each of these structures includes a specific scaling metric and a target value for the metric, along with various parameters to use with dynamic scaling.
-                More details can be found in the AWS Auto Scaling API Reference.
+            description: AWS Auto Scaling API Reference.
             type: string
         target_value:
             description: (Required) Target value for the metric.

@@ -13,16 +13,20 @@ spec:
                 included as an argument because the resource will add it automatically when updating the intent.
             type: string
         code_hook:
-            description: code_hook.messageThe message object that provides the message text and its type.
+            description: |-
+                (Optional) A description of the Lambda function that is run to fulfill the intent.
+                Required if type is CodeHook. Attributes are documented under code_hook.messageThe message object that provides the message text and its type.
+            optional: true
             type: string
         conclusion_statement:
-            description: fulfillment_activityfollow_up_prompt and conclusion_statementstatement.
+            description: |-
+                (Optional) The statement that you want Amazon Lex to convey to the user
+                after the intent is successfully fulfilled by the Lambda function. This element is relevant only if
+                you provide a Lambda function in the fulfillment_activityfollow_up_prompt and conclusion_statementstatement.
+            optional: true
             type: string
         confirmation_prompt:
-            description: |-
-                (Optional) Prompts the user to confirm the intent. This question should
-                have a yes or no answer. You you must provide both the rejection_statement and confirmation_promptprompt.
-            optional: true
+            description: rejection_statement and confirmation_promptprompt.
             type: string
         content:
             description: (Required) The text of the message. Must be less than or equal to 1000 characters in length.
@@ -34,7 +38,10 @@ spec:
             description: (Default 1m)
             type: string
         create_version:
-            description: false.
+            description: |-
+                (Optional) Determines if a new slot type version is created when the initial
+                resource is created and on each update. Defaults to false.
+            optional: true
             type: string
         created_date:
             description: The date when the intent version was created.
@@ -47,7 +54,11 @@ spec:
             description: code_hook.
             type: string
         follow_up_prompt:
-            description: follow_up_prompt field and the conclusion_statementfollow_up_prompt.
+            description: |-
+                (Optional) Amazon Lex uses this prompt to solicit additional activity after
+                fulfilling an intent. For example, after the OrderPizza intent is fulfilled, you might prompt the
+                user to order a drink. The follow_up_prompt field and the conclusion_statementfollow_up_prompt.
+            optional: true
             type: string
         fulfillment_activity:
             description: |-
@@ -89,13 +100,22 @@ spec:
             optional: true
             type: string
         priority:
-            description: ""
+            description: |-
+                (Optional) Directs Lex the order in which to elicit this slot value from the user.
+                For example, if the intent has two slots with priorities 1 and 2, AWS Lex first elicits a value for
+                the slot with priority 1. If multiple slots share the same priority, the order in which Lex elicits
+                values is arbitrary. Must be between 1 and 100.
+            optional: true
             type: string
         prompt:
             description: (Required) Prompts for information from the user. Attributes are documented under prompt.
             type: string
         rejection_statement:
-            description: statement.fulfillment_activityDescribes how the intent is fulfilled after the user provides all of the information required for the intent.
+            description: |-
+                (Optional) If the user answers "no" to the question defined in the prompt field,
+                Amazon Lex responds with this statement to acknowledge that the intent was canceled. Attributes are
+                documented below under statement.fulfillment_activityDescribes how the intent is fulfilled after the user provides all of the information required for the intent.
+            optional: true
             type: string
         response_card:
             description: |-

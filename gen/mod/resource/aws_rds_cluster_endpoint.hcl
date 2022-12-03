@@ -1,29 +1,34 @@
 resource "aws_rds_cluster_endpoint" "aws_rds_cluster_endpoint" {
-  custom_endpoint_type        = var.custom_endpoint_type
-  excluded_members            = var.excluded_members
-  static_members              = var.static_members
-  arn                         = var.arn
   cluster_identifier          = var.cluster_identifier
-  endpoint                    = var.endpoint
-  id                          = var.id
+  custom_endpoint_type        = var.custom_endpoint_type
+  static_members              = var.static_members
   tags                        = var.tags
+  arn                         = var.arn
   cluster_endpoint_identifier = var.cluster_endpoint_identifier
+  endpoint                    = var.endpoint
+  excluded_members            = var.excluded_members
+  id                          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of cluster"
   type        = string
 }
 variable "cluster_endpoint_identifier" {
   description = "(Required, Forces new resources) The identifier to use for the new endpoint. This parameter is stored as a lowercase string."
   type        = string
 }
-variable "cluster_identifier" {
-  description = "(Required, Forces new resources) The cluster identifier."
-  type        = string
-}
 variable "endpoint" {
   description = "A custom endpoint for the Aurora cluster"
   type        = string
+}
+variable "excluded_members" {
+  description = "(Optional) List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members."
+  type        = string
+  default     = ""
 }
 variable "id" {
   description = "The RDS Cluster Endpoint Identifier"
@@ -34,18 +39,13 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of cluster"
+variable "cluster_identifier" {
+  description = "(Required, Forces new resources) The cluster identifier."
   type        = string
 }
 variable "custom_endpoint_type" {
   description = "(Required) The type of the endpoint. One of: READER , ANY ."
   type        = string
-}
-variable "excluded_members" {
-  description = "(Optional) List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members."
-  type        = string
-  default     = ""
 }
 variable "static_members" {
   description = "(Optional) List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members."
@@ -172,21 +172,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cluster_endpoint_identifier" {
-  description = "(Required, Forces new resources) The identifier to use for the new endpoint. This parameter is stored as a lowercase string."
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.cluster_endpoint_identifier
-}
 output "cluster_identifier" {
   description = "(Required, Forces new resources) The cluster identifier."
   value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.cluster_identifier
 }
-output "endpoint" {
-  description = "A custom endpoint for the Aurora cluster"
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.endpoint
+output "custom_endpoint_type" {
+  description = "(Required) The type of the endpoint. One of: READER , ANY ."
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.custom_endpoint_type
 }
-output "id" {
-  description = "The RDS Cluster Endpoint Identifier"
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.id
+output "static_members" {
+  description = "(Optional) List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members."
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.static_members
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -196,25 +192,21 @@ output "arn" {
   description = "Amazon Resource Name (ARN) of cluster"
   value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.arn
 }
-output "custom_endpoint_type" {
-  description = "(Required) The type of the endpoint. One of: READER , ANY ."
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.custom_endpoint_type
+output "cluster_endpoint_identifier" {
+  description = "(Required, Forces new resources) The identifier to use for the new endpoint. This parameter is stored as a lowercase string."
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.cluster_endpoint_identifier
+}
+output "endpoint" {
+  description = "A custom endpoint for the Aurora cluster"
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.endpoint
 }
 output "excluded_members" {
   description = "(Optional) List of DB instance identifiers that aren't part of the custom endpoint group. All other eligible instances are reachable through the custom endpoint. Only relevant if the list of static members is empty. Conflicts with static_members."
   value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.excluded_members
 }
-output "static_members" {
-  description = "(Optional) List of DB instance identifiers that are part of the custom endpoint group. Conflicts with excluded_members."
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.static_members
-}
-output "arn" {
-  description = "Amazon Resource Name (ARN) of cluster"
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.arn
-}
-output "endpoint" {
-  description = "A custom endpoint for the Aurora cluster"
-  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.endpoint
+output "id" {
+  description = "The RDS Cluster Endpoint Identifier"
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.id
 }
 output "id" {
   description = "The RDS Cluster Endpoint Identifier"
@@ -223,6 +215,14 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.tags_all
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of cluster"
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.arn
+}
+output "endpoint" {
+  description = "A custom endpoint for the Aurora cluster"
+  value       = aws_rds_cluster_endpoint.aws_rds_cluster_endpoint.endpoint
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

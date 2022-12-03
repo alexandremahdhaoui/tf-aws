@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "free_trial_expiration" {
+  description = "If license_type is set to ENTERPRISE_FREE_TRIAL, this is the expiration date of the free trial."
+  type        = string
+}
 variable "license_type" {
   description = "(Required) The type of license for the workspace license association. Valid values are ENTERPRISE and ENTERPRISE_FREE_TRIAL."
   type        = string
 }
 variable "workspace_id" {
   description = "(Required) The workspace id.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "free_trial_expiration" {
-  description = "If license_type is set to ENTERPRISE_FREE_TRIAL, this is the expiration date of the free trial."
   type        = string
 }
 variable "tag_instance_id" {

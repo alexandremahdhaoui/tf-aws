@@ -1,29 +1,38 @@
 resource "aws_appmesh_virtual_router" "aws_appmesh_virtual_router" {
-  created_date      = var.created_date
-  listener          = var.listener
+  mesh_name         = var.mesh_name
+  port              = var.port
+  mesh_owner        = var.mesh_owner
+  protocol          = var.protocol
+  resource_owner    = var.resource_owner
+  name              = var.name
+  port_mapping      = var.port_mapping
+  spec              = var.spec
+  tags              = var.tags
   arn               = var.arn
   last_updated_date = var.last_updated_date
-  name              = var.name
-  protocol          = var.protocol
-  tags              = var.tags
+  listener          = var.listener
+  created_date      = var.created_date
   id                = var.id
-  mesh_name         = var.mesh_name
-  mesh_owner        = var.mesh_owner
-  port_mapping      = var.port_mapping
-  port              = var.port
-  resource_owner    = var.resource_owner
-  spec              = var.spec
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) Name to use for the virtual router. Must be between 1 and 255 characters in length."
+variable "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
   type        = string
+  default     = ""
 }
 variable "protocol" {
   description = "(Required) Protocol used for the port mapping. Valid values are http,http2, tcp and grpc.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  type        = string
+}
+variable "spec" {
+  description = "(Required) Virtual router specification to apply."
   type        = string
 }
 variable "tags" {
@@ -39,13 +48,20 @@ variable "last_updated_date" {
   description = "Last update date of the virtual router."
   type        = string
 }
-variable "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
+variable "listener" {
+  description = "The listener object supports the following:"
   type        = string
-  default     = ""
+}
+variable "name" {
+  description = "(Required) Name to use for the virtual router. Must be between 1 and 255 characters in length."
+  type        = string
 }
 variable "port_mapping" {
   description = "(Required) Port mapping information for the listener.The port_mapping object supports the following:"
+  type        = string
+}
+variable "created_date" {
+  description = "Creation date of the virtual router."
   type        = string
 }
 variable "id" {
@@ -56,24 +72,8 @@ variable "mesh_name" {
   description = "(Required) Name of the service mesh in which to create the virtual router. Must be between 1 and 255 characters in length."
   type        = string
 }
-variable "spec" {
-  description = "(Required) Virtual router specification to apply."
-  type        = string
-}
 variable "port" {
   description = "(Required) Port used for the port mapping."
-  type        = string
-}
-variable "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  type        = string
-}
-variable "created_date" {
-  description = "Creation date of the virtual router."
-  type        = string
-}
-variable "listener" {
-  description = "(Required) Listeners that the virtual router is expected to receive inbound traffic from.\nCurrently only one listener is supported per virtual router.The listener object supports the following:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -196,6 +196,38 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "resource_owner" {
+  description = "Resource owner's AWS account ID."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.resource_owner
+}
+output "mesh_owner" {
+  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.mesh_owner
+}
+output "protocol" {
+  description = "(Required) Protocol used for the port mapping. Valid values are http,http2, tcp and grpc.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.protocol
+}
+output "listener" {
+  description = "The listener object supports the following:"
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.listener
+}
+output "name" {
+  description = "(Required) Name to use for the virtual router. Must be between 1 and 255 characters in length."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.name
+}
+output "port_mapping" {
+  description = "(Required) Port mapping information for the listener.The port_mapping object supports the following:"
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.port_mapping
+}
+output "spec" {
+  description = "(Required) Virtual router specification to apply."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.spec
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.tags
+}
 output "arn" {
   description = "ARN of the virtual router."
   value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.arn
@@ -204,17 +236,9 @@ output "last_updated_date" {
   description = "Last update date of the virtual router."
   value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.last_updated_date
 }
-output "name" {
-  description = "(Required) Name to use for the virtual router. Must be between 1 and 255 characters in length."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.name
-}
-output "protocol" {
-  description = "(Required) Protocol used for the port mapping. Valid values are http,http2, tcp and grpc.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.protocol
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The spec object supports the following:"
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.tags
+output "created_date" {
+  description = "Creation date of the virtual router."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.created_date
 }
 output "id" {
   description = "ID of the virtual router."
@@ -224,41 +248,9 @@ output "mesh_name" {
   description = "(Required) Name of the service mesh in which to create the virtual router. Must be between 1 and 255 characters in length."
   value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.mesh_name
 }
-output "mesh_owner" {
-  description = "(Optional) AWS account ID of the service mesh's owner. Defaults to the account ID the AWS provider is currently connected to."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.mesh_owner
-}
-output "port_mapping" {
-  description = "(Required) Port mapping information for the listener.The port_mapping object supports the following:"
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.port_mapping
-}
 output "port" {
   description = "(Required) Port used for the port mapping."
   value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.port
-}
-output "resource_owner" {
-  description = "Resource owner's AWS account ID."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.resource_owner
-}
-output "spec" {
-  description = "(Required) Virtual router specification to apply."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.spec
-}
-output "created_date" {
-  description = "Creation date of the virtual router."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.created_date
-}
-output "listener" {
-  description = "(Required) Listeners that the virtual router is expected to receive inbound traffic from.\nCurrently only one listener is supported per virtual router.The listener object supports the following:"
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.listener
-}
-output "created_date" {
-  description = "Creation date of the virtual router."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.created_date
-}
-output "id" {
-  description = "ID of the virtual router."
-  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.id
 }
 output "last_updated_date" {
   description = "Last update date of the virtual router."
@@ -275,6 +267,14 @@ output "tags_all" {
 output "arn" {
   description = "ARN of the virtual router."
   value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.arn
+}
+output "created_date" {
+  description = "Creation date of the virtual router."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.created_date
+}
+output "id" {
+  description = "ID of the virtual router."
+  value       = aws_appmesh_virtual_router.aws_appmesh_virtual_router.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,30 +1,62 @@
 resource "aws_cloudformation_stack" "aws_cloudformation_stack" {
-  timeout_in_minutes = var.timeout_in_minutes
-  name               = var.name
-  on_failure         = var.on_failure
   outputs            = var.outputs
-  policy_url         = var.policy_url
   tags_all           = var.tags_all
+  capabilities       = var.capabilities
   notification_arns  = var.notification_arns
+  on_failure         = var.on_failure
+  template_url       = var.template_url
+  timeout_in_minutes = var.timeout_in_minutes
+  update             = var.update
+  disable_rollback   = var.disable_rollback
+  policy_url         = var.policy_url
+  tags               = var.tags
+  create             = var.create
+  template_body      = var.template_body
   parameters         = var.parameters
   policy_body        = var.policy_body
-  template_url       = var.template_url
-  update             = var.update
-  create             = var.create
   iam_role_arn       = var.iam_role_arn
   id                 = var.id
-  template_body      = var.template_body
-  capabilities       = var.capabilities
-  disable_rollback   = var.disable_rollback
-  tags               = var.tags
+  name               = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "disable_rollback" {
+  description = "on_failure."
+  type        = string
+}
+variable "policy_url" {
+  description = "policy_body."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "template_url" {
+  description = "(Optional) Location of a file containing the template body (max size: 460,800 bytes)."
+  type        = string
+  default     = ""
+}
+variable "timeout_in_minutes" {
+  description = "(Optional) The amount of time that can pass before the stack status becomes CREATE_FAILED.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+}
 variable "create" {
   description = "(Default 30m)"
   type        = string
+}
+variable "template_body" {
+  description = "(Optional) Structure containing the template body (max size: 51,200 bytes)."
+  type        = string
+  default     = ""
 }
 variable "iam_role_arn" {
   description = "(Optional) The ARN of an IAM role that AWS CloudFormation assumes to create the stack. If you don't specify a value, AWS CloudFormation uses the role that was previously associated with the stack. If no role is available, AWS CloudFormation uses a temporary session that is generated from your user credentials."
@@ -35,56 +67,9 @@ variable "id" {
   description = "A unique identifier of the stack."
   type        = string
 }
-variable "template_url" {
-  description = "(Optional) Location of a file containing the template body (max size: 460,800 bytes)."
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 30m)"
-  type        = string
-}
-variable "capabilities" {
-  description = "(Optional) A list of capabilities.\nValid values: CAPABILITY_IAM, CAPABILITY_NAMED_IAM, or CAPABILITY_AUTO_EXPAND"
-  type        = string
-  default     = ""
-}
-variable "disable_rollback" {
-  description = "on_failure."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of resource tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "template_body" {
-  description = "(Optional) Structure containing the template body (max size: 51,200 bytes)."
-  type        = string
-  default     = ""
-}
 variable "name" {
   description = "(Required) Stack name."
   type        = string
-}
-variable "on_failure" {
-  description = "(Optional) Action to be taken if stack creation fails. This must be\none of: DO_NOTHING, ROLLBACK, or DELETE. Conflicts with disable_rollback."
-  type        = string
-  default     = ""
-}
-variable "outputs" {
-  description = "A map of outputs from the stack."
-  type        = string
-}
-variable "timeout_in_minutes" {
-  description = "(Optional) The amount of time that can pass before the stack status becomes CREATE_FAILED.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "notification_arns" {
-  description = "(Optional) A list of SNS topic ARNs to publish stack related events."
-  type        = string
-  default     = ""
 }
 variable "parameters" {
   description = "(Optional) A map of Parameter structures that specify input parameters for the stack."
@@ -92,14 +77,25 @@ variable "parameters" {
   default     = ""
 }
 variable "policy_body" {
-  description = "(Optional) Structure containing the stack policy body.\nConflicts w/ policy_url."
+  description = "policy_url."
+  type        = string
+}
+variable "capabilities" {
+  description = "CAPABILITY_IAM, CAPABILITY_NAMED_IAM, or CAPABILITY_AUTO_EXPAND"
+  type        = string
+}
+variable "notification_arns" {
+  description = "(Optional) A list of SNS topic ARNs to publish stack related events."
   type        = string
   default     = ""
 }
-variable "policy_url" {
-  description = "(Optional) Location of a file containing the stack policy.\nConflicts w/ policy_body."
+variable "on_failure" {
+  description = "DO_NOTHING, ROLLBACK, or DELETE. Conflicts with disable_rollback."
   type        = string
-  default     = ""
+}
+variable "outputs" {
+  description = "A map of outputs from the stack."
+  type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -225,81 +221,77 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "outputs" {
-  description = "A map of outputs from the stack."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.outputs
+output "template_url" {
+  description = "(Optional) Location of a file containing the template body (max size: 460,800 bytes)."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.template_url
 }
 output "timeout_in_minutes" {
   description = "(Optional) The amount of time that can pass before the stack status becomes CREATE_FAILED.In addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudformation_stack.aws_cloudformation_stack.timeout_in_minutes
 }
-output "name" {
-  description = "(Required) Stack name."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.name
-}
-output "on_failure" {
-  description = "(Optional) Action to be taken if stack creation fails. This must be\none of: DO_NOTHING, ROLLBACK, or DELETE. Conflicts with disable_rollback."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.on_failure
-}
-output "policy_body" {
-  description = "(Optional) Structure containing the stack policy body.\nConflicts w/ policy_url."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.policy_body
-}
-output "policy_url" {
-  description = "(Optional) Location of a file containing the stack policy.\nConflicts w/ policy_body."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.policy_url
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.tags_all
-}
-output "notification_arns" {
-  description = "(Optional) A list of SNS topic ARNs to publish stack related events."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.notification_arns
-}
-output "parameters" {
-  description = "(Optional) A map of Parameter structures that specify input parameters for the stack."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.parameters
-}
-output "id" {
-  description = "A unique identifier of the stack."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.id
-}
-output "template_url" {
-  description = "(Optional) Location of a file containing the template body (max size: 460,800 bytes)."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.template_url
-}
 output "update" {
   description = "(Default 30m)"
   value       = aws_cloudformation_stack.aws_cloudformation_stack.update
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.create
-}
-output "iam_role_arn" {
-  description = "(Optional) The ARN of an IAM role that AWS CloudFormation assumes to create the stack. If you don't specify a value, AWS CloudFormation uses the role that was previously associated with the stack. If no role is available, AWS CloudFormation uses a temporary session that is generated from your user credentials."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.iam_role_arn
-}
-output "tags" {
-  description = "(Optional) Map of resource tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.tags
-}
-output "template_body" {
-  description = "(Optional) Structure containing the template body (max size: 51,200 bytes)."
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.template_body
-}
-output "capabilities" {
-  description = "(Optional) A list of capabilities.\nValid values: CAPABILITY_IAM, CAPABILITY_NAMED_IAM, or CAPABILITY_AUTO_EXPAND"
-  value       = aws_cloudformation_stack.aws_cloudformation_stack.capabilities
 }
 output "disable_rollback" {
   description = "on_failure."
   value       = aws_cloudformation_stack.aws_cloudformation_stack.disable_rollback
 }
+output "policy_url" {
+  description = "policy_body."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.policy_url
+}
+output "tags" {
+  description = "(Optional) Map of resource tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.tags
+}
+output "create" {
+  description = "(Default 30m)"
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.create
+}
+output "template_body" {
+  description = "(Optional) Structure containing the template body (max size: 51,200 bytes)."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.template_body
+}
+output "parameters" {
+  description = "(Optional) A map of Parameter structures that specify input parameters for the stack."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.parameters
+}
+output "policy_body" {
+  description = "policy_url."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.policy_body
+}
+output "iam_role_arn" {
+  description = "(Optional) The ARN of an IAM role that AWS CloudFormation assumes to create the stack. If you don't specify a value, AWS CloudFormation uses the role that was previously associated with the stack. If no role is available, AWS CloudFormation uses a temporary session that is generated from your user credentials."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.iam_role_arn
+}
+output "id" {
+  description = "A unique identifier of the stack."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.id
+}
+output "name" {
+  description = "(Required) Stack name."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.name
+}
+output "outputs" {
+  description = "A map of outputs from the stack."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.outputs
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_cloudformation_stack.aws_cloudformation_stack.tags_all
+}
+output "capabilities" {
+  description = "CAPABILITY_IAM, CAPABILITY_NAMED_IAM, or CAPABILITY_AUTO_EXPAND"
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.capabilities
+}
+output "notification_arns" {
+  description = "(Optional) A list of SNS topic ARNs to publish stack related events."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.notification_arns
+}
+output "on_failure" {
+  description = "DO_NOTHING, ROLLBACK, or DELETE. Conflicts with disable_rollback."
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.on_failure
 }
 output "update" {
   description = "(Default 30m)"
@@ -320,6 +312,10 @@ output "id" {
 output "outputs" {
   description = "A map of outputs from the stack."
   value       = aws_cloudformation_stack.aws_cloudformation_stack.outputs
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_cloudformation_stack.aws_cloudformation_stack.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -23,17 +23,10 @@ spec:
             description: The name of the Server Certificate
             type: string
         name_prefix:
-            description: |-
-                (Optional) Creates a unique name beginning with the specified
-                prefix. Conflicts with name.
-            optional: true
+            description: name.
             type: string
         path:
-            description: |-
-                (Optional) The IAM path for the server certificate.  If it is not
-                included, it defaults to a slash (/). If this certificate is for use with
-                AWS CloudFront, the path must be in format /cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths.
-            optional: true
+            description: /cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths.
             type: string
         private_key:
             description: ' – (Required) The contents of the private key in PEM-encoded format.'

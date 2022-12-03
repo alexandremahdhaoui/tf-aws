@@ -1,43 +1,48 @@
 resource "aws_ami_copy" "aws_ami_copy" {
-  kms_key_id              = var.kms_key_id
-  name                    = var.name
-  source_ami_region       = var.source_ami_region
-  tags                    = var.tags
   arn                     = var.arn
-  encrypted               = var.encrypted
-  id                      = var.id
-  update                  = var.update
   create                  = var.create
-  destination_outpost_arn = var.destination_outpost_arn
+  encrypted               = var.encrypted
+  name                    = var.name
   source_ami_id           = var.source_ami_id
+  tags                    = var.tags
+  destination_outpost_arn = var.destination_outpost_arn
+  id                      = var.id
+  kms_key_id              = var.kms_key_id
+  source_ami_region       = var.source_ami_region
+  update                  = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "create" {
-  description = "(Default 40m)"
-  type        = string
-}
-variable "destination_outpost_arn" {
-  description = "(Optional) ARN of the Outpost to which to copy the AMI.\nOnly specify this parameter when copying an AMI from an AWS Region to an Outpost. The AMI must be in the Region of the destination Outpost."
-  type        = string
-  default     = ""
-}
-variable "source_ami_id" {
-  description = "(Required) Id of the AMI to copy. This id must be valid in the region\ngiven by source_ami_region."
-  type        = string
-}
-variable "update" {
-  description = "(Default 40m)"
   type        = string
 }
 variable "arn" {
   description = "ARN of the AMI."
   type        = string
 }
+variable "create" {
+  description = "(Default 40m)"
+  type        = string
+}
 variable "encrypted" {
   description = "(Optional) Whether the destination snapshots of the copied image should be encrypted. Defaults to false"
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Region-unique name for the AMI."
+  type        = string
+}
+variable "source_ami_id" {
+  description = "(Required) Id of the AMI to copy. This id must be valid in the region\ngiven by source_ami_region."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.This resource also exposes the full set of arguments from the aws_ami resource.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "destination_outpost_arn" {
+  description = "(Optional) ARN of the Outpost to which to copy the AMI.\nOnly specify this parameter when copying an AMI from an AWS Region to an Outpost. The AMI must be in the Region of the destination Outpost."
   type        = string
   default     = ""
 }
@@ -50,18 +55,13 @@ variable "kms_key_id" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Region-unique name for the AMI."
-  type        = string
-}
 variable "source_ami_region" {
-  description = "(Required) Region from which the AMI will be copied. This may be the\nsame as the AWS provider region in order to create a copy within the same region."
+  description = ""
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.This resource also exposes the full set of arguments from the aws_ami resource.In addition to all arguments above, the following attributes are exported:"
+variable "update" {
+  description = "(Default 40m)"
   type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -183,13 +183,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "encrypted" {
+  description = "(Optional) Whether the destination snapshots of the copied image should be encrypted. Defaults to false"
+  value       = aws_ami_copy.aws_ami_copy.encrypted
+}
 output "name" {
   description = "(Required) Region-unique name for the AMI."
   value       = aws_ami_copy.aws_ami_copy.name
 }
-output "source_ami_region" {
-  description = "(Required) Region from which the AMI will be copied. This may be the\nsame as the AWS provider region in order to create a copy within the same region."
-  value       = aws_ami_copy.aws_ami_copy.source_ami_region
+output "source_ami_id" {
+  description = "(Required) Id of the AMI to copy. This id must be valid in the region\ngiven by source_ami_region."
+  value       = aws_ami_copy.aws_ami_copy.source_ami_id
 }
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.This resource also exposes the full set of arguments from the aws_ami resource.In addition to all arguments above, the following attributes are exported:"
@@ -199,33 +203,29 @@ output "arn" {
   description = "ARN of the AMI."
   value       = aws_ami_copy.aws_ami_copy.arn
 }
-output "encrypted" {
-  description = "(Optional) Whether the destination snapshots of the copied image should be encrypted. Defaults to false"
-  value       = aws_ami_copy.aws_ami_copy.encrypted
-}
-output "id" {
-  description = "ID of the created AMI.aws_amiTimeoutsConfiguration options:"
-  value       = aws_ami_copy.aws_ami_copy.id
+output "create" {
+  description = "(Default 40m)"
+  value       = aws_ami_copy.aws_ami_copy.create
 }
 output "kms_key_id" {
   description = "(Optional) Full ARN of the KMS Key to use when encrypting the snapshots of an image during a copy operation. If not specified, then the default AWS KMS Key will be used"
   value       = aws_ami_copy.aws_ami_copy.kms_key_id
 }
-output "create" {
+output "source_ami_region" {
+  description = ""
+  value       = aws_ami_copy.aws_ami_copy.source_ami_region
+}
+output "update" {
   description = "(Default 40m)"
-  value       = aws_ami_copy.aws_ami_copy.create
+  value       = aws_ami_copy.aws_ami_copy.update
 }
 output "destination_outpost_arn" {
   description = "(Optional) ARN of the Outpost to which to copy the AMI.\nOnly specify this parameter when copying an AMI from an AWS Region to an Outpost. The AMI must be in the Region of the destination Outpost."
   value       = aws_ami_copy.aws_ami_copy.destination_outpost_arn
 }
-output "source_ami_id" {
-  description = "(Required) Id of the AMI to copy. This id must be valid in the region\ngiven by source_ami_region."
-  value       = aws_ami_copy.aws_ami_copy.source_ami_id
-}
-output "update" {
-  description = "(Default 40m)"
-  value       = aws_ami_copy.aws_ami_copy.update
+output "id" {
+  description = "ID of the created AMI.aws_amiTimeoutsConfiguration options:"
+  value       = aws_ami_copy.aws_ami_copy.id
 }
 output "arn" {
   description = "ARN of the AMI."

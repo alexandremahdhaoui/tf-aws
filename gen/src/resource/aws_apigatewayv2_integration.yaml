@@ -39,7 +39,9 @@ spec:
             optional: true
             type: string
         integration_type:
-            description: AWS (supported only for WebSocket APIs), AWS_PROXY, HTTP (supported only for WebSocket APIs), HTTP_PROXY, MOCK (supported only for WebSocket APIs). For an HTTP API private integration, use HTTP_PROXY.
+            description: |-
+                (Required) Integration type of an integration.
+                Valid values: AWS (supported only for WebSocket APIs), AWS_PROXY, HTTP (supported only for WebSocket APIs), HTTP_PROXY, MOCK (supported only for WebSocket APIs). For an HTTP API private integration, use HTTP_PROXY.
             type: string
         integration_uri:
             description: (Optional) URI of the Lambda function for a Lambda proxy integration, when integration_type is AWS_PROXYHTTP integration, specify a fully-qualified URL. For an HTTP API private integration, specify the ARN of an Application Load Balancer listener, Network Load Balancer listener, or AWS Cloud Map service.
@@ -59,10 +61,7 @@ spec:
             optional: true
             type: string
         request_parameters:
-            description: |-
-                (Optional) For WebSocket APIs, a key-value map specifying request parameters that are passed from the method request to the backend.
-                For HTTP APIs with a specified integration_subtype, a key-value map specifying parameters that are passed to AWS_PROXYintegration_subtypeAmazon API Gateway Developer Guide for details.
-            optional: true
+            description: integration_subtype, a key-value map specifying parameters that are passed to AWS_PROXYintegration_subtypeAmazon API Gateway Developer Guide for details.
             type: string
         request_templates:
             description: (Optional) Map of Velocity templates that are applied on the request payload based on the value of the Content-Type header sent by the client. Supported only for WebSocket APIs.

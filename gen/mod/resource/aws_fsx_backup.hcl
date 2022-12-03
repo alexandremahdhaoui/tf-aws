@@ -1,17 +1,30 @@
 resource "aws_fsx_backup" "aws_fsx_backup" {
-  arn            = var.arn
-  create         = var.create
   id             = var.id
   kms_key_id     = var.kms_key_id
   owner_id       = var.owner_id
   tags           = var.tags
   volume_id      = var.volume_id
+  arn            = var.arn
+  create         = var.create
   file_system_id = var.file_system_id
   tags_all       = var.tags_all
   type           = var.type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "file_system_id" {
+  description = "(Optional) The ID of the file system to back up. Required if backing up Lustre or Windows file systems."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Identifier of the backup, e.g., fs-12345678"
+  type        = string
+}
+variable "kms_key_id" {
+  description = " The ID of the AWS Key Management Service (AWS KMS) key used to encrypt the backup of the Amazon FSx file system's data at rest."
   type        = string
 }
 variable "owner_id" {
@@ -35,19 +48,6 @@ variable "arn" {
 variable "create" {
   description = "(Default 10m)"
   type        = string
-}
-variable "id" {
-  description = "Identifier of the backup, e.g., fs-12345678"
-  type        = string
-}
-variable "kms_key_id" {
-  description = " The ID of the AWS Key Management Service (AWS KMS) key used to encrypt the backup of the Amazon FSx file system's data at rest."
-  type        = string
-}
-variable "file_system_id" {
-  description = "(Optional) The ID of the file system to back up. Required if backing up Lustre or Windows file systems."
-  type        = string
-  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -177,13 +177,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_id" {
-  description = " The ID of the AWS Key Management Service (AWS KMS) key used to encrypt the backup of the Amazon FSx file system's data at rest."
-  value       = aws_fsx_backup.aws_fsx_backup.kms_key_id
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_fsx_backup.aws_fsx_backup.tags_all
 }
-output "owner_id" {
-  description = "AWS account identifier that created the file system."
-  value       = aws_fsx_backup.aws_fsx_backup.owner_id
+output "type" {
+  description = "The type of the file system backup.TimeoutsConfiguration options:"
+  value       = aws_fsx_backup.aws_fsx_backup.type
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the file system. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level. If you have set copy_tags_to_backups to true, and you specify one or more tags, no existing file system tags are copied from the file system to the backup."
@@ -201,21 +201,13 @@ output "create" {
   description = "(Default 10m)"
   value       = aws_fsx_backup.aws_fsx_backup.create
 }
-output "id" {
-  description = "Identifier of the backup, e.g., fs-12345678"
-  value       = aws_fsx_backup.aws_fsx_backup.id
-}
 output "file_system_id" {
   description = "(Optional) The ID of the file system to back up. Required if backing up Lustre or Windows file systems."
   value       = aws_fsx_backup.aws_fsx_backup.file_system_id
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_fsx_backup.aws_fsx_backup.tags_all
-}
-output "type" {
-  description = "The type of the file system backup.TimeoutsConfiguration options:"
-  value       = aws_fsx_backup.aws_fsx_backup.type
+output "id" {
+  description = "Identifier of the backup, e.g., fs-12345678"
+  value       = aws_fsx_backup.aws_fsx_backup.id
 }
 output "kms_key_id" {
   description = " The ID of the AWS Key Management Service (AWS KMS) key used to encrypt the backup of the Amazon FSx file system's data at rest."
@@ -224,14 +216,6 @@ output "kms_key_id" {
 output "owner_id" {
   description = "AWS account identifier that created the file system."
   value       = aws_fsx_backup.aws_fsx_backup.owner_id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_fsx_backup.aws_fsx_backup.tags_all
-}
-output "type" {
-  description = "The type of the file system backup.TimeoutsConfiguration options:"
-  value       = aws_fsx_backup.aws_fsx_backup.type
 }
 output "arn" {
   description = "Amazon Resource Name of the backup."
@@ -248,6 +232,22 @@ output "delete" {
 output "id" {
   description = "Identifier of the backup, e.g., fs-12345678"
   value       = aws_fsx_backup.aws_fsx_backup.id
+}
+output "kms_key_id" {
+  description = " The ID of the AWS Key Management Service (AWS KMS) key used to encrypt the backup of the Amazon FSx file system's data at rest."
+  value       = aws_fsx_backup.aws_fsx_backup.kms_key_id
+}
+output "owner_id" {
+  description = "AWS account identifier that created the file system."
+  value       = aws_fsx_backup.aws_fsx_backup.owner_id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_fsx_backup.aws_fsx_backup.tags_all
+}
+output "type" {
+  description = "The type of the file system backup.TimeoutsConfiguration options:"
+  value       = aws_fsx_backup.aws_fsx_backup.type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

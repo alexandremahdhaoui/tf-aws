@@ -1,77 +1,30 @@
 resource "aws_flow_log" "aws_flow_log" {
-  iam_role_arn                  = var.iam_role_arn
-  log_destination_type          = var.log_destination_type
-  tags                          = var.tags
-  transit_gateway_id            = var.transit_gateway_id
   arn                           = var.arn
-  destination_options           = var.destination_options
   id                            = var.id
-  log_destination               = var.log_destination
+  log_group_name                = var.log_group_name
   traffic_type                  = var.traffic_type
   transit_gateway_attachment_id = var.transit_gateway_attachment_id
-  file_format                   = var.file_format
-  hive_compatible_partitions    = var.hive_compatible_partitions
-  log_format                    = var.log_format
-  log_group_name                = var.log_group_name
-  per_hour_partition            = var.per_hour_partition
   vpc_id                        = var.vpc_id
   eni_id                        = var.eni_id
-  max_aggregation_interval      = var.max_aggregation_interval
+  iam_role_arn                  = var.iam_role_arn
+  tags                          = var.tags
+  destination_options           = var.destination_options
+  hive_compatible_partitions    = var.hive_compatible_partitions
+  log_format                    = var.log_format
+  per_hour_partition            = var.per_hour_partition
   subnet_id                     = var.subnet_id
+  file_format                   = var.file_format
+  log_destination               = var.log_destination
+  log_destination_type          = var.log_destination_type
+  max_aggregation_interval      = var.max_aggregation_interval
+  transit_gateway_id            = var.transit_gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "iam_role_arn" {
-  description = "(Optional) The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group"
-  type        = string
-  default     = ""
-}
-variable "log_destination_type" {
-  description = "(Optional) The type of the logging destination. Valid values: cloud-watch-logs, s3, kinesis-data-firehose. Default: cloud-watch-logs."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.destination_optionsDescribes the destination options for a flow log."
-  type        = string
-  default     = ""
-}
-variable "transit_gateway_id" {
-  description = "(Optional) Transit Gateway ID to attach to"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the Flow Log."
-  type        = string
-}
 variable "destination_options" {
   description = "(Optional) Describes the destination options for a flow log. More details below."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "The Flow Log ID"
-  type        = string
-}
-variable "log_destination" {
-  description = "(Optional) The ARN of the logging destination. Either log_destination or log_group_name must be set."
-  type        = string
-  default     = ""
-}
-variable "traffic_type" {
-  description = "(Required) The type of traffic to capture. Valid values: ACCEPT,REJECT, ALL."
-  type        = string
-}
-variable "transit_gateway_attachment_id" {
-  description = "(Optional) Transit Gateway Attachment ID to attach to"
-  type        = string
-  default     = ""
-}
-variable "file_format" {
-  description = "(Optional) The format for the flow log. Default value: plain-text. Valid values: plain-text, parquet."
   type        = string
   default     = ""
 }
@@ -85,13 +38,59 @@ variable "log_format" {
   type        = string
   default     = ""
 }
+variable "per_hour_partition" {
+  description = "(Optional) Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. Default value: false.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "subnet_id" {
+  description = "(Optional) Subnet ID to attach to"
+  type        = string
+  default     = ""
+}
+variable "file_format" {
+  description = "(Optional) The format for the flow log. Default value: plain-text. Valid values: plain-text, parquet."
+  type        = string
+  default     = ""
+}
+variable "log_destination" {
+  description = "(Optional) The ARN of the logging destination. Either log_destination or log_group_name must be set."
+  type        = string
+  default     = ""
+}
+variable "log_destination_type" {
+  description = "(Optional) The type of the logging destination. Valid values: cloud-watch-logs, s3, kinesis-data-firehose. Default: cloud-watch-logs."
+  type        = string
+  default     = ""
+}
+variable "max_aggregation_interval" {
+  description = "60 seconds (1 minute) or 600600. When transit_gateway_id or transit_gateway_attachment_id is specified, max_aggregation_interval emmust be 60 seconds (1 minute)."
+  type        = string
+}
+variable "transit_gateway_id" {
+  description = "(Optional) Transit Gateway ID to attach to"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the Flow Log."
+  type        = string
+}
+variable "id" {
+  description = "The Flow Log ID"
+  type        = string
+}
 variable "log_group_name" {
   description = "(Optional) emDeprecated: Use log_destination instead. The name of the CloudWatch log group. Either log_group_name or log_destination must be set."
   type        = string
   default     = ""
 }
-variable "per_hour_partition" {
-  description = "(Optional) Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. Default value: false.In addition to all arguments above, the following attributes are exported:"
+variable "traffic_type" {
+  description = "(Required) The type of traffic to capture. Valid values: ACCEPT,REJECT, ALL."
+  type        = string
+}
+variable "transit_gateway_attachment_id" {
+  description = "(Optional) Transit Gateway Attachment ID to attach to"
   type        = string
   default     = ""
 }
@@ -105,13 +104,13 @@ variable "eni_id" {
   type        = string
   default     = ""
 }
-variable "max_aggregation_interval" {
-  description = "(Optional) The maximum interval of time\nduring which a flow of packets is captured and aggregated into a flow\nlog record. Valid Values: 60 seconds (1 minute) or 600600. When transit_gateway_id or transit_gateway_attachment_id is specified, max_aggregation_interval emmust be 60 seconds (1 minute)."
+variable "iam_role_arn" {
+  description = "(Optional) The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group"
   type        = string
   default     = ""
 }
-variable "subnet_id" {
-  description = "(Optional) Subnet ID to attach to"
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.destination_optionsDescribes the destination options for a flow log."
   type        = string
   default     = ""
 }
@@ -235,29 +234,45 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.destination_optionsDescribes the destination options for a flow log."
-  value       = aws_flow_log.aws_flow_log.tags
+output "per_hour_partition" {
+  description = "(Optional) Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. Default value: false.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_flow_log.aws_flow_log.per_hour_partition
+}
+output "subnet_id" {
+  description = "(Optional) Subnet ID to attach to"
+  value       = aws_flow_log.aws_flow_log.subnet_id
+}
+output "destination_options" {
+  description = "(Optional) Describes the destination options for a flow log. More details below."
+  value       = aws_flow_log.aws_flow_log.destination_options
+}
+output "hive_compatible_partitions" {
+  description = "(Optional) Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. Default value: false."
+  value       = aws_flow_log.aws_flow_log.hive_compatible_partitions
+}
+output "log_format" {
+  description = "(Optional) The fields to include in the flow log record, in the order in which they should appear."
+  value       = aws_flow_log.aws_flow_log.log_format
+}
+output "max_aggregation_interval" {
+  description = "60 seconds (1 minute) or 600600. When transit_gateway_id or transit_gateway_attachment_id is specified, max_aggregation_interval emmust be 60 seconds (1 minute)."
+  value       = aws_flow_log.aws_flow_log.max_aggregation_interval
 }
 output "transit_gateway_id" {
   description = "(Optional) Transit Gateway ID to attach to"
   value       = aws_flow_log.aws_flow_log.transit_gateway_id
 }
-output "iam_role_arn" {
-  description = "(Optional) The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group"
-  value       = aws_flow_log.aws_flow_log.iam_role_arn
-}
-output "log_destination_type" {
-  description = "(Optional) The type of the logging destination. Valid values: cloud-watch-logs, s3, kinesis-data-firehose. Default: cloud-watch-logs."
-  value       = aws_flow_log.aws_flow_log.log_destination_type
-}
-output "id" {
-  description = "The Flow Log ID"
-  value       = aws_flow_log.aws_flow_log.id
+output "file_format" {
+  description = "(Optional) The format for the flow log. Default value: plain-text. Valid values: plain-text, parquet."
+  value       = aws_flow_log.aws_flow_log.file_format
 }
 output "log_destination" {
   description = "(Optional) The ARN of the logging destination. Either log_destination or log_group_name must be set."
   value       = aws_flow_log.aws_flow_log.log_destination
+}
+output "log_destination_type" {
+  description = "(Optional) The type of the logging destination. Valid values: cloud-watch-logs, s3, kinesis-data-firehose. Default: cloud-watch-logs."
+  value       = aws_flow_log.aws_flow_log.log_destination_type
 }
 output "traffic_type" {
   description = "(Required) The type of traffic to capture. Valid values: ACCEPT,REJECT, ALL."
@@ -267,53 +282,9 @@ output "transit_gateway_attachment_id" {
   description = "(Optional) Transit Gateway Attachment ID to attach to"
   value       = aws_flow_log.aws_flow_log.transit_gateway_attachment_id
 }
-output "arn" {
-  description = "The ARN of the Flow Log."
-  value       = aws_flow_log.aws_flow_log.arn
-}
-output "destination_options" {
-  description = "(Optional) Describes the destination options for a flow log. More details below."
-  value       = aws_flow_log.aws_flow_log.destination_options
-}
-output "log_format" {
-  description = "(Optional) The fields to include in the flow log record, in the order in which they should appear."
-  value       = aws_flow_log.aws_flow_log.log_format
-}
-output "log_group_name" {
-  description = "(Optional) emDeprecated: Use log_destination instead. The name of the CloudWatch log group. Either log_group_name or log_destination must be set."
-  value       = aws_flow_log.aws_flow_log.log_group_name
-}
-output "per_hour_partition" {
-  description = "(Optional) Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. Default value: false.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_flow_log.aws_flow_log.per_hour_partition
-}
 output "vpc_id" {
   description = "(Optional) VPC ID to attach to"
   value       = aws_flow_log.aws_flow_log.vpc_id
-}
-output "file_format" {
-  description = "(Optional) The format for the flow log. Default value: plain-text. Valid values: plain-text, parquet."
-  value       = aws_flow_log.aws_flow_log.file_format
-}
-output "hive_compatible_partitions" {
-  description = "(Optional) Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. Default value: false."
-  value       = aws_flow_log.aws_flow_log.hive_compatible_partitions
-}
-output "subnet_id" {
-  description = "(Optional) Subnet ID to attach to"
-  value       = aws_flow_log.aws_flow_log.subnet_id
-}
-output "eni_id" {
-  description = "(Optional) Elastic Network Interface ID to attach to"
-  value       = aws_flow_log.aws_flow_log.eni_id
-}
-output "max_aggregation_interval" {
-  description = "(Optional) The maximum interval of time\nduring which a flow of packets is captured and aggregated into a flow\nlog record. Valid Values: 60 seconds (1 minute) or 600600. When transit_gateway_id or transit_gateway_attachment_id is specified, max_aggregation_interval emmust be 60 seconds (1 minute)."
-  value       = aws_flow_log.aws_flow_log.max_aggregation_interval
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_flow_log.aws_flow_log.tags_all
 }
 output "arn" {
   description = "The ARN of the Flow Log."
@@ -322,6 +293,34 @@ output "arn" {
 output "id" {
   description = "The Flow Log ID"
   value       = aws_flow_log.aws_flow_log.id
+}
+output "log_group_name" {
+  description = "(Optional) emDeprecated: Use log_destination instead. The name of the CloudWatch log group. Either log_group_name or log_destination must be set."
+  value       = aws_flow_log.aws_flow_log.log_group_name
+}
+output "eni_id" {
+  description = "(Optional) Elastic Network Interface ID to attach to"
+  value       = aws_flow_log.aws_flow_log.eni_id
+}
+output "iam_role_arn" {
+  description = "(Optional) The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group"
+  value       = aws_flow_log.aws_flow_log.iam_role_arn
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.destination_optionsDescribes the destination options for a flow log."
+  value       = aws_flow_log.aws_flow_log.tags
+}
+output "id" {
+  description = "The Flow Log ID"
+  value       = aws_flow_log.aws_flow_log.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_flow_log.aws_flow_log.tags_all
+}
+output "arn" {
+  description = "The ARN of the Flow Log."
+  value       = aws_flow_log.aws_flow_log.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

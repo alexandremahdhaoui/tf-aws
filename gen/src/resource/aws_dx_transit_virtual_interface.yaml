@@ -44,7 +44,10 @@ spec:
             description: Indicates whether jumbo frames (8500 MTU) are supported.
             type: string
         mtu:
-            description: 1500 or 8500 (jumbo frames). Default is 1500.
+            description: |-
+                (Optional) The maximum transmission unit (MTU) is the size, in bytes, of the largest permissible packet that can be passed over the connection.
+                The MTU of a virtual transit interface can be either 1500 or 8500 (jumbo frames). Default is 1500.
+            optional: true
             type: string
         name:
             description: (Required) The name for the virtual interface.

@@ -1,12 +1,12 @@
 resource "aws_cloudfront_function" "aws_cloudfront_function" {
-  status          = var.status
-  arn             = var.arn
   comment         = var.comment
   etag            = var.etag
   live_stage_etag = var.live_stage_etag
   name            = var.name
   publish         = var.publish
   runtime         = var.runtime
+  status          = var.status
+  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -170,18 +170,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Unique name for your CloudFront Function."
-  value       = aws_cloudfront_function.aws_cloudfront_function.name
-}
-output "publish" {
-  description = "(Optional) Whether to publish creation/change as Live CloudFront Function Version. Defaults to true.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudfront_function.aws_cloudfront_function.publish
-}
-output "runtime" {
-  description = "(Required) Identifier of the function's runtime. Currently only cloudfront-js-1.0 is valid."
-  value       = aws_cloudfront_function.aws_cloudfront_function.runtime
-}
 output "status" {
   description = "Status of the function. Can be UNPUBLISHED, UNASSOCIATED or ASSOCIATED."
   value       = aws_cloudfront_function.aws_cloudfront_function.status
@@ -202,9 +190,17 @@ output "live_stage_etag" {
   description = "ETag hash of any LIVE stage of the function."
   value       = aws_cloudfront_function.aws_cloudfront_function.live_stage_etag
 }
-output "live_stage_etag" {
-  description = "ETag hash of any LIVE stage of the function."
-  value       = aws_cloudfront_function.aws_cloudfront_function.live_stage_etag
+output "name" {
+  description = "(Required) Unique name for your CloudFront Function."
+  value       = aws_cloudfront_function.aws_cloudfront_function.name
+}
+output "publish" {
+  description = "(Optional) Whether to publish creation/change as Live CloudFront Function Version. Defaults to true.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudfront_function.aws_cloudfront_function.publish
+}
+output "runtime" {
+  description = "(Required) Identifier of the function's runtime. Currently only cloudfront-js-1.0 is valid."
+  value       = aws_cloudfront_function.aws_cloudfront_function.runtime
 }
 output "status" {
   description = "Status of the function. Can be UNPUBLISHED, UNASSOCIATED or ASSOCIATED."
@@ -217,6 +213,10 @@ output "arn" {
 output "etag" {
   description = "ETag hash of the function. This is the value for the DEVELOPMENT stage of the function."
   value       = aws_cloudfront_function.aws_cloudfront_function.etag
+}
+output "live_stage_etag" {
+  description = "ETag hash of any LIVE stage of the function."
+  value       = aws_cloudfront_function.aws_cloudfront_function.live_stage_etag
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

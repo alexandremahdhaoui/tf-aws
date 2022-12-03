@@ -9,8 +9,7 @@ spec:
             description: The account ID that this configuration applies to.
             type: string
         ami_distribution_configuration:
-            description: |
-                Nested list of AMI distribution configuration.
+            description: ""
             type: string
         ami_tags:
             description: Key-value map of tags to apply to distributed AMI.
@@ -35,30 +34,25 @@ spec:
             description: Description of the container distribution configuration.
             type: string
         distribution:
-            description: |
-                Set of distributions.
+            description: ""
             type: string
         enabled:
             description: A Boolean that represents the current state of faster launching for the Windows AMI.
             type: string
         fast_launch_configuration:
-            description: |
-                Nested list of Windows faster-launching configurations to use for AMI distribution.
+            description: ""
             type: string
         kms_key_id:
             description: ARN of Key Management Service (KMS) Key to encrypt AMI.
             type: string
         launch_permission:
-            description: |
-                Nested list of EC2 launch permissions.
+            description: ""
             type: string
         launch_template:
-            description: |
-                Nested list of launch templates that the fast-launch enabled Windows AMI uses when it launches Windows instances to create pre-provisioned snapshots.
+            description: ""
             type: string
         launch_template_configuration:
-            description: |
-                Nested list of launch template configurations.
+            description: ""
             type: string
         launch_template_id:
             description: ID of the Amazon EC2 launch template.
@@ -94,15 +88,13 @@ spec:
             description: Service in which the image is registered.
             type: string
         snapshot_configuration:
-            description: |
-                Nested list of configurations for managing the number of snapshots that are created from pre-provisioned instances for the Windows AMI when faster launching is enabled.
+            description: ""
             type: string
         target_account_ids:
             description: Set of target AWS Account identifiers.
             type: string
         target_repository:
-            description: |
-                Set of destination repositories for the container distribution configuration.
+            description: ""
             type: string
         target_resource_count:
             description: The number of pre-provisioned snapshots to keep on hand for a fast-launch enabled Windows AMI.

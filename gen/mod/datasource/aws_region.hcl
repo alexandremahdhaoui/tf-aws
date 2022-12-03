@@ -4,13 +4,13 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "name" {
-  description = "Name of the selected region."
-  value       = aws_region.aws_region.name
-}
 output "endpoint" {
   description = "EC2 endpoint for the selected region."
   value       = aws_region.aws_region.endpoint
+}
+output "name" {
+  description = "Name of the selected region."
+  value       = aws_region.aws_region.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

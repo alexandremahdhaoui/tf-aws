@@ -1,8 +1,8 @@
 datasource "aws_wafv2_web_acl" "aws_wafv2_web_acl" {
-  description = var.description
   name        = var.name
   scope       = var.scope
   arn         = var.arn
+  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

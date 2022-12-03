@@ -1,19 +1,47 @@
 resource "aws_msk_serverless_cluster" "aws_msk_serverless_cluster" {
-  vpc_config            = var.vpc_config
-  arn                   = var.arn
-  client_authentication = var.client_authentication
-  cluster_name          = var.cluster_name
-  iam                   = var.iam
-  security_group_ids    = var.security_group_ids
-  subnet_ids            = var.subnet_ids
-  create                = var.create
-  enabled               = var.enabled
-  sasl                  = var.sasl
   tags                  = var.tags
   tags_all              = var.tags_all
+  client_authentication = var.client_authentication
+  security_group_ids    = var.security_group_ids
+  subnet_ids            = var.subnet_ids
+  enabled               = var.enabled
+  iam                   = var.iam
+  sasl                  = var.sasl
+  vpc_config            = var.vpc_config
+  arn                   = var.arn
+  cluster_name          = var.cluster_name
+  create                = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "cluster_name" {
+  description = "(Required) The name of the serverless cluster."
+  type        = string
+}
+variable "create" {
+  description = "(Default 120m)"
+  type        = string
+}
+variable "enabled" {
+  description = "(Required) Whether SASL/IAM authentication is enabled or not.vpc_config Argument Reference"
+  type        = string
+}
+variable "iam" {
+  description = "(Required) Details for client authentication using IAM. See below.iam Argument Reference"
+  type        = string
+}
+variable "sasl" {
+  description = "(Required) Details for client authentication using SASL. See below.sasl Argument Reference"
+  type        = string
+}
+variable "vpc_config" {
+  description = "(Required) VPC configuration information. See below.client_authentication Argument Reference"
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the serverless cluster."
   type        = string
 }
 variable "security_group_ids" {
@@ -25,46 +53,18 @@ variable "subnet_ids" {
   description = "(Required) A list of subnets in at least two different Availability Zones that host your client applications.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "vpc_config" {
-  description = "(Required) VPC configuration information. See below.client_authentication Argument Reference"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
-}
-variable "arn" {
-  description = "The ARN of the serverless cluster."
-  type        = string
-}
-variable "client_authentication" {
-  description = "(Required) Specifies client authentication information for the serverless cluster. See below."
-  type        = string
-}
-variable "cluster_name" {
-  description = "(Required) The name of the serverless cluster."
-  type        = string
-}
-variable "iam" {
-  description = "(Required) Details for client authentication using IAM. See below.iam Argument Reference"
-  type        = string
+  default     = ""
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
-variable "create" {
-  description = "(Default 120m)"
+variable "client_authentication" {
+  description = "(Required) Specifies client authentication information for the serverless cluster. See below."
   type        = string
-}
-variable "enabled" {
-  description = "(Required) Whether SASL/IAM authentication is enabled or not.vpc_config Argument Reference"
-  type        = string
-}
-variable "sasl" {
-  description = "(Required) Details for client authentication using SASL. See below.sasl Argument Reference"
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -186,33 +186,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "vpc_config" {
+  description = "(Required) VPC configuration information. See below.client_authentication Argument Reference"
+  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.vpc_config
+}
 output "arn" {
   description = "The ARN of the serverless cluster."
   value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.arn
 }
-output "client_authentication" {
-  description = "(Required) Specifies client authentication information for the serverless cluster. See below."
-  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.client_authentication
-}
 output "cluster_name" {
   description = "(Required) The name of the serverless cluster."
   value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.cluster_name
-}
-output "iam" {
-  description = "(Required) Details for client authentication using IAM. See below.iam Argument Reference"
-  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.iam
-}
-output "security_group_ids" {
-  description = "(Optional) Specifies up to five security groups that control inbound and outbound traffic for the serverless cluster."
-  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.security_group_ids
-}
-output "subnet_ids" {
-  description = "(Required) A list of subnets in at least two different Availability Zones that host your client applications.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.subnet_ids
-}
-output "vpc_config" {
-  description = "(Required) VPC configuration information. See below.client_authentication Argument Reference"
-  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.vpc_config
 }
 output "create" {
   description = "(Default 120m)"
@@ -222,9 +206,25 @@ output "enabled" {
   description = "(Required) Whether SASL/IAM authentication is enabled or not.vpc_config Argument Reference"
   value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.enabled
 }
+output "iam" {
+  description = "(Required) Details for client authentication using IAM. See below.iam Argument Reference"
+  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.iam
+}
 output "sasl" {
   description = "(Required) Details for client authentication using SASL. See below.sasl Argument Reference"
   value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.sasl
+}
+output "client_authentication" {
+  description = "(Required) Specifies client authentication information for the serverless cluster. See below."
+  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.client_authentication
+}
+output "security_group_ids" {
+  description = "(Optional) Specifies up to five security groups that control inbound and outbound traffic for the serverless cluster."
+  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.security_group_ids
+}
+output "subnet_ids" {
+  description = "(Required) A list of subnets in at least two different Availability Zones that host your client applications.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_msk_serverless_cluster.aws_msk_serverless_cluster.subnet_ids
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."

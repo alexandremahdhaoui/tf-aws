@@ -1,26 +1,48 @@
 resource "aws_db_event_subscription" "aws_db_event_subscription" {
   arn              = var.arn
-  customer_aws_id  = var.customer_aws_id
-  event_categories = var.event_categories
-  name             = var.name
-  source_type      = var.source_type
-  tags             = var.tags
-  delete           = var.delete
-  enabled          = var.enabled
-  id               = var.id
-  name_prefix      = var.name_prefix
-  sns_topic        = var.sns_topic
   source_ids       = var.source_ids
   tags_all         = var.tags_all
   create           = var.create
+  enabled          = var.enabled
+  event_categories = var.event_categories
+  name             = var.name
+  sns_topic        = var.sns_topic
+  customer_aws_id  = var.customer_aws_id
+  id               = var.id
+  source_type      = var.source_type
+  delete           = var.delete
+  name_prefix      = var.name_prefix
+  tags             = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "The Amazon Resource Name of the RDS event notification subscription"
+  type        = string
+}
+variable "sns_topic" {
+  description = "(Required) The SNS topic to send events to."
+  type        = string
+}
+variable "source_ids" {
+  description = "(Optional) A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
 variable "create" {
   description = "(Default 40m)"
   type        = string
+}
+variable "enabled" {
+  description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
+  type        = string
+  default     = ""
 }
 variable "event_categories" {
   description = "(Optional) A list of event categories for a SourceType that you want to subscribe to. See http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html or run aws rds describe-event-categories."
@@ -32,10 +54,6 @@ variable "name" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "The Amazon Resource Name of the RDS event notification subscription"
-  type        = string
-}
 variable "customer_aws_id" {
   description = "The AWS customer account associated with the RDS event notification subscription"
   type        = string
@@ -44,27 +62,8 @@ variable "id" {
   description = "The name of the RDS event notification subscription"
   type        = string
 }
-variable "name_prefix" {
-  description = "(Optional) The name of the DB event subscription. Conflicts with name."
-  type        = string
-  default     = ""
-}
-variable "sns_topic" {
-  description = "(Required) The SNS topic to send events to."
-  type        = string
-}
-variable "source_ids" {
-  description = "(Optional) A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified."
-  type        = string
-  default     = ""
-}
 variable "source_type" {
   description = "(Optional) The type of source that will be generating the events. Valid options are db-instance, db-security-group, db-parameter-group, db-snapshot, db-cluster or db-cluster-snapshot. If not set, all sources will be subscribed to."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -72,14 +71,15 @@ variable "delete" {
   description = "(Default 40m)"
   type        = string
 }
-variable "enabled" {
-  description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
+variable "name_prefix" {
+  description = "(Optional) The name of the DB event subscription. Conflicts with name."
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -201,17 +201,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
+output "customer_aws_id" {
+  description = "The AWS customer account associated with the RDS event notification subscription"
+  value       = aws_db_event_subscription.aws_db_event_subscription.customer_aws_id
+}
+output "id" {
+  description = "The name of the RDS event notification subscription"
+  value       = aws_db_event_subscription.aws_db_event_subscription.id
+}
+output "source_type" {
+  description = "(Optional) The type of source that will be generating the events. Valid options are db-instance, db-security-group, db-parameter-group, db-snapshot, db-cluster or db-cluster-snapshot. If not set, all sources will be subscribed to."
+  value       = aws_db_event_subscription.aws_db_event_subscription.source_type
+}
+output "delete" {
   description = "(Default 40m)"
-  value       = aws_db_event_subscription.aws_db_event_subscription.create
+  value       = aws_db_event_subscription.aws_db_event_subscription.delete
+}
+output "name_prefix" {
+  description = "(Optional) The name of the DB event subscription. Conflicts with name."
+  value       = aws_db_event_subscription.aws_db_event_subscription.name_prefix
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_db_event_subscription.aws_db_event_subscription.tags
 }
 output "arn" {
   description = "The Amazon Resource Name of the RDS event notification subscription"
   value       = aws_db_event_subscription.aws_db_event_subscription.arn
 }
-output "customer_aws_id" {
-  description = "The AWS customer account associated with the RDS event notification subscription"
-  value       = aws_db_event_subscription.aws_db_event_subscription.customer_aws_id
+output "create" {
+  description = "(Default 40m)"
+  value       = aws_db_event_subscription.aws_db_event_subscription.create
+}
+output "enabled" {
+  description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
+  value       = aws_db_event_subscription.aws_db_event_subscription.enabled
 }
 output "event_categories" {
   description = "(Optional) A list of event categories for a SourceType that you want to subscribe to. See http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html or run aws rds describe-event-categories."
@@ -221,26 +245,6 @@ output "name" {
   description = "(Optional) The name of the DB event subscription. By default generated by Terraform."
   value       = aws_db_event_subscription.aws_db_event_subscription.name
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_db_event_subscription.aws_db_event_subscription.tags
-}
-output "delete" {
-  description = "(Default 40m)"
-  value       = aws_db_event_subscription.aws_db_event_subscription.delete
-}
-output "enabled" {
-  description = "(Optional) A boolean flag to enable/disable the subscription. Defaults to true."
-  value       = aws_db_event_subscription.aws_db_event_subscription.enabled
-}
-output "id" {
-  description = "The name of the RDS event notification subscription"
-  value       = aws_db_event_subscription.aws_db_event_subscription.id
-}
-output "name_prefix" {
-  description = "(Optional) The name of the DB event subscription. Conflicts with name."
-  value       = aws_db_event_subscription.aws_db_event_subscription.name_prefix
-}
 output "sns_topic" {
   description = "(Required) The SNS topic to send events to."
   value       = aws_db_event_subscription.aws_db_event_subscription.sns_topic
@@ -249,13 +253,13 @@ output "source_ids" {
   description = "(Optional) A list of identifiers of the event sources for which events will be returned. If not specified, then all sources are included in the response. If specified, a source_type must also be specified."
   value       = aws_db_event_subscription.aws_db_event_subscription.source_ids
 }
-output "source_type" {
-  description = "(Optional) The type of source that will be generating the events. Valid options are db-instance, db-security-group, db-parameter-group, db-snapshot, db-cluster or db-cluster-snapshot. If not set, all sources will be subscribed to."
-  value       = aws_db_event_subscription.aws_db_event_subscription.source_type
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_db_event_subscription.aws_db_event_subscription.tags_all
+}
+output "delete" {
+  description = "(Default 40m)"
+  value       = aws_db_event_subscription.aws_db_event_subscription.delete
 }
 output "id" {
   description = "The name of the RDS event notification subscription"
@@ -280,10 +284,6 @@ output "create" {
 output "customer_aws_id" {
   description = "The AWS customer account associated with the RDS event notification subscription"
   value       = aws_db_event_subscription.aws_db_event_subscription.customer_aws_id
-}
-output "delete" {
-  description = "(Default 40m)"
-  value       = aws_db_event_subscription.aws_db_event_subscription.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

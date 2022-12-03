@@ -1,4 +1,5 @@
 datasource "aws_rds_reserved_instance_offering" "aws_rds_reserved_instance_offering" {
+  currency_code       = var.currency_code
   db_instance_class   = var.db_instance_class
   duration            = var.duration
   fixed_price         = var.fixed_price
@@ -6,10 +7,21 @@ datasource "aws_rds_reserved_instance_offering" "aws_rds_reserved_instance_offer
   multi_az            = var.multi_az
   offering_type       = var.offering_type
   product_description = var.product_description
-  currency_code       = var.currency_code
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "currency_code" {
+  description = "Currency code for the reserved DB instance."
+  type        = string
+}
+variable "db_instance_class" {
+  description = "(Required) DB instance class for the reserved DB instance."
+  type        = string
+}
+variable "duration" {
+  description = "(Required) Duration of the reservation in seconds."
   type        = string
 }
 variable "fixed_price" {
@@ -31,22 +43,6 @@ variable "offering_type" {
 variable "product_description" {
   description = "(Required) Description of the reserved DB instance.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "currency_code" {
-  description = "Currency code for the reserved DB instance."
-  type        = string
-}
-variable "db_instance_class" {
-  description = "(Required) DB instance class for the reserved DB instance."
-  type        = string
-}
-variable "duration" {
-  description = "(Required) Duration of the reservation in seconds."
-  type        = string
-}
-output "id" {
-  description = "Unique identifier for the reservation. Same as offering_id."
-  value       = aws_rds_reserved_instance_offering.aws_rds_reserved_instance_offering.id
 }
 output "multi_az" {
   description = "(Required) Whether the reservation applies to Multi-AZ deployments."
@@ -75,6 +71,10 @@ output "duration" {
 output "fixed_price" {
   description = "Fixed price charged for this reserved DB instance."
   value       = aws_rds_reserved_instance_offering.aws_rds_reserved_instance_offering.fixed_price
+}
+output "id" {
+  description = "Unique identifier for the reservation. Same as offering_id."
+  value       = aws_rds_reserved_instance_offering.aws_rds_reserved_instance_offering.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

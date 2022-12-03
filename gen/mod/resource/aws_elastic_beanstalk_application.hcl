@@ -1,5 +1,4 @@
 resource "aws_elastic_beanstalk_application" "aws_elastic_beanstalk_application" {
-  delete_source_from_s3 = var.delete_source_from_s3
   description           = var.description
   max_age_in_days       = var.max_age_in_days
   max_count             = var.max_count
@@ -7,13 +6,10 @@ resource "aws_elastic_beanstalk_application" "aws_elastic_beanstalk_application"
   service_role          = var.service_role
   tags                  = var.tags
   arn                   = var.arn
+  delete_source_from_s3 = var.delete_source_from_s3
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the application, must be unique within your account"
   type        = string
 }
 variable "service_role" {
@@ -48,6 +44,10 @@ variable "max_count" {
   description = "(Optional) The maximum number of application versions to retain ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
   type        = string
   default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the application, must be unique within your account"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -169,10 +169,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name of the application, must be unique within your account"
-  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.name
-}
 output "service_role" {
   description = "(Required) The ARN of an IAM service role under which the application version is deleted.  Elastic Beanstalk must have permission to assume this role."
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.service_role
@@ -200,6 +196,10 @@ output "max_age_in_days" {
 output "max_count" {
   description = "(Optional) The maximum number of application versions to retain ('max_age_in_days' and 'max_count' cannot be enabled simultaneously.)."
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.max_count
+}
+output "name" {
+  description = "(Required) The name of the application, must be unique within your account"
+  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.name
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."

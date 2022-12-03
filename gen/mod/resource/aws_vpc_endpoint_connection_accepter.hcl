@@ -1,10 +1,14 @@
 resource "aws_vpc_endpoint_connection_accepter" "aws_vpc_endpoint_connection_accepter" {
-  id                      = var.id
   vpc_endpoint_id         = var.vpc_endpoint_id
   vpc_endpoint_service_id = var.vpc_endpoint_service_id
+  id                      = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the VPC Endpoint Connection."
   type        = string
 }
 variable "vpc_endpoint_id" {
@@ -13,10 +17,6 @@ variable "vpc_endpoint_id" {
 }
 variable "vpc_endpoint_service_id" {
   description = "(Required) AWS VPC Endpoint Service ID.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "id" {
-  description = "The ID of the VPC Endpoint Connection."
   type        = string
 }
 variable "tag_instance_id" {

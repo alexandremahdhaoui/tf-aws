@@ -1,19 +1,11 @@
 resource "aws_iam_signing_certificate" "aws_iam_signing_certificate" {
+  certificate_body = var.certificate_body
   certificate_id   = var.certificate_id
   status           = var.status
   user_name        = var.user_name
-  certificate_body = var.certificate_body
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "certificate_body" {
-  description = " – (Required) The contents of the signing certificate in PEM-encoded format."
-  type        = string
-}
-variable "certificate_id" {
-  description = "The ID for the signing certificate."
   type        = string
 }
 variable "status" {
@@ -23,6 +15,14 @@ variable "status" {
 }
 variable "user_name" {
   description = " – (Required) The name of the user the signing certificate is for.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "certificate_body" {
+  description = " – (Required) The contents of the signing certificate in PEM-encoded format."
+  type        = string
+}
+variable "certificate_id" {
+  description = "The ID for the signing certificate."
   type        = string
 }
 variable "tag_instance_id" {
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "user_name" {
+  description = " – (Required) The name of the user the signing certificate is for.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_iam_signing_certificate.aws_iam_signing_certificate.user_name
+}
 output "certificate_body" {
   description = " – (Required) The contents of the signing certificate in PEM-encoded format."
   value       = aws_iam_signing_certificate.aws_iam_signing_certificate.certificate_body
@@ -157,17 +161,13 @@ output "status" {
   description = " – (Optional)  The status you want to assign to the certificate. Active means that the certificate can be used for programmatic calls to Amazon Web Services Inactive means that the certificate cannot be used."
   value       = aws_iam_signing_certificate.aws_iam_signing_certificate.status
 }
-output "user_name" {
-  description = " – (Required) The name of the user the signing certificate is for.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_iam_signing_certificate.aws_iam_signing_certificate.user_name
+output "certificate_id" {
+  description = "The ID for the signing certificate."
+  value       = aws_iam_signing_certificate.aws_iam_signing_certificate.certificate_id
 }
 output "id" {
   description = "The certificate_id:user_name"
   value       = aws_iam_signing_certificate.aws_iam_signing_certificate.id
-}
-output "certificate_id" {
-  description = "The ID for the signing certificate."
-  value       = aws_iam_signing_certificate.aws_iam_signing_certificate.certificate_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

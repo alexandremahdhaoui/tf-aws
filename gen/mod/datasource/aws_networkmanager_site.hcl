@@ -4,14 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "location" {
-  description = "Site location as documented below."
-  value       = aws_networkmanager_site.aws_networkmanager_site.location
-}
-output "tags" {
-  description = "Key-value tags for the Site.The location object supports the following:"
-  value       = aws_networkmanager_site.aws_networkmanager_site.tags
-}
 output "address" {
   description = "Address of the location."
   value       = aws_networkmanager_site.aws_networkmanager_site.address
@@ -27,6 +19,14 @@ output "description" {
 output "latitude" {
   description = "Latitude of the location."
   value       = aws_networkmanager_site.aws_networkmanager_site.latitude
+}
+output "location" {
+  description = "Site location as documented below."
+  value       = aws_networkmanager_site.aws_networkmanager_site.location
+}
+output "tags" {
+  description = "Key-value tags for the Site.The location object supports the following:"
+  value       = aws_networkmanager_site.aws_networkmanager_site.tags
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

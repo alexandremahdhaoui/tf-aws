@@ -11,7 +11,10 @@ spec:
             description: (Required) The S3 Bucket ARN.
             type: string
         cloudwatch_logging_options:
-            description: CloudWatch Logging Options below for more details.
+            description: |-
+                (Optional) The CloudWatch log stream options to monitor application errors.
+                See CloudWatch Logging Options below for more details.
+            optional: true
             type: string
         count:
             description: '(Required) The Count of streams.Processing ConfigurationThe Processing Configuration to transform records as they are received from the stream.The processing_configuration block supports the following:'
@@ -20,7 +23,10 @@ spec:
             description: The Timestamp when the application version was created.
             type: string
         csv:
-            description: CSV Mapping Parameters below for more details.
+            description: |-
+                (Optional) Mapping information when the record format uses delimiters.
+                See CSV Mapping Parameters below for more details.
+            optional: true
             type: string
         description:
             description: (Optional) Description of the application.
@@ -37,7 +43,10 @@ spec:
             optional: true
             type: string
         json:
-            description: 'JSON Mapping Parameters below for more details.CSV Mapping ParametersMapping information when the record format uses delimiters.The csv block supports the following:'
+            description: |-
+                (Optional) Mapping information when JSON is the record format on the streaming source.
+                See JSON Mapping Parameters below for more details.CSV Mapping ParametersMapping information when the record format uses delimiters.The csv block supports the following:
+            optional: true
             type: string
         kinesis_firehose:
             description: (Optional) The Kinesis Firehose configuration for the destination stream. Conflicts with kinesis_streamKinesis Firehose below for more details.
@@ -61,7 +70,10 @@ spec:
             optional: true
             type: string
         mapping_parameters:
-            description: 'Mapping Parameters below for more details.Mapping ParametersProvides Mapping information specific to the record format on the streaming source.The mapping_parameters block supports the following:'
+            description: |-
+                (Optional) The Mapping Information for the record format.
+                See Mapping Parameters below for more details.Mapping ParametersProvides Mapping information specific to the record format on the streaming source.The mapping_parameters block supports the following:
+            optional: true
             type: string
         name:
             description: (Required) Name of the column.
@@ -74,23 +86,33 @@ spec:
             optional: true
             type: string
         parallelism:
-            description: Parallelism below for more details.
+            description: |-
+                (Optional) The number of Parallel in-application streams to create.
+                See Parallelism below for more details.
+            optional: true
             type: string
         processing_configuration:
-            description: Processing Configuration below for more details.
+            description: |-
+                (Optional) The Processing Configuration to transform records as they are received from the stream.
+                See Processing Configuration below for more details.
+            optional: true
             type: string
         record_column_delimiter:
             description: (Required) The Column Delimiter.
             type: string
         record_columns:
-            description: Record Columns below for more details.
+            description: |-
+                (Required) The Record Column mapping for the streaming source data element.
+                See Record Columns below for more details.
             type: string
         record_encoding:
             description: '(Optional) The Encoding of the record in the streaming source.ParallelismConfigures the number of Parallel in-application streams to create.The parallelism block supports the following:'
             optional: true
             type: string
         record_format:
-            description: Record Format below for more details.
+            description: |-
+                (Required) The Record Format and mapping information to schematize a record.
+                See Record Format below for more details.
             type: string
         record_format_type:
             description: (Required) The type of Record Format. Can be CSV or JSON.
@@ -102,10 +124,7 @@ spec:
             description: '(Required) Path to the top-level parent that contains the records.S3 ReferenceIdentifies the S3 bucket and object that contains the reference data.The s3 blcok supports the following:'
             type: string
         reference_data_sources:
-            description: |-
-                (Optional) An S3 Reference Data Source for the application.
-                See Reference Data Sources below for more details.
-            optional: true
+            description: Reference Data Sources below for more details.
             type: string
         resource_arn:
             description: (Required) The ARN of the Lambda function.

@@ -1,15 +1,28 @@
 resource "aws_customer_gateway" "aws_customer_gateway" {
+  arn             = var.arn
+  bgp_asn         = var.bgp_asn
   certificate_arn = var.certificate_arn
   device_name     = var.device_name
   id              = var.id
   ip_address      = var.ip_address
   tags            = var.tags
   type            = var.type
-  arn             = var.arn
-  bgp_asn         = var.bgp_asn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = ""
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the customer gateway."
   type        = string
 }
 variable "bgp_asn" {
@@ -32,19 +45,6 @@ variable "id" {
 }
 variable "ip_address" {
   description = "(Required) The IPv4 address for the customer gateway device's outside interface."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Tags to apply to the gateway. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Required) The type of customer gateway. The only type AWS\nsupports at this time is \"ipsec.1\"."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the customer gateway."
   type        = string
 }
 variable "tag_instance_id" {
@@ -180,7 +180,7 @@ output "tags" {
   value       = aws_customer_gateway.aws_customer_gateway.tags
 }
 output "type" {
-  description = "(Required) The type of customer gateway. The only type AWS\nsupports at this time is \"ipsec.1\"."
+  description = ""
   value       = aws_customer_gateway.aws_customer_gateway.type
 }
 output "arn" {

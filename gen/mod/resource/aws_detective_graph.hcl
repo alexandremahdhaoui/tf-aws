@@ -1,12 +1,17 @@
 resource "aws_detective_graph" "aws_detective_graph" {
+  tags         = var.tags
   created_time = var.created_time
   graph_arn    = var.graph_arn
   id           = var.id
-  tags         = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = " (Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."
@@ -20,11 +25,6 @@ variable "graph_arn" {
 }
 variable "id" {
   description = "ARN of the Detective Graph."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = " (Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -148,10 +148,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "created_time" {
-  description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."
-  value       = aws_detective_graph.aws_detective_graph.created_time
-}
 output "graph_arn" {
   description = "ARN of the Detective Graph."
   value       = aws_detective_graph.aws_detective_graph.graph_arn
@@ -163,6 +159,10 @@ output "id" {
 output "tags" {
   description = " (Optional) A map of tags to assign to the instance. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_detective_graph.aws_detective_graph.tags
+}
+output "created_time" {
+  description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."
+  value       = aws_detective_graph.aws_detective_graph.created_time
 }
 output "created_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when the Amazon Detective Graph was created."

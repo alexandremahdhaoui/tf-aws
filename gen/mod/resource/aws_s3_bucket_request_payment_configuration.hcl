@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  type        = string
-}
 variable "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner."
   type        = string
 }
 variable "payer" {
   description = "(Required) Specifies who pays for the download and request fees. Valid values: BucketOwner, Requester.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
   type        = string
 }
 variable "tag_instance_id" {

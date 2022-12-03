@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "available_providers" {
+  description = "Names of the service providers for the location."
+  value       = aws_dx_location.aws_dx_location.available_providers
+}
 output "available_macsec_port_speeds" {
   description = "The available MAC Security (MACsec) port speeds for the location."
   value       = aws_dx_location.aws_dx_location.available_macsec_port_speeds
@@ -11,10 +15,6 @@ output "available_macsec_port_speeds" {
 output "available_port_speeds" {
   description = "The available port speeds for the location."
   value       = aws_dx_location.aws_dx_location.available_port_speeds
-}
-output "available_providers" {
-  description = "Names of the service providers for the location."
-  value       = aws_dx_location.aws_dx_location.available_providers
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

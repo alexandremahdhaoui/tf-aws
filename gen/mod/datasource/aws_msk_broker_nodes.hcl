@@ -39,14 +39,6 @@ variable "client_subnet" {
   description = "Client subnet to which this broker node belongs"
   type        = string
 }
-output "broker_id" {
-  description = "ID of the broker"
-  value       = aws_msk_broker_nodes.aws_msk_broker_nodes.broker_id
-}
-output "client_subnet" {
-  description = "Client subnet to which this broker node belongs"
-  value       = aws_msk_broker_nodes.aws_msk_broker_nodes.client_subnet
-}
 output "client_vpc_ip_address" {
   description = "The client virtual private cloud (VPC) IP address"
   value       = aws_msk_broker_nodes.aws_msk_broker_nodes.client_vpc_ip_address
@@ -66,6 +58,14 @@ output "node_info_list" {
 output "attached_eni_id" {
   description = "Attached elastic network interface of the broker"
   value       = aws_msk_broker_nodes.aws_msk_broker_nodes.attached_eni_id
+}
+output "broker_id" {
+  description = "ID of the broker"
+  value       = aws_msk_broker_nodes.aws_msk_broker_nodes.broker_id
+}
+output "client_subnet" {
+  description = "Client subnet to which this broker node belongs"
+  value       = aws_msk_broker_nodes.aws_msk_broker_nodes.client_subnet
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -8,13 +8,17 @@ spec:
             description: The status of the VPC Peering Connection request.
             type: string
         accepter:
-            description: ""
+            description: |-
+                A configuration block that describes [VPC Peering Connection]
+                (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC.
             type: string
         allow_classic_link_to_remote_vpc:
             description: ""
             type: string
         allow_remote_vpc_dns_resolution:
-            description: ""
+            description: |-
+                Indicates whether a local VPC can resolve public DNS hostnames to
+                private IP addresses when queried from instances in a peer VPC.
             type: string
         auto_accept:
             description: (Optional) Whether or not to accept the peering request. Defaults to false.
@@ -33,7 +37,9 @@ spec:
             description: The ID of the requester VPC.
             type: string
         requester:
-            description: ""
+            description: |-
+                A configuration block that describes [VPC Peering Connection]
+                (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC.
             type: string
         tags:
             description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Removing aws_vpc_peering_connection_accepter from your configurationaws_vpc_peering_connectionaws_vpc_peering_connection_accepterstrongbut will not destroy the VPC Peering Connection.In addition to all arguments above, the following attributes are exported:'
@@ -53,16 +59,22 @@ spec:
             description: The status of the VPC Peering Connection request.
             type: string
         accepter:
-            description: ""
+            description: |-
+                A configuration block that describes [VPC Peering Connection]
+                (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the accepter VPC.
             type: string
         allow_classic_link_to_remote_vpc:
             description: ""
             type: string
         allow_remote_vpc_dns_resolution:
-            description: ""
+            description: |-
+                Indicates whether a local VPC can resolve public DNS hostnames to
+                private IP addresses when queried from instances in a peer VPC.
             type: string
         allow_vpc_to_remote_classic_link:
-            description: ""
+            description: |-
+                Indicates whether a local VPC can communicate with a ClassicLink
+                connection in the peer VPC over the VPC Peering Connection.
             type: string
         id:
             description: The ID of the VPC Peering Connection.
@@ -77,7 +89,9 @@ spec:
             description: The ID of the requester VPC.
             type: string
         requester:
-            description: ""
+            description: |-
+                A configuration block that describes [VPC Peering Connection]
+                (https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html) options set for the requester VPC.
             type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Accepter and Requester Attributes Reference

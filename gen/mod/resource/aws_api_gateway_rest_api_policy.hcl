@@ -1,6 +1,6 @@
 resource "aws_api_gateway_rest_api_policy" "aws_api_gateway_rest_api_policy" {
-  policy      = var.policy
   rest_api_id = var.rest_api_id
+  policy      = var.policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

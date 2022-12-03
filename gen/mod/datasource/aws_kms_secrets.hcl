@@ -1,9 +1,9 @@
 datasource "aws_kms_secrets" "aws_kms_secrets" {
+  context      = var.context
   grant_tokens = var.grant_tokens
   name         = var.name
   payload      = var.payload
   secret       = var.secret
-  context      = var.context
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -31,6 +31,14 @@ variable "secret" {
   description = "(Required) One or more encrypted payload definitions from the KMS service. See the Secret Definitions below.Secret DefinitionsEach secret supports the following arguments:"
   type        = string
 }
+output "payload" {
+  description = "(Required) Base64 encoded payload, as returned from a KMS encrypt operation."
+  value       = aws_kms_secrets.aws_kms_secrets.payload
+}
+output "secret" {
+  description = "(Required) One or more encrypted payload definitions from the KMS service. See the Secret Definitions below.Secret DefinitionsEach secret supports the following arguments:"
+  value       = aws_kms_secrets.aws_kms_secrets.secret
+}
 output "context" {
   description = "(Optional) An optional mapping that makes up the Encryption Context for the secret."
   value       = aws_kms_secrets.aws_kms_secrets.context
@@ -42,14 +50,6 @@ output "grant_tokens" {
 output "name" {
   description = "(Required) Name to export this secret under in the attributes."
   value       = aws_kms_secrets.aws_kms_secrets.name
-}
-output "payload" {
-  description = "(Required) Base64 encoded payload, as returned from a KMS encrypt operation."
-  value       = aws_kms_secrets.aws_kms_secrets.payload
-}
-output "secret" {
-  description = "(Required) One or more encrypted payload definitions from the KMS service. See the Secret Definitions below.Secret DefinitionsEach secret supports the following arguments:"
-  value       = aws_kms_secrets.aws_kms_secrets.secret
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

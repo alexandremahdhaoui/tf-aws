@@ -1,4 +1,4 @@
-datasource "aws_Create elasticache_subnet_group" "aws_Create elasticache_subnet_group" {
+datasource "aws_create_elasticache_subnet_group" "aws_create_elasticache_subnet_group" {
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

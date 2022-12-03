@@ -1,28 +1,15 @@
 resource "aws_api_gateway_client_certificate" "aws_api_gateway_client_certificate" {
-  tags                    = var.tags
-  arn                     = var.arn
   created_date            = var.created_date
   description             = var.description
   expiration_date         = var.expiration_date
   id                      = var.id
   pem_encoded_certificate = var.pem_encoded_certificate
+  tags                    = var.tags
+  arn                     = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "arn" {
-  description = "ARN"
-  type        = string
-}
-variable "created_date" {
-  description = "Date when the client certificate was created."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the client certificate."
-  type        = string
-  default     = ""
 }
 variable "expiration_date" {
   description = "Date when the client certificate will expire."
@@ -38,6 +25,19 @@ variable "pem_encoded_certificate" {
 }
 variable "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN"
+  type        = string
+}
+variable "created_date" {
+  description = "Date when the client certificate was created."
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the client certificate."
   type        = string
   default     = ""
 }
@@ -189,14 +189,6 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.tags
 }
-output "pem_encoded_certificate" {
-  description = "The PEM-encoded public key of the client certificate."
-  value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.pem_encoded_certificate
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.tags_all
-}
 output "arn" {
   description = "ARN"
   value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.arn
@@ -212,6 +204,14 @@ output "expiration_date" {
 output "id" {
   description = "Identifier of the client certificate."
   value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.id
+}
+output "pem_encoded_certificate" {
+  description = "The PEM-encoded public key of the client certificate."
+  value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.pem_encoded_certificate
+}
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_api_gateway_client_certificate.aws_api_gateway_client_certificate.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

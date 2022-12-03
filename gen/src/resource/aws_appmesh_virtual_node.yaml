@@ -125,7 +125,9 @@ spec:
             description: '(Required) Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster. Minimum value of 1.The health_check object supports the following:'
             type: string
         max_ejection_percent:
-            description: 0. Maximum value of 100.
+            description: |-
+                (Required) Maximum percentage of hosts in load balancing pool for upstream service that can be ejected. Will eject at least one host regardless of the value.
+                Minimum value of 0. Maximum value of 100.
             type: string
         max_pending_requests:
             description: '(Optional) Number of overflowing requests after max_connections Envoy will queue to upstream cluster. Minimum value of 1.The http2 connection pool object supports the following:'
@@ -151,9 +153,7 @@ spec:
             description: (Required) Name to use for the virtual node. Must be between 1 and 255 characters in length.
             type: string
         namespace_name:
-            description: |-
-                (Required) Name of the AWS Cloud Map namespace to use.
-                Use the aws_service_discovery_http_namespace resource to configure a Cloud Map namespace. Must be between 1 and 1024 characters in length.
+            description: aws_service_discovery_http_namespace resource to configure a Cloud Map namespace. Must be between 1 and 1024 characters in length.
             type: string
         outlier_detection:
             description: (Optional) Outlier detection information for the listener.

@@ -1,110 +1,62 @@
 resource "aws_keyspaces_table" "aws_keyspaces_table" {
-  comment                  = var.comment
-  keyspace_name            = var.keyspace_name
-  name                     = var.name
-  order_by                 = var.order_by
-  point_in_time_recovery   = var.point_in_time_recovery
-  read_capacity_units      = var.read_capacity_units
-  capacity_specification   = var.capacity_specification
-  column                   = var.column
   delete                   = var.delete
-  schema_definition        = var.schema_definition
-  tags                     = var.tags
-  tags_all                 = var.tags_all
-  create                   = var.create
   encryption_specification = var.encryption_specification
-  kms_key_identifier       = var.kms_key_identifier
-  partition_key            = var.partition_key
-  status                   = var.status
+  order_by                 = var.order_by
+  read_capacity_units      = var.read_capacity_units
+  schema_definition        = var.schema_definition
   static_column            = var.static_column
-  table_name               = var.table_name
-  clustering_key           = var.clustering_key
-  throughput_mode          = var.throughput_mode
   type                     = var.type
+  update                   = var.update
+  capacity_specification   = var.capacity_specification
+  tags                     = var.tags
+  throughput_mode          = var.throughput_mode
+  write_capacity_units     = var.write_capacity_units
+  kms_key_identifier       = var.kms_key_identifier
+  status                   = var.status
+  keyspace_name            = var.keyspace_name
+  point_in_time_recovery   = var.point_in_time_recovery
+  clustering_key           = var.clustering_key
+  column                   = var.column
+  partition_key            = var.partition_key
+  arn                      = var.arn
   default_time_to_live     = var.default_time_to_live
   message                  = var.message
+  table_name               = var.table_name
+  tags_all                 = var.tags_all
   ttl                      = var.ttl
-  write_capacity_units     = var.write_capacity_units
-  arn                      = var.arn
-  update                   = var.update
+  comment                  = var.comment
+  create                   = var.create
+  name                     = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "capacity_specification" {
-  description = "(Optional) Specifies the read/write throughput capacity mode for the table."
+variable "keyspace_name" {
+  description = "(Required) The name of the keyspace that the table is going to be created in."
+  type        = string
+}
+variable "point_in_time_recovery" {
+  description = "(Optional) Specifies if point-in-time recovery is enabled or disabled for the table. More information can be found in the Developer Guide."
   type        = string
   default     = ""
-}
-variable "column" {
-  description = "(Required) The regular columns of the table."
-  type        = string
-}
-variable "delete" {
-  description = "(Default 10m)"
-  type        = string
-  default     = ""
-}
-variable "schema_definition" {
-  description = "(Optional) Describes the schema of the table."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-  default     = ""
-}
-variable "encryption_specification" {
-  description = "(Optional) Specifies how the encryption key for encryption at rest is managed for the table. More information can be found in the Developer Guide."
-  type        = string
-  default     = ""
-}
-variable "kms_key_identifier" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the customer managed KMS key."
-  type        = string
-  default     = ""
-}
-variable "partition_key" {
-  description = "(Required) The columns that are part of the partition key of the table ."
-  type        = string
-}
-variable "status" {
-  description = "(Optional) Valid values: ENABLED.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "static_column" {
-  description = "(Required) The columns that have been defined as STATIC. Static columns store values that are shared by all rows in the same partition.The column object takes the following arguments:"
-  type        = string
-}
-variable "table_name" {
-  description = "(Required) The name of the table."
-  type        = string
 }
 variable "clustering_key" {
   description = "(Required) The columns that are part of the clustering key of the table."
   type        = string
 }
-variable "throughput_mode" {
-  description = "(Optional) The read/write throughput capacity mode for a table. Valid values: PAY_PER_REQUEST, PROVISIONED. The default value is PAY_PER_REQUEST."
+variable "column" {
+  description = "(Required) The regular columns of the table."
+  type        = string
+}
+variable "partition_key" {
+  description = "(Required) The columns that are part of the partition key of the table ."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the table."
   type        = string
   default     = ""
-}
-variable "type" {
-  description = "(Required) The data type of the column. See the Developer Guide for a list of available data types.The partition_key object takes the following arguments:"
-  type        = string
 }
 variable "default_time_to_live" {
   description = "(Optional) The default Time to Live setting in seconds for the table. More information can be found in the Developer Guide."
@@ -115,23 +67,17 @@ variable "message" {
   description = "(Required) A description of the table.The encryption_specification object takes the following arguments:"
   type        = string
 }
+variable "table_name" {
+  description = "(Required) The name of the table."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
+}
 variable "ttl" {
   description = "(Optional) Enables Time to Live custom settings for the table. More information can be found in the Developer Guide.The capacity_specification object takes the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "write_capacity_units" {
-  description = "(Optional) The throughput capacity specified for write operations defined in write capacity units (WCUs).The comment object takes the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the table."
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 30m)"
   type        = string
   default     = ""
 }
@@ -140,25 +86,79 @@ variable "comment" {
   type        = string
   default     = ""
 }
-variable "keyspace_name" {
-  description = "(Required) The name of the keyspace that the table is going to be created in."
+variable "create" {
+  description = "(Default 10m)"
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the static column.The ttl object takes the following arguments:"
   type        = string
 }
+variable "delete" {
+  description = "(Default 10m)"
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 30m)"
+  type        = string
+  default     = ""
+}
+variable "encryption_specification" {
+  description = "(Optional) Specifies how the encryption key for encryption at rest is managed for the table. More information can be found in the Developer Guide."
+  type        = string
+  default     = ""
+}
 variable "order_by" {
   description = "(Required) The order modifier. Valid values: ASC, DESC.The static_column object takes the following arguments:"
   type        = string
 }
-variable "point_in_time_recovery" {
-  description = "(Optional) Specifies if point-in-time recovery is enabled or disabled for the table. More information can be found in the Developer Guide."
+variable "read_capacity_units" {
+  description = "(Optional) The throughput capacity specified for read operations defined in read capacity units (RCUs)."
   type        = string
   default     = ""
 }
-variable "read_capacity_units" {
-  description = "(Optional) The throughput capacity specified for read operations defined in read capacity units (RCUs)."
+variable "schema_definition" {
+  description = "(Optional) Describes the schema of the table."
+  type        = string
+  default     = ""
+}
+variable "static_column" {
+  description = "(Required) The columns that have been defined as STATIC. Static columns store values that are shared by all rows in the same partition.The column object takes the following arguments:"
+  type        = string
+}
+variable "type" {
+  description = "(Required) The data type of the column. See the Developer Guide for a list of available data types.The partition_key object takes the following arguments:"
+  type        = string
+}
+variable "capacity_specification" {
+  description = "(Optional) Specifies the read/write throughput capacity mode for the table."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "throughput_mode" {
+  description = "(Optional) The read/write throughput capacity mode for a table. Valid values: PAY_PER_REQUEST, PROVISIONED. The default value is PAY_PER_REQUEST."
+  type        = string
+  default     = ""
+}
+variable "write_capacity_units" {
+  description = "(Optional) The throughput capacity specified for write operations defined in write capacity units (WCUs).The comment object takes the following arguments:"
+  type        = string
+  default     = ""
+}
+variable "kms_key_identifier" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the customer managed KMS key."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "(Optional) Valid values: ENABLED.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -282,53 +282,81 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_keyspaces_table.aws_keyspaces_table.create
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_keyspaces_table.aws_keyspaces_table.update
 }
 output "encryption_specification" {
   description = "(Optional) Specifies how the encryption key for encryption at rest is managed for the table. More information can be found in the Developer Guide."
   value       = aws_keyspaces_table.aws_keyspaces_table.encryption_specification
 }
-output "status" {
-  description = "(Optional) Valid values: ENABLED.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_keyspaces_table.aws_keyspaces_table.status
+output "order_by" {
+  description = "(Required) The order modifier. Valid values: ASC, DESC.The static_column object takes the following arguments:"
+  value       = aws_keyspaces_table.aws_keyspaces_table.order_by
 }
-output "kms_key_identifier" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the customer managed KMS key."
-  value       = aws_keyspaces_table.aws_keyspaces_table.kms_key_identifier
+output "read_capacity_units" {
+  description = "(Optional) The throughput capacity specified for read operations defined in read capacity units (RCUs)."
+  value       = aws_keyspaces_table.aws_keyspaces_table.read_capacity_units
 }
-output "partition_key" {
-  description = "(Required) The columns that are part of the partition key of the table ."
-  value       = aws_keyspaces_table.aws_keyspaces_table.partition_key
+output "schema_definition" {
+  description = "(Optional) Describes the schema of the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.schema_definition
 }
 output "static_column" {
   description = "(Required) The columns that have been defined as STATIC. Static columns store values that are shared by all rows in the same partition.The column object takes the following arguments:"
   value       = aws_keyspaces_table.aws_keyspaces_table.static_column
 }
-output "table_name" {
-  description = "(Required) The name of the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.table_name
-}
 output "type" {
   description = "(Required) The data type of the column. See the Developer Guide for a list of available data types.The partition_key object takes the following arguments:"
   value       = aws_keyspaces_table.aws_keyspaces_table.type
 }
-output "clustering_key" {
-  description = "(Required) The columns that are part of the clustering key of the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.clustering_key
+output "capacity_specification" {
+  description = "(Optional) Specifies the read/write throughput capacity mode for the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.capacity_specification
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_keyspaces_table.aws_keyspaces_table.tags
 }
 output "throughput_mode" {
   description = "(Optional) The read/write throughput capacity mode for a table. Valid values: PAY_PER_REQUEST, PROVISIONED. The default value is PAY_PER_REQUEST."
   value       = aws_keyspaces_table.aws_keyspaces_table.throughput_mode
 }
-output "ttl" {
-  description = "(Optional) Enables Time to Live custom settings for the table. More information can be found in the Developer Guide.The capacity_specification object takes the following arguments:"
-  value       = aws_keyspaces_table.aws_keyspaces_table.ttl
-}
 output "write_capacity_units" {
   description = "(Optional) The throughput capacity specified for write operations defined in write capacity units (WCUs).The comment object takes the following arguments:"
   value       = aws_keyspaces_table.aws_keyspaces_table.write_capacity_units
+}
+output "kms_key_identifier" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the customer managed KMS key."
+  value       = aws_keyspaces_table.aws_keyspaces_table.kms_key_identifier
+}
+output "status" {
+  description = "(Optional) Valid values: ENABLED.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_keyspaces_table.aws_keyspaces_table.status
+}
+output "keyspace_name" {
+  description = "(Required) The name of the keyspace that the table is going to be created in."
+  value       = aws_keyspaces_table.aws_keyspaces_table.keyspace_name
+}
+output "point_in_time_recovery" {
+  description = "(Optional) Specifies if point-in-time recovery is enabled or disabled for the table. More information can be found in the Developer Guide."
+  value       = aws_keyspaces_table.aws_keyspaces_table.point_in_time_recovery
+}
+output "clustering_key" {
+  description = "(Required) The columns that are part of the clustering key of the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.clustering_key
+}
+output "column" {
+  description = "(Required) The regular columns of the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.column
+}
+output "partition_key" {
+  description = "(Required) The columns that are part of the partition key of the table ."
+  value       = aws_keyspaces_table.aws_keyspaces_table.partition_key
+}
+output "arn" {
+  description = "The ARN of the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.arn
 }
 output "default_time_to_live" {
   description = "(Optional) The default Time to Live setting in seconds for the table. More information can be found in the Developer Guide."
@@ -338,61 +366,33 @@ output "message" {
   description = "(Required) A description of the table.The encryption_specification object takes the following arguments:"
   value       = aws_keyspaces_table.aws_keyspaces_table.message
 }
-output "arn" {
-  description = "The ARN of the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.arn
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_keyspaces_table.aws_keyspaces_table.update
-}
-output "name" {
-  description = "(Required) The name of the static column.The ttl object takes the following arguments:"
-  value       = aws_keyspaces_table.aws_keyspaces_table.name
-}
-output "order_by" {
-  description = "(Required) The order modifier. Valid values: ASC, DESC.The static_column object takes the following arguments:"
-  value       = aws_keyspaces_table.aws_keyspaces_table.order_by
-}
-output "point_in_time_recovery" {
-  description = "(Optional) Specifies if point-in-time recovery is enabled or disabled for the table. More information can be found in the Developer Guide."
-  value       = aws_keyspaces_table.aws_keyspaces_table.point_in_time_recovery
-}
-output "read_capacity_units" {
-  description = "(Optional) The throughput capacity specified for read operations defined in read capacity units (RCUs)."
-  value       = aws_keyspaces_table.aws_keyspaces_table.read_capacity_units
-}
-output "comment" {
-  description = "(Optional) A description of the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.comment
-}
-output "keyspace_name" {
-  description = "(Required) The name of the keyspace that the table is going to be created in."
-  value       = aws_keyspaces_table.aws_keyspaces_table.keyspace_name
-}
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_keyspaces_table.aws_keyspaces_table.delete
-}
-output "schema_definition" {
-  description = "(Optional) Describes the schema of the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.schema_definition
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_keyspaces_table.aws_keyspaces_table.tags
+output "table_name" {
+  description = "(Required) The name of the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.table_name
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_keyspaces_table.aws_keyspaces_table.tags_all
 }
-output "capacity_specification" {
-  description = "(Optional) Specifies the read/write throughput capacity mode for the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.capacity_specification
+output "ttl" {
+  description = "(Optional) Enables Time to Live custom settings for the table. More information can be found in the Developer Guide.The capacity_specification object takes the following arguments:"
+  value       = aws_keyspaces_table.aws_keyspaces_table.ttl
 }
-output "column" {
-  description = "(Required) The regular columns of the table."
-  value       = aws_keyspaces_table.aws_keyspaces_table.column
+output "comment" {
+  description = "(Optional) A description of the table."
+  value       = aws_keyspaces_table.aws_keyspaces_table.comment
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_keyspaces_table.aws_keyspaces_table.create
+}
+output "name" {
+  description = "(Required) The name of the static column.The ttl object takes the following arguments:"
+  value       = aws_keyspaces_table.aws_keyspaces_table.name
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_keyspaces_table.aws_keyspaces_table.delete
 }
 output "arn" {
   description = "The ARN of the table."

@@ -3,32 +3,52 @@ resource "aws_kms_replica_external_key" "aws_kms_replica_external_key" {
   deletion_window_in_days            = var.deletion_window_in_days
   enabled                            = var.enabled
   key_id                             = var.key_id
-  tags                               = var.tags
   valid_to                           = var.valid_to
-  expiration_model                   = var.expiration_model
-  key_state                          = var.key_state
-  key_usage                          = var.key_usage
-  primary_key_arn                    = var.primary_key_arn
-  arn                                = var.arn
   description                        = var.description
-  policy                             = var.policy
   key_material_base64                = var.key_material_base64
+  key_state                          = var.key_state
+  tags                               = var.tags
+  arn                                = var.arn
+  expiration_model                   = var.expiration_model
+  key_usage                          = var.key_usage
+  policy                             = var.policy
+  primary_key_arn                    = var.primary_key_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "expiration_model" {
-  description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
+variable "key_material_base64" {
+  description = "(Optional) Base64 encoded 256-bit symmetric encryption key material to import. The KMS key is permanently associated with this key material. The same key material can be reimported, but you cannot import different key material."
   type        = string
+  default     = ""
 }
 variable "key_state" {
   description = "The state of the replica key."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the replica key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "(Optional) A description of the KMS key."
+  type        = string
+  default     = ""
+}
+variable "expiration_model" {
+  description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
+  type        = string
+}
 variable "key_usage" {
   description = "The cryptographic operations for which you can use the KMS key. This is a shared property of multi-Region keys."
   type        = string
+}
+variable "policy" {
+  description = "(Optional) The key policy to attach to the KMS key. If you do not specify a key policy, AWS KMS attaches the default key policyAWS IAM Policy Document Guide."
+  type        = string
+  default     = ""
 }
 variable "primary_key_arn" {
   description = "(Required) The ARN of the multi-Region primary key to replicate. The primary key must be in a different AWS Region of the same AWS Partition. You can create only one replica of a given primary key in each AWS Region."
@@ -38,38 +58,8 @@ variable "arn" {
   description = "The Amazon Resource Name (ARN) of the replica key. The key ARNs of related multi-Region keys differ only in the Region value."
   type        = string
 }
-variable "description" {
-  description = "(Optional) A description of the KMS key."
-  type        = string
-  default     = ""
-}
-variable "policy" {
-  description = "(Optional) The key policy to attach to the KMS key. If you do not specify a key policy, AWS KMS attaches the default key policyAWS IAM Policy Document Guide."
-  type        = string
-  default     = ""
-}
-variable "key_material_base64" {
-  description = "(Optional) Base64 encoded 256-bit symmetric encryption key material to import. The KMS key is permanently associated with this key material. The same key material can be reimported, but you cannot import different key material."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the replica key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "valid_to" {
-  description = "(Optional) Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the key becomes unusable. If not specified, key material does not expire. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "bypass_policy_lockout_safety_check" {
   description = "(Optional) A flag to indicate whether to bypass the key policy lockout safety check.\nSetting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.\nFor more information, refer to the scenario in the Default Key Policy section in the emAWS Key Management Service Developer Guidefalse."
-  type        = string
-  default     = ""
-}
-variable "deletion_window_in_days" {
-  description = "(Optional) The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key.\nIf you specify a value, it must be between 7 and 30, inclusive. If you do not specify a value, it defaults to 30."
   type        = string
   default     = ""
 }
@@ -80,6 +70,15 @@ variable "enabled" {
 }
 variable "key_id" {
   description = "The key ID of the replica key. Related multi-Region keys have the same key ID."
+  type        = string
+}
+variable "valid_to" {
+  description = "(Optional) Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the key becomes unusable. If not specified, key material does not expire. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "deletion_window_in_days" {
+  description = "7 and 30, inclusive. If you do not specify a value, it defaults to 30."
   type        = string
 }
 variable "tag_instance_id" {
@@ -202,12 +201,48 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = "(Optional) A description of the KMS key."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.description
+}
+output "key_material_base64" {
+  description = "(Optional) Base64 encoded 256-bit symmetric encryption key material to import. The KMS key is permanently associated with this key material. The same key material can be reimported, but you cannot import different key material."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_material_base64
+}
+output "key_state" {
+  description = "The state of the replica key."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_state
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the replica key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.tags
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the replica key. The key ARNs of related multi-Region keys differ only in the Region value."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.arn
+}
+output "expiration_model" {
+  description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.expiration_model
+}
+output "key_usage" {
+  description = "The cryptographic operations for which you can use the KMS key. This is a shared property of multi-Region keys."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_usage
+}
+output "policy" {
+  description = "(Optional) The key policy to attach to the KMS key. If you do not specify a key policy, AWS KMS attaches the default key policyAWS IAM Policy Document Guide."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.policy
+}
+output "primary_key_arn" {
+  description = "(Required) The ARN of the multi-Region primary key to replicate. The primary key must be in a different AWS Region of the same AWS Partition. You can create only one replica of a given primary key in each AWS Region."
+  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.primary_key_arn
+}
 output "bypass_policy_lockout_safety_check" {
   description = "(Optional) A flag to indicate whether to bypass the key policy lockout safety check.\nSetting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.\nFor more information, refer to the scenario in the Default Key Policy section in the emAWS Key Management Service Developer Guidefalse."
   value       = aws_kms_replica_external_key.aws_kms_replica_external_key.bypass_policy_lockout_safety_check
 }
 output "deletion_window_in_days" {
-  description = "(Optional) The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key.\nIf you specify a value, it must be between 7 and 30, inclusive. If you do not specify a value, it defaults to 30."
+  description = "7 and 30, inclusive. If you do not specify a value, it defaults to 30."
   value       = aws_kms_replica_external_key.aws_kms_replica_external_key.deletion_window_in_days
 }
 output "enabled" {
@@ -218,45 +253,9 @@ output "key_id" {
   description = "The key ID of the replica key. Related multi-Region keys have the same key ID."
   value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_id
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the replica key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.tags
-}
 output "valid_to" {
   description = "(Optional) Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the key becomes unusable. If not specified, key material does not expire. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_replica_external_key.aws_kms_replica_external_key.valid_to
-}
-output "expiration_model" {
-  description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.expiration_model
-}
-output "key_state" {
-  description = "The state of the replica key."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_state
-}
-output "key_usage" {
-  description = "The cryptographic operations for which you can use the KMS key. This is a shared property of multi-Region keys."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_usage
-}
-output "primary_key_arn" {
-  description = "(Required) The ARN of the multi-Region primary key to replicate. The primary key must be in a different AWS Region of the same AWS Partition. You can create only one replica of a given primary key in each AWS Region."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.primary_key_arn
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the replica key. The key ARNs of related multi-Region keys differ only in the Region value."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.arn
-}
-output "description" {
-  description = "(Optional) A description of the KMS key."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.description
-}
-output "policy" {
-  description = "(Optional) The key policy to attach to the KMS key. If you do not specify a key policy, AWS KMS attaches the default key policyAWS IAM Policy Document Guide."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.policy
-}
-output "key_material_base64" {
-  description = "(Optional) Base64 encoded 256-bit symmetric encryption key material to import. The KMS key is permanently associated with this key material. The same key material can be reimported, but you cannot import different key material."
-  value       = aws_kms_replica_external_key.aws_kms_replica_external_key.key_material_base64
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the replica key. The key ARNs of related multi-Region keys differ only in the Region value."

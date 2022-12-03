@@ -5,7 +5,7 @@ variable "provider_region" {
   type        = string
 }
 output "etag" {
-  description = "E2QWRUHAPOMQZL."
+  description = "Current version of the distribution's information. For example:\nE2QWRUHAPOMQZL."
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.etag
 }
 output "id" {
@@ -13,7 +13,7 @@ output "id" {
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.id
 }
 output "in_progress_validation_batches" {
-  description = "The number of invalidation batches\ncurrently in progress."
+  description = ""
   value       = aws_cloudfront_distribution.aws_cloudfront_distribution.in_progress_validation_batches
 }
 output "last_modified_time" {

@@ -1,9 +1,9 @@
 resource "aws_autoscaling_group_tag" "aws_autoscaling_group_tag" {
+  autoscaling_group_name = var.autoscaling_group_name
   key                    = var.key
   propagate_at_launch    = var.propagate_at_launch
   tag                    = var.tag
   value                  = var.value
-  autoscaling_group_name = var.autoscaling_group_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -149,6 +149,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "autoscaling_group_name" {
+  description = "(Required) Name of the Autoscaling Group to apply the tag to."
+  value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.autoscaling_group_name
+}
+output "key" {
+  description = "(Required) Tag name."
+  value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.key
+}
 output "propagate_at_launch" {
   description = "(Required) Whether to propagate the tags to instances launched by the ASG.In addition to all arguments above, the following attributes are exported:"
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.propagate_at_launch
@@ -160,14 +168,6 @@ output "tag" {
 output "value" {
   description = "(Required) Tag value."
   value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.value
-}
-output "autoscaling_group_name" {
-  description = "(Required) Name of the Autoscaling Group to apply the tag to."
-  value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.autoscaling_group_name
-}
-output "key" {
-  description = "(Required) Tag name."
-  value       = aws_autoscaling_group_tag.aws_autoscaling_group_tag.key
 }
 output "id" {
   description = "ASG name and key, separated by a comma (,)"

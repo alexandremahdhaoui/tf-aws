@@ -1,10 +1,10 @@
 resource "aws_redshiftserverless_usage_limit" "aws_redshiftserverless_usage_limit" {
-  usage_type    = var.usage_type
-  amount        = var.amount
-  arn           = var.arn
   breach_action = var.breach_action
   period        = var.period
   resource_arn  = var.resource_arn
+  usage_type    = var.usage_type
+  amount        = var.amount
+  arn           = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -156,6 +156,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "resource_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the Amazon Redshift Serverless resource to create the usage limit for."
+  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.resource_arn
+}
+output "usage_type" {
+  description = "(Required) The type of Amazon Redshift Serverless usage to create a usage limit for. Valid values are serverless-compute or cross-region-datasharing.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.usage_type
+}
 output "amount" {
   description = "(Required) The limit amount. If time-based, this amount is in Redshift Processing Units (RPU) consumed per hour. If data-based, this amount is in terabytes (TB) of data transferred between Regions in cross-account sharing. The value must be a positive number."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.amount
@@ -172,21 +180,13 @@ output "period" {
   description = "(Optional) The time period that the amount applies to. A weekly period begins on Sunday. Valid values are daily, weekly, and monthly. The default is monthly."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.period
 }
-output "resource_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the Amazon Redshift Serverless resource to create the usage limit for."
-  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.resource_arn
-}
-output "usage_type" {
-  description = "(Required) The type of Amazon Redshift Serverless usage to create a usage limit for. Valid values are serverless-compute or cross-region-datasharing.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.usage_type
+output "id" {
+  description = "The Redshift Usage Limit id."
+  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Redshift Serverless Usage Limit."
   value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.arn
-}
-output "id" {
-  description = "The Redshift Usage Limit id."
-  value       = aws_redshiftserverless_usage_limit.aws_redshiftserverless_usage_limit.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

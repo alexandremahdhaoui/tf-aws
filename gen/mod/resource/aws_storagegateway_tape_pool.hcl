@@ -1,22 +1,13 @@
 resource "aws_storagegateway_tape_pool" "aws_storagegateway_tape_pool" {
-  storage_class               = var.storage_class
-  tags                        = var.tags
-  arn                         = var.arn
   pool_name                   = var.pool_name
   retention_lock_time_in_days = var.retention_lock_time_in_days
   retention_lock_type         = var.retention_lock_type
+  storage_class               = var.storage_class
+  tags                        = var.tags
+  arn                         = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., aws_storagegateway_tape_pool.example arn:aws:storagegateway:us-east-1:123456789012:tapepool/pool-12345678."
   type        = string
 }
 variable "pool_name" {
@@ -34,6 +25,15 @@ variable "retention_lock_type" {
 }
 variable "storage_class" {
   description = "(Required) The storage class that is associated with the new custom pool. When you use your backup application to eject the tape, the tape is archived directly into the storage class that corresponds to the pool. Possible values are DEEP_ARCHIVE or GLACIER."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., aws_storagegateway_tape_pool.example arn:aws:storagegateway:us-east-1:123456789012:tapepool/pool-12345678."
   type        = string
 }
 variable "tag_instance_id" {
@@ -156,10 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Volume Amazon Resource Name (ARN), e.g., aws_storagegateway_tape_pool.example arn:aws:storagegateway:us-east-1:123456789012:tapepool/pool-12345678."
-  value       = aws_storagegateway_tape_pool.aws_storagegateway_tape_pool.arn
-}
 output "pool_name" {
   description = "(Required) The name of the new custom tape pool."
   value       = aws_storagegateway_tape_pool.aws_storagegateway_tape_pool.pool_name
@@ -179,6 +175,10 @@ output "storage_class" {
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_storagegateway_tape_pool.aws_storagegateway_tape_pool.tags
+}
+output "arn" {
+  description = "Volume Amazon Resource Name (ARN), e.g., aws_storagegateway_tape_pool.example arn:aws:storagegateway:us-east-1:123456789012:tapepool/pool-12345678."
+  value       = aws_storagegateway_tape_pool.aws_storagegateway_tape_pool.arn
 }
 output "arn" {
   description = "Volume Amazon Resource Name (ARN), e.g., aws_storagegateway_tape_pool.example arn:aws:storagegateway:us-east-1:123456789012:tapepool/pool-12345678."

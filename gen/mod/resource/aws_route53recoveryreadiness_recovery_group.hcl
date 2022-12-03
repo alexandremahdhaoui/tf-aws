@@ -1,12 +1,16 @@
 resource "aws_route53recoveryreadiness_recovery_group" "aws_route53recoveryreadiness_recovery_group" {
+  tags_all            = var.tags_all
   arn                 = var.arn
   cells               = var.cells
   recovery_group_name = var.recovery_group_name
   tags                = var.tags
-  tags_all            = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the recovery group"
   type        = string
 }
 variable "cells" {
@@ -25,10 +29,6 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the recovery group"
   type        = string
 }
 variable "tag_instance_id" {

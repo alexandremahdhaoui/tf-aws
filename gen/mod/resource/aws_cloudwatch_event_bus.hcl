@@ -8,10 +8,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the event bus."
-  type        = string
-}
 variable "event_source_name" {
   description = " (Optional) The partner event source that the new event bus will be matched with. Must match name."
   type        = string
@@ -25,6 +21,10 @@ variable "tags" {
   description = "(Optional)  A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the event bus."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

@@ -1,15 +1,19 @@
 resource "aws_guardduty_ipset" "aws_guardduty_ipset" {
-  location    = var.location
-  name        = var.name
-  tags        = var.tags
-  activate    = var.activate
   arn         = var.arn
   detector_id = var.detector_id
   format      = var.format
   id          = var.id
+  location    = var.location
+  name        = var.name
+  tags        = var.tags
+  activate    = var.activate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "location" {
+  description = "(Required) The URI of the file that contains the IPSet."
   type        = string
 }
 variable "name" {
@@ -39,10 +43,6 @@ variable "format" {
 }
 variable "id" {
   description = "The ID of the GuardDuty IPSet."
-  type        = string
-}
-variable "location" {
-  description = "(Required) The URI of the file that contains the IPSet."
   type        = string
 }
 variable "tag_instance_id" {
@@ -165,10 +165,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "location" {
-  description = "(Required) The URI of the file that contains the IPSet."
-  value       = aws_guardduty_ipset.aws_guardduty_ipset.location
-}
 output "name" {
   description = "(Required) The friendly name to identify the IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.name
@@ -196,6 +192,10 @@ output "format" {
 output "id" {
   description = "The ID of the GuardDuty IPSet."
   value       = aws_guardduty_ipset.aws_guardduty_ipset.id
+}
+output "location" {
+  description = "(Required) The URI of the file that contains the IPSet."
+  value       = aws_guardduty_ipset.aws_guardduty_ipset.location
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the GuardDuty IPSet."

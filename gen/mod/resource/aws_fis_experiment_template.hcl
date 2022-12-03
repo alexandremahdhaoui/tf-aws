@@ -1,51 +1,72 @@
 resource "aws_fis_experiment_template" "aws_fis_experiment_template" {
-  key            = var.key
-  parameter      = var.parameter
-  selection_mode = var.selection_mode
-  value          = var.value
-  stop_condition = var.stop_condition
+  resource_arns  = var.resource_arns
+  resource_tag   = var.resource_tag
   tags           = var.tags
+  target         = var.target
   values         = var.values
-  action         = var.action
+  description    = var.description
+  key            = var.key
+  start_after    = var.start_after
+  stop_condition = var.stop_condition
   filter         = var.filter
+  resource_type  = var.resource_type
+  parameter      = var.parameter
+  role_arn       = var.role_arn
+  source         = var.source
+  value          = var.value
+  action         = var.action
+  action_id      = var.action_id
+  path           = var.path
+  selection_mode = var.selection_mode
   id             = var.id
   name           = var.name
-  resource_arns  = var.resource_arns
-  role_arn       = var.role_arn
-  start_after    = var.start_after
-  action_id      = var.action_id
-  description    = var.description
-  path           = var.path
-  resource_tag   = var.resource_tag
-  resource_type  = var.resource_type
-  source         = var.source
-  target         = var.target
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "stop_condition" {
-  description = "(Required) When an ongoing experiment should be stopped. See below."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "values" {
-  description = "(Required) Set of attribute values for the filter.~> strongNOTE: Values specified in a filter are joined with an OR clause, while values across multiple filter blocks are joined with an AND clause. For more information, see Targets for AWS FIS.resource_tag"
-  type        = string
-}
-variable "action" {
-  description = "(Required) Action to be performed during an experiment. See below."
   type        = string
 }
 variable "filter" {
   description = "(Optional) Filter(s) for the target. Filters can be used to select resources based on specific attributes returned by the respective describe action of the resource type. For more information, see Targets for AWS FIS. See below."
   type        = string
   default     = ""
+}
+variable "resource_type" {
+  description = "(Required) AWS resource type. The resource type must be supported for the specified action. To find out what resource types are supported, see Targets for AWS FIS."
+  type        = string
+}
+variable "start_after" {
+  description = "(Optional) Set of action names that must complete before this action can be executed."
+  type        = string
+  default     = ""
+}
+variable "stop_condition" {
+  description = "(Required) When an ongoing experiment should be stopped. See below."
+  type        = string
+}
+variable "value" {
+  description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "action" {
+  description = "(Required) Action to be performed during an experiment. See below."
+  type        = string
+}
+variable "action_id" {
+  description = "(Required) ID of the action. To find out what actions are supported see AWS FIS actions reference."
+  type        = string
+}
+variable "parameter" {
+  description = "(Optional) Parameter(s) for the action, if applicable. See below."
+  type        = string
+  default     = ""
+}
+variable "role_arn" {
+  description = "(Required) ARN of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf."
+  type        = string
+}
+variable "source" {
+  description = "(Required) Source of the condition. One of none, aws:cloudwatch:alarm."
+  type        = string
 }
 variable "id" {
   description = "Experiment Template ID."
@@ -56,44 +77,12 @@ variable "name" {
   description = "(Required) Friendly name given to the target."
   type        = string
 }
-variable "resource_arns" {
-  description = "(Optional) Set of ARNs of the resources to target with an action. Conflicts with resource_tag."
-  type        = string
-  default     = ""
-}
-variable "role_arn" {
-  description = "(Required) ARN of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf."
-  type        = string
-}
-variable "start_after" {
-  description = "(Optional) Set of action names that must complete before this action can be executed."
-  type        = string
-  default     = ""
-}
-variable "action_id" {
-  description = "(Required) ID of the action. To find out what actions are supported see AWS FIS actions reference."
-  type        = string
-}
-variable "description" {
-  description = "(Optional) Description of the action."
-  type        = string
-  default     = ""
-}
 variable "path" {
   description = "(Required) Attribute path for the filter."
   type        = string
 }
-variable "resource_tag" {
-  description = "(Optional) Tag(s) the resources need to have to be considered a valid target for an action. Conflicts with resource_arns. See below.~> strongNOTE: The target configuration block requires either resource_arns or resource_tag.filter"
-  type        = string
-  default     = ""
-}
-variable "resource_type" {
-  description = "(Required) AWS resource type. The resource type must be supported for the specified action. To find out what resource types are supported, see Targets for AWS FIS."
-  type        = string
-}
-variable "source" {
-  description = "(Required) Source of the condition. One of none, aws:cloudwatch:alarm."
+variable "selection_mode" {
+  description = "(Required) Scopes the identified resources. Valid values are ALL (all identified resources), COUNT(n) (randomly select n of the identified resources), PERCENT(n) (randomly select n percent of the identified resources)."
   type        = string
 }
 variable "target" {
@@ -101,22 +90,33 @@ variable "target" {
   type        = string
   default     = ""
 }
+variable "values" {
+  description = "(Required) Set of attribute values for the filter.~> strongNOTE: Values specified in a filter are joined with an OR clause, while values across multiple filter blocks are joined with an AND clause. For more information, see Targets for AWS FIS.resource_tag"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the action."
+  type        = string
+  default     = ""
+}
 variable "key" {
   description = "(Required) Tag key."
   type        = string
 }
-variable "parameter" {
-  description = "(Optional) Parameter(s) for the action, if applicable. See below."
+variable "resource_arns" {
+  description = "(Optional) Set of ARNs of the resources to target with an action. Conflicts with resource_tag."
   type        = string
   default     = ""
 }
-variable "selection_mode" {
-  description = "(Required) Scopes the identified resources. Valid values are ALL (all identified resources), COUNT(n) (randomly select n of the identified resources), PERCENT(n) (randomly select n percent of the identified resources)."
+variable "resource_tag" {
+  description = "(Optional) Tag(s) the resources need to have to be considered a valid target for an action. Conflicts with resource_arns. See below.~> strongNOTE: The target configuration block requires either resource_arns or resource_tag.filter"
   type        = string
+  default     = ""
 }
-variable "value" {
-  description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
+variable "tags" {
+  description = "(Optional) Key-value mapping of tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -238,6 +238,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "path" {
+  description = "(Required) Attribute path for the filter."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.path
+}
+output "selection_mode" {
+  description = "(Required) Scopes the identified resources. Valid values are ALL (all identified resources), COUNT(n) (randomly select n of the identified resources), PERCENT(n) (randomly select n percent of the identified resources)."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.selection_mode
+}
+output "id" {
+  description = "Experiment Template ID."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.id
+}
 output "name" {
   description = "(Required) Friendly name given to the target."
   value       = aws_fis_experiment_template.aws_fis_experiment_template.name
@@ -246,81 +258,69 @@ output "resource_arns" {
   description = "(Optional) Set of ARNs of the resources to target with an action. Conflicts with resource_tag."
   value       = aws_fis_experiment_template.aws_fis_experiment_template.resource_arns
 }
-output "role_arn" {
-  description = "(Required) ARN of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.role_arn
-}
-output "start_after" {
-  description = "(Optional) Set of action names that must complete before this action can be executed."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.start_after
-}
-output "values" {
-  description = "(Required) Set of attribute values for the filter.~> strongNOTE: Values specified in a filter are joined with an OR clause, while values across multiple filter blocks are joined with an AND clause. For more information, see Targets for AWS FIS.resource_tag"
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.values
-}
-output "action" {
-  description = "(Required) Action to be performed during an experiment. See below."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.action
-}
-output "filter" {
-  description = "(Optional) Filter(s) for the target. Filters can be used to select resources based on specific attributes returned by the respective describe action of the resource type. For more information, see Targets for AWS FIS. See below."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.filter
-}
-output "id" {
-  description = "Experiment Template ID."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.id
-}
 output "resource_tag" {
   description = "(Optional) Tag(s) the resources need to have to be considered a valid target for an action. Conflicts with resource_arns. See below.~> strongNOTE: The target configuration block requires either resource_arns or resource_tag.filter"
   value       = aws_fis_experiment_template.aws_fis_experiment_template.resource_tag
 }
-output "resource_type" {
-  description = "(Required) AWS resource type. The resource type must be supported for the specified action. To find out what resource types are supported, see Targets for AWS FIS."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.resource_type
-}
-output "source" {
-  description = "(Required) Source of the condition. One of none, aws:cloudwatch:alarm."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.source
+output "tags" {
+  description = "(Optional) Key-value mapping of tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.tags
 }
 output "target" {
   description = "(Optional) Action's target, if applicable. See below.parameter"
   value       = aws_fis_experiment_template.aws_fis_experiment_template.target
 }
-output "action_id" {
-  description = "(Required) ID of the action. To find out what actions are supported see AWS FIS actions reference."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.action_id
+output "values" {
+  description = "(Required) Set of attribute values for the filter.~> strongNOTE: Values specified in a filter are joined with an OR clause, while values across multiple filter blocks are joined with an AND clause. For more information, see Targets for AWS FIS.resource_tag"
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.values
 }
 output "description" {
   description = "(Optional) Description of the action."
   value       = aws_fis_experiment_template.aws_fis_experiment_template.description
 }
-output "path" {
-  description = "(Required) Attribute path for the filter."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.path
-}
-output "value" {
-  description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.value
-}
 output "key" {
   description = "(Required) Tag key."
   value       = aws_fis_experiment_template.aws_fis_experiment_template.key
 }
-output "parameter" {
-  description = "(Optional) Parameter(s) for the action, if applicable. See below."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.parameter
-}
-output "selection_mode" {
-  description = "(Required) Scopes the identified resources. Valid values are ALL (all identified resources), COUNT(n) (randomly select n of the identified resources), PERCENT(n) (randomly select n percent of the identified resources)."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.selection_mode
+output "start_after" {
+  description = "(Optional) Set of action names that must complete before this action can be executed."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.start_after
 }
 output "stop_condition" {
   description = "(Required) When an ongoing experiment should be stopped. See below."
   value       = aws_fis_experiment_template.aws_fis_experiment_template.stop_condition
 }
-output "tags" {
-  description = "(Optional) Key-value mapping of tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_fis_experiment_template.aws_fis_experiment_template.tags
+output "filter" {
+  description = "(Optional) Filter(s) for the target. Filters can be used to select resources based on specific attributes returned by the respective describe action of the resource type. For more information, see Targets for AWS FIS. See below."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.filter
+}
+output "resource_type" {
+  description = "(Required) AWS resource type. The resource type must be supported for the specified action. To find out what resource types are supported, see Targets for AWS FIS."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.resource_type
+}
+output "parameter" {
+  description = "(Optional) Parameter(s) for the action, if applicable. See below."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.parameter
+}
+output "role_arn" {
+  description = "(Required) ARN of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.role_arn
+}
+output "source" {
+  description = "(Required) Source of the condition. One of none, aws:cloudwatch:alarm."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.source
+}
+output "value" {
+  description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.value
+}
+output "action" {
+  description = "(Required) Action to be performed during an experiment. See below."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.action
+}
+output "action_id" {
+  description = "(Required) ID of the action. To find out what actions are supported see AWS FIS actions reference."
+  value       = aws_fis_experiment_template.aws_fis_experiment_template.action_id
 }
 output "id" {
   description = "Experiment Template ID."

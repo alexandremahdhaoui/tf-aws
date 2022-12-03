@@ -140,6 +140,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name or description of the Regex Pattern Set."
+  value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.name
+}
 output "regex_pattern_strings" {
   description = "(Optional) A list of regular expression (regex) patterns that you want AWS WAF to search for, such as B[a@]dB[o0]t.In addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.regex_pattern_strings
@@ -147,10 +151,6 @@ output "regex_pattern_strings" {
 output "id" {
   description = "The ID of the WAF Regex Pattern Set."
   value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.id
-}
-output "name" {
-  description = "(Required) The name or description of the Regex Pattern Set."
-  value       = aws_waf_regex_pattern_set.aws_waf_regex_pattern_set.name
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"

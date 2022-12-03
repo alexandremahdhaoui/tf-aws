@@ -1,16 +1,12 @@
 resource "aws_api_gateway_model" "aws_api_gateway_model" {
+  rest_api_id  = var.rest_api_id
   schema       = var.schema
   content_type = var.content_type
   description  = var.description
   name         = var.name
-  rest_api_id  = var.rest_api_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "content_type" {
-  description = "(Required) Content type of the model"
   type        = string
 }
 variable "description" {
@@ -28,6 +24,10 @@ variable "rest_api_id" {
 }
 variable "schema" {
   description = "(Required) Schema of the model in a JSON formIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "content_type" {
+  description = "(Required) Content type of the model"
   type        = string
 }
 variable "tag_instance_id" {

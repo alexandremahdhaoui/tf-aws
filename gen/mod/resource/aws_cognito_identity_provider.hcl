@@ -9,16 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "attribute_mapping" {
-  description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
-  type        = string
-  default     = ""
-}
-variable "idp_identifiers" {
-  description = " (Optional) - The list of identity providers."
-  type        = string
-  default     = ""
-}
 variable "provider_name" {
   description = " (Required) - The provider name"
   type        = string
@@ -30,6 +20,16 @@ variable "provider_type" {
 variable "user_pool_id" {
   description = " (Required) - The user pool id"
   type        = string
+}
+variable "attribute_mapping" {
+  description = " (Optional) - The map of attribute mapping of user pool attributes. AttributeMapping in AWS API documentation"
+  type        = string
+  default     = ""
+}
+variable "idp_identifiers" {
+  description = " (Optional) - The list of identity providers."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

@@ -11,7 +11,8 @@ const (
 )
 
 func TerraformVersionTag() string {
-	return os.Getenv(terraformVersionTagEnv)
+	v := os.Getenv(terraformVersionTagEnv)
+	return v
 }
 
 func SetTerraformVersionTag(version string) error {
@@ -23,7 +24,8 @@ func SetTerraformVersionTag(version string) error {
 }
 
 func ProviderVersionTag() string {
-	return os.Getenv(providerVersionTagEnv)
+	v := os.Getenv(providerVersionTagEnv)
+	return v
 }
 
 func SetProviderVersionTag(version string) error {

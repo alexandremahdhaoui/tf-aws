@@ -1,16 +1,36 @@
 resource "aws_acmpca_certificate" "aws_acmpca_certificate" {
   arn                         = var.arn
-  certificate_signing_request = var.certificate_signing_request
-  template_arn                = var.template_arn
-  validity                    = var.validity
-  value                       = var.value
   certificate                 = var.certificate
   certificate_authority_arn   = var.certificate_authority_arn
   signing_algorithm           = var.signing_algorithm
   type                        = var.type
+  validity                    = var.validity
+  certificate_signing_request = var.certificate_signing_request
+  template_arn                = var.template_arn
+  value                       = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "certificate_signing_request" {
+  description = "(Required) Certificate Signing Request in PEM format."
+  type        = string
+}
+variable "template_arn" {
+  description = "ACM PCA Documentation for more information.validity block"
+  type        = string
+}
+variable "value" {
+  description = "(Required) If type is DAYS, MONTHS, or YEARS, the relative time until the certificate expires. If type is ABSOLUTE, the date in seconds since the Unix epoch. If type is END_DATE, the  date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the certificate."
+  type        = string
+}
+variable "certificate" {
+  description = "PEM-encoded certificate value."
   type        = string
 }
 variable "certificate_authority_arn" {
@@ -25,28 +45,8 @@ variable "type" {
   description = "(Required) Determines how value is interpreted. Valid values: DAYS, MONTHS, YEARS, ABSOLUTE, END_DATE."
   type        = string
 }
-variable "certificate" {
-  description = "PEM-encoded certificate value."
-  type        = string
-}
-variable "certificate_signing_request" {
-  description = "(Required) Certificate Signing Request in PEM format."
-  type        = string
-}
-variable "template_arn" {
-  description = "ACM PCA Documentation for more information.validity block"
-  type        = string
-}
 variable "validity" {
   description = "(Required) Configures end of the validity period for the certificate. See validity block below."
-  type        = string
-}
-variable "value" {
-  description = "(Required) If type is DAYS, MONTHS, or YEARS, the relative time until the certificate expires. If type is ABSOLUTE, the date in seconds since the Unix epoch. If type is END_DATE, the  date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the certificate."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,10 +169,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "certificate" {
-  description = "PEM-encoded certificate value."
-  value       = aws_acmpca_certificate.aws_acmpca_certificate.certificate
-}
 output "certificate_authority_arn" {
   description = "(Required) ARN of the certificate authority."
   value       = aws_acmpca_certificate.aws_acmpca_certificate.certificate_authority_arn
@@ -185,9 +181,21 @@ output "type" {
   description = "(Required) Determines how value is interpreted. Valid values: DAYS, MONTHS, YEARS, ABSOLUTE, END_DATE."
   value       = aws_acmpca_certificate.aws_acmpca_certificate.type
 }
+output "validity" {
+  description = "(Required) Configures end of the validity period for the certificate. See validity block below."
+  value       = aws_acmpca_certificate.aws_acmpca_certificate.validity
+}
 output "arn" {
   description = "ARN of the certificate."
   value       = aws_acmpca_certificate.aws_acmpca_certificate.arn
+}
+output "certificate" {
+  description = "PEM-encoded certificate value."
+  value       = aws_acmpca_certificate.aws_acmpca_certificate.certificate
+}
+output "value" {
+  description = "(Required) If type is DAYS, MONTHS, or YEARS, the relative time until the certificate expires. If type is ABSOLUTE, the date in seconds since the Unix epoch. If type is END_DATE, the  date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_acmpca_certificate.aws_acmpca_certificate.value
 }
 output "certificate_signing_request" {
   description = "(Required) Certificate Signing Request in PEM format."
@@ -197,13 +205,9 @@ output "template_arn" {
   description = "ACM PCA Documentation for more information.validity block"
   value       = aws_acmpca_certificate.aws_acmpca_certificate.template_arn
 }
-output "validity" {
-  description = "(Required) Configures end of the validity period for the certificate. See validity block below."
-  value       = aws_acmpca_certificate.aws_acmpca_certificate.validity
-}
-output "value" {
-  description = "(Required) If type is DAYS, MONTHS, or YEARS, the relative time until the certificate expires. If type is ABSOLUTE, the date in seconds since the Unix epoch. If type is END_DATE, the  date in RFC 3339 format.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_acmpca_certificate.aws_acmpca_certificate.value
+output "arn" {
+  description = "ARN of the certificate."
+  value       = aws_acmpca_certificate.aws_acmpca_certificate.arn
 }
 output "certificate" {
   description = "PEM-encoded certificate value."
@@ -212,10 +216,6 @@ output "certificate" {
 output "certificate_chain" {
   description = "PEM-encoded certificate chain that includes any intermediate certificates and chains up to root CA."
   value       = aws_acmpca_certificate.aws_acmpca_certificate.certificate_chain
-}
-output "arn" {
-  description = "ARN of the certificate."
-  value       = aws_acmpca_certificate.aws_acmpca_certificate.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

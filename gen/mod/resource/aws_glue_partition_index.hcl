@@ -1,12 +1,12 @@
 resource "aws_glue_partition_index" "aws_glue_partition_index" {
+  database_name   = var.database_name
+  id              = var.id
+  index_name      = var.index_name
   keys            = var.keys
   partition_index = var.partition_index
   table_name      = var.table_name
   catalog_id      = var.catalog_id
   create          = var.create
-  database_name   = var.database_name
-  id              = var.id
-  index_name      = var.index_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -165,6 +165,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "index_name" {
+  description = "(Required) Name of the partition index."
+  value       = aws_glue_partition_index.aws_glue_partition_index.index_name
+}
+output "keys" {
+  description = "(Required) Keys for the partition index.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_partition_index.aws_glue_partition_index.keys
+}
+output "partition_index" {
+  description = "(Required) Configuration block for a partition index. See partition_index below."
+  value       = aws_glue_partition_index.aws_glue_partition_index.partition_index
+}
 output "table_name" {
   description = "(Required) Name of the table. For Hive compatibility, this must be entirely lowercase."
   value       = aws_glue_partition_index.aws_glue_partition_index.table_name
@@ -184,18 +196,6 @@ output "database_name" {
 output "id" {
   description = "Catalog ID, Database name, table name, and index name.TimeoutsConfiguration options:"
   value       = aws_glue_partition_index.aws_glue_partition_index.id
-}
-output "index_name" {
-  description = "(Required) Name of the partition index."
-  value       = aws_glue_partition_index.aws_glue_partition_index.index_name
-}
-output "keys" {
-  description = "(Required) Keys for the partition index.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_partition_index.aws_glue_partition_index.keys
-}
-output "partition_index" {
-  description = "(Required) Configuration block for a partition index. See partition_index below."
-  value       = aws_glue_partition_index.aws_glue_partition_index.partition_index
 }
 output "create" {
   description = "(Default 10m)"

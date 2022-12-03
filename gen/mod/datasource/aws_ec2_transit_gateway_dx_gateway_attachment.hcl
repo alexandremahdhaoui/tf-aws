@@ -1,29 +1,15 @@
 datasource "aws_ec2_transit_gateway_dx_gateway_attachment" "aws_ec2_transit_gateway_dx_gateway_attachment" {
+  tags               = var.tags
+  transit_gateway_id = var.transit_gateway_id
   values             = var.values
   dx_gateway_id      = var.dx_gateway_id
   filter             = var.filter
   id                 = var.id
   name               = var.name
-  tags               = var.tags
-  transit_gateway_id = var.transit_gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "transit_gateway_id" {
-  description = "(Optional) Identifier of the EC2 Transit Gateway."
-  type        = string
-  default     = ""
-}
-variable "values" {
-  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "dx_gateway_id" {
-  description = "(Optional) Identifier of the Direct Connect Gateway."
-  type        = string
-  default     = ""
 }
 variable "filter" {
   description = "(Optional) Configuration block(s) for filtering. Detailed below."
@@ -41,6 +27,20 @@ variable "name" {
 variable "tags" {
   description = "Key-value tags for the EC2 Transit Gateway AttachmentTimeoutsConfiguration options:"
   type        = string
+}
+variable "transit_gateway_id" {
+  description = "(Optional) Identifier of the EC2 Transit Gateway."
+  type        = string
+  default     = ""
+}
+variable "values" {
+  description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "dx_gateway_id" {
+  description = "(Optional) Identifier of the Direct Connect Gateway."
+  type        = string
+  default     = ""
 }
 output "dx_gateway_id" {
   description = "(Optional) Identifier of the Direct Connect Gateway."

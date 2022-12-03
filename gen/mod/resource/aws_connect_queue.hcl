@@ -1,42 +1,39 @@
 resource "aws_connect_queue" "aws_connect_queue" {
+  arn                          = var.arn
+  hours_of_operation_id        = var.hours_of_operation_id
+  outbound_caller_id_name      = var.outbound_caller_id_name
+  status                       = var.status
+  description                  = var.description
+  name                         = var.name
+  outbound_caller_config       = var.outbound_caller_config
+  tags                         = var.tags
+  id                           = var.id
+  max_contacts                 = var.max_contacts
   outbound_caller_id_number_id = var.outbound_caller_id_number_id
+  quick_connect_ids            = var.quick_connect_ids
+  instance_id                  = var.instance_id
   outbound_flow_id             = var.outbound_flow_id
   queue_id                     = var.queue_id
-  tags                         = var.tags
-  description                  = var.description
-  hours_of_operation_id        = var.hours_of_operation_id
-  max_contacts                 = var.max_contacts
-  outbound_caller_config       = var.outbound_caller_config
-  arn                          = var.arn
-  id                           = var.id
-  instance_id                  = var.instance_id
-  quick_connect_ids            = var.quick_connect_ids
-  status                       = var.status
-  name                         = var.name
-  outbound_caller_id_name      = var.outbound_caller_id_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Queue."
-  type        = string
-}
-variable "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Queue separated by a colon (:)."
+variable "queue_id" {
+  description = "The identifier for the Queue."
   type        = string
 }
 variable "instance_id" {
   description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
   type        = string
 }
-variable "outbound_caller_config" {
-  description = "(Required) A block that defines the outbound caller ID name, number, and outbound whisper flow. The Outbound Caller Config block is documented below."
+variable "outbound_flow_id" {
+  description = "(Optional) Specifies outbound whisper flow to be used during an outbound call.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
-variable "quick_connect_ids" {
-  description = "(Optional) Specifies a list of quick connects ids that determine the quick connects available to agents who are working the queue."
+variable "outbound_caller_id_name" {
+  description = "(Optional) Specifies the caller ID name."
   type        = string
   default     = ""
 }
@@ -45,12 +42,20 @@ variable "status" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Specifies the name of the Queue."
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Queue."
   type        = string
 }
-variable "outbound_caller_id_name" {
-  description = "(Optional) Specifies the caller ID name."
+variable "hours_of_operation_id" {
+  description = "(Required) Specifies the identifier of the Hours of Operation."
+  type        = string
+}
+variable "outbound_caller_config" {
+  description = "(Required) A block that defines the outbound caller ID name, number, and outbound whisper flow. The Outbound Caller Config block is documented below."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Tags to apply to the Queue. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A outbound_caller_config block supports the following arguments:"
   type        = string
   default     = ""
 }
@@ -59,31 +64,26 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "hours_of_operation_id" {
-  description = "(Required) Specifies the identifier of the Hours of Operation."
+variable "name" {
+  description = "(Required) Specifies the name of the Queue."
   type        = string
-}
-variable "max_contacts" {
-  description = "(Optional) Specifies the maximum number of contacts that can be in the queue before it is considered full. Minimum value of 0."
-  type        = string
-  default     = ""
 }
 variable "outbound_caller_id_number_id" {
   description = "(Optional) Specifies the caller ID number."
   type        = string
   default     = ""
 }
-variable "outbound_flow_id" {
-  description = "(Optional) Specifies outbound whisper flow to be used during an outbound call.In addition to all arguments above, the following attributes are exported:"
+variable "quick_connect_ids" {
+  description = "(Optional) Specifies a list of quick connects ids that determine the quick connects available to agents who are working the queue."
   type        = string
   default     = ""
 }
-variable "queue_id" {
-  description = "The identifier for the Queue."
+variable "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Queue separated by a colon (:)."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Tags to apply to the Queue. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A outbound_caller_config block supports the following arguments:"
+variable "max_contacts" {
+  description = "(Optional) Specifies the maximum number of contacts that can be in the queue before it is considered full. Minimum value of 0."
   type        = string
   default     = ""
 }
@@ -207,21 +207,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) Specifies the name of the Queue."
-  value       = aws_connect_queue.aws_connect_queue.name
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Queue."
+  value       = aws_connect_queue.aws_connect_queue.arn
+}
+output "hours_of_operation_id" {
+  description = "(Required) Specifies the identifier of the Hours of Operation."
+  value       = aws_connect_queue.aws_connect_queue.hours_of_operation_id
 }
 output "outbound_caller_id_name" {
   description = "(Optional) Specifies the caller ID name."
   value       = aws_connect_queue.aws_connect_queue.outbound_caller_id_name
 }
+output "status" {
+  description = "(Optional) Specifies the description of the Queue. Valid values are ENABLED, DISABLED."
+  value       = aws_connect_queue.aws_connect_queue.status
+}
 output "description" {
   description = "(Optional) Specifies the description of the Queue."
   value       = aws_connect_queue.aws_connect_queue.description
 }
-output "hours_of_operation_id" {
-  description = "(Required) Specifies the identifier of the Hours of Operation."
-  value       = aws_connect_queue.aws_connect_queue.hours_of_operation_id
+output "name" {
+  description = "(Required) Specifies the name of the Queue."
+  value       = aws_connect_queue.aws_connect_queue.name
+}
+output "outbound_caller_config" {
+  description = "(Required) A block that defines the outbound caller ID name, number, and outbound whisper flow. The Outbound Caller Config block is documented below."
+  value       = aws_connect_queue.aws_connect_queue.outbound_caller_config
+}
+output "tags" {
+  description = "(Optional) Tags to apply to the Queue. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A outbound_caller_config block supports the following arguments:"
+  value       = aws_connect_queue.aws_connect_queue.tags
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Queue separated by a colon (:)."
+  value       = aws_connect_queue.aws_connect_queue.id
 }
 output "max_contacts" {
   description = "(Optional) Specifies the maximum number of contacts that can be in the queue before it is considered full. Minimum value of 0."
@@ -231,6 +251,14 @@ output "outbound_caller_id_number_id" {
   description = "(Optional) Specifies the caller ID number."
   value       = aws_connect_queue.aws_connect_queue.outbound_caller_id_number_id
 }
+output "quick_connect_ids" {
+  description = "(Optional) Specifies a list of quick connects ids that determine the quick connects available to agents who are working the queue."
+  value       = aws_connect_queue.aws_connect_queue.quick_connect_ids
+}
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_queue.aws_connect_queue.instance_id
+}
 output "outbound_flow_id" {
   description = "(Optional) Specifies outbound whisper flow to be used during an outbound call.In addition to all arguments above, the following attributes are exported:"
   value       = aws_connect_queue.aws_connect_queue.outbound_flow_id
@@ -238,34 +266,6 @@ output "outbound_flow_id" {
 output "queue_id" {
   description = "The identifier for the Queue."
   value       = aws_connect_queue.aws_connect_queue.queue_id
-}
-output "tags" {
-  description = "(Optional) Tags to apply to the Queue. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A outbound_caller_config block supports the following arguments:"
-  value       = aws_connect_queue.aws_connect_queue.tags
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Queue."
-  value       = aws_connect_queue.aws_connect_queue.arn
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Queue separated by a colon (:)."
-  value       = aws_connect_queue.aws_connect_queue.id
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_queue.aws_connect_queue.instance_id
-}
-output "outbound_caller_config" {
-  description = "(Required) A block that defines the outbound caller ID name, number, and outbound whisper flow. The Outbound Caller Config block is documented below."
-  value       = aws_connect_queue.aws_connect_queue.outbound_caller_config
-}
-output "quick_connect_ids" {
-  description = "(Optional) Specifies a list of quick connects ids that determine the quick connects available to agents who are working the queue."
-  value       = aws_connect_queue.aws_connect_queue.quick_connect_ids
-}
-output "status" {
-  description = "(Optional) Specifies the description of the Queue. Valid values are ENABLED, DISABLED."
-  value       = aws_connect_queue.aws_connect_queue.status
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Queue."

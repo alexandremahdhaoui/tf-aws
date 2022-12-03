@@ -1,87 +1,27 @@
 resource "aws_glue_classifier" "aws_glue_classifier" {
-  header                 = var.header
-  json_path              = var.json_path
   quote_symbol           = var.quote_symbol
-  xml_classifier         = var.xml_classifier
-  custom_patterns        = var.custom_patterns
-  grok_pattern           = var.grok_pattern
-  json_classifier        = var.json_classifier
-  row_tag                = var.row_tag
-  classification         = var.classification
-  csv_classifier         = var.csv_classifier
-  disable_value_trimming = var.disable_value_trimming
   allow_single_column    = var.allow_single_column
-  delimiter              = var.delimiter
-  name                   = var.name
-  contains_header        = var.contains_header
   grok_classifier        = var.grok_classifier
+  json_classifier        = var.json_classifier
+  json_path              = var.json_path
+  csv_classifier         = var.csv_classifier
+  delimiter              = var.delimiter
+  disable_value_trimming = var.disable_value_trimming
+  grok_pattern           = var.grok_pattern
+  xml_classifier         = var.xml_classifier
+  classification         = var.classification
+  header                 = var.header
+  name                   = var.name
+  row_tag                = var.row_tag
+  contains_header        = var.contains_header
+  custom_patterns        = var.custom_patterns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "contains_header" {
-  description = "(Optional) Indicates whether the CSV file contains a header. This can be one of \"ABSENT\", \"PRESENT\", or \"UNKNOWN\"."
-  type        = string
-  default     = ""
-}
-variable "grok_classifier" {
-  description = " – (Optional) A classifier that uses grok patterns. Defined below."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = " – (Required) The name of the classifier."
-  type        = string
-}
-variable "custom_patterns" {
-  description = "(Optional) Custom grok patterns used by this classifier."
-  type        = string
-  default     = ""
-}
-variable "grok_pattern" {
-  description = "(Required) The grok pattern used by this classifier.json_classifier"
-  type        = string
-}
-variable "header" {
-  description = "(Optional) A list of strings representing column names."
-  type        = string
-  default     = ""
-}
-variable "json_path" {
-  description = "(Required) A JsonPath string defining the JSON data for the classifier to classify. AWS Glue supports a subset of JsonPath, as described in Writing JsonPath Custom Classifiers.xml_classifier"
-  type        = string
-}
-variable "quote_symbol" {
-  description = "(Optional) A custom symbol to denote what combines content into a single column value. It must be different from the column delimiter.grok_classifier"
-  type        = string
-  default     = ""
-}
-variable "xml_classifier" {
-  description = " – (Optional) A classifier for XML content. Defined below.csv_classifier"
-  type        = string
-  default     = ""
-}
-variable "classification" {
-  description = "(Required) An identifier of the data format that the classifier matches."
-  type        = string
-}
 variable "csv_classifier" {
   description = "(Optional) A classifier for Csv content. Defined below."
-  type        = string
-  default     = ""
-}
-variable "json_classifier" {
-  description = " – (Optional) A classifier for JSON content. Defined below."
-  type        = string
-  default     = ""
-}
-variable "row_tag" {
-  description = "(Required) The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by />). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, <row item_a=\"A\" item_b=\"B\"></row> is okay, but <row item_a=\"A\" item_b=\"B\" /> is not).In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "allow_single_column" {
-  description = "(Optional) Enables the processing of files that contain only one column."
   type        = string
   default     = ""
 }
@@ -92,6 +32,66 @@ variable "delimiter" {
 }
 variable "disable_value_trimming" {
   description = "(Optional) Specifies whether to trim column values."
+  type        = string
+  default     = ""
+}
+variable "grok_pattern" {
+  description = "(Required) The grok pattern used by this classifier.json_classifier"
+  type        = string
+}
+variable "classification" {
+  description = "(Required) An identifier of the data format that the classifier matches."
+  type        = string
+}
+variable "header" {
+  description = "(Optional) A list of strings representing column names."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = " – (Required) The name of the classifier."
+  type        = string
+}
+variable "row_tag" {
+  description = "(Required) The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by />). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, <row item_a=\"A\" item_b=\"B\"></row> is okay, but <row item_a=\"A\" item_b=\"B\" /> is not).In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "xml_classifier" {
+  description = " – (Optional) A classifier for XML content. Defined below.csv_classifier"
+  type        = string
+  default     = ""
+}
+variable "contains_header" {
+  description = "(Optional) Indicates whether the CSV file contains a header. This can be one of \"ABSENT\", \"PRESENT\", or \"UNKNOWN\"."
+  type        = string
+  default     = ""
+}
+variable "custom_patterns" {
+  description = "(Optional) Custom grok patterns used by this classifier."
+  type        = string
+  default     = ""
+}
+variable "allow_single_column" {
+  description = "(Optional) Enables the processing of files that contain only one column."
+  type        = string
+  default     = ""
+}
+variable "grok_classifier" {
+  description = " – (Optional) A classifier that uses grok patterns. Defined below."
+  type        = string
+  default     = ""
+}
+variable "json_classifier" {
+  description = " – (Optional) A classifier for JSON content. Defined below."
+  type        = string
+  default     = ""
+}
+variable "json_path" {
+  description = "(Required) A JsonPath string defining the JSON data for the classifier to classify. AWS Glue supports a subset of JsonPath, as described in Writing JsonPath Custom Classifiers.xml_classifier"
+  type        = string
+}
+variable "quote_symbol" {
+  description = "(Optional) A custom symbol to denote what combines content into a single column value. It must be different from the column delimiter.grok_classifier"
   type        = string
   default     = ""
 }
@@ -215,9 +215,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allow_single_column" {
-  description = "(Optional) Enables the processing of files that contain only one column."
-  value       = aws_glue_classifier.aws_glue_classifier.allow_single_column
+output "csv_classifier" {
+  description = "(Optional) A classifier for Csv content. Defined below."
+  value       = aws_glue_classifier.aws_glue_classifier.csv_classifier
 }
 output "delimiter" {
   description = "(Optional) The delimiter used in the Csv to separate columns."
@@ -227,33 +227,49 @@ output "disable_value_trimming" {
   description = "(Optional) Specifies whether to trim column values."
   value       = aws_glue_classifier.aws_glue_classifier.disable_value_trimming
 }
-output "contains_header" {
-  description = "(Optional) Indicates whether the CSV file contains a header. This can be one of \"ABSENT\", \"PRESENT\", or \"UNKNOWN\"."
-  value       = aws_glue_classifier.aws_glue_classifier.contains_header
+output "grok_pattern" {
+  description = "(Required) The grok pattern used by this classifier.json_classifier"
+  value       = aws_glue_classifier.aws_glue_classifier.grok_pattern
 }
-output "grok_classifier" {
-  description = " – (Optional) A classifier that uses grok patterns. Defined below."
-  value       = aws_glue_classifier.aws_glue_classifier.grok_classifier
+output "classification" {
+  description = "(Required) An identifier of the data format that the classifier matches."
+  value       = aws_glue_classifier.aws_glue_classifier.classification
+}
+output "header" {
+  description = "(Optional) A list of strings representing column names."
+  value       = aws_glue_classifier.aws_glue_classifier.header
 }
 output "name" {
   description = " – (Required) The name of the classifier."
   value       = aws_glue_classifier.aws_glue_classifier.name
 }
+output "row_tag" {
+  description = "(Required) The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by />). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, <row item_a=\"A\" item_b=\"B\"></row> is okay, but <row item_a=\"A\" item_b=\"B\" /> is not).In addition to all arguments above, the following attributes are exported:"
+  value       = aws_glue_classifier.aws_glue_classifier.row_tag
+}
 output "xml_classifier" {
   description = " – (Optional) A classifier for XML content. Defined below.csv_classifier"
   value       = aws_glue_classifier.aws_glue_classifier.xml_classifier
+}
+output "contains_header" {
+  description = "(Optional) Indicates whether the CSV file contains a header. This can be one of \"ABSENT\", \"PRESENT\", or \"UNKNOWN\"."
+  value       = aws_glue_classifier.aws_glue_classifier.contains_header
 }
 output "custom_patterns" {
   description = "(Optional) Custom grok patterns used by this classifier."
   value       = aws_glue_classifier.aws_glue_classifier.custom_patterns
 }
-output "grok_pattern" {
-  description = "(Required) The grok pattern used by this classifier.json_classifier"
-  value       = aws_glue_classifier.aws_glue_classifier.grok_pattern
+output "allow_single_column" {
+  description = "(Optional) Enables the processing of files that contain only one column."
+  value       = aws_glue_classifier.aws_glue_classifier.allow_single_column
 }
-output "header" {
-  description = "(Optional) A list of strings representing column names."
-  value       = aws_glue_classifier.aws_glue_classifier.header
+output "grok_classifier" {
+  description = " – (Optional) A classifier that uses grok patterns. Defined below."
+  value       = aws_glue_classifier.aws_glue_classifier.grok_classifier
+}
+output "json_classifier" {
+  description = " – (Optional) A classifier for JSON content. Defined below."
+  value       = aws_glue_classifier.aws_glue_classifier.json_classifier
 }
 output "json_path" {
   description = "(Required) A JsonPath string defining the JSON data for the classifier to classify. AWS Glue supports a subset of JsonPath, as described in Writing JsonPath Custom Classifiers.xml_classifier"
@@ -262,22 +278,6 @@ output "json_path" {
 output "quote_symbol" {
   description = "(Optional) A custom symbol to denote what combines content into a single column value. It must be different from the column delimiter.grok_classifier"
   value       = aws_glue_classifier.aws_glue_classifier.quote_symbol
-}
-output "classification" {
-  description = "(Required) An identifier of the data format that the classifier matches."
-  value       = aws_glue_classifier.aws_glue_classifier.classification
-}
-output "csv_classifier" {
-  description = "(Optional) A classifier for Csv content. Defined below."
-  value       = aws_glue_classifier.aws_glue_classifier.csv_classifier
-}
-output "json_classifier" {
-  description = " – (Optional) A classifier for JSON content. Defined below."
-  value       = aws_glue_classifier.aws_glue_classifier.json_classifier
-}
-output "row_tag" {
-  description = "(Required) The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by />). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, <row item_a=\"A\" item_b=\"B\"></row> is okay, but <row item_a=\"A\" item_b=\"B\" /> is not).In addition to all arguments above, the following attributes are exported:"
-  value       = aws_glue_classifier.aws_glue_classifier.row_tag
 }
 output "id" {
   description = "Name of the classifier"

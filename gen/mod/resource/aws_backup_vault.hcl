@@ -1,29 +1,16 @@
 resource "aws_backup_vault" "aws_backup_vault" {
-  tags_all        = var.tags_all
-  arn             = var.arn
-  force_destroy   = var.force_destroy
   id              = var.id
   kms_key_arn     = var.kms_key_arn
   name            = var.name
   recovery_points = var.recovery_points
   tags            = var.tags
+  tags_all        = var.tags_all
+  arn             = var.arn
+  force_destroy   = var.force_destroy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "force_destroy" {
-  description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
-  type        = string
-}
-variable "id" {
-  description = "The name of the vault."
-  type        = string
-}
-variable "kms_key_arn" {
-  description = "(Optional) The server-side encryption key that is used to protect your backups."
-  type        = string
-  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the backup vault to create."
@@ -45,6 +32,19 @@ variable "tags_all" {
 variable "arn" {
   description = "The ARN of the vault."
   type        = string
+}
+variable "force_destroy" {
+  description = "(Optional, Default: false) A boolean that indicates that all recovery points stored in the vault are deleted so that the vault can be destroyed without error."
+  type        = string
+}
+variable "id" {
+  description = "The name of the vault."
+  type        = string
+}
+variable "kms_key_arn" {
+  description = "(Optional) The server-side encryption key that is used to protect your backups."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,18 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_arn" {
-  description = "(Optional) The server-side encryption key that is used to protect your backups."
-  value       = aws_backup_vault.aws_backup_vault.kms_key_arn
-}
-output "name" {
-  description = "(Required) Name of the backup vault to create."
-  value       = aws_backup_vault.aws_backup_vault.name
-}
-output "recovery_points" {
-  description = "The number of recovery points that are stored in a backup vault."
-  value       = aws_backup_vault.aws_backup_vault.recovery_points
-}
 output "tags" {
   description = "(Optional) Metadata that you can assign to help organize the resources that you create. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_backup_vault.aws_backup_vault.tags
@@ -198,13 +186,17 @@ output "id" {
   description = "The name of the vault."
   value       = aws_backup_vault.aws_backup_vault.id
 }
-output "delete" {
-  description = "(Default 10m)"
-  value       = aws_backup_vault.aws_backup_vault.delete
+output "kms_key_arn" {
+  description = "(Optional) The server-side encryption key that is used to protect your backups."
+  value       = aws_backup_vault.aws_backup_vault.kms_key_arn
 }
-output "id" {
-  description = "The name of the vault."
-  value       = aws_backup_vault.aws_backup_vault.id
+output "name" {
+  description = "(Required) Name of the backup vault to create."
+  value       = aws_backup_vault.aws_backup_vault.name
+}
+output "recovery_points" {
+  description = "The number of recovery points that are stored in a backup vault."
+  value       = aws_backup_vault.aws_backup_vault.recovery_points
 }
 output "recovery_points" {
   description = "The number of recovery points that are stored in a backup vault."
@@ -217,6 +209,14 @@ output "tags_all" {
 output "arn" {
   description = "The ARN of the vault."
   value       = aws_backup_vault.aws_backup_vault.arn
+}
+output "delete" {
+  description = "(Default 10m)"
+  value       = aws_backup_vault.aws_backup_vault.delete
+}
+output "id" {
+  description = "The name of the vault."
+  value       = aws_backup_vault.aws_backup_vault.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

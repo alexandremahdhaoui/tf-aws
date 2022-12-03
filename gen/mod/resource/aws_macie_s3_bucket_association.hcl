@@ -10,6 +10,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "prefix" {
+  description = "(Optional) Object key prefix identifying one or more S3 objects to which the association applies.The classification_type object supports the following:"
+  type        = string
+  default     = ""
+}
 variable "bucket_name" {
   description = "(Required) The name of the S3 bucket that you want to associate with Amazon Macie."
   type        = string
@@ -20,9 +25,8 @@ variable "classification_type" {
   default     = ""
 }
 variable "continuous" {
-  description = "(Optional) A string value indicating that Macie perform a one-time classification of all of the existing objects in the bucket.\nThe only valid value is the default value, FULL."
+  description = "FULL."
   type        = string
-  default     = ""
 }
 variable "member_account_id" {
   description = "(Optional) The ID of the Amazon Macie member account whose S3 resources you want to associate with Macie. If member_account_id isn't specified, the action associates specified S3 resources with Macie for the current master account."
@@ -30,11 +34,7 @@ variable "member_account_id" {
   default     = ""
 }
 variable "one_time" {
-  description = "NONE and FULL. Defaults to NONE indicating that Macie only classifies objects that are added after the association was created.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "prefix" {
-  description = "(Optional) Object key prefix identifying one or more S3 objects to which the association applies.The classification_type object supports the following:"
+  description = "(Optional) A string value indicating whether or not Macie performs a one-time classification of all of the existing objects in the bucket.\nValid values are NONE and FULL. Defaults to NONE indicating that Macie only classifies objects that are added after the association was created.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -158,20 +158,8 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "classification_type" {
-  description = "(Optional) The configuration of how Amazon Macie classifies the S3 objects."
-  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.classification_type
-}
-output "continuous" {
-  description = "(Optional) A string value indicating that Macie perform a one-time classification of all of the existing objects in the bucket.\nThe only valid value is the default value, FULL."
-  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.continuous
-}
-output "member_account_id" {
-  description = "(Optional) The ID of the Amazon Macie member account whose S3 resources you want to associate with Macie. If member_account_id isn't specified, the action associates specified S3 resources with Macie for the current master account."
-  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.member_account_id
-}
 output "one_time" {
-  description = "NONE and FULL. Defaults to NONE indicating that Macie only classifies objects that are added after the association was created.In addition to all arguments above, the following attributes are exported:"
+  description = "(Optional) A string value indicating whether or not Macie performs a one-time classification of all of the existing objects in the bucket.\nValid values are NONE and FULL. Defaults to NONE indicating that Macie only classifies objects that are added after the association was created.In addition to all arguments above, the following attributes are exported:"
   value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.one_time
 }
 output "prefix" {
@@ -181,6 +169,18 @@ output "prefix" {
 output "bucket_name" {
   description = "(Required) The name of the S3 bucket that you want to associate with Amazon Macie."
   value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.bucket_name
+}
+output "classification_type" {
+  description = "(Optional) The configuration of how Amazon Macie classifies the S3 objects."
+  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.classification_type
+}
+output "continuous" {
+  description = "FULL."
+  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.continuous
+}
+output "member_account_id" {
+  description = "(Optional) The ID of the Amazon Macie member account whose S3 resources you want to associate with Macie. If member_account_id isn't specified, the action associates specified S3 resources with Macie for the current master account."
+  value       = aws_macie_s3_bucket_association.aws_macie_s3_bucket_association.member_account_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

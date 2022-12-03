@@ -1,11 +1,15 @@
 datasource "aws_backup_vault" "aws_backup_vault" {
+  arn             = var.arn
   kms_key_arn     = var.kms_key_arn
   name            = var.name
   recovery_points = var.recovery_points
-  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the vault."
   type        = string
 }
 variable "kms_key_arn" {
@@ -18,10 +22,6 @@ variable "name" {
 }
 variable "recovery_points" {
   description = "Number of recovery points that are stored in a backup vault."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the vault."
   type        = string
 }
 output "arn" {
@@ -40,10 +40,6 @@ output "recovery_points" {
   description = "Number of recovery points that are stored in a backup vault."
   value       = aws_backup_vault.aws_backup_vault.recovery_points
 }
-output "arn" {
-  description = "ARN of the vault."
-  value       = aws_backup_vault.aws_backup_vault.arn
-}
 output "kms_key_arn" {
   description = "Server-side encryption key that is used to protect your backups."
   value       = aws_backup_vault.aws_backup_vault.kms_key_arn
@@ -51,6 +47,10 @@ output "kms_key_arn" {
 output "recovery_points" {
   description = "Number of recovery points that are stored in a backup vault."
   value       = aws_backup_vault.aws_backup_vault.recovery_points
+}
+output "arn" {
+  description = "ARN of the vault."
+  value       = aws_backup_vault.aws_backup_vault.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."
