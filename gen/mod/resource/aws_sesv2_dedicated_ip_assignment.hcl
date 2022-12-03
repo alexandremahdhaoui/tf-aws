@@ -1,8 +1,8 @@
 resource "aws_sesv2_dedicated_ip_assignment" "aws_sesv2_dedicated_ip_assignment" {
-  ip                    = var.ip
   create                = var.create
   destination_pool_name = var.destination_pool_name
   id                    = var.id
+  ip                    = var.ip
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

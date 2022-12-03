@@ -1,22 +1,13 @@
 resource "aws_ses_template" "aws_ses_template" {
-  arn     = var.arn
-  html    = var.html
   name    = var.name
   subject = var.subject
   text    = var.text
+  arn     = var.arn
+  html    = var.html
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "arn" {
-  description = "The ARN of the SES template"
-  type        = string
-}
-variable "html" {
-  description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
-  type        = string
-  default     = ""
 }
 variable "name" {
   description = "(Required) The name of the template. Cannot exceed 64 characters. You will refer to this name when you send email."
@@ -29,6 +20,15 @@ variable "subject" {
 }
 variable "text" {
   description = "(Optional) The email body that will be visible to recipients whose email clients do not display HTML. Must be less than 500KB in size, including both the text and HTML parts.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the SES template"
+  type        = string
+}
+variable "html" {
+  description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
   type        = string
   default     = ""
 }
@@ -152,14 +152,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the SES template"
-  value       = aws_ses_template.aws_ses_template.arn
-}
-output "html" {
-  description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
-  value       = aws_ses_template.aws_ses_template.html
-}
 output "name" {
   description = "(Required) The name of the template. Cannot exceed 64 characters. You will refer to this name when you send email."
   value       = aws_ses_template.aws_ses_template.name
@@ -171,6 +163,14 @@ output "subject" {
 output "text" {
   description = "(Optional) The email body that will be visible to recipients whose email clients do not display HTML. Must be less than 500KB in size, including both the text and HTML parts.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ses_template.aws_ses_template.text
+}
+output "arn" {
+  description = "The ARN of the SES template"
+  value       = aws_ses_template.aws_ses_template.arn
+}
+output "html" {
+  description = "(Optional) The HTML body of the email. Must be less than 500KB in size, including both the text and HTML parts."
+  value       = aws_ses_template.aws_ses_template.html
 }
 output "arn" {
   description = "The ARN of the SES template"

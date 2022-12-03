@@ -1,27 +1,14 @@
 resource "aws_codeartifact_repository_permissions_policy" "aws_codeartifact_repository_permissions_policy" {
-  domain_owner    = var.domain_owner
   id              = var.id
   policy_document = var.policy_document
   policy_revision = var.policy_revision
   repository      = var.repository
   domain          = var.domain
+  domain_owner    = var.domain_owner
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "id" {
-  description = "The ARN of the resource associated with the resource policy."
-  type        = string
-}
-variable "policy_document" {
-  description = "(Required) A JSON policy string to be set as the access control resource policy on the provided domain."
-  type        = string
-}
-variable "policy_revision" {
-  description = "(Optional) The current revision of the resource policy to be set. This revision is used for optimistic locking, which prevents others from overwriting your changes to the domain's resource policy.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "repository" {
   description = "(Required) The name of the repository to set the resource policy on."
@@ -33,6 +20,19 @@ variable "domain" {
 }
 variable "domain_owner" {
   description = "(Optional) The account number of the AWS account that owns the domain."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ARN of the resource associated with the resource policy."
+  type        = string
+}
+variable "policy_document" {
+  description = "(Required) A JSON policy string to be set as the access control resource policy on the provided domain."
+  type        = string
+}
+variable "policy_revision" {
+  description = "(Optional) The current revision of the resource policy to be set. This revision is used for optimistic locking, which prevents others from overwriting your changes to the domain's resource policy.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }

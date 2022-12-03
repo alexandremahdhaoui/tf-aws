@@ -23,10 +23,14 @@ spec:
             description: ': Instances are terminated after a specified wait time.'
             type: string
         action:
-            description: ""
+            description: |
+                (Optional) The action to take on instances in the original environment after a successful blue/green deployment.
+            optional: true
             type: string
         action_on_timeout:
-            description: ""
+            description: |
+                (Optional) When to reroute traffic from an original environment to a replacement environment in a blue/green deployment.
+            optional: true
             type: string
         alarm_configuration:
             description: (Optional) Configuration block of alarms associated with the deployment group (documented below).

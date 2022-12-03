@@ -1,9 +1,9 @@
 resource "aws_apigatewayv2_route_response" "aws_apigatewayv2_route_response" {
-  route_response_key         = var.route_response_key
   api_id                     = var.api_id
   model_selection_expression = var.model_selection_expression
   response_models            = var.response_models
   route_id                   = var.route_id
+  route_response_key         = var.route_response_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -151,14 +151,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "route_response_key" {
-  description = "(Required) Route response key."
-  value       = aws_apigatewayv2_route_response.aws_apigatewayv2_route_response.route_response_key
-}
-output "api_id" {
-  description = "(Required) API identifier."
-  value       = aws_apigatewayv2_route_response.aws_apigatewayv2_route_response.api_id
-}
 output "model_selection_expression" {
   description = "(Optional) The model selection expression for the route response."
   value       = aws_apigatewayv2_route_response.aws_apigatewayv2_route_response.model_selection_expression
@@ -170,6 +162,14 @@ output "response_models" {
 output "route_id" {
   description = "(Required) Identifier of the aws_apigatewayv2_route."
   value       = aws_apigatewayv2_route_response.aws_apigatewayv2_route_response.route_id
+}
+output "route_response_key" {
+  description = "(Required) Route response key."
+  value       = aws_apigatewayv2_route_response.aws_apigatewayv2_route_response.route_response_key
+}
+output "api_id" {
+  description = "(Required) API identifier."
+  value       = aws_apigatewayv2_route_response.aws_apigatewayv2_route_response.api_id
 }
 output "id" {
   description = "Route response identifier."

@@ -1,26 +1,14 @@
 datasource "aws_ecs_task_definition" "aws_ecs_task_definition" {
-  arn             = var.arn
   family          = var.family
   id              = var.id
   network_mode    = var.network_mode
   revision        = var.revision
   status          = var.status
   task_definition = var.task_definition
+  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "family" {
-  description = "Family of this task definition"
-  type        = string
-}
-variable "id" {
-  description = "ARN of the task definition"
-  type        = string
-}
-variable "network_mode" {
-  description = "Docker networking mode to use for the containers in this task."
   type        = string
 }
 variable "revision" {
@@ -39,21 +27,17 @@ variable "arn" {
   description = "ARN of the task definition"
   type        = string
 }
-output "arn" {
-  description = "ARN of the task definition"
-  value       = aws_ecs_task_definition.aws_ecs_task_definition.arn
-}
-output "family" {
+variable "family" {
   description = "Family of this task definition"
-  value       = aws_ecs_task_definition.aws_ecs_task_definition.family
+  type        = string
 }
-output "id" {
+variable "id" {
   description = "ARN of the task definition"
-  value       = aws_ecs_task_definition.aws_ecs_task_definition.id
+  type        = string
 }
-output "network_mode" {
+variable "network_mode" {
   description = "Docker networking mode to use for the containers in this task."
-  value       = aws_ecs_task_definition.aws_ecs_task_definition.network_mode
+  type        = string
 }
 output "revision" {
   description = "Revision of this task definition"
@@ -67,13 +51,21 @@ output "task_definition" {
   description = "(Required) Family for the latest ACTIVE revision, family and revision (family:revision) for a specific revision in the family, the ARN of the task definition to access to.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecs_task_definition.aws_ecs_task_definition.task_definition
 }
-output "revision" {
-  description = "Revision of this task definition"
-  value       = aws_ecs_task_definition.aws_ecs_task_definition.revision
+output "arn" {
+  description = "ARN of the task definition"
+  value       = aws_ecs_task_definition.aws_ecs_task_definition.arn
 }
-output "status" {
-  description = "Status of this task definition"
-  value       = aws_ecs_task_definition.aws_ecs_task_definition.status
+output "family" {
+  description = "Family of this task definition"
+  value       = aws_ecs_task_definition.aws_ecs_task_definition.family
+}
+output "id" {
+  description = "ARN of the task definition"
+  value       = aws_ecs_task_definition.aws_ecs_task_definition.id
+}
+output "network_mode" {
+  description = "Docker networking mode to use for the containers in this task."
+  value       = aws_ecs_task_definition.aws_ecs_task_definition.network_mode
 }
 output "arn" {
   description = "ARN of the task definition"
@@ -90,6 +82,14 @@ output "id" {
 output "network_mode" {
   description = "Docker networking mode to use for the containers in this task."
   value       = aws_ecs_task_definition.aws_ecs_task_definition.network_mode
+}
+output "revision" {
+  description = "Revision of this task definition"
+  value       = aws_ecs_task_definition.aws_ecs_task_definition.revision
+}
+output "status" {
+  description = "Status of this task definition"
+  value       = aws_ecs_task_definition.aws_ecs_task_definition.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

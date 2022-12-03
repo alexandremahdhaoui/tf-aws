@@ -7,17 +7,17 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "arn" {
+  description = "(Optional) ARN that identifies the activity.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "ARN that identifies the activity."
   type        = string
 }
 variable "name" {
   description = "(Optional) Name that identifies the activity."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "(Optional) ARN that identifies the activity.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }

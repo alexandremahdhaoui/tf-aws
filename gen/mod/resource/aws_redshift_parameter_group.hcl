@@ -1,5 +1,4 @@
 resource "aws_redshift_parameter_group" "aws_redshift_parameter_group" {
-  family      = var.family
   id          = var.id
   name        = var.name
   parameter   = var.parameter
@@ -7,17 +6,10 @@ resource "aws_redshift_parameter_group" "aws_redshift_parameter_group" {
   value       = var.value
   arn         = var.arn
   description = var.description
+  family      = var.family
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "value" {
-  description = "(Required) The value of the Redshift parameter."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of parameter group"
   type        = string
 }
 variable "description" {
@@ -46,6 +38,14 @@ variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.You can read more about the parameters that Redshift supports in the documentationIn addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "value" {
+  description = "(Required) The value of the Redshift parameter."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of parameter group"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -167,6 +167,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = "(Optional) The description of the Redshift parameter group. Defaults to \"Managed by Terraform\"."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.description
+}
+output "family" {
+  description = "(Required) The family of the Redshift parameter group."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.family
+}
+output "id" {
+  description = "The Redshift parameter group name."
+  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
+}
 output "name" {
   description = "(Required) The name of the Redshift parameter."
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.name
@@ -186,18 +198,6 @@ output "value" {
 output "arn" {
   description = "Amazon Resource Name (ARN) of parameter group"
   value       = aws_redshift_parameter_group.aws_redshift_parameter_group.arn
-}
-output "description" {
-  description = "(Optional) The description of the Redshift parameter group. Defaults to \"Managed by Terraform\"."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.description
-}
-output "family" {
-  description = "(Required) The family of the Redshift parameter group."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.family
-}
-output "id" {
-  description = "The Redshift parameter group name."
-  value       = aws_redshift_parameter_group.aws_redshift_parameter_group.id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of parameter group"

@@ -1,52 +1,87 @@
 resource "aws_ssm_document" "aws_ssm_document" {
-  latest_version     = var.latest_version
+  schema_version     = var.schema_version
+  document_type      = var.document_type
+  document_version   = var.document_version
+  hash               = var.hash
+  platform_types     = var.platform_types
+  type               = var.type
   values             = var.values
   version_name       = var.version_name
-  document_format    = var.document_format
-  document_type      = var.document_type
-  hash_type          = var.hash_type
-  key                = var.key
-  tags_all           = var.tags_all
-  target_type        = var.target_type
-  hash               = var.hash
-  name               = var.name
-  permissions        = var.permissions
-  platform_types     = var.platform_types
-  description        = var.description
-  document_version   = var.document_version
-  schema_version     = var.schema_version
-  tags               = var.tags
-  attachments_source = var.attachments_source
   content            = var.content
   created_date       = var.created_date
-  default_version    = var.default_version
-  owner              = var.owner
   parameter          = var.parameter
+  tags               = var.tags
+  owner              = var.owner
+  permissions        = var.permissions
+  tags_all           = var.tags_all
+  attachments_source = var.attachments_source
+  default_version    = var.default_version
+  document_format    = var.document_format
+  hash_type          = var.hash_type
   status             = var.status
-  type               = var.type
+  target_type        = var.target_type
+  description        = var.description
+  key                = var.key
+  latest_version     = var.latest_version
+  name               = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "owner" {
-  description = "The AWS user account of the person who created the document."
+variable "name" {
+  description = "(Optional) The name of the document attachment fileIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "parameter" {
-  description = "The parameters that are available to this document."
-  type        = string
+  default     = ""
 }
 variable "status" {
   description = "\"Creating\", \"Active\" or \"Deleting\". The current status of the document."
   type        = string
 }
-variable "type" {
-  description = "The permission type for the document. The permission type can be Share."
+variable "target_type" {
+  description = "(Optional) The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see AWS Resource Types Reference (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)"
+  type        = string
+  default     = ""
+}
+variable "description" {
+  description = "The description of the document."
+  type        = string
+}
+variable "key" {
+  description = "(Required) The key describing the location of an attachment to a document. Valid key types include: SourceUrl and S3FileUrl"
   type        = string
 }
 variable "latest_version" {
   description = "The latest version of the document."
+  type        = string
+}
+variable "platform_types" {
+  description = "A list of OS platforms compatible with this SSM document, either \"Windows\" or \"Linux\"."
+  type        = string
+}
+variable "schema_version" {
+  description = "The schema version of the document."
+  type        = string
+}
+variable "document_type" {
+  description = "(Required) The type of the document. Valid document types include: Automation, Command, Package, Policy, and Session"
+  type        = string
+}
+variable "document_version" {
+  description = "The document version."
+  type        = string
+}
+variable "hash" {
+  description = "The sha1 or sha256 of the document content"
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "The permission type for the document. The permission type can be Share."
   type        = string
 }
 variable "values" {
@@ -58,71 +93,6 @@ variable "version_name" {
   type        = string
   default     = ""
 }
-variable "document_format" {
-  description = "(Optional, defaults to JSON) The format of the document. Valid document types include: JSON and YAML"
-  type        = string
-}
-variable "document_type" {
-  description = "(Required) The type of the document. Valid document types include: Automation, Command, Package, Policy, and Session"
-  type        = string
-}
-variable "hash_type" {
-  description = "\"Sha1\" \"Sha256\". The hashing algorithm used when hashing the content."
-  type        = string
-}
-variable "key" {
-  description = "(Required) The key describing the location of an attachment to a document. Valid key types include: SourceUrl and S3FileUrl"
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:"
-  type        = string
-}
-variable "target_type" {
-  description = "(Optional) The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see AWS Resource Types Reference (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)"
-  type        = string
-  default     = ""
-}
-variable "hash" {
-  description = "The sha1 or sha256 of the document content"
-  type        = string
-}
-variable "name" {
-  description = "(Optional) The name of the document attachment fileIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "permissions" {
-  description = "(Optional) Additional Permissions to attach to the document. See Permissions below for details."
-  type        = string
-  default     = ""
-}
-variable "platform_types" {
-  description = "A list of OS platforms compatible with this SSM document, either \"Windows\" or \"Linux\"."
-  type        = string
-}
-variable "description" {
-  description = "The description of the document."
-  type        = string
-}
-variable "document_version" {
-  description = "The document version."
-  type        = string
-}
-variable "schema_version" {
-  description = "The schema version of the document."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "attachments_source" {
-  description = "(Optional) One or more configuration blocks describing attachments sources to a version of a document. Defined below."
-  type        = string
-  default     = ""
-}
 variable "content" {
   description = "(Required) The JSON or YAML content of the document."
   type        = string
@@ -131,8 +101,38 @@ variable "created_date" {
   description = "The date the document was created."
   type        = string
 }
+variable "parameter" {
+  description = "The parameters that are available to this document."
+  type        = string
+}
+variable "hash_type" {
+  description = "\"Sha1\" \"Sha256\". The hashing algorithm used when hashing the content."
+  type        = string
+}
+variable "owner" {
+  description = "The AWS user account of the person who created the document."
+  type        = string
+}
+variable "permissions" {
+  description = "(Optional) Additional Permissions to attach to the document. See Permissions below for details."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:"
+  type        = string
+}
+variable "attachments_source" {
+  description = "(Optional) One or more configuration blocks describing attachments sources to a version of a document. Defined below."
+  type        = string
+  default     = ""
+}
 variable "default_version" {
   description = "The default version of the document."
+  type        = string
+}
+variable "document_format" {
+  description = "(Optional, defaults to JSON) The format of the document. Valid document types include: JSON and YAML"
   type        = string
 }
 variable "tag_instance_id" {
@@ -255,41 +255,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "document_type" {
+  description = "(Required) The type of the document. Valid document types include: Automation, Command, Package, Policy, and Session"
+  value       = aws_ssm_document.aws_ssm_document.document_type
+}
+output "document_version" {
+  description = "The document version."
+  value       = aws_ssm_document.aws_ssm_document.document_version
+}
 output "hash" {
   description = "The sha1 or sha256 of the document content"
   value       = aws_ssm_document.aws_ssm_document.hash
-}
-output "name" {
-  description = "(Optional) The name of the document attachment fileIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ssm_document.aws_ssm_document.name
-}
-output "permissions" {
-  description = "(Optional) Additional Permissions to attach to the document. See Permissions below for details."
-  value       = aws_ssm_document.aws_ssm_document.permissions
 }
 output "platform_types" {
   description = "A list of OS platforms compatible with this SSM document, either \"Windows\" or \"Linux\"."
   value       = aws_ssm_document.aws_ssm_document.platform_types
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:"
-  value       = aws_ssm_document.aws_ssm_document.tags_all
-}
-output "target_type" {
-  description = "(Optional) The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see AWS Resource Types Reference (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)"
-  value       = aws_ssm_document.aws_ssm_document.target_type
-}
 output "schema_version" {
   description = "The schema version of the document."
   value       = aws_ssm_document.aws_ssm_document.schema_version
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ssm_document.aws_ssm_document.tags
-}
-output "attachments_source" {
-  description = "(Optional) One or more configuration blocks describing attachments sources to a version of a document. Defined below."
-  value       = aws_ssm_document.aws_ssm_document.attachments_source
 }
 output "content" {
   description = "(Required) The JSON or YAML content of the document."
@@ -299,49 +283,57 @@ output "created_date" {
   description = "The date the document was created."
   value       = aws_ssm_document.aws_ssm_document.created_date
 }
-output "default_version" {
-  description = "The default version of the document."
-  value       = aws_ssm_document.aws_ssm_document.default_version
-}
-output "description" {
-  description = "The description of the document."
-  value       = aws_ssm_document.aws_ssm_document.description
-}
-output "document_version" {
-  description = "The document version."
-  value       = aws_ssm_document.aws_ssm_document.document_version
-}
-output "owner" {
-  description = "The AWS user account of the person who created the document."
-  value       = aws_ssm_document.aws_ssm_document.owner
-}
 output "parameter" {
   description = "The parameters that are available to this document."
   value       = aws_ssm_document.aws_ssm_document.parameter
 }
-output "status" {
-  description = "\"Creating\", \"Active\" or \"Deleting\". The current status of the document."
-  value       = aws_ssm_document.aws_ssm_document.status
+output "tags" {
+  description = "(Optional) A map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ssm_document.aws_ssm_document.tags
 }
 output "type" {
   description = "The permission type for the document. The permission type can be Share."
   value       = aws_ssm_document.aws_ssm_document.type
 }
+output "values" {
+  description = "(Required) The value describing the location of an attachment to a document"
+  value       = aws_ssm_document.aws_ssm_document.values
+}
 output "version_name" {
   description = "(Optional) A field specifying the version of the artifact you are creating with the document. For example, \"Release 12, Update 6\". This value is unique across all versions of a document and cannot be changed for an existing document version.attachments_sourceThe attachments_source block supports the following:"
   value       = aws_ssm_document.aws_ssm_document.version_name
+}
+output "attachments_source" {
+  description = "(Optional) One or more configuration blocks describing attachments sources to a version of a document. Defined below."
+  value       = aws_ssm_document.aws_ssm_document.attachments_source
+}
+output "default_version" {
+  description = "The default version of the document."
+  value       = aws_ssm_document.aws_ssm_document.default_version
 }
 output "document_format" {
   description = "(Optional, defaults to JSON) The format of the document. Valid document types include: JSON and YAML"
   value       = aws_ssm_document.aws_ssm_document.document_format
 }
-output "document_type" {
-  description = "(Required) The type of the document. Valid document types include: Automation, Command, Package, Policy, and Session"
-  value       = aws_ssm_document.aws_ssm_document.document_type
-}
 output "hash_type" {
   description = "\"Sha1\" \"Sha256\". The hashing algorithm used when hashing the content."
   value       = aws_ssm_document.aws_ssm_document.hash_type
+}
+output "owner" {
+  description = "The AWS user account of the person who created the document."
+  value       = aws_ssm_document.aws_ssm_document.owner
+}
+output "permissions" {
+  description = "(Optional) Additional Permissions to attach to the document. See Permissions below for details."
+  value       = aws_ssm_document.aws_ssm_document.permissions
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:"
+  value       = aws_ssm_document.aws_ssm_document.tags_all
+}
+output "description" {
+  description = "The description of the document."
+  value       = aws_ssm_document.aws_ssm_document.description
 }
 output "key" {
   description = "(Required) The key describing the location of an attachment to a document. Valid key types include: SourceUrl and S3FileUrl"
@@ -351,53 +343,45 @@ output "latest_version" {
   description = "The latest version of the document."
   value       = aws_ssm_document.aws_ssm_document.latest_version
 }
-output "values" {
-  description = "(Required) The value describing the location of an attachment to a document"
-  value       = aws_ssm_document.aws_ssm_document.values
+output "name" {
+  description = "(Optional) The name of the document attachment fileIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ssm_document.aws_ssm_document.name
 }
-output "owner" {
-  description = "The AWS user account of the person who created the document."
-  value       = aws_ssm_document.aws_ssm_document.owner
+output "status" {
+  description = "\"Creating\", \"Active\" or \"Deleting\". The current status of the document."
+  value       = aws_ssm_document.aws_ssm_document.status
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:"
-  value       = aws_ssm_document.aws_ssm_document.tags_all
-}
-output "type" {
-  description = "The permission type for the document. The permission type can be Share."
-  value       = aws_ssm_document.aws_ssm_document.type
-}
-output "schema_version" {
-  description = "The schema version of the document."
-  value       = aws_ssm_document.aws_ssm_document.schema_version
-}
-output "created_date" {
-  description = "The date the document was created."
-  value       = aws_ssm_document.aws_ssm_document.created_date
-}
-output "default_version" {
-  description = "The default version of the document."
-  value       = aws_ssm_document.aws_ssm_document.default_version
-}
-output "document_version" {
-  description = "The document version."
-  value       = aws_ssm_document.aws_ssm_document.document_version
-}
-output "hash" {
-  description = "The sha1 or sha256 of the document content"
-  value       = aws_ssm_document.aws_ssm_document.hash
+output "target_type" {
+  description = "(Optional) The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see AWS Resource Types Reference (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)"
+  value       = aws_ssm_document.aws_ssm_document.target_type
 }
 output "account_ids" {
   description = "The AWS user accounts that should have access to the document. The account IDs can either be a group of account IDs or All."
   value       = aws_ssm_document.aws_ssm_document.account_ids
 }
-output "description" {
-  description = "The description of the document."
-  value       = aws_ssm_document.aws_ssm_document.description
-}
 output "parameter" {
   description = "The parameters that are available to this document."
   value       = aws_ssm_document.aws_ssm_document.parameter
+}
+output "default_version" {
+  description = "The default version of the document."
+  value       = aws_ssm_document.aws_ssm_document.default_version
+}
+output "platform_types" {
+  description = "A list of OS platforms compatible with this SSM document, either \"Windows\" or \"Linux\"."
+  value       = aws_ssm_document.aws_ssm_document.platform_types
+}
+output "type" {
+  description = "The permission type for the document. The permission type can be Share."
+  value       = aws_ssm_document.aws_ssm_document.type
+}
+output "created_date" {
+  description = "The date the document was created."
+  value       = aws_ssm_document.aws_ssm_document.created_date
+}
+output "description" {
+  description = "The description of the document."
+  value       = aws_ssm_document.aws_ssm_document.description
 }
 output "hash_type" {
   description = "\"Sha1\" \"Sha256\". The hashing algorithm used when hashing the content."
@@ -407,13 +391,29 @@ output "latest_version" {
   description = "The latest version of the document."
   value       = aws_ssm_document.aws_ssm_document.latest_version
 }
-output "platform_types" {
-  description = "A list of OS platforms compatible with this SSM document, either \"Windows\" or \"Linux\"."
-  value       = aws_ssm_document.aws_ssm_document.platform_types
+output "schema_version" {
+  description = "The schema version of the document."
+  value       = aws_ssm_document.aws_ssm_document.schema_version
+}
+output "document_version" {
+  description = "The document version."
+  value       = aws_ssm_document.aws_ssm_document.document_version
+}
+output "hash" {
+  description = "The sha1 or sha256 of the document content"
+  value       = aws_ssm_document.aws_ssm_document.hash
+}
+output "owner" {
+  description = "The AWS user account of the person who created the document."
+  value       = aws_ssm_document.aws_ssm_document.owner
 }
 output "status" {
   description = "\"Creating\", \"Active\" or \"Deleting\". The current status of the document."
   value       = aws_ssm_document.aws_ssm_document.status
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.PermissionsThe permissions mapping supports the following:"
+  value       = aws_ssm_document.aws_ssm_document.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

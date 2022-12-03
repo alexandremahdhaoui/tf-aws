@@ -124,6 +124,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.tags_all
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.update
+}
 output "arn" {
   description = "ARN of the table replica."
   value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.arn
@@ -139,14 +147,6 @@ output "delete" {
 output "id" {
   description = "Name of the table and region of the main global table joined with a semicolon (eme.g., TableName:us-east-1)."
   value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.id
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.tags_all
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_dynamodb_table_replica.aws_dynamodb_table_replica.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

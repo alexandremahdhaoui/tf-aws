@@ -257,10 +257,7 @@ spec:
             optional: true
             type: string
         text_transformation:
-            description: |-
-                (Required) Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass detection.
-                At least one required.
-                See Text Transformation below for details.Field to MatchThe part of a web request that you want AWS WAF to inspect. Include the single field_to_match type that you want to inspect, with additional specifications as needed, according to the type. You specify a single request component in field_to_match for each rule statement that requires it. To inspect more than one component of a web request, create a separate rule statement for each component. See the documentation for more details.The field_to_match block supports the following arguments:~> strongNOTE: Only one of all_query_arguments, body, cookies, headers, json_body, method, query_string, single_header, single_query_argument, or uri_path{} should be used when specifying all_query_arguments, body, method, or query_string attributes.
+            description: 'Text Transformation below for details.Field to MatchThe part of a web request that you want AWS WAF to inspect. Include the single field_to_match type that you want to inspect, with additional specifications as needed, according to the type. You specify a single request component in field_to_match for each rule statement that requires it. To inspect more than one component of a web request, create a separate rule statement for each component. See the documentation for more details.The field_to_match block supports the following arguments:~> strongNOTE: Only one of all_query_arguments, body, cookies, headers, json_body, method, query_string, single_header, single_query_argument, or uri_path{} should be used when specifying all_query_arguments, body, method, or query_string attributes.'
             type: string
         type:
             description: '(Required) The transformation to apply, please refer to the Text Transformation documentation for more details.Visibility ConfigurationThe visibility_config block supports the following arguments:'

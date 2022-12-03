@@ -1,20 +1,50 @@
 resource "aws_sagemaker_project" "aws_sagemaker_project" {
-  id                                   = var.id
-  path_id                              = var.path_id
-  project_description                  = var.project_description
-  project_id                           = var.project_id
-  project_name                         = var.project_name
   provisioning_parameter               = var.provisioning_parameter
+  service_catalog_provisioning_details = var.service_catalog_provisioning_details
   value                                = var.value
   arn                                  = var.arn
   key                                  = var.key
   product_id                           = var.product_id
+  project_name                         = var.project_name
   provisioning_artifact_id             = var.provisioning_artifact_id
-  service_catalog_provisioning_details = var.service_catalog_provisioning_details
   tags                                 = var.tags
+  id                                   = var.id
+  path_id                              = var.path_id
+  project_description                  = var.project_description
+  project_id                           = var.project_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "value" {
+  description = "(Optional) The value of the provisioning parameter.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) assigned by AWS to this Project."
+  type        = string
+}
+variable "key" {
+  description = "(Required) The key that identifies a provisioning parameter."
+  type        = string
+}
+variable "product_id" {
+  description = "(Required) The ID of the product to provision."
+  type        = string
+}
+variable "project_name" {
+  description = "(Required) The name of the Project."
+  type        = string
+}
+variable "provisioning_parameter" {
+  description = "(Optional) A list of key value pairs that you specify when you provision a product. See Provisioning Parameter below.Provisioning Parameter"
+  type        = string
+  default     = ""
+}
+variable "service_catalog_provisioning_details" {
+  description = "(Required) The product ID and provisioning artifact ID to provision a service catalog. See Service Catalog Provisioning Details below."
   type        = string
 }
 variable "id" {
@@ -35,40 +65,10 @@ variable "project_id" {
   description = "The ID of the project."
   type        = string
 }
-variable "project_name" {
-  description = "(Required) The name of the Project."
-  type        = string
-}
-variable "provisioning_parameter" {
-  description = "(Optional) A list of key value pairs that you specify when you provision a product. See Provisioning Parameter below.Provisioning Parameter"
-  type        = string
-  default     = ""
-}
-variable "value" {
-  description = "(Optional) The value of the provisioning parameter.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) assigned by AWS to this Project."
-  type        = string
-}
-variable "key" {
-  description = "(Required) The key that identifies a provisioning parameter."
-  type        = string
-}
-variable "product_id" {
-  description = "(Required) The ID of the product to provision."
-  type        = string
-}
 variable "provisioning_artifact_id" {
   description = "(Optional) The ID of the provisioning artifact."
   type        = string
   default     = ""
-}
-variable "service_catalog_provisioning_details" {
-  description = "(Required) The product ID and provisioning artifact ID to provision a service catalog. See Service Catalog Provisioning Details below."
-  type        = string
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Service Catalog Provisioning Details"
@@ -203,17 +203,21 @@ output "product_id" {
   description = "(Required) The ID of the product to provision."
   value       = aws_sagemaker_project.aws_sagemaker_project.product_id
 }
-output "provisioning_artifact_id" {
-  description = "(Optional) The ID of the provisioning artifact."
-  value       = aws_sagemaker_project.aws_sagemaker_project.provisioning_artifact_id
+output "project_name" {
+  description = "(Required) The name of the Project."
+  value       = aws_sagemaker_project.aws_sagemaker_project.project_name
+}
+output "provisioning_parameter" {
+  description = "(Optional) A list of key value pairs that you specify when you provision a product. See Provisioning Parameter below.Provisioning Parameter"
+  value       = aws_sagemaker_project.aws_sagemaker_project.provisioning_parameter
 }
 output "service_catalog_provisioning_details" {
   description = "(Required) The product ID and provisioning artifact ID to provision a service catalog. See Service Catalog Provisioning Details below."
   value       = aws_sagemaker_project.aws_sagemaker_project.service_catalog_provisioning_details
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Service Catalog Provisioning Details"
-  value       = aws_sagemaker_project.aws_sagemaker_project.tags
+output "value" {
+  description = "(Optional) The value of the provisioning parameter.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_sagemaker_project.aws_sagemaker_project.value
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) assigned by AWS to this Project."
@@ -231,17 +235,13 @@ output "project_id" {
   description = "The ID of the project."
   value       = aws_sagemaker_project.aws_sagemaker_project.project_id
 }
-output "project_name" {
-  description = "(Required) The name of the Project."
-  value       = aws_sagemaker_project.aws_sagemaker_project.project_name
+output "provisioning_artifact_id" {
+  description = "(Optional) The ID of the provisioning artifact."
+  value       = aws_sagemaker_project.aws_sagemaker_project.provisioning_artifact_id
 }
-output "provisioning_parameter" {
-  description = "(Optional) A list of key value pairs that you specify when you provision a product. See Provisioning Parameter below.Provisioning Parameter"
-  value       = aws_sagemaker_project.aws_sagemaker_project.provisioning_parameter
-}
-output "value" {
-  description = "(Optional) The value of the provisioning parameter.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_sagemaker_project.aws_sagemaker_project.value
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Service Catalog Provisioning Details"
+  value       = aws_sagemaker_project.aws_sagemaker_project.tags
 }
 output "id" {
   description = "The name of the Project."

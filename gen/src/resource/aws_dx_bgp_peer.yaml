@@ -33,7 +33,10 @@ spec:
             description: (Default 10m)
             type: string
         customer_address:
-            description: 'In addition to all arguments above, the following attributes are exported:'
+            description: |-
+                (Optional) The IPv4 CIDR destination address to which Amazon should send traffic.
+                Required for IPv4 BGP peers on public virtual interfaces.In addition to all arguments above, the following attributes are exported:
+            optional: true
             type: string
         id:
             description: The ID of the BGP peer resource.

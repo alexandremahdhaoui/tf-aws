@@ -1,7 +1,7 @@
 apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
 kind: TerraformDatasource
 metadata:
-    name: aws_Update ssm_patch_baseline
+    name: aws_update_ssm_patch_baseline
 spec:
     args: {}
     attrs: {}

@@ -5,15 +5,20 @@ metadata:
 spec:
     args:
         access_endpoints:
-            description: access_endpoints below.
+            description: |-
+                (Optional) Set of configuration blocks defining the interface VPC endpoints. Users of the stack can connect to AppStream 2.0 only through the specified endpoints.
+                See access_endpoints below.
             optional: true
             type: string
         action:
-            description: CLIPBOARD_COPY_FROM_LOCAL_DEVICE,  CLIPBOARD_COPY_TO_LOCAL_DEVICE, FILE_UPLOAD, FILE_DOWNLOAD, PRINTING_TO_LOCAL_DEVICE, DOMAIN_PASSWORD_SIGNIN, or DOMAIN_SMART_CARD_SIGNIN.
-            optional: true
+            description: |-
+                (Required) Action that is enabled or disabled.
+                Valid values are CLIPBOARD_COPY_FROM_LOCAL_DEVICE,  CLIPBOARD_COPY_TO_LOCAL_DEVICE, FILE_UPLOAD, FILE_DOWNLOAD, PRINTING_TO_LOCAL_DEVICE, DOMAIN_PASSWORD_SIGNIN, or DOMAIN_SMART_CARD_SIGNIN.
             type: string
         application_settings:
-            description: application_settings below.
+            description: |-
+                (Optional) Settings for application settings persistence.
+                See application_settings below.
             optional: true
             type: string
         arn:
@@ -49,9 +54,8 @@ spec:
             description: (Required) Whether application settings should be persisted.
             type: string
         endpoint_type:
-            description: |-
-                (Required) Type of the interface endpoint.
-                See the AccessEndpoint AWS API documentation for valid values.
+            description: AccessEndpoint AWS API documentation for valid values.
+            optional: true
             type: string
         feedback_url:
             description: (Optional) URL that users are redirected to after they click the Send Feedback link. If no URL is specified, no Send Feedback link is displayed. .
@@ -65,9 +69,8 @@ spec:
             description: (Required) Unique name for the AppStream stack.
             type: string
         permission:
-            description: |-
-                (Required) Whether the action is enabled or disabled.
-                Valid values are ENABLED or DISABLED.In addition to all arguments above, the following attributes are exported:
+            description: 'ENABLED or DISABLED.In addition to all arguments above, the following attributes are exported:'
+            optional: true
             type: string
         redirect_url:
             description: (Optional) URL that users are redirected to after their streaming session ends.
@@ -90,9 +93,7 @@ spec:
             optional: true
             type: string
         user_settings:
-            description: |-
-                (Optional) Configuration block for the actions that are enabled or disabled for users during their streaming sessions. By default, these actions are enabled.
-                See user_settings below.access_endpoints
+            description: user_settings below.access_endpoints
             optional: true
             type: string
         vpce_id:

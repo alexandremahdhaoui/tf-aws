@@ -12,6 +12,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "capacity" {
+  description = "Size of the root volume.user_storage"
+  type        = string
+}
 variable "compute_type" {
   description = " – The compute type. See supported fields below."
   type        = string
@@ -40,46 +44,6 @@ variable "bundle_id" {
   description = " – The ID of the bundle."
   type        = string
 }
-variable "capacity" {
-  description = "Size of the root volume.user_storage"
-  type        = string
-}
-output "capacity" {
-  description = "Size of the root volume.user_storage"
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.capacity
-}
-output "compute_type" {
-  description = " – The compute type. See supported fields below."
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.compute_type
-}
-output "description" {
-  description = " – The description of the bundle."
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.description
-}
-output "name" {
-  description = "Name of the compute type.root_storage"
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.name
-}
-output "owner" {
-  description = " – The owner of the bundle."
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.owner
-}
-output "root_storage" {
-  description = " – The root volume. See supported fields below."
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.root_storage
-}
-output "user_storage" {
-  description = " – The user storage. See supported fields below.compute_type"
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.user_storage
-}
-output "bundle_id" {
-  description = " – The ID of the bundle."
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.bundle_id
-}
-output "owner" {
-  description = " – The owner of the bundle."
-  value       = aws_workspaces_bundle.aws_workspaces_bundle.owner
-}
 output "root_storage" {
   description = " – The root volume. See supported fields below."
   value       = aws_workspaces_bundle.aws_workspaces_bundle.root_storage
@@ -107,6 +71,42 @@ output "description" {
 output "name" {
   description = "Name of the compute type.root_storage"
   value       = aws_workspaces_bundle.aws_workspaces_bundle.name
+}
+output "owner" {
+  description = " – The owner of the bundle."
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.owner
+}
+output "user_storage" {
+  description = " – The user storage. See supported fields below.compute_type"
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.user_storage
+}
+output "bundle_id" {
+  description = " – The ID of the bundle."
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.bundle_id
+}
+output "capacity" {
+  description = "Size of the root volume.user_storage"
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.capacity
+}
+output "compute_type" {
+  description = " – The compute type. See supported fields below."
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.compute_type
+}
+output "description" {
+  description = " – The description of the bundle."
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.description
+}
+output "name" {
+  description = "Name of the compute type.root_storage"
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.name
+}
+output "owner" {
+  description = " – The owner of the bundle."
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.owner
+}
+output "root_storage" {
+  description = " – The root volume. See supported fields below."
+  value       = aws_workspaces_bundle.aws_workspaces_bundle.root_storage
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

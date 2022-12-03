@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "policy" {
-  description = "(Required) A JSON-formatted resource policy. For more information, see Sharing a Projec and Sharing a Report Group.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "resource_arn" {
   description = "(Required) The ARN of the Project or ReportGroup resource you want to associate with a resource policy."
+  type        = string
+}
+variable "policy" {
+  description = "(Required) A JSON-formatted resource policy. For more information, see Sharing a Projec and Sharing a Report Group.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

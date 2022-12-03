@@ -6,27 +6,19 @@ spec:
     args: {}
     attrs:
         caller_reference:
-            description: |-
-                Internal value used by CloudFront to allow future
-                updates to the origin access identity.
+            description: ""
             type: string
         cloudfront_access_identity_path:
-            description: |-
-                A shortcut to the full path for the
-                origin access identity to use in CloudFront, see below.
+            description: ""
             type: string
         comment:
             description: An optional comment for the origin access identity.
             type: string
         etag:
-            description: |-
-                Current version of the origin access identity's information.
-                For example: E2QWRUHAPOMQZL.
+            description: E2QWRUHAPOMQZL.
             type: string
         iam_arn:
-            description: |-
-                Pre-generated ARN for use in S3 bucket policies (see below).
-                Example: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E2QWRUHAPOMQZL.
+            description: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E2QWRUHAPOMQZL.
             type: string
     terraform:
         backend: ""

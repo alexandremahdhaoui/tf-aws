@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "resource_arn" {
-  description = "(Required, Forces new resources) The Amazon Resource Name (ARN) of the DB cluster."
-  type        = string
-}
 variable "engine_native_audit_fields_included" {
   description = "(Optional, Forces new resources) Specifies whether the database activity stream includes engine-native audit fields. This option only applies to an Oracle DB instance. By default, no engine-native audit fields are included. Defaults false.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -27,6 +23,10 @@ variable "kms_key_id" {
 }
 variable "mode" {
   description = "(Required, Forces new resources) Specifies the mode of the database activity stream. Database events such as a change or access generate an activity stream event. The database session can handle these events either synchronously or asynchronously. One of: sync, async."
+  type        = string
+}
+variable "resource_arn" {
+  description = "(Required, Forces new resources) The Amazon Resource Name (ARN) of the DB cluster."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,10 +149,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The Amazon Resource Name (ARN) of the DB cluster."
-  value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.id
-}
 output "kms_key_id" {
   description = "(Required, Forces new resources) The AWS KMS key identifier for encrypting messages in the database activity stream. The AWS KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key."
   value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.kms_key_id
@@ -168,6 +164,10 @@ output "resource_arn" {
 output "engine_native_audit_fields_included" {
   description = "(Optional, Forces new resources) Specifies whether the database activity stream includes engine-native audit fields. This option only applies to an Oracle DB instance. By default, no engine-native audit fields are included. Defaults false.In addition to all arguments above, the following attributes are exported:"
   value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.engine_native_audit_fields_included
+}
+output "id" {
+  description = "The Amazon Resource Name (ARN) of the DB cluster."
+  value       = aws_rds_cluster_activity_stream.aws_rds_cluster_activity_stream.id
 }
 output "id" {
   description = "The Amazon Resource Name (ARN) of the DB cluster."

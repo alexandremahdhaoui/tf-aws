@@ -1,9 +1,9 @@
 resource "aws_schemas_discoverer" "aws_schemas_discoverer" {
+  id          = var.id
+  source_arn  = var.source_arn
   tags        = var.tags
   arn         = var.arn
   description = var.description
-  id          = var.id
-  source_arn  = var.source_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -171,10 +171,6 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_schemas_discoverer.aws_schemas_discoverer.tags
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the discoverer."
-  value       = aws_schemas_discoverer.aws_schemas_discoverer.arn
-}
 output "id" {
   description = "The ID of the discoverer."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.id
@@ -182,6 +178,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_schemas_discoverer.aws_schemas_discoverer.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the discoverer."
+  value       = aws_schemas_discoverer.aws_schemas_discoverer.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

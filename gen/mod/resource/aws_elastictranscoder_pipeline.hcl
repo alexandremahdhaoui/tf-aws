@@ -1,48 +1,31 @@
 resource "aws_elastictranscoder_pipeline" "aws_elastictranscoder_pipeline" {
-  error                        = var.error
-  progressing                  = var.progressing
-  thumbnail_config_permissions = var.thumbnail_config_permissions
-  aws_kms_key_arn              = var.aws_kms_key_arn
-  id                           = var.id
-  input_bucket                 = var.input_bucket
-  content_config_permissions   = var.content_config_permissions
-  grantee                      = var.grantee
-  name                         = var.name
-  output_bucket                = var.output_bucket
-  completed                    = var.completed
   bucket                       = var.bucket
-  content_config               = var.content_config
+  error                        = var.error
   grantee_type                 = var.grantee_type
-  notifications                = var.notifications
-  role                         = var.role
+  id                           = var.id
+  thumbnail_config_permissions = var.thumbnail_config_permissions
   storage_class                = var.storage_class
   thumbnail_config             = var.thumbnail_config
-  access                       = var.access
   warning                      = var.warning
+  access                       = var.access
+  aws_kms_key_arn              = var.aws_kms_key_arn
+  name                         = var.name
+  notifications                = var.notifications
+  role                         = var.role
+  content_config_permissions   = var.content_config_permissions
+  grantee                      = var.grantee
+  progressing                  = var.progressing
+  completed                    = var.completed
+  content_config               = var.content_config
+  input_bucket                 = var.input_bucket
+  output_bucket                = var.output_bucket
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "output_bucket" {
-  description = "(Optional) The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files."
-  type        = string
-  default     = ""
-}
-variable "completed" {
-  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing a job in this pipeline."
-  type        = string
-}
-variable "grantee" {
-  description = "The AWS user or group that you want to have access to thumbnail files."
-  type        = string
-}
 variable "name" {
   description = "(Optional, Forces new resource) The name of the pipeline. Maximum 40 characters"
-  type        = string
-}
-variable "grantee_type" {
-  description = "Specify the type of value that appears in the thumbnail_config_permissions.grantee object. Valid values are Canonical, Email or Group.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "notifications" {
@@ -63,36 +46,18 @@ variable "thumbnail_config" {
   type        = string
   default     = ""
 }
-variable "access" {
-  description = "The permission that you want to give to the AWS user that you specified in thumbnail_config_permissions.grantee. Valid values are Read, ReadAcp, WriteAcp or FullControl."
-  type        = string
-}
-variable "bucket" {
-  description = "The Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files."
-  type        = string
-}
-variable "content_config" {
-  description = "(Optional) The ContentConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. (documented below)"
-  type        = string
-  default     = ""
-}
 variable "warning" {
   description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters a warning condition while processing a job in this pipeline.The thumbnail_configcontent_configthumbnail_configcontent_config and thumbnail_config, omit the OutputBucket object.The thumbnail_config object supports the following:"
   type        = string
 }
-variable "thumbnail_config_permissions" {
-  description = "(Optional) The permissions for the thumbnail_config object. (documented below)The content_configcontent_configthumbnail_config. If you specify values for content_configthumbnail_config, omit the output_bucket object.The content_config object supports the following:"
+variable "access" {
+  description = "The permission that you want to give to the AWS user that you specified in thumbnail_config_permissions.grantee. Valid values are Read, ReadAcp, WriteAcp or FullControl."
   type        = string
-  default     = ""
 }
 variable "aws_kms_key_arn" {
   description = "(Optional) The AWS Key Management Service (AWS KMS) key that you want to use with this pipeline."
   type        = string
   default     = ""
-}
-variable "error" {
-  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition while processing a job in this pipeline."
-  type        = string
 }
 variable "progressing" {
   description = "The topic ARN for the Amazon Simple Notification Service (Amazon SNS) topic that you want to notify when Elastic Transcoder has started to process a job in this pipeline."
@@ -103,12 +68,47 @@ variable "content_config_permissions" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The ID of the Elastictranscoder pipeline."
+variable "grantee" {
+  description = "The AWS user or group that you want to have access to thumbnail files."
   type        = string
 }
 variable "input_bucket" {
   description = "(Required) The Amazon S3 bucket in which you saved the media files that you want to transcode and the graphics that you want to use as watermarks."
+  type        = string
+}
+variable "output_bucket" {
+  description = "(Optional) The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files."
+  type        = string
+  default     = ""
+}
+variable "completed" {
+  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing a job in this pipeline."
+  type        = string
+}
+variable "content_config" {
+  description = "(Optional) The ContentConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. (documented below)"
+  type        = string
+  default     = ""
+}
+variable "grantee_type" {
+  description = "Specify the type of value that appears in the thumbnail_config_permissions.grantee object. Valid values are Canonical, Email or Group.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "id" {
+  description = "The ID of the Elastictranscoder pipeline."
+  type        = string
+}
+variable "thumbnail_config_permissions" {
+  description = "(Optional) The permissions for the thumbnail_config object. (documented below)The content_configcontent_configthumbnail_config. If you specify values for content_configthumbnail_config, omit the output_bucket object.The content_config object supports the following:"
+  type        = string
+  default     = ""
+}
+variable "bucket" {
+  description = "The Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files."
+  type        = string
+}
+variable "error" {
+  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition while processing a job in this pipeline."
   type        = string
 }
 variable "tag_instance_id" {
@@ -231,45 +231,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "content_config_permissions" {
-  description = "(Optional) The permissions for the content_config object. (documented below)"
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.content_config_permissions
+output "bucket" {
+  description = "The Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.bucket
 }
-output "id" {
-  description = "The ID of the Elastictranscoder pipeline."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.id
-}
-output "input_bucket" {
-  description = "(Required) The Amazon S3 bucket in which you saved the media files that you want to transcode and the graphics that you want to use as watermarks."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.input_bucket
-}
-output "output_bucket" {
-  description = "(Optional) The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.output_bucket
-}
-output "completed" {
-  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing a job in this pipeline."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.completed
-}
-output "grantee" {
-  description = "The AWS user or group that you want to have access to thumbnail files."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.grantee
-}
-output "name" {
-  description = "(Optional, Forces new resource) The name of the pipeline. Maximum 40 characters"
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.name
+output "error" {
+  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition while processing a job in this pipeline."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.error
 }
 output "grantee_type" {
   description = "Specify the type of value that appears in the thumbnail_config_permissions.grantee object. Valid values are Canonical, Email or Group.In addition to all arguments above, the following attributes are exported:"
   value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.grantee_type
 }
-output "notifications" {
-  description = "(Optional) The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status. (documented below)"
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.notifications
+output "id" {
+  description = "The ID of the Elastictranscoder pipeline."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.id
 }
-output "role" {
-  description = "(Required) The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to transcode jobs for this pipeline."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.role
+output "thumbnail_config_permissions" {
+  description = "(Optional) The permissions for the thumbnail_config object. (documented below)The content_configcontent_configthumbnail_config. If you specify values for content_configthumbnail_config, omit the output_bucket object.The content_config object supports the following:"
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.thumbnail_config_permissions
 }
 output "storage_class" {
   description = "The Amazon S3 storage class, Standard or ReducedRedundancy, that you want Elastic Transcoder to assign to the thumbnails that it stores in your Amazon S3 bucket.The thumbnail_config_permissions object supports the following:"
@@ -279,37 +259,57 @@ output "thumbnail_config" {
   description = "(Optional) The ThumbnailConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files. (documented below)"
   value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.thumbnail_config
 }
-output "access" {
-  description = "The permission that you want to give to the AWS user that you specified in thumbnail_config_permissions.grantee. Valid values are Read, ReadAcp, WriteAcp or FullControl."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.access
-}
-output "bucket" {
-  description = "The Amazon S3 bucket in which you want Elastic Transcoder to save thumbnail files."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.bucket
-}
-output "content_config" {
-  description = "(Optional) The ContentConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. (documented below)"
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.content_config
-}
 output "warning" {
   description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters a warning condition while processing a job in this pipeline.The thumbnail_configcontent_configthumbnail_configcontent_config and thumbnail_config, omit the OutputBucket object.The thumbnail_config object supports the following:"
   value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.warning
 }
-output "thumbnail_config_permissions" {
-  description = "(Optional) The permissions for the thumbnail_config object. (documented below)The content_configcontent_configthumbnail_config. If you specify values for content_configthumbnail_config, omit the output_bucket object.The content_config object supports the following:"
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.thumbnail_config_permissions
+output "access" {
+  description = "The permission that you want to give to the AWS user that you specified in thumbnail_config_permissions.grantee. Valid values are Read, ReadAcp, WriteAcp or FullControl."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.access
 }
 output "aws_kms_key_arn" {
   description = "(Optional) The AWS Key Management Service (AWS KMS) key that you want to use with this pipeline."
   value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.aws_kms_key_arn
 }
-output "error" {
-  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder encounters an error condition while processing a job in this pipeline."
-  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.error
+output "name" {
+  description = "(Optional, Forces new resource) The name of the pipeline. Maximum 40 characters"
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.name
+}
+output "notifications" {
+  description = "(Optional) The Amazon Simple Notification Service (Amazon SNS) topic that you want to notify to report job status. (documented below)"
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.notifications
+}
+output "role" {
+  description = "(Required) The IAM Amazon Resource Name (ARN) for the role that you want Elastic Transcoder to use to transcode jobs for this pipeline."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.role
+}
+output "content_config_permissions" {
+  description = "(Optional) The permissions for the content_config object. (documented below)"
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.content_config_permissions
+}
+output "grantee" {
+  description = "The AWS user or group that you want to have access to thumbnail files."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.grantee
 }
 output "progressing" {
   description = "The topic ARN for the Amazon Simple Notification Service (Amazon SNS) topic that you want to notify when Elastic Transcoder has started to process a job in this pipeline."
   value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.progressing
+}
+output "completed" {
+  description = "The topic ARN for the Amazon SNS topic that you want to notify when Elastic Transcoder has finished processing a job in this pipeline."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.completed
+}
+output "content_config" {
+  description = "(Optional) The ContentConfig object specifies information about the Amazon S3 bucket in which you want Elastic Transcoder to save transcoded files and playlists. (documented below)"
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.content_config
+}
+output "input_bucket" {
+  description = "(Required) The Amazon S3 bucket in which you saved the media files that you want to transcode and the graphics that you want to use as watermarks."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.input_bucket
+}
+output "output_bucket" {
+  description = "(Optional) The Amazon S3 bucket in which you want Elastic Transcoder to save the transcoded files."
+  value       = aws_elastictranscoder_pipeline.aws_elastictranscoder_pipeline.output_bucket
 }
 output "arn" {
   description = "The ARN of the Elastictranscoder pipeline."

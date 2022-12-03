@@ -8,6 +8,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "namespace" {
+  description = "(Optional) The namespace. Currently, you should set this to default.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "aws_account_id" {
   description = "(Optional) The ID for the AWS account that the group is in. Currently, you use the ID for the AWS account that contains your Amazon QuickSight account."
   type        = string
@@ -21,11 +26,6 @@ variable "description" {
 variable "group_name" {
   description = "(Required) A name for the group."
   type        = string
-}
-variable "namespace" {
-  description = "(Optional) The namespace. Currently, you should set this to default.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

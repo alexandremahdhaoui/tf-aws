@@ -1,41 +1,24 @@
 resource "aws_waf_web_acl" "aws_waf_web_acl" {
-  redacted_fields       = var.redacted_fields
+  default_action        = var.default_action
+  id                    = var.id
+  logging_configuration = var.logging_configuration
   tags                  = var.tags
   type                  = var.type
-  arn                   = var.arn
-  default_action        = var.default_action
-  logging_configuration = var.logging_configuration
   priority              = var.priority
+  rule_id               = var.rule_id
+  action                = var.action
+  arn                   = var.arn
+  field_to_match        = var.field_to_match
+  metric_name           = var.metric_name
+  override_action       = var.override_action
   data                  = var.data
   log_destination       = var.log_destination
-  metric_name           = var.metric_name
-  rule_id               = var.rule_id
-  rules                 = var.rules
-  action                = var.action
-  field_to_match        = var.field_to_match
-  id                    = var.id
   name                  = var.name
-  override_action       = var.override_action
+  redacted_fields       = var.redacted_fields
+  rules                 = var.rules
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "action" {
-  description = "(Optional) The action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Not used if type is GROUP"
-  type        = string
-  default     = ""
-}
-variable "field_to_match" {
-  description = "(Required) Set of configuration blocks for fields to redact. Detailed below.field_to_match Configuration Block-> Additional information about this configuration can be found in the AWS WAF Regional API Reference."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the WAF WebACL."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name or description of the web ACL."
   type        = string
 }
 variable "override_action" {
@@ -43,18 +26,16 @@ variable "override_action" {
   type        = string
   default     = ""
 }
-variable "redacted_fields" {
-  description = "(Optional) Configuration block containing parts of the request that you want redacted from the logs. Detailed below.redacted_fields Configuration Block"
+variable "priority" {
+  description = "(Required) Specifies the order in which the rules in a WebACL are evaluated.\nRules with a lower value are evaluated before rules with a higher value."
   type        = string
-  default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.default_action Configuration Block"
+variable "rule_id" {
+  description = "(Required) ID of the associated WAF (Global) rule (e.g., aws_waf_rule). WAF (Regional) rules cannot be used."
   type        = string
-  default     = ""
 }
-variable "type" {
-  description = "(Optional) The rule type, either REGULAR, as defined by Rule, RATE_BASED, as defined by RateBasedRule, or GROUP, as defined by RuleGroup. The default is REGULAR. If you add a RATE_BASED rule, you need to set type as RATE_BASED. If you add a GROUP rule, you need to set type as GROUP.In addition to all arguments above, the following attributes are exported:"
+variable "action" {
+  description = "(Optional) The action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Not used if type is GROUP"
   type        = string
   default     = ""
 }
@@ -62,18 +43,18 @@ variable "arn" {
   description = "The ARN of the WAF WebACL."
   type        = string
 }
-variable "default_action" {
-  description = "(Required) Configuration block with action that you want AWS WAF to take when a request doesn't match the criteria in any of the rules that are associated with the web ACL. Detailed below."
+variable "field_to_match" {
+  description = "(Required) Set of configuration blocks for fields to redact. Detailed below.field_to_match Configuration Block-> Additional information about this configuration can be found in the AWS WAF Regional API Reference."
   type        = string
 }
-variable "logging_configuration" {
-  description = "(Optional) Configuration block to enable WAF logging. Detailed below."
+variable "metric_name" {
+  description = "(Required) The name or description for the Amazon CloudWatch metric of this web ACL."
+  type        = string
+}
+variable "rules" {
+  description = "(Optional) Configuration blocks containing rules to associate with the web ACL and the settings for each rule. Detailed below."
   type        = string
   default     = ""
-}
-variable "priority" {
-  description = "(Required) Specifies the order in which the rules in a WebACL are evaluated.\nRules with a lower value are evaluated before rules with a higher value."
-  type        = string
 }
 variable "data" {
   description = "(Optional) When the value of type is HEADER, enter the name of the header that you want the WAF to search, for example, User-Agent or Referer. If the value of type is any other value, omit data."
@@ -84,16 +65,35 @@ variable "log_destination" {
   description = "(Required) Amazon Resource Name (ARN) of Kinesis Firehose Delivery Stream"
   type        = string
 }
-variable "metric_name" {
-  description = "(Required) The name or description for the Amazon CloudWatch metric of this web ACL."
+variable "name" {
+  description = "(Required) The name or description of the web ACL."
   type        = string
 }
-variable "rule_id" {
-  description = "(Required) ID of the associated WAF (Global) rule (e.g., aws_waf_rule). WAF (Regional) rules cannot be used."
+variable "redacted_fields" {
+  description = "(Optional) Configuration block containing parts of the request that you want redacted from the logs. Detailed below.redacted_fields Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Optional) The rule type, either REGULAR, as defined by Rule, RATE_BASED, as defined by RateBasedRule, or GROUP, as defined by RuleGroup. The default is REGULAR. If you add a RATE_BASED rule, you need to set type as RATE_BASED. If you add a GROUP rule, you need to set type as GROUP.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "default_action" {
+  description = "(Required) Configuration block with action that you want AWS WAF to take when a request doesn't match the criteria in any of the rules that are associated with the web ACL. Detailed below."
   type        = string
 }
-variable "rules" {
-  description = "(Optional) Configuration blocks containing rules to associate with the web ACL and the settings for each rule. Detailed below."
+variable "id" {
+  description = "The ID of the WAF WebACL."
+  type        = string
+}
+variable "logging_configuration" {
+  description = "(Optional) Configuration block to enable WAF logging. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.default_action Configuration Block"
   type        = string
   default     = ""
 }
@@ -217,9 +217,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "redacted_fields" {
-  description = "(Optional) Configuration block containing parts of the request that you want redacted from the logs. Detailed below.redacted_fields Configuration Block"
-  value       = aws_waf_web_acl.aws_waf_web_acl.redacted_fields
+output "default_action" {
+  description = "(Required) Configuration block with action that you want AWS WAF to take when a request doesn't match the criteria in any of the rules that are associated with the web ACL. Detailed below."
+  value       = aws_waf_web_acl.aws_waf_web_acl.default_action
+}
+output "id" {
+  description = "The ID of the WAF WebACL."
+  value       = aws_waf_web_acl.aws_waf_web_acl.id
+}
+output "logging_configuration" {
+  description = "(Optional) Configuration block to enable WAF logging. Detailed below."
+  value       = aws_waf_web_acl.aws_waf_web_acl.logging_configuration
 }
 output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.default_action Configuration Block"
@@ -229,17 +237,29 @@ output "type" {
   description = "(Optional) The rule type, either REGULAR, as defined by Rule, RATE_BASED, as defined by RateBasedRule, or GROUP, as defined by RuleGroup. The default is REGULAR. If you add a RATE_BASED rule, you need to set type as RATE_BASED. If you add a GROUP rule, you need to set type as GROUP.In addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_web_acl.aws_waf_web_acl.type
 }
+output "rule_id" {
+  description = "(Required) ID of the associated WAF (Global) rule (e.g., aws_waf_rule). WAF (Regional) rules cannot be used."
+  value       = aws_waf_web_acl.aws_waf_web_acl.rule_id
+}
+output "action" {
+  description = "(Optional) The action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Not used if type is GROUP"
+  value       = aws_waf_web_acl.aws_waf_web_acl.action
+}
 output "arn" {
   description = "The ARN of the WAF WebACL."
   value       = aws_waf_web_acl.aws_waf_web_acl.arn
 }
-output "default_action" {
-  description = "(Required) Configuration block with action that you want AWS WAF to take when a request doesn't match the criteria in any of the rules that are associated with the web ACL. Detailed below."
-  value       = aws_waf_web_acl.aws_waf_web_acl.default_action
+output "field_to_match" {
+  description = "(Required) Set of configuration blocks for fields to redact. Detailed below.field_to_match Configuration Block-> Additional information about this configuration can be found in the AWS WAF Regional API Reference."
+  value       = aws_waf_web_acl.aws_waf_web_acl.field_to_match
 }
-output "logging_configuration" {
-  description = "(Optional) Configuration block to enable WAF logging. Detailed below."
-  value       = aws_waf_web_acl.aws_waf_web_acl.logging_configuration
+output "metric_name" {
+  description = "(Required) The name or description for the Amazon CloudWatch metric of this web ACL."
+  value       = aws_waf_web_acl.aws_waf_web_acl.metric_name
+}
+output "override_action" {
+  description = "(Optional) Override the action that a group requests CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Only used if type is GROUP"
+  value       = aws_waf_web_acl.aws_waf_web_acl.override_action
 }
 output "priority" {
   description = "(Required) Specifies the order in which the rules in a WebACL are evaluated.\nRules with a lower value are evaluated before rules with a higher value."
@@ -253,37 +273,17 @@ output "log_destination" {
   description = "(Required) Amazon Resource Name (ARN) of Kinesis Firehose Delivery Stream"
   value       = aws_waf_web_acl.aws_waf_web_acl.log_destination
 }
-output "metric_name" {
-  description = "(Required) The name or description for the Amazon CloudWatch metric of this web ACL."
-  value       = aws_waf_web_acl.aws_waf_web_acl.metric_name
-}
-output "rule_id" {
-  description = "(Required) ID of the associated WAF (Global) rule (e.g., aws_waf_rule). WAF (Regional) rules cannot be used."
-  value       = aws_waf_web_acl.aws_waf_web_acl.rule_id
-}
-output "rules" {
-  description = "(Optional) Configuration blocks containing rules to associate with the web ACL and the settings for each rule. Detailed below."
-  value       = aws_waf_web_acl.aws_waf_web_acl.rules
-}
-output "action" {
-  description = "(Optional) The action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Not used if type is GROUP"
-  value       = aws_waf_web_acl.aws_waf_web_acl.action
-}
-output "field_to_match" {
-  description = "(Required) Set of configuration blocks for fields to redact. Detailed below.field_to_match Configuration Block-> Additional information about this configuration can be found in the AWS WAF Regional API Reference."
-  value       = aws_waf_web_acl.aws_waf_web_acl.field_to_match
-}
-output "id" {
-  description = "The ID of the WAF WebACL."
-  value       = aws_waf_web_acl.aws_waf_web_acl.id
-}
 output "name" {
   description = "(Required) The name or description of the web ACL."
   value       = aws_waf_web_acl.aws_waf_web_acl.name
 }
-output "override_action" {
-  description = "(Optional) Override the action that a group requests CloudFront or AWS WAF takes when a web request matches the conditions in the rule. Only used if type is GROUP"
-  value       = aws_waf_web_acl.aws_waf_web_acl.override_action
+output "redacted_fields" {
+  description = "(Optional) Configuration block containing parts of the request that you want redacted from the logs. Detailed below.redacted_fields Configuration Block"
+  value       = aws_waf_web_acl.aws_waf_web_acl.redacted_fields
+}
+output "rules" {
+  description = "(Optional) Configuration blocks containing rules to associate with the web ACL and the settings for each rule. Detailed below."
+  value       = aws_waf_web_acl.aws_waf_web_acl.rules
 }
 output "arn" {
   description = "The ARN of the WAF WebACL."

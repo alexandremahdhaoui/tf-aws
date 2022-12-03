@@ -1,12 +1,17 @@
 resource "aws_amplify_webhook" "aws_amplify_webhook" {
+  description = var.description
   app_id      = var.app_id
   arn         = var.arn
   branch_name = var.branch_name
-  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "description" {
+  description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "app_id" {
   description = "(Required) Unique ID for an Amplify app."
@@ -19,11 +24,6 @@ variable "arn" {
 variable "branch_name" {
   description = "(Required) Name for a branch that is part of the Amplify app."
   type        = string
-}
-variable "description" {
-  description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -145,10 +145,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_amplify_webhook.aws_amplify_webhook.description
-}
 output "app_id" {
   description = "(Required) Unique ID for an Amplify app."
   value       = aws_amplify_webhook.aws_amplify_webhook.app_id
@@ -160,6 +156,10 @@ output "arn" {
 output "branch_name" {
   description = "(Required) Name for a branch that is part of the Amplify app."
   value       = aws_amplify_webhook.aws_amplify_webhook.branch_name
+}
+output "description" {
+  description = "(Optional) Description for a webhook.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_amplify_webhook.aws_amplify_webhook.description
 }
 output "arn" {
   description = "ARN for the webhook."

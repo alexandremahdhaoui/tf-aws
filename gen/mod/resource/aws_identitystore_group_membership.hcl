@@ -1,7 +1,7 @@
 resource "aws_identitystore_group_membership" "aws_identitystore_group_membership" {
+  member_id         = var.member_id
   group_id          = var.group_id
   identity_store_id = var.identity_store_id
-  member_id         = var.member_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

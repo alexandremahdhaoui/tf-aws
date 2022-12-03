@@ -1,7 +1,7 @@
 resource "aws_route_table_association" "aws_route_table_association" {
-  gateway_id     = var.gateway_id
   route_table_id = var.route_table_id
   subnet_id      = var.subnet_id
+  gateway_id     = var.gateway_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

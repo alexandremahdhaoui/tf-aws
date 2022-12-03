@@ -135,13 +135,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "resource_type_management_preference" {
-  description = "(Optional) A map of services along with the management preferences for the Region.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_backup_region_settings.aws_backup_region_settings.resource_type_management_preference
-}
 output "resource_type_opt_in_preference" {
   description = "(Required) A map of services along with the opt-in preferences for the Region."
   value       = aws_backup_region_settings.aws_backup_region_settings.resource_type_opt_in_preference
+}
+output "resource_type_management_preference" {
+  description = "(Optional) A map of services along with the management preferences for the Region.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_backup_region_settings.aws_backup_region_settings.resource_type_management_preference
 }
 output "id" {
   description = "The AWS region."

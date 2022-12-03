@@ -5,7 +5,11 @@ metadata:
 spec:
     args:
         apply_method:
-            description: 'In addition to all arguments above, the following attributes are exported:'
+            description: |-
+                (Optional) "immediate" (default), or "pending-reboot". Some
+                engines can't apply some parameters without a reboot, and you will need to
+                specify "pending-reboot" here.In addition to all arguments above, the following attributes are exported:
+            optional: true
             type: string
         arn:
             description: The ARN of the db parameter group.

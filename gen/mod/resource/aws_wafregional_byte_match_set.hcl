@@ -12,15 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "data" {
-  description = "(Optional) When the value of Type is HEADER, enter the name of the header that you want AWS WAF to search, for example, User-Agent or Referer. If the value of Type is any other value, omit Data."
-  type        = string
-  default     = ""
-}
-variable "field_to_match" {
-  description = "(Required) Settings for the ByteMatchTuple. FieldToMatch documented below."
-  type        = string
-}
 variable "name" {
   description = "(Required) The name or description of the ByteMatchSet."
   type        = string
@@ -45,6 +36,15 @@ variable "byte_match_tuples" {
   description = "(Optional)Settings for the ByteMatchSet, such as the bytes (typically a string that corresponds with ASCII characters) that you want AWS WAF to search for in web requests. ByteMatchTuple documented below.ByteMatchTuples(byte_match_tuples) support the following:"
   type        = string
   default     = ""
+}
+variable "data" {
+  description = "(Optional) When the value of Type is HEADER, enter the name of the header that you want AWS WAF to search, for example, User-Agent or Referer. If the value of Type is any other value, omit Data."
+  type        = string
+  default     = ""
+}
+variable "field_to_match" {
+  description = "(Required) Settings for the ByteMatchTuple. FieldToMatch documented below."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,6 +166,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "text_transformation" {
+  description = "(Required) The formatting way for web request.FieldToMatch(field_to_match) support following:"
+  value       = aws_wafregional_byte_match_set.aws_wafregional_byte_match_set.text_transformation
+}
+output "type" {
+  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.RemarksIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_wafregional_byte_match_set.aws_wafregional_byte_match_set.type
+}
 output "byte_match_tuples" {
   description = "(Optional)Settings for the ByteMatchSet, such as the bytes (typically a string that corresponds with ASCII characters) that you want AWS WAF to search for in web requests. ByteMatchTuple documented below.ByteMatchTuples(byte_match_tuples) support the following:"
   value       = aws_wafregional_byte_match_set.aws_wafregional_byte_match_set.byte_match_tuples
@@ -189,14 +197,6 @@ output "positional_constraint" {
 output "target_string" {
   description = "(Required) The value that you want AWS WAF to search for. The maximum length of the value is 50 bytes."
   value       = aws_wafregional_byte_match_set.aws_wafregional_byte_match_set.target_string
-}
-output "text_transformation" {
-  description = "(Required) The formatting way for web request.FieldToMatch(field_to_match) support following:"
-  value       = aws_wafregional_byte_match_set.aws_wafregional_byte_match_set.text_transformation
-}
-output "type" {
-  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.RemarksIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_wafregional_byte_match_set.aws_wafregional_byte_match_set.type
 }
 output "id" {
   description = "The ID of the WAF ByteMatchSet."

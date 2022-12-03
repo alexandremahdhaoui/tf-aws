@@ -1,37 +1,47 @@
 resource "aws_redshift_scheduled_action" "aws_redshift_scheduled_action" {
-  description        = var.description
-  end_time           = var.end_time
-  node_type          = var.node_type
-  resume_cluster     = var.resume_cluster
-  classic            = var.classic
-  enable             = var.enable
-  pause_cluster      = var.pause_cluster
-  target_action      = var.target_action
-  cluster_identifier = var.cluster_identifier
   cluster_type       = var.cluster_type
-  number_of_nodes    = var.number_of_nodes
+  resume_cluster     = var.resume_cluster
+  schedule           = var.schedule
+  enable             = var.enable
+  end_time           = var.end_time
   iam_role           = var.iam_role
   name               = var.name
+  pause_cluster      = var.pause_cluster
+  node_type          = var.node_type
+  classic            = var.classic
+  cluster_identifier = var.cluster_identifier
+  description        = var.description
+  number_of_nodes    = var.number_of_nodes
   resize_cluster     = var.resize_cluster
-  schedule           = var.schedule
   start_time         = var.start_time
+  target_action      = var.target_action
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "classic" {
-  description = "(Optional) A boolean value indicating whether the resize operation is using the classic resize process. Default: false."
+variable "node_type" {
+  description = "(Optional) The new node type for the nodes you are adding."
   type        = string
   default     = ""
 }
-variable "enable" {
-  description = "(Optional) Whether to enable the scheduled action. Default is true ."
+variable "description" {
+  description = "(Optional) The description of the scheduled action."
   type        = string
   default     = ""
 }
-variable "pause_cluster" {
-  description = "(Optional) An action that runs a PauseCluster API operation. Documented below."
+variable "number_of_nodes" {
+  description = "(Optional) The new number of nodes for the cluster.resume_cluster"
+  type        = string
+  default     = ""
+}
+variable "resize_cluster" {
+  description = "(Optional) An action that runs a ResizeCluster API operation. Documented below."
+  type        = string
+  default     = ""
+}
+variable "start_time" {
+  description = "(Optional) The start time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
   type        = string
   default     = ""
 }
@@ -39,8 +49,17 @@ variable "target_action" {
   description = "(Required) Target action. Documented below.Nested Blockstarget_action"
   type        = string
 }
+variable "classic" {
+  description = "(Optional) A boolean value indicating whether the resize operation is using the classic resize process. Default: false."
+  type        = string
+  default     = ""
+}
 variable "cluster_identifier" {
   description = "(Required) The identifier of the cluster to be resumed.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "schedule" {
+  description = "(Required) The schedule of action. The schedule is defined format of \"at expression\" or \"cron expression\", for example at(2016-03-04T17:27:00) or cron(0 10 ? * MON *). See Scheduled Action for more information."
   type        = string
 }
 variable "cluster_type" {
@@ -48,8 +67,8 @@ variable "cluster_type" {
   type        = string
   default     = ""
 }
-variable "number_of_nodes" {
-  description = "(Optional) The new number of nodes for the cluster.resume_cluster"
+variable "resume_cluster" {
+  description = "(Optional) An action that runs a ResumeCluster API operation. Documented below.pause_cluster"
   type        = string
   default     = ""
 }
@@ -61,37 +80,18 @@ variable "name" {
   description = "(Required) The scheduled action name."
   type        = string
 }
-variable "resize_cluster" {
-  description = "(Optional) An action that runs a ResizeCluster API operation. Documented below."
+variable "pause_cluster" {
+  description = "(Optional) An action that runs a PauseCluster API operation. Documented below."
   type        = string
   default     = ""
 }
-variable "schedule" {
-  description = "(Required) The schedule of action. The schedule is defined format of \"at expression\" or \"cron expression\", for example at(2016-03-04T17:27:00) or cron(0 10 ? * MON *). See Scheduled Action for more information."
-  type        = string
-}
-variable "start_time" {
-  description = "(Optional) The start time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) The description of the scheduled action."
+variable "enable" {
+  description = "(Optional) Whether to enable the scheduled action. Default is true ."
   type        = string
   default     = ""
 }
 variable "end_time" {
   description = "(Optional) The end time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
-  type        = string
-  default     = ""
-}
-variable "node_type" {
-  description = "(Optional) The new node type for the nodes you are adding."
-  type        = string
-  default     = ""
-}
-variable "resume_cluster" {
-  description = "(Optional) An action that runs a ResumeCluster API operation. Documented below.pause_cluster"
   type        = string
   default     = ""
 }
@@ -215,33 +215,57 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "classic" {
-  description = "(Optional) A boolean value indicating whether the resize operation is using the classic resize process. Default: false."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.classic
-}
-output "enable" {
-  description = "(Optional) Whether to enable the scheduled action. Default is true ."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.enable
-}
-output "pause_cluster" {
-  description = "(Optional) An action that runs a PauseCluster API operation. Documented below."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.pause_cluster
+output "node_type" {
+  description = "(Optional) The new node type for the nodes you are adding."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.node_type
 }
 output "target_action" {
   description = "(Required) Target action. Documented below.Nested Blockstarget_action"
   value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.target_action
 }
+output "classic" {
+  description = "(Optional) A boolean value indicating whether the resize operation is using the classic resize process. Default: false."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.classic
+}
 output "cluster_identifier" {
   description = "(Required) The identifier of the cluster to be resumed.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.cluster_identifier
+}
+output "description" {
+  description = "(Optional) The description of the scheduled action."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.description
+}
+output "number_of_nodes" {
+  description = "(Optional) The new number of nodes for the cluster.resume_cluster"
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.number_of_nodes
+}
+output "resize_cluster" {
+  description = "(Optional) An action that runs a ResizeCluster API operation. Documented below."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.resize_cluster
+}
+output "start_time" {
+  description = "(Optional) The start time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.start_time
 }
 output "cluster_type" {
   description = "(Optional)\u3000The new cluster type for the specified cluster."
   value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.cluster_type
 }
-output "number_of_nodes" {
-  description = "(Optional) The new number of nodes for the cluster.resume_cluster"
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.number_of_nodes
+output "resume_cluster" {
+  description = "(Optional) An action that runs a ResumeCluster API operation. Documented below.pause_cluster"
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.resume_cluster
+}
+output "schedule" {
+  description = "(Required) The schedule of action. The schedule is defined format of \"at expression\" or \"cron expression\", for example at(2016-03-04T17:27:00) or cron(0 10 ? * MON *). See Scheduled Action for more information."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.schedule
+}
+output "enable" {
+  description = "(Optional) Whether to enable the scheduled action. Default is true ."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.enable
+}
+output "end_time" {
+  description = "(Optional) The end time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.end_time
 }
 output "iam_role" {
   description = "(Required) The IAM role to assume to run the scheduled action."
@@ -251,33 +275,9 @@ output "name" {
   description = "(Required) The scheduled action name."
   value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.name
 }
-output "resize_cluster" {
-  description = "(Optional) An action that runs a ResizeCluster API operation. Documented below."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.resize_cluster
-}
-output "schedule" {
-  description = "(Required) The schedule of action. The schedule is defined format of \"at expression\" or \"cron expression\", for example at(2016-03-04T17:27:00) or cron(0 10 ? * MON *). See Scheduled Action for more information."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.schedule
-}
-output "start_time" {
-  description = "(Optional) The start time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.start_time
-}
-output "description" {
-  description = "(Optional) The description of the scheduled action."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.description
-}
-output "end_time" {
-  description = "(Optional) The end time in UTC when the schedule is active, in UTC RFC3339 format(for example, YYYY-MM-DDTHH:MM:SSZ)."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.end_time
-}
-output "node_type" {
-  description = "(Optional) The new node type for the nodes you are adding."
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.node_type
-}
-output "resume_cluster" {
-  description = "(Optional) An action that runs a ResumeCluster API operation. Documented below.pause_cluster"
-  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.resume_cluster
+output "pause_cluster" {
+  description = "(Optional) An action that runs a PauseCluster API operation. Documented below."
+  value       = aws_redshift_scheduled_action.aws_redshift_scheduled_action.pause_cluster
 }
 output "id" {
   description = "The Redshift Scheduled Action name."

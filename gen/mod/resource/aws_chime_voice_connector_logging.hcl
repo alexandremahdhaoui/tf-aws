@@ -1,16 +1,11 @@
 resource "aws_chime_voice_connector_logging" "aws_chime_voice_connector_logging" {
+  voice_connector_id       = var.voice_connector_id
   enable_media_metric_logs = var.enable_media_metric_logs
   enable_sip_logs          = var.enable_sip_logs
-  voice_connector_id       = var.voice_connector_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "enable_media_metric_logs" {
-  description = "(Optional) When true, enables logging of detailed media metrics for Voice Connectors to Amazon CloudWatch logs.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "enable_sip_logs" {
   description = "(Optional) When true, enables SIP message logs for sending to Amazon CloudWatch Logs."
@@ -20,6 +15,11 @@ variable "enable_sip_logs" {
 variable "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   type        = string
+}
+variable "enable_media_metric_logs" {
+  description = "(Optional) When true, enables logging of detailed media metrics for Voice Connectors to Amazon CloudWatch logs.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

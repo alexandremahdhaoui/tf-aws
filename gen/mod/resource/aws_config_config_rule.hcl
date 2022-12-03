@@ -1,64 +1,33 @@
 resource "aws_config_config_rule" "aws_config_config_rule" {
-  input_parameters                             = var.input_parameters
-  source_detail                                = var.source_detail
-  compliance_resource_id                       = var.compliance_resource_id
   custom_policy_details                        = var.custom_policy_details
-  description                                  = var.description
-  event_source                                 = var.event_source
-  arn                                          = var.arn
-  maximum_execution_frequency                  = var.maximum_execution_frequency
-  source_identifier                            = var.source_identifier
-  tag_value                                    = var.tag_value
-  owner                                        = var.owner
+  message_type                                 = var.message_type
   policy_runtime                               = var.policy_runtime
-  rule_id                                      = var.rule_id
-  tag_key                                      = var.tag_key
+  source_identifier                            = var.source_identifier
   ConfigurationItemChangeNotification          = var.ConfigurationItemChangeNotification
   ConfigurationSnapshotDeliveryCompleted       = var.ConfigurationSnapshotDeliveryCompleted
-  OversizedConfigurationItemChangeNotification = var.OversizedConfigurationItemChangeNotification
-  compliance_resource_types                    = var.compliance_resource_types
-  policy_text                                  = var.policy_text
+  compliance_resource_id                       = var.compliance_resource_id
+  owner                                        = var.owner
   scope                                        = var.scope
   source                                       = var.source
   tags                                         = var.tags
+  arn                                          = var.arn
+  description                                  = var.description
+  maximum_execution_frequency                  = var.maximum_execution_frequency
+  policy_text                                  = var.policy_text
+  rule_id                                      = var.rule_id
+  tag_key                                      = var.tag_key
+  OversizedConfigurationItemChangeNotification = var.OversizedConfigurationItemChangeNotification
   ScheduledNotification                        = var.ScheduledNotification
   enable_debug_log_delivery                    = var.enable_debug_log_delivery
-  message_type                                 = var.message_type
   name                                         = var.name
+  source_detail                                = var.source_detail
+  tag_value                                    = var.tag_value
+  compliance_resource_types                    = var.compliance_resource_types
+  event_source                                 = var.event_source
+  input_parameters                             = var.input_parameters
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the config rule"
-  type        = string
-}
-variable "maximum_execution_frequency" {
-  description = "(Optional) The frequency that you want AWS Config to run evaluations for a rule that istriggered periodically. If specified, requires message_type to be ScheduledNotification."
-  type        = string
-  default     = ""
-}
-variable "source_identifier" {
-  description = "(Optional) For AWS Config managed rules, a predefined identifier, e.g IAM_PASSWORD_POLICY. For custom Lambda rules, the identifier is the ARN of the Lambda Function, such as arn:aws:lambda:us-east-1:123456789012:function:custom_rule_name or the arn attribute of the aws_lambda_function resource."
-  type        = string
-  default     = ""
-}
-variable "tag_value" {
-  description = "(Optional) The tag value applied to only those AWS resources that you want to trigger an evaluation for the rule.SourceProvides the rule owner (AWS or customer), the rule identifier, and the notifications that cause the function to evaluate your AWS resources."
-  type        = string
-  default     = ""
-}
-variable "policy_runtime" {
-  description = "(Required) The runtime system for your Config Custom Policy rule. Guard is a policy-as-code language that allows you to write policies that are enforced by Config Custom Policy rules. For more information about Guard, see the Guard GitHub Repository."
-  type        = string
-}
-variable "rule_id" {
-  description = "The ID of the config rule"
-  type        = string
-}
-variable "tag_key" {
-  description = "(Optional, Required if tag_value is specified) The tag key that is applied to only those AWS resources that you want you want to trigger an evaluation for the rule."
   type        = string
 }
 variable "ConfigurationItemChangeNotification" {
@@ -69,12 +38,40 @@ variable "ConfigurationSnapshotDeliveryCompleted" {
   description = "Triggers a periodic evaluation when AWS Config delivers a configuration snapshot.Custom Policy Details"
   type        = string
 }
-variable "OversizedConfigurationItemChangeNotification" {
-  description = "Triggers an evaluation when AWS Config delivers an oversized configuration item. AWS Config may generate this notification type when a resource changes and the notification exceeds the maximum size allowed by Amazon SNS."
+variable "compliance_resource_id" {
+  description = "(Optional) The IDs of the only AWS resource that you want to trigger an evaluation for the rule. If you specify a resource ID, you must specify one resource type for compliance_resource_types."
+  type        = string
+  default     = ""
+}
+variable "custom_policy_details" {
+  description = "(Optional) Provides the runtime system, policy definition, and whether debug logging is enabled. Required when owner is set to CUSTOM_POLICY. See Custom Policy Details Below.Source Detail"
+  type        = string
+  default     = ""
+}
+variable "message_type" {
+  description = ""
   type        = string
 }
-variable "compliance_resource_types" {
-  description = "(Optional) A list of resource types of only those AWS resources that you want to trigger an evaluation for the ruleE.g., AWS::EC2::Instance. You can only specify one type if you also specify a resource ID for compliance_resource_id. See relevant part of AWS Docs for available types."
+variable "policy_runtime" {
+  description = "(Required) The runtime system for your Config Custom Policy rule. Guard is a policy-as-code language that allows you to write policies that are enforced by Config Custom Policy rules. For more information about Guard, see the Guard GitHub Repository."
+  type        = string
+}
+variable "source_identifier" {
+  description = "(Optional) For AWS Config managed rules, a predefined identifier, e.g IAM_PASSWORD_POLICY. For custom Lambda rules, the identifier is the ARN of the Lambda Function, such as arn:aws:lambda:us-east-1:123456789012:function:custom_rule_name or the arn attribute of the aws_lambda_function resource."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the config rule"
+  type        = string
+}
+variable "description" {
+  description = "(Optional) Description of the rule"
+  type        = string
+  default     = ""
+}
+variable "maximum_execution_frequency" {
+  description = "(Optional) The frequency that you want AWS Config to run evaluations for a rule that istriggered periodically. If specified, requires message_type to be ScheduledNotification."
   type        = string
   default     = ""
 }
@@ -96,6 +93,10 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "OversizedConfigurationItemChangeNotification" {
+  description = "Triggers an evaluation when AWS Config delivers an oversized configuration item. AWS Config may generate this notification type when a resource changes and the notification exceeds the maximum size allowed by Amazon SNS."
+  type        = string
+}
 variable "ScheduledNotification" {
   description = "Triggers a periodic evaluation at the frequency specified for maximum_execution_frequency."
   type        = string
@@ -105,36 +106,20 @@ variable "enable_debug_log_delivery" {
   type        = string
   default     = ""
 }
-variable "message_type" {
-  description = "(Optional) The type of notification that triggers AWS Config to run an evaluation for a rule. You canspecify the following notification types:\n"
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) The name of the rule"
-  type        = string
-}
 variable "policy_text" {
   description = "(Required) The policy definition containing the logic for your Config Custom Policy rule.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "source_detail" {
-  description = "(Optional) Provides the source and type of the event that causes AWS Config to evaluate your AWS resources. Only valid if owner is CUSTOM_LAMBDA or CUSTOM_POLICY. See Source Detail Below."
+variable "rule_id" {
+  description = "The ID of the config rule"
   type        = string
-  default     = ""
 }
-variable "compliance_resource_id" {
-  description = "(Optional) The IDs of the only AWS resource that you want to trigger an evaluation for the rule. If you specify a resource ID, you must specify one resource type for compliance_resource_types."
+variable "tag_key" {
+  description = "(Optional, Required if tag_value is specified) The tag key that is applied to only those AWS resources that you want you want to trigger an evaluation for the rule."
   type        = string
-  default     = ""
 }
-variable "custom_policy_details" {
-  description = "(Optional) Provides the runtime system, policy definition, and whether debug logging is enabled. Required when owner is set to CUSTOM_POLICY. See Custom Policy Details Below.Source Detail"
-  type        = string
-  default     = ""
-}
-variable "description" {
-  description = "(Optional) Description of the rule"
+variable "compliance_resource_types" {
+  description = "(Optional) A list of resource types of only those AWS resources that you want to trigger an evaluation for the ruleE.g., AWS::EC2::Instance. You can only specify one type if you also specify a resource ID for compliance_resource_id. See relevant part of AWS Docs for available types."
   type        = string
   default     = ""
 }
@@ -145,6 +130,20 @@ variable "event_source" {
 }
 variable "input_parameters" {
   description = "(Optional) A string in JSON format that is passed to the AWS Config rule Lambda function."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) The name of the rule"
+  type        = string
+}
+variable "source_detail" {
+  description = "(Optional) Provides the source and type of the event that causes AWS Config to evaluate your AWS resources. Only valid if owner is CUSTOM_LAMBDA or CUSTOM_POLICY. See Source Detail Below."
+  type        = string
+  default     = ""
+}
+variable "tag_value" {
+  description = "(Optional) The tag value applied to only those AWS resources that you want to trigger an evaluation for the rule.SourceProvides the rule owner (AWS or customer), the rule identifier, and the notifications that cause the function to evaluate your AWS resources."
   type        = string
   default     = ""
 }
@@ -268,45 +267,37 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "rule_id" {
-  description = "The ID of the config rule"
-  value       = aws_config_config_rule.aws_config_config_rule.rule_id
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Scope"
+  value       = aws_config_config_rule.aws_config_config_rule.tags
 }
-output "tag_key" {
-  description = "(Optional, Required if tag_value is specified) The tag key that is applied to only those AWS resources that you want you want to trigger an evaluation for the rule."
-  value       = aws_config_config_rule.aws_config_config_rule.tag_key
+output "arn" {
+  description = "The ARN of the config rule"
+  value       = aws_config_config_rule.aws_config_config_rule.arn
 }
-output "ConfigurationItemChangeNotification" {
-  description = "Triggers an evaluation when AWS Config delivers a configuration item as a result of a resource change."
-  value       = aws_config_config_rule.aws_config_config_rule.ConfigurationItemChangeNotification
+output "description" {
+  description = "(Optional) Description of the rule"
+  value       = aws_config_config_rule.aws_config_config_rule.description
 }
-output "ConfigurationSnapshotDeliveryCompleted" {
-  description = "Triggers a periodic evaluation when AWS Config delivers a configuration snapshot.Custom Policy Details"
-  value       = aws_config_config_rule.aws_config_config_rule.ConfigurationSnapshotDeliveryCompleted
-}
-output "OversizedConfigurationItemChangeNotification" {
-  description = "Triggers an evaluation when AWS Config delivers an oversized configuration item. AWS Config may generate this notification type when a resource changes and the notification exceeds the maximum size allowed by Amazon SNS."
-  value       = aws_config_config_rule.aws_config_config_rule.OversizedConfigurationItemChangeNotification
-}
-output "compliance_resource_types" {
-  description = "(Optional) A list of resource types of only those AWS resources that you want to trigger an evaluation for the ruleE.g., AWS::EC2::Instance. You can only specify one type if you also specify a resource ID for compliance_resource_id. See relevant part of AWS Docs for available types."
-  value       = aws_config_config_rule.aws_config_config_rule.compliance_resource_types
+output "maximum_execution_frequency" {
+  description = "(Optional) The frequency that you want AWS Config to run evaluations for a rule that istriggered periodically. If specified, requires message_type to be ScheduledNotification."
+  value       = aws_config_config_rule.aws_config_config_rule.maximum_execution_frequency
 }
 output "owner" {
   description = "(Required) Indicates whether AWS or the customer owns and manages the AWS Config rule. Valid values are AWS, CUSTOM_LAMBDA or CUSTOM_POLICY. For more information about managed rules, see the AWS Config Managed Rules documentation. For more information about custom rules, see the AWS Config Custom Rules documentation. Custom Lambda Functions require permissions to allow the AWS Config service to invoke them, e.g., via the aws_lambda_permission resource."
   value       = aws_config_config_rule.aws_config_config_rule.owner
 }
-output "policy_runtime" {
-  description = "(Required) The runtime system for your Config Custom Policy rule. Guard is a policy-as-code language that allows you to write policies that are enforced by Config Custom Policy rules. For more information about Guard, see the Guard GitHub Repository."
-  value       = aws_config_config_rule.aws_config_config_rule.policy_runtime
+output "scope" {
+  description = "(Optional) Scope defines which resources can trigger an evaluation for the rule. See Source Below."
+  value       = aws_config_config_rule.aws_config_config_rule.scope
 }
 output "source" {
   description = "(Required) Source specifies the rule owner, the rule identifier, and the notifications that cause the function to evaluate your AWS resources. See Scope Below."
   value       = aws_config_config_rule.aws_config_config_rule.source
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Scope"
-  value       = aws_config_config_rule.aws_config_config_rule.tags
+output "OversizedConfigurationItemChangeNotification" {
+  description = "Triggers an evaluation when AWS Config delivers an oversized configuration item. AWS Config may generate this notification type when a resource changes and the notification exceeds the maximum size allowed by Amazon SNS."
+  value       = aws_config_config_rule.aws_config_config_rule.OversizedConfigurationItemChangeNotification
 }
 output "ScheduledNotification" {
   description = "Triggers a periodic evaluation at the frequency specified for maximum_execution_frequency."
@@ -316,33 +307,21 @@ output "enable_debug_log_delivery" {
   description = "(Optional) The boolean expression for enabling debug logging for your Config Custom Policy rule. The default value is false."
   value       = aws_config_config_rule.aws_config_config_rule.enable_debug_log_delivery
 }
-output "message_type" {
-  description = "(Optional) The type of notification that triggers AWS Config to run an evaluation for a rule. You canspecify the following notification types:\n"
-  value       = aws_config_config_rule.aws_config_config_rule.message_type
-}
-output "name" {
-  description = "(Required) The name of the rule"
-  value       = aws_config_config_rule.aws_config_config_rule.name
-}
 output "policy_text" {
   description = "(Required) The policy definition containing the logic for your Config Custom Policy rule.In addition to all arguments above, the following attributes are exported:"
   value       = aws_config_config_rule.aws_config_config_rule.policy_text
 }
-output "scope" {
-  description = "(Optional) Scope defines which resources can trigger an evaluation for the rule. See Source Below."
-  value       = aws_config_config_rule.aws_config_config_rule.scope
+output "rule_id" {
+  description = "The ID of the config rule"
+  value       = aws_config_config_rule.aws_config_config_rule.rule_id
 }
-output "compliance_resource_id" {
-  description = "(Optional) The IDs of the only AWS resource that you want to trigger an evaluation for the rule. If you specify a resource ID, you must specify one resource type for compliance_resource_types."
-  value       = aws_config_config_rule.aws_config_config_rule.compliance_resource_id
+output "tag_key" {
+  description = "(Optional, Required if tag_value is specified) The tag key that is applied to only those AWS resources that you want you want to trigger an evaluation for the rule."
+  value       = aws_config_config_rule.aws_config_config_rule.tag_key
 }
-output "custom_policy_details" {
-  description = "(Optional) Provides the runtime system, policy definition, and whether debug logging is enabled. Required when owner is set to CUSTOM_POLICY. See Custom Policy Details Below.Source Detail"
-  value       = aws_config_config_rule.aws_config_config_rule.custom_policy_details
-}
-output "description" {
-  description = "(Optional) Description of the rule"
-  value       = aws_config_config_rule.aws_config_config_rule.description
+output "compliance_resource_types" {
+  description = "(Optional) A list of resource types of only those AWS resources that you want to trigger an evaluation for the ruleE.g., AWS::EC2::Instance. You can only specify one type if you also specify a resource ID for compliance_resource_id. See relevant part of AWS Docs for available types."
+  value       = aws_config_config_rule.aws_config_config_rule.compliance_resource_types
 }
 output "event_source" {
   description = "(Optional) The source of the event, such as an AWS service, that triggers AWS Config to evaluate your AWSresources. This defaults to aws.config and is the only valid value."
@@ -352,25 +331,45 @@ output "input_parameters" {
   description = "(Optional) A string in JSON format that is passed to the AWS Config rule Lambda function."
   value       = aws_config_config_rule.aws_config_config_rule.input_parameters
 }
+output "name" {
+  description = "(Required) The name of the rule"
+  value       = aws_config_config_rule.aws_config_config_rule.name
+}
 output "source_detail" {
   description = "(Optional) Provides the source and type of the event that causes AWS Config to evaluate your AWS resources. Only valid if owner is CUSTOM_LAMBDA or CUSTOM_POLICY. See Source Detail Below."
   value       = aws_config_config_rule.aws_config_config_rule.source_detail
 }
-output "arn" {
-  description = "The ARN of the config rule"
-  value       = aws_config_config_rule.aws_config_config_rule.arn
-}
-output "maximum_execution_frequency" {
-  description = "(Optional) The frequency that you want AWS Config to run evaluations for a rule that istriggered periodically. If specified, requires message_type to be ScheduledNotification."
-  value       = aws_config_config_rule.aws_config_config_rule.maximum_execution_frequency
+output "tag_value" {
+  description = "(Optional) The tag value applied to only those AWS resources that you want to trigger an evaluation for the rule.SourceProvides the rule owner (AWS or customer), the rule identifier, and the notifications that cause the function to evaluate your AWS resources."
+  value       = aws_config_config_rule.aws_config_config_rule.tag_value
 }
 output "source_identifier" {
   description = "(Optional) For AWS Config managed rules, a predefined identifier, e.g IAM_PASSWORD_POLICY. For custom Lambda rules, the identifier is the ARN of the Lambda Function, such as arn:aws:lambda:us-east-1:123456789012:function:custom_rule_name or the arn attribute of the aws_lambda_function resource."
   value       = aws_config_config_rule.aws_config_config_rule.source_identifier
 }
-output "tag_value" {
-  description = "(Optional) The tag value applied to only those AWS resources that you want to trigger an evaluation for the rule.SourceProvides the rule owner (AWS or customer), the rule identifier, and the notifications that cause the function to evaluate your AWS resources."
-  value       = aws_config_config_rule.aws_config_config_rule.tag_value
+output "ConfigurationItemChangeNotification" {
+  description = "Triggers an evaluation when AWS Config delivers a configuration item as a result of a resource change."
+  value       = aws_config_config_rule.aws_config_config_rule.ConfigurationItemChangeNotification
+}
+output "ConfigurationSnapshotDeliveryCompleted" {
+  description = "Triggers a periodic evaluation when AWS Config delivers a configuration snapshot.Custom Policy Details"
+  value       = aws_config_config_rule.aws_config_config_rule.ConfigurationSnapshotDeliveryCompleted
+}
+output "compliance_resource_id" {
+  description = "(Optional) The IDs of the only AWS resource that you want to trigger an evaluation for the rule. If you specify a resource ID, you must specify one resource type for compliance_resource_types."
+  value       = aws_config_config_rule.aws_config_config_rule.compliance_resource_id
+}
+output "custom_policy_details" {
+  description = "(Optional) Provides the runtime system, policy definition, and whether debug logging is enabled. Required when owner is set to CUSTOM_POLICY. See Custom Policy Details Below.Source Detail"
+  value       = aws_config_config_rule.aws_config_config_rule.custom_policy_details
+}
+output "message_type" {
+  description = ""
+  value       = aws_config_config_rule.aws_config_config_rule.message_type
+}
+output "policy_runtime" {
+  description = "(Required) The runtime system for your Config Custom Policy rule. Guard is a policy-as-code language that allows you to write policies that are enforced by Config Custom Policy rules. For more information about Guard, see the Guard GitHub Repository."
+  value       = aws_config_config_rule.aws_config_config_rule.policy_runtime
 }
 output "arn" {
   description = "The ARN of the config rule"

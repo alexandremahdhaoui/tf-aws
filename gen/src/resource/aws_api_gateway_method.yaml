@@ -27,7 +27,10 @@ spec:
             optional: true
             type: string
         request_models:
-            description: application/jsonError, Empty (built-in models) or aws_api_gateway_model's name.
+            description: |-
+                (Optional) Map of the API models used for the request's content type
+                where key is the content type (e.g., application/jsonError, Empty (built-in models) or aws_api_gateway_model's name.
+            optional: true
             type: string
         request_validator_id:
             description: (Optional) ID of a aws_api_gateway_request_validator

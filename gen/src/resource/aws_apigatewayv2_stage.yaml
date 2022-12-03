@@ -5,10 +5,7 @@ metadata:
 spec:
     args:
         access_log_settings:
-            description: |-
-                (Optional) Settings for logging access in this stage.
-                Use the aws_api_gateway_account resource to configure permissions for CloudWatch Logging.
-            optional: true
+            description: aws_api_gateway_account resource to configure permissions for CloudWatch Logging.
             type: string
         api_id:
             description: (Required) API identifier.
@@ -25,10 +22,7 @@ spec:
             optional: true
             type: string
         data_trace_enabled:
-            description: |-
-                (Optional) Whether data trace logging is enabled for the route. Affects the log entries pushed to Amazon CloudWatch Logs.
-                Defaults to false. Supported only for WebSocket APIs.
-            optional: true
+            description: false. Supported only for WebSocket APIs.
             type: string
         default_route_settings:
             description: (Optional) Default route settings for the stage.

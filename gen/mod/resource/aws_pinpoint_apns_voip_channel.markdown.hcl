@@ -12,6 +12,18 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "private_key" {
+  description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
+  type        = string
+}
+variable "team_id" {
+  description = "(Required) The ID assigned to your Apple developer account team. This value is provided on the Membership page."
+  type        = string
+}
+variable "token_key" {
+  description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
+  type        = string
+}
 variable "application_id" {
   description = "(Required) The application ID."
   type        = string
@@ -33,18 +45,6 @@ variable "enabled" {
   description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
   type        = string
   default     = ""
-}
-variable "private_key" {
-  description = "(Required) The Certificate Private Key file (ie. .key file).If you choose to use strongKey credentials you will have to provide:"
-  type        = string
-}
-variable "team_id" {
-  description = "(Required) The ID assigned to your Apple developer account team. This value is provided on the Membership page."
-  type        = string
-}
-variable "token_key" {
-  description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,10 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "token_key" {
-  description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
-  value       = aws_pinpoint_apns_voip_channel.markdown.aws_pinpoint_apns_voip_channel.markdown.token_key
-}
 output "application_id" {
   description = "(Required) The application ID."
   value       = aws_pinpoint_apns_voip_channel.markdown.aws_pinpoint_apns_voip_channel.markdown.application_id
@@ -197,6 +193,10 @@ output "private_key" {
 output "team_id" {
   description = "(Required) The ID assigned to your Apple developer account team. This value is provided on the Membership page."
   value       = aws_pinpoint_apns_voip_channel.markdown.aws_pinpoint_apns_voip_channel.markdown.team_id
+}
+output "token_key" {
+  description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
+  value       = aws_pinpoint_apns_voip_channel.markdown.aws_pinpoint_apns_voip_channel.markdown.token_key
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

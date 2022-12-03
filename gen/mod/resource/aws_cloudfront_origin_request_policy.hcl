@@ -1,19 +1,14 @@
 resource "aws_cloudfront_origin_request_policy" "aws_cloudfront_origin_request_policy" {
-  name                 = var.name
   query_strings_config = var.query_strings_config
   comment              = var.comment
   cookies_config       = var.cookies_config
   etag                 = var.etag
   headers_config       = var.headers_config
+  name                 = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "query_strings_config" {
-  description = "(Required) Object that determines whether any URL query strings in viewer requests (and if so, which query strings) are included in the origin request key and automatically included in requests that CloudFront sends to the origin. See Query String Config for more information.Cookies Configcookie_behavior(Required) Determines whether any cookies in viewer requests are included in the origin request key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist allcookies(Optional) Object that contains a list of cookie names. See Items for more information.Headers Configheader_behavior(Required) Determines whether any HTTP headers are included in the origin request key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allViewer, allViewerAndWhitelistCloudFrontheaders(Optional) Object that contains a list of header names. See Items for more information.Query String Configquery_string_behavior(Required) Determines whether any URL query strings in viewer requests are included in the origin request key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allquery_strings(Optional) Object that contains a list of query string names. See Items for more information.Itemsitems(Required) List of item names (cookies, headers, or query strings).In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "comment" {
   description = "(Optional) Comment to describe the origin request policy."
@@ -35,6 +30,11 @@ variable "headers_config" {
 variable "name" {
   description = "(Required) Unique name to identify the origin request policy."
   type        = string
+}
+variable "query_strings_config" {
+  description = "(Required) Object that determines whether any URL query strings in viewer requests (and if so, which query strings) are included in the origin request key and automatically included in requests that CloudFront sends to the origin. See Query String Config for more information.Cookies Configcookie_behavior(Required) Determines whether any cookies in viewer requests are included in the origin request key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist allcookies(Optional) Object that contains a list of cookie names. See Items for more information.Headers Configheader_behavior(Required) Determines whether any HTTP headers are included in the origin request key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allViewer, allViewerAndWhitelistCloudFrontheaders(Optional) Object that contains a list of header names. See Items for more information.Query String Configquery_string_behavior(Required) Determines whether any URL query strings in viewer requests are included in the origin request key and automatically included in requests that CloudFront sends to the origin. Valid values are none, whitelist, allquery_strings(Optional) Object that contains a list of query string names. See Items for more information.Itemsitems(Required) List of item names (cookies, headers, or query strings).In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

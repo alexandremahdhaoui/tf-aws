@@ -1,11 +1,19 @@
 resource "aws_macie2_classification_export_configuration" "aws_macie2_classification_export_configuration" {
-  bucket_name    = var.bucket_name
   key_prefix     = var.key_prefix
   kms_key_arn    = var.kms_key_arn
   s3_destination = var.s3_destination
+  bucket_name    = var.bucket_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "kms_key_arn" {
+  description = "(Required) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.Additional information can be found in the Storing and retaining sensitive data discovery results with Amazon Macie for AWS Macie documentation.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "s3_destination" {
+  description = "(Required) Configuration block for a S3 Destination. Defined belows3_destination Configuration BlockThe s3_destination configuration block supports the following arguments:"
   type        = string
 }
 variable "bucket_name" {
@@ -16,14 +24,6 @@ variable "key_prefix" {
   description = "(Optional) The object key for the bucket in which Amazon Macie exports the data classification results."
   type        = string
   default     = ""
-}
-variable "kms_key_arn" {
-  description = "(Required) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.Additional information can be found in the Storing and retaining sensitive data discovery results with Amazon Macie for AWS Macie documentation.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "s3_destination" {
-  description = "(Required) Configuration block for a S3 Destination. Defined belows3_destination Configuration BlockThe s3_destination configuration block supports the following arguments:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "s3_destination" {
+  description = "(Required) Configuration block for a S3 Destination. Defined belows3_destination Configuration BlockThe s3_destination configuration block supports the following arguments:"
+  value       = aws_macie2_classification_export_configuration.aws_macie2_classification_export_configuration.s3_destination
+}
 output "bucket_name" {
   description = "(Required) The Amazon S3 bucket name in which Amazon Macie exports the data classification results."
   value       = aws_macie2_classification_export_configuration.aws_macie2_classification_export_configuration.bucket_name
@@ -156,10 +160,6 @@ output "key_prefix" {
 output "kms_key_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the KMS key to be used to encrypt the data.Additional information can be found in the Storing and retaining sensitive data discovery results with Amazon Macie for AWS Macie documentation.In addition to all arguments above, the following attributes are exported:"
   value       = aws_macie2_classification_export_configuration.aws_macie2_classification_export_configuration.kms_key_arn
-}
-output "s3_destination" {
-  description = "(Required) Configuration block for a S3 Destination. Defined belows3_destination Configuration BlockThe s3_destination configuration block supports the following arguments:"
-  value       = aws_macie2_classification_export_configuration.aws_macie2_classification_export_configuration.s3_destination
 }
 output "id" {
   description = "The unique identifier (ID) of the configuration."

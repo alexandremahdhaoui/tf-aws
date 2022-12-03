@@ -21,7 +21,9 @@ spec:
             description: (Required) The ID of a Regex Pattern Set.
             type: string
         text_transformation:
-            description: CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match
+            description: |-
+                (Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.
+                e.g., CMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match
             type: string
         type:
             description: |-

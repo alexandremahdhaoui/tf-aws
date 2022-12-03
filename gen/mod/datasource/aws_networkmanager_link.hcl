@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "type" {
+  description = "Type of the link.The bandwidth object supports the following:"
+  value       = aws_networkmanager_link.aws_networkmanager_link.type
+}
 output "arn" {
   description = "ARN of the link."
   value       = aws_networkmanager_link.aws_networkmanager_link.arn
@@ -31,10 +35,6 @@ output "site_id" {
 output "tags" {
   description = "Key-value tags for the link."
   value       = aws_networkmanager_link.aws_networkmanager_link.tags
-}
-output "type" {
-  description = "Type of the link.The bandwidth object supports the following:"
-  value       = aws_networkmanager_link.aws_networkmanager_link.type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

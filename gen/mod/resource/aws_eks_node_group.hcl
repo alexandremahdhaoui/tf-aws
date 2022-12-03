@@ -1,50 +1,54 @@
 resource "aws_eks_node_group" "aws_eks_node_group" {
-  min_size                        = var.min_size
-  node_group_name                 = var.node_group_name
-  remote_access_security_group_id = var.remote_access_security_group_id
-  scaling_config                  = var.scaling_config
-  autoscaling_groups              = var.autoscaling_groups
-  create                          = var.create
-  id                              = var.id
-  launch_template                 = var.launch_template
-  value                           = var.value
-  version                         = var.version
-  force_update_version            = var.force_update_version
   max_size                        = var.max_size
-  remote_access                   = var.remote_access
-  resources                       = var.resources
-  disk_size                       = var.disk_size
   max_unavailable                 = var.max_unavailable
-  name                            = var.name
-  node_group_name_prefix          = var.node_group_name_prefix
-  delete                          = var.delete
+  min_size                        = var.min_size
+  disk_size                       = var.disk_size
+  instance_types                  = var.instance_types
   labels                          = var.labels
+  node_role_arn                   = var.node_role_arn
+  delete                          = var.delete
+  desired_size                    = var.desired_size
+  key                             = var.key
+  value                           = var.value
+  remote_access_security_group_id = var.remote_access_security_group_id
+  source_security_group_ids       = var.source_security_group_ids
+  update                          = var.update
   tags_all                        = var.tags_all
   taint                           = var.taint
-  arn                             = var.arn
-  cluster_name                    = var.cluster_name
   release_version                 = var.release_version
-  tags                            = var.tags
-  update                          = var.update
-  desired_size                    = var.desired_size
-  ec2_ssh_key                     = var.ec2_ssh_key
-  key                             = var.key
-  source_security_group_ids       = var.source_security_group_ids
-  node_role_arn                   = var.node_role_arn
+  resources                       = var.resources
+  scaling_config                  = var.scaling_config
+  cluster_name                    = var.cluster_name
+  effect                          = var.effect
+  node_group_name                 = var.node_group_name
+  node_group_name_prefix          = var.node_group_name_prefix
   status                          = var.status
   ami_type                        = var.ami_type
-  effect                          = var.effect
-  instance_types                  = var.instance_types
-  max_unavailable_percentage      = var.max_unavailable_percentage
   capacity_type                   = var.capacity_type
+  force_update_version            = var.force_update_version
   subnet_ids                      = var.subnet_ids
+  tags                            = var.tags
+  autoscaling_groups              = var.autoscaling_groups
+  max_unavailable_percentage      = var.max_unavailable_percentage
+  remote_access                   = var.remote_access
+  id                              = var.id
+  launch_template                 = var.launch_template
+  name                            = var.name
+  version                         = var.version
+  arn                             = var.arn
+  create                          = var.create
+  ec2_ssh_key                     = var.ec2_ssh_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "min_size" {
-  description = "(Required) Minimum number of worker nodes.taint Configuration Block"
+variable "cluster_name" {
+  description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
+  type        = string
+}
+variable "effect" {
+  description = "(Required) The effect of the taint. Valid values: NO_SCHEDULE, NO_EXECUTE, PREFER_NO_SCHEDULE.update_config Configuration BlockThe following arguments are mutually exclusive."
   type        = string
 }
 variable "node_group_name" {
@@ -52,22 +56,71 @@ variable "node_group_name" {
   type        = string
   default     = ""
 }
-variable "remote_access_security_group_id" {
-  description = "Identifier of the remote access EC2 Security Group."
+variable "ami_type" {
+  description = "(Optional) Type of Amazon Machine Image (AMI) associated with the EKS Node Group. See the AWS documentation for valid values. Terraform will only perform drift detection if a configuration value is provided."
   type        = string
   default     = ""
 }
-variable "scaling_config" {
-  description = "(Required) Configuration block with scaling settings. Detailed below."
+variable "capacity_type" {
+  description = "(Optional) Type of capacity associated with the EKS Node Group. Valid values: ON_DEMAND, SPOT. Terraform will only perform drift detection if a configuration value is provided."
   type        = string
+  default     = ""
+}
+variable "force_update_version" {
+  description = "(Optional) Force version update if existing pods are unable to be drained due to a pod disruption budget issue."
+  type        = string
+  default     = ""
+}
+variable "node_group_name_prefix" {
+  description = " – (Optional) Creates a unique name beginning with the specified prefix. Conflicts with node_group_name."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "Status of the EKS Node Group.TimeoutsConfiguration options:"
+  type        = string
+  default     = ""
 }
 variable "autoscaling_groups" {
-  description = "List of objects containing information about AutoScaling Groups.\n"
+  description = ""
+  type        = string
+  default     = ""
+}
+variable "max_unavailable_percentage" {
+  description = "(Optional) Desired max percentage of unavailable worker nodes during node group update.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "remote_access" {
+  description = "(Optional) Configuration block with remote access settings. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "subnet_ids" {
+  description = " – (Required) Identifiers of EC2 Subnets to associate with the EKS Node Group. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster)."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "version" {
+  description = "(Required) EC2 Launch Template version number. While the API accepts values like $Default and $Latest, the API will convert the value to the associated version number (e.g., 1) on read and Terraform will show a difference on next plan. Using the default_version or latest_version attribute of the aws_launch_template resource or data source is recommended for this argument.remote_access Configuration Block"
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS Node Group."
   type        = string
   default     = ""
 }
 variable "create" {
   description = "(Default 60m)"
+  type        = string
+  default     = ""
+}
+variable "ec2_ssh_key" {
+  description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group. If you specify this configuration, but do not specify source_security_group_ids when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0)."
   type        = string
   default     = ""
 }
@@ -81,31 +134,8 @@ variable "launch_template" {
   type        = string
   default     = ""
 }
-variable "value" {
-  description = "(Optional) The value of the taint. Maximum length of 63."
-  type        = string
-  default     = ""
-}
-variable "version" {
-  description = "(Required) EC2 Launch Template version number. While the API accepts values like $Default and $Latest, the API will convert the value to the associated version number (e.g., 1) on read and Terraform will show a difference on next plan. Using the default_version or latest_version attribute of the aws_launch_template resource or data source is recommended for this argument.remote_access Configuration Block"
-  type        = string
-}
-variable "force_update_version" {
-  description = "(Optional) Force version update if existing pods are unable to be drained due to a pod disruption budget issue."
-  type        = string
-  default     = ""
-}
-variable "max_size" {
-  description = "(Required) Maximum number of worker nodes."
-  type        = string
-}
-variable "remote_access" {
-  description = "(Optional) Configuration block with remote access settings. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "resources" {
-  description = "List of objects containing information about underlying resources.\n"
+variable "name" {
+  description = "Name of the AutoScaling Group."
   type        = string
   default     = ""
 }
@@ -114,23 +144,8 @@ variable "disk_size" {
   type        = string
   default     = ""
 }
-variable "max_unavailable" {
-  description = "(Optional) Desired max number of unavailable worker nodes during node group update."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "Name of the AutoScaling Group."
-  type        = string
-  default     = ""
-}
-variable "node_group_name_prefix" {
-  description = " – (Optional) Creates a unique name beginning with the specified prefix. Conflicts with node_group_name."
-  type        = string
-  default     = ""
-}
-variable "delete" {
-  description = "(Default 60m)"
+variable "instance_types" {
+  description = "(Optional) List of instance types associated with the EKS Node Group. Defaults to [\"t3.medium\"]. Terraform will only perform drift detection if a configuration value is provided."
   type        = string
   default     = ""
 }
@@ -138,6 +153,70 @@ variable "labels" {
   description = "(Optional) Key-value map of Kubernetes labels. Only labels that are applied with the EKS API are managed by this argument. Other Kubernetes labels applied to the EKS Node Group will not be managed."
   type        = string
   default     = ""
+}
+variable "max_size" {
+  description = "(Required) Maximum number of worker nodes."
+  type        = string
+}
+variable "max_unavailable" {
+  description = "(Optional) Desired max number of unavailable worker nodes during node group update."
+  type        = string
+  default     = ""
+}
+variable "min_size" {
+  description = "(Required) Minimum number of worker nodes.taint Configuration Block"
+  type        = string
+}
+variable "delete" {
+  description = "(Default 60m)"
+  type        = string
+  default     = ""
+}
+variable "desired_size" {
+  description = "(Required) Desired number of worker nodes."
+  type        = string
+}
+variable "key" {
+  description = "(Required) The key of the taint. Maximum length of 63."
+  type        = string
+}
+variable "node_role_arn" {
+  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group."
+  type        = string
+}
+variable "remote_access_security_group_id" {
+  description = "Identifier of the remote access EC2 Security Group."
+  type        = string
+  default     = ""
+}
+variable "source_security_group_ids" {
+  description = "(Optional) Set of EC2 Security Group IDs to allow SSH access (port 22) from on the worker nodes. If you specify ec2_ssh_key, but do not specify this configuration when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0).scaling_config Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 60m)"
+  type        = string
+  default     = ""
+}
+variable "value" {
+  description = "(Optional) The value of the taint. Maximum length of 63."
+  type        = string
+  default     = ""
+}
+variable "release_version" {
+  description = " – (Optional) AMI version of the EKS Node Group. Defaults to latest version for Kubernetes version."
+  type        = string
+  default     = ""
+}
+variable "resources" {
+  description = ""
+  type        = string
+  default     = ""
+}
+variable "scaling_config" {
+  description = "(Required) Configuration block with scaling settings. Detailed below."
+  type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -148,85 +227,6 @@ variable "taint" {
   description = "(Optional) The Kubernetes taints to be applied to the nodes in the node group. Maximum of 50 taints per node group. Detailed below."
   type        = string
   default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS Node Group."
-  type        = string
-  default     = ""
-}
-variable "cluster_name" {
-  description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
-  type        = string
-}
-variable "release_version" {
-  description = " – (Optional) AMI version of the EKS Node Group. Defaults to latest version for Kubernetes version."
-  type        = string
-  default     = ""
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 60m)"
-  type        = string
-  default     = ""
-}
-variable "desired_size" {
-  description = "(Required) Desired number of worker nodes."
-  type        = string
-}
-variable "ec2_ssh_key" {
-  description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group. If you specify this configuration, but do not specify source_security_group_ids when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0)."
-  type        = string
-  default     = ""
-}
-variable "key" {
-  description = "(Required) The key of the taint. Maximum length of 63."
-  type        = string
-}
-variable "source_security_group_ids" {
-  description = "(Optional) Set of EC2 Security Group IDs to allow SSH access (port 22) from on the worker nodes. If you specify ec2_ssh_key, but do not specify this configuration when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0).scaling_config Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "node_role_arn" {
-  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group."
-  type        = string
-}
-variable "status" {
-  description = "Status of the EKS Node Group.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "ami_type" {
-  description = "(Optional) Type of Amazon Machine Image (AMI) associated with the EKS Node Group. See the AWS documentation for valid values. Terraform will only perform drift detection if a configuration value is provided."
-  type        = string
-  default     = ""
-}
-variable "effect" {
-  description = "(Required) The effect of the taint. Valid values: NO_SCHEDULE, NO_EXECUTE, PREFER_NO_SCHEDULE.update_config Configuration BlockThe following arguments are mutually exclusive."
-  type        = string
-}
-variable "instance_types" {
-  description = "(Optional) List of instance types associated with the EKS Node Group. Defaults to [\"t3.medium\"]. Terraform will only perform drift detection if a configuration value is provided."
-  type        = string
-  default     = ""
-}
-variable "max_unavailable_percentage" {
-  description = "(Optional) Desired max percentage of unavailable worker nodes during node group update.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "capacity_type" {
-  description = "(Optional) Type of capacity associated with the EKS Node Group. Valid values: ON_DEMAND, SPOT. Terraform will only perform drift detection if a configuration value is provided."
-  type        = string
-  default     = ""
-}
-variable "subnet_ids" {
-  description = " – (Required) Identifiers of EC2 Subnets to associate with the EKS Node Group. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster)."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -348,13 +348,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "delete" {
-  description = "(Default 60m)"
-  value       = aws_eks_node_group.aws_eks_node_group.delete
+output "release_version" {
+  description = " – (Optional) AMI version of the EKS Node Group. Defaults to latest version for Kubernetes version."
+  value       = aws_eks_node_group.aws_eks_node_group.release_version
 }
-output "labels" {
-  description = "(Optional) Key-value map of Kubernetes labels. Only labels that are applied with the EKS API are managed by this argument. Other Kubernetes labels applied to the EKS Node Group will not be managed."
-  value       = aws_eks_node_group.aws_eks_node_group.labels
+output "resources" {
+  description = ""
+  value       = aws_eks_node_group.aws_eks_node_group.resources
+}
+output "scaling_config" {
+  description = "(Required) Configuration block with scaling settings. Detailed below."
+  value       = aws_eks_node_group.aws_eks_node_group.scaling_config
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -364,97 +368,69 @@ output "taint" {
   description = "(Optional) The Kubernetes taints to be applied to the nodes in the node group. Maximum of 50 taints per node group. Detailed below."
   value       = aws_eks_node_group.aws_eks_node_group.taint
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS Node Group."
-  value       = aws_eks_node_group.aws_eks_node_group.arn
-}
 output "cluster_name" {
   description = " – (Required) Name of the EKS Cluster. Must be between 1-100 characters in length. Must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores (^[0-9A-Za-z][A-Za-z0-9\\-_]+$)."
   value       = aws_eks_node_group.aws_eks_node_group.cluster_name
-}
-output "release_version" {
-  description = " – (Optional) AMI version of the EKS Node Group. Defaults to latest version for Kubernetes version."
-  value       = aws_eks_node_group.aws_eks_node_group.release_version
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_eks_node_group.aws_eks_node_group.tags
-}
-output "update" {
-  description = "(Default 60m)"
-  value       = aws_eks_node_group.aws_eks_node_group.update
-}
-output "desired_size" {
-  description = "(Required) Desired number of worker nodes."
-  value       = aws_eks_node_group.aws_eks_node_group.desired_size
-}
-output "ec2_ssh_key" {
-  description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group. If you specify this configuration, but do not specify source_security_group_ids when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0)."
-  value       = aws_eks_node_group.aws_eks_node_group.ec2_ssh_key
-}
-output "key" {
-  description = "(Required) The key of the taint. Maximum length of 63."
-  value       = aws_eks_node_group.aws_eks_node_group.key
-}
-output "source_security_group_ids" {
-  description = "(Optional) Set of EC2 Security Group IDs to allow SSH access (port 22) from on the worker nodes. If you specify ec2_ssh_key, but do not specify this configuration when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0).scaling_config Configuration Block"
-  value       = aws_eks_node_group.aws_eks_node_group.source_security_group_ids
-}
-output "node_role_arn" {
-  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group."
-  value       = aws_eks_node_group.aws_eks_node_group.node_role_arn
-}
-output "status" {
-  description = "Status of the EKS Node Group.TimeoutsConfiguration options:"
-  value       = aws_eks_node_group.aws_eks_node_group.status
-}
-output "ami_type" {
-  description = "(Optional) Type of Amazon Machine Image (AMI) associated with the EKS Node Group. See the AWS documentation for valid values. Terraform will only perform drift detection if a configuration value is provided."
-  value       = aws_eks_node_group.aws_eks_node_group.ami_type
 }
 output "effect" {
   description = "(Required) The effect of the taint. Valid values: NO_SCHEDULE, NO_EXECUTE, PREFER_NO_SCHEDULE.update_config Configuration BlockThe following arguments are mutually exclusive."
   value       = aws_eks_node_group.aws_eks_node_group.effect
 }
-output "instance_types" {
-  description = "(Optional) List of instance types associated with the EKS Node Group. Defaults to [\"t3.medium\"]. Terraform will only perform drift detection if a configuration value is provided."
-  value       = aws_eks_node_group.aws_eks_node_group.instance_types
+output "node_group_name" {
+  description = " – (Optional) Name of the EKS Node Group. If omitted, Terraform will assign a random, unique name. Conflicts with node_group_name_prefix."
+  value       = aws_eks_node_group.aws_eks_node_group.node_group_name
 }
-output "max_unavailable_percentage" {
-  description = "(Optional) Desired max percentage of unavailable worker nodes during node group update.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_eks_node_group.aws_eks_node_group.max_unavailable_percentage
+output "ami_type" {
+  description = "(Optional) Type of Amazon Machine Image (AMI) associated with the EKS Node Group. See the AWS documentation for valid values. Terraform will only perform drift detection if a configuration value is provided."
+  value       = aws_eks_node_group.aws_eks_node_group.ami_type
 }
 output "capacity_type" {
   description = "(Optional) Type of capacity associated with the EKS Node Group. Valid values: ON_DEMAND, SPOT. Terraform will only perform drift detection if a configuration value is provided."
   value       = aws_eks_node_group.aws_eks_node_group.capacity_type
 }
+output "force_update_version" {
+  description = "(Optional) Force version update if existing pods are unable to be drained due to a pod disruption budget issue."
+  value       = aws_eks_node_group.aws_eks_node_group.force_update_version
+}
+output "node_group_name_prefix" {
+  description = " – (Optional) Creates a unique name beginning with the specified prefix. Conflicts with node_group_name."
+  value       = aws_eks_node_group.aws_eks_node_group.node_group_name_prefix
+}
+output "status" {
+  description = "Status of the EKS Node Group.TimeoutsConfiguration options:"
+  value       = aws_eks_node_group.aws_eks_node_group.status
+}
+output "autoscaling_groups" {
+  description = ""
+  value       = aws_eks_node_group.aws_eks_node_group.autoscaling_groups
+}
+output "max_unavailable_percentage" {
+  description = "(Optional) Desired max percentage of unavailable worker nodes during node group update.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_eks_node_group.aws_eks_node_group.max_unavailable_percentage
+}
+output "remote_access" {
+  description = "(Optional) Configuration block with remote access settings. Detailed below."
+  value       = aws_eks_node_group.aws_eks_node_group.remote_access
+}
 output "subnet_ids" {
   description = " – (Required) Identifiers of EC2 Subnets to associate with the EKS Node Group. These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME (where CLUSTER_NAME is replaced with the name of the EKS Cluster)."
   value       = aws_eks_node_group.aws_eks_node_group.subnet_ids
 }
-output "min_size" {
-  description = "(Required) Minimum number of worker nodes.taint Configuration Block"
-  value       = aws_eks_node_group.aws_eks_node_group.min_size
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_eks_node_group.aws_eks_node_group.tags
 }
-output "node_group_name" {
-  description = " – (Optional) Name of the EKS Node Group. If omitted, Terraform will assign a random, unique name. Conflicts with node_group_name_prefix."
-  value       = aws_eks_node_group.aws_eks_node_group.node_group_name
-}
-output "remote_access_security_group_id" {
-  description = "Identifier of the remote access EC2 Security Group."
-  value       = aws_eks_node_group.aws_eks_node_group.remote_access_security_group_id
-}
-output "scaling_config" {
-  description = "(Required) Configuration block with scaling settings. Detailed below."
-  value       = aws_eks_node_group.aws_eks_node_group.scaling_config
-}
-output "autoscaling_groups" {
-  description = "List of objects containing information about AutoScaling Groups.\n"
-  value       = aws_eks_node_group.aws_eks_node_group.autoscaling_groups
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS Node Group."
+  value       = aws_eks_node_group.aws_eks_node_group.arn
 }
 output "create" {
   description = "(Default 60m)"
   value       = aws_eks_node_group.aws_eks_node_group.create
+}
+output "ec2_ssh_key" {
+  description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group. If you specify this configuration, but do not specify source_security_group_ids when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0)."
+  value       = aws_eks_node_group.aws_eks_node_group.ec2_ssh_key
 }
 output "id" {
   description = "EKS Cluster name and EKS Node Group name separated by a colon (:)."
@@ -464,45 +440,73 @@ output "launch_template" {
   description = "(Optional) Configuration block with Launch Template settings. Detailed below."
   value       = aws_eks_node_group.aws_eks_node_group.launch_template
 }
-output "value" {
-  description = "(Optional) The value of the taint. Maximum length of 63."
-  value       = aws_eks_node_group.aws_eks_node_group.value
+output "name" {
+  description = "Name of the AutoScaling Group."
+  value       = aws_eks_node_group.aws_eks_node_group.name
 }
 output "version" {
   description = "(Required) EC2 Launch Template version number. While the API accepts values like $Default and $Latest, the API will convert the value to the associated version number (e.g., 1) on read and Terraform will show a difference on next plan. Using the default_version or latest_version attribute of the aws_launch_template resource or data source is recommended for this argument.remote_access Configuration Block"
   value       = aws_eks_node_group.aws_eks_node_group.version
 }
-output "force_update_version" {
-  description = "(Optional) Force version update if existing pods are unable to be drained due to a pod disruption budget issue."
-  value       = aws_eks_node_group.aws_eks_node_group.force_update_version
+output "disk_size" {
+  description = "(Optional) Disk size in GiB for worker nodes. Defaults to 20. Terraform will only perform drift detection if a configuration value is provided."
+  value       = aws_eks_node_group.aws_eks_node_group.disk_size
+}
+output "instance_types" {
+  description = "(Optional) List of instance types associated with the EKS Node Group. Defaults to [\"t3.medium\"]. Terraform will only perform drift detection if a configuration value is provided."
+  value       = aws_eks_node_group.aws_eks_node_group.instance_types
+}
+output "labels" {
+  description = "(Optional) Key-value map of Kubernetes labels. Only labels that are applied with the EKS API are managed by this argument. Other Kubernetes labels applied to the EKS Node Group will not be managed."
+  value       = aws_eks_node_group.aws_eks_node_group.labels
 }
 output "max_size" {
   description = "(Required) Maximum number of worker nodes."
   value       = aws_eks_node_group.aws_eks_node_group.max_size
 }
-output "remote_access" {
-  description = "(Optional) Configuration block with remote access settings. Detailed below."
-  value       = aws_eks_node_group.aws_eks_node_group.remote_access
-}
-output "resources" {
-  description = "List of objects containing information about underlying resources.\n"
-  value       = aws_eks_node_group.aws_eks_node_group.resources
-}
-output "disk_size" {
-  description = "(Optional) Disk size in GiB for worker nodes. Defaults to 20. Terraform will only perform drift detection if a configuration value is provided."
-  value       = aws_eks_node_group.aws_eks_node_group.disk_size
-}
 output "max_unavailable" {
   description = "(Optional) Desired max number of unavailable worker nodes during node group update."
   value       = aws_eks_node_group.aws_eks_node_group.max_unavailable
 }
-output "name" {
-  description = "Name of the AutoScaling Group."
-  value       = aws_eks_node_group.aws_eks_node_group.name
+output "min_size" {
+  description = "(Required) Minimum number of worker nodes.taint Configuration Block"
+  value       = aws_eks_node_group.aws_eks_node_group.min_size
 }
-output "node_group_name_prefix" {
-  description = " – (Optional) Creates a unique name beginning with the specified prefix. Conflicts with node_group_name."
-  value       = aws_eks_node_group.aws_eks_node_group.node_group_name_prefix
+output "delete" {
+  description = "(Default 60m)"
+  value       = aws_eks_node_group.aws_eks_node_group.delete
+}
+output "desired_size" {
+  description = "(Required) Desired number of worker nodes."
+  value       = aws_eks_node_group.aws_eks_node_group.desired_size
+}
+output "key" {
+  description = "(Required) The key of the taint. Maximum length of 63."
+  value       = aws_eks_node_group.aws_eks_node_group.key
+}
+output "node_role_arn" {
+  description = " – (Required) Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group."
+  value       = aws_eks_node_group.aws_eks_node_group.node_role_arn
+}
+output "remote_access_security_group_id" {
+  description = "Identifier of the remote access EC2 Security Group."
+  value       = aws_eks_node_group.aws_eks_node_group.remote_access_security_group_id
+}
+output "source_security_group_ids" {
+  description = "(Optional) Set of EC2 Security Group IDs to allow SSH access (port 22) from on the worker nodes. If you specify ec2_ssh_key, but do not specify this configuration when you create an EKS Node Group, port 22 on the worker nodes is opened to the Internet (0.0.0.0/0).scaling_config Configuration Block"
+  value       = aws_eks_node_group.aws_eks_node_group.source_security_group_ids
+}
+output "update" {
+  description = "(Default 60m)"
+  value       = aws_eks_node_group.aws_eks_node_group.update
+}
+output "value" {
+  description = "(Optional) The value of the taint. Maximum length of 63."
+  value       = aws_eks_node_group.aws_eks_node_group.value
+}
+output "delete" {
+  description = "(Default 60m)"
+  value       = aws_eks_node_group.aws_eks_node_group.delete
 }
 output "name" {
   description = "Name of the AutoScaling Group."
@@ -513,7 +517,7 @@ output "remote_access_security_group_id" {
   value       = aws_eks_node_group.aws_eks_node_group.remote_access_security_group_id
 }
 output "resources" {
-  description = "List of objects containing information about underlying resources.\n"
+  description = ""
   value       = aws_eks_node_group.aws_eks_node_group.resources
 }
 output "status" {
@@ -524,18 +528,6 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_eks_node_group.aws_eks_node_group.tags_all
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS Node Group."
-  value       = aws_eks_node_group.aws_eks_node_group.arn
-}
-output "autoscaling_groups" {
-  description = "List of objects containing information about AutoScaling Groups.\n"
-  value       = aws_eks_node_group.aws_eks_node_group.autoscaling_groups
-}
-output "delete" {
-  description = "(Default 60m)"
-  value       = aws_eks_node_group.aws_eks_node_group.delete
-}
 output "update" {
   description = "(Default 60m)"
   value       = aws_eks_node_group.aws_eks_node_group.update
@@ -544,9 +536,17 @@ output "create" {
   description = "(Default 60m)"
   value       = aws_eks_node_group.aws_eks_node_group.create
 }
+output "autoscaling_groups" {
+  description = ""
+  value       = aws_eks_node_group.aws_eks_node_group.autoscaling_groups
+}
 output "id" {
   description = "EKS Cluster name and EKS Node Group name separated by a colon (:)."
   value       = aws_eks_node_group.aws_eks_node_group.id
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS Node Group."
+  value       = aws_eks_node_group.aws_eks_node_group.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

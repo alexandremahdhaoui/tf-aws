@@ -1,6 +1,6 @@
 resource "aws_network_acl_association" "aws_network_acl_association" {
-  subnet_id      = var.subnet_id
   network_acl_id = var.network_acl_id
+  subnet_id      = var.subnet_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

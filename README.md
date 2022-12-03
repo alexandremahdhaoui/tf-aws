@@ -8,30 +8,28 @@ their content.
 
 # Repository structure
 
-| Path          | Description                                                                                                          |
-|---------------|----------------------------------------------------------------------------------------------------------------------|
-| `cmd/`        | Includes command line tools used in this project.                                                                    |
-| `cmd/gen_src` | CLI generating `TerraformModuleDefinition`s from GitHub repository of `terraform-provider-aws`.                      |
-| `cmd/gen_mod` | CLI generating Terraform modules from `TerraformModuleDefiniton`s located in `gen/src/` & `customize/`.              |
-| `customize/`  | Includes configuration files to customize behaviors of generated modules.                                            |
-| `gen/mod/`    | Generated modules.                                                                                                   |
-| `gen/src/`    | `TerraformModule` configuration files.                                                                               |
-| `pkg/`        | Includes go packages used by the cli tools defined in `cmd`.                                                         |
-| `pkg/apis/`   | Contains `TerraformModuleDefinition` structs.                                                                        | 
-| `pkg/ast/`    | Contains `NewTokenizer`, `FromHtmlDoc` & `ToTerraformDefinition` functions.                                          | 
-| `pkg/tokens/` | Contains `Token`, `TokenStream` & `TokenTree` interfaces used to parse the markdowns into `TerraformModule` structs. |
+| Path           | Description                                                                                                          |
+|----------------|----------------------------------------------------------------------------------------------------------------------|
+| `cmd/`         | Includes command line tools used in this project.                                                                    |
+| `cmd/gen_src`  | CLI generating `TerraformModuleDefinition`s from GitHub repository of `terraform-provider-aws`.                      |
+| `cmd/gen_mod`  | CLI generating Terraform modules from `TerraformModuleDefiniton`s located in `gen/src/` & `customize/`.              |
+| `customize/`   | Includes configuration files to customize behaviors of generated modules.                                            |
+| `gen/mod/`     | Generated modules.                                                                                                   |
+| `gen/src/`     | `TerraformModule` configuration files.                                                                               |
+| `pkg/`         | Includes go packages used by the cli tools defined in `cmd`.                                                         |
+| `pkg/apis/`    | Contains `TerraformModuleDefinition` structs.                                                                        | 
+| `pkg/ast/`     | Contains `NewTokenizer`, `FromHtmlDoc` & `ToTerraformDefinition` functions.                                          | 
+| `pkg/logger`   | Logging framework used all around the repository.                                                                    |
+| `pkg/cmdutils` | Utility functions used by `cmd/`.                                                                                    |
+| `pkg/tokens/`  | Contains `Token`, `TokenStream` & `TokenTree` interfaces used to parse the markdowns into `TerraformModule` structs. |
 
 
 # TODO
 
-- [ ] please **snake_case** strings in file names to avoid unconventional naming schemas.  
-- [ ] add logger.
+- [x] please **snake_case** strings in file names to avoid unconventional naming schemas.  
+- [ ] add general usage of the documentation
 
 ## cmd/gen_mod/
-- [x] Deserialize both data in `gen/src/` & `customize/`.
-- [x] Overwrite values of `gen/src/` by the one in `customize/` if applicable.
-- [x] Using `hcl` library, write a `Serializer` that takes a `TerraformModuleDefinition` as input and outputs a valid
-Terraform module.
 - [ ] Once it is done, outsource this module into [template-mod-tf](https://gitlab.com/alexandre.mahdhaoui/template-mod-tf).
   - [ ] Rename the repository of the outsourced module to: `go-lib-gen-tf` (better respects the naming convention).
 
@@ -41,7 +39,7 @@ Terraform module.
 - [ ] `cmd/gen_src`: Add ability to fetch all the modules name,urls from the GitHub API instead of hard sourcing these in 
 `cmd/gen_src/{datasource,resource}.txt`.
 
-Maybe in the future:
+Future:
 - Don't store `gen/` in this repo but rather in `s3` ?
 
 # Considerations

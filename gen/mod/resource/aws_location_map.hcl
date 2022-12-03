@@ -1,36 +1,31 @@
 resource "aws_location_map" "aws_location_map" {
-  create_time   = var.create_time
   description   = var.description
-  map_name      = var.map_name
+  map_arn       = var.map_arn
   style         = var.style
-  tags_all      = var.tags_all
   update_time   = var.update_time
   configuration = var.configuration
+  create_time   = var.create_time
+  map_name      = var.map_name
   tags          = var.tags
-  map_arn       = var.map_arn
+  tags_all      = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "description" {
+  description = "(Optional) An optional description for the map resource."
+  type        = string
+  default     = ""
 }
 variable "map_arn" {
   description = "The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all AWS."
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Key-value tags for the map. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
-  type        = string
-  default     = ""
-}
 variable "style" {
   description = "(Required) Specifies the map style selected from an available data provider. Valid values can be found in the Location Service CreateMap API Reference.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
 }
 variable "update_time" {
   description = "The timestamp for when the map resource was last updated in ISO 8601 format."
@@ -46,14 +41,19 @@ variable "create_time" {
   type        = string
   default     = ""
 }
-variable "description" {
-  description = "(Optional) An optional description for the map resource."
-  type        = string
-  default     = ""
-}
 variable "map_name" {
   description = "(Required) The name for the map resource."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the map. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -175,9 +175,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_location_map.aws_location_map.tags_all
+output "description" {
+  description = "(Optional) An optional description for the map resource."
+  value       = aws_location_map.aws_location_map.description
+}
+output "map_arn" {
+  description = "The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all AWS."
+  value       = aws_location_map.aws_location_map.map_arn
+}
+output "style" {
+  description = "(Required) Specifies the map style selected from an available data provider. Valid values can be found in the Location Service CreateMap API Reference.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_location_map.aws_location_map.style
 }
 output "update_time" {
   description = "The timestamp for when the map resource was last updated in ISO 8601 format."
@@ -191,25 +199,21 @@ output "create_time" {
   description = "The timestamp for when the map resource was created in ISO 8601 format."
   value       = aws_location_map.aws_location_map.create_time
 }
-output "description" {
-  description = "(Optional) An optional description for the map resource."
-  value       = aws_location_map.aws_location_map.description
-}
 output "map_name" {
   description = "(Required) The name for the map resource."
   value       = aws_location_map.aws_location_map.map_name
 }
-output "style" {
-  description = "(Required) Specifies the map style selected from an available data provider. Valid values can be found in the Location Service CreateMap API Reference.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_location_map.aws_location_map.style
-}
-output "map_arn" {
-  description = "The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all AWS."
-  value       = aws_location_map.aws_location_map.map_arn
-}
 output "tags" {
   description = "(Optional) Key-value tags for the map. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.configuration"
   value       = aws_location_map.aws_location_map.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_location_map.aws_location_map.tags_all
+}
+output "create_time" {
+  description = "The timestamp for when the map resource was created in ISO 8601 format."
+  value       = aws_location_map.aws_location_map.create_time
 }
 output "map_arn" {
   description = "The Amazon Resource Name (ARN) for the map resource. Used to specify a resource across all AWS."
@@ -222,10 +226,6 @@ output "tags_all" {
 output "update_time" {
   description = "The timestamp for when the map resource was last updated in ISO 8601 format."
   value       = aws_location_map.aws_location_map.update_time
-}
-output "create_time" {
-  description = "The timestamp for when the map resource was created in ISO 8601 format."
-  value       = aws_location_map.aws_location_map.create_time
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

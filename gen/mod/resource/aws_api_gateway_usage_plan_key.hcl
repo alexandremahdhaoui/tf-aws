@@ -1,16 +1,12 @@
 resource "aws_api_gateway_usage_plan_key" "aws_api_gateway_usage_plan_key" {
-  key_type      = var.key_type
   name          = var.name
   usage_plan_id = var.usage_plan_id
   id            = var.id
   key_id        = var.key_id
+  key_type      = var.key_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "usage_plan_id" {
-  description = "ID of the API resource"
   type        = string
 }
 variable "id" {
@@ -27,6 +23,10 @@ variable "key_type" {
 }
 variable "name" {
   description = "Name of a usage plan key."
+  type        = string
+}
+variable "usage_plan_id" {
+  description = "ID of the API resource"
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,6 +149,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "ID of a usage plan key."
+  value       = aws_api_gateway_usage_plan_key.aws_api_gateway_usage_plan_key.id
+}
+output "key_id" {
+  description = "Identifier of the API gateway key resource."
+  value       = aws_api_gateway_usage_plan_key.aws_api_gateway_usage_plan_key.key_id
+}
 output "key_type" {
   description = "Type of a usage plan key. Currently, the valid key type is API_KEY."
   value       = aws_api_gateway_usage_plan_key.aws_api_gateway_usage_plan_key.key_type
@@ -160,14 +168,6 @@ output "name" {
 output "usage_plan_id" {
   description = "ID of the API resource"
   value       = aws_api_gateway_usage_plan_key.aws_api_gateway_usage_plan_key.usage_plan_id
-}
-output "id" {
-  description = "ID of a usage plan key."
-  value       = aws_api_gateway_usage_plan_key.aws_api_gateway_usage_plan_key.id
-}
-output "key_id" {
-  description = "Identifier of the API gateway key resource."
-  value       = aws_api_gateway_usage_plan_key.aws_api_gateway_usage_plan_key.key_id
 }
 output "id" {
   description = "ID of a usage plan key."

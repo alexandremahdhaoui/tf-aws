@@ -1,7 +1,7 @@
 resource "aws_networkmanager_transit_gateway_connect_peer_association" "aws_networkmanager_transit_gateway_connect_peer_association" {
+  device_id         = var.device_id
   global_network_id = var.global_network_id
   link_id           = var.link_id
-  device_id         = var.device_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

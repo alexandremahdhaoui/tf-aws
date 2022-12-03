@@ -8,20 +8,20 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the filter"
-  type        = string
-}
-variable "policy" {
-  description = "(Required) Block or AllowIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
 variable "cidr" {
   description = "(Required) The IP address or address range to filter, in CIDR notation"
   type        = string
 }
 variable "id" {
   description = "The SES receipt filter name."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the filter"
+  type        = string
+}
+variable "policy" {
+  description = "(Required) Block or AllowIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,14 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name of the filter"
-  value       = aws_ses_receipt_filter.aws_ses_receipt_filter.name
-}
-output "policy" {
-  description = "(Required) Block or AllowIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ses_receipt_filter.aws_ses_receipt_filter.policy
-}
 output "cidr" {
   description = "(Required) The IP address or address range to filter, in CIDR notation"
   value       = aws_ses_receipt_filter.aws_ses_receipt_filter.cidr
@@ -160,13 +152,21 @@ output "id" {
   description = "The SES receipt filter name."
   value       = aws_ses_receipt_filter.aws_ses_receipt_filter.id
 }
-output "arn" {
-  description = "The SES receipt filter ARN."
-  value       = aws_ses_receipt_filter.aws_ses_receipt_filter.arn
+output "name" {
+  description = "(Required) The name of the filter"
+  value       = aws_ses_receipt_filter.aws_ses_receipt_filter.name
+}
+output "policy" {
+  description = "(Required) Block or AllowIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ses_receipt_filter.aws_ses_receipt_filter.policy
 }
 output "id" {
   description = "The SES receipt filter name."
   value       = aws_ses_receipt_filter.aws_ses_receipt_filter.id
+}
+output "arn" {
+  description = "The SES receipt filter ARN."
+  value       = aws_ses_receipt_filter.aws_ses_receipt_filter.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

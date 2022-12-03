@@ -1,8 +1,8 @@
 resource "aws_kinesis_stream_consumer" "aws_kinesis_stream_consumer" {
+  stream_arn         = var.stream_arn
   arn                = var.arn
   creation_timestamp = var.creation_timestamp
   name               = var.name
-  stream_arn         = var.stream_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

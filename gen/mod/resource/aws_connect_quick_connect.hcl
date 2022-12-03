@@ -1,31 +1,27 @@
 resource "aws_connect_quick_connect" "aws_connect_quick_connect" {
+  contact_flow_id      = var.contact_flow_id
+  id                   = var.id
+  instance_id          = var.instance_id
+  arn                  = var.arn
+  user_config          = var.user_config
   description          = var.description
   name                 = var.name
-  phone_number         = var.phone_number
-  queue_id             = var.queue_id
-  user_id              = var.user_id
-  arn                  = var.arn
-  contact_flow_id      = var.contact_flow_id
-  instance_id          = var.instance_id
-  phone_config         = var.phone_config
   queue_config         = var.queue_config
+  queue_id             = var.queue_id
   quick_connect_id     = var.quick_connect_id
   quick_connect_type   = var.quick_connect_type
-  user_config          = var.user_config
-  id                   = var.id
-  quick_connect_config = var.quick_connect_config
   tags                 = var.tags
+  phone_config         = var.phone_config
+  phone_number         = var.phone_number
+  quick_connect_config = var.quick_connect_config
+  user_id              = var.user_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Quick Connect separated by a colon (:)."
-  type        = string
-}
-variable "quick_connect_config" {
-  description = "(Required) A block that defines the configuration information for the Quick Connect: quick_connect_type and one of phone_config, queue_config, user_config . The Quick Connect Config block is documented below."
+variable "quick_connect_type" {
+  description = "(Required) Specifies the configuration type of the quick connect. valid values are PHONE_NUMBER, QUEUE, USER."
   type        = string
 }
 variable "tags" {
@@ -42,33 +38,17 @@ variable "name" {
   description = "(Required) Specifies the name of the Quick Connect."
   type        = string
 }
-variable "phone_number" {
-  description = "(Required) Specifies the phone number in in E.164 format.A queue_config block supports the following arguments:"
+variable "queue_config" {
+  description = "(Optional) Specifies the queue configuration of the Quick Connect. This is required only if quick_connect_type is QUEUE. The queue_config block is documented below."
   type        = string
+  default     = ""
 }
 variable "queue_id" {
   description = "(Required) Specifies the identifier for the queue.A user_config block supports the following arguments:"
   type        = string
 }
-variable "user_id" {
-  description = "(Required) Specifies the identifier for the user.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the Quick Connect."
-  type        = string
-}
-variable "contact_flow_id" {
-  description = "(Required) Specifies the identifier of the contact flow."
-  type        = string
-}
-variable "user_config" {
-  description = "(Optional) Specifies the user configuration of the Quick Connect. This is required only if quick_connect_type is USER. The user_config block is documented below.A phone_config block supports the following arguments:"
-  type        = string
-  default     = ""
-}
-variable "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+variable "quick_connect_id" {
+  description = "The identifier for the Quick Connect."
   type        = string
 }
 variable "phone_config" {
@@ -76,18 +56,38 @@ variable "phone_config" {
   type        = string
   default     = ""
 }
-variable "queue_config" {
-  description = "(Optional) Specifies the queue configuration of the Quick Connect. This is required only if quick_connect_type is QUEUE. The queue_config block is documented below."
+variable "phone_number" {
+  description = "(Required) Specifies the phone number in in E.164 format.A queue_config block supports the following arguments:"
+  type        = string
+}
+variable "quick_connect_config" {
+  description = "(Required) A block that defines the configuration information for the Quick Connect: quick_connect_type and one of phone_config, queue_config, user_config . The Quick Connect Config block is documented below."
+  type        = string
+}
+variable "user_id" {
+  description = "(Required) Specifies the identifier for the user.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "contact_flow_id" {
+  description = "(Required) Specifies the identifier of the contact flow."
+  type        = string
+}
+variable "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Quick Connect separated by a colon (:)."
+  type        = string
+}
+variable "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the Quick Connect."
+  type        = string
+}
+variable "user_config" {
+  description = "(Optional) Specifies the user configuration of the Quick Connect. This is required only if quick_connect_type is USER. The user_config block is documented below.A phone_config block supports the following arguments:"
   type        = string
   default     = ""
-}
-variable "quick_connect_id" {
-  description = "The identifier for the Quick Connect."
-  type        = string
-}
-variable "quick_connect_type" {
-  description = "(Required) Specifies the configuration type of the quick connect. valid values are PHONE_NUMBER, QUEUE, USER."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -209,13 +209,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "queue_id" {
-  description = "(Required) Specifies the identifier for the queue.A user_config block supports the following arguments:"
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.queue_id
+output "quick_connect_type" {
+  description = "(Required) Specifies the configuration type of the quick connect. valid values are PHONE_NUMBER, QUEUE, USER."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.quick_connect_type
 }
-output "user_id" {
-  description = "(Required) Specifies the identifier for the user.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.user_id
+output "tags" {
+  description = "(Optional) Tags to apply to the Quick Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A quick_connect_config block supports the following arguments:"
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.tags
 }
 output "description" {
   description = "(Optional) Specifies the description of the Quick Connect."
@@ -225,53 +225,61 @@ output "name" {
   description = "(Required) Specifies the name of the Quick Connect."
   value       = aws_connect_quick_connect.aws_connect_quick_connect.name
 }
-output "phone_number" {
-  description = "(Required) Specifies the phone number in in E.164 format.A queue_config block supports the following arguments:"
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.phone_number
+output "queue_config" {
+  description = "(Optional) Specifies the queue configuration of the Quick Connect. This is required only if quick_connect_type is QUEUE. The queue_config block is documented below."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.queue_config
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the Quick Connect."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.arn
-}
-output "contact_flow_id" {
-  description = "(Required) Specifies the identifier of the contact flow."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.contact_flow_id
+output "queue_id" {
+  description = "(Required) Specifies the identifier for the queue.A user_config block supports the following arguments:"
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.queue_id
 }
 output "quick_connect_id" {
   description = "The identifier for the Quick Connect."
   value       = aws_connect_quick_connect.aws_connect_quick_connect.quick_connect_id
 }
-output "quick_connect_type" {
-  description = "(Required) Specifies the configuration type of the quick connect. valid values are PHONE_NUMBER, QUEUE, USER."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.quick_connect_type
-}
-output "user_config" {
-  description = "(Optional) Specifies the user configuration of the Quick Connect. This is required only if quick_connect_type is USER. The user_config block is documented below.A phone_config block supports the following arguments:"
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.user_config
-}
-output "instance_id" {
-  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.instance_id
-}
 output "phone_config" {
   description = "(Optional) Specifies the phone configuration of the Quick Connect. This is required only if quick_connect_type is PHONE_NUMBER. The phone_config block is documented below."
   value       = aws_connect_quick_connect.aws_connect_quick_connect.phone_config
 }
-output "queue_config" {
-  description = "(Optional) Specifies the queue configuration of the Quick Connect. This is required only if quick_connect_type is QUEUE. The queue_config block is documented below."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.queue_config
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Quick Connect separated by a colon (:)."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.id
+output "phone_number" {
+  description = "(Required) Specifies the phone number in in E.164 format.A queue_config block supports the following arguments:"
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.phone_number
 }
 output "quick_connect_config" {
   description = "(Required) A block that defines the configuration information for the Quick Connect: quick_connect_type and one of phone_config, queue_config, user_config . The Quick Connect Config block is documented below."
   value       = aws_connect_quick_connect.aws_connect_quick_connect.quick_connect_config
 }
-output "tags" {
-  description = "(Optional) Tags to apply to the Quick Connect. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.A quick_connect_config block supports the following arguments:"
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.tags
+output "user_id" {
+  description = "(Required) Specifies the identifier for the user.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.user_id
+}
+output "contact_flow_id" {
+  description = "(Required) Specifies the identifier of the contact flow."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.contact_flow_id
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Quick Connect separated by a colon (:)."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.id
+}
+output "instance_id" {
+  description = "(Required) Specifies the identifier of the hosting Amazon Connect Instance."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.instance_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the Quick Connect."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.arn
+}
+output "user_config" {
+  description = "(Optional) Specifies the user configuration of the Quick Connect. This is required only if quick_connect_type is USER. The user_config block is documented below.A phone_config block supports the following arguments:"
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.user_config
+}
+output "id" {
+  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Quick Connect separated by a colon (:)."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.id
+}
+output "quick_connect_id" {
+  description = "The identifier for the Quick Connect."
+  value       = aws_connect_quick_connect.aws_connect_quick_connect.quick_connect_id
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -280,14 +288,6 @@ output "tags_all" {
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the Quick Connect."
   value       = aws_connect_quick_connect.aws_connect_quick_connect.arn
-}
-output "id" {
-  description = "The identifier of the hosting Amazon Connect Instance and identifier of the Quick Connect separated by a colon (:)."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.id
-}
-output "quick_connect_id" {
-  description = "The identifier for the Quick Connect."
-  value       = aws_connect_quick_connect.aws_connect_quick_connect.quick_connect_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

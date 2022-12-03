@@ -124,14 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "latest" {
-  description = "Whether the observability configuration has the highest observability_configuration_revision among all configurations that share the same observability_configuration_name."
-  value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.latest
-}
-output "observability_configuration_revision" {
-  description = "The revision of this observability configuration."
-  value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.observability_configuration_revision
-}
 output "status" {
   description = "Current state of the observability configuration. An INACTIVE configuration revision has been deleted and can't be used. It is permanently removed some time after deletion."
   value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.status
@@ -143,6 +135,14 @@ output "tags_all" {
 output "arn" {
   description = "ARN of this observability configuration."
   value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.arn
+}
+output "latest" {
+  description = "Whether the observability configuration has the highest observability_configuration_revision among all configurations that share the same observability_configuration_name."
+  value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.latest
+}
+output "observability_configuration_revision" {
+  description = "The revision of this observability configuration."
+  value       = aws_apprunner_observability_configuration.aws_apprunner_observability_configuration.observability_configuration_revision
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

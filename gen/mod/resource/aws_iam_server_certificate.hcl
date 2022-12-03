@@ -1,18 +1,54 @@
 resource "aws_iam_server_certificate" "aws_iam_server_certificate" {
-  arn               = var.arn
-  certificate_body  = var.certificate_body
+  certificate_chain = var.certificate_chain
   expiration        = var.expiration
+  id                = var.id
   name              = var.name
   name_prefix       = var.name_prefix
+  certificate_body  = var.certificate_body
   path              = var.path
-  certificate_chain = var.certificate_chain
-  id                = var.id
   private_key       = var.private_key
   tags              = var.tags
   tags_all          = var.tags_all
+  arn               = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "certificate_body" {
+  description = ""
+  type        = string
+}
+variable "certificate_chain" {
+  description = ""
+  type        = string
+}
+variable "expiration" {
+  description = "Date and time in RFC3339 format on which the certificate is set to expire."
+  type        = string
+}
+variable "id" {
+  description = "The unique Server Certificate name"
+  type        = string
+}
+variable "name" {
+  description = "The name of the Server Certificate"
+  type        = string
+}
+variable "name_prefix" {
+  description = "name."
+  type        = string
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the server certificate."
+  type        = string
+}
+variable "path" {
+  description = "/cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths."
+  type        = string
+}
+variable "private_key" {
+  description = " – (Required) The contents of the private key in PEM-encoded format."
   type        = string
 }
 variable "tags" {
@@ -22,44 +58,6 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "certificate_chain" {
-  description = ""
-  type        = string
-}
-variable "id" {
-  description = "The unique Server Certificate name"
-  type        = string
-}
-variable "private_key" {
-  description = " – (Required) The contents of the private key in PEM-encoded format."
-  type        = string
-}
-variable "name" {
-  description = "The name of the Server Certificate"
-  type        = string
-}
-variable "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
-  type        = string
-  default     = ""
-}
-variable "path" {
-  description = "(Optional) The IAM path for the server certificate.  If it is not\nincluded, it defaults to a slash (/). If this certificate is for use with\nAWS CloudFront, the path must be in format /cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the server certificate."
-  type        = string
-}
-variable "certificate_body" {
-  description = ""
-  type        = string
-}
-variable "expiration" {
-  description = "Date and time in RFC3339 format on which the certificate is set to expire."
   type        = string
 }
 variable "tag_instance_id" {
@@ -182,37 +180,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the server certificate."
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.arn
-}
-output "certificate_body" {
+output "certificate_chain" {
   description = ""
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_body
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_chain
 }
 output "expiration" {
   description = "Date and time in RFC3339 format on which the certificate is set to expire."
   value       = aws_iam_server_certificate.aws_iam_server_certificate.expiration
+}
+output "id" {
+  description = "The unique Server Certificate name"
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.id
 }
 output "name" {
   description = "The name of the Server Certificate"
   value       = aws_iam_server_certificate.aws_iam_server_certificate.name
 }
 output "name_prefix" {
-  description = "(Optional) Creates a unique name beginning with the specified\nprefix. Conflicts with name."
+  description = "name."
   value       = aws_iam_server_certificate.aws_iam_server_certificate.name_prefix
 }
-output "path" {
-  description = "(Optional) The IAM path for the server certificate.  If it is not\nincluded, it defaults to a slash (/). If this certificate is for use with\nAWS CloudFront, the path must be in format /cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths."
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.path
-}
-output "certificate_chain" {
+output "certificate_body" {
   description = ""
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_chain
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.certificate_body
 }
-output "id" {
-  description = "The unique Server Certificate name"
-  value       = aws_iam_server_certificate.aws_iam_server_certificate.id
+output "path" {
+  description = "/cloudfront/your_path_hereIAM Identifiers for more details on IAM Paths."
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.path
 }
 output "private_key" {
   description = " – (Required) The contents of the private key in PEM-encoded format."
@@ -225,6 +219,10 @@ output "tags" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_iam_server_certificate.aws_iam_server_certificate.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the server certificate."
+  value       = aws_iam_server_certificate.aws_iam_server_certificate.arn
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the server certificate."

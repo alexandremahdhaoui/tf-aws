@@ -6,12 +6,12 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "bucket" {
-  description = "(Required) Amazon Resource Name (ARN) of the bucket."
-  type        = string
-}
 variable "policy" {
   description = "(Required) JSON string of the resource policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "bucket" {
+  description = "(Required) Amazon Resource Name (ARN) of the bucket."
   type        = string
 }
 variable "tag_instance_id" {

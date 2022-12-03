@@ -5,7 +5,11 @@ metadata:
 spec:
     args:
         filter:
-            description: describe-volumes in the AWS CLI reference.
+            description: |-
+                (Optional) One or more name/value pairs to filter off of. There are
+                several valid keys, for a full reference, check out
+                describe-volumes in the AWS CLI reference.
+            optional: true
             type: string
         id:
             description: AWS Region.

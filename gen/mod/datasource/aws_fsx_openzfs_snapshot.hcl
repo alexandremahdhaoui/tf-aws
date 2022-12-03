@@ -1,34 +1,17 @@
 datasource "aws_fsx_openzfs_snapshot" "aws_fsx_openzfs_snapshot" {
-  arn           = var.arn
+  name          = var.name
+  snapshot_id   = var.snapshot_id
+  tags          = var.tags
+  id            = var.id
   creation_time = var.creation_time
   filter        = var.filter
   most_recent   = var.most_recent
-  name          = var.name
   snapshot_ids  = var.snapshot_ids
-  id            = var.id
-  snapshot_id   = var.snapshot_id
-  tags          = var.tags
+  arn           = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "id" {
-  description = "Identifier of the snapshot, e.g., fsvolsnap-12345678"
-  type        = string
-}
-variable "snapshot_id" {
-  description = "ID of the snapshot."
-  type        = string
-}
-variable "tags" {
-  description = "List of Tag values, with a maximum of 50 elements."
-  type        = string
-}
-variable "snapshot_ids" {
-  description = "(Optional) Returns information on a specific snapshot_id."
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "Amazon Resource Name of the snapshot."
@@ -48,17 +31,26 @@ variable "most_recent" {
   type        = string
   default     = ""
 }
+variable "snapshot_ids" {
+  description = "(Optional) Returns information on a specific snapshot_id."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Identifier of the snapshot, e.g., fsvolsnap-12345678"
+  type        = string
+}
 variable "name" {
   description = "Name of the snapshot."
   type        = string
 }
-output "name" {
-  description = "Name of the snapshot."
-  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.name
+variable "snapshot_id" {
+  description = "ID of the snapshot."
+  type        = string
 }
-output "snapshot_ids" {
-  description = "(Optional) Returns information on a specific snapshot_id."
-  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.snapshot_ids
+variable "tags" {
+  description = "List of Tag values, with a maximum of 50 elements."
+  type        = string
 }
 output "arn" {
   description = "Amazon Resource Name of the snapshot."
@@ -76,9 +68,17 @@ output "most_recent" {
   description = "(Optional) If more than one result is returned, use the most recent snapshot."
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.most_recent
 }
+output "snapshot_ids" {
+  description = "(Optional) Returns information on a specific snapshot_id."
+  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.snapshot_ids
+}
 output "id" {
   description = "Identifier of the snapshot, e.g., fsvolsnap-12345678"
   value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.id
+}
+output "name" {
+  description = "Name of the snapshot."
+  value       = aws_fsx_openzfs_snapshot.aws_fsx_openzfs_snapshot.name
 }
 output "snapshot_id" {
   description = "ID of the snapshot."

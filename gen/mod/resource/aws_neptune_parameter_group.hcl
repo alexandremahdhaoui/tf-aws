@@ -1,38 +1,24 @@
 resource "aws_neptune_parameter_group" "aws_neptune_parameter_group" {
-  parameter    = var.parameter
   tags         = var.tags
-  arn          = var.arn
+  description  = var.description
   family       = var.family
   id           = var.id
-  name         = var.name
+  parameter    = var.parameter
   value        = var.value
   apply_method = var.apply_method
-  description  = var.description
+  arn          = var.arn
+  name         = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The Neptune parameter group Amazon Resource Name (ARN)."
+variable "id" {
+  description = "The Neptune parameter group name."
   type        = string
-}
-variable "family" {
-  description = "(Required) The family of the Neptune parameter group."
-  type        = string
-}
-variable "parameter" {
-  description = "(Optional) A list of Neptune parameters to apply."
-  type        = string
-  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
-  type        = string
-  default     = ""
-}
-variable "apply_method" {
-  description = "(Optional) The apply method of the Neptune parameter. Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -41,16 +27,30 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The Neptune parameter group name."
+variable "family" {
+  description = "(Required) The family of the Neptune parameter group."
   type        = string
 }
 variable "name" {
   description = "  - (Required) The name of the Neptune parameter."
   type        = string
 }
+variable "parameter" {
+  description = "(Optional) A list of Neptune parameters to apply."
+  type        = string
+  default     = ""
+}
 variable "value" {
   description = "(Required) The value of the Neptune parameter."
+  type        = string
+}
+variable "apply_method" {
+  description = "(Optional) The apply method of the Neptune parameter. Valid values are immediate and pending-reboot. Defaults to pending-reboot.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The Neptune parameter group Amazon Resource Name (ARN)."
   type        = string
 }
 variable "tag_instance_id" {
@@ -177,29 +177,29 @@ output "family" {
   description = "(Required) The family of the Neptune parameter group."
   value       = aws_neptune_parameter_group.aws_neptune_parameter_group.family
 }
-output "parameter" {
-  description = "(Optional) A list of Neptune parameters to apply."
-  value       = aws_neptune_parameter_group.aws_neptune_parameter_group.parameter
+output "id" {
+  description = "The Neptune parameter group name."
+  value       = aws_neptune_parameter_group.aws_neptune_parameter_group.id
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
   value       = aws_neptune_parameter_group.aws_neptune_parameter_group.tags
 }
-output "arn" {
-  description = "The Neptune parameter group Amazon Resource Name (ARN)."
-  value       = aws_neptune_parameter_group.aws_neptune_parameter_group.arn
-}
 output "description" {
   description = "(Optional) The description of the Neptune parameter group. Defaults to \"Managed by Terraform\"."
   value       = aws_neptune_parameter_group.aws_neptune_parameter_group.description
 }
-output "id" {
-  description = "The Neptune parameter group name."
-  value       = aws_neptune_parameter_group.aws_neptune_parameter_group.id
+output "arn" {
+  description = "The Neptune parameter group Amazon Resource Name (ARN)."
+  value       = aws_neptune_parameter_group.aws_neptune_parameter_group.arn
 }
 output "name" {
   description = "  - (Required) The name of the Neptune parameter."
   value       = aws_neptune_parameter_group.aws_neptune_parameter_group.name
+}
+output "parameter" {
+  description = "(Optional) A list of Neptune parameters to apply."
+  value       = aws_neptune_parameter_group.aws_neptune_parameter_group.parameter
 }
 output "value" {
   description = "(Required) The value of the Neptune parameter."

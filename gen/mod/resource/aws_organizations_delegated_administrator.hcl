@@ -1,12 +1,12 @@
 resource "aws_organizations_delegated_administrator" "aws_organizations_delegated_administrator" {
+  email                   = var.email
+  joined_method           = var.joined_method
+  joined_timestamp        = var.joined_timestamp
   account_id              = var.account_id
   arn                     = var.arn
-  joined_method           = var.joined_method
-  name                    = var.name
   delegation_enabled_date = var.delegation_enabled_date
-  email                   = var.email
   id                      = var.id
-  joined_timestamp        = var.joined_timestamp
+  name                    = var.name
   service_principal       = var.service_principal
 }
 variable "provider_region" {
@@ -17,36 +17,36 @@ variable "email" {
   description = "The email address that is associated with the delegated administrator's AWS account."
   type        = string
 }
-variable "id" {
-  description = "The unique identifier (ID) of the delegated administrator."
+variable "joined_method" {
+  description = "The method by which the delegated administrator's account joined the organization."
   type        = string
 }
 variable "joined_timestamp" {
   description = "The date when the delegated administrator's account became a part of the organization."
   type        = string
 }
-variable "service_principal" {
-  description = "(Required) The service principal of the AWS service for which you want to make the member account a delegated administrator.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "delegation_enabled_date" {
-  description = "The date when the account was made a delegated administrator."
+variable "account_id" {
+  description = "(Required) The account ID number of the member account in the organization to register as a delegated administrator."
   type        = string
 }
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the delegated administrator's account."
   type        = string
 }
-variable "joined_method" {
-  description = "The method by which the delegated administrator's account joined the organization."
+variable "delegation_enabled_date" {
+  description = "The date when the account was made a delegated administrator."
+  type        = string
+}
+variable "id" {
+  description = "The unique identifier (ID) of the delegated administrator."
   type        = string
 }
 variable "name" {
   description = "The friendly name of the delegated administrator's account."
   type        = string
 }
-variable "account_id" {
-  description = "(Required) The account ID number of the member account in the organization to register as a delegated administrator."
+variable "service_principal" {
+  description = "(Required) The service principal of the AWS service for which you want to make the member account a delegated administrator.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -173,37 +173,41 @@ output "email" {
   description = "The email address that is associated with the delegated administrator's AWS account."
   value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.email
 }
-output "id" {
-  description = "The unique identifier (ID) of the delegated administrator."
-  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.id
+output "joined_method" {
+  description = "The method by which the delegated administrator's account joined the organization."
+  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.joined_method
 }
 output "joined_timestamp" {
   description = "The date when the delegated administrator's account became a part of the organization."
   value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.joined_timestamp
 }
-output "service_principal" {
-  description = "(Required) The service principal of the AWS service for which you want to make the member account a delegated administrator.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.service_principal
-}
-output "delegation_enabled_date" {
-  description = "The date when the account was made a delegated administrator."
-  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.delegation_enabled_date
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the delegated administrator's account."
-  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.arn
-}
-output "joined_method" {
-  description = "The method by which the delegated administrator's account joined the organization."
-  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.joined_method
+output "id" {
+  description = "The unique identifier (ID) of the delegated administrator."
+  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.id
 }
 output "name" {
   description = "The friendly name of the delegated administrator's account."
   value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.name
 }
+output "service_principal" {
+  description = "(Required) The service principal of the AWS service for which you want to make the member account a delegated administrator.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.service_principal
+}
 output "account_id" {
   description = "(Required) The account ID number of the member account in the organization to register as a delegated administrator."
   value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.account_id
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the delegated administrator's account."
+  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.arn
+}
+output "delegation_enabled_date" {
+  description = "The date when the account was made a delegated administrator."
+  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.delegation_enabled_date
+}
+output "id" {
+  description = "The unique identifier (ID) of the delegated administrator."
+  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.id
 }
 output "joined_method" {
   description = "The method by which the delegated administrator's account joined the organization."
@@ -232,10 +236,6 @@ output "delegation_enabled_date" {
 output "email" {
   description = "The email address that is associated with the delegated administrator's AWS account."
   value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.email
-}
-output "id" {
-  description = "The unique identifier (ID) of the delegated administrator."
-  value       = aws_organizations_delegated_administrator.aws_organizations_delegated_administrator.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

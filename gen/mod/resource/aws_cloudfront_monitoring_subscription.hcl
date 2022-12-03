@@ -8,6 +8,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "realtime_metrics_subscription_status" {
+  description = "(Required) A flag that indicates whether additional CloudWatch metrics are enabled for a given CloudFront distribution. Valid values are Enabled and Disabled. See below.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "distribution_id" {
   description = "(Required) The ID of the distribution that you are enabling metrics for."
   type        = string
@@ -18,10 +22,6 @@ variable "monitoring_subscription" {
 }
 variable "realtime_metrics_subscription_config" {
   description = "(Required) A subscription configuration for additional CloudWatch metrics. See below.realtime_metrics_subscription_config"
-  type        = string
-}
-variable "realtime_metrics_subscription_status" {
-  description = "(Required) A flag that indicates whether additional CloudWatch metrics are enabled for a given CloudFront distribution. Valid values are Enabled and Disabled. See below.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

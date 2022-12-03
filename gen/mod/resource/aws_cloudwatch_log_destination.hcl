@@ -7,16 +7,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "target_arn" {
+  description = "(Required) The ARN of the target Amazon Kinesis stream resource for the destinationIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
 variable "name" {
   description = "(Required) A name for the log destination"
   type        = string
 }
 variable "role_arn" {
   description = "(Required) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to put data into the target"
-  type        = string
-}
-variable "target_arn" {
-  description = "(Required) The ARN of the target Amazon Kinesis stream resource for the destinationIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) A name for the log destination"
-  value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.name
-}
 output "role_arn" {
   description = "(Required) The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to put data into the target"
   value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.role_arn
@@ -150,6 +146,10 @@ output "role_arn" {
 output "target_arn" {
   description = "(Required) The ARN of the target Amazon Kinesis stream resource for the destinationIn addition to all arguments above, the following attributes are exported:"
   value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.target_arn
+}
+output "name" {
+  description = "(Required) A name for the log destination"
+  value       = aws_cloudwatch_log_destination.aws_cloudwatch_log_destination.name
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the log destination."

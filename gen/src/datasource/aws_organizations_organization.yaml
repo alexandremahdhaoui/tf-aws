@@ -42,12 +42,10 @@ spec:
             description: List of organization accounts excluding the master account. For a list including the master account, see the accounts
             type: string
         policy_types:
-            description: |
-                List of policy types enabled for this root. All elements have these attributes:
+            description: ""
             type: string
         roots:
-            description: |
-                List of organization roots. All elements have these attributes:
+            description: ""
             type: string
         status:
             description: Status of the account

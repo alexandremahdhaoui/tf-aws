@@ -232,10 +232,7 @@ spec:
             optional: true
             type: string
         tags:
-            description: |-
-                (Optional)  A map of tags that identifies subset of objects to which the rule applies.
-                The rule applies only to objects having all the tags in its tagset.Destination~> strongNOTE: Replication to multiple destination buckets requires that priority is specified in the rules object. If the corresponding rule requires no filter, an empty configuration block filter {} must be specified.The destination configuration block supports the following arguments:
-            optional: true
+            description: 'Destination~> strongNOTE: Replication to multiple destination buckets requires that priority is specified in the rules object. If the corresponding rule requires no filter, an empty configuration block filter {} must be specified.The destination configuration block supports the following arguments:'
             type: string
         tags_all:
             description: A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.

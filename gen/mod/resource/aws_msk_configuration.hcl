@@ -1,9 +1,9 @@
 resource "aws_msk_configuration" "aws_msk_configuration" {
+  kafka_versions    = var.kafka_versions
   name              = var.name
   server_properties = var.server_properties
   arn               = var.arn
   description       = var.description
-  kafka_versions    = var.kafka_versions
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,6 +150,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "kafka_versions" {
+  description = "(Required) List of Apache Kafka versions which can use this configuration."
+  value       = aws_msk_configuration.aws_msk_configuration.kafka_versions
+}
 output "name" {
   description = "(Required) Name of the configuration."
   value       = aws_msk_configuration.aws_msk_configuration.name
@@ -165,10 +169,6 @@ output "arn" {
 output "description" {
   description = "(Optional) Description of the configuration.In addition to all arguments above, the following attributes are exported:"
   value       = aws_msk_configuration.aws_msk_configuration.description
-}
-output "kafka_versions" {
-  description = "(Required) List of Apache Kafka versions which can use this configuration."
-  value       = aws_msk_configuration.aws_msk_configuration.kafka_versions
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the configuration."

@@ -1,18 +1,13 @@
 resource "aws_ami_launch_permission" "aws_ami_launch_permission" {
+  image_id                = var.image_id
   organization_arn        = var.organization_arn
   organizational_unit_arn = var.organizational_unit_arn
   account_id              = var.account_id
   group                   = var.group
-  image_id                = var.image_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "organizational_unit_arn" {
-  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "account_id" {
   description = "(Optional) AWS account ID for the launch permission."
@@ -30,6 +25,11 @@ variable "image_id" {
 }
 variable "organization_arn" {
   description = "(Optional) ARN of an organization for the launch permission."
+  type        = string
+  default     = ""
+}
+variable "organizational_unit_arn" {
+  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -153,6 +153,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "organizational_unit_arn" {
+  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ami_launch_permission.aws_ami_launch_permission.organizational_unit_arn
+}
 output "account_id" {
   description = "(Optional) AWS account ID for the launch permission."
   value       = aws_ami_launch_permission.aws_ami_launch_permission.account_id
@@ -168,10 +172,6 @@ output "image_id" {
 output "organization_arn" {
   description = "(Optional) ARN of an organization for the launch permission."
   value       = aws_ami_launch_permission.aws_ami_launch_permission.organization_arn
-}
-output "organizational_unit_arn" {
-  description = "(Optional) ARN of an organizational unit for the launch permission.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ami_launch_permission.aws_ami_launch_permission.organizational_unit_arn
 }
 output "id" {
   description = "Launch permission ID."

@@ -1,8 +1,8 @@
 resource "aws_elasticache_subnet_group" "aws_elasticache_subnet_group" {
-  description = var.description
   name        = var.name
   subnet_ids  = var.subnet_ids
   tags        = var.tags
+  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -161,10 +161,6 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.tags
 }
-output "description" {
-  description = "The Description of the ElastiCache Subnet Group."
-  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.description
-}
 output "name" {
   description = "The Name of the ElastiCache Subnet Group."
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.name
@@ -176,6 +172,10 @@ output "subnet_ids" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.tags_all
+}
+output "description" {
+  description = "The Description of the ElastiCache Subnet Group."
+  value       = aws_elasticache_subnet_group.aws_elasticache_subnet_group.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

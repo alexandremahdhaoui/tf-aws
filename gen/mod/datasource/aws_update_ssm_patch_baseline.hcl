@@ -1,4 +1,4 @@
-datasource "aws_Update ssm_patch_baseline" "aws_Update ssm_patch_baseline" {
+datasource "aws_update_ssm_patch_baseline" "aws_update_ssm_patch_baseline" {
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

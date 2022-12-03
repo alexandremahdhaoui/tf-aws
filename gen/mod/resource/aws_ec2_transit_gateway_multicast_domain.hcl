@@ -1,37 +1,22 @@
 resource "aws_ec2_transit_gateway_multicast_domain" "aws_ec2_transit_gateway_multicast_domain" {
+  tags                            = var.tags
+  auto_accept_shared_associations = var.auto_accept_shared_associations
+  id                              = var.id
+  igmpv2_support                  = var.igmpv2_support
+  static_sources_support          = var.static_sources_support
   tags_all                        = var.tags_all
   transit_gateway_id              = var.transit_gateway_id
   arn                             = var.arn
-  id                              = var.id
-  owner_id                        = var.owner_id
-  tags                            = var.tags
-  auto_accept_shared_associations = var.auto_accept_shared_associations
   create                          = var.create
-  igmpv2_support                  = var.igmpv2_support
-  static_sources_support          = var.static_sources_support
+  owner_id                        = var.owner_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "auto_accept_shared_associations" {
-  description = "(Optional) Whether to automatically accept cross-account subnet associations that are associated with the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Default 10m)"
-  type        = string
-}
-variable "igmpv2_support" {
-  description = "(Optional) Whether to enable Internet Group Management Protocol (IGMP) version 2 for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
-  type        = string
-  default     = ""
-}
-variable "static_sources_support" {
-  description = "(Optional) Whether to enable support for statically configuring multicast group sources for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
-  type        = string
-  default     = ""
 }
 variable "transit_gateway_id" {
   description = "(Required) EC2 Transit Gateway identifier. The EC2 Transit Gateway must have multicast_support enabled."
@@ -41,22 +26,37 @@ variable "arn" {
   description = "EC2 Transit Gateway Multicast Domain Amazon Resource Name (ARN)."
   type        = string
 }
-variable "id" {
-  description = "EC2 Transit Gateway Multicast Domain identifier."
+variable "create" {
+  description = "(Default 10m)"
   type        = string
 }
 variable "owner_id" {
   description = "Identifier of the AWS account that owns the EC2 Transit Gateway Multicast Domain."
   type        = string
 }
+variable "static_sources_support" {
+  description = "(Optional) Whether to enable support for statically configuring multicast group sources for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
+  type        = string
+  default     = ""
+}
+variable "auto_accept_shared_associations" {
+  description = "(Optional) Whether to automatically accept cross-account subnet associations that are associated with the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "EC2 Transit Gateway Multicast Domain identifier."
+  type        = string
+}
+variable "igmpv2_support" {
+  description = "(Optional) Whether to enable Internet Group Management Protocol (IGMP) version 2 for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Key-value tags for the EC2 Transit Gateway Multicast Domain. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -178,17 +178,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.create
-}
-output "igmpv2_support" {
-  description = "(Optional) Whether to enable Internet Group Management Protocol (IGMP) version 2 for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
-  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.igmpv2_support
-}
-output "static_sources_support" {
-  description = "(Optional) Whether to enable support for statically configuring multicast group sources for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
-  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.static_sources_support
+output "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Multicast Domain. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.tags
 }
 output "auto_accept_shared_associations" {
   description = "(Optional) Whether to automatically accept cross-account subnet associations that are associated with the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
@@ -198,13 +190,13 @@ output "id" {
   description = "EC2 Transit Gateway Multicast Domain identifier."
   value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.id
 }
-output "owner_id" {
-  description = "Identifier of the AWS account that owns the EC2 Transit Gateway Multicast Domain."
-  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.owner_id
+output "igmpv2_support" {
+  description = "(Optional) Whether to enable Internet Group Management Protocol (IGMP) version 2 for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
+  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.igmpv2_support
 }
-output "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Multicast Domain. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.tags
+output "static_sources_support" {
+  description = "(Optional) Whether to enable support for statically configuring multicast group sources for the EC2 Transit Gateway Multicast Domain. Valid values: disable, enable. Default value: disable."
+  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.static_sources_support
 }
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
@@ -217,6 +209,14 @@ output "transit_gateway_id" {
 output "arn" {
   description = "EC2 Transit Gateway Multicast Domain Amazon Resource Name (ARN)."
   value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.create
+}
+output "owner_id" {
+  description = "Identifier of the AWS account that owns the EC2 Transit Gateway Multicast Domain."
+  value       = aws_ec2_transit_gateway_multicast_domain.aws_ec2_transit_gateway_multicast_domain.owner_id
 }
 output "owner_id" {
   description = "Identifier of the AWS account that owns the EC2 Transit Gateway Multicast Domain."

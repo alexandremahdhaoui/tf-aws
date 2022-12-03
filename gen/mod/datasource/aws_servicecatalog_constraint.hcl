@@ -1,15 +1,24 @@
 datasource "aws_servicecatalog_constraint" "aws_servicecatalog_constraint" {
-  status          = var.status
-  accept_language = var.accept_language
-  description     = var.description
   id              = var.id
   owner           = var.owner
   parameters      = var.parameters
   portfolio_id    = var.portfolio_id
   product_id      = var.product_id
+  status          = var.status
+  accept_language = var.accept_language
+  description     = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "Description of the constraint."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "Constraint identifier."
   type        = string
 }
 variable "owner" {
@@ -41,15 +50,6 @@ variable "accept_language" {
   description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "description" {
-  description = "Description of the constraint."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "Constraint identifier."
-  type        = string
 }
 output "product_id" {
   description = "Product identifier."
@@ -83,14 +83,6 @@ output "portfolio_id" {
   description = "Portfolio identifier."
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.portfolio_id
 }
-output "product_id" {
-  description = "Product identifier."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.product_id
-}
-output "status" {
-  description = "Constraint status."
-  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.status
-}
 output "description" {
   description = "Description of the constraint."
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.description
@@ -106,6 +98,14 @@ output "parameters" {
 output "portfolio_id" {
   description = "Portfolio identifier."
   value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.portfolio_id
+}
+output "product_id" {
+  description = "Product identifier."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.product_id
+}
+output "status" {
+  description = "Constraint status."
+  value       = aws_servicecatalog_constraint.aws_servicecatalog_constraint.status
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

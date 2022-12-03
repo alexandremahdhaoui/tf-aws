@@ -1,42 +1,51 @@
 resource "aws_apigatewayv2_api" "aws_apigatewayv2_api" {
-  allow_origins                = var.allow_origins
-  api_endpoint                 = var.api_endpoint
-  aws_apigatewayv2_integration = var.aws_apigatewayv2_integration
-  aws_apigatewayv2_route       = var.aws_apigatewayv2_route
-  cors_configuration           = var.cors_configuration
-  credentials_arn              = var.credentials_arn
-  expose_headers               = var.expose_headers
-  allow_methods                = var.allow_methods
-  name                         = var.name
-  route_selection_expression   = var.route_selection_expression
-  version                      = var.version
-  id                           = var.id
-  disable_execute_api_endpoint = var.disable_execute_api_endpoint
-  execution_arn                = var.execution_arn
-  fail_on_warnings             = var.fail_on_warnings
-  route_key                    = var.route_key
-  api_key_selection_expression = var.api_key_selection_expression
-  allow_headers                = var.allow_headers
   description                  = var.description
-  max_age                      = var.max_age
-  protocol_type                = var.protocol_type
+  execution_arn                = var.execution_arn
+  route_selection_expression   = var.route_selection_expression
   tags                         = var.tags
   allow_credentials            = var.allow_credentials
+  allow_methods                = var.allow_methods
   body                         = var.body
+  api_key_selection_expression = var.api_key_selection_expression
+  aws_apigatewayv2_route       = var.aws_apigatewayv2_route
+  credentials_arn              = var.credentials_arn
+  disable_execute_api_endpoint = var.disable_execute_api_endpoint
+  id                           = var.id
+  allow_headers                = var.allow_headers
+  allow_origins                = var.allow_origins
+  api_endpoint                 = var.api_endpoint
+  route_key                    = var.route_key
+  name                         = var.name
+  protocol_type                = var.protocol_type
   target                       = var.target
+  aws_apigatewayv2_integration = var.aws_apigatewayv2_integration
+  cors_configuration           = var.cors_configuration
+  fail_on_warnings             = var.fail_on_warnings
+  version                      = var.version
   arn                          = var.arn
+  expose_headers               = var.expose_headers
+  max_age                      = var.max_age
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "api_key_selection_expression" {
-  description = "(Optional) An API key selection expression$context.authorizer.usageIdentifierKey, $request.header.x-api-key. Defaults to $request.header.x-api-key"
+variable "arn" {
+  description = "ARN of the API."
+  type        = string
+}
+variable "expose_headers" {
+  description = "(Optional) Set of exposed HTTP headers."
   type        = string
   default     = ""
 }
-variable "disable_execute_api_endpoint" {
-  description = "(Optional) Whether clients can invoke the API by using the default execute-api{api_id}.execute-api.{region}.amazonaws.com endpoint"
+variable "max_age" {
+  description = "(Optional) Number of seconds that the browser should cache preflight request results.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "version" {
+  description = "(Optional) Version identifier for the API. Must be between 1 and 64 characters in length."
   type        = string
   default     = ""
 }
@@ -44,13 +53,8 @@ variable "execution_arn" {
   description = "ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details."
   type        = string
 }
-variable "fail_on_warnings" {
-  description = "(Optional) Whether warnings should return an error while API Gateway is creating or updating the resource using an OpenAPI specification. Defaults to false. Applicable for HTTP APIs.strongNote: If the body argument is provided, the OpenAPI specification will be used to configure the integrations and route for the HTTP API. If this argument is provided, the following resources should not be managed as separate ones, as updates may cause manual resource updates to be overwritten:"
-  type        = string
-  default     = ""
-}
-variable "route_key" {
-  description = "(Optional) Part of emquick create. Specifies any route key. Applicable for HTTP APIs."
+variable "route_selection_expression" {
+  description = "(Optional) The route selection expression$request.method $request.path."
   type        = string
   default     = ""
 }
@@ -64,8 +68,13 @@ variable "allow_credentials" {
   type        = string
   default     = ""
 }
-variable "allow_headers" {
-  description = "(Optional) Set of allowed HTTP headers."
+variable "allow_methods" {
+  description = "(Optional) Set of allowed HTTP methods."
+  type        = string
+  default     = ""
+}
+variable "body" {
+  description = "(Optional) An OpenAPI specification that defines the set of routes and integrations to create as part of the HTTP APIs. Supported only for HTTP APIs."
   type        = string
   default     = ""
 }
@@ -74,46 +83,26 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "max_age" {
-  description = "(Optional) Number of seconds that the browser should cache preflight request results.In addition to all arguments above, the following attributes are exported:"
+variable "aws_apigatewayv2_route" {
+  description = "Further more, the name, description, cors_configuration, tags and version fields should be specified in the Terraform configuration and the values will override any values specified in the OpenAPI document.The cors_configuration object supports the following:"
   type        = string
-  default     = ""
-}
-variable "protocol_type" {
-  description = "(Required) API protocol. Valid values: HTTP, WEBSOCKET."
-  type        = string
-}
-variable "arn" {
-  description = "ARN of the API."
-  type        = string
-}
-variable "body" {
-  description = "(Optional) An OpenAPI specification that defines the set of routes and integrations to create as part of the HTTP APIs. Supported only for HTTP APIs."
-  type        = string
-  default     = ""
-}
-variable "target" {
-  description = "(Optional) Part of emquick createHTTP_PROXY or AWS_PROXY, respectively. Applicable for HTTP APIs."
-  type        = string
-  default     = ""
-}
-variable "cors_configuration" {
-  description = "(Optional) Cross-origin resource sharing (CORS) configuration. Applicable for HTTP APIs."
-  type        = string
-  default     = ""
 }
 variable "credentials_arn" {
   description = "(Optional) Part of emquick create. Specifies any credentials required for the integration. Applicable for HTTP APIs."
   type        = string
   default     = ""
 }
-variable "expose_headers" {
-  description = "(Optional) Set of exposed HTTP headers."
+variable "disable_execute_api_endpoint" {
+  description = "(Optional) Whether clients can invoke the API by using the default execute-api{api_id}.execute-api.{region}.amazonaws.com endpoint"
   type        = string
   default     = ""
 }
-variable "allow_methods" {
-  description = "(Optional) Set of allowed HTTP methods."
+variable "id" {
+  description = "API identifier."
+  type        = string
+}
+variable "allow_headers" {
+  description = "(Optional) Set of allowed HTTP headers."
   type        = string
   default     = ""
 }
@@ -126,31 +115,42 @@ variable "api_endpoint" {
   description = "URI of the API, of the form https://{api-id}.execute-api.{region}.amazonaws.com for HTTP APIs and wss://{api-id}.execute-api.{region}.amazonaws.com for WebSocket APIs."
   type        = string
 }
+variable "api_key_selection_expression" {
+  description = "(Optional) An API key selection expression$context.authorizer.usageIdentifierKey, $request.header.x-api-key. Defaults to $request.header.x-api-key"
+  type        = string
+  default     = ""
+}
+variable "route_key" {
+  description = "(Optional) Part of emquick create. Specifies any route key. Applicable for HTTP APIs."
+  type        = string
+  default     = ""
+}
+variable "protocol_type" {
+  description = "(Required) API protocol. Valid values: HTTP, WEBSOCKET."
+  type        = string
+}
+variable "target" {
+  description = "(Optional) Part of emquick createHTTP_PROXY or AWS_PROXY, respectively. Applicable for HTTP APIs."
+  type        = string
+  default     = ""
+}
 variable "aws_apigatewayv2_integration" {
   description = ""
   type        = string
 }
-variable "aws_apigatewayv2_route" {
-  description = "Further more, the name, description, cors_configuration, tags and version fields should be specified in the Terraform configuration and the values will override any values specified in the OpenAPI document.The cors_configuration object supports the following:"
+variable "cors_configuration" {
+  description = "(Optional) Cross-origin resource sharing (CORS) configuration. Applicable for HTTP APIs."
   type        = string
+  default     = ""
 }
-variable "id" {
-  description = "API identifier."
+variable "fail_on_warnings" {
+  description = "(Optional) Whether warnings should return an error while API Gateway is creating or updating the resource using an OpenAPI specification. Defaults to false. Applicable for HTTP APIs.strongNote: If the body argument is provided, the OpenAPI specification will be used to configure the integrations and route for the HTTP API. If this argument is provided, the following resources should not be managed as separate ones, as updates may cause manual resource updates to be overwritten:"
   type        = string
+  default     = ""
 }
 variable "name" {
   description = "(Required) Name of the API. Must be less than or equal to 128 characters in length."
   type        = string
-}
-variable "route_selection_expression" {
-  description = "(Optional) The route selection expression$request.method $request.path."
-  type        = string
-  default     = ""
-}
-variable "version" {
-  description = "(Optional) Version identifier for the API. Must be between 1 and 64 characters in length."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -272,17 +272,73 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "credentials_arn" {
-  description = "(Optional) Part of emquick create. Specifies any credentials required for the integration. Applicable for HTTP APIs."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.credentials_arn
+output "version" {
+  description = "(Optional) Version identifier for the API. Must be between 1 and 64 characters in length."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.version
+}
+output "arn" {
+  description = "ARN of the API."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.arn
 }
 output "expose_headers" {
   description = "(Optional) Set of exposed HTTP headers."
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.expose_headers
 }
+output "max_age" {
+  description = "(Optional) Number of seconds that the browser should cache preflight request results.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.max_age
+}
+output "description" {
+  description = "(Optional) Description of the API. Must be less than or equal to 1024 characters in length."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.description
+}
+output "execution_arn" {
+  description = "ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.execution_arn
+}
+output "route_selection_expression" {
+  description = "(Optional) The route selection expression$request.method $request.path."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.route_selection_expression
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to the API. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.tags
+}
+output "allow_credentials" {
+  description = "(Optional) Whether credentials are included in the CORS request."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.allow_credentials
+}
 output "allow_methods" {
   description = "(Optional) Set of allowed HTTP methods."
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.allow_methods
+}
+output "body" {
+  description = "(Optional) An OpenAPI specification that defines the set of routes and integrations to create as part of the HTTP APIs. Supported only for HTTP APIs."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.body
+}
+output "api_key_selection_expression" {
+  description = "(Optional) An API key selection expression$context.authorizer.usageIdentifierKey, $request.header.x-api-key. Defaults to $request.header.x-api-key"
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.api_key_selection_expression
+}
+output "aws_apigatewayv2_route" {
+  description = "Further more, the name, description, cors_configuration, tags and version fields should be specified in the Terraform configuration and the values will override any values specified in the OpenAPI document.The cors_configuration object supports the following:"
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.aws_apigatewayv2_route
+}
+output "credentials_arn" {
+  description = "(Optional) Part of emquick create. Specifies any credentials required for the integration. Applicable for HTTP APIs."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.credentials_arn
+}
+output "disable_execute_api_endpoint" {
+  description = "(Optional) Whether clients can invoke the API by using the default execute-api{api_id}.execute-api.{region}.amazonaws.com endpoint"
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.disable_execute_api_endpoint
+}
+output "id" {
+  description = "API identifier."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.id
+}
+output "allow_headers" {
+  description = "(Optional) Set of allowed HTTP headers."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.allow_headers
 }
 output "allow_origins" {
   description = "(Optional) Set of allowed origins."
@@ -292,89 +348,45 @@ output "api_endpoint" {
   description = "URI of the API, of the form https://{api-id}.execute-api.{region}.amazonaws.com for HTTP APIs and wss://{api-id}.execute-api.{region}.amazonaws.com for WebSocket APIs."
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.api_endpoint
 }
-output "aws_apigatewayv2_integration" {
-  description = ""
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.aws_apigatewayv2_integration
-}
-output "aws_apigatewayv2_route" {
-  description = "Further more, the name, description, cors_configuration, tags and version fields should be specified in the Terraform configuration and the values will override any values specified in the OpenAPI document.The cors_configuration object supports the following:"
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.aws_apigatewayv2_route
-}
-output "cors_configuration" {
-  description = "(Optional) Cross-origin resource sharing (CORS) configuration. Applicable for HTTP APIs."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.cors_configuration
-}
-output "id" {
-  description = "API identifier."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.id
+output "route_key" {
+  description = "(Optional) Part of emquick create. Specifies any route key. Applicable for HTTP APIs."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.route_key
 }
 output "name" {
   description = "(Required) Name of the API. Must be less than or equal to 128 characters in length."
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.name
 }
-output "route_selection_expression" {
-  description = "(Optional) The route selection expression$request.method $request.path."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.route_selection_expression
+output "protocol_type" {
+  description = "(Required) API protocol. Valid values: HTTP, WEBSOCKET."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.protocol_type
 }
-output "version" {
-  description = "(Optional) Version identifier for the API. Must be between 1 and 64 characters in length."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.version
+output "target" {
+  description = "(Optional) Part of emquick createHTTP_PROXY or AWS_PROXY, respectively. Applicable for HTTP APIs."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.target
 }
-output "api_key_selection_expression" {
-  description = "(Optional) An API key selection expression$context.authorizer.usageIdentifierKey, $request.header.x-api-key. Defaults to $request.header.x-api-key"
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.api_key_selection_expression
+output "aws_apigatewayv2_integration" {
+  description = ""
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.aws_apigatewayv2_integration
 }
-output "disable_execute_api_endpoint" {
-  description = "(Optional) Whether clients can invoke the API by using the default execute-api{api_id}.execute-api.{region}.amazonaws.com endpoint"
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.disable_execute_api_endpoint
-}
-output "execution_arn" {
-  description = "ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.execution_arn
+output "cors_configuration" {
+  description = "(Optional) Cross-origin resource sharing (CORS) configuration. Applicable for HTTP APIs."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.cors_configuration
 }
 output "fail_on_warnings" {
   description = "(Optional) Whether warnings should return an error while API Gateway is creating or updating the resource using an OpenAPI specification. Defaults to false. Applicable for HTTP APIs.strongNote: If the body argument is provided, the OpenAPI specification will be used to configure the integrations and route for the HTTP API. If this argument is provided, the following resources should not be managed as separate ones, as updates may cause manual resource updates to be overwritten:"
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.fail_on_warnings
 }
-output "route_key" {
-  description = "(Optional) Part of emquick create. Specifies any route key. Applicable for HTTP APIs."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.route_key
-}
-output "allow_credentials" {
-  description = "(Optional) Whether credentials are included in the CORS request."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.allow_credentials
-}
-output "allow_headers" {
-  description = "(Optional) Set of allowed HTTP headers."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.allow_headers
-}
-output "description" {
-  description = "(Optional) Description of the API. Must be less than or equal to 1024 characters in length."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.description
-}
-output "max_age" {
-  description = "(Optional) Number of seconds that the browser should cache preflight request results.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.max_age
-}
-output "protocol_type" {
-  description = "(Required) API protocol. Valid values: HTTP, WEBSOCKET."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.protocol_type
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to the API. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.tags
-}
 output "arn" {
   description = "ARN of the API."
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.arn
 }
-output "body" {
-  description = "(Optional) An OpenAPI specification that defines the set of routes and integrations to create as part of the HTTP APIs. Supported only for HTTP APIs."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.body
+output "execution_arn" {
+  description = "ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.execution_arn
 }
-output "target" {
-  description = "(Optional) Part of emquick createHTTP_PROXY or AWS_PROXY, respectively. Applicable for HTTP APIs."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.target
+output "id" {
+  description = "API identifier."
+  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.id
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -383,18 +395,6 @@ output "tags_all" {
 output "api_endpoint" {
   description = "URI of the API, of the form https://{api-id}.execute-api.{region}.amazonaws.com for HTTP APIs and wss://{api-id}.execute-api.{region}.amazonaws.com for WebSocket APIs."
   value       = aws_apigatewayv2_api.aws_apigatewayv2_api.api_endpoint
-}
-output "arn" {
-  description = "ARN of the API."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.arn
-}
-output "execution_arn" {
-  description = "ARN prefix to be used in an aws_lambda_permission's source_arnaws_iam_policy to authorize access to the @connections APIAmazon API Gateway Developer Guide for details."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.execution_arn
-}
-output "id" {
-  description = "API identifier."
-  value       = aws_apigatewayv2_api.aws_apigatewayv2_api.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

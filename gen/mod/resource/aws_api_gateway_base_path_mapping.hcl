@@ -7,6 +7,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "api_id" {
+  description = "(Required) ID of the API to connect."
+  type        = string
+}
 variable "domain_name" {
   description = "(Required) Already-registered domain name to connect the API to."
   type        = string
@@ -15,10 +19,6 @@ variable "stage_name" {
   description = "(Optional) Name of a specific deployment stage to expose at the given path. If omitted, callers may select any stage by including its name as a path element after the base path."
   type        = string
   default     = ""
-}
-variable "api_id" {
-  description = "(Required) ID of the API to connect."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -140,10 +140,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "stage_name" {
-  description = "(Optional) Name of a specific deployment stage to expose at the given path. If omitted, callers may select any stage by including its name as a path element after the base path."
-  value       = aws_api_gateway_base_path_mapping.aws_api_gateway_base_path_mapping.stage_name
-}
 output "api_id" {
   description = "(Required) ID of the API to connect."
   value       = aws_api_gateway_base_path_mapping.aws_api_gateway_base_path_mapping.api_id
@@ -151,6 +147,10 @@ output "api_id" {
 output "domain_name" {
   description = "(Required) Already-registered domain name to connect the API to."
   value       = aws_api_gateway_base_path_mapping.aws_api_gateway_base_path_mapping.domain_name
+}
+output "stage_name" {
+  description = "(Optional) Name of a specific deployment stage to expose at the given path. If omitted, callers may select any stage by including its name as a path element after the base path."
+  value       = aws_api_gateway_base_path_mapping.aws_api_gateway_base_path_mapping.stage_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

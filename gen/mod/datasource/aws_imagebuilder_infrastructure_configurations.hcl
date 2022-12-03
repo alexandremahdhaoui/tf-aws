@@ -1,8 +1,8 @@
 datasource "aws_imagebuilder_infrastructure_configurations" "aws_imagebuilder_infrastructure_configurations" {
-  arns   = var.arns
   filter = var.filter
   name   = var.name
   values = var.values
+  arns   = var.arns
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

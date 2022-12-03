@@ -1,13 +1,22 @@
 resource "aws_service_discovery_http_namespace" "aws_service_discovery_http_namespace" {
-  id          = var.id
-  name        = var.name
-  tags        = var.tags
   arn         = var.arn
   description = var.description
   http_name   = var.http_name
+  id          = var.id
+  name        = var.name
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   type        = string
 }
 variable "description" {
@@ -25,15 +34,6 @@ variable "id" {
 }
 variable "name" {
   description = "(Required) The name of the http namespace."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the namespace. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."
   type        = string
 }
 variable "tag_instance_id" {
@@ -156,14 +156,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "http_name" {
-  description = "The name of an HTTP namespace."
-  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.http_name
-}
-output "id" {
-  description = "The ID of a namespace."
-  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.id
-}
 output "name" {
   description = "(Required) The name of the http namespace."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.name
@@ -179,6 +171,14 @@ output "arn" {
 output "description" {
   description = "(Optional) The description that you specify for the namespace when you create it."
   value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.description
+}
+output "http_name" {
+  description = "The name of an HTTP namespace."
+  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.http_name
+}
+output "id" {
+  description = "The ID of a namespace."
+  value       = aws_service_discovery_http_namespace.aws_service_discovery_http_namespace.id
 }
 output "arn" {
   description = "The ARN that Amazon Route 53 assigns to the namespace when you create it."

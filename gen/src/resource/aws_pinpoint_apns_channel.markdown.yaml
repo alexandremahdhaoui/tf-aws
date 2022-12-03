@@ -14,10 +14,7 @@ spec:
             description: (Required) The pem encoded TLS Certificate from Apple.
             type: string
         default_authentication_method:
-            description: |-
-                (Optional) The default authentication method used for APNs.
-                strongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:
-            optional: true
+            description: 'strongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:'
             type: string
         enabled:
             description: (Optional) Whether the channel is enabled or disabled. Defaults to true.

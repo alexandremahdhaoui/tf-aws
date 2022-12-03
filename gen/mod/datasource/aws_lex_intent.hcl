@@ -1,15 +1,23 @@
 datasource "aws_lex_intent" "aws_lex_intent" {
-  version                 = var.version
-  arn                     = var.arn
-  checksum                = var.checksum
   created_date            = var.created_date
   description             = var.description
   last_updated_date       = var.last_updated_date
   name                    = var.name
   parent_intent_signature = var.parent_intent_signature
+  version                 = var.version
+  arn                     = var.arn
+  checksum                = var.checksum
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "name" {
+  description = "Name of the intent, not case sensitive."
+  type        = string
+}
+variable "parent_intent_signature" {
+  description = "Standard Built-in Intents"
   type        = string
 }
 variable "version" {
@@ -22,7 +30,7 @@ variable "arn" {
   type        = string
 }
 variable "checksum" {
-  description = "Checksum identifying the version of the intent that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the intent."
+  description = ""
   type        = string
 }
 variable "created_date" {
@@ -37,13 +45,9 @@ variable "last_updated_date" {
   description = "Date when the $LATEST version of this intent was updated."
   type        = string
 }
-variable "name" {
-  description = "Name of the intent, not case sensitive."
-  type        = string
-}
-variable "parent_intent_signature" {
-  description = "Standard Built-in Intents"
-  type        = string
+output "created_date" {
+  description = "Date when the intent version was created."
+  value       = aws_lex_intent.aws_lex_intent.created_date
 }
 output "description" {
   description = "Description of the intent."
@@ -70,12 +74,16 @@ output "arn" {
   value       = aws_lex_intent.aws_lex_intent.arn
 }
 output "checksum" {
-  description = "Checksum identifying the version of the intent that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the intent."
+  description = ""
   value       = aws_lex_intent.aws_lex_intent.checksum
 }
-output "created_date" {
-  description = "Date when the intent version was created."
-  value       = aws_lex_intent.aws_lex_intent.created_date
+output "arn" {
+  description = "ARN of the Lex intent."
+  value       = aws_lex_intent.aws_lex_intent.arn
+}
+output "checksum" {
+  description = ""
+  value       = aws_lex_intent.aws_lex_intent.checksum
 }
 output "created_date" {
   description = "Date when the intent version was created."
@@ -96,14 +104,6 @@ output "name" {
 output "parent_intent_signature" {
   description = "Standard Built-in Intents"
   value       = aws_lex_intent.aws_lex_intent.parent_intent_signature
-}
-output "arn" {
-  description = "ARN of the Lex intent."
-  value       = aws_lex_intent.aws_lex_intent.arn
-}
-output "checksum" {
-  description = "Checksum identifying the version of the intent that was created. The checksum is not\nincluded as an argument because the resource will add it automatically when updating the intent."
-  value       = aws_lex_intent.aws_lex_intent.checksum
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

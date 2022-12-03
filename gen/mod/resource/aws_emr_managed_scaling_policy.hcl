@@ -10,10 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "minimum_capacity_units" {
-  description = "(Required) The lower boundary of EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration."
-  type        = string
-}
 variable "unit_type" {
   description = "(Required) The unit type used for specifying a managed scaling policy. Valid Values: InstanceFleetUnits | Instances | VCPU"
   type        = string
@@ -34,6 +30,10 @@ variable "maximum_ondemand_capacity_units" {
   description = "(Optional) The upper boundary of On-Demand EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. The On-Demand units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between On-Demand and Spot instances."
   type        = string
   default     = ""
+}
+variable "minimum_capacity_units" {
+  description = "(Required) The lower boundary of EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -155,18 +155,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "maximum_ondemand_capacity_units" {
-  description = "(Optional) The upper boundary of On-Demand EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. The On-Demand units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between On-Demand and Spot instances."
-  value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.maximum_ondemand_capacity_units
-}
-output "minimum_capacity_units" {
-  description = "(Required) The lower boundary of EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration."
-  value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.minimum_capacity_units
-}
-output "unit_type" {
-  description = "(Required) The unit type used for specifying a managed scaling policy. Valid Values: InstanceFleetUnits | Instances | VCPU"
-  value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.unit_type
-}
 output "cluster_id" {
   description = "(Required) ID of the EMR cluster"
   value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.cluster_id
@@ -178,6 +166,18 @@ output "compute_limits" {
 output "maximum_capacity_units" {
   description = "(Required) The upper boundary of EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration."
   value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.maximum_capacity_units
+}
+output "maximum_ondemand_capacity_units" {
+  description = "(Optional) The upper boundary of On-Demand EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. The On-Demand units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between On-Demand and Spot instances."
+  value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.maximum_ondemand_capacity_units
+}
+output "minimum_capacity_units" {
+  description = "(Required) The lower boundary of EC2 units. It is measured through VCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration."
+  value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.minimum_capacity_units
+}
+output "unit_type" {
+  description = "(Required) The unit type used for specifying a managed scaling policy. Valid Values: InstanceFleetUnits | Instances | VCPU"
+  value       = aws_emr_managed_scaling_policy.aws_emr_managed_scaling_policy.unit_type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

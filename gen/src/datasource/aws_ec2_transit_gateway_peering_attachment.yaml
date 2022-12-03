@@ -13,7 +13,9 @@ spec:
             optional: true
             type: string
         name:
-            description: the underlying AWS API.
+            description: |-
+                (Required) Name of the field to filter by, as defined by
+                the underlying AWS API.
             type: string
         peer_account_id:
             description: Identifier of the peer AWS account
@@ -25,16 +27,15 @@ spec:
             description: Identifier of the peer EC2 Transit Gateway
             type: string
         tags:
-            description: |-
-                (Optional) Mapping of tags, each pair of which must exactly match
-                a pair on the specific EC2 Transit Gateway Peering Attachment to retrieve.More complex filters can be expressed using one or more filter
-            optional: true
+            description: More complex filters can be expressed using one or more filter
             type: string
         transit_gateway_id:
             description: 'Identifier of the local EC2 Transit GatewayTimeoutsConfiguration options:'
             type: string
         values:
-            description: 'Attribute ReferenceIn addition to all arguments above, the following attributes are exported:'
+            description: |-
+                (Required) Set of values that are accepted for the given field.
+                An EC2 Transit Gateway Peering Attachment be selected if any one of the given values matches.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:
             type: string
     attrs: {}
     terraform:

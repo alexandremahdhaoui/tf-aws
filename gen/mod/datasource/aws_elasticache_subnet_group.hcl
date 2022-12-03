@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "ARN of the subnet group."
-  type        = string
-}
-variable "description" {
-  description = "Description of the subnet group."
-  type        = string
-}
 variable "id" {
   description = "Name of the subnet group."
   type        = string
@@ -27,6 +19,14 @@ variable "name" {
 }
 variable "subnet_ids" {
   description = "Set of VPC Subnet ID-s of the subnet group."
+  type        = string
+}
+variable "arn" {
+  description = "ARN of the subnet group."
+  type        = string
+}
+variable "description" {
+  description = "Description of the subnet group."
   type        = string
 }
 output "arn" {

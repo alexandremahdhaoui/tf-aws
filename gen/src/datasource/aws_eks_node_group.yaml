@@ -58,7 +58,8 @@ spec:
             description: ' – AMI version of the EKS Node Group.'
             type: string
         remote_access:
-            description: ""
+            description: |
+                Configuration block with remote access settings.
             type: string
         remote_access_security_group_id:
             description: Identifier of the remote access EC2 Security Group.
@@ -83,8 +84,7 @@ spec:
             description: Key-value map of resource tags.
             type: string
         taints:
-            description: |
-                List of objects containing information about taints applied to the nodes in the EKS Node Group.
+            description: ""
             type: string
         value:
             description: The value of the taint.

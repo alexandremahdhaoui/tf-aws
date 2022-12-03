@@ -1,30 +1,21 @@
 resource "aws_media_package_channel" "aws_media_package_channel" {
-  channel_id       = var.channel_id
-  description      = var.description
-  ingest_endpoints = var.ingest_endpoints
   url              = var.url
-  username         = var.username
   arn              = var.arn
   hls_ingest       = var.hls_ingest
-  id               = var.id
   password         = var.password
   tags             = var.tags
+  username         = var.username
+  channel_id       = var.channel_id
+  description      = var.description
+  id               = var.id
+  ingest_endpoints = var.ingest_endpoints
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional) A description of the channel"
-  type        = string
-  default     = ""
-}
 variable "ingest_endpoints" {
-  description = "A list of the ingest endpoints\n"
-  type        = string
-}
-variable "url" {
-  description = "The URL"
+  description = ""
   type        = string
 }
 variable "username" {
@@ -35,16 +26,13 @@ variable "channel_id" {
   description = "(Required) A unique identifier describing the channel"
   type        = string
 }
-variable "hls_ingest" {
-  description = "A single item list of HLS ingest information\n"
+variable "description" {
+  description = "(Optional) A description of the channel"
   type        = string
+  default     = ""
 }
 variable "id" {
   description = "The same as channel_id"
-  type        = string
-}
-variable "password" {
-  description = "The password"
   type        = string
 }
 variable "tags" {
@@ -52,8 +40,20 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "url" {
+  description = "The URL"
+  type        = string
+}
 variable "arn" {
   description = "The ARN of the channel"
+  type        = string
+}
+variable "hls_ingest" {
+  description = ""
+  type        = string
+}
+variable "password" {
+  description = "The password"
   type        = string
 }
 variable "tag_instance_id" {
@@ -176,9 +176,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "password" {
+  description = "The password"
+  value       = aws_media_package_channel.aws_media_package_channel.password
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_media_package_channel.aws_media_package_channel.tags
+}
 output "url" {
   description = "The URL"
   value       = aws_media_package_channel.aws_media_package_channel.url
+}
+output "arn" {
+  description = "The ARN of the channel"
+  value       = aws_media_package_channel.aws_media_package_channel.arn
+}
+output "hls_ingest" {
+  description = ""
+  value       = aws_media_package_channel.aws_media_package_channel.hls_ingest
+}
+output "id" {
+  description = "The same as channel_id"
+  value       = aws_media_package_channel.aws_media_package_channel.id
+}
+output "ingest_endpoints" {
+  description = ""
+  value       = aws_media_package_channel.aws_media_package_channel.ingest_endpoints
 }
 output "username" {
   description = "The username"
@@ -193,43 +217,7 @@ output "description" {
   value       = aws_media_package_channel.aws_media_package_channel.description
 }
 output "ingest_endpoints" {
-  description = "A list of the ingest endpoints\n"
-  value       = aws_media_package_channel.aws_media_package_channel.ingest_endpoints
-}
-output "password" {
-  description = "The password"
-  value       = aws_media_package_channel.aws_media_package_channel.password
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_media_package_channel.aws_media_package_channel.tags
-}
-output "arn" {
-  description = "The ARN of the channel"
-  value       = aws_media_package_channel.aws_media_package_channel.arn
-}
-output "hls_ingest" {
-  description = "A single item list of HLS ingest information\n"
-  value       = aws_media_package_channel.aws_media_package_channel.hls_ingest
-}
-output "id" {
-  description = "The same as channel_id"
-  value       = aws_media_package_channel.aws_media_package_channel.id
-}
-output "arn" {
-  description = "The ARN of the channel"
-  value       = aws_media_package_channel.aws_media_package_channel.arn
-}
-output "hls_ingest" {
-  description = "A single item list of HLS ingest information\n"
-  value       = aws_media_package_channel.aws_media_package_channel.hls_ingest
-}
-output "id" {
-  description = "The same as channel_id"
-  value       = aws_media_package_channel.aws_media_package_channel.id
-}
-output "ingest_endpoints" {
-  description = "A list of the ingest endpoints\n"
+  description = ""
   value       = aws_media_package_channel.aws_media_package_channel.ingest_endpoints
 }
 output "password" {
@@ -247,6 +235,18 @@ output "url" {
 output "username" {
   description = "The username"
   value       = aws_media_package_channel.aws_media_package_channel.username
+}
+output "arn" {
+  description = "The ARN of the channel"
+  value       = aws_media_package_channel.aws_media_package_channel.arn
+}
+output "hls_ingest" {
+  description = ""
+  value       = aws_media_package_channel.aws_media_package_channel.hls_ingest
+}
+output "id" {
+  description = "The same as channel_id"
+  value       = aws_media_package_channel.aws_media_package_channel.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

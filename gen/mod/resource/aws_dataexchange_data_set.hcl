@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name of this data set."
-  value       = aws_dataexchange_data_set.aws_dataexchange_data_set.arn
-}
 output "id" {
   description = "The Id of the data set."
   value       = aws_dataexchange_data_set.aws_dataexchange_data_set.id
@@ -135,6 +131,10 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_dataexchange_data_set.aws_dataexchange_data_set.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name of this data set."
+  value       = aws_dataexchange_data_set.aws_dataexchange_data_set.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

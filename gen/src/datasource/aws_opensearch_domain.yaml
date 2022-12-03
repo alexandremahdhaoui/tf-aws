@@ -11,7 +11,8 @@ spec:
             description: Key-value string pairs to specify advanced configuration options.
             type: string
         advanced_security_options:
-            description: ""
+            description: |
+                Status of the OpenSearch domain's advanced security options. The block consists of the following attributes:
             type: string
         arn:
             description: ' – ARN of the domain.'
@@ -37,10 +38,12 @@ spec:
                 Cluster configuration of the domain.
             type: string
         cognito_options:
-            description: ""
+            description: |
+                Domain Amazon Cognito Authentication options for Kibana.
             type: string
         cold_storage_options:
-            description: ""
+            description: |
+                Configuration block containing cold storage configuration.
             type: string
         created:
             description: ' – Status of the creation of the domain.'
@@ -70,7 +73,8 @@ spec:
             description: ' – (Required) Name of the domain.The following attributes are exported:'
             type: string
         duration:
-            description: ""
+            description: |
+                Configuration block for the duration of the Auto-Tune maintenance window.
             type: string
         ebs_enabled:
             description: Whether EBS volumes are attached to data nodes in the domain.
@@ -120,10 +124,12 @@ spec:
             description: Type of OpenSearch log being published.
             type: string
         maintenance_schedule:
-            description: ""
+            description: |
+                A list of the nested configurations for the Auto-Tune maintenance windows of the domain.
             type: string
         node_to_node_encryption:
-            description: ""
+            description: |
+                Domain in transit encryption related options.
             type: string
         processing:
             description: ' – Status of a configuration change in the domain.'
@@ -195,7 +201,8 @@ spec:
             description: Key-value string pairs to specify advanced configuration options.
             type: string
         advanced_security_options:
-            description: ""
+            description: |
+                Status of the OpenSearch domain's advanced security options. The block consists of the following attributes:
             type: string
         arn:
             description: ' – ARN of the domain.'
@@ -221,10 +228,12 @@ spec:
                 Cluster configuration of the domain.
             type: string
         cognito_options:
-            description: ""
+            description: |
+                Domain Amazon Cognito Authentication options for Kibana.
             type: string
         cold_storage_options:
-            description: ""
+            description: |
+                Configuration block containing cold storage configuration.
             type: string
         created:
             description: ' – Status of the creation of the domain.'
@@ -251,7 +260,8 @@ spec:
             description: ' – Unique identifier for the domain.'
             type: string
         duration:
-            description: ""
+            description: |
+                Configuration block for the duration of the Auto-Tune maintenance window.
             type: string
         ebs_enabled:
             description: Whether EBS volumes are attached to data nodes in the domain.
@@ -301,10 +311,12 @@ spec:
             description: Type of OpenSearch log being published.
             type: string
         maintenance_schedule:
-            description: ""
+            description: |
+                A list of the nested configurations for the Auto-Tune maintenance windows of the domain.
             type: string
         node_to_node_encryption:
-            description: ""
+            description: |
+                Domain in transit encryption related options.
             type: string
         processing:
             description: ' – Status of a configuration change in the domain.'

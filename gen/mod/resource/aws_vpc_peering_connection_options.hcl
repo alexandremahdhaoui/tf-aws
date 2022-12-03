@@ -1,17 +1,13 @@
 resource "aws_vpc_peering_connection_options" "aws_vpc_peering_connection_options" {
+  allow_vpc_to_remote_classic_link = var.allow_vpc_to_remote_classic_link
   requester                        = var.requester
   vpc_peering_connection_id        = var.vpc_peering_connection_id
   accepter                         = var.accepter
   allow_classic_link_to_remote_vpc = var.allow_classic_link_to_remote_vpc
   allow_remote_vpc_dns_resolution  = var.allow_remote_vpc_dns_resolution
-  allow_vpc_to_remote_classic_link = var.allow_vpc_to_remote_classic_link
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "requester" {
-  description = "Accepter and Requester Arguments-> strongNote:enable_dns_hostnamesaws_vpc"
   type        = string
 }
 variable "vpc_peering_connection_id" {
@@ -23,8 +19,9 @@ variable "accepter" {
   type        = string
 }
 variable "allow_classic_link_to_remote_vpc" {
-  description = ""
+  description = "(Optional) Allow a local linked EC2-Classic instance to communicate\nwith instances in a peer VPC. This enables an outbound communication from the local ClassicLink connection\nto the remote VPC. This option is not supported for inter-region VPC peering."
   type        = string
+  default     = ""
 }
 variable "allow_remote_vpc_dns_resolution" {
   description = "(Optional) Allow a local VPC to resolve public DNS hostnames to\nprivate IP addresses when queried from instances in the peer VPC."
@@ -35,6 +32,10 @@ variable "allow_vpc_to_remote_classic_link" {
   description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection. This option is not supported for inter-region VPC peering.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
+}
+variable "requester" {
+  description = "Accepter and Requester Arguments-> strongNote:enable_dns_hostnamesaws_vpc"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,20 +157,12 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "requester" {
-  description = "Accepter and Requester Arguments-> strongNote:enable_dns_hostnamesaws_vpc"
-  value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.requester
-}
-output "vpc_peering_connection_id" {
-  description = "(Required) The ID of the requester VPC peering connection."
-  value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.vpc_peering_connection_id
-}
 output "accepter" {
   description = ""
   value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.accepter
 }
 output "allow_classic_link_to_remote_vpc" {
-  description = ""
+  description = "(Optional) Allow a local linked EC2-Classic instance to communicate\nwith instances in a peer VPC. This enables an outbound communication from the local ClassicLink connection\nto the remote VPC. This option is not supported for inter-region VPC peering."
   value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.allow_classic_link_to_remote_vpc
 }
 output "allow_remote_vpc_dns_resolution" {
@@ -179,6 +172,14 @@ output "allow_remote_vpc_dns_resolution" {
 output "allow_vpc_to_remote_classic_link" {
   description = "(Optional) Allow a local VPC to communicate with a linked EC2-Classic\ninstance in a peer VPC. This enables an outbound communication from the local VPC to the remote ClassicLink\nconnection. This option is not supported for inter-region VPC peering.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.allow_vpc_to_remote_classic_link
+}
+output "requester" {
+  description = "Accepter and Requester Arguments-> strongNote:enable_dns_hostnamesaws_vpc"
+  value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.requester
+}
+output "vpc_peering_connection_id" {
+  description = "(Required) The ID of the requester VPC peering connection."
+  value       = aws_vpc_peering_connection_options.aws_vpc_peering_connection_options.vpc_peering_connection_id
 }
 output "id" {
   description = "The ID of the VPC Peering Connection Options."

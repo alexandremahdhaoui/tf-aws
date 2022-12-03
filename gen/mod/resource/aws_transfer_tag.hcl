@@ -1,10 +1,14 @@
 resource "aws_transfer_tag" "aws_transfer_tag" {
-  value        = var.value
   key          = var.key
   resource_arn = var.resource_arn
+  value        = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "key" {
+  description = "(Required) Tag name."
   type        = string
 }
 variable "resource_arn" {
@@ -13,10 +17,6 @@ variable "resource_arn" {
 }
 variable "value" {
   description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "key" {
-  description = "(Required) Tag name."
   type        = string
 }
 variable "tag_instance_id" {

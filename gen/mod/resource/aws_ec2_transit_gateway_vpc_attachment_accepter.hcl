@@ -1,32 +1,19 @@
 resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "aws_ec2_transit_gateway_vpc_attachment_accepter" {
-  ipv6_support                                    = var.ipv6_support
+  appliance_mode_support                          = var.appliance_mode_support
+  dns_support                                     = var.dns_support
+  subnet_ids                                      = var.subnet_ids
+  tags_all                                        = var.tags_all
   transit_gateway_attachment_id                   = var.transit_gateway_attachment_id
+  vpc_id                                          = var.vpc_id
+  id                                              = var.id
+  ipv6_support                                    = var.ipv6_support
+  tags                                            = var.tags
   transit_gateway_default_route_table_association = var.transit_gateway_default_route_table_association
   transit_gateway_default_route_table_propagation = var.transit_gateway_default_route_table_propagation
   transit_gateway_id                              = var.transit_gateway_id
-  vpc_id                                          = var.vpc_id
-  appliance_mode_support                          = var.appliance_mode_support
-  dns_support                                     = var.dns_support
-  tags                                            = var.tags
-  tags_all                                        = var.tags_all
-  id                                              = var.id
-  subnet_ids                                      = var.subnet_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "transit_gateway_default_route_table_propagation" {
-  description = "(Optional) Boolean whether the VPC Attachment should propagate routes with the EC2 Transit Gateway propagation default route table. Default value: true."
-  type        = string
-  default     = ""
-}
-variable "transit_gateway_id" {
-  description = "Identifier of EC2 Transit Gateway."
-  type        = string
-}
-variable "vpc_id" {
-  description = "Identifier of EC2 VPC."
   type        = string
 }
 variable "appliance_mode_support" {
@@ -37,25 +24,28 @@ variable "dns_support" {
   description = "Whether DNS support is enabled. Valid values: disable, enable."
   type        = string
 }
-variable "ipv6_support" {
-  description = "Whether IPv6 support is enabled. Valid values: disable, enable."
+variable "subnet_ids" {
+  description = "Identifiers of EC2 Subnets."
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
 variable "transit_gateway_attachment_id" {
   description = "(Required) The ID of the EC2 Transit Gateway Attachment to manage."
   type        = string
 }
-variable "transit_gateway_default_route_table_association" {
-  description = "(Optional) Boolean whether the VPC Attachment should be associated with the EC2 Transit Gateway association default route table. Default value: true."
+variable "vpc_id" {
+  description = "Identifier of EC2 VPC."
   type        = string
-  default     = ""
 }
 variable "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   type        = string
 }
-variable "subnet_ids" {
-  description = "Identifiers of EC2 Subnets."
+variable "ipv6_support" {
+  description = "Whether IPv6 support is enabled. Valid values: disable, enable."
   type        = string
 }
 variable "tags" {
@@ -63,8 +53,18 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "transit_gateway_default_route_table_association" {
+  description = "(Optional) Boolean whether the VPC Attachment should be associated with the EC2 Transit Gateway association default route table. Default value: true."
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_default_route_table_propagation" {
+  description = "(Optional) Boolean whether the VPC Attachment should propagate routes with the EC2 Transit Gateway propagation default route table. Default value: true."
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_id" {
+  description = "Identifier of EC2 Transit Gateway."
   type        = string
 }
 variable "tag_instance_id" {
@@ -187,6 +187,38 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "dns_support" {
+  description = "Whether DNS support is enabled. Valid values: disable, enable."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.dns_support
+}
+output "subnet_ids" {
+  description = "Identifiers of EC2 Subnets."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.subnet_ids
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.tags_all
+}
+output "transit_gateway_attachment_id" {
+  description = "(Required) The ID of the EC2 Transit Gateway Attachment to manage."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.transit_gateway_attachment_id
+}
+output "vpc_id" {
+  description = "Identifier of EC2 VPC."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.vpc_id
+}
+output "appliance_mode_support" {
+  description = "Whether Appliance Mode support is enabled. Valid values: disable, enable."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.appliance_mode_support
+}
+output "ipv6_support" {
+  description = "Whether IPv6 support is enabled. Valid values: disable, enable."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.ipv6_support
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway VPC Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.tags
+}
 output "transit_gateway_default_route_table_association" {
   description = "(Optional) Boolean whether the VPC Attachment should be associated with the EC2 Transit Gateway association default route table. Default value: true."
   value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.transit_gateway_default_route_table_association
@@ -199,50 +231,22 @@ output "transit_gateway_id" {
   description = "Identifier of EC2 Transit Gateway."
   value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.transit_gateway_id
 }
-output "vpc_id" {
-  description = "Identifier of EC2 VPC."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.vpc_id
+output "id" {
+  description = "EC2 Transit Gateway Attachment identifier"
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.id
 }
-output "appliance_mode_support" {
-  description = "Whether Appliance Mode support is enabled. Valid values: disable, enable."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.appliance_mode_support
+output "transit_gateway_id" {
+  description = "Identifier of EC2 Transit Gateway."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.transit_gateway_id
 }
-output "dns_support" {
-  description = "Whether DNS support is enabled. Valid values: disable, enable."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.dns_support
+output "id" {
+  description = "EC2 Transit Gateway Attachment identifier"
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.id
 }
 output "ipv6_support" {
   description = "Whether IPv6 support is enabled. Valid values: disable, enable."
   value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.ipv6_support
 }
-output "transit_gateway_attachment_id" {
-  description = "(Required) The ID of the EC2 Transit Gateway Attachment to manage."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.transit_gateway_attachment_id
-}
-output "id" {
-  description = "EC2 Transit Gateway Attachment identifier"
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.id
-}
-output "subnet_ids" {
-  description = "Identifiers of EC2 Subnets."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.subnet_ids
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway VPC Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.tags
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.tags_all
-}
-output "dns_support" {
-  description = "Whether DNS support is enabled. Valid values: disable, enable."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.dns_support
-}
-output "id" {
-  description = "EC2 Transit Gateway Attachment identifier"
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.id
-}
 output "subnet_ids" {
   description = "Identifiers of EC2 Subnets."
   value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.subnet_ids
@@ -250,6 +254,10 @@ output "subnet_ids" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.tags_all
+}
+output "vpc_id" {
+  description = "Identifier of EC2 VPC."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.vpc_id
 }
 output "vpc_owner_id" {
   description = "Identifier of the AWS account that owns the EC2 VPC."
@@ -259,17 +267,9 @@ output "appliance_mode_support" {
   description = "Whether Appliance Mode support is enabled. Valid values: disable, enable."
   value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.appliance_mode_support
 }
-output "ipv6_support" {
-  description = "Whether IPv6 support is enabled. Valid values: disable, enable."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.ipv6_support
-}
-output "transit_gateway_id" {
-  description = "Identifier of EC2 Transit Gateway."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.transit_gateway_id
-}
-output "vpc_id" {
-  description = "Identifier of EC2 VPC."
-  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.vpc_id
+output "dns_support" {
+  description = "Whether DNS support is enabled. Valid values: disable, enable."
+  value       = aws_ec2_transit_gateway_vpc_attachment_accepter.aws_ec2_transit_gateway_vpc_attachment_accepter.dns_support
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

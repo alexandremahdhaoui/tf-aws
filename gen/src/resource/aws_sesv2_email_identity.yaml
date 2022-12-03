@@ -15,8 +15,7 @@ spec:
             description: '[Easy DKIM] The key length of the DKIM key pair in use.'
             type: string
         dkim_signing_attributes:
-            description: |
-                An object that contains information about the private key and selector that you want to use to configure DKIM for the identity for Bring Your Own DKIM (BYODKIM) for the identity, or, configures the key length to be used for Easy DKIM.
+            description: ""
             type: string
         domain_signing_private_key:
             description: (Optional) [Bring Your Own DKIM] A private key that's used to generate a DKIM signature. The private key must use 1024 or 2048-bit RSA encryption, and must be encoded using base64 encoding.
@@ -59,8 +58,7 @@ spec:
             description: '[Easy DKIM] The key length of the DKIM key pair in use.'
             type: string
         dkim_signing_attributes:
-            description: |
-                An object that contains information about the private key and selector that you want to use to configure DKIM for the identity for Bring Your Own DKIM (BYODKIM) for the identity, or, configures the key length to be used for Easy DKIM.
+            description: ""
             type: string
         identity_type:
             description: 'The email identity type. Valid values: EMAIL_ADDRESS, DOMAIN.'

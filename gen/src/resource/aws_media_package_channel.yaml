@@ -15,15 +15,13 @@ spec:
             optional: true
             type: string
         hls_ingest:
-            description: |
-                A single item list of HLS ingest information
+            description: ""
             type: string
         id:
             description: The same as channel_id
             type: string
         ingest_endpoints:
-            description: |
-                A list of the ingest endpoints
+            description: ""
             type: string
         password:
             description: The password
@@ -43,15 +41,13 @@ spec:
             description: The ARN of the channel
             type: string
         hls_ingest:
-            description: |
-                A single item list of HLS ingest information
+            description: ""
             type: string
         id:
             description: The same as channel_id
             type: string
         ingest_endpoints:
-            description: |
-                A list of the ingest endpoints
+            description: ""
             type: string
         password:
             description: The password

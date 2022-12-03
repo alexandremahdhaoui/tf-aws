@@ -1,6 +1,6 @@
 datasource "aws_db_event_categories" "aws_db_event_categories" {
-  source_type      = var.source_type
   event_categories = var.event_categories
+  source_type      = var.source_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

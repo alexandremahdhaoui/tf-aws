@@ -124,13 +124,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The Amazon Resource Name of this instance profile."
-  value       = aws_devicefarm_instance_profile.aws_devicefarm_instance_profile.arn
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_devicefarm_instance_profile.aws_devicefarm_instance_profile.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name of this instance profile."
+  value       = aws_devicefarm_instance_profile.aws_devicefarm_instance_profile.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

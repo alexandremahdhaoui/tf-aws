@@ -145,6 +145,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "connector" {
+  description = "(Optional) The Amazon Chime Voice Connectors to route inbound calls to.connectorFor Amazon Chime Voice Connector groups, the Amazon Chime Voice Connectors to which to route inbound calls. Includes priority configuration settings. Limit: 3 VoiceConnectorItems per Amazon Chime Voice Connector group."
+  value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.connector
+}
 output "name" {
   description = "(Required) The name of the Amazon Chime Voice Connector group."
   value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.name
@@ -156,10 +160,6 @@ output "priority" {
 output "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.voice_connector_id
-}
-output "connector" {
-  description = "(Optional) The Amazon Chime Voice Connectors to route inbound calls to.connectorFor Amazon Chime Voice Connector groups, the Amazon Chime Voice Connectors to which to route inbound calls. Includes priority configuration settings. Limit: 3 VoiceConnectorItems per Amazon Chime Voice Connector group."
-  value       = aws_chime_voice_connector_group.aws_chime_voice_connector_group.connector
 }
 output "id" {
   description = "Amazon Chime Voice Connector group ID."

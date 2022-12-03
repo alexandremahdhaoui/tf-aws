@@ -4,14 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "arn" {
-  description = "ARN of the application."
-  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.arn
-}
-output "description" {
-  description = "Short description of the applicationApplication version lifecycle (appversion_lifecycle) supports the nested attribute containing."
-  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.description
-}
 output "id" {
   description = "Name of the application"
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.id
@@ -27,6 +19,14 @@ output "max_count" {
 output "service_role" {
   description = "ARN of an IAM service role under which the application version is deleted.  Elastic Beanstalk must have permission to assume this role."
   value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.service_role
+}
+output "arn" {
+  description = "ARN of the application."
+  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.arn
+}
+output "description" {
+  description = "Short description of the applicationApplication version lifecycle (appversion_lifecycle) supports the nested attribute containing."
+  value       = aws_elastic_beanstalk_application.aws_elastic_beanstalk_application.description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

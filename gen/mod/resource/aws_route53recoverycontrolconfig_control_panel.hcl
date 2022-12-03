@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "routing_control_count" {
-  description = "Number routing controls in a control panel."
-  type        = string
-}
 variable "arn" {
   description = "ARN of the control panel."
   type        = string
@@ -27,6 +19,14 @@ variable "cluster_arn" {
 }
 variable "default_control_panel" {
   description = "Whether a control panel is default."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name describing the control panel.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "routing_control_count" {
+  description = "Number routing controls in a control panel."
   type        = string
 }
 variable "tag_instance_id" {

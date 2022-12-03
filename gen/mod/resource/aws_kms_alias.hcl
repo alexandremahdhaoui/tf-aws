@@ -1,11 +1,15 @@
 resource "aws_kms_alias" "aws_kms_alias" {
-  arn           = var.arn
   name          = var.name
   name_prefix   = var.name_prefix
   target_key_id = var.target_key_id
+  arn           = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "target_key_id" {
+  description = "(Required) Identifier for the key for which the alias is for, can be either an ARN or key_id.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -18,12 +22,9 @@ variable "name" {
   default     = ""
 }
 variable "name_prefix" {
-  description = "name."
+  description = "(Optional) Creates an unique alias beginning with the specified prefix.\nThe name must start with the word \"alias\" followed by a forward slash (alias/).  Conflicts with name."
   type        = string
-}
-variable "target_key_id" {
-  description = "(Required) Identifier for the key for which the alias is for, can be either an ARN or key_id.In addition to all arguments above, the following attributes are exported:"
-  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -145,10 +146,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name_prefix" {
-  description = "name."
-  value       = aws_kms_alias.aws_kms_alias.name_prefix
-}
 output "target_key_id" {
   description = "(Required) Identifier for the key for which the alias is for, can be either an ARN or key_id.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_alias.aws_kms_alias.target_key_id
@@ -160,6 +157,10 @@ output "arn" {
 output "name" {
   description = "(Optional) The display name of the alias. The name must start with the word \"alias\" followed by a forward slash (alias/)"
   value       = aws_kms_alias.aws_kms_alias.name
+}
+output "name_prefix" {
+  description = "(Optional) Creates an unique alias beginning with the specified prefix.\nThe name must start with the word \"alias\" followed by a forward slash (alias/).  Conflicts with name."
+  value       = aws_kms_alias.aws_kms_alias.name_prefix
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the key alias."

@@ -1,20 +1,33 @@
 resource "aws_key_pair" "aws_key_pair" {
-  fingerprint     = var.fingerprint
+  arn             = var.arn
   key_name        = var.key_name
+  key_name_prefix = var.key_name_prefix
   key_type        = var.key_type
+  fingerprint     = var.fingerprint
+  id              = var.id
+  key_pair_id     = var.key_pair_id
   public_key      = var.public_key
   tags            = var.tags
-  arn             = var.arn
-  id              = var.id
-  key_name_prefix = var.key_name_prefix
-  key_pair_id     = var.key_pair_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "arn" {
-  description = "The key pair ARN."
+variable "key_pair_id" {
+  description = "The key pair ID."
+  type        = string
+}
+variable "public_key" {
+  description = "(Required) The public key material."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "fingerprint" {
+  description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
   type        = string
 }
 variable "id" {
@@ -26,30 +39,17 @@ variable "key_name_prefix" {
   type        = string
   default     = ""
 }
-variable "key_pair_id" {
-  description = "The key pair ID."
+variable "key_type" {
+  description = "The type of key pair."
   type        = string
 }
-variable "fingerprint" {
-  description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
+variable "arn" {
+  description = "The key pair ARN."
   type        = string
 }
 variable "key_name" {
   description = "The key pair name."
   type        = string
-}
-variable "key_type" {
-  description = "The type of key pair."
-  type        = string
-}
-variable "public_key" {
-  description = "(Required) The public key material."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -175,13 +175,13 @@ output "fingerprint" {
   description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
   value       = aws_key_pair.aws_key_pair.fingerprint
 }
-output "key_name" {
+output "id" {
   description = "The key pair name."
-  value       = aws_key_pair.aws_key_pair.key_name
+  value       = aws_key_pair.aws_key_pair.id
 }
-output "key_type" {
-  description = "The type of key pair."
-  value       = aws_key_pair.aws_key_pair.key_type
+output "key_pair_id" {
+  description = "The key pair ID."
+  value       = aws_key_pair.aws_key_pair.key_pair_id
 }
 output "public_key" {
   description = "(Required) The public key material."
@@ -195,17 +195,25 @@ output "arn" {
   description = "The key pair ARN."
   value       = aws_key_pair.aws_key_pair.arn
 }
-output "id" {
+output "key_name" {
   description = "The key pair name."
-  value       = aws_key_pair.aws_key_pair.id
+  value       = aws_key_pair.aws_key_pair.key_name
 }
 output "key_name_prefix" {
   description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with key_name. If neither key_name nor key_name_prefix is provided, Terraform will create a unique key name using the prefix terraform-."
   value       = aws_key_pair.aws_key_pair.key_name_prefix
 }
-output "key_pair_id" {
-  description = "The key pair ID."
-  value       = aws_key_pair.aws_key_pair.key_pair_id
+output "key_type" {
+  description = "The type of key pair."
+  value       = aws_key_pair.aws_key_pair.key_type
+}
+output "id" {
+  description = "The key pair name."
+  value       = aws_key_pair.aws_key_pair.id
+}
+output "key_name" {
+  description = "The key pair name."
+  value       = aws_key_pair.aws_key_pair.key_name
 }
 output "key_pair_id" {
   description = "The key pair ID."
@@ -226,14 +234,6 @@ output "arn" {
 output "fingerprint" {
   description = "The MD5 public key fingerprint as specified in section 4 of RFC 4716."
   value       = aws_key_pair.aws_key_pair.fingerprint
-}
-output "id" {
-  description = "The key pair name."
-  value       = aws_key_pair.aws_key_pair.id
-}
-output "key_name" {
-  description = "The key pair name."
-  value       = aws_key_pair.aws_key_pair.key_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,20 +1,16 @@
 resource "aws_codeartifact_domain" "aws_codeartifact_domain" {
-  owner            = var.owner
-  repository_count = var.repository_count
-  asset_size_bytes = var.asset_size_bytes
-  domain           = var.domain
+  created_time     = var.created_time
   encryption_key   = var.encryption_key
   id               = var.id
+  owner            = var.owner
+  repository_count = var.repository_count
   tags             = var.tags
   arn              = var.arn
-  created_time     = var.created_time
+  asset_size_bytes = var.asset_size_bytes
+  domain           = var.domain
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "asset_size_bytes" {
-  description = "The total size of all assets in the domain."
   type        = string
 }
 variable "domain" {
@@ -29,8 +25,17 @@ variable "repository_count" {
   description = "The number of repositories in the domain."
   type        = string
 }
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "arn" {
   description = "The ARN of the Domain."
+  type        = string
+}
+variable "asset_size_bytes" {
+  description = "The total size of all assets in the domain."
   type        = string
 }
 variable "created_time" {
@@ -45,11 +50,6 @@ variable "encryption_key" {
 variable "id" {
   description = "The ARN of the Domain."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -171,13 +171,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "asset_size_bytes" {
-  description = "The total size of all assets in the domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.asset_size_bytes
-}
 output "domain" {
   description = "(Required) The name of the domain to create. All domain names in an AWS Region that are in the same AWS account must be unique. The domain name is used as the prefix in DNS hostnames. Do not use sensitive information in a domain name because it is publicly discoverable."
   value       = aws_codeartifact_domain.aws_codeartifact_domain.domain
+}
+output "id" {
+  description = "The ARN of the Domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.id
 }
 output "owner" {
   description = "The AWS account ID that owns the domain."
@@ -187,9 +187,17 @@ output "repository_count" {
   description = "The number of repositories in the domain."
   value       = aws_codeartifact_domain.aws_codeartifact_domain.repository_count
 }
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.tags
+}
 output "arn" {
   description = "The ARN of the Domain."
   value       = aws_codeartifact_domain.aws_codeartifact_domain.arn
+}
+output "asset_size_bytes" {
+  description = "The total size of all assets in the domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.asset_size_bytes
 }
 output "created_time" {
   description = "A timestamp that represents the date and time the domain was created in RFC3339 format."
@@ -199,13 +207,9 @@ output "encryption_key" {
   description = "(Optional) The encryption key for the domain. This is used to encrypt content stored in a domain. The KMS Key Amazon Resource Name (ARN). The default aws/codeartifact AWS KMS master key is used if this element is absent."
   value       = aws_codeartifact_domain.aws_codeartifact_domain.encryption_key
 }
-output "id" {
-  description = "The ARN of the Domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.id
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.tags
+output "asset_size_bytes" {
+  description = "The total size of all assets in the domain."
+  value       = aws_codeartifact_domain.aws_codeartifact_domain.asset_size_bytes
 }
 output "created_time" {
   description = "A timestamp that represents the date and time the domain was created in RFC3339 format."
@@ -230,10 +234,6 @@ output "tags_all" {
 output "arn" {
   description = "The ARN of the Domain."
   value       = aws_codeartifact_domain.aws_codeartifact_domain.arn
-}
-output "asset_size_bytes" {
-  description = "The total size of all assets in the domain."
-  value       = aws_codeartifact_domain.aws_codeartifact_domain.asset_size_bytes
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

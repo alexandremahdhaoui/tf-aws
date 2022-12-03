@@ -9,10 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "ipam_pool_id" {
-  description = "(Required) ID of the pool to which you want to assign a CIDR."
-  type        = string
-}
 variable "netmask_length" {
   description = "(Optional) Netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -31,9 +27,9 @@ variable "id" {
   description = "ID of the preview.TimeoutsConfiguration options:"
   type        = string
 }
-output "cidr" {
-  description = "Previewed CIDR from the pool."
-  value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.cidr
+variable "ipam_pool_id" {
+  description = "(Required) ID of the pool to which you want to assign a CIDR."
+  type        = string
 }
 output "disallowed_cidrs" {
   description = "(Optional) Exclude a particular CIDR range from being returned by the pool."
@@ -50,6 +46,10 @@ output "ipam_pool_id" {
 output "netmask_length" {
   description = "(Optional) Netmask length of the CIDR you would like to preview from the IPAM pool.In addition to all arguments above, the following attributes are exported:"
   value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.netmask_length
+}
+output "cidr" {
+  description = "Previewed CIDR from the pool."
+  value       = aws_vpc_ipam_preview_next_cidr.aws_vpc_ipam_preview_next_cidr.cidr
 }
 output "cidr" {
   description = "Previewed CIDR from the pool."

@@ -1,12 +1,17 @@
 resource "aws_api_gateway_gateway_response.markdown" "aws_api_gateway_gateway_response.markdown" {
+  response_templates = var.response_templates
   response_type      = var.response_type
   rest_api_id        = var.rest_api_id
   status_code        = var.status_code
-  response_templates = var.response_templates
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "status_code" {
+  description = "(Optional) HTTP status code of the Gateway Response."
+  type        = string
+  default     = ""
 }
 variable "response_templates" {
   description = "(Optional) Map of templates used to transform the response body."
@@ -20,11 +25,6 @@ variable "response_type" {
 variable "rest_api_id" {
   description = "(Required) String identifier of the associated REST API."
   type        = string
-}
-variable "status_code" {
-  description = "(Optional) HTTP status code of the Gateway Response."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

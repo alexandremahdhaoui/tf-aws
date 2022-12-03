@@ -1,14 +1,22 @@
 resource "aws_redshift_snapshot_schedule" "aws_redshift_snapshot_schedule" {
+  tags              = var.tags
+  arn               = var.arn
+  definitions       = var.definitions
   description       = var.description
   force_destroy     = var.force_destroy
   identifier        = var.identifier
   identifier_prefix = var.identifier_prefix
-  tags              = var.tags
-  arn               = var.arn
-  definitions       = var.definitions
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "identifier" {
+  description = "(Optional, Forces new resource) The snapshot schedule identifier. If omitted, Terraform will assign a random, unique identifier."
+  type        = string
+}
+variable "identifier_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique\nidentifier beginning with the specified prefix. Conflicts with identifier."
   type        = string
 }
 variable "tags" {
@@ -34,14 +42,6 @@ variable "force_destroy" {
   description = "(Optional) Whether to destroy all associated clusters with this snapshot schedule on deletion. Must be enabled and applied before attempting deletion."
   type        = string
   default     = ""
-}
-variable "identifier" {
-  description = "(Optional, Forces new resource) The snapshot schedule identifier. If omitted, Terraform will assign a random, unique identifier."
-  type        = string
-}
-variable "identifier_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique\nidentifier beginning with the specified prefix. Conflicts with identifier."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

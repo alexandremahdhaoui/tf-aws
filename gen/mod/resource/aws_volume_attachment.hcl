@@ -1,10 +1,10 @@
 resource "aws_volume_attachment" "aws_volume_attachment" {
-  skip_destroy                   = var.skip_destroy
-  stop_instance_before_detaching = var.stop_instance_before_detaching
-  volume_id                      = var.volume_id
   device_name                    = var.device_name
   force_detach                   = var.force_detach
   instance_id                    = var.instance_id
+  skip_destroy                   = var.skip_destroy
+  stop_instance_before_detaching = var.stop_instance_before_detaching
+  volume_id                      = var.volume_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -15,11 +15,11 @@ variable "instance_id" {
   type        = string
 }
 variable "skip_destroy" {
-  description = ""
+  description = "(Optional, Boolean) Set this to true if you do not wish\nto detach the volume from the instance to which it is attached at destroy\ntime, and instead just remove the attachment from Terraform state. This is\nuseful when destroying an instance which has volumes created by some other\nmeans attached."
   type        = string
 }
 variable "stop_instance_before_detaching" {
-  description = "(Optional, Boolean) Set this to true to ensure that the target instance is stopped\nbefore trying to detach the volume. Stops the instance, if it is not already stopped.In addition to all arguments above, the following attributes are exported:"
+  description = "In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "volume_id" {
@@ -154,16 +154,8 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "instance_id" {
-  description = "ID of the Instance"
-  value       = aws_volume_attachment.aws_volume_attachment.instance_id
-}
-output "skip_destroy" {
-  description = ""
-  value       = aws_volume_attachment.aws_volume_attachment.skip_destroy
-}
 output "stop_instance_before_detaching" {
-  description = "(Optional, Boolean) Set this to true to ensure that the target instance is stopped\nbefore trying to detach the volume. Stops the instance, if it is not already stopped.In addition to all arguments above, the following attributes are exported:"
+  description = "In addition to all arguments above, the following attributes are exported:"
   value       = aws_volume_attachment.aws_volume_attachment.stop_instance_before_detaching
 }
 output "volume_id" {
@@ -177,6 +169,14 @@ output "device_name" {
 output "force_detach" {
   description = "(Optional, Boolean) Set to truestrongdata lossDetaching an Amazon EBS Volume from an Instance for more information."
   value       = aws_volume_attachment.aws_volume_attachment.force_detach
+}
+output "instance_id" {
+  description = "ID of the Instance"
+  value       = aws_volume_attachment.aws_volume_attachment.instance_id
+}
+output "skip_destroy" {
+  description = "(Optional, Boolean) Set this to true if you do not wish\nto detach the volume from the instance to which it is attached at destroy\ntime, and instead just remove the attachment from Terraform state. This is\nuseful when destroying an instance which has volumes created by some other\nmeans attached."
+  value       = aws_volume_attachment.aws_volume_attachment.skip_destroy
 }
 output "device_name" {
   description = "The device name exposed to the instance"

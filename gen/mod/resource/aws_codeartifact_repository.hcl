@@ -1,33 +1,34 @@
 resource "aws_codeartifact_repository" "aws_codeartifact_repository" {
-  id                       = var.id
+  domain                   = var.domain
   repository               = var.repository
+  tags                     = var.tags
+  upstream                 = var.upstream
+  external_connections     = var.external_connections
+  id                       = var.id
   repository_name          = var.repository_name
   administrator_account    = var.administrator_account
   arn                      = var.arn
   description              = var.description
   domain_owner             = var.domain_owner
-  external_connections     = var.external_connections
-  upstream                 = var.upstream
-  domain                   = var.domain
   external_connection_name = var.external_connection_name
-  tags                     = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "domain" {
-  description = "(Required) The domain that contains the created repository."
+variable "description" {
+  description = "(Optional) The description of the repository."
   type        = string
+  default     = ""
+}
+variable "domain_owner" {
+  description = "(Optional) The account number of the AWS account that owns the domain."
+  type        = string
+  default     = ""
 }
 variable "external_connection_name" {
   description = "(Required) The name of the external connection associated with a repository.In addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Upstream"
-  type        = string
-  default     = ""
 }
 variable "external_connections" {
   description = "An array of external connections associated with the repository. Only one external connection can be set per repository. see External Connections."
@@ -35,10 +36,6 @@ variable "external_connections" {
 }
 variable "id" {
   description = "The ARN of the repository."
-  type        = string
-}
-variable "repository" {
-  description = "(Required) The name of the repository to create."
   type        = string
 }
 variable "repository_name" {
@@ -53,13 +50,8 @@ variable "arn" {
   description = "The ARN of the repository."
   type        = string
 }
-variable "description" {
-  description = "(Optional) The description of the repository."
-  type        = string
-  default     = ""
-}
-variable "domain_owner" {
-  description = "(Optional) The account number of the AWS account that owns the domain."
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Upstream"
   type        = string
   default     = ""
 }
@@ -67,6 +59,14 @@ variable "upstream" {
   description = "(Optional) A list of upstream repositories to associate with the repository. The order of the upstream repositories in the list determines their priority order when AWS CodeArtifact looks for a requested package version. see Upstream"
   type        = string
   default     = ""
+}
+variable "domain" {
+  description = "(Required) The domain that contains the created repository."
+  type        = string
+}
+variable "repository" {
+  description = "(Required) The name of the repository to create."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -188,17 +188,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "external_connection_name" {
-  description = "(Required) The name of the external connection associated with a repository.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_codeartifact_repository.aws_codeartifact_repository.external_connection_name
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Upstream"
-  value       = aws_codeartifact_repository.aws_codeartifact_repository.tags
-}
-output "domain" {
-  description = "(Required) The domain that contains the created repository."
-  value       = aws_codeartifact_repository.aws_codeartifact_repository.domain
+output "administrator_account" {
+  description = "The account number of the AWS account that manages the repository."
+  value       = aws_codeartifact_repository.aws_codeartifact_repository.administrator_account
 }
 output "arn" {
   description = "The ARN of the repository."
@@ -212,6 +204,10 @@ output "domain_owner" {
   description = "(Optional) The account number of the AWS account that owns the domain."
   value       = aws_codeartifact_repository.aws_codeartifact_repository.domain_owner
 }
+output "external_connection_name" {
+  description = "(Required) The name of the external connection associated with a repository.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_codeartifact_repository.aws_codeartifact_repository.external_connection_name
+}
 output "external_connections" {
   description = "An array of external connections associated with the repository. Only one external connection can be set per repository. see External Connections."
   value       = aws_codeartifact_repository.aws_codeartifact_repository.external_connections
@@ -220,17 +216,21 @@ output "id" {
   description = "The ARN of the repository."
   value       = aws_codeartifact_repository.aws_codeartifact_repository.id
 }
-output "repository" {
-  description = "(Required) The name of the repository to create."
-  value       = aws_codeartifact_repository.aws_codeartifact_repository.repository
-}
 output "repository_name" {
   description = "(Required) The name of an upstream repository.External Connections"
   value       = aws_codeartifact_repository.aws_codeartifact_repository.repository_name
 }
-output "administrator_account" {
-  description = "The account number of the AWS account that manages the repository."
-  value       = aws_codeartifact_repository.aws_codeartifact_repository.administrator_account
+output "domain" {
+  description = "(Required) The domain that contains the created repository."
+  value       = aws_codeartifact_repository.aws_codeartifact_repository.domain
+}
+output "repository" {
+  description = "(Required) The name of the repository to create."
+  value       = aws_codeartifact_repository.aws_codeartifact_repository.repository
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Upstream"
+  value       = aws_codeartifact_repository.aws_codeartifact_repository.tags
 }
 output "upstream" {
   description = "(Optional) A list of upstream repositories to associate with the repository. The order of the upstream repositories in the list determines their priority order when AWS CodeArtifact looks for a requested package version. see Upstream"

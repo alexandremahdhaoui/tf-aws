@@ -1,42 +1,22 @@
 resource "aws_directory_service_radius_settings" "aws_directory_service_radius_settings" {
-  radius_servers          = var.radius_servers
-  shared_secret           = var.shared_secret
-  use_same_username       = var.use_same_username
-  authentication_protocol = var.authentication_protocol
-  directory_id            = var.directory_id
-  display_label           = var.display_label
   radius_retries          = var.radius_retries
+  radius_servers          = var.radius_servers
+  radius_timeout          = var.radius_timeout
+  authentication_protocol = var.authentication_protocol
   create                  = var.create
+  directory_id            = var.directory_id
   id                      = var.id
   radius_port             = var.radius_port
-  radius_timeout          = var.radius_timeout
+  shared_secret           = var.shared_secret
+  display_label           = var.display_label
+  use_same_username       = var.use_same_username
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
-  type        = string
-}
 variable "radius_port" {
   description = "(Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers."
-  type        = string
-}
-variable "radius_timeout" {
-  description = "(Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50."
-  type        = string
-}
-variable "create" {
-  description = "(Default 30 minutes) Used for RADIUS settings creation"
-  type        = string
-}
-variable "directory_id" {
-  description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
-  type        = string
-}
-variable "display_label" {
-  description = "(Required) Display label."
   type        = string
 }
 variable "radius_retries" {
@@ -47,17 +27,37 @@ variable "radius_servers" {
   description = "(Required) An array of strings that contains the fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer."
   type        = string
 }
+variable "radius_timeout" {
+  description = "(Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50."
+  type        = string
+}
+variable "authentication_protocol" {
+  description = "(Optional) The protocol specified for your RADIUS endpoints. Valid values: PAP, CHAP, MS-CHAPv1, MS-CHAPv2."
+  type        = string
+  default     = ""
+}
+variable "create" {
+  description = "(Default 30 minutes) Used for RADIUS settings creation"
+  type        = string
+}
+variable "directory_id" {
+  description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
+  type        = string
+}
+variable "id" {
+  description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
+  type        = string
+}
 variable "shared_secret" {
   description = "(Required) Required for enabling RADIUS on the directory."
   type        = string
 }
+variable "display_label" {
+  description = "(Required) Display label."
+  type        = string
+}
 variable "use_same_username" {
   description = "(Optional) Not currently used.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "authentication_protocol" {
-  description = "(Optional) The protocol specified for your RADIUS endpoints. Valid values: PAP, CHAP, MS-CHAPv1, MS-CHAPv2."
   type        = string
   default     = ""
 }
@@ -181,33 +181,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "directory_id" {
-  description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.directory_id
-}
 output "display_label" {
   description = "(Required) Display label."
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.display_label
-}
-output "radius_retries" {
-  description = "(Required) The maximum number of times that communication with the RADIUS server is attempted. Minimum value of 0. Maximum value of 10."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_retries
-}
-output "radius_servers" {
-  description = "(Required) An array of strings that contains the fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_servers
-}
-output "shared_secret" {
-  description = "(Required) Required for enabling RADIUS on the directory."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.shared_secret
 }
 output "use_same_username" {
   description = "(Optional) Not currently used.In addition to all arguments above, the following attributes are exported:"
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.use_same_username
 }
+output "radius_servers" {
+  description = "(Required) An array of strings that contains the fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_servers
+}
+output "radius_timeout" {
+  description = "(Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_timeout
+}
 output "authentication_protocol" {
   description = "(Optional) The protocol specified for your RADIUS endpoints. Valid values: PAP, CHAP, MS-CHAPv1, MS-CHAPv2."
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.authentication_protocol
+}
+output "create" {
+  description = "(Default 30 minutes) Used for RADIUS settings creation"
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.create
+}
+output "directory_id" {
+  description = "(Required) The identifier of the directory for which you want to manager RADIUS settings."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.directory_id
 }
 output "id" {
   description = "The directory identifier.Timeoutsaws_directory_service_radius_settings provides the following Timeouts configuration options:"
@@ -217,13 +217,13 @@ output "radius_port" {
   description = "(Required) The port that your RADIUS server is using for communications. Your self-managed network must allow inbound traffic over this port from the AWS Directory Service servers."
   value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_port
 }
-output "radius_timeout" {
-  description = "(Required) The amount of time, in seconds, to wait for the RADIUS server to respond. Minimum value of 1. Maximum value of 50."
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_timeout
+output "radius_retries" {
+  description = "(Required) The maximum number of times that communication with the RADIUS server is attempted. Minimum value of 0. Maximum value of 10."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.radius_retries
 }
-output "create" {
-  description = "(Default 30 minutes) Used for RADIUS settings creation"
-  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.create
+output "shared_secret" {
+  description = "(Required) Required for enabling RADIUS on the directory."
+  value       = aws_directory_service_radius_settings.aws_directory_service_radius_settings.shared_secret
 }
 output "create" {
   description = "(Default 30 minutes) Used for RADIUS settings creation"

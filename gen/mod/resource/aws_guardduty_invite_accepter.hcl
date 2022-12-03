@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "master_account_id" {
+  description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.master_account_id
+}
 output "detector_id" {
   description = "(Required) The detector ID of the member GuardDuty account."
   value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.detector_id
@@ -146,10 +150,6 @@ output "detector_id" {
 output "id" {
   description = "GuardDuty member detector IDTimeoutsConfiguration options:"
   value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.id
-}
-output "master_account_id" {
-  description = "(Required) AWS account ID for primary account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_guardduty_invite_accepter.aws_guardduty_invite_accepter.master_account_id
 }
 output "create" {
   description = "(Default 1m)"

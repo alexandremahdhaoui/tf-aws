@@ -1,5 +1,4 @@
 resource "aws_serverlessapplicationrepository_cloudformation_stack" "aws_serverlessapplicationrepository_cloudformation_stack" {
-  name             = var.name
   outputs          = var.outputs
   parameters       = var.parameters
   semantic_version = var.semantic_version
@@ -7,17 +6,10 @@ resource "aws_serverlessapplicationrepository_cloudformation_stack" "aws_serverl
   application_id   = var.application_id
   capabilities     = var.capabilities
   id               = var.id
+  name             = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "A unique identifier of the stack."
-  type        = string
-}
-variable "name" {
-  description = "(Required) The name of the stack to create. The resource deployed in AWS will be prefixed with serverlessrepo-"
   type        = string
 }
 variable "outputs" {
@@ -45,6 +37,14 @@ variable "application_id" {
 }
 variable "capabilities" {
   description = "(Required) A list of capabilities. Valid values are CAPABILITY_IAM, CAPABILITY_NAMED_IAM, CAPABILITY_RESOURCE_POLICY, or CAPABILITY_AUTO_EXPAND"
+  type        = string
+}
+variable "id" {
+  description = "A unique identifier of the stack."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the stack to create. The resource deployed in AWS will be prefixed with serverlessrepo-"
   type        = string
 }
 variable "tag_instance_id" {
@@ -167,14 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A list of tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.tags
-}
-output "application_id" {
-  description = "(Required) The ARN of the application from the Serverless Application Repository."
-  value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.application_id
-}
 output "capabilities" {
   description = "(Required) A list of capabilities. Valid values are CAPABILITY_IAM, CAPABILITY_NAMED_IAM, CAPABILITY_RESOURCE_POLICY, or CAPABILITY_AUTO_EXPAND"
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.capabilities
@@ -198,6 +190,14 @@ output "parameters" {
 output "semantic_version" {
   description = "(Optional) The version of the application to deploy. If not supplied, deploys the latest version."
   value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.semantic_version
+}
+output "tags" {
+  description = "(Optional) A list of tags to associate with this stack. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.tags
+}
+output "application_id" {
+  description = "(Required) The ARN of the application from the Serverless Application Repository."
+  value       = aws_serverlessapplicationrepository_cloudformation_stack.aws_serverlessapplicationrepository_cloudformation_stack.application_id
 }
 output "id" {
   description = "A unique identifier of the stack."

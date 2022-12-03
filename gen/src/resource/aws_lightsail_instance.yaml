@@ -41,7 +41,9 @@ spec:
             description: The ARN of the Lightsail instance (matches id).
             type: string
         availability_zone:
-            description: ""
+            description: |-
+                (Required) The Availability Zone in which to create your
+                instance (see list below)
             type: string
         blueprint_id:
             description: '(Required) The ID for a virtual private server image. A list of available blueprint IDs can be obtained using the AWS CLI command: aws lightsail get-blueprints'
@@ -98,7 +100,10 @@ spec:
             description: A Boolean value indicating whether this instance has a static IP assigned to it.
             type: string
         key_pair_name:
-            description: aws_key_pair at this time)
+            description: |-
+                (Optional) The name of your key pair. Created in the
+                Lightsail console (cannot use aws_key_pair at this time)
+            optional: true
             type: string
         large_:
             description: ""

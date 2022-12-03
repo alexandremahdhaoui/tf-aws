@@ -1,8 +1,8 @@
 resource "aws_cloud9_environment_membership.markdown" "aws_cloud9_environment_membership.markdown" {
+  user_arn       = var.user_arn
   environment_id = var.environment_id
   id             = var.id
   permissions    = var.permissions
-  user_arn       = var.user_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

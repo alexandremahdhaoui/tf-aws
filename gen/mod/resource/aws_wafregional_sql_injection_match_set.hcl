@@ -10,24 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "sql_injection_match_tuple" {
-  description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested fieldssql_injection_match_tuple"
-  type        = string
-  default     = ""
-}
-variable "text_transformation" {
-  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
-  type        = string
-}
-variable "type" {
-  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "data" {
-  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
-  type        = string
-  default     = ""
-}
 variable "field_to_match" {
   description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
   type        = string
@@ -35,6 +17,24 @@ variable "field_to_match" {
 variable "name" {
   description = "(Required) The name or description of the SizeConstraintSet."
   type        = string
+}
+variable "sql_injection_match_tuple" {
+  description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested fieldssql_injection_match_tuple"
+  type        = string
+  default     = ""
+}
+variable "text_transformation" {
+  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
+  type        = string
+}
+variable "type" {
+  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "data" {
+  description = "(Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,20 +156,8 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name or description of the SizeConstraintSet."
-  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.name
-}
-output "sql_injection_match_tuple" {
-  description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested fieldssql_injection_match_tuple"
-  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.sql_injection_match_tuple
-}
-output "text_transformation" {
-  description = "(Required) Text transformations used to eliminate unusual formatting that attackers use in web requests in an effort to bypass AWS WAF.\nIf you specify a transformation, AWS WAF performs the transformation on field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
-  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.text_transformation
-}
 output "type" {
-  description = "(Required) The part of the web request that you want AWS WAF to search for a specified string.\ne.g., HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
+  description = "HEADER, METHOD or BODYdocsIn addition to all arguments above, the following attributes are exported:"
   value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.type
 }
 output "data" {
@@ -179,6 +167,18 @@ output "data" {
 output "field_to_match" {
   description = "(Required) Specifies where in a web request to look for snippets of malicious SQL code."
   value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.field_to_match
+}
+output "name" {
+  description = "(Required) The name or description of the SizeConstraintSet."
+  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.name
+}
+output "sql_injection_match_tuple" {
+  description = "(Optional) The parts of web requests that you want AWS WAF to inspect for malicious SQL code and, if you want AWS WAF to inspect a header, the name of the header.Nested fieldssql_injection_match_tuple"
+  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.sql_injection_match_tuple
+}
+output "text_transformation" {
+  description = "field_to_matchCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_match"
+  value       = aws_wafregional_sql_injection_match_set.aws_wafregional_sql_injection_match_set.text_transformation
 }
 output "id" {
   description = "The ID of the WAF SqlInjectionMatchSet."

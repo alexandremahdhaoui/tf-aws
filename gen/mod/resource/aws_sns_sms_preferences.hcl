@@ -1,9 +1,9 @@
 resource "aws_sns_sms_preferences" "aws_sns_sms_preferences" {
+  delivery_status_success_sampling_rate = var.delivery_status_success_sampling_rate
+  monthly_spend_limit                   = var.monthly_spend_limit
   default_sender_id                     = var.default_sender_id
   default_sms_type                      = var.default_sms_type
   delivery_status_iam_role_arn          = var.delivery_status_iam_role_arn
-  delivery_status_success_sampling_rate = var.delivery_status_success_sampling_rate
-  monthly_spend_limit                   = var.monthly_spend_limit
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

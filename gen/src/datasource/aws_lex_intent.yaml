@@ -8,9 +8,7 @@ spec:
             description: ARN of the Lex intent.
             type: string
         checksum:
-            description: |-
-                Checksum identifying the version of the intent that was created. The checksum is not
-                included as an argument because the resource will add it automatically when updating the intent.
+            description: ""
             type: string
         created_date:
             description: Date when the intent version was created.
@@ -36,9 +34,7 @@ spec:
             description: ARN of the Lex intent.
             type: string
         checksum:
-            description: |-
-                Checksum identifying the version of the intent that was created. The checksum is not
-                included as an argument because the resource will add it automatically when updating the intent.
+            description: ""
             type: string
         created_date:
             description: Date when the intent version was created.

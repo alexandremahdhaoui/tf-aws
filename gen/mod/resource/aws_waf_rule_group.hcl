@@ -1,14 +1,14 @@
 resource "aws_waf_rule_group" "aws_waf_rule_group" {
-  priority       = var.priority
   action         = var.action
   arn            = var.arn
   id             = var.id
+  metric_name    = var.metric_name
+  priority       = var.priority
+  activated_rule = var.activated_rule
+  name           = var.name
   rule_id        = var.rule_id
   tags           = var.tags
   type           = var.type
-  activated_rule = var.activated_rule
-  metric_name    = var.metric_name
-  name           = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -18,10 +18,6 @@ variable "activated_rule" {
   description = "(Optional) A list of activated rules, see below"
   type        = string
   default     = ""
-}
-variable "metric_name" {
-  description = "(Required) A friendly name for the metrics from the rule group"
-  type        = string
 }
 variable "name" {
   description = "(Required) A friendly name of the rule group"
@@ -51,6 +47,10 @@ variable "arn" {
 }
 variable "id" {
   description = "The ID of the WAF rule group."
+  type        = string
+}
+variable "metric_name" {
+  description = "(Required) A friendly name for the metrics from the rule group"
   type        = string
 }
 variable "priority" {
@@ -177,6 +177,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "metric_name" {
+  description = "(Required) A friendly name for the metrics from the rule group"
+  value       = aws_waf_rule_group.aws_waf_rule_group.metric_name
+}
+output "priority" {
+  description = "(Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value."
+  value       = aws_waf_rule_group.aws_waf_rule_group.priority
+}
 output "action" {
   description = "(Required) Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the rule.\n"
   value       = aws_waf_rule_group.aws_waf_rule_group.action
@@ -189,9 +197,9 @@ output "id" {
   description = "The ID of the WAF rule group."
   value       = aws_waf_rule_group.aws_waf_rule_group.id
 }
-output "priority" {
-  description = "(Required) Specifies the order in which the rules are evaluated. Rules with a lower value are evaluated before rules with a higher value."
-  value       = aws_waf_rule_group.aws_waf_rule_group.priority
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blocksactivated_ruleArguments"
+  value       = aws_waf_rule_group.aws_waf_rule_group.tags
 }
 output "type" {
   description = "(Optional) The rule type, either REGULAR, RATE_BASED, or GROUP. Defaults to REGULAR.In addition to all arguments above, the following attributes are exported:"
@@ -201,10 +209,6 @@ output "activated_rule" {
   description = "(Optional) A list of activated rules, see below"
   value       = aws_waf_rule_group.aws_waf_rule_group.activated_rule
 }
-output "metric_name" {
-  description = "(Required) A friendly name for the metrics from the rule group"
-  value       = aws_waf_rule_group.aws_waf_rule_group.metric_name
-}
 output "name" {
   description = "(Required) A friendly name of the rule group"
   value       = aws_waf_rule_group.aws_waf_rule_group.name
@@ -212,10 +216,6 @@ output "name" {
 output "rule_id" {
   description = "(Required) The ID of a rule"
   value       = aws_waf_rule_group.aws_waf_rule_group.rule_id
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Blocksactivated_ruleArguments"
-  value       = aws_waf_rule_group.aws_waf_rule_group.tags
 }
 output "arn" {
   description = "The ARN of the WAF rule group."

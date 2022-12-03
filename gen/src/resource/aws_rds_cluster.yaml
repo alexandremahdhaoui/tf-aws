@@ -185,7 +185,10 @@ spec:
             optional: true
             type: string
         restore_type:
-            description: full-copy (default) and copy-on-write.
+            description: |-
+                (Optional) Type of restore to be performed.
+                Valid options are full-copy (default) and copy-on-write.
+            optional: true
             type: string
         scaling_configuration:
             description: (Optional) Nested attribute with scaling properties. Only valid when engine_mode is set to serverless. More details below.
@@ -370,7 +373,9 @@ spec:
             description: '(Optional) Date and time in UTC format to restore the database cluster to. Conflicts with use_latest_restorable_time.scaling_configuration Argument Reference~> strongNOTE: scaling_configuration configuration is only valid when engine_mode is set to serverless.Example:'
             type: string
         restore_type:
-            description: full-copy (default) and copy-on-write.
+            description: |-
+                (Optional) Type of restore to be performed.
+                Valid options are full-copy (default) and copy-on-write.
             type: string
         scaling_configuration:
             description: (Optional) Nested attribute with scaling properties. Only valid when engine_mode is set to serverless. More details below.

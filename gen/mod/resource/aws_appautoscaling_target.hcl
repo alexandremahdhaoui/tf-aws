@@ -1,20 +1,12 @@
 resource "aws_appautoscaling_target" "aws_appautoscaling_target" {
+  role_arn           = var.role_arn
+  scalable_dimension = var.scalable_dimension
   max_capacity       = var.max_capacity
   min_capacity       = var.min_capacity
   resource_id        = var.resource_id
-  role_arn           = var.role_arn
-  scalable_dimension = var.scalable_dimension
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "min_capacity" {
-  description = "(Required) Min capacity of the scalable target."
-  type        = string
-}
-variable "resource_id" {
-  description = "(Required) Resource type and unique identifier string for the resource associated with the scaling policy. Documentation can be found in the ResourceId parameter at: AWS Application Auto Scaling API Reference"
   type        = string
 }
 variable "role_arn" {
@@ -28,6 +20,14 @@ variable "scalable_dimension" {
 }
 variable "max_capacity" {
   description = "(Required) Max capacity of the scalable target."
+  type        = string
+}
+variable "min_capacity" {
+  description = "(Required) Min capacity of the scalable target."
+  type        = string
+}
+variable "resource_id" {
+  description = "(Required) Resource type and unique identifier string for the resource associated with the scaling policy. Documentation can be found in the ResourceId parameter at: AWS Application Auto Scaling API Reference"
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,14 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "max_capacity" {
-  description = "(Required) Max capacity of the scalable target."
-  value       = aws_appautoscaling_target.aws_appautoscaling_target.max_capacity
-}
-output "min_capacity" {
-  description = "(Required) Min capacity of the scalable target."
-  value       = aws_appautoscaling_target.aws_appautoscaling_target.min_capacity
-}
 output "resource_id" {
   description = "(Required) Resource type and unique identifier string for the resource associated with the scaling policy. Documentation can be found in the ResourceId parameter at: AWS Application Auto Scaling API Reference"
   value       = aws_appautoscaling_target.aws_appautoscaling_target.resource_id
@@ -169,6 +161,14 @@ output "role_arn" {
 output "scalable_dimension" {
   description = "(Required) Scalable dimension of the scalable target. Documentation can be found in the ScalableDimension parameter at: AWS Application Auto Scaling API Reference"
   value       = aws_appautoscaling_target.aws_appautoscaling_target.scalable_dimension
+}
+output "max_capacity" {
+  description = "(Required) Max capacity of the scalable target."
+  value       = aws_appautoscaling_target.aws_appautoscaling_target.max_capacity
+}
+output "min_capacity" {
+  description = "(Required) Min capacity of the scalable target."
+  value       = aws_appautoscaling_target.aws_appautoscaling_target.min_capacity
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

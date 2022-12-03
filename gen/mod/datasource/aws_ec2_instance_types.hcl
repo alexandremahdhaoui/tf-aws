@@ -1,9 +1,9 @@
 datasource "aws_ec2_instance_types" "aws_ec2_instance_types" {
+  filter         = var.filter
+  id             = var.id
   instance_types = var.instance_types
   name           = var.name
   values         = var.values
-  filter         = var.filter
-  id             = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -30,14 +30,6 @@ variable "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-output "name" {
-  description = "(Required) Name of the filter."
-  value       = aws_ec2_instance_types.aws_ec2_instance_types.name
-}
-output "values" {
-  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_instance_types.aws_ec2_instance_types.values
-}
 output "filter" {
   description = "(Optional) One or more configuration blocks containing name-values filters. See the EC2 API Reference for supported filters. Detailed below.filter Argument Reference"
   value       = aws_ec2_instance_types.aws_ec2_instance_types.filter
@@ -49,6 +41,14 @@ output "id" {
 output "instance_types" {
   description = "List of EC2 Instance Types.TimeoutsConfiguration options:"
   value       = aws_ec2_instance_types.aws_ec2_instance_types.instance_types
+}
+output "name" {
+  description = "(Required) Name of the filter."
+  value       = aws_ec2_instance_types.aws_ec2_instance_types.name
+}
+output "values" {
+  description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_instance_types.aws_ec2_instance_types.values
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

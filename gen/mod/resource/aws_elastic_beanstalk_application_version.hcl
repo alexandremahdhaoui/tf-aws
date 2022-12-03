@@ -1,5 +1,4 @@
 resource "aws_elastic_beanstalk_application_version" "aws_elastic_beanstalk_application_version" {
-  arn          = var.arn
   bucket       = var.bucket
   description  = var.description
   force_delete = var.force_delete
@@ -7,13 +6,10 @@ resource "aws_elastic_beanstalk_application_version" "aws_elastic_beanstalk_appl
   name         = var.name
   tags         = var.tags
   application  = var.application
+  arn          = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Unique name for the this Application Version."
   type        = string
 }
 variable "tags" {
@@ -46,6 +42,10 @@ variable "force_delete" {
 }
 variable "key" {
   description = "(Required) S3 object that is the Application Version source bundle."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Unique name for the this Application Version."
   type        = string
 }
 variable "tag_instance_id" {
@@ -168,18 +168,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN assigned by AWS for this Elastic Beanstalk Application."
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.arn
-}
-output "bucket" {
-  description = "(Required) S3 bucket that contains the Application Version source bundle."
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.bucket
-}
-output "description" {
-  description = "(Optional) Short description of the Application Version."
-  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.description
-}
 output "force_delete" {
   description = "(Optional) On delete, force an Application Version to be deleted when it may be in use by multiple Elastic Beanstalk Environments."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.force_delete
@@ -199,6 +187,18 @@ output "tags" {
 output "application" {
   description = "(Required) Name of the Beanstalk Application the version is associated with."
   value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.application
+}
+output "arn" {
+  description = "ARN assigned by AWS for this Elastic Beanstalk Application."
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.arn
+}
+output "bucket" {
+  description = "(Required) S3 bucket that contains the Application Version source bundle."
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.bucket
+}
+output "description" {
+  description = "(Optional) Short description of the Application Version."
+  value       = aws_elastic_beanstalk_application_version.aws_elastic_beanstalk_application_version.description
 }
 output "arn" {
   description = "ARN assigned by AWS for this Elastic Beanstalk Application."

@@ -1,74 +1,69 @@
 resource "aws_fsx_ontap_volume" "aws_fsx_ontap_volume" {
-  cooling_policy             = var.cooling_policy
-  size_in_megabytes          = var.size_in_megabytes
+  arn                        = var.arn
   delete                     = var.delete
-  flexcache_endpoint_type    = var.flexcache_endpoint_type
+  id                         = var.id
+  ontap_volume_type          = var.ontap_volume_type
+  size_in_megabytes          = var.size_in_megabytes
+  cooling_policy             = var.cooling_policy
+  name                       = var.name
+  security_style             = var.security_style
   tags                       = var.tags
   tags_all                   = var.tags_all
-  id                         = var.id
-  junction_path              = var.junction_path
-  storage_virtual_machine_id = var.storage_virtual_machine_id
   uuid                       = var.uuid
-  arn                        = var.arn
-  create                     = var.create
   file_system_id             = var.file_system_id
-  name                       = var.name
-  ontap_volume_type          = var.ontap_volume_type
-  security_style             = var.security_style
+  create                     = var.create
+  flexcache_endpoint_type    = var.flexcache_endpoint_type
+  junction_path              = var.junction_path
   storage_efficiency_enabled = var.storage_efficiency_enabled
+  storage_virtual_machine_id = var.storage_virtual_machine_id
   volume_type                = var.volume_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "Identifier of the volume, e.g., fsvol-12345678"
+variable "create" {
+  description = "(Default 30m)"
+  type        = string
+}
+variable "flexcache_endpoint_type" {
+  description = "Specifies the FlexCache endpoint type of the volume, Valid values are NONE, ORIGIN, CACHE. Default value is NONE. These can be set by the ONTAP CLI or API and are use with FlexCache feature."
   type        = string
 }
 variable "junction_path" {
   description = "(Required) Specifies the location in the storage virtual machine's namespace where the volume is mounted. The junction_path must have a leading forward slash, such as /vol3"
   type        = string
 }
-variable "storage_virtual_machine_id" {
-  description = "(Required) Specifies the storage virtual machine in which to create the volume."
-  type        = string
-}
 variable "storage_efficiency_enabled" {
   description = "(Required) Set to true to enable deduplication, compression, and compaction storage efficiency features on the volume."
   type        = string
 }
-variable "uuid" {
-  description = "The Volume's UUID (universally unique identifier)."
+variable "storage_virtual_machine_id" {
+  description = "(Required) Specifies the storage virtual machine in which to create the volume."
+  type        = string
+}
+variable "volume_type" {
+  description = "The type of volume, currently the only valid value is ONTAP.TimeoutsConfiguration options:"
   type        = string
 }
 variable "arn" {
   description = "Amazon Resource Name of the volune."
   type        = string
 }
-variable "create" {
+variable "delete" {
   description = "(Default 30m)"
   type        = string
 }
-variable "file_system_id" {
-  description = "Describes the file system for the volume, e.g. fs-12345679"
-  type        = string
-}
-variable "name" {
-  description = "(Required) Specifies the tiering policy for the ONTAP volume for moving data to the capacity pool storage. Valid values are SNAPSHOT_ONLY, AUTO, ALL, NONE. Default value is SNAPSHOT_ONLY."
+variable "id" {
+  description = "Identifier of the volume, e.g., fsvol-12345678"
   type        = string
 }
 variable "ontap_volume_type" {
   description = "Specifies the type of volume, Valid values are RW, DP,  and LS. Default value is RW. These can be set by the ONTAP CLI or API. This setting is used as part of migration and replication Migrating to Amazon FSx for NetApp ONTAP"
   type        = string
 }
-variable "security_style" {
-  description = "(Optional) Specifies the volume security style, Valid values are UNIX, NTFS, and MIXED. Default value is UNIX."
-  type        = string
-  default     = ""
-}
-variable "volume_type" {
-  description = "The type of volume, currently the only valid value is ONTAP.TimeoutsConfiguration options:"
+variable "size_in_megabytes" {
+  description = "(Required) Specifies the size of the volume, in megabytes (MB), that you are creating."
   type        = string
 }
 variable "cooling_policy" {
@@ -76,17 +71,14 @@ variable "cooling_policy" {
   type        = string
   default     = ""
 }
-variable "size_in_megabytes" {
-  description = "(Required) Specifies the size of the volume, in megabytes (MB), that you are creating."
+variable "name" {
+  description = "(Required) Specifies the tiering policy for the ONTAP volume for moving data to the capacity pool storage. Valid values are SNAPSHOT_ONLY, AUTO, ALL, NONE. Default value is SNAPSHOT_ONLY."
   type        = string
 }
-variable "delete" {
-  description = "(Default 30m)"
+variable "security_style" {
+  description = "(Optional) Specifies the volume security style, Valid values are UNIX, NTFS, and MIXED. Default value is UNIX."
   type        = string
-}
-variable "flexcache_endpoint_type" {
-  description = "Specifies the FlexCache endpoint type of the volume, Valid values are NONE, ORIGIN, CACHE. Default value is NONE. These can be set by the ONTAP CLI or API and are use with FlexCache feature."
-  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the volume. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.tiering_policytiering_policy configuration block:"
@@ -95,6 +87,14 @@ variable "tags" {
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "uuid" {
+  description = "The Volume's UUID (universally unique identifier)."
+  type        = string
+}
+variable "file_system_id" {
+  description = "Describes the file system for the volume, e.g. fs-12345679"
   type        = string
 }
 variable "tag_instance_id" {
@@ -217,13 +217,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "cooling_policy" {
-  description = "(Optional) Specifies the number of days that user data in a volume must remain inactive before it is considered \"cold\" and moved to the capacity pool. Used with AUTO and SNAPSHOT_ONLY tiering policies only. Valid values are whole numbers between 2 and 183. Default values are 31 days for AUTO and 2 days for SNAPSHOT_ONLY.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.cooling_policy
+output "arn" {
+  description = "Amazon Resource Name of the volune."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.arn
+}
+output "delete" {
+  description = "(Default 30m)"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.delete
+}
+output "id" {
+  description = "Identifier of the volume, e.g., fsvol-12345678"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.id
+}
+output "ontap_volume_type" {
+  description = "Specifies the type of volume, Valid values are RW, DP,  and LS. Default value is RW. These can be set by the ONTAP CLI or API. This setting is used as part of migration and replication Migrating to Amazon FSx for NetApp ONTAP"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.ontap_volume_type
 }
 output "size_in_megabytes" {
   description = "(Required) Specifies the size of the volume, in megabytes (MB), that you are creating."
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.size_in_megabytes
+}
+output "uuid" {
+  description = "The Volume's UUID (universally unique identifier)."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.uuid
+}
+output "cooling_policy" {
+  description = "(Optional) Specifies the number of days that user data in a volume must remain inactive before it is considered \"cold\" and moved to the capacity pool. Used with AUTO and SNAPSHOT_ONLY tiering policies only. Valid values are whole numbers between 2 and 183. Default values are 31 days for AUTO and 2 days for SNAPSHOT_ONLY.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.cooling_policy
+}
+output "name" {
+  description = "(Required) Specifies the tiering policy for the ONTAP volume for moving data to the capacity pool storage. Valid values are SNAPSHOT_ONLY, AUTO, ALL, NONE. Default value is SNAPSHOT_ONLY."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.name
+}
+output "security_style" {
+  description = "(Optional) Specifies the volume security style, Valid values are UNIX, NTFS, and MIXED. Default value is UNIX."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.security_style
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the volume. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.tiering_policytiering_policy configuration block:"
@@ -233,65 +261,61 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.tags_all
 }
-output "delete" {
+output "file_system_id" {
+  description = "Describes the file system for the volume, e.g. fs-12345679"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.file_system_id
+}
+output "volume_type" {
+  description = "The type of volume, currently the only valid value is ONTAP.TimeoutsConfiguration options:"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.volume_type
+}
+output "create" {
   description = "(Default 30m)"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.delete
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.create
 }
 output "flexcache_endpoint_type" {
   description = "Specifies the FlexCache endpoint type of the volume, Valid values are NONE, ORIGIN, CACHE. Default value is NONE. These can be set by the ONTAP CLI or API and are use with FlexCache feature."
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.flexcache_endpoint_type
-}
-output "storage_virtual_machine_id" {
-  description = "(Required) Specifies the storage virtual machine in which to create the volume."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.storage_virtual_machine_id
-}
-output "id" {
-  description = "Identifier of the volume, e.g., fsvol-12345678"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.id
 }
 output "junction_path" {
   description = "(Required) Specifies the location in the storage virtual machine's namespace where the volume is mounted. The junction_path must have a leading forward slash, such as /vol3"
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.junction_path
 }
-output "file_system_id" {
-  description = "Describes the file system for the volume, e.g. fs-12345679"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.file_system_id
-}
-output "name" {
-  description = "(Required) Specifies the tiering policy for the ONTAP volume for moving data to the capacity pool storage. Valid values are SNAPSHOT_ONLY, AUTO, ALL, NONE. Default value is SNAPSHOT_ONLY."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.name
-}
-output "ontap_volume_type" {
-  description = "Specifies the type of volume, Valid values are RW, DP,  and LS. Default value is RW. These can be set by the ONTAP CLI or API. This setting is used as part of migration and replication Migrating to Amazon FSx for NetApp ONTAP"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.ontap_volume_type
-}
-output "security_style" {
-  description = "(Optional) Specifies the volume security style, Valid values are UNIX, NTFS, and MIXED. Default value is UNIX."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.security_style
-}
 output "storage_efficiency_enabled" {
   description = "(Required) Set to true to enable deduplication, compression, and compaction storage efficiency features on the volume."
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.storage_efficiency_enabled
+}
+output "storage_virtual_machine_id" {
+  description = "(Required) Specifies the storage virtual machine in which to create the volume."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.storage_virtual_machine_id
+}
+output "arn" {
+  description = "Amazon Resource Name of the volune."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.arn
+}
+output "flexcache_endpoint_type" {
+  description = "Specifies the FlexCache endpoint type of the volume, Valid values are NONE, ORIGIN, CACHE. Default value is NONE. These can be set by the ONTAP CLI or API and are use with FlexCache feature."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.flexcache_endpoint_type
+}
+output "id" {
+  description = "Identifier of the volume, e.g., fsvol-12345678"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.id
+}
+output "update" {
+  description = "(Default 30m)"
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.update
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.tags_all
 }
 output "uuid" {
   description = "The Volume's UUID (universally unique identifier)."
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.uuid
 }
-output "arn" {
-  description = "Amazon Resource Name of the volune."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.arn
-}
-output "create" {
-  description = "(Default 30m)"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.create
-}
 output "volume_type" {
   description = "The type of volume, currently the only valid value is ONTAP.TimeoutsConfiguration options:"
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.volume_type
-}
-output "arn" {
-  description = "Amazon Resource Name of the volune."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.arn
 }
 output "create" {
   description = "(Default 30m)"
@@ -305,33 +329,9 @@ output "file_system_id" {
   description = "Describes the file system for the volume, e.g. fs-12345679"
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.file_system_id
 }
-output "id" {
-  description = "Identifier of the volume, e.g., fsvol-12345678"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.id
-}
-output "flexcache_endpoint_type" {
-  description = "Specifies the FlexCache endpoint type of the volume, Valid values are NONE, ORIGIN, CACHE. Default value is NONE. These can be set by the ONTAP CLI or API and are use with FlexCache feature."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.flexcache_endpoint_type
-}
 output "ontap_volume_type" {
   description = "Specifies the type of volume, Valid values are RW, DP,  and LS. Default value is RW. These can be set by the ONTAP CLI or API. This setting is used as part of migration and replication Migrating to Amazon FSx for NetApp ONTAP"
   value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.ontap_volume_type
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.tags_all
-}
-output "update" {
-  description = "(Default 30m)"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.update
-}
-output "uuid" {
-  description = "The Volume's UUID (universally unique identifier)."
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.uuid
-}
-output "volume_type" {
-  description = "The type of volume, currently the only valid value is ONTAP.TimeoutsConfiguration options:"
-  value       = aws_fsx_ontap_volume.aws_fsx_ontap_volume.volume_type
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

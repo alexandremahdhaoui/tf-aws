@@ -1,10 +1,14 @@
 resource "aws_autoscaling_notification" "aws_autoscaling_notification" {
-  topic_arn     = var.topic_arn
   group_names   = var.group_names
   notifications = var.notifications
+  topic_arn     = var.topic_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "group_names" {
+  description = ""
   type        = string
 }
 variable "notifications" {
@@ -13,10 +17,6 @@ variable "notifications" {
 }
 variable "topic_arn" {
   description = "(Required) Topic ARN for notifications to be sent throughIn addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "group_names" {
-  description = ""
   type        = string
 }
 variable "tag_instance_id" {

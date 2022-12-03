@@ -1,14 +1,18 @@
 datasource "aws_cloudfront_function" "aws_cloudfront_function" {
-  arn                = var.arn
-  comment            = var.comment
-  etag               = var.etag
   last_modified_time = var.last_modified_time
   name               = var.name
   runtime            = var.runtime
   stage              = var.stage
+  arn                = var.arn
+  comment            = var.comment
+  etag               = var.etag
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "comment" {
+  description = "Comment."
   type        = string
 }
 variable "etag" {
@@ -35,18 +39,6 @@ variable "arn" {
   description = "ARN identifying your CloudFront Function."
   type        = string
 }
-variable "comment" {
-  description = "Comment."
-  type        = string
-}
-output "comment" {
-  description = "Comment."
-  value       = aws_cloudfront_function.aws_cloudfront_function.comment
-}
-output "etag" {
-  description = "ETag hash of the function"
-  value       = aws_cloudfront_function.aws_cloudfront_function.etag
-}
 output "last_modified_time" {
   description = "When this resource was last modified."
   value       = aws_cloudfront_function.aws_cloudfront_function.last_modified_time
@@ -66,6 +58,14 @@ output "stage" {
 output "arn" {
   description = "ARN identifying your CloudFront Function."
   value       = aws_cloudfront_function.aws_cloudfront_function.arn
+}
+output "comment" {
+  description = "Comment."
+  value       = aws_cloudfront_function.aws_cloudfront_function.comment
+}
+output "etag" {
+  description = "ETag hash of the function"
+  value       = aws_cloudfront_function.aws_cloudfront_function.etag
 }
 output "arn" {
   description = "ARN identifying your CloudFront Function."

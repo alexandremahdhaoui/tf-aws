@@ -1,14 +1,23 @@
 resource "aws_ec2_transit_gateway_peering_attachment" "aws_ec2_transit_gateway_peering_attachment" {
-  id                      = var.id
-  peer_account_id         = var.peer_account_id
-  peer_region             = var.peer_region
   peer_transit_gateway_id = var.peer_transit_gateway_id
   tags                    = var.tags
   transit_gateway_id      = var.transit_gateway_id
+  id                      = var.id
+  peer_account_id         = var.peer_account_id
+  peer_region             = var.peer_region
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "peer_transit_gateway_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway to peer with."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
 }
 variable "transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway.In addition to all arguments above, the following attributes are exported:"
@@ -26,15 +35,6 @@ variable "peer_account_id" {
 variable "peer_region" {
   description = "(Required) Region of EC2 Transit Gateway to peer with."
   type        = string
-}
-variable "peer_transit_gateway_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway to peer with."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -156,6 +156,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags" {
+  description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.tags
+}
+output "transit_gateway_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.transit_gateway_id
+}
 output "id" {
   description = "EC2 Transit Gateway Attachment identifier"
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.id
@@ -171,14 +179,6 @@ output "peer_region" {
 output "peer_transit_gateway_id" {
   description = "(Required) Identifier of EC2 Transit Gateway to peer with."
   value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.peer_transit_gateway_id
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the EC2 Transit Gateway Peering Attachment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.tags
-}
-output "transit_gateway_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_transit_gateway_peering_attachment.aws_ec2_transit_gateway_peering_attachment.transit_gateway_id
 }
 output "id" {
   description = "EC2 Transit Gateway Attachment identifier"

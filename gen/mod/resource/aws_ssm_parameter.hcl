@@ -1,45 +1,30 @@
 resource "aws_ssm_parameter" "aws_ssm_parameter" {
-  allowed_pattern = var.allowed_pattern
-  description     = var.description
   value           = var.value
-  arn             = var.arn
-  data_type       = var.data_type
   name            = var.name
-  version         = var.version
-  tags            = var.tags
-  tier            = var.tier
+  description     = var.description
   insecure_value  = var.insecure_value
-  key_id          = var.key_id
-  overwrite       = var.overwrite
+  tags            = var.tags
   tags_all        = var.tags_all
   type            = var.type
+  allowed_pattern = var.allowed_pattern
+  tier            = var.tier
+  data_type       = var.data_type
+  key_id          = var.key_id
+  overwrite       = var.overwrite
+  version         = var.version
+  arn             = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "tier" {
-  description = "(Optional) Parameter tier to assign to the parameter. If not specified, will use the default parameter tier for the region. Valid tiers are Standard, Advanced, and Intelligent-Tiering. Downgrading an Advanced tier parameter to Standard will recreate the resource. For more information on parameter tiers, see the AWS SSM Parameter tier comparison and guide."
-  type        = string
-  default     = ""
 }
 variable "insecure_value" {
   description = "(Optional, exactly one of value or insecure_value is required) Value of the parameter. strongUse caution: This value is emnever marked as sensitive in the Terraform plan output. This argument is not valid with a type of SecureString."
   type        = string
   default     = ""
 }
-variable "key_id" {
-  description = "(Optional) KMS key ID or ARN for encrypting a SecureString."
-  type        = string
-  default     = ""
-}
-variable "overwrite" {
-  description = "(Optional) Overwrite an existing parameter. If not specified, will default to false if the resource has not been created by terraform to avoid overwrite of existing resource and will default to true otherwise (terraform lifecycle rules should then be used to manage the update behavior)."
+variable "tags" {
+  description = "(Optional) Map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
   default     = ""
 }
@@ -62,8 +47,23 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "value" {
-  description = "(Optional, exactly one of value or insecure_value is required) Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide.~> strongNOTE: aws:ssm:integration data_type parameters must be of the type SecureString and the name must start with the prefix /d9d01087-4a3f-49e0-b0b4-d568d7826553/ssm/integrations/webhook/. See here for information on the usage of aws:ssm:integration parameters.In addition to all arguments above, the following attributes are exported:"
+variable "data_type" {
+  description = "(Optional) Data type of the parameter. Valid values: text, aws:ssm:integration and aws:ec2:image for AMI format, see the Native parameter support for Amazon Machine Image IDs."
+  type        = string
+  default     = ""
+}
+variable "tier" {
+  description = "(Optional) Parameter tier to assign to the parameter. If not specified, will use the default parameter tier for the region. Valid tiers are Standard, Advanced, and Intelligent-Tiering. Downgrading an Advanced tier parameter to Standard will recreate the resource. For more information on parameter tiers, see the AWS SSM Parameter tier comparison and guide."
+  type        = string
+  default     = ""
+}
+variable "overwrite" {
+  description = "(Optional) Overwrite an existing parameter. If not specified, will default to false if the resource has not been created by terraform to avoid overwrite of existing resource and will default to true otherwise (terraform lifecycle rules should then be used to manage the update behavior)."
+  type        = string
+  default     = ""
+}
+variable "version" {
+  description = "Version of the parameter."
   type        = string
   default     = ""
 }
@@ -72,8 +72,8 @@ variable "arn" {
   type        = string
   default     = ""
 }
-variable "data_type" {
-  description = "(Optional) Data type of the parameter. Valid values: text, aws:ssm:integration and aws:ec2:image for AMI format, see the Native parameter support for Amazon Machine Image IDs."
+variable "key_id" {
+  description = "(Optional) KMS key ID or ARN for encrypting a SecureString."
   type        = string
   default     = ""
 }
@@ -81,8 +81,8 @@ variable "name" {
   description = "(Required) Name of the parameter. If the name contains a path (e.g., any forward slashes (/)), it must be fully qualified with a leading forward slash (/). For additional requirements and constraints, see the AWS SSM User Guide."
   type        = string
 }
-variable "version" {
-  description = "Version of the parameter."
+variable "value" {
+  description = "(Optional, exactly one of value or insecure_value is required) Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide.~> strongNOTE: aws:ssm:integration data_type parameters must be of the type SecureString and the name must start with the prefix /d9d01087-4a3f-49e0-b0b4-d568d7826553/ssm/integrations/webhook/. See here for information on the usage of aws:ssm:integration parameters.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -206,41 +206,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "allowed_pattern" {
-  description = "(Optional) Regular expression used to validate the parameter value."
-  value       = aws_ssm_parameter.aws_ssm_parameter.allowed_pattern
+output "arn" {
+  description = "ARN of the parameter."
+  value       = aws_ssm_parameter.aws_ssm_parameter.arn
 }
-output "description" {
-  description = "(Optional) Description of the parameter."
-  value       = aws_ssm_parameter.aws_ssm_parameter.description
+output "key_id" {
+  description = "(Optional) KMS key ID or ARN for encrypting a SecureString."
+  value       = aws_ssm_parameter.aws_ssm_parameter.key_id
 }
-output "value" {
-  description = "(Optional, exactly one of value or insecure_value is required) Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide.~> strongNOTE: aws:ssm:integration data_type parameters must be of the type SecureString and the name must start with the prefix /d9d01087-4a3f-49e0-b0b4-d568d7826553/ssm/integrations/webhook/. See here for information on the usage of aws:ssm:integration parameters.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ssm_parameter.aws_ssm_parameter.value
+output "overwrite" {
+  description = "(Optional) Overwrite an existing parameter. If not specified, will default to false if the resource has not been created by terraform to avoid overwrite of existing resource and will default to true otherwise (terraform lifecycle rules should then be used to manage the update behavior)."
+  value       = aws_ssm_parameter.aws_ssm_parameter.overwrite
 }
 output "version" {
   description = "Version of the parameter."
   value       = aws_ssm_parameter.aws_ssm_parameter.version
 }
-output "arn" {
-  description = "ARN of the parameter."
-  value       = aws_ssm_parameter.aws_ssm_parameter.arn
-}
-output "data_type" {
-  description = "(Optional) Data type of the parameter. Valid values: text, aws:ssm:integration and aws:ec2:image for AMI format, see the Native parameter support for Amazon Machine Image IDs."
-  value       = aws_ssm_parameter.aws_ssm_parameter.data_type
-}
 output "name" {
   description = "(Required) Name of the parameter. If the name contains a path (e.g., any forward slashes (/)), it must be fully qualified with a leading forward slash (/). For additional requirements and constraints, see the AWS SSM User Guide."
   value       = aws_ssm_parameter.aws_ssm_parameter.name
 }
-output "tags" {
-  description = "(Optional) Map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_ssm_parameter.aws_ssm_parameter.tags
-}
-output "tier" {
-  description = "(Optional) Parameter tier to assign to the parameter. If not specified, will use the default parameter tier for the region. Valid tiers are Standard, Advanced, and Intelligent-Tiering. Downgrading an Advanced tier parameter to Standard will recreate the resource. For more information on parameter tiers, see the AWS SSM Parameter tier comparison and guide."
-  value       = aws_ssm_parameter.aws_ssm_parameter.tier
+output "value" {
+  description = "(Optional, exactly one of value or insecure_value is required) Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide.~> strongNOTE: aws:ssm:integration data_type parameters must be of the type SecureString and the name must start with the prefix /d9d01087-4a3f-49e0-b0b4-d568d7826553/ssm/integrations/webhook/. See here for information on the usage of aws:ssm:integration parameters.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ssm_parameter.aws_ssm_parameter.value
 }
 output "tags_all" {
   description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
@@ -250,17 +238,29 @@ output "type" {
   description = "(Required) Type of the parameter. Valid types are String, StringList and SecureString."
   value       = aws_ssm_parameter.aws_ssm_parameter.type
 }
+output "allowed_pattern" {
+  description = "(Optional) Regular expression used to validate the parameter value."
+  value       = aws_ssm_parameter.aws_ssm_parameter.allowed_pattern
+}
+output "description" {
+  description = "(Optional) Description of the parameter."
+  value       = aws_ssm_parameter.aws_ssm_parameter.description
+}
 output "insecure_value" {
   description = "(Optional, exactly one of value or insecure_value is required) Value of the parameter. strongUse caution: This value is emnever marked as sensitive in the Terraform plan output. This argument is not valid with a type of SecureString."
   value       = aws_ssm_parameter.aws_ssm_parameter.insecure_value
 }
-output "key_id" {
-  description = "(Optional) KMS key ID or ARN for encrypting a SecureString."
-  value       = aws_ssm_parameter.aws_ssm_parameter.key_id
+output "tags" {
+  description = "(Optional) Map of tags to assign to the object. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_ssm_parameter.aws_ssm_parameter.tags
 }
-output "overwrite" {
-  description = "(Optional) Overwrite an existing parameter. If not specified, will default to false if the resource has not been created by terraform to avoid overwrite of existing resource and will default to true otherwise (terraform lifecycle rules should then be used to manage the update behavior)."
-  value       = aws_ssm_parameter.aws_ssm_parameter.overwrite
+output "data_type" {
+  description = "(Optional) Data type of the parameter. Valid values: text, aws:ssm:integration and aws:ec2:image for AMI format, see the Native parameter support for Amazon Machine Image IDs."
+  value       = aws_ssm_parameter.aws_ssm_parameter.data_type
+}
+output "tier" {
+  description = "(Optional) Parameter tier to assign to the parameter. If not specified, will use the default parameter tier for the region. Valid tiers are Standard, Advanced, and Intelligent-Tiering. Downgrading an Advanced tier parameter to Standard will recreate the resource. For more information on parameter tiers, see the AWS SSM Parameter tier comparison and guide."
+  value       = aws_ssm_parameter.aws_ssm_parameter.tier
 }
 output "arn" {
   description = "ARN of the parameter."

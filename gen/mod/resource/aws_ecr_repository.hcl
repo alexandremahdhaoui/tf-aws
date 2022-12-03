@@ -1,47 +1,21 @@
 resource "aws_ecr_repository" "aws_ecr_repository" {
-  repository_url               = var.repository_url
+  arn                          = var.arn
+  encryption_configuration     = var.encryption_configuration
+  encryption_type              = var.encryption_type
+  image_scanning_configuration = var.image_scanning_configuration
+  image_tag_mutability         = var.image_tag_mutability
+  tags                         = var.tags
   tags_all                     = var.tags_all
   force_delete                 = var.force_delete
   kms_key                      = var.kms_key
   name                         = var.name
   registry_id                  = var.registry_id
-  image_tag_mutability         = var.image_tag_mutability
+  repository_url               = var.repository_url
   scan_on_push                 = var.scan_on_push
-  tags                         = var.tags
-  arn                          = var.arn
-  encryption_configuration     = var.encryption_configuration
-  encryption_type              = var.encryption_type
-  image_scanning_configuration = var.image_scanning_configuration
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "name" {
-  description = "(Required) Name of the repository."
-  type        = string
-}
-variable "registry_id" {
-  description = "The registry ID where the repository was created."
-  type        = string
-}
-variable "repository_url" {
-  description = "The URL of the repository (in the form aws_account_id.dkr.ecr.region.amazonaws.com/repositoryName)."
-  type        = string
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "force_delete" {
-  description = "(Optional) If truefalse."
-  type        = string
-  default     = ""
-}
-variable "kms_key" {
-  description = "(Optional) The ARN of the KMS key to use when encryption_type is KMS. If not specified, uses the default AWS managed key for ECR.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "encryption_type" {
   description = "(Optional) The encryption type to use for the repository. Valid values are AES256 or KMS. Defaults to AES256."
@@ -58,6 +32,27 @@ variable "image_tag_mutability" {
   type        = string
   default     = ""
 }
+variable "arn" {
+  description = "Full ARN of the repository."
+  type        = string
+}
+variable "encryption_configuration" {
+  description = "(Optional) Encryption configuration for the repository. See below for schema."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name of the repository."
+  type        = string
+}
+variable "registry_id" {
+  description = "The registry ID where the repository was created."
+  type        = string
+}
+variable "repository_url" {
+  description = "The URL of the repository (in the form aws_account_id.dkr.ecr.region.amazonaws.com/repositoryName)."
+  type        = string
+}
 variable "scan_on_push" {
   description = "(Required) Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
   type        = string
@@ -67,12 +62,17 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "Full ARN of the repository."
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
-variable "encryption_configuration" {
-  description = "(Optional) Encryption configuration for the repository. See below for schema."
+variable "force_delete" {
+  description = "(Optional) If truefalse."
+  type        = string
+  default     = ""
+}
+variable "kms_key" {
+  description = "(Optional) The ARN of the KMS key to use when encryption_type is KMS. If not specified, uses the default AWS managed key for ECR.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -196,6 +196,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "Full ARN of the repository."
+  value       = aws_ecr_repository.aws_ecr_repository.arn
+}
 output "encryption_configuration" {
   description = "(Optional) Encryption configuration for the repository. See below for schema."
   value       = aws_ecr_repository.aws_ecr_repository.encryption_configuration
@@ -212,17 +216,9 @@ output "image_tag_mutability" {
   description = "(Optional) The tag mutability setting for the repository. Must be one of: MUTABLE or IMMUTABLE. Defaults to MUTABLE."
   value       = aws_ecr_repository.aws_ecr_repository.image_tag_mutability
 }
-output "scan_on_push" {
-  description = "(Required) Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
-  value       = aws_ecr_repository.aws_ecr_repository.scan_on_push
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.encryption_configuration"
-  value       = aws_ecr_repository.aws_ecr_repository.tags
-}
-output "arn" {
-  description = "Full ARN of the repository."
-  value       = aws_ecr_repository.aws_ecr_repository.arn
+output "force_delete" {
+  description = "(Optional) If truefalse."
+  value       = aws_ecr_repository.aws_ecr_repository.force_delete
 }
 output "kms_key" {
   description = "(Optional) The ARN of the KMS key to use when encryption_type is KMS. If not specified, uses the default AWS managed key for ECR.In addition to all arguments above, the following attributes are exported:"
@@ -240,13 +236,21 @@ output "repository_url" {
   description = "The URL of the repository (in the form aws_account_id.dkr.ecr.region.amazonaws.com/repositoryName)."
   value       = aws_ecr_repository.aws_ecr_repository.repository_url
 }
+output "scan_on_push" {
+  description = "(Required) Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
+  value       = aws_ecr_repository.aws_ecr_repository.scan_on_push
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.encryption_configuration"
+  value       = aws_ecr_repository.aws_ecr_repository.tags
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_ecr_repository.aws_ecr_repository.tags_all
 }
-output "force_delete" {
-  description = "(Optional) If truefalse."
-  value       = aws_ecr_repository.aws_ecr_repository.force_delete
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_ecr_repository.aws_ecr_repository.tags_all
 }
 output "arn" {
   description = "Full ARN of the repository."
@@ -263,10 +267,6 @@ output "registry_id" {
 output "repository_url" {
   description = "The URL of the repository (in the form aws_account_id.dkr.ecr.region.amazonaws.com/repositoryName)."
   value       = aws_ecr_repository.aws_ecr_repository.repository_url
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_ecr_repository.aws_ecr_repository.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

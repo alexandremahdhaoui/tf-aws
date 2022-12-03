@@ -4,25 +4,28 @@ import (
 	"bytes"
 	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/apis"
 	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/token"
+	"strings"
 )
 
-func ToTerraformDefinition(tkns []token.Token, kind apis.Kind, moduleName string) apis.TerraformModuleDefinition {
+// TODO: please add logging to all function of this file
+
+func ToTerraformDefinition(tokens []token.Token, kind apis.Kind, moduleName string) apis.TerraformModuleDefinition {
 	return apis.TerraformModuleDefinition{
 		ApiVersion: apis.ApiVersion(),
 		Kind:       kind,
-		Metadata: apis.Metadata{
-			Name: moduleName,
+		Metadata: &apis.Metadata{
+			Name: cleanMetadataName(moduleName),
 		},
-		Spec: apis.Spec{
-			Args:  args(tkns),
-			Attrs: attrs(tkns),
-			Terraform: apis.TerraformConfig{
+		Spec: &apis.Spec{
+			Args:  args(tokens),
+			Attrs: attrs(tokens),
+			Terraform: &apis.TerraformConfig{
 				Version: apis.CleanVersion(apis.TerraformVersionTag),
-				Provider: apis.TerraformProvider{
+				Provider: &apis.TerraformProvider{
 					Name:    "aws",
 					Source:  "hashicorp/aws",
 					Version: apis.CleanVersion(apis.ProviderVersionTag),
-					DefaultTags: apis.DefaultTags{
+					DefaultTags: &apis.DefaultTags{
 						Enabled: true,
 					},
 				},
@@ -31,20 +34,20 @@ func ToTerraformDefinition(tkns []token.Token, kind apis.Kind, moduleName string
 	}
 }
 
-func args(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
-	m := requiredArgs(tkns)
-	for k, v := range optionalArgs(tkns) {
+func args(tokens []token.Token) map[string]apis.ArgumentOrAttribute {
+	m := requiredArgs(tokens)
+	for k, v := range optionalArgs(tokens) {
 		m[k] = v
 	}
 	return m
 }
 
-func requiredArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
+func requiredArgs(tokens []token.Token) map[string]apis.ArgumentOrAttribute {
 	m := make(map[string]apis.ArgumentOrAttribute)
 	var stack []token.Kind
 	var queue []token.Token
 	var tkn token.Token
-	for i, t := range tkns {
+	for i, t := range tokens {
 		switch kind := t.Kind(); kind {
 		case ArgumentReference:
 			stack = make([]token.Kind, 0)
@@ -53,7 +56,7 @@ func requiredArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 			stack = append(stack, kind)
 		}
 		if evalKind(stack, ArgumentReference) && evalKind(stack, RequiredArgs) && evalKind(stack, Li) {
-			queue = tkns[i+1:]
+			queue = tokens[i+1:]
 			break
 		}
 	}
@@ -126,12 +129,12 @@ func evalKind(stack []token.Kind, kind token.Kind) bool {
 	return false
 }
 
-func optionalArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
+func optionalArgs(tokens []token.Token) map[string]apis.ArgumentOrAttribute {
 	m := make(map[string]apis.ArgumentOrAttribute)
 	var stack []token.Kind
 	var queue []token.Token
 	var tkn token.Token
-	for i, t := range tkns {
+	for i, t := range tokens {
 		switch kind := t.Kind(); kind {
 		case ArgumentReference:
 			stack = make([]token.Kind, 0)
@@ -140,7 +143,7 @@ func optionalArgs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 			stack = append(stack, kind)
 		}
 		if evalKind(stack, ArgumentReference) && evalKind(stack, OptionalArgs) && evalKind(stack, Li) {
-			queue = tkns[i+1:]
+			queue = tokens[i+1:]
 			break
 		}
 	}
@@ -247,3 +250,8 @@ func attrs(tkns []token.Token) map[string]apis.ArgumentOrAttribute {
 }
 
 // ====================================================== Helpers ======================================================
+
+func cleanMetadataName(s string) string {
+	s = strings.ToLower(s)
+	return strings.ReplaceAll(s, " ", "_")
+}

@@ -24,7 +24,10 @@ spec:
             optional: true
             type: string
         min_size:
-            description: ""
+            description: |-
+                (Optional) Minimum size for the Auto Scaling group. Default 0.
+                Set to -1 if you don't want to change the minimum size at the scheduled time.
+            optional: true
             type: string
         recurrence:
             description: (Optional) Time when recurring future actions will start. Start time is specified by the user following the Unix cron syntax format.

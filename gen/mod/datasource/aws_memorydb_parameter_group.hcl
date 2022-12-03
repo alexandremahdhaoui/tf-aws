@@ -1,14 +1,18 @@
 datasource "aws_memorydb_parameter_group" "aws_memorydb_parameter_group" {
+  id          = var.id
+  name        = var.name
+  parameter   = var.parameter
   value       = var.value
   arn         = var.arn
   description = var.description
   family      = var.family
-  id          = var.id
-  name        = var.name
-  parameter   = var.parameter
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "Description of the parameter group."
   type        = string
 }
 variable "family" {
@@ -24,7 +28,7 @@ variable "name" {
   type        = string
 }
 variable "parameter" {
-  description = "Set of user-defined MemoryDB parameters applied by the parameter group.\n"
+  description = ""
   type        = string
 }
 variable "value" {
@@ -35,42 +39,6 @@ variable "arn" {
   description = "ARN of the parameter group."
   type        = string
 }
-variable "description" {
-  description = "Description of the parameter group."
-  type        = string
-}
-output "family" {
-  description = "Engine version that the parameter group can be used with."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.family
-}
-output "id" {
-  description = "Name of the parameter group."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.id
-}
-output "name" {
-  description = "Name of the parameter."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.name
-}
-output "parameter" {
-  description = "Set of user-defined MemoryDB parameters applied by the parameter group.\n"
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.parameter
-}
-output "value" {
-  description = "Value of the parameter."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.value
-}
-output "arn" {
-  description = "ARN of the parameter group."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.arn
-}
-output "description" {
-  description = "Description of the parameter group."
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.description
-}
-output "parameter" {
-  description = "Set of user-defined MemoryDB parameters applied by the parameter group.\n"
-  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.parameter
-}
 output "value" {
   description = "Value of the parameter."
   value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.value
@@ -94,6 +62,38 @@ output "id" {
 output "name" {
   description = "Name of the parameter."
   value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.name
+}
+output "parameter" {
+  description = ""
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.parameter
+}
+output "id" {
+  description = "Name of the parameter group."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.id
+}
+output "name" {
+  description = "Name of the parameter."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.name
+}
+output "parameter" {
+  description = ""
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.parameter
+}
+output "value" {
+  description = "Value of the parameter."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.value
+}
+output "arn" {
+  description = "ARN of the parameter group."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.arn
+}
+output "description" {
+  description = "Description of the parameter group."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.description
+}
+output "family" {
+  description = "Engine version that the parameter group can be used with."
+  value       = aws_memorydb_parameter_group.aws_memorydb_parameter_group.family
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

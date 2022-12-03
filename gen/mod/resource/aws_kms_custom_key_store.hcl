@@ -1,26 +1,14 @@
 resource "aws_kms_custom_key_store" "aws_kms_custom_key_store" {
+  custom_key_store_name    = var.custom_key_store_name
   id                       = var.id
   key_store_password       = var.key_store_password
   trust_anchor_certificate = var.trust_anchor_certificate
   update                   = var.update
   cloud_hsm_cluster_id     = var.cloud_hsm_cluster_id
   create                   = var.create
-  custom_key_store_name    = var.custom_key_store_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "trust_anchor_certificate" {
-  description = "(Required) Customer certificate used for signing on CloudHSM.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "update" {
-  description = "(Default 15m)"
-  type        = string
-}
-variable "cloud_hsm_cluster_id" {
-  description = "(Required) Cluster ID of CloudHSM."
   type        = string
 }
 variable "create" {
@@ -37,6 +25,18 @@ variable "id" {
 }
 variable "key_store_password" {
   description = "(Required) Password for kmsuser on CloudHSM."
+  type        = string
+}
+variable "trust_anchor_certificate" {
+  description = "(Required) Customer certificate used for signing on CloudHSM.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "update" {
+  description = "(Default 15m)"
+  type        = string
+}
+variable "cloud_hsm_cluster_id" {
+  description = "(Required) Cluster ID of CloudHSM."
   type        = string
 }
 variable "tag_instance_id" {
@@ -159,10 +159,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "update" {
-  description = "(Default 15m)"
-  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.update
-}
 output "cloud_hsm_cluster_id" {
   description = "(Required) Cluster ID of CloudHSM."
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.cloud_hsm_cluster_id
@@ -187,9 +183,9 @@ output "trust_anchor_certificate" {
   description = "(Required) Customer certificate used for signing on CloudHSM.In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.trust_anchor_certificate
 }
-output "delete" {
+output "update" {
   description = "(Default 15m)"
-  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.delete
+  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.update
 }
 output "id" {
   description = "The Custom Key Store IDTimeoutsConfiguration options:"
@@ -202,6 +198,10 @@ output "update" {
 output "create" {
   description = "(Default 15m)"
   value       = aws_kms_custom_key_store.aws_kms_custom_key_store.create
+}
+output "delete" {
+  description = "(Default 15m)"
+  value       = aws_kms_custom_key_store.aws_kms_custom_key_store.delete
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

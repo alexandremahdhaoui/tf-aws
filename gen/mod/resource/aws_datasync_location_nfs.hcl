@@ -1,24 +1,16 @@
 resource "aws_datasync_location_nfs" "aws_datasync_location_nfs" {
+  agent_arns      = var.agent_arns
+  arn             = var.arn
   on_prem_config  = var.on_prem_config
-  subdirectory    = var.subdirectory
+  server_hostname = var.server_hostname
   tags            = var.tags
   version         = var.version
-  arn             = var.arn
   id              = var.id
   mount_options   = var.mount_options
-  agent_arns      = var.agent_arns
-  server_hostname = var.server_hostname
+  subdirectory    = var.subdirectory
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
   type        = string
 }
 variable "mount_options" {
@@ -26,12 +18,24 @@ variable "mount_options" {
   type        = string
   default     = ""
 }
+variable "subdirectory" {
+  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
+  type        = string
+}
+variable "id" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
 variable "on_prem_config" {
   description = "(Required) Configuration block containing information for connecting to the NFS File System."
   type        = string
 }
-variable "subdirectory" {
-  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
+variable "server_hostname" {
+  description = "(Required) Specifies the IP address or DNS name of the NFS server. The DataSync Agent(s) use this to mount the NFS server."
   type        = string
 }
 variable "tags" {
@@ -46,10 +50,6 @@ variable "version" {
 }
 variable "agent_arns" {
   description = "(Required) List of Amazon Resource Names (ARNs) of the DataSync Agents used to connect to the NFS server.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "server_hostname" {
-  description = "(Required) Specifies the IP address or DNS name of the NFS server. The DataSync Agent(s) use this to mount the NFS server."
   type        = string
 }
 variable "tag_instance_id" {
@@ -172,29 +172,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "server_hostname" {
-  description = "(Required) Specifies the IP address or DNS name of the NFS server. The DataSync Agent(s) use this to mount the NFS server."
-  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.server_hostname
+output "mount_options" {
+  description = "(Optional) Configuration block containing mount options used by DataSync to access the NFS Server."
+  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.mount_options
 }
-output "agent_arns" {
-  description = "(Required) List of Amazon Resource Names (ARNs) of the DataSync Agents used to connect to the NFS server.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.agent_arns
+output "subdirectory" {
+  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
+  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.subdirectory
 }
 output "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_nfs.aws_datasync_location_nfs.id
 }
-output "mount_options" {
-  description = "(Optional) Configuration block containing mount options used by DataSync to access the NFS Server."
-  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.mount_options
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.arn
 }
 output "on_prem_config" {
   description = "(Required) Configuration block containing information for connecting to the NFS File System."
   value       = aws_datasync_location_nfs.aws_datasync_location_nfs.on_prem_config
 }
-output "subdirectory" {
-  description = "(Required) Subdirectory to perform actions as source or destination. Should be exported by the NFS server."
-  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.subdirectory
+output "server_hostname" {
+  description = "(Required) Specifies the IP address or DNS name of the NFS server. The DataSync Agent(s) use this to mount the NFS server."
+  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.server_hostname
 }
 output "tags" {
   description = "(Optional) Key-value pairs of resource tags to assign to the DataSync Location. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.mount_options Argument Referencemount_options configuration block:"
@@ -204,9 +204,9 @@ output "version" {
   description = "(Optional) The specific NFS version that you want DataSync to use for mounting your NFS share. Valid values: AUTOMATIC, NFS3, NFS4_0 and NFS4_1. Default: AUTOMATICon_prem_config Argument Referenceon_prem_config configuration block:"
   value       = aws_datasync_location_nfs.aws_datasync_location_nfs.version
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.arn
+output "agent_arns" {
+  description = "(Required) List of Amazon Resource Names (ARNs) of the DataSync Agents used to connect to the NFS server.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_datasync_location_nfs.aws_datasync_location_nfs.agent_arns
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."

@@ -45,10 +45,7 @@ spec:
             optional: true
             type: string
         tags:
-            description: |-
-                (Optional) Tags to apply to the hierarchy group. If configured with a provider
-                default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:
-            optional: true
+            description: 'default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:'
             type: string
         tags_all:
             description: 'A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.A hierarchy_path block supports the following attributes:'

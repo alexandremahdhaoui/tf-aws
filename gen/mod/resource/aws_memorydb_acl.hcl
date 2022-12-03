@@ -1,12 +1,12 @@
 resource "aws_memorydb_acl" "aws_memorydb_acl" {
+  id                     = var.id
+  minimum_engine_version = var.minimum_engine_version
+  name                   = var.name
   name_prefix            = var.name_prefix
   tags                   = var.tags
   tags_all               = var.tags_all
   user_names             = var.user_names
   arn                    = var.arn
-  id                     = var.id
-  minimum_engine_version = var.minimum_engine_version
-  name                   = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -172,22 +172,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_memorydb_acl.aws_memorydb_acl.tags
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_memorydb_acl.aws_memorydb_acl.tags_all
-}
-output "user_names" {
-  description = "(Optional) Set of MemoryDB user names to be included in this ACL."
-  value       = aws_memorydb_acl.aws_memorydb_acl.user_names
-}
-output "arn" {
-  description = "The ARN of the ACL."
-  value       = aws_memorydb_acl.aws_memorydb_acl.arn
-}
 output "id" {
   description = "Same as name."
   value       = aws_memorydb_acl.aws_memorydb_acl.id
@@ -203,6 +187,22 @@ output "name" {
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_memorydb_acl.aws_memorydb_acl.name_prefix
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_memorydb_acl.aws_memorydb_acl.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_memorydb_acl.aws_memorydb_acl.tags_all
+}
+output "user_names" {
+  description = "(Optional) Set of MemoryDB user names to be included in this ACL."
+  value       = aws_memorydb_acl.aws_memorydb_acl.user_names
+}
+output "arn" {
+  description = "The ARN of the ACL."
+  value       = aws_memorydb_acl.aws_memorydb_acl.arn
 }
 output "arn" {
   description = "The ARN of the ACL."

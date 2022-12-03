@@ -1,28 +1,28 @@
 resource "aws_backup_framework" "aws_backup_framework" {
-  tags                      = var.tags
-  control                   = var.control
-  deployment_status         = var.deployment_status
-  input_parameter           = var.input_parameter
   status                    = var.status
-  scope                     = var.scope
-  compliance_resource_ids   = var.compliance_resource_ids
-  compliance_resource_types = var.compliance_resource_types
-  create                    = var.create
-  description               = var.description
-  id                        = var.id
-  name                      = var.name
   update                    = var.update
+  deployment_status         = var.deployment_status
+  description               = var.description
+  name                      = var.name
+  compliance_resource_types = var.compliance_resource_types
+  id                        = var.id
+  tags_all                  = var.tags_all
+  tags                      = var.tags
   value                     = var.value
   arn                       = var.arn
+  input_parameter           = var.input_parameter
+  scope                     = var.scope
   creation_time             = var.creation_time
-  tags_all                  = var.tags_all
+  compliance_resource_ids   = var.compliance_resource_ids
+  control                   = var.control
+  create                    = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) The tag key-value pair applied to those AWS resources that you want to trigger an evaluation for a rule. A maximum of one key-value pair can be provided.In addition to all arguments above, the following attributes are exported:"
+variable "compliance_resource_ids" {
+  description = "(Optional) The ID of the only AWS resource that you want your control scope to contain. Minimum number of 1 item. Maximum number of 100 items."
   type        = string
   default     = ""
 }
@@ -30,36 +30,16 @@ variable "control" {
   description = "(Required) One or more control blocks that make up the framework. Each control in the list has a name, input parameters, and scope. Detailed below."
   type        = string
 }
-variable "deployment_status" {
-  description = "The deployment status of a framework. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED | FAILED."
-  type        = string
-}
-variable "input_parameter" {
-  description = "(Optional) One or more input parameter blocks. An example of a control with two parameters is: \"backup plan frequency is at least daily and the retention period is at least 1 year\". The first parameter is daily. The second parameter is 1 year. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "status" {
-  description = "A framework consists of one or more controls. Each control governs a resource, such as backup plans, backup selections, backup vaults, or recovery points. You can also turn AWS Config recording on or off for each resource. For more information refer to the AWS documentation for Framework Status"
-  type        = string
-}
-variable "scope" {
-  description = "(Optional) The scope of a control. The control scope defines what the control will evaluate. Three examples of control scopes are: a specific backup plan, all backup plans with a specific tag, or all backup plans. Detailed below.Input Parameter ArgumentsFor stronginput_parameter the following attributes are supported:"
-  type        = string
-  default     = ""
-}
-variable "compliance_resource_ids" {
-  description = "(Optional) The ID of the only AWS resource that you want your control scope to contain. Minimum number of 1 item. Maximum number of 100 items."
-  type        = string
-  default     = ""
-}
-variable "compliance_resource_types" {
-  description = "(Optional) Describes whether the control scope includes one or more types of resources, such as EFS or RDS."
-  type        = string
-  default     = ""
-}
 variable "create" {
   description = "(Default 2m)"
+  type        = string
+}
+variable "creation_time" {
+  description = "The date and time that a framework is created, in Unix format and Coordinated Universal Time (UTC)."
+  type        = string
+}
+variable "deployment_status" {
+  description = "The deployment status of a framework. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED | FAILED."
   type        = string
 }
 variable "description" {
@@ -67,35 +47,55 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "The id of the backup framework."
-  type        = string
-}
 variable "name" {
   description = "(Optional) The name of a parameter, for example, BackupPlanFrequency."
   type        = string
   default     = ""
 }
+variable "status" {
+  description = "A framework consists of one or more controls. Each control governs a resource, such as backup plans, backup selections, backup vaults, or recovery points. You can also turn AWS Config recording on or off for each resource. For more information refer to the AWS documentation for Framework Status"
+  type        = string
+}
 variable "update" {
   description = "(Default 2m)"
   type        = string
 }
-variable "value" {
-  description = "(Optional) The value of parameter, for example, hourly.Scope ArgumentsFor strongscope the following attributes are supported:"
+variable "compliance_resource_types" {
+  description = "(Optional) Describes whether the control scope includes one or more types of resources, such as EFS or RDS."
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "The ARN of the backup framework."
-  type        = string
-}
-variable "creation_time" {
-  description = "The date and time that a framework is created, in Unix format and Coordinated Universal Time (UTC)."
+variable "id" {
+  description = "The id of the backup framework."
   type        = string
 }
 variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
+}
+variable "arn" {
+  description = "The ARN of the backup framework."
+  type        = string
+}
+variable "input_parameter" {
+  description = "(Optional) One or more input parameter blocks. An example of a control with two parameters is: \"backup plan frequency is at least daily and the retention period is at least 1 year\". The first parameter is daily. The second parameter is 1 year. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "scope" {
+  description = "(Optional) The scope of a control. The control scope defines what the control will evaluate. Three examples of control scopes are: a specific backup plan, all backup plans with a specific tag, or all backup plans. Detailed below.Input Parameter ArgumentsFor stronginput_parameter the following attributes are supported:"
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) The tag key-value pair applied to those AWS resources that you want to trigger an evaluation for a rule. A maximum of one key-value pair can be provided.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "value" {
+  description = "(Optional) The value of parameter, for example, hourly.Scope ArgumentsFor strongscope the following attributes are supported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -217,17 +217,41 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The id of the backup framework."
-  value       = aws_backup_framework.aws_backup_framework.id
+output "status" {
+  description = "A framework consists of one or more controls. Each control governs a resource, such as backup plans, backup selections, backup vaults, or recovery points. You can also turn AWS Config recording on or off for each resource. For more information refer to the AWS documentation for Framework Status"
+  value       = aws_backup_framework.aws_backup_framework.status
+}
+output "update" {
+  description = "(Default 2m)"
+  value       = aws_backup_framework.aws_backup_framework.update
+}
+output "deployment_status" {
+  description = "The deployment status of a framework. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED | FAILED."
+  value       = aws_backup_framework.aws_backup_framework.deployment_status
+}
+output "description" {
+  description = "(Optional) The description of the framework with a maximum of 1,024 characters"
+  value       = aws_backup_framework.aws_backup_framework.description
 }
 output "name" {
   description = "(Optional) The name of a parameter, for example, BackupPlanFrequency."
   value       = aws_backup_framework.aws_backup_framework.name
 }
-output "update" {
-  description = "(Default 2m)"
-  value       = aws_backup_framework.aws_backup_framework.update
+output "compliance_resource_types" {
+  description = "(Optional) Describes whether the control scope includes one or more types of resources, such as EFS or RDS."
+  value       = aws_backup_framework.aws_backup_framework.compliance_resource_types
+}
+output "id" {
+  description = "The id of the backup framework."
+  value       = aws_backup_framework.aws_backup_framework.id
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_backup_framework.aws_backup_framework.tags_all
+}
+output "tags" {
+  description = "(Optional) The tag key-value pair applied to those AWS resources that you want to trigger an evaluation for a rule. A maximum of one key-value pair can be provided.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_backup_framework.aws_backup_framework.tags
 }
 output "value" {
   description = "(Optional) The value of parameter, for example, hourly.Scope ArgumentsFor strongscope the following attributes are supported:"
@@ -237,49 +261,9 @@ output "arn" {
   description = "The ARN of the backup framework."
   value       = aws_backup_framework.aws_backup_framework.arn
 }
-output "creation_time" {
-  description = "The date and time that a framework is created, in Unix format and Coordinated Universal Time (UTC)."
-  value       = aws_backup_framework.aws_backup_framework.creation_time
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_backup_framework.aws_backup_framework.tags_all
-}
-output "control" {
-  description = "(Required) One or more control blocks that make up the framework. Each control in the list has a name, input parameters, and scope. Detailed below."
-  value       = aws_backup_framework.aws_backup_framework.control
-}
-output "deployment_status" {
-  description = "The deployment status of a framework. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED | FAILED."
-  value       = aws_backup_framework.aws_backup_framework.deployment_status
-}
 output "input_parameter" {
   description = "(Optional) One or more input parameter blocks. An example of a control with two parameters is: \"backup plan frequency is at least daily and the retention period is at least 1 year\". The first parameter is daily. The second parameter is 1 year. Detailed below."
   value       = aws_backup_framework.aws_backup_framework.input_parameter
-}
-output "status" {
-  description = "A framework consists of one or more controls. Each control governs a resource, such as backup plans, backup selections, backup vaults, or recovery points. You can also turn AWS Config recording on or off for each resource. For more information refer to the AWS documentation for Framework Status"
-  value       = aws_backup_framework.aws_backup_framework.status
-}
-output "tags" {
-  description = "(Optional) The tag key-value pair applied to those AWS resources that you want to trigger an evaluation for a rule. A maximum of one key-value pair can be provided.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_backup_framework.aws_backup_framework.tags
-}
-output "compliance_resource_ids" {
-  description = "(Optional) The ID of the only AWS resource that you want your control scope to contain. Minimum number of 1 item. Maximum number of 100 items."
-  value       = aws_backup_framework.aws_backup_framework.compliance_resource_ids
-}
-output "compliance_resource_types" {
-  description = "(Optional) Describes whether the control scope includes one or more types of resources, such as EFS or RDS."
-  value       = aws_backup_framework.aws_backup_framework.compliance_resource_types
-}
-output "create" {
-  description = "(Default 2m)"
-  value       = aws_backup_framework.aws_backup_framework.create
-}
-output "description" {
-  description = "(Optional) The description of the framework with a maximum of 1,024 characters"
-  value       = aws_backup_framework.aws_backup_framework.description
 }
 output "scope" {
   description = "(Optional) The scope of a control. The control scope defines what the control will evaluate. Three examples of control scopes are: a specific backup plan, all backup plans with a specific tag, or all backup plans. Detailed below.Input Parameter ArgumentsFor stronginput_parameter the following attributes are supported:"
@@ -289,37 +273,53 @@ output "creation_time" {
   description = "The date and time that a framework is created, in Unix format and Coordinated Universal Time (UTC)."
   value       = aws_backup_framework.aws_backup_framework.creation_time
 }
-output "delete" {
-  description = "(Default 2m)"
-  value       = aws_backup_framework.aws_backup_framework.delete
+output "compliance_resource_ids" {
+  description = "(Optional) The ID of the only AWS resource that you want your control scope to contain. Minimum number of 1 item. Maximum number of 100 items."
+  value       = aws_backup_framework.aws_backup_framework.compliance_resource_ids
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_backup_framework.aws_backup_framework.tags_all
+output "control" {
+  description = "(Required) One or more control blocks that make up the framework. Each control in the list has a name, input parameters, and scope. Detailed below."
+  value       = aws_backup_framework.aws_backup_framework.control
+}
+output "create" {
+  description = "(Default 2m)"
+  value       = aws_backup_framework.aws_backup_framework.create
 }
 output "arn" {
   description = "The ARN of the backup framework."
   value       = aws_backup_framework.aws_backup_framework.arn
 }
-output "deployment_status" {
-  description = "The deployment status of a framework. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED | FAILED."
-  value       = aws_backup_framework.aws_backup_framework.deployment_status
+output "create" {
+  description = "(Default 2m)"
+  value       = aws_backup_framework.aws_backup_framework.create
+}
+output "creation_time" {
+  description = "The date and time that a framework is created, in Unix format and Coordinated Universal Time (UTC)."
+  value       = aws_backup_framework.aws_backup_framework.creation_time
 }
 output "id" {
   description = "The id of the backup framework."
   value       = aws_backup_framework.aws_backup_framework.id
 }
+output "delete" {
+  description = "(Default 2m)"
+  value       = aws_backup_framework.aws_backup_framework.delete
+}
+output "deployment_status" {
+  description = "The deployment status of a framework. The statuses are: CREATE_IN_PROGRESS | UPDATE_IN_PROGRESS | DELETE_IN_PROGRESS | COMPLETED | FAILED."
+  value       = aws_backup_framework.aws_backup_framework.deployment_status
+}
 output "status" {
   description = "A framework consists of one or more controls. Each control governs a resource, such as backup plans, backup selections, backup vaults, or recovery points. You can also turn AWS Config recording on or off for each resource. For more information refer to the AWS documentation for Framework Status"
   value       = aws_backup_framework.aws_backup_framework.status
 }
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_backup_framework.aws_backup_framework.tags_all
+}
 output "update" {
   description = "(Default 2m)"
   value       = aws_backup_framework.aws_backup_framework.update
-}
-output "create" {
-  description = "(Default 2m)"
-  value       = aws_backup_framework.aws_backup_framework.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

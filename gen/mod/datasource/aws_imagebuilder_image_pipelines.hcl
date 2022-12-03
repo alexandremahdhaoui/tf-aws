@@ -24,10 +24,6 @@ variable "filter" {
   description = " configuration block:"
   type        = string
 }
-output "arns" {
-  description = "Set of ARNs of the matched Image Builder Image Pipelines."
-  value       = aws_imagebuilder_image_pipelines.aws_imagebuilder_image_pipelines.arns
-}
 output "filter" {
   description = " configuration block:"
   value       = aws_imagebuilder_image_pipelines.aws_imagebuilder_image_pipelines.filter
@@ -39,6 +35,10 @@ output "name" {
 output "values" {
   description = "(Required) Set of values that are accepted for the given filter field. Results will be selected if any given value matches."
   value       = aws_imagebuilder_image_pipelines.aws_imagebuilder_image_pipelines.values
+}
+output "arns" {
+  description = "Set of ARNs of the matched Image Builder Image Pipelines."
+  value       = aws_imagebuilder_image_pipelines.aws_imagebuilder_image_pipelines.arns
 }
 output "arns" {
   description = "Set of ARNs of the matched Image Builder Image Pipelines."

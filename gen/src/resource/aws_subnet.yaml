@@ -8,7 +8,11 @@ spec:
             description: The ARN of the subnet.
             type: string
         assign_ipv6_address_on_creation:
-            description: "false"
+            description: |-
+                (Optional) Specify true to indicate
+                that network interfaces created in the specified subnet should be
+                assigned an IPv6 address. Default is false
+            optional: true
             type: string
         availability_zone:
             description: (Optional) AZ for the subnet.
@@ -59,7 +63,11 @@ spec:
             optional: true
             type: string
         map_public_ip_on_launch:
-            description: false.
+            description: |4-
+                 (Optional) Specify true to indicate
+                that instances launched into the subnet should be assigned
+                a public IP address. Default is false.
+            optional: true
             type: string
         outpost_arn:
             description: (Optional) The Amazon Resource Name (ARN) of the Outpost.

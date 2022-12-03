@@ -1,17 +1,12 @@
 resource "aws_media_store_container" "aws_media_store_container" {
+  arn      = var.arn
   endpoint = var.endpoint
   name     = var.name
   tags     = var.tags
-  arn      = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The ARN of the container."
@@ -24,6 +19,11 @@ variable "endpoint" {
 variable "name" {
   description = "(Required) The name of the container. Must contain alphanumeric characters or underscores."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

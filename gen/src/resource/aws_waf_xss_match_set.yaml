@@ -21,9 +21,7 @@ spec:
             description: target_stringCMD_LINE, HTML_ENTITY_DECODE or NONEdocsfield_to_matchArguments
             type: string
         type:
-            description: |-
-                (Required) The part of the web request that you want AWS WAF to search for a specified string.
-                e.g., HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:
+            description: 'HEADER, METHOD or BODYdocsRemarksIn addition to all arguments above, the following attributes are exported:'
             type: string
         xss_match_tuples:
             description: (Optional) The parts of web requests that you want to inspect for cross-site scripting attacks.Nested Blocksxss_match_tuples

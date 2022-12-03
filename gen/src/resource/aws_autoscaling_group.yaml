@@ -105,10 +105,7 @@ spec:
             optional: true
             type: string
         instance_refresh:
-            description: |-
-                (Optional) If this block is configured, start an
-                Instance Refreshbelow.
-            optional: true
+            description: Instance Refreshbelow.
             type: string
         instance_requirements:
             description: (Optional) Override the instance type in the Launch Template with instance types that satisfy the requirements.
@@ -192,12 +189,7 @@ spec:
             description: (Required) Minimum.
             type: string
         min_elb_capacity:
-            description: |-
-                (Optional) Setting this causes Terraform to wait for
-                this number of instances from this Auto Scaling Group to show up healthy in the
-                ELB only on creation. Updates will not wait on ELB instance number changes.
-                (See also Waiting for Capacity below.)
-            optional: true
+            description: Waiting for Capacity below.)
             type: string
         min_healthy_percentage:
             description: (Optional) Amount of capacity in the Auto Scaling group that must remain healthy during an instance refresh to allow the operation to continue, as a percentage of the desired capacity of the Auto Scaling group. Defaults to 90.
@@ -252,9 +244,7 @@ spec:
             optional: true
             type: string
         preferences:
-            description: |
-                (Optional) Override default parameters for Instance Refresh.
-            optional: true
+            description: ""
             type: string
         propagate_at_launch:
             description: |-
@@ -340,12 +330,7 @@ spec:
             description: duration
             type: string
         wait_for_elb_capacity:
-            description: |-
-                (Optional) Setting this will cause Terraform to wait
-                for exactly this number of healthy instances from this Auto Scaling Group in
-                all attached load balancers on both create and update operations. (Takes
-                precedence over min_elb_capacityWaiting for Capacity below.)
-            optional: true
+            description: min_elb_capacityWaiting for Capacity below.)
             type: string
         warm_pool:
             description: '(Optional) If this block is configured, add a Warm Poolbelowlaunch_template~> strongNOTE: Either id or name must be specified.The top-level launch_template block supports the following:'

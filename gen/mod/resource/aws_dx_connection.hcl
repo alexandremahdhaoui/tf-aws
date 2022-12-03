@@ -1,27 +1,51 @@
 resource "aws_dx_connection" "aws_dx_connection" {
-  tags_all               = var.tags_all
   has_logical_redundancy = var.has_logical_redundancy
   jumbo_frame_capable    = var.jumbo_frame_capable
-  location               = var.location
-  name                   = var.name
   owner_account_id       = var.owner_account_id
-  provider_name          = var.provider_name
-  tags                   = var.tags
-  arn                    = var.arn
   aws_device             = var.aws_device
   bandwidth              = var.bandwidth
+  location               = var.location
+  name                   = var.name
+  provider_name          = var.provider_name
+  tags                   = var.tags
+  tags_all               = var.tags_all
+  arn                    = var.arn
   id                     = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the connection."
+variable "bandwidth" {
+  description = "(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps, 10Gbps and 100Gbps. Case sensitive."
+  type        = string
+}
+variable "has_logical_redundancy" {
+  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
+  type        = string
+}
+variable "jumbo_frame_capable" {
+  description = "Boolean value representing if jumbo frames have been enabled for this connection."
   type        = string
 }
 variable "owner_account_id" {
   description = "The ID of the AWS account that owns the connection."
+  type        = string
+}
+variable "aws_device" {
+  description = "The Direct Connect endpoint on which the physical connection terminates."
+  type        = string
+}
+variable "id" {
+  description = "The ID of the connection."
+  type        = string
+}
+variable "location" {
+  description = "(Required) The AWS Direct Connect location where the connection is located. See DescribeLocations for the list of AWS Direct Connect locations. Use locationCode."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name of the connection."
   type        = string
 }
 variable "provider_name" {
@@ -38,32 +62,8 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
 }
-variable "has_logical_redundancy" {
-  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
-  type        = string
-}
-variable "jumbo_frame_capable" {
-  description = "Boolean value representing if jumbo frames have been enabled for this connection."
-  type        = string
-}
-variable "location" {
-  description = "(Required) The AWS Direct Connect location where the connection is located. See DescribeLocations for the list of AWS Direct Connect locations. Use locationCode."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the connection."
-  type        = string
-}
 variable "arn" {
   description = "The ARN of the connection."
-  type        = string
-}
-variable "aws_device" {
-  description = "The Direct Connect endpoint on which the physical connection terminates."
-  type        = string
-}
-variable "bandwidth" {
-  description = "(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps, 10Gbps and 100Gbps. Case sensitive."
   type        = string
 }
 variable "tag_instance_id" {
@@ -186,21 +186,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_dx_connection.aws_dx_connection.tags
-}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_dx_connection.aws_dx_connection.tags_all
 }
-output "has_logical_redundancy" {
-  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
-  value       = aws_dx_connection.aws_dx_connection.has_logical_redundancy
+output "arn" {
+  description = "The ARN of the connection."
+  value       = aws_dx_connection.aws_dx_connection.arn
 }
-output "jumbo_frame_capable" {
-  description = "Boolean value representing if jumbo frames have been enabled for this connection."
-  value       = aws_dx_connection.aws_dx_connection.jumbo_frame_capable
+output "id" {
+  description = "The ID of the connection."
+  value       = aws_dx_connection.aws_dx_connection.id
 }
 output "location" {
   description = "(Required) The AWS Direct Connect location where the connection is located. See DescribeLocations for the list of AWS Direct Connect locations. Use locationCode."
@@ -210,17 +206,13 @@ output "name" {
   description = "(Required) The name of the connection."
   value       = aws_dx_connection.aws_dx_connection.name
 }
-output "owner_account_id" {
-  description = "The ID of the AWS account that owns the connection."
-  value       = aws_dx_connection.aws_dx_connection.owner_account_id
-}
 output "provider_name" {
   description = "(Optional) The name of the service provider associated with the connection."
   value       = aws_dx_connection.aws_dx_connection.provider_name
 }
-output "arn" {
-  description = "The ARN of the connection."
-  value       = aws_dx_connection.aws_dx_connection.arn
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_dx_connection.aws_dx_connection.tags
 }
 output "aws_device" {
   description = "The Direct Connect endpoint on which the physical connection terminates."
@@ -230,9 +222,17 @@ output "bandwidth" {
   description = "(Required) The bandwidth of the connection. Valid values for dedicated connections: 1Gbps, 10Gbps. Valid values for hosted connections: 50Mbps, 100Mbps, 200Mbps, 300Mbps, 400Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps, 10Gbps and 100Gbps. Case sensitive."
   value       = aws_dx_connection.aws_dx_connection.bandwidth
 }
-output "id" {
-  description = "The ID of the connection."
-  value       = aws_dx_connection.aws_dx_connection.id
+output "has_logical_redundancy" {
+  description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."
+  value       = aws_dx_connection.aws_dx_connection.has_logical_redundancy
+}
+output "jumbo_frame_capable" {
+  description = "Boolean value representing if jumbo frames have been enabled for this connection."
+  value       = aws_dx_connection.aws_dx_connection.jumbo_frame_capable
+}
+output "owner_account_id" {
+  description = "The ID of the AWS account that owns the connection."
+  value       = aws_dx_connection.aws_dx_connection.owner_account_id
 }
 output "has_logical_redundancy" {
   description = "Indicates whether the connection supports a secondary BGP peer in the same address family (IPv4/IPv6)."

@@ -54,7 +54,10 @@ spec:
             description: 'If session tokens are required: optional, required.'
             type: string
         iam_instance_profile:
-            description: ""
+            description: |-
+                (Optional) The name attribute of the IAM instance profile to associate
+                with launched instances.
+            optional: true
             type: string
         id:
             description: The ID of the launch configuration.
@@ -96,13 +99,13 @@ spec:
             optional: true
             type: string
         placement_tenancy:
-            description: |-
-                (Optional) The tenancy of the instance. Valid values are
-                "default" or "dedicated", see AWS's Create Launch ConfigurationBlock devicesEach of the *_block_deviceThe root_block_device mapping supports the following:
-            optional: true
+            description: '"default" or "dedicated", see AWS''s Create Launch ConfigurationBlock devicesEach of the *_block_deviceThe root_block_device mapping supports the following:'
             type: string
         root_block_device:
-            description: Block Devices below for details.
+            description: |-
+                (Optional) Customize details about the root block
+                device of the instance. See Block Devices below for details.
+            optional: true
             type: string
         security_groups:
             description: (Optional) A list of associated security group IDS.

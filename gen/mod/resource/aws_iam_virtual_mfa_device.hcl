@@ -10,15 +10,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Map of resource tags for the virtual mfa device. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "virtual_mfa_device_name" {
-  description = "(Required) The name of the virtual MFA device. Use with path to uniquely identify a virtual MFA device."
-  type        = string
-}
 variable "arn" {
   description = "The Amazon Resource Name (ARN) specifying the virtual mfa device."
   type        = string
@@ -34,6 +25,15 @@ variable "path" {
 }
 variable "qr_code_png" {
   description = " A QR code PNG image that encodes otpauth://totp/$virtualMFADeviceName@$AccountName?secret=$Base32String where $virtualMFADeviceName is one of the create call arguments. AccountName is the user name if set (otherwise, the account ID otherwise), and Base32String is the seed in base32 format."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Map of resource tags for the virtual mfa device. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "virtual_mfa_device_name" {
+  description = "(Required) The name of the virtual MFA device. Use with path to uniquely identify a virtual MFA device."
   type        = string
 }
 variable "tag_instance_id" {

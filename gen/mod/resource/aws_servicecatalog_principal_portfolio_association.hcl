@@ -12,10 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "principal_arn" {
-  description = "(Required) Principal ARN."
-  type        = string
-}
 variable "principal_type" {
   description = "(Optional) Principal type. Setting this argument empty (e.g., principal_type = \"\") will result in an error. Valid value is IAM. Default is IAM.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -48,6 +44,10 @@ variable "id" {
 }
 variable "portfolio_id" {
   description = "(Required) Portfolio identifier."
+  type        = string
+}
+variable "principal_arn" {
+  description = "(Required) Principal ARN."
   type        = string
 }
 variable "tag_instance_id" {
@@ -170,6 +170,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "delete" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
+}
 output "id" {
   description = "Identifier of the association.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
@@ -198,9 +202,13 @@ output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
 }
-output "delete" {
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.read
+}
+output "create" {
   description = "(Default 3m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.delete
+  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
 }
 output "delete" {
   description = "(Default 3m)"
@@ -209,14 +217,6 @@ output "delete" {
 output "id" {
   description = "Identifier of the association.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.id
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.read
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_principal_portfolio_association.aws_servicecatalog_principal_portfolio_association.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

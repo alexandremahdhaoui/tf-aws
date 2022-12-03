@@ -1,33 +1,40 @@
 resource "aws_datapipeline_pipeline_definition" "aws_datapipeline_pipeline_definition" {
   attribute        = var.attribute
   id               = var.id
+  parameter_object = var.parameter_object
+  pipeline_object  = var.pipeline_object
+  field            = var.field
   key              = var.key
   name             = var.name
-  parameter_object = var.parameter_object
   parameter_value  = var.parameter_value
+  pipeline_id      = var.pipeline_id
   ref_value        = var.ref_value
   string_value     = var.string_value
-  field            = var.field
-  pipeline_id      = var.pipeline_id
-  pipeline_object  = var.pipeline_object
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "field" {
+  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
+  type        = string
+}
+variable "key" {
+  description = "(Required) Field identifier."
   type        = string
 }
 variable "name" {
   description = "(Required) ARN of the storage connector.field"
   type        = string
 }
-variable "parameter_object" {
-  description = "(Optional) Configuration block for the parameter objects used in the pipeline definition. See below"
-  type        = string
-  default     = ""
-}
 variable "parameter_value" {
   description = "(Optional) Configuration block for the parameter values used in the pipeline definition. See belowpipeline_object"
   type        = string
   default     = ""
+}
+variable "pipeline_id" {
+  description = "(Required) ID of the pipeline."
+  type        = string
 }
 variable "ref_value" {
   description = "(Optional) Field value, expressed as the identifier of another object"
@@ -47,17 +54,10 @@ variable "id" {
   type        = string
   default     = ""
 }
-variable "key" {
-  description = "(Required) Field identifier."
+variable "parameter_object" {
+  description = "(Optional) Configuration block for the parameter objects used in the pipeline definition. See below"
   type        = string
-}
-variable "field" {
-  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
-  type        = string
-}
-variable "pipeline_id" {
-  description = "(Required) ID of the pipeline."
-  type        = string
+  default     = ""
 }
 variable "pipeline_object" {
   description = "(Required) Configuration block for the objects that define the pipeline. See below"
@@ -191,13 +191,13 @@ output "name" {
   description = "(Required) ARN of the storage connector.field"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.name
 }
-output "parameter_object" {
-  description = "(Optional) Configuration block for the parameter objects used in the pipeline definition. See below"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.parameter_object
-}
 output "parameter_value" {
   description = "(Optional) Configuration block for the parameter values used in the pipeline definition. See belowpipeline_object"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.parameter_value
+}
+output "pipeline_id" {
+  description = "(Required) ID of the pipeline."
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.pipeline_id
 }
 output "ref_value" {
   description = "(Optional) Field value, expressed as the identifier of another object"
@@ -207,25 +207,25 @@ output "string_value" {
   description = "(Required) Field value, expressed as a String.In addition to all arguments above, the following attributes are exported:"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.string_value
 }
-output "attribute" {
-  description = "(Required) Configuration block for attributes of the parameter object. See below"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.attribute
+output "field" {
+  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.field
 }
 output "id" {
   description = "Unique ID of the datapipeline definition."
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.id
 }
+output "parameter_object" {
+  description = "(Optional) Configuration block for the parameter objects used in the pipeline definition. See below"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.parameter_object
+}
 output "pipeline_object" {
   description = "(Required) Configuration block for the objects that define the pipeline. See below"
   value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.pipeline_object
 }
-output "field" {
-  description = "(Required) Configuration block for Key-value pairs that define the properties of the object. See below"
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.field
-}
-output "pipeline_id" {
-  description = "(Required) ID of the pipeline."
-  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.pipeline_id
+output "attribute" {
+  description = "(Required) Configuration block for attributes of the parameter object. See below"
+  value       = aws_datapipeline_pipeline_definition.aws_datapipeline_pipeline_definition.attribute
 }
 output "id" {
   description = "Unique ID of the datapipeline definition."

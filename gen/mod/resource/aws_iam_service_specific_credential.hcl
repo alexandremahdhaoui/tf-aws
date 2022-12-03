@@ -1,17 +1,13 @@
 resource "aws_iam_service_specific_credential" "aws_iam_service_specific_credential" {
-  id                = var.id
   service_name      = var.service_name
   service_password  = var.service_password
   service_user_name = var.service_user_name
   status            = var.status
   user_name         = var.user_name
+  id                = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "service_password" {
-  description = "The generated password for the service-specific credential."
   type        = string
 }
 variable "service_user_name" {
@@ -33,6 +29,10 @@ variable "id" {
 }
 variable "service_name" {
   description = "(Required) The name of the AWS service that is to be associated with the credentials. The service you specify here is the only service that can be accessed using these credentials."
+  type        = string
+}
+variable "service_password" {
+  description = "The generated password for the service-specific credential."
   type        = string
 }
 variable "tag_instance_id" {
@@ -155,6 +155,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The combination of service_name and user_name as such: service_name:user_name:service_specific_credential_id."
+  value       = aws_iam_service_specific_credential.aws_iam_service_specific_credential.id
+}
 output "service_name" {
   description = "(Required) The name of the AWS service that is to be associated with the credentials. The service you specify here is the only service that can be accessed using these credentials."
   value       = aws_iam_service_specific_credential.aws_iam_service_specific_credential.service_name
@@ -174,10 +178,6 @@ output "status" {
 output "user_name" {
   description = "(Required) The name of the IAM user that is to be associated with the credentials. The new service-specific credentials have the same permissions as the associated user except that they can be used only to access the specified service."
   value       = aws_iam_service_specific_credential.aws_iam_service_specific_credential.user_name
-}
-output "id" {
-  description = "The combination of service_name and user_name as such: service_name:user_name:service_specific_credential_id."
-  value       = aws_iam_service_specific_credential.aws_iam_service_specific_credential.id
 }
 output "id" {
   description = "The combination of service_name and user_name as such: service_name:user_name:service_specific_credential_id."

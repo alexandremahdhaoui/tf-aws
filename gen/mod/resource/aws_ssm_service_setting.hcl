@@ -1,7 +1,7 @@
 resource "aws_ssm_service_setting" "aws_ssm_service_setting" {
+  setting_value = var.setting_value
   arn           = var.arn
   setting_id    = var.setting_id
-  setting_value = var.setting_value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

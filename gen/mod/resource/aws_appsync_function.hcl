@@ -1,23 +1,28 @@
 resource "aws_appsync_function" "aws_appsync_function" {
+  arn                            = var.arn
+  description                    = var.description
+  request_mapping_template       = var.request_mapping_template
+  response_mapping_template      = var.response_mapping_template
+  lambda_conflict_handler_arn    = var.lambda_conflict_handler_arn
   lambda_conflict_handler_config = var.lambda_conflict_handler_config
   max_batch_size                 = var.max_batch_size
   sync_config                    = var.sync_config
+  api_id                         = var.api_id
   conflict_detection             = var.conflict_detection
   conflict_handler               = var.conflict_handler
+  data_source                    = var.data_source
   function_version               = var.function_version
   id                             = var.id
   name                           = var.name
-  api_id                         = var.api_id
-  data_source                    = var.data_source
-  description                    = var.description
-  request_mapping_template       = var.request_mapping_template
-  arn                            = var.arn
-  lambda_conflict_handler_arn    = var.lambda_conflict_handler_arn
-  response_mapping_template      = var.response_mapping_template
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "lambda_conflict_handler_arn" {
+  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "lambda_conflict_handler_config" {
   description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
@@ -29,6 +34,11 @@ variable "max_batch_size" {
   type        = string
   default     = ""
 }
+variable "sync_config" {
+  description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "API Function ID (Formatted as ApiId-FunctionId)"
   type        = string
@@ -37,10 +47,9 @@ variable "name" {
   description = "(Required) Function name. The function name does not have to be unique."
   type        = string
 }
-variable "sync_config" {
-  description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
+variable "api_id" {
+  description = "(Required) ID of the associated AppSync API."
   type        = string
-  default     = ""
 }
 variable "conflict_detection" {
   description = "(Optional) Conflict Detection strategy to use. Valid values are NONE and VERSION."
@@ -52,25 +61,12 @@ variable "conflict_handler" {
   type        = string
   default     = ""
 }
-variable "function_version" {
-  description = "(Optional) Version of the request mapping template. Currently the supported value is 2018-05-29.Sync Config"
-  type        = string
-  default     = ""
-}
-variable "request_mapping_template" {
-  description = "(Required) Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template."
-  type        = string
-}
-variable "api_id" {
-  description = "(Required) ID of the associated AppSync API."
-  type        = string
-}
 variable "data_source" {
   description = "(Required) Function data source name."
   type        = string
 }
-variable "description" {
-  description = "(Optional) Function description."
+variable "function_version" {
+  description = "(Optional) Version of the request mapping template. Currently the supported value is 2018-05-29.Sync Config"
   type        = string
   default     = ""
 }
@@ -78,10 +74,14 @@ variable "arn" {
   description = "ARN of the Function object."
   type        = string
 }
-variable "lambda_conflict_handler_arn" {
-  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
+variable "description" {
+  description = "(Optional) Function description."
   type        = string
   default     = ""
+}
+variable "request_mapping_template" {
+  description = "(Required) Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template."
+  type        = string
 }
 variable "response_mapping_template" {
   description = "(Required) Function response mapping template."
@@ -207,9 +207,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "request_mapping_template" {
+  description = "(Required) Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template."
+  value       = aws_appsync_function.aws_appsync_function.request_mapping_template
+}
+output "response_mapping_template" {
+  description = "(Required) Function response mapping template."
+  value       = aws_appsync_function.aws_appsync_function.response_mapping_template
+}
+output "lambda_conflict_handler_arn" {
+  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_appsync_function.aws_appsync_function.lambda_conflict_handler_arn
+}
+output "lambda_conflict_handler_config" {
+  description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
+  value       = aws_appsync_function.aws_appsync_function.lambda_conflict_handler_config
+}
+output "max_batch_size" {
+  description = "(Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000."
+  value       = aws_appsync_function.aws_appsync_function.max_batch_size
+}
 output "sync_config" {
   description = "(Optional) Describes a Sync configuration for a resolver. See Sync Config."
   value       = aws_appsync_function.aws_appsync_function.sync_config
+}
+output "api_id" {
+  description = "(Required) ID of the associated AppSync API."
+  value       = aws_appsync_function.aws_appsync_function.api_id
 }
 output "conflict_detection" {
   description = "(Optional) Conflict Detection strategy to use. Valid values are NONE and VERSION."
@@ -218,6 +242,10 @@ output "conflict_detection" {
 output "conflict_handler" {
   description = "(Optional) Conflict Resolution strategy to perform in the event of a conflict. Valid values are NONE, OPTIMISTIC_CONCURRENCY, AUTOMERGE, and LAMBDA."
   value       = aws_appsync_function.aws_appsync_function.conflict_handler
+}
+output "data_source" {
+  description = "(Required) Function data source name."
+  value       = aws_appsync_function.aws_appsync_function.data_source
 }
 output "function_version" {
   description = "(Optional) Version of the request mapping template. Currently the supported value is 2018-05-29.Sync Config"
@@ -231,45 +259,13 @@ output "name" {
   description = "(Required) Function name. The function name does not have to be unique."
   value       = aws_appsync_function.aws_appsync_function.name
 }
-output "api_id" {
-  description = "(Required) ID of the associated AppSync API."
-  value       = aws_appsync_function.aws_appsync_function.api_id
-}
-output "data_source" {
-  description = "(Required) Function data source name."
-  value       = aws_appsync_function.aws_appsync_function.data_source
+output "arn" {
+  description = "ARN of the Function object."
+  value       = aws_appsync_function.aws_appsync_function.arn
 }
 output "description" {
   description = "(Optional) Function description."
   value       = aws_appsync_function.aws_appsync_function.description
-}
-output "request_mapping_template" {
-  description = "(Required) Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template."
-  value       = aws_appsync_function.aws_appsync_function.request_mapping_template
-}
-output "arn" {
-  description = "ARN of the Function object."
-  value       = aws_appsync_function.aws_appsync_function.arn
-}
-output "lambda_conflict_handler_arn" {
-  description = "(Optional) ARN for the Lambda function to use as the Conflict Handler.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_appsync_function.aws_appsync_function.lambda_conflict_handler_arn
-}
-output "response_mapping_template" {
-  description = "(Required) Function response mapping template."
-  value       = aws_appsync_function.aws_appsync_function.response_mapping_template
-}
-output "lambda_conflict_handler_config" {
-  description = "(Optional) Lambda Conflict Handler Config when configuring LAMBDA as the Conflict Handler. See Lambda Conflict Handler Config.Lambda Conflict Handler Config"
-  value       = aws_appsync_function.aws_appsync_function.lambda_conflict_handler_config
-}
-output "max_batch_size" {
-  description = "(Optional) Maximum batching size for a resolver. Valid values are between 0 and 2000."
-  value       = aws_appsync_function.aws_appsync_function.max_batch_size
-}
-output "arn" {
-  description = "ARN of the Function object."
-  value       = aws_appsync_function.aws_appsync_function.arn
 }
 output "function_id" {
   description = "Unique ID representing the Function object."
@@ -278,6 +274,10 @@ output "function_id" {
 output "id" {
   description = "API Function ID (Formatted as ApiId-FunctionId)"
   value       = aws_appsync_function.aws_appsync_function.id
+}
+output "arn" {
+  description = "ARN of the Function object."
+  value       = aws_appsync_function.aws_appsync_function.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

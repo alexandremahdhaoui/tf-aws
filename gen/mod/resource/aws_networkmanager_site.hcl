@@ -1,16 +1,31 @@
 resource "aws_networkmanager_site" "aws_networkmanager_site" {
-  global_network_id = var.global_network_id
-  latitude          = var.latitude
-  location          = var.location
   longitude         = var.longitude
   tags              = var.tags
   address           = var.address
   arn               = var.arn
   description       = var.description
+  global_network_id = var.global_network_id
+  latitude          = var.latitude
+  location          = var.location
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "latitude" {
+  description = "(Optional) Latitude of the location."
+  type        = string
+  default     = ""
+}
+variable "location" {
+  description = "(Optional) The site location as documented below."
+  type        = string
+  default     = ""
+}
+variable "longitude" {
+  description = "(Optional) Longitude of the location.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) Key-value tags for the Site. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.The location object supports the following:"
@@ -34,21 +49,6 @@ variable "description" {
 variable "global_network_id" {
   description = "(Required) The ID of the Global Network to create the site in."
   type        = string
-}
-variable "latitude" {
-  description = "(Optional) Latitude of the location."
-  type        = string
-  default     = ""
-}
-variable "location" {
-  description = "(Optional) The site location as documented below."
-  type        = string
-  default     = ""
-}
-variable "longitude" {
-  description = "(Optional) Longitude of the location.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -170,6 +170,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "description" {
+  description = "(Optional) Description of the Site."
+  value       = aws_networkmanager_site.aws_networkmanager_site.description
+}
+output "global_network_id" {
+  description = "(Required) The ID of the Global Network to create the site in."
+  value       = aws_networkmanager_site.aws_networkmanager_site.global_network_id
+}
 output "latitude" {
   description = "(Optional) Latitude of the location."
   value       = aws_networkmanager_site.aws_networkmanager_site.latitude
@@ -193,14 +201,6 @@ output "address" {
 output "arn" {
   description = "Site Amazon Resource Name (ARN)"
   value       = aws_networkmanager_site.aws_networkmanager_site.arn
-}
-output "description" {
-  description = "(Optional) Description of the Site."
-  value       = aws_networkmanager_site.aws_networkmanager_site.description
-}
-output "global_network_id" {
-  description = "(Required) The ID of the Global Network to create the site in."
-  value       = aws_networkmanager_site.aws_networkmanager_site.global_network_id
 }
 output "arn" {
   description = "Site Amazon Resource Name (ARN)"

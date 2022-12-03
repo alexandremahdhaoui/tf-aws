@@ -4,9 +4,21 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "serial_number" {
-  description = "Serial number of the device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.serial_number
+output "vendor" {
+  description = "Vendor of the device.The aws_location object supports the following:"
+  value       = aws_networkmanager_device.aws_networkmanager_device.vendor
+}
+output "zone" {
+  description = "Zone that the device is located in.The location object supports the following:"
+  value       = aws_networkmanager_device.aws_networkmanager_device.zone
+}
+output "aws_location" {
+  description = "AWS location of the device. Documented below."
+  value       = aws_networkmanager_device.aws_networkmanager_device.aws_location
+}
+output "latitude" {
+  description = "Latitude."
+  value       = aws_networkmanager_device.aws_networkmanager_device.latitude
 }
 output "site_id" {
   description = "ID of the site."
@@ -28,37 +40,25 @@ output "description" {
   description = "Description of the device."
   value       = aws_networkmanager_device.aws_networkmanager_device.description
 }
-output "latitude" {
-  description = "Latitude."
-  value       = aws_networkmanager_device.aws_networkmanager_device.latitude
+output "location" {
+  description = "Location of the device. Documented below."
+  value       = aws_networkmanager_device.aws_networkmanager_device.location
 }
 output "tags" {
   description = "Key-value tags for the device."
   value       = aws_networkmanager_device.aws_networkmanager_device.tags
 }
-output "model" {
-  description = "Model of device."
-  value       = aws_networkmanager_device.aws_networkmanager_device.model
-}
-output "vendor" {
-  description = "Vendor of the device.The aws_location object supports the following:"
-  value       = aws_networkmanager_device.aws_networkmanager_device.vendor
-}
-output "zone" {
-  description = "Zone that the device is located in.The location object supports the following:"
-  value       = aws_networkmanager_device.aws_networkmanager_device.zone
-}
 output "arn" {
   description = "ARN of the device."
   value       = aws_networkmanager_device.aws_networkmanager_device.arn
 }
-output "aws_location" {
-  description = "AWS location of the device. Documented below."
-  value       = aws_networkmanager_device.aws_networkmanager_device.aws_location
+output "model" {
+  description = "Model of device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.model
 }
-output "location" {
-  description = "Location of the device. Documented below."
-  value       = aws_networkmanager_device.aws_networkmanager_device.location
+output "serial_number" {
+  description = "Serial number of the device."
+  value       = aws_networkmanager_device.aws_networkmanager_device.serial_number
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

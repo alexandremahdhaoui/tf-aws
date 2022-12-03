@@ -1,14 +1,10 @@
 resource "aws_ec2_transit_gateway_multicast_group_source" "aws_ec2_transit_gateway_multicast_group_source" {
+  transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
   group_ip_address                    = var.group_ip_address
   network_interface_id                = var.network_interface_id
-  transit_gateway_multicast_domain_id = var.transit_gateway_multicast_domain_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "group_ip_address" {
-  description = "(Required) The IP address assigned to the transit gateway multicast group."
   type        = string
 }
 variable "network_interface_id" {
@@ -17,6 +13,10 @@ variable "network_interface_id" {
 }
 variable "transit_gateway_multicast_domain_id" {
   description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "group_ip_address" {
+  description = "(Required) The IP address assigned to the transit gateway multicast group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "group_ip_address" {
-  description = "(Required) The IP address assigned to the transit gateway multicast group."
-  value       = aws_ec2_transit_gateway_multicast_group_source.aws_ec2_transit_gateway_multicast_group_source.group_ip_address
-}
 output "network_interface_id" {
   description = "(Required) The group members' network interface ID to register with the transit gateway multicast group."
   value       = aws_ec2_transit_gateway_multicast_group_source.aws_ec2_transit_gateway_multicast_group_source.network_interface_id
@@ -150,6 +146,10 @@ output "network_interface_id" {
 output "transit_gateway_multicast_domain_id" {
   description = "(Required) The ID of the transit gateway multicast domain.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_multicast_group_source.aws_ec2_transit_gateway_multicast_group_source.transit_gateway_multicast_domain_id
+}
+output "group_ip_address" {
+  description = "(Required) The IP address assigned to the transit gateway multicast group."
+  value       = aws_ec2_transit_gateway_multicast_group_source.aws_ec2_transit_gateway_multicast_group_source.group_ip_address
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,16 +1,21 @@
 resource "aws_placement_group" "aws_placement_group" {
-  strategy           = var.strategy
-  tags               = var.tags
-  arn                = var.arn
-  id                 = var.id
   name               = var.name
   partition_count    = var.partition_count
   placement_group_id = var.placement_group_id
   spread_level       = var.spread_level
+  strategy           = var.strategy
+  tags               = var.tags
+  arn                = var.arn
+  id                 = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "spread_level" {
+  description = "(Optional) Determines how placement groups spread instances. Can only be used\nwhen the strategy is set to \"spread\". Can be \"host\" or \"rack\". \"host\" can only be used for Outpost placement groups."
+  type        = string
+  default     = ""
 }
 variable "strategy" {
   description = "(Required) The placement strategy. Can be \"cluster\", \"partition\" or \"spread\"."
@@ -34,17 +39,13 @@ variable "name" {
   type        = string
 }
 variable "partition_count" {
-  description = "strategy\"partition\".  Valid values are 1 - 7 (default is 2)."
+  description = "(Optional) The number of partitions to create in the\nplacement group.  Can only be specified when the strategy\"partition\".  Valid values are 1 - 7 (default is 2)."
   type        = string
+  default     = ""
 }
 variable "placement_group_id" {
   description = "The ID of the placement group."
   type        = string
-}
-variable "spread_level" {
-  description = "(Optional) Determines how placement groups spread instances. Can only be used\nwhen the strategy is set to \"spread\". Can be \"host\" or \"rack\". \"host\" can only be used for Outpost placement groups."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -166,16 +167,12 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The name of the placement group."
-  value       = aws_placement_group.aws_placement_group.id
-}
 output "name" {
   description = "(Required) The name of the placement group."
   value       = aws_placement_group.aws_placement_group.name
 }
 output "partition_count" {
-  description = "strategy\"partition\".  Valid values are 1 - 7 (default is 2)."
+  description = "(Optional) The number of partitions to create in the\nplacement group.  Can only be specified when the strategy\"partition\".  Valid values are 1 - 7 (default is 2)."
   value       = aws_placement_group.aws_placement_group.partition_count
 }
 output "placement_group_id" {
@@ -197,6 +194,10 @@ output "tags" {
 output "arn" {
   description = "Amazon Resource Name (ARN) of the placement group."
   value       = aws_placement_group.aws_placement_group.arn
+}
+output "id" {
+  description = "The name of the placement group."
+  value       = aws_placement_group.aws_placement_group.id
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the placement group."

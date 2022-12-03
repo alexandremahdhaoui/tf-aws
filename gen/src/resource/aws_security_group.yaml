@@ -83,9 +83,7 @@ spec:
             description: (Required) End range port (or ICMP code if protocol is icmp).
             type: string
         vpc_id:
-            description: |-
-                (Optional, Forces new resource) VPC ID.
-                Defaults to the region's default VPC.ingressThis argument is processed in attribute-as-blocks mode.
+            description: ingressThis argument is processed in attribute-as-blocks mode.
             type: string
     attrs:
         arn:

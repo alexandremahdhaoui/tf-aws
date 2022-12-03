@@ -18,9 +18,7 @@ spec:
             description: (Required) The type of geographical area you want AWS WAF to search for. Currently Country is the only valid value.
             type: string
         value:
-            description: |-
-                (Required) The country that you want AWS WAF to search for.
-                This is the two-letter country code, e.g., US, CA, RU, CNdocs for all supported values.RemarksIn addition to all arguments above, the following attributes are exported:
+            description: 'US, CA, RU, CNdocs for all supported values.RemarksIn addition to all arguments above, the following attributes are exported:'
             type: string
     attrs:
         arn:

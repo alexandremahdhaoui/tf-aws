@@ -20,8 +20,7 @@ spec:
             description: Name of the parameter.
             type: string
         parameter:
-            description: |
-                Set of user-defined MemoryDB parameters applied by the parameter group.
+            description: ""
             type: string
         value:
             description: Value of the parameter.
@@ -43,8 +42,7 @@ spec:
             description: Name of the parameter.
             type: string
         parameter:
-            description: |
-                Set of user-defined MemoryDB parameters applied by the parameter group.
+            description: ""
             type: string
         value:
             description: Value of the parameter.

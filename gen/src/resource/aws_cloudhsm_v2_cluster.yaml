@@ -5,8 +5,7 @@ metadata:
 spec:
     args:
         cluster_certificates:
-            description: |
-                The list of cluster certificates.
+            description: ""
             type: string
         cluster_certificates.0.aws_hardware_certificate:
             description: The HSM hardware certificate issued (signed) by AWS CloudHSM.
@@ -51,8 +50,7 @@ spec:
             type: string
     attrs:
         cluster_certificates:
-            description: |
-                The list of cluster certificates.
+            description: ""
             type: string
         cluster_certificates.0.aws_hardware_certificate:
             description: The HSM hardware certificate issued (signed) by AWS CloudHSM.

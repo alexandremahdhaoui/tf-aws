@@ -1,17 +1,34 @@
 resource "aws_detective_member" "aws_detective_member" {
   account_id                 = var.account_id
-  disable_email_notification = var.disable_email_notification
-  id                         = var.id
-  message                    = var.message
   administrator_id           = var.administrator_id
-  email_address              = var.email_address
+  disable_email_notification = var.disable_email_notification
   graph_arn                  = var.graph_arn
+  email_address              = var.email_address
+  id                         = var.id
   invited_time               = var.invited_time
+  message                    = var.message
   status                     = var.status
   volume_usage_in_bytes      = var.volume_usage_in_bytes
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "account_id" {
+  description = "(Required) AWS account ID for the account."
+  type        = string
+}
+variable "administrator_id" {
+  description = "AWS account ID for the administrator account."
+  type        = string
+}
+variable "disable_email_notification" {
+  description = "(Optional) If set to true, then the root user of the invited account will emnot receive an email notification. This notification is in addition to an alert that the root user receives in AWS Personal Health Dashboard. By default, this is set to false.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "graph_arn" {
+  description = "(Required) ARN of the behavior graph to invite the member accounts to contribute their data to."
   type        = string
 }
 variable "status" {
@@ -22,33 +39,16 @@ variable "volume_usage_in_bytes" {
   description = "Data volume in bytes per day for the member account."
   type        = string
 }
-variable "administrator_id" {
-  description = "AWS account ID for the administrator account."
-  type        = string
-}
 variable "email_address" {
   description = "(Required) Email address for the account."
   type        = string
 }
-variable "graph_arn" {
-  description = "(Required) ARN of the behavior graph to invite the member accounts to contribute their data to."
+variable "id" {
+  description = "Unique identifier (ID) of the Detective."
   type        = string
 }
 variable "invited_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, when an Amazon Detective membership invitation was last sent to the account."
-  type        = string
-}
-variable "account_id" {
-  description = "(Required) AWS account ID for the account."
-  type        = string
-}
-variable "disable_email_notification" {
-  description = "(Optional) If set to true, then the root user of the invited account will emnot receive an email notification. This notification is in addition to an alert that the root user receives in AWS Personal Health Dashboard. By default, this is set to false.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "Unique identifier (ID) of the Detective."
   type        = string
 }
 variable "message" {
@@ -176,21 +176,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "administrator_id" {
-  description = "AWS account ID for the administrator account."
-  value       = aws_detective_member.aws_detective_member.administrator_id
-}
-output "email_address" {
-  description = "(Required) Email address for the account."
-  value       = aws_detective_member.aws_detective_member.email_address
-}
-output "graph_arn" {
-  description = "(Required) ARN of the behavior graph to invite the member accounts to contribute their data to."
-  value       = aws_detective_member.aws_detective_member.graph_arn
-}
-output "invited_time" {
-  description = "Date and time, in UTC and extended RFC 3339 format, when an Amazon Detective membership invitation was last sent to the account."
-  value       = aws_detective_member.aws_detective_member.invited_time
+output "message" {
+  description = "(Optional) A custom message to include in the invitation. Amazon Detective adds this message to the standard content that it sends for an invitation."
+  value       = aws_detective_member.aws_detective_member.message
 }
 output "status" {
   description = "Current membership status of the member account."
@@ -200,21 +188,37 @@ output "volume_usage_in_bytes" {
   description = "Data volume in bytes per day for the member account."
   value       = aws_detective_member.aws_detective_member.volume_usage_in_bytes
 }
-output "account_id" {
-  description = "(Required) AWS account ID for the account."
-  value       = aws_detective_member.aws_detective_member.account_id
-}
-output "disable_email_notification" {
-  description = "(Optional) If set to true, then the root user of the invited account will emnot receive an email notification. This notification is in addition to an alert that the root user receives in AWS Personal Health Dashboard. By default, this is set to false.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_detective_member.aws_detective_member.disable_email_notification
+output "email_address" {
+  description = "(Required) Email address for the account."
+  value       = aws_detective_member.aws_detective_member.email_address
 }
 output "id" {
   description = "Unique identifier (ID) of the Detective."
   value       = aws_detective_member.aws_detective_member.id
 }
-output "message" {
-  description = "(Optional) A custom message to include in the invitation. Amazon Detective adds this message to the standard content that it sends for an invitation."
-  value       = aws_detective_member.aws_detective_member.message
+output "invited_time" {
+  description = "Date and time, in UTC and extended RFC 3339 format, when an Amazon Detective membership invitation was last sent to the account."
+  value       = aws_detective_member.aws_detective_member.invited_time
+}
+output "graph_arn" {
+  description = "(Required) ARN of the behavior graph to invite the member accounts to contribute their data to."
+  value       = aws_detective_member.aws_detective_member.graph_arn
+}
+output "account_id" {
+  description = "(Required) AWS account ID for the account."
+  value       = aws_detective_member.aws_detective_member.account_id
+}
+output "administrator_id" {
+  description = "AWS account ID for the administrator account."
+  value       = aws_detective_member.aws_detective_member.administrator_id
+}
+output "disable_email_notification" {
+  description = "(Optional) If set to true, then the root user of the invited account will emnot receive an email notification. This notification is in addition to an alert that the root user receives in AWS Personal Health Dashboard. By default, this is set to false.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_detective_member.aws_detective_member.disable_email_notification
+}
+output "volume_usage_in_bytes" {
+  description = "Data volume in bytes per day for the member account."
+  value       = aws_detective_member.aws_detective_member.volume_usage_in_bytes
 }
 output "administrator_id" {
   description = "AWS account ID for the administrator account."
@@ -235,10 +239,6 @@ output "status" {
 output "updated_time" {
   description = "Date and time, in UTC and extended RFC 3339 format, of the most recent change to the member account's status."
   value       = aws_detective_member.aws_detective_member.updated_time
-}
-output "volume_usage_in_bytes" {
-  description = "Data volume in bytes per day for the member account."
-  value       = aws_detective_member.aws_detective_member.volume_usage_in_bytes
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

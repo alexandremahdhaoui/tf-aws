@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "key" {
-  description = "(Required) The tag name."
-  value       = aws_ec2_tag.aws_ec2_tag.key
-}
 output "resource_id" {
   description = "(Required) The ID of the EC2 resource to manage the tag for."
   value       = aws_ec2_tag.aws_ec2_tag.resource_id
@@ -150,6 +146,10 @@ output "resource_id" {
 output "value" {
   description = "(Required) The value of the tag.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_tag.aws_ec2_tag.value
+}
+output "key" {
+  description = "(Required) The tag name."
+  value       = aws_ec2_tag.aws_ec2_tag.key
 }
 output "id" {
   description = "EC2 resource identifier and key, separated by a comma (,)"

@@ -1,48 +1,36 @@
 resource "aws_cur_report_definition" "aws_cur_report_definition" {
-  compression                = var.compression
-  refresh_closed_reports     = var.refresh_closed_reports
-  s3_region                  = var.s3_region
   additional_artifacts       = var.additional_artifacts
   additional_schema_elements = var.additional_schema_elements
+  compression                = var.compression
+  format                     = var.format
+  refresh_closed_reports     = var.refresh_closed_reports
   report_versioning          = var.report_versioning
   s3_bucket                  = var.s3_bucket
   s3_prefix                  = var.s3_prefix
+  s3_region                  = var.s3_region
   time_unit                  = var.time_unit
-  format                     = var.format
   report_name                = var.report_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "additional_artifacts" {
-  description = "(Required) A list of additional artifacts. Valid values are: REDSHIFT, QUICKSIGHT, ATHENA. When ATHENA exists within additional_artifacts, no other artifact type can be declared and report_versioning must be OVERWRITE_REPORT."
-  type        = string
-}
-variable "additional_schema_elements" {
-  description = "(Required) A list of schema elements. Valid values are: RESOURCES."
+variable "report_name" {
+  description = "(Required) Unique name for the report. Must start with a number/letter and is case sensitive. Limited to 256 characters."
   type        = string
 }
 variable "compression" {
   description = "(Required) Compression format for report. Valid values are: GZIP, ZIP, Parquet. If Parquet is used, then format must also be Parquet."
   type        = string
 }
-variable "refresh_closed_reports" {
-  description = "(Optional) Set to true to update your reports after they have been finalized if AWS detects charges related to previous months."
-  type        = string
-  default     = ""
-}
-variable "s3_region" {
-  description = "(Required) Region of the existing S3 bucket to hold generated reports."
-  type        = string
-}
 variable "format" {
   description = "(Required) Format for report. Valid values are: textORcsv, Parquet. If Parquet is used, then Compression must also be Parquet."
   type        = string
 }
-variable "report_name" {
-  description = "(Required) Unique name for the report. Must start with a number/letter and is case sensitive. Limited to 256 characters."
+variable "refresh_closed_reports" {
+  description = "(Optional) Set to true to update your reports after they have been finalized if AWS detects charges related to previous months."
   type        = string
+  default     = ""
 }
 variable "report_versioning" {
   description = "(Optional) Overwrite the previous version of each report or to deliver the report in addition to the previous versions. Valid values are: CREATE_NEW_REPORT and OVERWRITE_REPORT.In addition to all arguments above, the following attributes are exported:"
@@ -57,6 +45,18 @@ variable "s3_prefix" {
   description = "(Optional) Report path prefix. Limited to 256 characters."
   type        = string
   default     = ""
+}
+variable "additional_artifacts" {
+  description = "(Required) A list of additional artifacts. Valid values are: REDSHIFT, QUICKSIGHT, ATHENA. When ATHENA exists within additional_artifacts, no other artifact type can be declared and report_versioning must be OVERWRITE_REPORT."
+  type        = string
+}
+variable "additional_schema_elements" {
+  description = "(Required) A list of schema elements. Valid values are: RESOURCES."
+  type        = string
+}
+variable "s3_region" {
+  description = "(Required) Region of the existing S3 bucket to hold generated reports."
+  type        = string
 }
 variable "time_unit" {
   description = "(Required) The frequency on which report data are measured and displayed.  Valid values are: HOURLY, DAILY."
@@ -182,25 +182,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "additional_schema_elements" {
+  description = "(Required) A list of schema elements. Valid values are: RESOURCES."
+  value       = aws_cur_report_definition.aws_cur_report_definition.additional_schema_elements
+}
 output "compression" {
   description = "(Required) Compression format for report. Valid values are: GZIP, ZIP, Parquet. If Parquet is used, then format must also be Parquet."
   value       = aws_cur_report_definition.aws_cur_report_definition.compression
 }
+output "format" {
+  description = "(Required) Format for report. Valid values are: textORcsv, Parquet. If Parquet is used, then Compression must also be Parquet."
+  value       = aws_cur_report_definition.aws_cur_report_definition.format
+}
 output "refresh_closed_reports" {
   description = "(Optional) Set to true to update your reports after they have been finalized if AWS detects charges related to previous months."
   value       = aws_cur_report_definition.aws_cur_report_definition.refresh_closed_reports
-}
-output "s3_region" {
-  description = "(Required) Region of the existing S3 bucket to hold generated reports."
-  value       = aws_cur_report_definition.aws_cur_report_definition.s3_region
-}
-output "additional_artifacts" {
-  description = "(Required) A list of additional artifacts. Valid values are: REDSHIFT, QUICKSIGHT, ATHENA. When ATHENA exists within additional_artifacts, no other artifact type can be declared and report_versioning must be OVERWRITE_REPORT."
-  value       = aws_cur_report_definition.aws_cur_report_definition.additional_artifacts
-}
-output "additional_schema_elements" {
-  description = "(Required) A list of schema elements. Valid values are: RESOURCES."
-  value       = aws_cur_report_definition.aws_cur_report_definition.additional_schema_elements
 }
 output "report_versioning" {
   description = "(Optional) Overwrite the previous version of each report or to deliver the report in addition to the previous versions. Valid values are: CREATE_NEW_REPORT and OVERWRITE_REPORT.In addition to all arguments above, the following attributes are exported:"
@@ -214,13 +210,17 @@ output "s3_prefix" {
   description = "(Optional) Report path prefix. Limited to 256 characters."
   value       = aws_cur_report_definition.aws_cur_report_definition.s3_prefix
 }
+output "additional_artifacts" {
+  description = "(Required) A list of additional artifacts. Valid values are: REDSHIFT, QUICKSIGHT, ATHENA. When ATHENA exists within additional_artifacts, no other artifact type can be declared and report_versioning must be OVERWRITE_REPORT."
+  value       = aws_cur_report_definition.aws_cur_report_definition.additional_artifacts
+}
 output "time_unit" {
   description = "(Required) The frequency on which report data are measured and displayed.  Valid values are: HOURLY, DAILY."
   value       = aws_cur_report_definition.aws_cur_report_definition.time_unit
 }
-output "format" {
-  description = "(Required) Format for report. Valid values are: textORcsv, Parquet. If Parquet is used, then Compression must also be Parquet."
-  value       = aws_cur_report_definition.aws_cur_report_definition.format
+output "s3_region" {
+  description = "(Required) Region of the existing S3 bucket to hold generated reports."
+  value       = aws_cur_report_definition.aws_cur_report_definition.s3_region
 }
 output "report_name" {
   description = "(Required) Unique name for the report. Must start with a number/letter and is case sensitive. Limited to 256 characters."

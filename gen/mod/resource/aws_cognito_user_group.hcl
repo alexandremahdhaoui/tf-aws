@@ -1,8 +1,8 @@
 resource "aws_cognito_user_group" "aws_cognito_user_group" {
-  name         = var.name
-  precedence   = var.precedence
   user_pool_id = var.user_pool_id
   description  = var.description
+  name         = var.name
+  precedence   = var.precedence
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

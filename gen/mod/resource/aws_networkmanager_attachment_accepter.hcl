@@ -1,24 +1,24 @@
 resource "aws_networkmanager_attachment_accepter" "aws_networkmanager_attachment_accepter" {
-  core_network_arn              = var.core_network_arn
-  resource_arn                  = var.resource_arn
-  attachment_id                 = var.attachment_id
   attachment_policy_rule_number = var.attachment_policy_rule_number
-  attachment_type               = var.attachment_type
+  segment_name                  = var.segment_name
+  attachment_id                 = var.attachment_id
+  core_network_arn              = var.core_network_arn
   core_network_id               = var.core_network_id
   edge_location                 = var.edge_location
   owner_account_id              = var.owner_account_id
-  segment_name                  = var.segment_name
+  resource_arn                  = var.resource_arn
+  attachment_type               = var.attachment_type
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "core_network_arn" {
-  description = "The ARN of a core network."
+variable "attachment_type" {
+  description = "The type of attachment. Valid values can be found in the AWS DocumentationIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
-variable "resource_arn" {
-  description = "The attachment resource ARN."
+variable "core_network_arn" {
+  description = "The ARN of a core network."
   type        = string
 }
 variable "core_network_id" {
@@ -33,8 +33,8 @@ variable "owner_account_id" {
   description = "The ID of the attachment account owner."
   type        = string
 }
-variable "segment_name" {
-  description = "The name of the segment attachment."
+variable "resource_arn" {
+  description = "The attachment resource ARN."
   type        = string
 }
 variable "attachment_id" {
@@ -45,8 +45,8 @@ variable "attachment_policy_rule_number" {
   description = "The policy rule number associated with the attachment."
   type        = string
 }
-variable "attachment_type" {
-  description = "The type of attachment. Valid values can be found in the AWS DocumentationIn addition to all arguments above, the following attributes are exported:"
+variable "segment_name" {
+  description = "The name of the segment attachment."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,13 +169,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "attachment_type" {
+  description = "The type of attachment. Valid values can be found in the AWS DocumentationIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.attachment_type
+}
+output "core_network_arn" {
+  description = "The ARN of a core network."
+  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.core_network_arn
+}
+output "core_network_id" {
+  description = "The id of a core network."
+  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.core_network_id
+}
+output "edge_location" {
+  description = "The Region where the edge is located."
+  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.edge_location
+}
 output "owner_account_id" {
   description = "The ID of the attachment account owner."
   value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.owner_account_id
 }
-output "segment_name" {
-  description = "The name of the segment attachment."
-  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.segment_name
+output "resource_arn" {
+  description = "The attachment resource ARN."
+  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.resource_arn
 }
 output "attachment_id" {
   description = "(Required) The ID of the attachment."
@@ -185,26 +201,6 @@ output "attachment_policy_rule_number" {
   description = "The policy rule number associated with the attachment."
   value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.attachment_policy_rule_number
 }
-output "attachment_type" {
-  description = "The type of attachment. Valid values can be found in the AWS DocumentationIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.attachment_type
-}
-output "core_network_id" {
-  description = "The id of a core network."
-  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.core_network_id
-}
-output "edge_location" {
-  description = "The Region where the edge is located."
-  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.edge_location
-}
-output "core_network_arn" {
-  description = "The ARN of a core network."
-  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.core_network_arn
-}
-output "resource_arn" {
-  description = "The attachment resource ARN."
-  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.resource_arn
-}
 output "segment_name" {
   description = "The name of the segment attachment."
   value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.segment_name
@@ -232,6 +228,10 @@ output "owner_account_id" {
 output "resource_arn" {
   description = "The attachment resource ARN."
   value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.resource_arn
+}
+output "segment_name" {
+  description = "The name of the segment attachment."
+  value       = aws_networkmanager_attachment_accepter.aws_networkmanager_attachment_accepter.segment_name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

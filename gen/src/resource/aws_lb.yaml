@@ -124,7 +124,10 @@ spec:
             description: 'ID of the Outpost containing the load balancer.TimeoutsConfiguration options:'
             type: string
         subnets:
-            description: networknetwork will force a recreation of the resource.
+            description: |-
+                (Optional) A list of subnet IDs to attach to the LB. Subnets
+                cannot be updated for Load Balancers of type networknetwork will force a recreation of the resource.
+            optional: true
             type: string
         tags:
             description: '(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Access Logs (access_logs) support the following:'

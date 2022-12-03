@@ -1,7 +1,7 @@
 resource "aws_dynamodb_tag" "aws_dynamodb_tag" {
-  value        = var.value
   key          = var.key
   resource_arn = var.resource_arn
+  value        = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,10 +139,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "key" {
-  description = "(Required) Tag name."
-  value       = aws_dynamodb_tag.aws_dynamodb_tag.key
-}
 output "resource_arn" {
   description = "(Required) Amazon Resource Name (ARN) of the DynamoDB resource to tag."
   value       = aws_dynamodb_tag.aws_dynamodb_tag.resource_arn
@@ -150,6 +146,10 @@ output "resource_arn" {
 output "value" {
   description = "(Required) Tag value.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dynamodb_tag.aws_dynamodb_tag.value
+}
+output "key" {
+  description = "(Required) Tag name."
+  value       = aws_dynamodb_tag.aws_dynamodb_tag.key
 }
 output "id" {
   description = "DynamoDB resource identifier and key, separated by a comma (,)"

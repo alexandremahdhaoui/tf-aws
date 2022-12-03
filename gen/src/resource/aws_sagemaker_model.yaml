@@ -20,10 +20,7 @@ spec:
             optional: true
             type: string
         environment:
-            description: |-
-                (Optional) Environment variables for the Docker container.
-                A list of key value pairs.
-            optional: true
+            description: ""
             type: string
         execution_role_arn:
             description: (Required) A role that SageMaker can assume to access model artifacts and docker images for deployment.

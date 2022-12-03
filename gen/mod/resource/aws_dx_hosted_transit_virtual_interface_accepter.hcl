@@ -1,11 +1,11 @@
 resource "aws_dx_hosted_transit_virtual_interface_accepter" "aws_dx_hosted_transit_virtual_interface_accepter" {
-  create               = var.create
   dx_gateway_id        = var.dx_gateway_id
   id                   = var.id
   tags                 = var.tags
   tags_all             = var.tags_all
   virtual_interface_id = var.virtual_interface_id
   arn                  = var.arn
+  create               = var.create
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -160,10 +160,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "virtual_interface_id" {
-  description = "(Required) The ID of the Direct Connect virtual interface to accept."
-  value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.virtual_interface_id
-}
 output "arn" {
   description = "The ARN of the virtual interface."
   value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.arn
@@ -188,6 +184,18 @@ output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.tags_all
 }
+output "virtual_interface_id" {
+  description = "(Required) The ID of the Direct Connect virtual interface to accept."
+  value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.virtual_interface_id
+}
+output "arn" {
+  description = "The ARN of the virtual interface."
+  value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.arn
+}
+output "create" {
+  description = "(Default 10m)"
+  value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.create
+}
 output "delete" {
   description = "(Default 10m)"
   value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.delete
@@ -199,14 +207,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.tags_all
-}
-output "arn" {
-  description = "The ARN of the virtual interface."
-  value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.arn
-}
-output "create" {
-  description = "(Default 10m)"
-  value       = aws_dx_hosted_transit_virtual_interface_accepter.aws_dx_hosted_transit_virtual_interface_accepter.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

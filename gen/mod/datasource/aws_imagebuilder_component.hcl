@@ -4,33 +4,9 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "change_description" {
-  description = "Change description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
-}
 output "date_created" {
   description = "Date the component was created."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.date_created
-}
-output "name" {
-  description = "Name of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.name
-}
-output "platform" {
-  description = "Platform of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
-}
-output "supported_os_versions" {
-  description = "Operating Systems (OSes) supported by the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
-}
-output "data" {
-  description = "Data of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.data
-}
-output "description" {
-  description = "Description of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
 }
 output "encrypted" {
   description = "Encryption status of the component."
@@ -44,13 +20,37 @@ output "owner" {
   description = "Owner of the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.owner
 }
+output "type" {
+  description = "Type of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.type
+}
+output "data" {
+  description = "Data of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.data
+}
+output "description" {
+  description = "Description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.description
+}
+output "name" {
+  description = "Name of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.name
+}
+output "platform" {
+  description = "Platform of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.platform
+}
+output "supported_os_versions" {
+  description = "Operating Systems (OSes) supported by the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.supported_os_versions
+}
 output "tags" {
   description = "Key-value map of resource tags for the component."
   value       = aws_imagebuilder_component.aws_imagebuilder_component.tags
 }
-output "type" {
-  description = "Type of the component."
-  value       = aws_imagebuilder_component.aws_imagebuilder_component.type
+output "change_description" {
+  description = "Change description of the component."
+  value       = aws_imagebuilder_component.aws_imagebuilder_component.change_description
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

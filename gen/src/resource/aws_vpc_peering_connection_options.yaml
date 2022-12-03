@@ -8,7 +8,11 @@ spec:
             description: ""
             type: string
         allow_classic_link_to_remote_vpc:
-            description: ""
+            description: |-
+                (Optional) Allow a local linked EC2-Classic instance to communicate
+                with instances in a peer VPC. This enables an outbound communication from the local ClassicLink connection
+                to the remote VPC. This option is not supported for inter-region VPC peering.
+            optional: true
             type: string
         allow_remote_vpc_dns_resolution:
             description: |-

@@ -39,7 +39,8 @@ spec:
             description: POSIX permissions mode
             type: string
         posix_user:
-            description: ""
+            description: |
+                Single element list containing operating system user and group applied to all file system requests made using the access point.
             type: string
         root_directory:
             description: ""
@@ -83,7 +84,8 @@ spec:
             description: POSIX permissions mode
             type: string
         posix_user:
-            description: ""
+            description: |
+                Single element list containing operating system user and group applied to all file system requests made using the access point.
             type: string
         root_directory:
             description: ""

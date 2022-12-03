@@ -1,70 +1,33 @@
 resource "aws_cloudtrail_event_data_store" "aws_cloudtrail_event_data_store" {
-  not_starts_with                = var.not_starts_with
-  retention_period               = var.retention_period
+  field_selector                 = var.field_selector
   multi_region_enabled           = var.multi_region_enabled
-  not_ends_with                  = var.not_ends_with
-  organization_enabled           = var.organization_enabled
-  advanced_event_selector        = var.advanced_event_selector
-  ends_with                      = var.ends_with
   not_equals                     = var.not_equals
-  arn                            = var.arn
+  not_starts_with                = var.not_starts_with
+  starts_with                    = var.starts_with
+  ends_with                      = var.ends_with
   field                          = var.field
   id                             = var.id
-  name                           = var.name
-  starts_with                    = var.starts_with
+  organization_enabled           = var.organization_enabled
+  advanced_event_selector        = var.advanced_event_selector
+  arn                            = var.arn
+  retention_period               = var.retention_period
   tags                           = var.tags
   termination_protection_enabled = var.termination_protection_enabled
   equals                         = var.equals
-  field_selector                 = var.field_selector
+  not_ends_with                  = var.not_ends_with
+  name                           = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "multi_region_enabled" {
-  description = "(Optional) Specifies whether the event data store includes events from all regions, or only from the region in which the event data store is created. Default: true."
-  type        = string
-  default     = ""
-}
-variable "not_ends_with" {
-  description = " (Optional) - A list of values that excludes events that match the last few characters of the event record field specified as the value of field.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "organization_enabled" {
-  description = "(Optional) Specifies whether an event data store collects events logged for an organization in AWS Organizations. Default: false."
-  type        = string
-  default     = ""
-}
-variable "advanced_event_selector" {
-  description = "(Optional) The advanced event selectors to use to select the events for the data store. For more information about how to use advanced event selectors, see Log events by using advanced event selectors in the CloudTrail User Guide."
-  type        = string
-  default     = ""
-}
-variable "ends_with" {
-  description = " (Optional) - A list of values that includes events that match the last few characters of the event record field specified as the value of field."
-  type        = string
-  default     = ""
 }
 variable "not_equals" {
   description = " (Optional) - A list of values that excludes events that match the exact value of the event record field specified as the value of field."
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "ARN of the event data store."
-  type        = string
-}
-variable "field" {
-  description = " (Required) - Specifies a field in an event record on which to filter events to be logged. You can specify only the following values: readOnly, eventSource, eventName, eventCategory, resources.type, resources.ARN."
-  type        = string
-}
-variable "id" {
-  description = "Name of the event data store."
-  type        = string
-}
-variable "name" {
-  description = " (Optional) - Specifies the name of the advanced event selector."
+variable "not_starts_with" {
+  description = " (Optional) - A list of values that excludes events that match the first few characters of the event record field specified as the value of field."
   type        = string
   default     = ""
 }
@@ -73,8 +36,39 @@ variable "starts_with" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+variable "ends_with" {
+  description = " (Optional) - A list of values that includes events that match the last few characters of the event record field specified as the value of field."
+  type        = string
+  default     = ""
+}
+variable "field" {
+  description = " (Required) - Specifies a field in an event record on which to filter events to be logged. You can specify only the following values: readOnly, eventSource, eventName, eventCategory, resources.type, resources.ARN."
+  type        = string
+}
+variable "field_selector" {
+  description = " (Required) - Specifies the selector statements in an advanced event selector. Fields documented below.Field Selector ArgumentsFor strongfield_selector the following attributes are supported."
+  type        = string
+}
+variable "multi_region_enabled" {
+  description = "(Optional) Specifies whether the event data store includes events from all regions, or only from the region in which the event data store is created. Default: true."
+  type        = string
+  default     = ""
+}
+variable "advanced_event_selector" {
+  description = "(Optional) The advanced event selectors to use to select the events for the data store. For more information about how to use advanced event selectors, see Log events by using advanced event selectors in the CloudTrail User Guide."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the event data store."
+  type        = string
+}
+variable "id" {
+  description = "Name of the event data store."
+  type        = string
+}
+variable "organization_enabled" {
+  description = "(Optional) Specifies whether an event data store collects events logged for an organization in AWS Organizations. Default: false."
   type        = string
   default     = ""
 }
@@ -88,17 +82,23 @@ variable "equals" {
   type        = string
   default     = ""
 }
-variable "field_selector" {
-  description = " (Required) - Specifies the selector statements in an advanced event selector. Fields documented below.Field Selector ArgumentsFor strongfield_selector the following attributes are supported."
-  type        = string
-}
-variable "not_starts_with" {
-  description = " (Optional) - A list of values that excludes events that match the first few characters of the event record field specified as the value of field."
+variable "not_ends_with" {
+  description = " (Optional) - A list of values that excludes events that match the last few characters of the event record field specified as the value of field.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
 variable "retention_period" {
   description = "(Optional) The retention period of the event data store, in days. You can set a retention period of up to 2555 days, the equivalent of seven years. Default: 2555."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = " (Optional) - Specifies the name of the advanced event selector."
   type        = string
   default     = ""
 }
@@ -222,21 +222,61 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "ARN of the event data store."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.arn
+output "starts_with" {
+  description = " (Optional) - A list of values that includes events that match the first few characters of the event record field specified as the value of field."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.starts_with
+}
+output "ends_with" {
+  description = " (Optional) - A list of values that includes events that match the last few characters of the event record field specified as the value of field."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.ends_with
 }
 output "field" {
   description = " (Required) - Specifies a field in an event record on which to filter events to be logged. You can specify only the following values: readOnly, eventSource, eventName, eventCategory, resources.type, resources.ARN."
   value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.field
 }
+output "field_selector" {
+  description = " (Required) - Specifies the selector statements in an advanced event selector. Fields documented below.Field Selector ArgumentsFor strongfield_selector the following attributes are supported."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.field_selector
+}
+output "multi_region_enabled" {
+  description = "(Optional) Specifies whether the event data store includes events from all regions, or only from the region in which the event data store is created. Default: true."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.multi_region_enabled
+}
 output "not_equals" {
   description = " (Optional) - A list of values that excludes events that match the exact value of the event record field specified as the value of field."
   value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.not_equals
 }
-output "starts_with" {
-  description = " (Optional) - A list of values that includes events that match the first few characters of the event record field specified as the value of field."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.starts_with
+output "not_starts_with" {
+  description = " (Optional) - A list of values that excludes events that match the first few characters of the event record field specified as the value of field."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.not_starts_with
+}
+output "advanced_event_selector" {
+  description = "(Optional) The advanced event selectors to use to select the events for the data store. For more information about how to use advanced event selectors, see Log events by using advanced event selectors in the CloudTrail User Guide."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.advanced_event_selector
+}
+output "arn" {
+  description = "ARN of the event data store."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.arn
+}
+output "id" {
+  description = "Name of the event data store."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.id
+}
+output "organization_enabled" {
+  description = "(Optional) Specifies whether an event data store collects events logged for an organization in AWS Organizations. Default: false."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.organization_enabled
+}
+output "equals" {
+  description = " (Optional) - A list of values that includes events that match the exact value of the event record field specified as the value of field. This is the only valid operator that you can use with the readOnly, eventCategory, and resources.type fields."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.equals
+}
+output "not_ends_with" {
+  description = " (Optional) - A list of values that excludes events that match the last few characters of the event record field specified as the value of field.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.not_ends_with
+}
+output "retention_period" {
+  description = "(Optional) The retention period of the event data store, in days. You can set a retention period of up to 2555 days, the equivalent of seven years. Default: 2555."
+  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.retention_period
 }
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
@@ -246,49 +286,9 @@ output "termination_protection_enabled" {
   description = "(Optional) Specifies whether termination protection is enabled for the event data store. If termination protection is enabled, you cannot delete the event data store until termination protection is disabled. Default: true.Advanced Event Selector ArgumentsFor strongadvanced_event_selector the following attributes are supported."
   value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.termination_protection_enabled
 }
-output "equals" {
-  description = " (Optional) - A list of values that includes events that match the exact value of the event record field specified as the value of field. This is the only valid operator that you can use with the readOnly, eventCategory, and resources.type fields."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.equals
-}
-output "field_selector" {
-  description = " (Required) - Specifies the selector statements in an advanced event selector. Fields documented below.Field Selector ArgumentsFor strongfield_selector the following attributes are supported."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.field_selector
-}
-output "id" {
-  description = "Name of the event data store."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.id
-}
 output "name" {
   description = " (Optional) - Specifies the name of the advanced event selector."
   value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.name
-}
-output "not_starts_with" {
-  description = " (Optional) - A list of values that excludes events that match the first few characters of the event record field specified as the value of field."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.not_starts_with
-}
-output "retention_period" {
-  description = "(Optional) The retention period of the event data store, in days. You can set a retention period of up to 2555 days, the equivalent of seven years. Default: 2555."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.retention_period
-}
-output "organization_enabled" {
-  description = "(Optional) Specifies whether an event data store collects events logged for an organization in AWS Organizations. Default: false."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.organization_enabled
-}
-output "advanced_event_selector" {
-  description = "(Optional) The advanced event selectors to use to select the events for the data store. For more information about how to use advanced event selectors, see Log events by using advanced event selectors in the CloudTrail User Guide."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.advanced_event_selector
-}
-output "ends_with" {
-  description = " (Optional) - A list of values that includes events that match the last few characters of the event record field specified as the value of field."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.ends_with
-}
-output "multi_region_enabled" {
-  description = "(Optional) Specifies whether the event data store includes events from all regions, or only from the region in which the event data store is created. Default: true."
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.multi_region_enabled
-}
-output "not_ends_with" {
-  description = " (Optional) - A list of values that excludes events that match the last few characters of the event record field specified as the value of field.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudtrail_event_data_store.aws_cloudtrail_event_data_store.not_ends_with
 }
 output "arn" {
   description = "ARN of the event data store."

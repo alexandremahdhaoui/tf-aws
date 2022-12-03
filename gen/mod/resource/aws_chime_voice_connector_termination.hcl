@@ -1,21 +1,13 @@
 resource "aws_chime_voice_connector_termination" "aws_chime_voice_connector_termination" {
+  disabled             = var.disabled
+  voice_connector_id   = var.voice_connector_id
   calling_regions      = var.calling_regions
   cidr_allow_list      = var.cidr_allow_list
   cps_limit            = var.cps_limit
   default_phone_number = var.default_phone_number
-  disabled             = var.disabled
-  voice_connector_id   = var.voice_connector_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "calling_regions" {
-  description = "(Required) The countries to which calls are allowed, in ISO 3166-1 alpha-2 format."
-  type        = string
-}
-variable "cidr_allow_list" {
-  description = "(Required) The IP addresses allowed to make calls, in CIDR format."
   type        = string
 }
 variable "cps_limit" {
@@ -35,6 +27,14 @@ variable "disabled" {
 }
 variable "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
+  type        = string
+}
+variable "calling_regions" {
+  description = "(Required) The countries to which calls are allowed, in ISO 3166-1 alpha-2 format."
+  type        = string
+}
+variable "cidr_allow_list" {
+  description = "(Required) The IP addresses allowed to make calls, in CIDR format."
   type        = string
 }
 variable "tag_instance_id" {
@@ -157,14 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "default_phone_number" {
-  description = "(Optional) The default caller ID phone number."
-  value       = aws_chime_voice_connector_termination.aws_chime_voice_connector_termination.default_phone_number
-}
-output "disabled" {
-  description = "(Optional) When termination settings are disabled, outbound calls can not be made."
-  value       = aws_chime_voice_connector_termination.aws_chime_voice_connector_termination.disabled
-}
 output "voice_connector_id" {
   description = "(Required) The Amazon Chime Voice Connector ID."
   value       = aws_chime_voice_connector_termination.aws_chime_voice_connector_termination.voice_connector_id
@@ -180,6 +172,14 @@ output "cidr_allow_list" {
 output "cps_limit" {
   description = "(Optional) The limit on calls per second. Max value based on account service quota. Default value of 1.In addition to all arguments above, the following attributes are exported:"
   value       = aws_chime_voice_connector_termination.aws_chime_voice_connector_termination.cps_limit
+}
+output "default_phone_number" {
+  description = "(Optional) The default caller ID phone number."
+  value       = aws_chime_voice_connector_termination.aws_chime_voice_connector_termination.default_phone_number
+}
+output "disabled" {
+  description = "(Optional) When termination settings are disabled, outbound calls can not be made."
+  value       = aws_chime_voice_connector_termination.aws_chime_voice_connector_termination.disabled
 }
 output "id" {
   description = "The Amazon Chime Voice Connector ID."

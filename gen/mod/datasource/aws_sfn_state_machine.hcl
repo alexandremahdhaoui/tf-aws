@@ -4,6 +4,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+output "arn" {
+  description = "Set to the arn of the state function."
+  value       = aws_sfn_state_machine.aws_sfn_state_machine.arn
+}
 output "creation_date" {
   description = "Date the state machine was created."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.creation_date
@@ -19,10 +23,6 @@ output "id" {
 output "role_arn" {
   description = "Set to the role_arn used by the state function."
   value       = aws_sfn_state_machine.aws_sfn_state_machine.role_arn
-}
-output "arn" {
-  description = "Set to the arn of the state function."
-  value       = aws_sfn_state_machine.aws_sfn_state_machine.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

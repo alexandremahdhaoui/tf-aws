@@ -1,15 +1,19 @@
 resource "aws_glacier_vault" "aws_glacier_vault" {
+  location      = var.location
+  name          = var.name
   notification  = var.notification
   sns_topic     = var.sns_topic
   tags          = var.tags
   access_policy = var.access_policy
   arn           = var.arn
   events        = var.events
-  location      = var.location
-  name          = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the vault."
   type        = string
 }
 variable "events" {
@@ -42,10 +46,6 @@ variable "access_policy" {
   description = "(Optional) The policy document. This is a JSON formatted string.\nThe heredoc syntax or file function is helpful here. Use the Glacier Developer Guide for more information on Glacier Vault Policy"
   type        = string
   default     = ""
-}
-variable "arn" {
-  description = "The ARN of the vault."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -167,14 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "events" {
-  description = "(Required) You can configure a vault to publish a notification for ArchiveRetrievalCompleted and InventoryRetrievalCompleted events."
-  value       = aws_glacier_vault.aws_glacier_vault.events
-}
-output "location" {
-  description = "The URI of the vault that was created."
-  value       = aws_glacier_vault.aws_glacier_vault.location
-}
 output "name" {
   description = "(Required) The name of the Vault. Names can be between 1 and 255 characters long and the valid characters are a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), and '.' (period)."
   value       = aws_glacier_vault.aws_glacier_vault.name
@@ -199,6 +191,18 @@ output "arn" {
   description = "The ARN of the vault."
   value       = aws_glacier_vault.aws_glacier_vault.arn
 }
+output "events" {
+  description = "(Required) You can configure a vault to publish a notification for ArchiveRetrievalCompleted and InventoryRetrievalCompleted events."
+  value       = aws_glacier_vault.aws_glacier_vault.events
+}
+output "location" {
+  description = "The URI of the vault that was created."
+  value       = aws_glacier_vault.aws_glacier_vault.location
+}
+output "arn" {
+  description = "The ARN of the vault."
+  value       = aws_glacier_vault.aws_glacier_vault.arn
+}
 output "location" {
   description = "The URI of the vault that was created."
   value       = aws_glacier_vault.aws_glacier_vault.location
@@ -206,10 +210,6 @@ output "location" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_glacier_vault.aws_glacier_vault.tags_all
-}
-output "arn" {
-  description = "The ARN of the vault."
-  value       = aws_glacier_vault.aws_glacier_vault.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

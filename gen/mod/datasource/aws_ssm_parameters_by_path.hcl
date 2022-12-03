@@ -1,21 +1,13 @@
 datasource "aws_ssm_parameters_by_path" "aws_ssm_parameters_by_path" {
-  types           = var.types
   with_decryption = var.with_decryption
   arns            = var.arns
   names           = var.names
   path            = var.path
   recursive       = var.recursive
+  types           = var.types
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "arns" {
-  description = "ARNs of the parameters."
-  type        = string
-}
-variable "names" {
-  description = "Names of the parameters."
   type        = string
 }
 variable "path" {
@@ -35,6 +27,14 @@ variable "with_decryption" {
   description = "(Optional) Whether to return decrypted SecureString value. Defaults to true."
   type        = string
   default     = ""
+}
+variable "arns" {
+  description = "ARNs of the parameters."
+  type        = string
+}
+variable "names" {
+  description = "Names of the parameters."
+  type        = string
 }
 output "types" {
   description = "Types of the parameters."

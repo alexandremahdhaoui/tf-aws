@@ -1,21 +1,12 @@
 resource "aws_ec2_transit_gateway_prefix_list_reference" "aws_ec2_transit_gateway_prefix_list_reference" {
+  transit_gateway_route_table_id = var.transit_gateway_route_table_id
   blackhole                      = var.blackhole
   id                             = var.id
   prefix_list_id                 = var.prefix_list_id
   transit_gateway_attachment_id  = var.transit_gateway_attachment_id
-  transit_gateway_route_table_id = var.transit_gateway_route_table_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "transit_gateway_attachment_id" {
-  description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "transit_gateway_route_table_id" {
-  description = "(Required) Identifier of EC2 Transit Gateway Route Table."
   type        = string
 }
 variable "blackhole" {
@@ -30,6 +21,15 @@ variable "id" {
 }
 variable "prefix_list_id" {
   description = "(Required) Identifier of EC2 Prefix List."
+  type        = string
+}
+variable "transit_gateway_attachment_id" {
+  description = "(Optional) Identifier of EC2 Transit Gateway Attachment.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_route_table_id" {
+  description = "(Required) Identifier of EC2 Transit Gateway Route Table."
   type        = string
 }
 variable "tag_instance_id" {

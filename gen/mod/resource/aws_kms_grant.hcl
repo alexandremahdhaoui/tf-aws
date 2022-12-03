@@ -1,12 +1,12 @@
 resource "aws_kms_grant" "aws_kms_grant" {
   constraints               = var.constraints
+  encryption_context_equals = var.encryption_context_equals
+  grantee_principal         = var.grantee_principal
+  key_id                    = var.key_id
   encryption_context_subset = var.encryption_context_subset
   grant_creation_tokens     = var.grant_creation_tokens
   grant_id                  = var.grant_id
-  grantee_principal         = var.grantee_principal
-  key_id                    = var.key_id
   name                      = var.name
-  encryption_context_equals = var.encryption_context_equals
   operations                = var.operations
   retire_on_delete          = var.retire_on_delete
   retiring_principal        = var.retiring_principal
@@ -15,24 +15,8 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "grant_id" {
-  description = "The unique identifier for the grant."
-  type        = string
-}
-variable "grantee_principal" {
-  description = "(Required, Forces new resources) The principal that is given permission to perform the operations that the grant permits in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
-  type        = string
-}
-variable "key_id" {
-  description = "(Required, Forces new resources) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN."
-  type        = string
-}
-variable "name" {
-  description = "(Optional, Forces new resources) A friendly name for identifying the grant."
-  type        = string
-}
-variable "constraints" {
-  description = "(Optional, Forces new resources) A structure that you can use to allow certain operations in the grant only when the desired encryption context is present. For more information about encryption context, see Encryption Context."
+variable "retiring_principal" {
+  description = "(Optional, Forces new resources) The principal that is given permission to retire the grant by using RetireGrant operation in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
   type        = string
 }
 variable "encryption_context_subset" {
@@ -44,14 +28,13 @@ variable "grant_creation_tokens" {
   description = "(Optional, Forces new resources) A list of grant tokens to be used when creating the grant. See Grant Tokens for more information about grant tokens."
   type        = string
 }
-variable "retiring_principal" {
-  description = "(Optional, Forces new resources) The principal that is given permission to retire the grant by using RetireGrant operation in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
+variable "grant_id" {
+  description = "The unique identifier for the grant."
   type        = string
 }
-variable "encryption_context_equals" {
-  description = "(Optional) A list of key-value pairs that must match the encryption context in subsequent cryptographic operation requests. The grant allows the operation only when the encryption context in the request is the same as the encryption context specified in this constraint. Conflicts with encryption_context_subset."
+variable "name" {
+  description = "(Optional, Forces new resources) A friendly name for identifying the grant."
   type        = string
-  default     = ""
 }
 variable "operations" {
   description = "(Required, Forces new resources) A list of operations that the grant permits. The permitted values are: Decrypt, Encrypt, GenerateDataKey, GenerateDataKeyWithoutPlaintext, ReEncryptFrom, ReEncryptTo, Sign, Verify, GetPublicKey, CreateGrant, RetireGrant, DescribeKey, GenerateDataKeyPair, or GenerateDataKeyPairWithoutPlaintext."
@@ -59,6 +42,23 @@ variable "operations" {
 }
 variable "retire_on_delete" {
   description = "RetireGrant for more information.The constraints block supports the following arguments:"
+  type        = string
+}
+variable "constraints" {
+  description = "(Optional, Forces new resources) A structure that you can use to allow certain operations in the grant only when the desired encryption context is present. For more information about encryption context, see Encryption Context."
+  type        = string
+}
+variable "encryption_context_equals" {
+  description = "(Optional) A list of key-value pairs that must match the encryption context in subsequent cryptographic operation requests. The grant allows the operation only when the encryption context in the request is the same as the encryption context specified in this constraint. Conflicts with encryption_context_subset."
+  type        = string
+  default     = ""
+}
+variable "grantee_principal" {
+  description = "(Required, Forces new resources) The principal that is given permission to perform the operations that the grant permits in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
+  type        = string
+}
+variable "key_id" {
+  description = "(Required, Forces new resources) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN."
   type        = string
 }
 variable "tag_instance_id" {
@@ -181,25 +181,25 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "constraints" {
+  description = "(Optional, Forces new resources) A structure that you can use to allow certain operations in the grant only when the desired encryption context is present. For more information about encryption context, see Encryption Context."
+  value       = aws_kms_grant.aws_kms_grant.constraints
+}
 output "encryption_context_equals" {
   description = "(Optional) A list of key-value pairs that must match the encryption context in subsequent cryptographic operation requests. The grant allows the operation only when the encryption context in the request is the same as the encryption context specified in this constraint. Conflicts with encryption_context_subset."
   value       = aws_kms_grant.aws_kms_grant.encryption_context_equals
 }
-output "operations" {
-  description = "(Required, Forces new resources) A list of operations that the grant permits. The permitted values are: Decrypt, Encrypt, GenerateDataKey, GenerateDataKeyWithoutPlaintext, ReEncryptFrom, ReEncryptTo, Sign, Verify, GetPublicKey, CreateGrant, RetireGrant, DescribeKey, GenerateDataKeyPair, or GenerateDataKeyPairWithoutPlaintext."
-  value       = aws_kms_grant.aws_kms_grant.operations
+output "grantee_principal" {
+  description = "(Required, Forces new resources) The principal that is given permission to perform the operations that the grant permits in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
+  value       = aws_kms_grant.aws_kms_grant.grantee_principal
 }
-output "retire_on_delete" {
-  description = "RetireGrant for more information.The constraints block supports the following arguments:"
-  value       = aws_kms_grant.aws_kms_grant.retire_on_delete
+output "key_id" {
+  description = "(Required, Forces new resources) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN."
+  value       = aws_kms_grant.aws_kms_grant.key_id
 }
 output "retiring_principal" {
   description = "(Optional, Forces new resources) The principal that is given permission to retire the grant by using RetireGrant operation in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
   value       = aws_kms_grant.aws_kms_grant.retiring_principal
-}
-output "constraints" {
-  description = "(Optional, Forces new resources) A structure that you can use to allow certain operations in the grant only when the desired encryption context is present. For more information about encryption context, see Encryption Context."
-  value       = aws_kms_grant.aws_kms_grant.constraints
 }
 output "encryption_context_subset" {
   description = "(Optional) A list of key-value pairs that must be included in the encryption context of subsequent cryptographic operation requests. The grant allows the cryptographic operation only when the encryption context in the request includes the key-value pairs specified in this constraint, although it can include additional key-value pairs. Conflicts with encryption_context_equals.In addition to all arguments above, the following attributes are exported:"
@@ -213,25 +213,25 @@ output "grant_id" {
   description = "The unique identifier for the grant."
   value       = aws_kms_grant.aws_kms_grant.grant_id
 }
-output "grantee_principal" {
-  description = "(Required, Forces new resources) The principal that is given permission to perform the operations that the grant permits in ARN format. Note that due to eventual consistency issues around IAM principals, terraform's state may not always be refreshed to reflect what is true in AWS."
-  value       = aws_kms_grant.aws_kms_grant.grantee_principal
-}
-output "key_id" {
-  description = "(Required, Forces new resources) The unique identifier for the customer master key (CMK) that the grant applies to. Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To specify a CMK in a different AWS account, you must use the key ARN."
-  value       = aws_kms_grant.aws_kms_grant.key_id
-}
 output "name" {
   description = "(Optional, Forces new resources) A friendly name for identifying the grant."
   value       = aws_kms_grant.aws_kms_grant.name
 }
-output "grant_token" {
-  description = "The grant token for the created grant. For more information, see Grant Tokens."
-  value       = aws_kms_grant.aws_kms_grant.grant_token
+output "operations" {
+  description = "(Required, Forces new resources) A list of operations that the grant permits. The permitted values are: Decrypt, Encrypt, GenerateDataKey, GenerateDataKeyWithoutPlaintext, ReEncryptFrom, ReEncryptTo, Sign, Verify, GetPublicKey, CreateGrant, RetireGrant, DescribeKey, GenerateDataKeyPair, or GenerateDataKeyPairWithoutPlaintext."
+  value       = aws_kms_grant.aws_kms_grant.operations
+}
+output "retire_on_delete" {
+  description = "RetireGrant for more information.The constraints block supports the following arguments:"
+  value       = aws_kms_grant.aws_kms_grant.retire_on_delete
 }
 output "grant_id" {
   description = "The unique identifier for the grant."
   value       = aws_kms_grant.aws_kms_grant.grant_id
+}
+output "grant_token" {
+  description = "The grant token for the created grant. For more information, see Grant Tokens."
+  value       = aws_kms_grant.aws_kms_grant.grant_token
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

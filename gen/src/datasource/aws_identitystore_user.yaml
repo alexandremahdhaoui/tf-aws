@@ -28,8 +28,7 @@ spec:
             optional: true
             type: string
         emails:
-            description: |
-                List of details about the user's email.
+            description: ""
             optional: true
             type: string
         external_id:
@@ -37,7 +36,8 @@ spec:
             optional: true
             type: string
         external_ids:
-            description: ""
+            description: |
+                List of identifiers issued to this resource by an external identity provider.
             optional: true
             type: string
         family_name:
@@ -97,8 +97,7 @@ spec:
             optional: true
             type: string
         phone_numbers:
-            description: |
-                List of details about the user's phone number.
+            description: ""
             optional: true
             type: string
         postal_code:
@@ -165,11 +164,11 @@ spec:
             description: The name that is typically displayed when the user is referenced.
             type: string
         emails:
-            description: |
-                List of details about the user's email.
+            description: ""
             type: string
         external_ids:
-            description: ""
+            description: |
+                List of identifiers issued to this resource by an external identity provider.
             type: string
         family_name:
             description: The family name of the user.
@@ -209,8 +208,7 @@ spec:
             description: An alternate name for the user.
             type: string
         phone_numbers:
-            description: |
-                List of details about the user's phone number.
+            description: ""
             type: string
         postal_code:
             description: The postal code of the address.

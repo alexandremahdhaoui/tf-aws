@@ -1,7 +1,7 @@
 apiVersion: aws.terraform.alexandre.mahdhaoui.com/v0.1.0
 kind: TerraformDatasource
 metadata:
-    name: aws_Create elasticache_subnet_group
+    name: aws_create_elasticache_subnet_group
 spec:
     args: {}
     attrs: {}

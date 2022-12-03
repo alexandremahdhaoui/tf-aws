@@ -5,9 +5,7 @@ metadata:
 spec:
     args:
         abort_incomplete_multipart_upload:
-            description: |
-                (Optional) Configuration block containing settings for abort incomplete multipart upload.
-            optional: true
+            description: ""
             type: string
         bucket:
             description: (Required) Amazon Resource Name (ARN) of the bucket.
@@ -24,16 +22,16 @@ spec:
             description: (Required) Number of days after which Amazon S3 aborts an incomplete multipart upload.
             type: string
         expiration:
-            description: |
-                (Optional) Configuration block containing settings for expiration of objects.
-            optional: true
+            description: ""
             type: string
         expired_object_delete_marker:
             description: (Optional) Enable to remove a delete marker with no noncurrent versions. Cannot be specified with date or days.
             optional: true
             type: string
         filter:
-            description: ""
+            description: |
+                (Optional) Configuration block containing settings for filtering.
+            optional: true
             type: string
         id:
             description: (Required) Unique identifier for the rule.
@@ -43,7 +41,8 @@ spec:
             optional: true
             type: string
         rule:
-            description: ""
+            description: |
+                (Required) Configuration block(s) containing lifecycle rules for the bucket.
             type: string
         status:
             description: '(Optional) Status of the rule. Valid values: Enabled and Disabled. Defaults to Enabled.In addition to all arguments above, the following attributes are exported:'

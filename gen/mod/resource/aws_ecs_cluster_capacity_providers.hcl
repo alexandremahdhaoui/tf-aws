@@ -158,14 +158,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "default_capacity_provider_strategy" {
-  description = "(Optional) Set of capacity provider strategies to use by default for the cluster. Detailed below.default_capacity_provider_strategy Configuration Block"
-  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.default_capacity_provider_strategy
-}
-output "weight" {
-  description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider. The weight value is taken into consideration after the base count of tasks has been satisfied. Defaults to 0."
-  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.weight
-}
 output "base" {
   description = "(Optional) The number of tasks, at a minimum, to run on the specified capacity provider. Only one capacity provider in a capacity provider strategy can have a base defined. Defaults to 0.In addition to all arguments above, the following attributes are exported:"
   value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.base
@@ -181,6 +173,14 @@ output "capacity_providers" {
 output "cluster_name" {
   description = "(Required, Forces new resource) Name of the ECS cluster to manage capacity providers for."
   value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.cluster_name
+}
+output "default_capacity_provider_strategy" {
+  description = "(Optional) Set of capacity provider strategies to use by default for the cluster. Detailed below.default_capacity_provider_strategy Configuration Block"
+  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.default_capacity_provider_strategy
+}
+output "weight" {
+  description = "(Optional) The relative percentage of the total number of launched tasks that should use the specified capacity provider. The weight value is taken into consideration after the base count of tasks has been satisfied. Defaults to 0."
+  value       = aws_ecs_cluster_capacity_providers.aws_ecs_cluster_capacity_providers.weight
 }
 output "id" {
   description = "Same as cluster_name."

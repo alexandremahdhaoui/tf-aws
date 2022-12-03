@@ -1,32 +1,37 @@
 resource "aws_lakeformation_permissions" "aws_lakeformation_permissions" {
-  key                           = var.key
-  principal                     = var.principal
-  arn                           = var.arn
-  catalog_id                    = var.catalog_id
-  column_names                  = var.column_names
-  data_location                 = var.data_location
-  database_name                 = var.database_name
   excluded_column_names         = var.excluded_column_names
-  catalog_resource              = var.catalog_resource
-  lf_tag_policy                 = var.lf_tag_policy
   table_with_columns            = var.table_with_columns
-  lf_tag                        = var.lf_tag
+  database                      = var.database
+  permissions                   = var.permissions
+  permissions_with_grant_option = var.permissions_with_grant_option
   table                         = var.table
   values                        = var.values
   wildcard                      = var.wildcard
-  database                      = var.database
+  column_names                  = var.column_names
+  data_location                 = var.data_location
+  catalog_resource              = var.catalog_resource
   expression                    = var.expression
-  name                          = var.name
-  permissions                   = var.permissions
-  permissions_with_grant_option = var.permissions_with_grant_option
+  key                           = var.key
+  principal                     = var.principal
   resource_type                 = var.resource_type
+  arn                           = var.arn
+  catalog_id                    = var.catalog_id
+  lf_tag_policy                 = var.lf_tag_policy
+  name                          = var.name
+  database_name                 = var.database_name
+  lf_tag                        = var.lf_tag
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "catalog_id" {
-  description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
+variable "excluded_column_names" {
+  description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+  type        = string
+  default     = ""
+}
+variable "table_with_columns" {
+  description = "(Optional) Configuration block for a table with columns resource. Detailed below."
   type        = string
   default     = ""
 }
@@ -40,39 +45,17 @@ variable "data_location" {
   type        = string
   default     = ""
 }
-variable "database_name" {
-  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
-  type        = string
-}
-variable "excluded_column_names" {
-  description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+variable "database" {
+  description = "(Optional) Configuration block for a database resource. Detailed below."
   type        = string
   default     = ""
 }
-variable "key" {
-  description = " – (Required) The key-name of an LF-Tag."
+variable "permissions" {
+  description = " – (Required) List of permissions granted to the principal. Valid values may include ALL, ALTER, ASSOCIATE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, DELETE, DESCRIBE, DROP, INSERT, and SELECT. For details on each permission, see Lake Formation Permissions Reference."
   type        = string
 }
-variable "principal" {
-  description = " – (Required) Principal to be granted the permissions on the resource. Supported principals include IAM_ALLOWED_PRINCIPALS (see Default Behavior and IAMAllowedPrincipals above), IAM roles, users, groups, SAML groups and users, QuickSight groups, OUs, and organizations as well as AWS account IDs for cross-account permissions. For more information, see Lake Formation Permissions Reference.~> strongNOTE: We highly recommend that the principal emNOT be a Lake Formation administrator (granted using aws_lakeformation_data_lake_settings). The entity (e.g., IAM role) running Terraform will most likely need to be a Lake Formation administrator. As such, the entity will have implicit permissions and does not need permissions granted through this resource.One of the following is required:"
-  type        = string
-}
-variable "arn" {
-  description = " – (Required) Amazon Resource Name (ARN) that uniquely identifies the data location resource.The following argument is optional:"
-  type        = string
-}
-variable "lf_tag_policy" {
-  description = "(Optional) Configuration block for an LF-tag policy resource. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "table_with_columns" {
-  description = "(Optional) Configuration block for a table with columns resource. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "catalog_resource" {
-  description = "(Optional) Whether the permissions are to be granted for the Data Catalog. Defaults to false."
+variable "permissions_with_grant_option" {
+  description = "(Optional) Subset of permissions which the principal can pass.data_locationThe following argument is required:"
   type        = string
   default     = ""
 }
@@ -85,8 +68,22 @@ variable "values" {
   description = "(Required) A list of possible values of an LF-Tag.tableThe following argument is required:"
   type        = string
 }
-variable "lf_tag" {
-  description = "(Optional) Configuration block for an LF-tag resource. Detailed below."
+variable "wildcard" {
+  description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = " – (Required) Amazon Resource Name (ARN) that uniquely identifies the data location resource.The following argument is optional:"
+  type        = string
+}
+variable "catalog_id" {
+  description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
+  type        = string
+  default     = ""
+}
+variable "catalog_resource" {
+  description = "(Optional) Whether the permissions are to be granted for the Data Catalog. Defaults to false."
   type        = string
   default     = ""
 }
@@ -94,32 +91,35 @@ variable "expression" {
   description = "(Required) A list of tag conditions that apply to the resource's tag policy. Configuration block for tag conditions that apply to the policy. See expression below.The following argument is optional:"
   type        = string
 }
-variable "name" {
-  description = " – (Required) Name of the table resource."
+variable "key" {
+  description = " – (Required) The key-name of an LF-Tag."
   type        = string
 }
-variable "permissions" {
-  description = " – (Required) List of permissions granted to the principal. Valid values may include ALL, ALTER, ASSOCIATE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, DELETE, DESCRIBE, DROP, INSERT, and SELECT. For details on each permission, see Lake Formation Permissions Reference."
+variable "principal" {
+  description = " – (Required) Principal to be granted the permissions on the resource. Supported principals include IAM_ALLOWED_PRINCIPALS (see Default Behavior and IAMAllowedPrincipals above), IAM roles, users, groups, SAML groups and users, QuickSight groups, OUs, and organizations as well as AWS account IDs for cross-account permissions. For more information, see Lake Formation Permissions Reference.~> strongNOTE: We highly recommend that the principal emNOT be a Lake Formation administrator (granted using aws_lakeformation_data_lake_settings). The entity (e.g., IAM role) running Terraform will most likely need to be a Lake Formation administrator. As such, the entity will have implicit permissions and does not need permissions granted through this resource.One of the following is required:"
   type        = string
-}
-variable "permissions_with_grant_option" {
-  description = "(Optional) Subset of permissions which the principal can pass.data_locationThe following argument is required:"
-  type        = string
-  default     = ""
 }
 variable "resource_type" {
   description = " – (Required) The resource type for which the tag policy applies. Valid values are DATABASE and TABLE."
   type        = string
 }
-variable "wildcard" {
-  description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+variable "database_name" {
+  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
+  type        = string
+}
+variable "lf_tag" {
+  description = "(Optional) Configuration block for an LF-tag resource. Detailed below."
   type        = string
   default     = ""
 }
-variable "database" {
-  description = "(Optional) Configuration block for a database resource. Detailed below."
+variable "lf_tag_policy" {
+  description = "(Optional) Configuration block for an LF-tag policy resource. Detailed below."
   type        = string
   default     = ""
+}
+variable "name" {
+  description = " – (Required) Name of the table resource."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -241,45 +241,9 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "permissions" {
-  description = " – (Required) List of permissions granted to the principal. Valid values may include ALL, ALTER, ASSOCIATE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, DELETE, DESCRIBE, DROP, INSERT, and SELECT. For details on each permission, see Lake Formation Permissions Reference."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.permissions
-}
-output "permissions_with_grant_option" {
-  description = "(Optional) Subset of permissions which the principal can pass.data_locationThe following argument is required:"
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.permissions_with_grant_option
-}
-output "resource_type" {
-  description = " – (Required) The resource type for which the tag policy applies. Valid values are DATABASE and TABLE."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.resource_type
-}
-output "wildcard" {
-  description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.wildcard
-}
-output "database" {
-  description = "(Optional) Configuration block for a database resource. Detailed below."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.database
-}
 output "expression" {
   description = "(Required) A list of tag conditions that apply to the resource's tag policy. Configuration block for tag conditions that apply to the policy. See expression below.The following argument is optional:"
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.expression
-}
-output "name" {
-  description = " – (Required) Name of the table resource."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.name
-}
-output "data_location" {
-  description = "(Optional) Configuration block for a data location resource. Detailed below."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.data_location
-}
-output "database_name" {
-  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.database_name
-}
-output "excluded_column_names" {
-  description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.excluded_column_names
 }
 output "key" {
   description = " – (Required) The key-name of an LF-Tag."
@@ -289,6 +253,10 @@ output "principal" {
   description = " – (Required) Principal to be granted the permissions on the resource. Supported principals include IAM_ALLOWED_PRINCIPALS (see Default Behavior and IAMAllowedPrincipals above), IAM roles, users, groups, SAML groups and users, QuickSight groups, OUs, and organizations as well as AWS account IDs for cross-account permissions. For more information, see Lake Formation Permissions Reference.~> strongNOTE: We highly recommend that the principal emNOT be a Lake Formation administrator (granted using aws_lakeformation_data_lake_settings). The entity (e.g., IAM role) running Terraform will most likely need to be a Lake Formation administrator. As such, the entity will have implicit permissions and does not need permissions granted through this resource.One of the following is required:"
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.principal
 }
+output "resource_type" {
+  description = " – (Required) The resource type for which the tag policy applies. Valid values are DATABASE and TABLE."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.resource_type
+}
 output "arn" {
   description = " – (Required) Amazon Resource Name (ARN) that uniquely identifies the data location resource.The following argument is optional:"
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.arn
@@ -297,25 +265,41 @@ output "catalog_id" {
   description = "(Optional) Identifier for the Data Catalog. By default, it is the account ID of the caller."
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.catalog_id
 }
-output "column_names" {
-  description = "(Required, at least one of column_names or wildcard) Set of column names for the table."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.column_names
-}
 output "catalog_resource" {
   description = "(Optional) Whether the permissions are to be granted for the Data Catalog. Defaults to false."
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.catalog_resource
+}
+output "name" {
+  description = " – (Required) Name of the table resource."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.name
+}
+output "database_name" {
+  description = " – (Required) Name of the database for the table with columns resource. Unique to the Data Catalog."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.database_name
+}
+output "lf_tag" {
+  description = "(Optional) Configuration block for an LF-tag resource. Detailed below."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.lf_tag
 }
 output "lf_tag_policy" {
   description = "(Optional) Configuration block for an LF-tag policy resource. Detailed below."
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.lf_tag_policy
 }
+output "excluded_column_names" {
+  description = "(Optional) Set of column names for the table to exclude. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.excluded_column_names
+}
 output "table_with_columns" {
   description = "(Optional) Configuration block for a table with columns resource. Detailed below."
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.table_with_columns
 }
-output "lf_tag" {
-  description = "(Optional) Configuration block for an LF-tag resource. Detailed below."
-  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.lf_tag
+output "permissions" {
+  description = " – (Required) List of permissions granted to the principal. Valid values may include ALL, ALTER, ASSOCIATE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, DELETE, DESCRIBE, DROP, INSERT, and SELECT. For details on each permission, see Lake Formation Permissions Reference."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.permissions
+}
+output "permissions_with_grant_option" {
+  description = "(Optional) Subset of permissions which the principal can pass.data_locationThe following argument is required:"
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.permissions_with_grant_option
 }
 output "table" {
   description = "(Optional) Configuration block for a table resource. Detailed below."
@@ -324,6 +308,22 @@ output "table" {
 output "values" {
   description = "(Required) A list of possible values of an LF-Tag.tableThe following argument is required:"
   value       = aws_lakeformation_permissions.aws_lakeformation_permissions.values
+}
+output "wildcard" {
+  description = "(Required, at least one of column_names or wildcard) Whether to use a column wildcard. If excluded_column_names is included, wildcard must be set to true to avoid Terraform reporting a difference."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.wildcard
+}
+output "column_names" {
+  description = "(Required, at least one of column_names or wildcard) Set of column names for the table."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.column_names
+}
+output "data_location" {
+  description = "(Optional) Configuration block for a data location resource. Detailed below."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.data_location
+}
+output "database" {
+  description = "(Optional) Configuration block for a database resource. Detailed below."
+  value       = aws_lakeformation_permissions.aws_lakeformation_permissions.database
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

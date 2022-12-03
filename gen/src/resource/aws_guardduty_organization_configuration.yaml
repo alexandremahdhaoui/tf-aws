@@ -18,9 +18,7 @@ spec:
             description: (Required) The detector ID of the GuardDuty account.
             type: string
         ebs_volumes:
-            description: |-
-                (Required) Configure whether scanning EBS volumes should be auto-enabled for new members joining the organization
-                See EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:
+            description: 'EBS volumes below for more details.EBS volumesThe ebs_volumes block supports the following:'
             type: string
         enable:
             description: '(Required) If true, enables Kubernetes audit logs as a data source for Kubernetes protectiontrue.Malware Protectionmalware_protection block supports the following:'

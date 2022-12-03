@@ -52,9 +52,7 @@ spec:
             optional: true
             type: string
         message_type:
-            description: |
-                (Optional) The type of notification that triggers AWS Config to run an evaluation for a rule. You canspecify the following notification types:
-            optional: true
+            description: ""
             type: string
         name:
             description: (Required) The name of the rule

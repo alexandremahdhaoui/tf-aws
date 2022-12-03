@@ -1,16 +1,29 @@
 resource "aws_guardduty_member" "aws_guardduty_member" {
-  id                         = var.id
-  invite                     = var.invite
-  relationship_status        = var.relationship_status
   detector_id                = var.detector_id
   disable_email_notification = var.disable_email_notification
-  email                      = var.email
+  id                         = var.id
   account_id                 = var.account_id
   create                     = var.create
+  email                      = var.email
   invitation_message         = var.invitation_message
+  invite                     = var.invite
+  relationship_status        = var.relationship_status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "detector_id" {
+  description = "(Required) The detector ID of the GuardDuty account where you want to create member accounts."
+  type        = string
+}
+variable "disable_email_notification" {
+  description = "(Optional) Boolean whether an email notification is sent to the accounts. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The ID of the GuardDuty member"
   type        = string
 }
 variable "account_id" {
@@ -19,6 +32,10 @@ variable "account_id" {
 }
 variable "create" {
   description = "(Default 1m)"
+  type        = string
+}
+variable "email" {
+  description = "(Required) Email address for member account."
   type        = string
 }
 variable "invitation_message" {
@@ -33,23 +50,6 @@ variable "invite" {
 }
 variable "relationship_status" {
   description = "The status of the relationship between the member account and its primary account. More information can be found in Amazon GuardDuty API Reference.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "detector_id" {
-  description = "(Required) The detector ID of the GuardDuty account where you want to create member accounts."
-  type        = string
-}
-variable "disable_email_notification" {
-  description = "(Optional) Boolean whether an email notification is sent to the accounts. Defaults to false.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "email" {
-  description = "(Required) Email address for member account."
-  type        = string
-}
-variable "id" {
-  description = "The ID of the GuardDuty member"
   type        = string
 }
 variable "tag_instance_id" {
@@ -172,17 +172,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "disable_email_notification" {
-  description = "(Optional) Boolean whether an email notification is sent to the accounts. Defaults to false.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_guardduty_member.aws_guardduty_member.disable_email_notification
+output "create" {
+  description = "(Default 1m)"
+  value       = aws_guardduty_member.aws_guardduty_member.create
 }
 output "email" {
   description = "(Required) Email address for member account."
   value       = aws_guardduty_member.aws_guardduty_member.email
 }
-output "id" {
-  description = "The ID of the GuardDuty member"
-  value       = aws_guardduty_member.aws_guardduty_member.id
+output "invitation_message" {
+  description = "(Optional) Message for invitation."
+  value       = aws_guardduty_member.aws_guardduty_member.invitation_message
 }
 output "invite" {
   description = "(Optional) Boolean whether to invite the account to GuardDuty as a member. Defaults to false. To detect if an invitation needs to be (re-)sent, the Terraform state value is true based on a relationship_status of Disabled, Enabled, Invited, or EmailVerificationInProgress."
@@ -192,21 +192,21 @@ output "relationship_status" {
   description = "The status of the relationship between the member account and its primary account. More information can be found in Amazon GuardDuty API Reference.TimeoutsConfiguration options:"
   value       = aws_guardduty_member.aws_guardduty_member.relationship_status
 }
-output "detector_id" {
-  description = "(Required) The detector ID of the GuardDuty account where you want to create member accounts."
-  value       = aws_guardduty_member.aws_guardduty_member.detector_id
-}
-output "create" {
-  description = "(Default 1m)"
-  value       = aws_guardduty_member.aws_guardduty_member.create
-}
-output "invitation_message" {
-  description = "(Optional) Message for invitation."
-  value       = aws_guardduty_member.aws_guardduty_member.invitation_message
-}
 output "account_id" {
   description = "(Required) AWS account ID for member account."
   value       = aws_guardduty_member.aws_guardduty_member.account_id
+}
+output "disable_email_notification" {
+  description = "(Optional) Boolean whether an email notification is sent to the accounts. Defaults to false.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_guardduty_member.aws_guardduty_member.disable_email_notification
+}
+output "id" {
+  description = "The ID of the GuardDuty member"
+  value       = aws_guardduty_member.aws_guardduty_member.id
+}
+output "detector_id" {
+  description = "(Required) The detector ID of the GuardDuty account where you want to create member accounts."
+  value       = aws_guardduty_member.aws_guardduty_member.detector_id
 }
 output "create" {
   description = "(Default 1m)"

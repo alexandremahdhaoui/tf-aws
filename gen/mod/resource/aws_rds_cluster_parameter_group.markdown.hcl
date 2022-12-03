@@ -1,12 +1,12 @@
 resource "aws_rds_cluster_parameter_group.markdown" "aws_rds_cluster_parameter_group.markdown" {
+  arn          = var.arn
+  id           = var.id
+  name_prefix  = var.name_prefix
+  apply_method = var.apply_method
   description  = var.description
   family       = var.family
-  id           = var.id
   name         = var.name
-  name_prefix  = var.name_prefix
   parameter    = var.parameter
-  apply_method = var.apply_method
-  arn          = var.arn
   tags         = var.tags
   value        = var.value
 }
@@ -14,13 +14,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "apply_method" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+variable "name" {
+  description = "(Required) The name of the DB parameter."
   type        = string
 }
-variable "arn" {
-  description = "The ARN of the db cluster parameter group."
+variable "parameter" {
+  description = "(Optional) A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group."
   type        = string
+  default     = ""
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
@@ -31,6 +32,11 @@ variable "value" {
   description = "(Required) The value of the DB parameter."
   type        = string
 }
+variable "apply_method" {
+  description = "(Optional) \"immediate\" (default), or \"pending-reboot\". Some\nengines can't apply some parameters without a reboot, and you will need to\nspecify \"pending-reboot\" here.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "description" {
   description = "(Optional) The description of the DB cluster parameter group. Defaults to \"Managed by Terraform\"."
   type        = string
@@ -40,22 +46,17 @@ variable "family" {
   description = "(Required) The family of the DB cluster parameter group."
   type        = string
 }
-variable "id" {
-  description = "The db cluster parameter group name."
+variable "arn" {
+  description = "The ARN of the db cluster parameter group."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the DB parameter."
+variable "id" {
+  description = "The db cluster parameter group name."
   type        = string
 }
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   type        = string
-}
-variable "parameter" {
-  description = "(Optional) A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -177,10 +178,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the db cluster parameter group."
-  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.arn
-}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Parameter blocks support the following:"
   value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.tags
@@ -190,32 +187,36 @@ output "value" {
   value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.value
 }
 output "apply_method" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+  description = "(Optional) \"immediate\" (default), or \"pending-reboot\". Some\nengines can't apply some parameters without a reboot, and you will need to\nspecify \"pending-reboot\" here.In addition to all arguments above, the following attributes are exported:"
   value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.apply_method
+}
+output "description" {
+  description = "(Optional) The description of the DB cluster parameter group. Defaults to \"Managed by Terraform\"."
+  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.description
 }
 output "family" {
   description = "(Required) The family of the DB cluster parameter group."
   value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.family
 }
-output "id" {
-  description = "The db cluster parameter group name."
-  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.id
-}
 output "name" {
   description = "(Required) The name of the DB parameter."
   value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.name
-}
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.name_prefix
 }
 output "parameter" {
   description = "(Optional) A list of DB parameters to apply. Note that parameters may differ from a family to an other. Full list of all parameters can be discovered via aws rds describe-db-cluster-parameters after initial creation of the group."
   value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.parameter
 }
-output "description" {
-  description = "(Optional) The description of the DB cluster parameter group. Defaults to \"Managed by Terraform\"."
-  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.description
+output "arn" {
+  description = "The ARN of the db cluster parameter group."
+  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.arn
+}
+output "id" {
+  description = "The db cluster parameter group name."
+  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.id
+}
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_rds_cluster_parameter_group.markdown.aws_rds_cluster_parameter_group.markdown.name_prefix
 }
 output "arn" {
   description = "The ARN of the db cluster parameter group."

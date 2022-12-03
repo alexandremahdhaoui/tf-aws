@@ -33,8 +33,7 @@ spec:
             description: Key ARN of the asymmetric CMK from which the public key was downloaded.
             type: string
         key_id:
-            description: |
-                (Required) Key identifier which can be one of the following format:
+            description: ""
             type: string
         key_usage:
             description: Permitted use of the public key. Valid values are ENCRYPT_DECRYPT or SIGN_VERIFY

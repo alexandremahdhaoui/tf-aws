@@ -135,13 +135,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "(Required) The name of the assessment target."
-  value       = aws_inspector_assessment_target.aws_inspector_assessment_target.name
-}
 output "resource_group_arn" {
   description = " (Optional) Inspector Resource Group Amazon Resource Name (ARN) stating tags for instance matching. If not specified, all EC2 instances in the current AWS account and region are included in the assessment target.In addition to all arguments above, the following attributes are exported:"
   value       = aws_inspector_assessment_target.aws_inspector_assessment_target.resource_group_arn
+}
+output "name" {
+  description = "(Required) The name of the assessment target."
+  value       = aws_inspector_assessment_target.aws_inspector_assessment_target.name
 }
 output "arn" {
   description = "The target assessment ARN."

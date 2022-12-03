@@ -1,7 +1,7 @@
 resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "aws_sagemaker_notebook_instance_lifecycle_configuration" {
-  name      = var.name
   on_create = var.on_create
   on_start  = var.on_start
+  name      = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

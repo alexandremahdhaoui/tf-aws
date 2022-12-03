@@ -1,19 +1,15 @@
 datasource "aws_connect_security_profile" "aws_connect_security_profile" {
-  id                       = var.id
-  instance_id              = var.instance_id
   name                     = var.name
   organization_resource_id = var.organization_resource_id
   permissions              = var.permissions
   security_profile_id      = var.security_profile_id
   arn                      = var.arn
   description              = var.description
+  id                       = var.id
+  instance_id              = var.instance_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "organization_resource_id" {
-  description = "The organization resource identifier for the security profile."
   type        = string
 }
 variable "permissions" {
@@ -46,6 +42,22 @@ variable "name" {
   type        = string
   default     = ""
 }
+variable "organization_resource_id" {
+  description = "The organization resource identifier for the security profile."
+  type        = string
+}
+output "security_profile_id" {
+  description = "(Optional) Returns information on a specific Security Profile by Security Profile id"
+  value       = aws_connect_security_profile.aws_connect_security_profile.security_profile_id
+}
+output "arn" {
+  description = "ARN of the Security Profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.arn
+}
+output "description" {
+  description = "Description of the Security Profile."
+  value       = aws_connect_security_profile.aws_connect_security_profile.description
+}
 output "id" {
   description = "Identifier of the hosting Amazon Connect Instance and identifier of the Security Profile separated by a colon (:)."
   value       = aws_connect_security_profile.aws_connect_security_profile.id
@@ -65,18 +77,6 @@ output "organization_resource_id" {
 output "permissions" {
   description = "List of permissions assigned to the security profile."
   value       = aws_connect_security_profile.aws_connect_security_profile.permissions
-}
-output "security_profile_id" {
-  description = "(Optional) Returns information on a specific Security Profile by Security Profile id"
-  value       = aws_connect_security_profile.aws_connect_security_profile.security_profile_id
-}
-output "arn" {
-  description = "ARN of the Security Profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.arn
-}
-output "description" {
-  description = "Description of the Security Profile."
-  value       = aws_connect_security_profile.aws_connect_security_profile.description
 }
 output "arn" {
   description = "ARN of the Security Profile."

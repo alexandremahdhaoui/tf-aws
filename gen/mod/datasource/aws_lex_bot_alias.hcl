@@ -1,27 +1,15 @@
 datasource "aws_lex_bot_alias" "aws_lex_bot_alias" {
+  description       = var.description
+  last_updated_date = var.last_updated_date
   name              = var.name
   arn               = var.arn
   bot_name          = var.bot_name
   bot_version       = var.bot_version
   checksum          = var.checksum
   created_date      = var.created_date
-  description       = var.description
-  last_updated_date = var.last_updated_date
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "checksum" {
-  description = "Checksum of the bot alias."
-  type        = string
-}
-variable "created_date" {
-  description = "Date that the bot alias was created."
-  type        = string
-}
-variable "description" {
-  description = "Description of the alias."
   type        = string
 }
 variable "last_updated_date" {
@@ -44,21 +32,17 @@ variable "bot_version" {
   description = "Version of the bot that the alias points to."
   type        = string
 }
-output "bot_version" {
-  description = "Version of the bot that the alias points to."
-  value       = aws_lex_bot_alias.aws_lex_bot_alias.bot_version
-}
-output "checksum" {
+variable "checksum" {
   description = "Checksum of the bot alias."
-  value       = aws_lex_bot_alias.aws_lex_bot_alias.checksum
+  type        = string
 }
-output "created_date" {
+variable "created_date" {
   description = "Date that the bot alias was created."
-  value       = aws_lex_bot_alias.aws_lex_bot_alias.created_date
+  type        = string
 }
-output "description" {
+variable "description" {
   description = "Description of the alias."
-  value       = aws_lex_bot_alias.aws_lex_bot_alias.description
+  type        = string
 }
 output "last_updated_date" {
   description = "Date that the bot alias was updated. When you create a resource, the creation date and the last updated date are the same."
@@ -76,9 +60,21 @@ output "bot_name" {
   description = "Name of the bot."
   value       = aws_lex_bot_alias.aws_lex_bot_alias.bot_name
 }
-output "arn" {
-  description = "ARN of the bot alias."
-  value       = aws_lex_bot_alias.aws_lex_bot_alias.arn
+output "bot_version" {
+  description = "Version of the bot that the alias points to."
+  value       = aws_lex_bot_alias.aws_lex_bot_alias.bot_version
+}
+output "checksum" {
+  description = "Checksum of the bot alias."
+  value       = aws_lex_bot_alias.aws_lex_bot_alias.checksum
+}
+output "created_date" {
+  description = "Date that the bot alias was created."
+  value       = aws_lex_bot_alias.aws_lex_bot_alias.created_date
+}
+output "description" {
+  description = "Description of the alias."
+  value       = aws_lex_bot_alias.aws_lex_bot_alias.description
 }
 output "bot_name" {
   description = "Name of the bot."
@@ -103,6 +99,10 @@ output "description" {
 output "last_updated_date" {
   description = "Date that the bot alias was updated. When you create a resource, the creation date and the last updated date are the same."
   value       = aws_lex_bot_alias.aws_lex_bot_alias.last_updated_date
+}
+output "arn" {
+  description = "ARN of the bot alias."
+  value       = aws_lex_bot_alias.aws_lex_bot_alias.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

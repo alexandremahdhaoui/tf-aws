@@ -37,7 +37,8 @@ spec:
             description: ARN of the image recipe.
             type: string
         image_tests_configuration:
-            description: ""
+            description: |
+                List of an object with image tests configuration.
             type: string
         image_tests_enabled:
             description: Whether image tests are enabled.

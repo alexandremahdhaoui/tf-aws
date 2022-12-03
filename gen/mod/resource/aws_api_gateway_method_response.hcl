@@ -1,20 +1,12 @@
 resource "aws_api_gateway_method_response" "aws_api_gateway_method_response" {
+  http_method     = var.http_method
+  resource_id     = var.resource_id
   response_models = var.response_models
   rest_api_id     = var.rest_api_id
   status_code     = var.status_code
-  http_method     = var.http_method
-  resource_id     = var.resource_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "http_method" {
-  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
-  type        = string
-}
-variable "resource_id" {
-  description = "(Required) API resource ID"
   type        = string
 }
 variable "response_models" {
@@ -28,6 +20,14 @@ variable "rest_api_id" {
 }
 variable "status_code" {
   description = "(Required) HTTP status code"
+  type        = string
+}
+variable "http_method" {
+  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
+  type        = string
+}
+variable "resource_id" {
+  description = "(Required) API resource ID"
   type        = string
 }
 variable "tag_instance_id" {
@@ -150,14 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "http_method" {
-  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
-  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.http_method
-}
-output "resource_id" {
-  description = "(Required) API resource ID"
-  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.resource_id
-}
 output "response_models" {
   description = "(Optional) Map of the API models used for the response's content type"
   value       = aws_api_gateway_method_response.aws_api_gateway_method_response.response_models
@@ -169,6 +161,14 @@ output "rest_api_id" {
 output "status_code" {
   description = "(Required) HTTP status code"
   value       = aws_api_gateway_method_response.aws_api_gateway_method_response.status_code
+}
+output "http_method" {
+  description = "(Required) HTTP Method (GET, POST, PUT, DELETE, HEAD, OPTIONS, ANY)"
+  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.http_method
+}
+output "resource_id" {
+  description = "(Required) API resource ID"
+  value       = aws_api_gateway_method_response.aws_api_gateway_method_response.resource_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

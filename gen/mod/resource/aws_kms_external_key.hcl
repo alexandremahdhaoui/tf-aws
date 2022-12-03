@@ -1,30 +1,34 @@
 resource "aws_kms_external_key" "aws_kms_external_key" {
-  enabled                            = var.enabled
-  key_usage                          = var.key_usage
-  key_state                          = var.key_state
-  valid_to                           = var.valid_to
-  expiration_model                   = var.expiration_model
-  id                                 = var.id
   description                        = var.description
-  key_material_base64                = var.key_material_base64
-  bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
-  deletion_window_in_days            = var.deletion_window_in_days
+  enabled                            = var.enabled
   policy                             = var.policy
-  tags                               = var.tags
   arn                                = var.arn
+  id                                 = var.id
+  bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
+  expiration_model                   = var.expiration_model
+  key_state                          = var.key_state
   multi_region                       = var.multi_region
+  deletion_window_in_days            = var.deletion_window_in_days
+  key_usage                          = var.key_usage
+  tags                               = var.tags
+  valid_to                           = var.valid_to
+  key_material_base64                = var.key_material_base64
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "deletion_window_in_days" {
-  description = "(Optional) Duration in days after which the key is deleted after destruction of the resource. Must be between 7 and 30 days. Defaults to 30."
+variable "key_usage" {
+  description = "The cryptographic operations for which you can use the CMK."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A key-value map of tags to assign to the key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
   default     = ""
 }
-variable "description" {
-  description = "(Optional) Description of the key."
+variable "valid_to" {
+  description = "(Optional) Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the CMK becomes unusable. If not specified, key material does not expire. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -33,13 +37,13 @@ variable "key_material_base64" {
   type        = string
   default     = ""
 }
-variable "bypass_policy_lockout_safety_check" {
-  description = "(Optional) Specifies whether to disable the policy lockout check performed when creating or updating the key's policy. Setting this value to true increases the risk that the key becomes unmanageable. For more information, refer to the scenario in the Default Key Policy section in the AWS Key Management Service Developer Guide. Defaults to false."
+variable "description" {
+  description = "(Optional) Description of the key."
   type        = string
   default     = ""
 }
-variable "multi_region" {
-  description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
+variable "enabled" {
+  description = "(Optional) Specifies whether the key is enabled. Keys pending import can only be false. Imported keys default to true unless expired."
   type        = string
   default     = ""
 }
@@ -48,40 +52,36 @@ variable "policy" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) A key-value map of tags to assign to the key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
 variable "arn" {
   description = "The Amazon Resource Name (ARN) of the key."
   type        = string
-}
-variable "key_usage" {
-  description = "The cryptographic operations for which you can use the CMK."
-  type        = string
-}
-variable "enabled" {
-  description = "(Optional) Specifies whether the key is enabled. Keys pending import can only be false. Imported keys default to true unless expired."
-  type        = string
-  default     = ""
 }
 variable "id" {
   description = "The unique identifier for the key."
   type        = string
 }
-variable "key_state" {
-  description = "The state of the CMK."
-  type        = string
-}
-variable "valid_to" {
-  description = "(Optional) Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the CMK becomes unusable. If not specified, key material does not expire. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)In addition to all arguments above, the following attributes are exported:"
+variable "bypass_policy_lockout_safety_check" {
+  description = "(Optional) Specifies whether to disable the policy lockout check performed when creating or updating the key's policy. Setting this value to true increases the risk that the key becomes unmanageable. For more information, refer to the scenario in the Default Key Policy section in the AWS Key Management Service Developer Guide. Defaults to false."
   type        = string
   default     = ""
 }
 variable "expiration_model" {
   description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
   type        = string
+}
+variable "key_state" {
+  description = "The state of the CMK."
+  type        = string
+}
+variable "multi_region" {
+  description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
+  type        = string
+  default     = ""
+}
+variable "deletion_window_in_days" {
+  description = "(Optional) Duration in days after which the key is deleted after destruction of the resource. Must be between 7 and 30 days. Defaults to 30."
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -203,21 +203,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "enabled" {
-  description = "(Optional) Specifies whether the key is enabled. Keys pending import can only be false. Imported keys default to true unless expired."
-  value       = aws_kms_external_key.aws_kms_external_key.enabled
+output "multi_region" {
+  description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
+  value       = aws_kms_external_key.aws_kms_external_key.multi_region
 }
-output "key_usage" {
-  description = "The cryptographic operations for which you can use the CMK."
-  value       = aws_kms_external_key.aws_kms_external_key.key_usage
+output "deletion_window_in_days" {
+  description = "(Optional) Duration in days after which the key is deleted after destruction of the resource. Must be between 7 and 30 days. Defaults to 30."
+  value       = aws_kms_external_key.aws_kms_external_key.deletion_window_in_days
 }
 output "expiration_model" {
   description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
   value       = aws_kms_external_key.aws_kms_external_key.expiration_model
-}
-output "id" {
-  description = "The unique identifier for the key."
-  value       = aws_kms_external_key.aws_kms_external_key.id
 }
 output "key_state" {
   description = "The state of the CMK."
@@ -227,45 +223,37 @@ output "valid_to" {
   description = "(Optional) Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the CMK becomes unusable. If not specified, key material does not expire. Valid values: RFC3339 time string (YYYY-MM-DDTHH:MM:SSZ)In addition to all arguments above, the following attributes are exported:"
   value       = aws_kms_external_key.aws_kms_external_key.valid_to
 }
-output "bypass_policy_lockout_safety_check" {
-  description = "(Optional) Specifies whether to disable the policy lockout check performed when creating or updating the key's policy. Setting this value to true increases the risk that the key becomes unmanageable. For more information, refer to the scenario in the Default Key Policy section in the AWS Key Management Service Developer Guide. Defaults to false."
-  value       = aws_kms_external_key.aws_kms_external_key.bypass_policy_lockout_safety_check
-}
-output "deletion_window_in_days" {
-  description = "(Optional) Duration in days after which the key is deleted after destruction of the resource. Must be between 7 and 30 days. Defaults to 30."
-  value       = aws_kms_external_key.aws_kms_external_key.deletion_window_in_days
-}
-output "description" {
-  description = "(Optional) Description of the key."
-  value       = aws_kms_external_key.aws_kms_external_key.description
-}
 output "key_material_base64" {
   description = "(Optional) Base64 encoded 256-bit symmetric encryption key material to import. The CMK is permanently associated with this key material. The same key material can be reimported, but you cannot import different key material."
   value       = aws_kms_external_key.aws_kms_external_key.key_material_base64
 }
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the key."
-  value       = aws_kms_external_key.aws_kms_external_key.arn
-}
-output "multi_region" {
-  description = "(Optional) Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false."
-  value       = aws_kms_external_key.aws_kms_external_key.multi_region
-}
-output "policy" {
-  description = "(Optional) A key policy JSON document. If you do not provide a key policy, AWS KMS attaches a default key policy to the CMK."
-  value       = aws_kms_external_key.aws_kms_external_key.policy
+output "key_usage" {
+  description = "The cryptographic operations for which you can use the CMK."
+  value       = aws_kms_external_key.aws_kms_external_key.key_usage
 }
 output "tags" {
   description = "(Optional) A key-value map of tags to assign to the key. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
   value       = aws_kms_external_key.aws_kms_external_key.tags
 }
+output "policy" {
+  description = "(Optional) A key policy JSON document. If you do not provide a key policy, AWS KMS attaches a default key policy to the CMK."
+  value       = aws_kms_external_key.aws_kms_external_key.policy
+}
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the key."
   value       = aws_kms_external_key.aws_kms_external_key.arn
 }
-output "expiration_model" {
-  description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
-  value       = aws_kms_external_key.aws_kms_external_key.expiration_model
+output "description" {
+  description = "(Optional) Description of the key."
+  value       = aws_kms_external_key.aws_kms_external_key.description
+}
+output "enabled" {
+  description = "(Optional) Specifies whether the key is enabled. Keys pending import can only be false. Imported keys default to true unless expired."
+  value       = aws_kms_external_key.aws_kms_external_key.enabled
+}
+output "bypass_policy_lockout_safety_check" {
+  description = "(Optional) Specifies whether to disable the policy lockout check performed when creating or updating the key's policy. Setting this value to true increases the risk that the key becomes unmanageable. For more information, refer to the scenario in the Default Key Policy section in the AWS Key Management Service Developer Guide. Defaults to false."
+  value       = aws_kms_external_key.aws_kms_external_key.bypass_policy_lockout_safety_check
 }
 output "id" {
   description = "The unique identifier for the key."
@@ -282,6 +270,18 @@ output "key_usage" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_kms_external_key.aws_kms_external_key.tags_all
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the key."
+  value       = aws_kms_external_key.aws_kms_external_key.arn
+}
+output "expiration_model" {
+  description = "Whether the key material expires. Empty when pending key material import, otherwise KEY_MATERIAL_EXPIRES or KEY_MATERIAL_DOES_NOT_EXPIRE."
+  value       = aws_kms_external_key.aws_kms_external_key.expiration_model
+}
+output "id" {
+  description = "The unique identifier for the key."
+  value       = aws_kms_external_key.aws_kms_external_key.id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,10 +1,10 @@
 resource "aws_redshift_security_group" "aws_redshift_security_group" {
+  security_group_owner_id = var.security_group_owner_id
+  cidr                    = var.cidr
   description             = var.description
   ingress                 = var.ingress
   name                    = var.name
   security_group_name     = var.security_group_name
-  security_group_owner_id = var.security_group_owner_id
-  cidr                    = var.cidr
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -156,6 +156,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "cidr" {
+  description = "The CIDR block to accept"
+  value       = aws_redshift_security_group.aws_redshift_security_group.cidr
+}
+output "description" {
+  description = "(Optional) The description of the Redshift security group. Defaults to \"Managed by Terraform\"."
+  value       = aws_redshift_security_group.aws_redshift_security_group.description
+}
 output "ingress" {
   description = "(Optional) A list of ingress rules.Ingress blocks support the following:"
   value       = aws_redshift_security_group.aws_redshift_security_group.ingress
@@ -171,14 +179,6 @@ output "security_group_name" {
 output "security_group_owner_id" {
   description = "The owner Id of the security group provided\nby security_group_name.In addition to all arguments above, the following attributes are exported:"
   value       = aws_redshift_security_group.aws_redshift_security_group.security_group_owner_id
-}
-output "cidr" {
-  description = "The CIDR block to accept"
-  value       = aws_redshift_security_group.aws_redshift_security_group.cidr
-}
-output "description" {
-  description = "(Optional) The description of the Redshift security group. Defaults to \"Managed by Terraform\"."
-  value       = aws_redshift_security_group.aws_redshift_security_group.description
 }
 output "id" {
   description = "The Redshift security group ID."

@@ -124,10 +124,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "function_arn" {
-  description = "The the ARN of the Lambda function the event source mapping is sending events to. (Note: this is a computed value that differs from function_name above.)"
-  value       = aws_lambda_event_source_mapping.aws_lambda_event_source_mapping.function_arn
-}
 output "last_modified" {
   description = "The date this resource was last modified."
   value       = aws_lambda_event_source_mapping.aws_lambda_event_source_mapping.last_modified
@@ -147,6 +143,10 @@ output "state_transition_reason" {
 output "uuid" {
   description = "The UUID of the created event source mapping."
   value       = aws_lambda_event_source_mapping.aws_lambda_event_source_mapping.uuid
+}
+output "function_arn" {
+  description = "The the ARN of the Lambda function the event source mapping is sending events to. (Note: this is a computed value that differs from function_name above.)"
+  value       = aws_lambda_event_source_mapping.aws_lambda_event_source_mapping.function_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

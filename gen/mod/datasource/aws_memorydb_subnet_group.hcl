@@ -1,17 +1,13 @@
 datasource "aws_memorydb_subnet_group" "aws_memorydb_subnet_group" {
-  arn         = var.arn
-  description = var.description
-  id          = var.id
   name        = var.name
   subnet_ids  = var.subnet_ids
   vpc_id      = var.vpc_id
+  arn         = var.arn
+  description = var.description
+  id          = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the subnet group.In addition, the following attributes are exported:"
   type        = string
 }
 variable "subnet_ids" {
@@ -34,13 +30,9 @@ variable "id" {
   description = "Name of the subnet group."
   type        = string
 }
-output "description" {
-  description = "Description of the subnet group."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.description
-}
-output "id" {
-  description = "Name of the subnet group."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.id
+variable "name" {
+  description = "(Required) Name of the subnet group.In addition, the following attributes are exported:"
+  type        = string
 }
 output "name" {
   description = "(Required) Name of the subnet group.In addition, the following attributes are exported:"
@@ -57,6 +49,14 @@ output "vpc_id" {
 output "arn" {
   description = "ARN of the subnet group."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.arn
+}
+output "description" {
+  description = "Description of the subnet group."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.description
+}
+output "id" {
+  description = "Name of the subnet group."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.id
 }
 output "id" {
   description = "Name of the subnet group."

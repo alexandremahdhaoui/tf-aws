@@ -1,16 +1,28 @@
 resource "aws_inspector_assessment_template" "aws_inspector_assessment_template" {
-  rules_package_arns = var.rules_package_arns
+  event              = var.event
+  name               = var.name
   tags               = var.tags
+  rules_package_arns = var.rules_package_arns
+  target_arn         = var.target_arn
+  topic_arn          = var.topic_arn
   arn                = var.arn
   duration           = var.duration
-  event              = var.event
-  topic_arn          = var.topic_arn
   event_subscription = var.event_subscription
-  name               = var.name
-  target_arn         = var.target_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "rules_package_arns" {
+  description = "(Required) The rules to be used during the run."
+  type        = string
+}
+variable "target_arn" {
+  description = "(Required) The assessment target ARN to attach the template to."
+  type        = string
+}
+variable "topic_arn" {
+  description = "(Required) The ARN of the SNS topic to which notifications are sent.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "arn" {
@@ -21,35 +33,23 @@ variable "duration" {
   description = "(Required) The duration of the inspector run."
   type        = string
 }
+variable "event_subscription" {
+  description = "(Optional) A block that enables sending notifications about a specified assessment template event to a designated SNS topic. See Event Subscriptions for details."
+  type        = string
+  default     = ""
+}
 variable "event" {
   description = "(Required) The event for which you want to receive SNS notifications. Valid values are ASSESSMENT_RUN_STARTED, ASSESSMENT_RUN_COMPLETED, ASSESSMENT_RUN_STATE_CHANGED, and FINDING_REPORTED."
   type        = string
 }
-variable "rules_package_arns" {
-  description = "(Required) The rules to be used during the run."
+variable "name" {
+  description = "(Required) The name of the assessment template."
   type        = string
 }
 variable "tags" {
   description = "(Optional) Key-value map of tags for the Inspector assessment template. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Event SubscriptionsThe event subscription configuration block supports the following arguments:"
   type        = string
   default     = ""
-}
-variable "event_subscription" {
-  description = "(Optional) A block that enables sending notifications about a specified assessment template event to a designated SNS topic. See Event Subscriptions for details."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) The name of the assessment template."
-  type        = string
-}
-variable "target_arn" {
-  description = "(Required) The assessment target ARN to attach the template to."
-  type        = string
-}
-variable "topic_arn" {
-  description = "(Required) The ARN of the SNS topic to which notifications are sent.In addition to all arguments above, the following attributes are exported:"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -171,33 +171,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The template assessment ARN."
-  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.arn
-}
 output "duration" {
   description = "(Required) The duration of the inspector run."
   value       = aws_inspector_assessment_template.aws_inspector_assessment_template.duration
-}
-output "event" {
-  description = "(Required) The event for which you want to receive SNS notifications. Valid values are ASSESSMENT_RUN_STARTED, ASSESSMENT_RUN_COMPLETED, ASSESSMENT_RUN_STATE_CHANGED, and FINDING_REPORTED."
-  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.event
-}
-output "rules_package_arns" {
-  description = "(Required) The rules to be used during the run."
-  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.rules_package_arns
-}
-output "tags" {
-  description = "(Optional) Key-value map of tags for the Inspector assessment template. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Event SubscriptionsThe event subscription configuration block supports the following arguments:"
-  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.tags
 }
 output "event_subscription" {
   description = "(Optional) A block that enables sending notifications about a specified assessment template event to a designated SNS topic. See Event Subscriptions for details."
   value       = aws_inspector_assessment_template.aws_inspector_assessment_template.event_subscription
 }
-output "name" {
-  description = "(Required) The name of the assessment template."
-  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.name
+output "rules_package_arns" {
+  description = "(Required) The rules to be used during the run."
+  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.rules_package_arns
 }
 output "target_arn" {
   description = "(Required) The assessment target ARN to attach the template to."
@@ -211,9 +195,25 @@ output "arn" {
   description = "The template assessment ARN."
   value       = aws_inspector_assessment_template.aws_inspector_assessment_template.arn
 }
+output "name" {
+  description = "(Required) The name of the assessment template."
+  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.name
+}
+output "tags" {
+  description = "(Optional) Key-value map of tags for the Inspector assessment template. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Event SubscriptionsThe event subscription configuration block supports the following arguments:"
+  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.tags
+}
+output "event" {
+  description = "(Required) The event for which you want to receive SNS notifications. Valid values are ASSESSMENT_RUN_STARTED, ASSESSMENT_RUN_COMPLETED, ASSESSMENT_RUN_STATE_CHANGED, and FINDING_REPORTED."
+  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.event
+}
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_inspector_assessment_template.aws_inspector_assessment_template.tags_all
+}
+output "arn" {
+  description = "The template assessment ARN."
+  value       = aws_inspector_assessment_template.aws_inspector_assessment_template.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

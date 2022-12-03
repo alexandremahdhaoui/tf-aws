@@ -1,4 +1,5 @@
 datasource "aws_ec2_transit_gateway_connect" "aws_ec2_transit_gateway_connect" {
+  transit_gateway_connect_id = var.transit_gateway_connect_id
   transit_gateway_id         = var.transit_gateway_id
   transport_attachment_id    = var.transport_attachment_id
   values                     = var.values
@@ -6,10 +7,22 @@ datasource "aws_ec2_transit_gateway_connect" "aws_ec2_transit_gateway_connect" {
   name                       = var.name
   protocol                   = var.protocol
   tags                       = var.tags
-  transit_gateway_connect_id = var.transit_gateway_connect_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "transit_gateway_connect_id" {
+  description = "(Optional) Identifier of the EC2 Transit Gateway Connect.filter Argument Reference"
+  type        = string
+  default     = ""
+}
+variable "transit_gateway_id" {
+  description = "EC2 Transit Gateway identifier"
+  type        = string
+}
+variable "transport_attachment_id" {
+  description = "The underlaying VPC attachmentTimeoutsConfiguration options:"
   type        = string
 }
 variable "values" {
@@ -32,27 +45,6 @@ variable "protocol" {
 variable "tags" {
   description = "Key-value tags for the EC2 Transit Gateway Connect"
   type        = string
-}
-variable "transit_gateway_connect_id" {
-  description = "(Optional) Identifier of the EC2 Transit Gateway Connect.filter Argument Reference"
-  type        = string
-  default     = ""
-}
-variable "transit_gateway_id" {
-  description = "EC2 Transit Gateway identifier"
-  type        = string
-}
-variable "transport_attachment_id" {
-  description = "The underlaying VPC attachmentTimeoutsConfiguration options:"
-  type        = string
-}
-output "filter" {
-  description = "(Optional) One or more configuration blocks containing name-values filters. Detailed below."
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.filter
-}
-output "name" {
-  description = "(Required) Name of the filter."
-  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.name
 }
 output "protocol" {
   description = "Tunnel protocol"
@@ -77,6 +69,14 @@ output "transport_attachment_id" {
 output "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.values
+}
+output "filter" {
+  description = "(Optional) One or more configuration blocks containing name-values filters. Detailed below."
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.filter
+}
+output "name" {
+  description = "(Required) Name of the filter."
+  value       = aws_ec2_transit_gateway_connect.aws_ec2_transit_gateway_connect.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

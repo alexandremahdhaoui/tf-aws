@@ -1,19 +1,14 @@
 resource "aws_secretsmanager_secret_version" "aws_secretsmanager_secret_version" {
+  version_stages = var.version_stages
+  arn            = var.arn
   id             = var.id
   secret_binary  = var.secret_binary
   secret_id      = var.secret_id
   secret_string  = var.secret_string
-  version_stages = var.version_stages
-  arn            = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
-}
-variable "version_stages" {
-  description = "(Optional) Specifies a list of staging labels that are attached to this version of the secret. A staging label must be unique to a single version of the secret. If you specify a staging label that's already associated with a different version of the same secret then that staging label is automatically removed from the other version and attached to this version. If you do not specify a value, then AWS Secrets Manager automatically moves the staging label AWSCURRENT to this new version on creation.~> strongNOTE: If version_stages is configured, you must include the AWSCURRENT staging label if this secret version is the only version or if the label is currently present on this secret version, otherwise Terraform will show a perpetual difference.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "arn" {
   description = "The ARN of the secret."
@@ -34,6 +29,11 @@ variable "secret_id" {
 }
 variable "secret_string" {
   description = "(Optional) Specifies text data that you want to encrypt and store in this version of the secret. This is required if secret_binary is not set."
+  type        = string
+  default     = ""
+}
+variable "version_stages" {
+  description = "(Optional) Specifies a list of staging labels that are attached to this version of the secret. A staging label must be unique to a single version of the secret. If you specify a staging label that's already associated with a different version of the same secret then that staging label is automatically removed from the other version and attached to this version. If you do not specify a value, then AWS Secrets Manager automatically moves the staging label AWSCURRENT to this new version on creation.~> strongNOTE: If version_stages is configured, you must include the AWSCURRENT staging label if this secret version is the only version or if the label is currently present on this secret version, otherwise Terraform will show a perpetual difference.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -181,6 +181,10 @@ output "version_stages" {
   description = "(Optional) Specifies a list of staging labels that are attached to this version of the secret. A staging label must be unique to a single version of the secret. If you specify a staging label that's already associated with a different version of the same secret then that staging label is automatically removed from the other version and attached to this version. If you do not specify a value, then AWS Secrets Manager automatically moves the staging label AWSCURRENT to this new version on creation.~> strongNOTE: If version_stages is configured, you must include the AWSCURRENT staging label if this secret version is the only version or if the label is currently present on this secret version, otherwise Terraform will show a perpetual difference.In addition to all arguments above, the following attributes are exported:"
   value       = aws_secretsmanager_secret_version.aws_secretsmanager_secret_version.version_stages
 }
+output "version_id" {
+  description = "The unique identifier of the version of the secret."
+  value       = aws_secretsmanager_secret_version.aws_secretsmanager_secret_version.version_id
+}
 output "arn" {
   description = "The ARN of the secret."
   value       = aws_secretsmanager_secret_version.aws_secretsmanager_secret_version.arn
@@ -188,10 +192,6 @@ output "arn" {
 output "id" {
   description = "A pipe delimited combination of secret ID and version ID."
   value       = aws_secretsmanager_secret_version.aws_secretsmanager_secret_version.id
-}
-output "version_id" {
-  description = "The unique identifier of the version of the secret."
-  value       = aws_secretsmanager_secret_version.aws_secretsmanager_secret_version.version_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

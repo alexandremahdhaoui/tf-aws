@@ -1,33 +1,33 @@
 resource "aws_ce_cost_category" "aws_ce_cost_category" {
   default_value     = var.default_value
-  dimension         = var.dimension
-  key               = var.key
-  rule              = var.rule
-  cost_category     = var.cost_category
-  match_options     = var.match_options
-  method            = var.method
-  split_charge_rule = var.split_charge_rule
-  dimension_key     = var.dimension_key
-  effective_start   = var.effective_start
-  or                = var.or
-  tag               = var.tag
-  inherited_value   = var.inherited_value
-  name              = var.name
-  and               = var.and
   id                = var.id
-  parameter         = var.parameter
-  value             = var.value
-  type              = var.type
-  arn               = var.arn
-  dimension_name    = var.dimension_name
-  not               = var.not
-  rule_version      = var.rule_version
-  targets           = var.targets
-  effective_end     = var.effective_end
-  source            = var.source
-  tags              = var.tags
+  tag               = var.tag
   tags_all          = var.tags_all
   values            = var.values
+  dimension         = var.dimension
+  or                = var.or
+  cost_category     = var.cost_category
+  key               = var.key
+  match_options     = var.match_options
+  not               = var.not
+  tags              = var.tags
+  dimension_key     = var.dimension_key
+  arn               = var.arn
+  method            = var.method
+  split_charge_rule = var.split_charge_rule
+  value             = var.value
+  inherited_value   = var.inherited_value
+  rule_version      = var.rule_version
+  targets           = var.targets
+  type              = var.type
+  effective_end     = var.effective_end
+  dimension_name    = var.dimension_name
+  effective_start   = var.effective_start
+  name              = var.name
+  parameter         = var.parameter
+  rule              = var.rule
+  source            = var.source
+  and               = var.and
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -38,8 +38,43 @@ variable "cost_category" {
   type        = string
   default     = ""
 }
+variable "or" {
+  description = "(Optional) Return results that match both Dimension object."
+  type        = string
+  default     = ""
+}
+variable "dimension_key" {
+  description = "(Optional) Key to extract cost category values."
+  type        = string
+  default     = ""
+}
+variable "key" {
+  description = "(Optional) Key for the tag."
+  type        = string
+  default     = ""
+}
 variable "match_options" {
   description = "(Optional) Match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. Valid values are: EQUALS,  ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE."
+  type        = string
+  default     = ""
+}
+variable "not" {
+  description = "(Optional) Return results that match both Dimension object."
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.rule"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "ARN of the cost category."
+  type        = string
+  default     = ""
+}
+variable "inherited_value" {
+  description = "(Optional) Configuration block for the value the line item is categorized as if the line item contains the matched dimension. See below."
   type        = string
   default     = ""
 }
@@ -52,67 +87,13 @@ variable "split_charge_rule" {
   type        = string
   default     = ""
 }
-variable "dimension_key" {
-  description = "(Optional) Key to extract cost category values."
-  type        = string
-  default     = ""
-}
-variable "effective_start" {
-  description = "Effective state data of your Cost Category."
-  type        = string
-  default     = ""
-}
-variable "or" {
-  description = "(Optional) Return results that match both Dimension object."
-  type        = string
-  default     = ""
-}
-variable "tag" {
-  description = "(Optional) Configuration block for the specific Tag to use for Expression. See below.cost_category"
-  type        = string
-  default     = ""
-}
-variable "inherited_value" {
-  description = "(Optional) Configuration block for the value the line item is categorized as if the line item contains the matched dimension. See below."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Unique name for the Cost Category."
-  type        = string
-}
-variable "and" {
-  description = "(Optional) Return results that match both Dimension objects."
-  type        = string
-  default     = ""
-}
-variable "id" {
-  description = "Unique ID of the cost category."
-  type        = string
-  default     = ""
-}
-variable "parameter" {
-  description = "(Optional) Configuration block for the parameters for a split charge method. This is only required for the FIXED method. See below."
-  type        = string
-  default     = ""
-}
 variable "value" {
   description = "(Optional) Default value for the cost category.inherited_value"
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "ARN of the cost category."
-  type        = string
-  default     = ""
-}
-variable "dimension_name" {
-  description = "(Optional) Name of the dimension that's used to group costs. If you specify LINKED_ACCOUNT_NAME, the cost category value is based on account name. If you specify TAG, the cost category value will be based on the value of the specified tag key. Valid values are LINKED_ACCOUNT_NAME, TAGrule"
-  type        = string
-  default     = ""
-}
-variable "not" {
-  description = "(Optional) Return results that match both Dimension object."
+variable "effective_end" {
+  description = "Effective end data of your Cost Category."
   type        = string
   default     = ""
 }
@@ -129,29 +110,38 @@ variable "type" {
   type        = string
   default     = ""
 }
-variable "effective_end" {
-  description = "Effective end data of your Cost Category."
+variable "and" {
+  description = "(Optional) Return results that match both Dimension objects."
+  type        = string
+  default     = ""
+}
+variable "dimension_name" {
+  description = "(Optional) Name of the dimension that's used to group costs. If you specify LINKED_ACCOUNT_NAME, the cost category value is based on account name. If you specify TAG, the cost category value will be based on the value of the specified tag key. Valid values are LINKED_ACCOUNT_NAME, TAGrule"
+  type        = string
+  default     = ""
+}
+variable "effective_start" {
+  description = "Effective state data of your Cost Category."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Unique name for the Cost Category."
+  type        = string
+}
+variable "parameter" {
+  description = "(Optional) Configuration block for the parameters for a split charge method. This is only required for the FIXED method. See below."
+  type        = string
+  default     = ""
+}
+variable "rule" {
+  description = "(Optional) Configuration block for the Expression object used to categorize costs. See below."
   type        = string
   default     = ""
 }
 variable "source" {
   description = "(Required) Cost Category value that you want to split."
   type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.rule"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "values" {
-  description = "(Optional) Parameter values.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "default_value" {
   description = "(Optional) Default value for the cost category."
@@ -163,13 +153,23 @@ variable "dimension" {
   type        = string
   default     = ""
 }
-variable "key" {
-  description = "(Optional) Key for the tag."
+variable "id" {
+  description = "Unique ID of the cost category."
   type        = string
   default     = ""
 }
-variable "rule" {
-  description = "(Optional) Configuration block for the Expression object used to categorize costs. See below."
+variable "tag" {
+  description = "(Optional) Configuration block for the specific Tag to use for Expression. See below.cost_category"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "values" {
+  description = "(Optional) Parameter values.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -293,29 +293,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "arn" {
+  description = "ARN of the cost category."
+  value       = aws_ce_cost_category.aws_ce_cost_category.arn
+}
 output "inherited_value" {
   description = "(Optional) Configuration block for the value the line item is categorized as if the line item contains the matched dimension. See below."
   value       = aws_ce_cost_category.aws_ce_cost_category.inherited_value
 }
-output "name" {
-  description = "(Required) Unique name for the Cost Category."
-  value       = aws_ce_cost_category.aws_ce_cost_category.name
+output "method" {
+  description = "(Required) Method that's used to define how to split your source costs across your targets. Valid values are FIXED, PROPORTIONAL, EVEN"
+  value       = aws_ce_cost_category.aws_ce_cost_category.method
+}
+output "split_charge_rule" {
+  description = "(Optional) Configuration block for the split charge rules used to allocate your charges between your Cost Category values. See below."
+  value       = aws_ce_cost_category.aws_ce_cost_category.split_charge_rule
 }
 output "value" {
   description = "(Optional) Default value for the cost category.inherited_value"
   value       = aws_ce_cost_category.aws_ce_cost_category.value
 }
-output "and" {
-  description = "(Optional) Return results that match both Dimension objects."
-  value       = aws_ce_cost_category.aws_ce_cost_category.and
-}
-output "id" {
-  description = "Unique ID of the cost category."
-  value       = aws_ce_cost_category.aws_ce_cost_category.id
-}
-output "parameter" {
-  description = "(Optional) Configuration block for the parameters for a split charge method. This is only required for the FIXED method. See below."
-  value       = aws_ce_cost_category.aws_ce_cost_category.parameter
+output "effective_end" {
+  description = "Effective end data of your Cost Category."
+  value       = aws_ce_cost_category.aws_ce_cost_category.effective_end
 }
 output "rule_version" {
   description = "(Required) Rule schema version in this particular Cost Category."
@@ -329,41 +329,33 @@ output "type" {
   description = "(Optional) Parameter type."
   value       = aws_ce_cost_category.aws_ce_cost_category.type
 }
-output "arn" {
-  description = "ARN of the cost category."
-  value       = aws_ce_cost_category.aws_ce_cost_category.arn
-}
-output "dimension_name" {
-  description = "(Optional) Name of the dimension that's used to group costs. If you specify LINKED_ACCOUNT_NAME, the cost category value is based on account name. If you specify TAG, the cost category value will be based on the value of the specified tag key. Valid values are LINKED_ACCOUNT_NAME, TAGrule"
-  value       = aws_ce_cost_category.aws_ce_cost_category.dimension_name
-}
-output "not" {
-  description = "(Optional) Return results that match both Dimension object."
-  value       = aws_ce_cost_category.aws_ce_cost_category.not
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ce_cost_category.aws_ce_cost_category.tags_all
-}
-output "values" {
-  description = "(Optional) Parameter values.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ce_cost_category.aws_ce_cost_category.values
-}
-output "effective_end" {
-  description = "Effective end data of your Cost Category."
-  value       = aws_ce_cost_category.aws_ce_cost_category.effective_end
+output "rule" {
+  description = "(Optional) Configuration block for the Expression object used to categorize costs. See below."
+  value       = aws_ce_cost_category.aws_ce_cost_category.rule
 }
 output "source" {
   description = "(Required) Cost Category value that you want to split."
   value       = aws_ce_cost_category.aws_ce_cost_category.source
 }
-output "tags" {
-  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.rule"
-  value       = aws_ce_cost_category.aws_ce_cost_category.tags
+output "and" {
+  description = "(Optional) Return results that match both Dimension objects."
+  value       = aws_ce_cost_category.aws_ce_cost_category.and
 }
-output "rule" {
-  description = "(Optional) Configuration block for the Expression object used to categorize costs. See below."
-  value       = aws_ce_cost_category.aws_ce_cost_category.rule
+output "dimension_name" {
+  description = "(Optional) Name of the dimension that's used to group costs. If you specify LINKED_ACCOUNT_NAME, the cost category value is based on account name. If you specify TAG, the cost category value will be based on the value of the specified tag key. Valid values are LINKED_ACCOUNT_NAME, TAGrule"
+  value       = aws_ce_cost_category.aws_ce_cost_category.dimension_name
+}
+output "effective_start" {
+  description = "Effective state data of your Cost Category."
+  value       = aws_ce_cost_category.aws_ce_cost_category.effective_start
+}
+output "name" {
+  description = "(Required) Unique name for the Cost Category."
+  value       = aws_ce_cost_category.aws_ce_cost_category.name
+}
+output "parameter" {
+  description = "(Optional) Configuration block for the parameters for a split charge method. This is only required for the FIXED method. See below."
+  value       = aws_ce_cost_category.aws_ce_cost_category.parameter
 }
 output "default_value" {
   description = "(Optional) Default value for the cost category."
@@ -373,41 +365,57 @@ output "dimension" {
   description = "(Optional) Configuration block for the specific Dimension to use for Expression. See below."
   value       = aws_ce_cost_category.aws_ce_cost_category.dimension
 }
-output "key" {
-  description = "(Optional) Key for the tag."
-  value       = aws_ce_cost_category.aws_ce_cost_category.key
+output "id" {
+  description = "Unique ID of the cost category."
+  value       = aws_ce_cost_category.aws_ce_cost_category.id
 }
-output "split_charge_rule" {
-  description = "(Optional) Configuration block for the split charge rules used to allocate your charges between your Cost Category values. See below."
-  value       = aws_ce_cost_category.aws_ce_cost_category.split_charge_rule
+output "tag" {
+  description = "(Optional) Configuration block for the specific Tag to use for Expression. See below.cost_category"
+  value       = aws_ce_cost_category.aws_ce_cost_category.tag
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ce_cost_category.aws_ce_cost_category.tags_all
+}
+output "values" {
+  description = "(Optional) Parameter values.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ce_cost_category.aws_ce_cost_category.values
 }
 output "cost_category" {
   description = "(Optional) Configuration block for the filter that's based on CostCategory values. See below."
   value       = aws_ce_cost_category.aws_ce_cost_category.cost_category
 }
-output "match_options" {
-  description = "(Optional) Match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. Valid values are: EQUALS,  ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE."
-  value       = aws_ce_cost_category.aws_ce_cost_category.match_options
-}
-output "method" {
-  description = "(Required) Method that's used to define how to split your source costs across your targets. Valid values are FIXED, PROPORTIONAL, EVEN"
-  value       = aws_ce_cost_category.aws_ce_cost_category.method
+output "or" {
+  description = "(Optional) Return results that match both Dimension object."
+  value       = aws_ce_cost_category.aws_ce_cost_category.or
 }
 output "dimension_key" {
   description = "(Optional) Key to extract cost category values."
   value       = aws_ce_cost_category.aws_ce_cost_category.dimension_key
 }
-output "effective_start" {
-  description = "Effective state data of your Cost Category."
-  value       = aws_ce_cost_category.aws_ce_cost_category.effective_start
+output "key" {
+  description = "(Optional) Key for the tag."
+  value       = aws_ce_cost_category.aws_ce_cost_category.key
 }
-output "or" {
+output "match_options" {
+  description = "(Optional) Match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. Valid values are: EQUALS,  ABSENT, STARTS_WITH, ENDS_WITH, CONTAINS, CASE_SENSITIVE, CASE_INSENSITIVE."
+  value       = aws_ce_cost_category.aws_ce_cost_category.match_options
+}
+output "not" {
   description = "(Optional) Return results that match both Dimension object."
-  value       = aws_ce_cost_category.aws_ce_cost_category.or
+  value       = aws_ce_cost_category.aws_ce_cost_category.not
 }
-output "tag" {
-  description = "(Optional) Configuration block for the specific Tag to use for Expression. See below.cost_category"
-  value       = aws_ce_cost_category.aws_ce_cost_category.tag
+output "tags" {
+  description = "(Optional) Key-value mapping of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.rule"
+  value       = aws_ce_cost_category.aws_ce_cost_category.tags
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_ce_cost_category.aws_ce_cost_category.tags_all
+}
+output "arn" {
+  description = "ARN of the cost category."
+  value       = aws_ce_cost_category.aws_ce_cost_category.arn
 }
 output "effective_end" {
   description = "Effective end data of your Cost Category."
@@ -420,14 +428,6 @@ output "effective_start" {
 output "id" {
   description = "Unique ID of the cost category."
   value       = aws_ce_cost_category.aws_ce_cost_category.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_ce_cost_category.aws_ce_cost_category.tags_all
-}
-output "arn" {
-  description = "ARN of the cost category."
-  value       = aws_ce_cost_category.aws_ce_cost_category.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

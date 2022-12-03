@@ -9,11 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
 variable "target_arns" {
   description = "(Required, ForceNew) List of network load balancer arns in the VPC targeted by the VPC link. Currently AWS only supports 1 target."
   type        = string
@@ -30,6 +25,11 @@ variable "id" {
 variable "name" {
   description = "(Required) Name used to label and identify the VPC link."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -151,10 +151,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_api_gateway_vpc_link.aws_api_gateway_vpc_link.tags
-}
 output "target_arns" {
   description = "(Required, ForceNew) List of network load balancer arns in the VPC targeted by the VPC link. Currently AWS only supports 1 target."
   value       = aws_api_gateway_vpc_link.aws_api_gateway_vpc_link.target_arns
@@ -170,6 +166,10 @@ output "id" {
 output "name" {
   description = "(Required) Name used to label and identify the VPC link."
   value       = aws_api_gateway_vpc_link.aws_api_gateway_vpc_link.name
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_api_gateway_vpc_link.aws_api_gateway_vpc_link.tags
 }
 output "id" {
   description = "Identifier of the VpcLink."

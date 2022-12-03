@@ -1,7 +1,7 @@
 resource "aws_ecs_account_setting_default" "aws_ecs_account_setting_default" {
-  value = var.value
   id    = var.id
   name  = var.name
+  value = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "value" {
+  description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.value
+}
 output "id" {
   description = "ARN that identifies the account setting."
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.id
@@ -146,10 +150,6 @@ output "id" {
 output "name" {
   description = "(Required) Name of the account setting to set. Valid values are serviceLongArnFormat, taskLongArnFormat, containerInstanceLongArnFormat, awsvpcTrunking and containerInsights."
   value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.name
-}
-output "value" {
-  description = "(Required) State of the setting. Valid values are enabled and disabled.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ecs_account_setting_default.aws_ecs_account_setting_default.value
 }
 output "id" {
   description = "ARN that identifies the account setting."

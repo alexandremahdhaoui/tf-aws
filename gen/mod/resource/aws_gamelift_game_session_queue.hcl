@@ -1,38 +1,16 @@
 resource "aws_gamelift_game_session_queue" "aws_gamelift_game_session_queue" {
-  destinations                                   = var.destinations
-  maximum_individual_player_latency_milliseconds = var.maximum_individual_player_latency_milliseconds
-  timeout_in_seconds                             = var.timeout_in_seconds
-  tags                                           = var.tags
-  arn                                            = var.arn
   name                                           = var.name
   notification_target                            = var.notification_target
+  timeout_in_seconds                             = var.timeout_in_seconds
+  arn                                            = var.arn
+  maximum_individual_player_latency_milliseconds = var.maximum_individual_player_latency_milliseconds
   player_latency_policy                          = var.player_latency_policy
   policy_duration_seconds                        = var.policy_duration_seconds
+  tags                                           = var.tags
+  destinations                                   = var.destinations
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "destinations" {
-  description = "(Optional) List of fleet/alias ARNs used by session queue for placing game sessions."
-  type        = string
-  default     = ""
-}
-variable "maximum_individual_player_latency_milliseconds" {
-  description = "(Required) Maximum latency value that is allowed for any player."
-  type        = string
-}
-variable "timeout_in_seconds" {
-  description = "(Required) Maximum time a game session request can remain in the queue."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsplayer_latency_policy"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Game Session Queue ARN."
   type        = string
 }
 variable "name" {
@@ -44,6 +22,18 @@ variable "notification_target" {
   type        = string
   default     = ""
 }
+variable "timeout_in_seconds" {
+  description = "(Required) Maximum time a game session request can remain in the queue."
+  type        = string
+}
+variable "arn" {
+  description = "Game Session Queue ARN."
+  type        = string
+}
+variable "maximum_individual_player_latency_milliseconds" {
+  description = "(Required) Maximum latency value that is allowed for any player."
+  type        = string
+}
 variable "player_latency_policy" {
   description = "(Optional) One or more policies used to choose fleet based on player latency. See below."
   type        = string
@@ -51,6 +41,16 @@ variable "player_latency_policy" {
 }
 variable "policy_duration_seconds" {
   description = "(Optional) Length of time that the policy is enforced while placing a new game session. Absence of value for this attribute means that the policy is enforced until the queue times out.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested Fieldsplayer_latency_policy"
+  type        = string
+  default     = ""
+}
+variable "destinations" {
+  description = "(Optional) List of fleet/alias ARNs used by session queue for placing game sessions."
   type        = string
   default     = ""
 }
@@ -174,6 +174,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "destinations" {
+  description = "(Optional) List of fleet/alias ARNs used by session queue for placing game sessions."
+  value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.destinations
+}
+output "maximum_individual_player_latency_milliseconds" {
+  description = "(Required) Maximum latency value that is allowed for any player."
+  value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.maximum_individual_player_latency_milliseconds
+}
+output "player_latency_policy" {
+  description = "(Optional) One or more policies used to choose fleet based on player latency. See below."
+  value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.player_latency_policy
+}
 output "policy_duration_seconds" {
   description = "(Optional) Length of time that the policy is enforced while placing a new game session. Absence of value for this attribute means that the policy is enforced until the queue times out.In addition to all arguments above, the following attributes are exported:"
   value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.policy_duration_seconds
@@ -193,18 +205,6 @@ output "name" {
 output "notification_target" {
   description = "(Optional) An SNS topic ARN that is set up to receive game session placement notifications."
   value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.notification_target
-}
-output "player_latency_policy" {
-  description = "(Optional) One or more policies used to choose fleet based on player latency. See below."
-  value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.player_latency_policy
-}
-output "destinations" {
-  description = "(Optional) List of fleet/alias ARNs used by session queue for placing game sessions."
-  value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.destinations
-}
-output "maximum_individual_player_latency_milliseconds" {
-  description = "(Required) Maximum latency value that is allowed for any player."
-  value       = aws_gamelift_game_session_queue.aws_gamelift_game_session_queue.maximum_individual_player_latency_milliseconds
 }
 output "timeout_in_seconds" {
   description = "(Required) Maximum time a game session request can remain in the queue."

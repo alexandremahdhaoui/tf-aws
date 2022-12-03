@@ -11,7 +11,7 @@ variable "stream_arn" {
   type        = string
 }
 variable "table_name" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+  description = "(Required) The name of the DynamoDB table. There\ncan only be one Kinesis streaming destination for a given DynamoDB table.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -139,7 +139,7 @@ output "stream_arn" {
   value       = aws_dynamodb_kinesis_streaming_destination.aws_dynamodb_kinesis_streaming_destination.stream_arn
 }
 output "table_name" {
-  description = "In addition to all arguments above, the following attributes are exported:"
+  description = "(Required) The name of the DynamoDB table. There\ncan only be one Kinesis streaming destination for a given DynamoDB table.In addition to all arguments above, the following attributes are exported:"
   value       = aws_dynamodb_kinesis_streaming_destination.aws_dynamodb_kinesis_streaming_destination.table_name
 }
 output "id" {

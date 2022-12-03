@@ -1,15 +1,15 @@
 datasource "aws_ec2_transit_gateway_attachment" "aws_ec2_transit_gateway_attachment" {
+  filter                        = var.filter
   resource_id                   = var.resource_id
+  state                         = var.state
+  arn                           = var.arn
+  name                          = var.name
   resource_owner_id             = var.resource_owner_id
   resource_type                 = var.resource_type
-  state                         = var.state
+  tags                          = var.tags
+  transit_gateway_attachment_id = var.transit_gateway_attachment_id
   transit_gateway_id            = var.transit_gateway_id
   values                        = var.values
-  arn                           = var.arn
-  filter                        = var.filter
-  transit_gateway_attachment_id = var.transit_gateway_attachment_id
-  name                          = var.name
-  tags                          = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -17,6 +17,14 @@ variable "provider_region" {
 }
 variable "name" {
   description = "(Required) Name of the field to filter by, as defined by the underlying AWS API."
+  type        = string
+}
+variable "resource_owner_id" {
+  description = "ID of the AWS account that owns the resource."
+  type        = string
+}
+variable "resource_type" {
+  description = "Resource type."
   type        = string
 }
 variable "tags" {
@@ -28,31 +36,6 @@ variable "transit_gateway_attachment_id" {
   type        = string
   default     = ""
 }
-variable "arn" {
-  description = "ARN of the attachment."
-  type        = string
-}
-variable "filter" {
-  description = "(Optional) One or more configuration blocks containing name-values filters. Detailed below."
-  type        = string
-  default     = ""
-}
-variable "resource_id" {
-  description = "ID of the resource."
-  type        = string
-}
-variable "resource_owner_id" {
-  description = "ID of the AWS account that owns the resource."
-  type        = string
-}
-variable "resource_type" {
-  description = "Resource type."
-  type        = string
-}
-variable "state" {
-  description = "Attachment state."
-  type        = string
-}
 variable "transit_gateway_id" {
   description = "ID of the transit gateway."
   type        = string
@@ -61,6 +44,23 @@ variable "values" {
   description = "(Required) List of one or more values for the filter.Attribute ReferenceIn addition to all arguments above, the following attributes are exported:"
   type        = string
 }
+variable "arn" {
+  description = "ARN of the attachment."
+  type        = string
+}
+variable "resource_id" {
+  description = "ID of the resource."
+  type        = string
+}
+variable "state" {
+  description = "Attachment state."
+  type        = string
+}
+variable "filter" {
+  description = "(Optional) One or more configuration blocks containing name-values filters. Detailed below."
+  type        = string
+  default     = ""
+}
 output "filter" {
   description = "(Optional) One or more configuration blocks containing name-values filters. Detailed below."
   value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.filter
@@ -68,14 +68,6 @@ output "filter" {
 output "resource_id" {
   description = "ID of the resource."
   value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.resource_id
-}
-output "resource_owner_id" {
-  description = "ID of the AWS account that owns the resource."
-  value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.resource_owner_id
-}
-output "resource_type" {
-  description = "Resource type."
-  value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.resource_type
 }
 output "state" {
   description = "Attachment state."
@@ -93,6 +85,18 @@ output "arn" {
   description = "ARN of the attachment."
   value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.arn
 }
+output "name" {
+  description = "(Required) Name of the field to filter by, as defined by the underlying AWS API."
+  value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.name
+}
+output "resource_owner_id" {
+  description = "ID of the AWS account that owns the resource."
+  value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.resource_owner_id
+}
+output "resource_type" {
+  description = "Resource type."
+  value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.resource_type
+}
 output "tags" {
   description = "Key-value tags for the attachment."
   value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.tags
@@ -100,10 +104,6 @@ output "tags" {
 output "transit_gateway_attachment_id" {
   description = "(Optional) ID of the attachment.filter Argument Reference"
   value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.transit_gateway_attachment_id
-}
-output "name" {
-  description = "(Required) Name of the field to filter by, as defined by the underlying AWS API."
-  value       = aws_ec2_transit_gateway_attachment.aws_ec2_transit_gateway_attachment.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

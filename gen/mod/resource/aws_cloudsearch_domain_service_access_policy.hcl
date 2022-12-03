@@ -1,14 +1,10 @@
 resource "aws_cloudsearch_domain_service_access_policy" "aws_cloudsearch_domain_service_access_policy" {
-  update        = var.update
   access_policy = var.access_policy
   domain_name   = var.domain_name
+  update        = var.update
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "access_policy" {
-  description = "(Required) The access rules you want to configure. These rules replace any existing rules. See the AWS documentation for details."
   type        = string
 }
 variable "domain_name" {
@@ -17,6 +13,10 @@ variable "domain_name" {
 }
 variable "update" {
   description = "(Default 20m)"
+  type        = string
+}
+variable "access_policy" {
+  description = "(Required) The access rules you want to configure. These rules replace any existing rules. See the AWS documentation for details."
   type        = string
 }
 variable "tag_instance_id" {

@@ -9,6 +9,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "geo_match_constraint" {
+  description = "(Optional) The GeoMatchConstraint objects which contain the country that you want AWS WAF to search for.Nested Blocksgeo_match_constraintArguments"
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "The ID of the WAF GeoMatchSet."
   type        = string
@@ -22,13 +27,8 @@ variable "type" {
   type        = string
 }
 variable "value" {
-  description = "(Required) The country that you want AWS WAF to search for.\nThis is the two-letter country code, e.g., US, CA, RU, CNdocs for all supported values.RemarksIn addition to all arguments above, the following attributes are exported:"
+  description = "US, CA, RU, CNdocs for all supported values.RemarksIn addition to all arguments above, the following attributes are exported:"
   type        = string
-}
-variable "geo_match_constraint" {
-  description = "(Optional) The GeoMatchConstraint objects which contain the country that you want AWS WAF to search for.Nested Blocksgeo_match_constraintArguments"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -150,6 +150,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "geo_match_constraint" {
+  description = "(Optional) The GeoMatchConstraint objects which contain the country that you want AWS WAF to search for.Nested Blocksgeo_match_constraintArguments"
+  value       = aws_waf_geo_match_set.aws_waf_geo_match_set.geo_match_constraint
+}
 output "id" {
   description = "The ID of the WAF GeoMatchSet."
   value       = aws_waf_geo_match_set.aws_waf_geo_match_set.id
@@ -163,12 +167,8 @@ output "type" {
   value       = aws_waf_geo_match_set.aws_waf_geo_match_set.type
 }
 output "value" {
-  description = "(Required) The country that you want AWS WAF to search for.\nThis is the two-letter country code, e.g., US, CA, RU, CNdocs for all supported values.RemarksIn addition to all arguments above, the following attributes are exported:"
+  description = "US, CA, RU, CNdocs for all supported values.RemarksIn addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_geo_match_set.aws_waf_geo_match_set.value
-}
-output "geo_match_constraint" {
-  description = "(Optional) The GeoMatchConstraint objects which contain the country that you want AWS WAF to search for.Nested Blocksgeo_match_constraintArguments"
-  value       = aws_waf_geo_match_set.aws_waf_geo_match_set.geo_match_constraint
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"

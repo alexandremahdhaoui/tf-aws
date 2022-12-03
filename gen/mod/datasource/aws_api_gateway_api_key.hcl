@@ -4,18 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "enabled" {
-  description = "Whether the API Key is enabled."
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.enabled
-}
-output "id" {
-  description = "Set to the ID of the API Key."
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.id
-}
-output "last_updated_date" {
-  description = "Date and time when the API Key was last updated."
-  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.last_updated_date
-}
 output "name" {
   description = "Set to the name of the API Key."
   value       = aws_api_gateway_api_key.aws_api_gateway_api_key.name
@@ -31,6 +19,18 @@ output "created_date" {
 output "description" {
   description = "Description of the API Key."
   value       = aws_api_gateway_api_key.aws_api_gateway_api_key.description
+}
+output "enabled" {
+  description = "Whether the API Key is enabled."
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.enabled
+}
+output "id" {
+  description = "Set to the ID of the API Key."
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.id
+}
+output "last_updated_date" {
+  description = "Date and time when the API Key was last updated."
+  value       = aws_api_gateway_api_key.aws_api_gateway_api_key.last_updated_date
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

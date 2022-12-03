@@ -1,11 +1,15 @@
 resource "aws_wafregional_geo_match_set" "aws_wafregional_geo_match_set" {
-  geo_match_constraint = var.geo_match_constraint
-  name                 = var.name
   type                 = var.type
   value                = var.value
+  geo_match_constraint = var.geo_match_constraint
+  name                 = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "value" {
+  description = "(Required) The country that you want AWS WAF to search for.\nThis is the two-letter country code, e.g., US, CA, RU, CNdocs for all supported values.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "geo_match_constraint" {
@@ -19,10 +23,6 @@ variable "name" {
 }
 variable "type" {
   description = "(Required) The type of geographical area you want AWS WAF to search for. Currently Country is the only valid value."
-  type        = string
-}
-variable "value" {
-  description = "(Required) The country that you want AWS WAF to search for.\nThis is the two-letter country code, e.g., US, CA, RU, CNdocs for all supported values.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {

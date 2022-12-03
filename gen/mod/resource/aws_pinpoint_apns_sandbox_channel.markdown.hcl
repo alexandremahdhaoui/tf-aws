@@ -1,4 +1,5 @@
 resource "aws_pinpoint_apns_sandbox_channel.markdown" "aws_pinpoint_apns_sandbox_channel.markdown" {
+  application_id                = var.application_id
   bundle_id                     = var.bundle_id
   certificate                   = var.certificate
   default_authentication_method = var.default_authentication_method
@@ -6,10 +7,13 @@ resource "aws_pinpoint_apns_sandbox_channel.markdown" "aws_pinpoint_apns_sandbox
   private_key                   = var.private_key
   team_id                       = var.team_id
   token_key                     = var.token_key
-  application_id                = var.application_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "bundle_id" {
+  description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
   type        = string
 }
 variable "certificate" {
@@ -17,9 +21,8 @@ variable "certificate" {
   type        = string
 }
 variable "default_authentication_method" {
-  description = "(Optional) The default authentication method used for APNs Sandbox.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
+  description = "strongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
   type        = string
-  default     = ""
 }
 variable "enabled" {
   description = "(Optional) Whether the channel is enabled or disabled. Defaults to true."
@@ -40,10 +43,6 @@ variable "token_key" {
 }
 variable "application_id" {
   description = "(Required) The application ID."
-  type        = string
-}
-variable "bundle_id" {
-  description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,6 +165,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "application_id" {
+  description = "(Required) The application ID."
+  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.application_id
+}
 output "bundle_id" {
   description = "(Required) The ID assigned to your iOS app. To find this value, choose Certificates, IDs & Profiles, choose App IDs in the Identifiers section, and choose your app."
   value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.bundle_id
@@ -175,7 +178,7 @@ output "certificate" {
   value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.certificate
 }
 output "default_authentication_method" {
-  description = "(Optional) The default authentication method used for APNs Sandbox.\nstrongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
+  description = "strongNOTEOne of the following sets of credentials is also required.If you choose to use strongCertificate credentials you will have to provide:"
   value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.default_authentication_method
 }
 output "enabled" {
@@ -193,10 +196,6 @@ output "team_id" {
 output "token_key" {
   description = "(Required) The .p8 file that you download from your Apple developer account when you create an authentication key."
   value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.token_key
-}
-output "application_id" {
-  description = "(Required) The application ID."
-  value       = aws_pinpoint_apns_sandbox_channel.markdown.aws_pinpoint_apns_sandbox_channel.markdown.application_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

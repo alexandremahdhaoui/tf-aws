@@ -33,8 +33,7 @@ spec:
             description: ARN of the image recipe.
             type: string
         image_tests_configuration:
-            description: |
-                List of an object with image tests configuration.
+            description: ""
             type: string
         image_tests_enabled:
             description: Whether image tests are enabled.
@@ -52,8 +51,7 @@ spec:
             description: Platform of the image pipeline.
             type: string
         schedule:
-            description: |
-                List of an object with schedule settings.
+            description: ""
             type: string
         schedule_expression:
             description: Cron expression of how often the pipeline start condition is evaluated.

@@ -1,8 +1,8 @@
 resource "aws_inspector2_enabler" "aws_inspector2_enabler" {
+  resource_types = var.resource_types
   update         = var.update
   account_ids    = var.account_ids
   create         = var.create
-  resource_types = var.resource_types
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

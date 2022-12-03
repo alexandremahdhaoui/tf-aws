@@ -6,8 +6,7 @@ spec:
     args: {}
     attrs:
         delegated_services:
-            description: |
-                Services for which the account is a delegated administrator, which have the following attributes:
+            description: ""
             type: string
         delegation_enabled_date:
             description: The date that the account became a delegated administrator for this service.

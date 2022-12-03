@@ -1,9 +1,9 @@
 resource "aws_vpc_ipam_pool_cidr" "aws_vpc_ipam_pool_cidr" {
-  cidr_authorization_context = var.cidr_authorization_context
-  ipam_pool_id               = var.ipam_pool_id
   message                    = var.message
   signature                  = var.signature
   cidr                       = var.cidr
+  cidr_authorization_context = var.cidr_authorization_context
+  ipam_pool_id               = var.ipam_pool_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -153,10 +153,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "signature" {
-  description = "(Optional) The signed authorization message for the prefix and account.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.signature
-}
 output "cidr" {
   description = "(Optional) The CIDR you want to assign to the pool."
   value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.cidr
@@ -172,6 +168,10 @@ output "ipam_pool_id" {
 output "message" {
   description = "(Optional) The plain-text authorization message for the prefix and account."
   value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.message
+}
+output "signature" {
+  description = "(Optional) The signed authorization message for the prefix and account.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_vpc_ipam_pool_cidr.aws_vpc_ipam_pool_cidr.signature
 }
 output "id" {
   description = "The ID of the IPAM Pool Cidr concatenated with the IPAM Pool ID."

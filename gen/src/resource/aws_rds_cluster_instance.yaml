@@ -5,10 +5,7 @@ metadata:
 spec:
     args:
         apply_immediately:
-            description: |-
-                (Optional) Specifies whether any database modifications
-                are applied immediately, or during the next maintenance window. Default isfalse.
-            optional: true
+            description: false.
             type: string
         arn:
             description: Amazon Resource Name (ARN) of cluster instance
@@ -78,7 +75,10 @@ spec:
             optional: true
             type: string
         monitoring_role_arn:
-            description: AWS Documentation
+            description: |-
+                (Optional) The ARN for the IAM role that permits RDS to send
+                enhanced monitoring metrics to CloudWatch Logs. You can find more information on the AWS Documentation
+            optional: true
             type: string
         network_type:
             description: The network type of the DB instance.
@@ -101,7 +101,10 @@ spec:
             optional: true
             type: string
         preferred_maintenance_window:
-            description: ""
+            description: |-
+                (Optional) The window to perform maintenance in.
+                Syntax: "ddd:hh24:mi-ddd:hh24:mi". Eg: "Mon:00:00-Mon:03:00".
+            optional: true
             type: string
         promotion_tier:
             description: (Optional) Default 0. Failover Priority setting on instance level. The reader who has lower tier has higher priority to get promoted to writer.

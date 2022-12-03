@@ -1,15 +1,19 @@
 datasource "aws_connect_contact_flow_module" "aws_connect_contact_flow_module" {
-  tags                   = var.tags
-  arn                    = var.arn
-  contact_flow_module_id = var.contact_flow_module_id
   content                = var.content
   description            = var.description
   instance_id            = var.instance_id
   name                   = var.name
   state                  = var.state
+  tags                   = var.tags
+  arn                    = var.arn
+  contact_flow_module_id = var.contact_flow_module_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "content" {
+  description = "Logic of the Contact Flow Module."
   type        = string
 }
 variable "description" {
@@ -42,9 +46,17 @@ variable "contact_flow_module_id" {
   type        = string
   default     = ""
 }
-variable "content" {
-  description = "Logic of the Contact Flow Module."
-  type        = string
+output "tags" {
+  description = "Map of tags to assign to the Contact Flow Module."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.tags
+}
+output "arn" {
+  description = "ARN of the Contact Flow Module."
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.arn
+}
+output "contact_flow_module_id" {
+  description = "(Optional) Returns information on a specific Contact Flow Module by contact flow module id"
+  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.contact_flow_module_id
 }
 output "content" {
   description = "Logic of the Contact Flow Module."
@@ -65,18 +77,6 @@ output "name" {
 output "state" {
   description = "Type of Contact Flow Module Module. Values are either ACTIVE or ARCHIVED."
   value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.state
-}
-output "tags" {
-  description = "Map of tags to assign to the Contact Flow Module."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.tags
-}
-output "arn" {
-  description = "ARN of the Contact Flow Module."
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.arn
-}
-output "contact_flow_module_id" {
-  description = "(Optional) Returns information on a specific Contact Flow Module by contact flow module id"
-  value       = aws_connect_contact_flow_module.aws_connect_contact_flow_module.contact_flow_module_id
 }
 output "content" {
   description = "Logic of the Contact Flow Module."

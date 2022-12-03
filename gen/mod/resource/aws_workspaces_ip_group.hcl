@@ -1,10 +1,10 @@
 resource "aws_workspaces_ip_group" "aws_workspaces_ip_group" {
-  source      = var.source
-  tags        = var.tags
   description = var.description
   id          = var.id
   name        = var.name
   rules       = var.rules
+  source      = var.source
+  tags        = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -157,14 +157,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) The description.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_workspaces_ip_group.aws_workspaces_ip_group.description
-}
-output "id" {
-  description = "The IP group identifier."
-  value       = aws_workspaces_ip_group.aws_workspaces_ip_group.id
-}
 output "name" {
   description = "(Required) The name of the IP group."
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.name
@@ -180,6 +172,14 @@ output "source" {
 output "tags" {
   description = " – (Optional) A map of tags assigned to the WorkSpaces directory. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlocksrulesArguments"
   value       = aws_workspaces_ip_group.aws_workspaces_ip_group.tags
+}
+output "description" {
+  description = "(Optional) The description.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_workspaces_ip_group.aws_workspaces_ip_group.description
+}
+output "id" {
+  description = "The IP group identifier."
+  value       = aws_workspaces_ip_group.aws_workspaces_ip_group.id
 }
 output "id" {
   description = "The IP group identifier."

@@ -1,17 +1,46 @@
 resource "aws_memorydb_subnet_group" "aws_memorydb_subnet_group" {
-  arn         = var.arn
-  subnet_ids  = var.subnet_ids
-  tags        = var.tags
-  tags_all    = var.tags_all
-  vpc_id      = var.vpc_id
-  description = var.description
-  id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
+  subnet_ids  = var.subnet_ids
+  vpc_id      = var.vpc_id
+  arn         = var.arn
+  description = var.description
+  id          = var.id
+  tags        = var.tags
+  tags_all    = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+  default     = ""
+}
+variable "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  type        = string
+  default     = ""
+}
+variable "subnet_ids" {
+  description = "(Required) Set of VPC Subnet ID-s for the subnet group. At least one subnet must be provided."
+  type        = string
+}
+variable "vpc_id" {
+  description = "The VPC in which the subnet group exists."
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the subnet group."
+  type        = string
+  default     = ""
 }
 variable "description" {
   description = "(Optional) Description for the subnet group. Defaults to \"Managed by Terraform\"."
@@ -25,35 +54,6 @@ variable "id" {
 }
 variable "name" {
   description = "(Optional, Forces new resource) Name of the subnet group. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
-  type        = string
-  default     = ""
-}
-variable "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the subnet group."
-  type        = string
-  default     = ""
-}
-variable "subnet_ids" {
-  description = "(Required) Set of VPC Subnet ID-s for the subnet group. At least one subnet must be provided."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-  default     = ""
-}
-variable "vpc_id" {
-  description = "The VPC in which the subnet group exists."
   type        = string
   default     = ""
 }
@@ -177,13 +177,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name_prefix" {
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.name_prefix
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.tags
 }
-output "description" {
-  description = "(Optional) Description for the subnet group. Defaults to \"Managed by Terraform\"."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.description
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.tags_all
 }
 output "id" {
   description = "The name of the subnet group."
@@ -193,9 +193,13 @@ output "name" {
   description = "(Optional, Forces new resource) Name of the subnet group. If omitted, Terraform will assign a random, unique name. Conflicts with name_prefix."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.name
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.tags_all
+output "name_prefix" {
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.name_prefix
+}
+output "subnet_ids" {
+  description = "(Required) Set of VPC Subnet ID-s for the subnet group. At least one subnet must be provided."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.subnet_ids
 }
 output "vpc_id" {
   description = "The VPC in which the subnet group exists."
@@ -205,13 +209,13 @@ output "arn" {
   description = "The ARN of the subnet group."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.arn
 }
-output "subnet_ids" {
-  description = "(Required) Set of VPC Subnet ID-s for the subnet group. At least one subnet must be provided."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.subnet_ids
+output "description" {
+  description = "(Optional) Description for the subnet group. Defaults to \"Managed by Terraform\"."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.description
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.tags
+output "vpc_id" {
+  description = "The VPC in which the subnet group exists."
+  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.vpc_id
 }
 output "arn" {
   description = "The ARN of the subnet group."
@@ -224,10 +228,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.tags_all
-}
-output "vpc_id" {
-  description = "The VPC in which the subnet group exists."
-  value       = aws_memorydb_subnet_group.aws_memorydb_subnet_group.vpc_id
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -9,7 +9,10 @@ spec:
             optional: true
             type: string
         associated_gateway_id:
-            description: ""
+            description: |-
+                (Optional) The ID of the VGW or transit gateway with which to associate the Direct Connect gateway.
+                Used for single account Direct Connect gateway associations.
+            optional: true
             type: string
         associated_gateway_owner_account_id:
             description: |-

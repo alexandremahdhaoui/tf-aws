@@ -168,6 +168,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "filter" {
+  description = "(Required) Filter criteria for the archive rule. See Filter for more details."
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.filter
+}
+output "neq" {
+  description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.neq
+}
 output "rule_name" {
   description = "(Required) Rule name.FilterstrongNote One comparator must be included with each filter."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.rule_name
@@ -191,14 +199,6 @@ output "eq" {
 output "exists" {
   description = "(Optional) Boolean comparator."
   value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.exists
-}
-output "filter" {
-  description = "(Required) Filter criteria for the archive rule. See Filter for more details."
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.filter
-}
-output "neq" {
-  description = "(Optional) Not Equals comparator.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_accessanalyzer_archive_rule.aws_accessanalyzer_archive_rule.neq
 }
 output "id" {
   description = "Resource ID in the format: analyzer_name/rule_name."

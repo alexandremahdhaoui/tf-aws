@@ -13,7 +13,9 @@ spec:
                 should be applied. This can be specified if the protocol is SSL or TCP.In addition to all arguments above, the following attributes are exported:
             type: string
         load_balancer:
-            description: ""
+            description: |-
+                (Required) The load balancer to which the policy
+                should be attached.
             type: string
     attrs:
         id:

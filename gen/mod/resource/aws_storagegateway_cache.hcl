@@ -134,13 +134,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "disk_id" {
-  description = "(Required) Local disk identifier. For example, pci-0000:03:00.0-scsi-0:0:0:0."
-  value       = aws_storagegateway_cache.aws_storagegateway_cache.disk_id
-}
 output "gateway_arn" {
   description = "(Required) The Amazon Resource Name (ARN) of the gateway.In addition to all arguments above, the following attributes are exported:"
   value       = aws_storagegateway_cache.aws_storagegateway_cache.gateway_arn
+}
+output "disk_id" {
+  description = "(Required) Local disk identifier. For example, pci-0000:03:00.0-scsi-0:0:0:0."
+  value       = aws_storagegateway_cache.aws_storagegateway_cache.disk_id
 }
 output "id" {
   description = "Combined gateway Amazon Resource Name (ARN) and local disk identifier."

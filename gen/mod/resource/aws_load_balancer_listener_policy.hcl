@@ -1,11 +1,15 @@
 resource "aws_load_balancer_listener_policy" "aws_load_balancer_listener_policy" {
+  id                 = var.id
   load_balancer_name = var.load_balancer_name
   load_balancer_port = var.load_balancer_port
   policy_names       = var.policy_names
-  id                 = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "policy_names" {
+  description = "(Required) List of Policy Names to apply to the backend server.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "id" {
@@ -18,10 +22,6 @@ variable "load_balancer_name" {
 }
 variable "load_balancer_port" {
   description = "(Required) The load balancer listener port to apply the policy to."
-  type        = string
-}
-variable "policy_names" {
-  description = "(Required) List of Policy Names to apply to the backend server.In addition to all arguments above, the following attributes are exported:"
   type        = string
 }
 variable "tag_instance_id" {
@@ -144,10 +144,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "id" {
-  description = "The ID of the policy."
-  value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.id
-}
 output "load_balancer_name" {
   description = "The load balancer on which the policy is defined."
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.load_balancer_name
@@ -159,6 +155,10 @@ output "load_balancer_port" {
 output "policy_names" {
   description = "(Required) List of Policy Names to apply to the backend server.In addition to all arguments above, the following attributes are exported:"
   value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.policy_names
+}
+output "id" {
+  description = "The ID of the policy."
+  value       = aws_load_balancer_listener_policy.aws_load_balancer_listener_policy.id
 }
 output "id" {
   description = "The ID of the policy."

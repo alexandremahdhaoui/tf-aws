@@ -9,6 +9,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "database" {
+  description = "(Required) Database to which the query belongs."
+  type        = string
+}
 variable "description" {
   description = "(Optional) Brief explanation of the query. Maximum length of 1024.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -26,10 +30,6 @@ variable "workgroup" {
   description = "(Optional) Workgroup to which the query belongs. Defaults to primary"
   type        = string
   default     = ""
-}
-variable "database" {
-  description = "(Required) Database to which the query belongs."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -151,6 +151,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "query" {
+  description = "(Required) Text of the query itself. In other words, all query statements. Maximum length of 262144."
+  value       = aws_athena_named_query.aws_athena_named_query.query
+}
+output "workgroup" {
+  description = "(Optional) Workgroup to which the query belongs. Defaults to primary"
+  value       = aws_athena_named_query.aws_athena_named_query.workgroup
+}
 output "database" {
   description = "(Required) Database to which the query belongs."
   value       = aws_athena_named_query.aws_athena_named_query.database
@@ -162,14 +170,6 @@ output "description" {
 output "name" {
   description = "(Required) Plain language name for the query. Maximum length of 128."
   value       = aws_athena_named_query.aws_athena_named_query.name
-}
-output "query" {
-  description = "(Required) Text of the query itself. In other words, all query statements. Maximum length of 262144."
-  value       = aws_athena_named_query.aws_athena_named_query.query
-}
-output "workgroup" {
-  description = "(Optional) Workgroup to which the query belongs. Defaults to primary"
-  value       = aws_athena_named_query.aws_athena_named_query.workgroup
 }
 output "id" {
   description = "Unique ID of the query."

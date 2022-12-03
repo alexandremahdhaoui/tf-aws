@@ -1,12 +1,12 @@
 datasource "aws_dx_router_configuration" "aws_dx_router_configuration" {
+  vendor                 = var.vendor
+  virtual_interface_id   = var.virtual_interface_id
   xslt_template_name     = var.xslt_template_name
   customer_router_config = var.customer_router_config
   platform               = var.platform
   router                 = var.router
   router_type_identifier = var.router_type_identifier
   software               = var.software
-  vendor                 = var.vendor
-  virtual_interface_id   = var.virtual_interface_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -44,18 +44,6 @@ variable "virtual_interface_id" {
   description = "(Required) ID of the Direct Connect Virtual Interface"
   type        = string
 }
-output "vendor" {
-  description = "Router vendor"
-  value       = aws_dx_router_configuration.aws_dx_router_configuration.vendor
-}
-output "virtual_interface_id" {
-  description = "(Required) ID of the Direct Connect Virtual Interface"
-  value       = aws_dx_router_configuration.aws_dx_router_configuration.virtual_interface_id
-}
-output "xslt_template_name" {
-  description = "Router XSLT Template Name"
-  value       = aws_dx_router_configuration.aws_dx_router_configuration.xslt_template_name
-}
 output "customer_router_config" {
   description = "Instructions for configuring your router"
   value       = aws_dx_router_configuration.aws_dx_router_configuration.customer_router_config
@@ -63,18 +51,6 @@ output "customer_router_config" {
 output "platform" {
   description = "Router platform"
   value       = aws_dx_router_configuration.aws_dx_router_configuration.platform
-}
-output "router" {
-  description = "Block of the router type detailsA router block supports the following attributes:"
-  value       = aws_dx_router_configuration.aws_dx_router_configuration.router
-}
-output "router_type_identifier" {
-  description = "Router type identifier"
-  value       = aws_dx_router_configuration.aws_dx_router_configuration.router_type_identifier
-}
-output "software" {
-  description = "Router operating system"
-  value       = aws_dx_router_configuration.aws_dx_router_configuration.software
 }
 output "router" {
   description = "Block of the router type detailsA router block supports the following attributes:"
@@ -92,6 +68,26 @@ output "vendor" {
   description = "Router vendor"
   value       = aws_dx_router_configuration.aws_dx_router_configuration.vendor
 }
+output "virtual_interface_id" {
+  description = "(Required) ID of the Direct Connect Virtual Interface"
+  value       = aws_dx_router_configuration.aws_dx_router_configuration.virtual_interface_id
+}
+output "xslt_template_name" {
+  description = "Router XSLT Template Name"
+  value       = aws_dx_router_configuration.aws_dx_router_configuration.xslt_template_name
+}
+output "router_type_identifier" {
+  description = "Router type identifier"
+  value       = aws_dx_router_configuration.aws_dx_router_configuration.router_type_identifier
+}
+output "software" {
+  description = "Router operating system"
+  value       = aws_dx_router_configuration.aws_dx_router_configuration.software
+}
+output "vendor" {
+  description = "Router vendor"
+  value       = aws_dx_router_configuration.aws_dx_router_configuration.vendor
+}
 output "xslt_template_name" {
   description = "Router XSLT Template Name"
   value       = aws_dx_router_configuration.aws_dx_router_configuration.xslt_template_name
@@ -103,6 +99,10 @@ output "customer_router_config" {
 output "platform" {
   description = "Router platform"
   value       = aws_dx_router_configuration.aws_dx_router_configuration.platform
+}
+output "router" {
+  description = "Block of the router type detailsA router block supports the following attributes:"
+  value       = aws_dx_router_configuration.aws_dx_router_configuration.router
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

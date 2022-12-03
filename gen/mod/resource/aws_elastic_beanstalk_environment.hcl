@@ -1,37 +1,65 @@
 resource "aws_elastic_beanstalk_environment" "aws_elastic_beanstalk_environment" {
-  name                   = var.name
-  platform_arn           = var.platform_arn
-  triggers               = var.triggers
-  version_label          = var.version_label
-  resource               = var.resource
-  autoscaling_groups     = var.autoscaling_groups
-  cname_prefix           = var.cname_prefix
-  description            = var.description
+  tags                   = var.tags
+  template_name          = var.template_name
   id                     = var.id
-  load_balancers         = var.load_balancers
+  launch_configurations  = var.launch_configurations
+  name                   = var.name
   namespace              = var.namespace
   queues                 = var.queues
-  tags_all               = var.tags_all
-  value                  = var.value
-  all_settings           = var.all_settings
-  cname                  = var.cname
-  instances              = var.instances
-  launch_configurations  = var.launch_configurations
-  tags                   = var.tags
-  application            = var.application
-  poll_interval          = var.poll_interval
-  setting                = var.setting
-  solution_stack_name    = var.solution_stack_name
-  template_name          = var.template_name
+  resource               = var.resource
   tier                   = var.tier
+  solution_stack_name    = var.solution_stack_name
+  value                  = var.value
+  autoscaling_groups     = var.autoscaling_groups
+  cname                  = var.cname
+  description            = var.description
+  instances              = var.instances
+  load_balancers         = var.load_balancers
+  setting                = var.setting
+  version_label          = var.version_label
+  application            = var.application
+  cname_prefix           = var.cname_prefix
+  tags_all               = var.tags_all
   wait_for_ready_timeout = var.wait_for_ready_timeout
+  all_settings           = var.all_settings
+  platform_arn           = var.platform_arn
+  poll_interval          = var.poll_interval
+  triggers               = var.triggers
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "triggers" {
-  description = "Autoscaling triggers in use by this Environment."
+variable "cname" {
+  description = "Fully qualified DNS name for this Environment."
+  type        = string
+}
+variable "description" {
+  description = "Description of the Elastic Beanstalk Environment."
+  type        = string
+}
+variable "instances" {
+  description = "Instances used by this Environment."
+  type        = string
+}
+variable "load_balancers" {
+  description = "Elastic load balancers in use by this Environment."
+  type        = string
+}
+variable "setting" {
+  description = " – Settings specifically set for this Environment."
+  type        = string
+}
+variable "solution_stack_name" {
+  description = "Amazon API documentation"
+  type        = string
+}
+variable "value" {
+  description = "value for the configuration option"
+  type        = string
+}
+variable "autoscaling_groups" {
+  description = "The autoscaling groups used by this Environment."
   type        = string
 }
 variable "version_label" {
@@ -39,8 +67,21 @@ variable "version_label" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "Name of the Elastic Beanstalk Environment."
+variable "cname_prefix" {
+  description = "(Optional) Prefix to use for the fully qualified DNS name of\nthe Environment."
+  type        = string
+  default     = ""
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  type        = string
+}
+variable "wait_for_ready_timeout" {
+  description = "(Default 20mduration"
+  type        = string
+}
+variable "application" {
+  description = " – The Elastic Beanstalk Application specified for this environment."
   type        = string
 }
 variable "platform_arn" {
@@ -48,16 +89,24 @@ variable "platform_arn" {
   type        = string
   default     = ""
 }
-variable "description" {
-  description = "Description of the Elastic Beanstalk Environment."
+variable "poll_interval" {
+  description = "create or update action. Minimum 10s, maximum 180s"
   type        = string
 }
-variable "id" {
-  description = "ID of the Elastic Beanstalk Environment."
+variable "triggers" {
+  description = "Autoscaling triggers in use by this Environment."
   type        = string
 }
-variable "load_balancers" {
-  description = "Elastic load balancers in use by this Environment."
+variable "all_settings" {
+  description = "setting"
+  type        = string
+}
+variable "launch_configurations" {
+  description = "Launch configurations in use by this Environment."
+  type        = string
+}
+variable "name" {
+  description = "Name of the Elastic Beanstalk Environment."
   type        = string
 }
 variable "namespace" {
@@ -73,70 +122,21 @@ variable "resource" {
   type        = string
   default     = ""
 }
-variable "autoscaling_groups" {
-  description = "The autoscaling groups used by this Environment."
-  type        = string
-}
-variable "cname_prefix" {
-  description = "(Optional) Prefix to use for the fully qualified DNS name of\nthe Environment."
-  type        = string
-  default     = ""
-}
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  type        = string
-}
-variable "value" {
-  description = "value for the configuration option"
-  type        = string
-}
-variable "instances" {
-  description = "Instances used by this Environment."
-  type        = string
-}
-variable "launch_configurations" {
-  description = "Launch configurations in use by this Environment."
-  type        = string
-}
 variable "tags" {
   description = "(Optional) A set of tags to apply to the Environment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option SettingsSome options can be stack-specific, check AWS DocsThe setting and all_settings mappings support the following format:"
   type        = string
   default     = ""
 }
-variable "all_settings" {
-  description = "setting"
-  type        = string
-}
-variable "cname" {
-  description = "Fully qualified DNS name for this Environment."
-  type        = string
-}
-variable "setting" {
-  description = " – Settings specifically set for this Environment."
-  type        = string
-}
-variable "solution_stack_name" {
-  description = "Amazon API documentation"
-  type        = string
-}
 variable "template_name" {
   description = ""
   type        = string
 }
+variable "id" {
+  description = "ID of the Elastic Beanstalk Environment."
+  type        = string
+}
 variable "tier" {
   description = "The environment tier specified."
-  type        = string
-}
-variable "wait_for_ready_timeout" {
-  description = "(Default 20mduration"
-  type        = string
-}
-variable "application" {
-  description = " – The Elastic Beanstalk Application specified for this environment."
-  type        = string
-}
-variable "poll_interval" {
-  description = "create or update action. Minimum 10s, maximum 180s"
   type        = string
 }
 variable "tag_instance_id" {
@@ -259,49 +259,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "instances" {
-  description = "Instances used by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.instances
-}
-output "launch_configurations" {
-  description = "Launch configurations in use by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.launch_configurations
-}
-output "tags" {
-  description = "(Optional) A set of tags to apply to the Environment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option SettingsSome options can be stack-specific, check AWS DocsThe setting and all_settings mappings support the following format:"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tags
-}
 output "all_settings" {
   description = "setting"
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.all_settings
 }
-output "cname" {
-  description = "Fully qualified DNS name for this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.cname
-}
-output "setting" {
-  description = " – Settings specifically set for this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.setting
-}
-output "solution_stack_name" {
-  description = "Amazon API documentation"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.solution_stack_name
-}
-output "template_name" {
-  description = ""
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.template_name
-}
-output "tier" {
-  description = "The environment tier specified."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tier
-}
-output "wait_for_ready_timeout" {
-  description = "(Default 20mduration"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.wait_for_ready_timeout
-}
-output "application" {
-  description = " – The Elastic Beanstalk Application specified for this environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.application
+output "platform_arn" {
+  description = " – (Optional) The ARN of the Elastic Beanstalk Platform"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.platform_arn
 }
 output "poll_interval" {
   description = "create or update action. Minimum 10s, maximum 180s"
@@ -311,29 +275,25 @@ output "triggers" {
   description = "Autoscaling triggers in use by this Environment."
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.triggers
 }
-output "version_label" {
-  description = "(Optional) The name of the Elastic Beanstalk Application Version\nto use in deployment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.version_label
+output "tags" {
+  description = "(Optional) A set of tags to apply to the Environment. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Option SettingsSome options can be stack-specific, check AWS DocsThe setting and all_settings mappings support the following format:"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tags
 }
-output "name" {
-  description = "Name of the Elastic Beanstalk Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.name
-}
-output "platform_arn" {
-  description = " – (Optional) The ARN of the Elastic Beanstalk Platform"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.platform_arn
-}
-output "description" {
-  description = "Description of the Elastic Beanstalk Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.description
+output "template_name" {
+  description = ""
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.template_name
 }
 output "id" {
   description = "ID of the Elastic Beanstalk Environment."
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.id
 }
-output "load_balancers" {
-  description = "Elastic load balancers in use by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.load_balancers
+output "launch_configurations" {
+  description = "Launch configurations in use by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.launch_configurations
+}
+output "name" {
+  description = "Name of the Elastic Beanstalk Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.name
 }
 output "namespace" {
   description = "unique namespace identifying the option's associated AWS resource"
@@ -347,61 +307,17 @@ output "resource" {
   description = "(Optional) resource name for scheduled actionExample With OptionsIn addition to all arguments above, the following attributes are exported:"
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.resource
 }
-output "autoscaling_groups" {
-  description = "The autoscaling groups used by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.autoscaling_groups
-}
-output "cname_prefix" {
-  description = "(Optional) Prefix to use for the fully qualified DNS name of\nthe Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.cname_prefix
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tags_all
-}
-output "value" {
-  description = "value for the configuration option"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.value
-}
-output "id" {
-  description = "ID of the Elastic Beanstalk Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.id
-}
-output "instances" {
-  description = "Instances used by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.instances
-}
-output "name" {
-  description = "Name of the Elastic Beanstalk Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.name
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tags_all
-}
-output "description" {
-  description = "Description of the Elastic Beanstalk Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.description
-}
-output "endpoint_url" {
-  description = "The URL to the Load Balancer for this Environment"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.endpoint_url
-}
-output "load_balancers" {
-  description = "Elastic load balancers in use by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.load_balancers
-}
-output "queues" {
-  description = "SQS queues in use by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.queues
-}
 output "tier" {
   description = "The environment tier specified."
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tier
 }
-output "all_settings" {
-  description = "setting"
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.all_settings
+output "solution_stack_name" {
+  description = "Amazon API documentation"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.solution_stack_name
+}
+output "value" {
+  description = "value for the configuration option"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.value
 }
 output "autoscaling_groups" {
   description = "The autoscaling groups used by this Environment."
@@ -411,13 +327,69 @@ output "cname" {
   description = "Fully qualified DNS name for this Environment."
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.cname
 }
-output "launch_configurations" {
-  description = "Launch configurations in use by this Environment."
-  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.launch_configurations
+output "description" {
+  description = "Description of the Elastic Beanstalk Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.description
+}
+output "instances" {
+  description = "Instances used by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.instances
+}
+output "load_balancers" {
+  description = "Elastic load balancers in use by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.load_balancers
 }
 output "setting" {
   description = " – Settings specifically set for this Environment."
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.setting
+}
+output "version_label" {
+  description = "(Optional) The name of the Elastic Beanstalk Application Version\nto use in deployment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.version_label
+}
+output "application" {
+  description = " – The Elastic Beanstalk Application specified for this environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.application
+}
+output "cname_prefix" {
+  description = "(Optional) Prefix to use for the fully qualified DNS name of\nthe Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.cname_prefix
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tags_all
+}
+output "wait_for_ready_timeout" {
+  description = "(Default 20mduration"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.wait_for_ready_timeout
+}
+output "autoscaling_groups" {
+  description = "The autoscaling groups used by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.autoscaling_groups
+}
+output "setting" {
+  description = " – Settings specifically set for this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.setting
+}
+output "all_settings" {
+  description = "setting"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.all_settings
+}
+output "cname" {
+  description = "Fully qualified DNS name for this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.cname
+}
+output "description" {
+  description = "Description of the Elastic Beanstalk Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.description
+}
+output "instances" {
+  description = "Instances used by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.instances
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tags_all
 }
 output "triggers" {
   description = "Autoscaling triggers in use by this Environment."
@@ -426,6 +398,34 @@ output "triggers" {
 output "application" {
   description = " – The Elastic Beanstalk Application specified for this environment."
   value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.application
+}
+output "endpoint_url" {
+  description = "The URL to the Load Balancer for this Environment"
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.endpoint_url
+}
+output "id" {
+  description = "ID of the Elastic Beanstalk Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.id
+}
+output "launch_configurations" {
+  description = "Launch configurations in use by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.launch_configurations
+}
+output "load_balancers" {
+  description = "Elastic load balancers in use by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.load_balancers
+}
+output "name" {
+  description = "Name of the Elastic Beanstalk Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.name
+}
+output "queues" {
+  description = "SQS queues in use by this Environment."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.queues
+}
+output "tier" {
+  description = "The environment tier specified."
+  value       = aws_elastic_beanstalk_environment.aws_elastic_beanstalk_environment.tier
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

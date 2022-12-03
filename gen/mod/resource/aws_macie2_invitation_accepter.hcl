@@ -1,6 +1,6 @@
 resource "aws_macie2_invitation_accepter" "aws_macie2_invitation_accepter" {
-  administrator_account_id = var.administrator_account_id
   id                       = var.id
+  administrator_account_id = var.administrator_account_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

@@ -11,6 +11,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "permissions_boundary" {
+  description = "(Optional) The ARN of the policy that is used to set the permissions boundary for the user."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "Key-value map of tags for the IAM user. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
@@ -24,7 +29,7 @@ variable "arn" {
   type        = string
 }
 variable "force_destroy" {
-  description = "force_destroy"
+  description = "(Optional, default false) When destroying this user, destroy even if it\nhas non-Terraform-managed IAM access keys, login profile or MFA devices. Without force_destroy"
   type        = string
 }
 variable "name" {
@@ -34,11 +39,6 @@ variable "name" {
 variable "path" {
   description = "(Optional, default \"/\") Path in which to create the user."
   type        = string
-}
-variable "permissions_boundary" {
-  description = "(Optional) The ARN of the policy that is used to set the permissions boundary for the user."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -160,6 +160,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_iam_user.aws_iam_user.tags_all
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this user."
+  value       = aws_iam_user.aws_iam_user.arn
+}
+output "force_destroy" {
+  description = "(Optional, default false) When destroying this user, destroy even if it\nhas non-Terraform-managed IAM access keys, login profile or MFA devices. Without force_destroy"
+  value       = aws_iam_user.aws_iam_user.force_destroy
+}
 output "name" {
   description = "The user's name."
   value       = aws_iam_user.aws_iam_user.name
@@ -176,22 +188,6 @@ output "tags" {
   description = "Key-value map of tags for the IAM user. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_iam_user.aws_iam_user.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_iam_user.aws_iam_user.tags_all
-}
-output "arn" {
-  description = "The ARN assigned by AWS for this user."
-  value       = aws_iam_user.aws_iam_user.arn
-}
-output "force_destroy" {
-  description = "force_destroy"
-  value       = aws_iam_user.aws_iam_user.force_destroy
-}
-output "arn" {
-  description = "The ARN assigned by AWS for this user."
-  value       = aws_iam_user.aws_iam_user.arn
-}
 output "name" {
   description = "The user's name."
   value       = aws_iam_user.aws_iam_user.name
@@ -203,6 +199,10 @@ output "tags_all" {
 output "unique_id" {
   description = "The unique ID assigned by AWS."
   value       = aws_iam_user.aws_iam_user.unique_id
+}
+output "arn" {
+  description = "The ARN assigned by AWS for this user."
+  value       = aws_iam_user.aws_iam_user.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

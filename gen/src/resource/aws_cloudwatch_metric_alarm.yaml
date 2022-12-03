@@ -91,7 +91,9 @@ spec:
             optional: true
             type: string
         stat:
-            description: supported statistics.
+            description: |-
+                (Required) The statistic to apply to this metric.
+                See docs for supported statistics.
             type: string
         statistic:
             description: SampleCount, Average, Sum, Minimum, Maximum

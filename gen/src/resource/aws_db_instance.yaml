@@ -18,14 +18,17 @@ spec:
             optional: true
             type: string
         apply_immediately:
-            description: "(Optional) Specifies whether any database modifications\nare applied immediately, or during the next maintenance window. Default is\nfalse. See "
-            optional: true
+            description: 'false. See '
             type: string
         arn:
             description: The ARN of the RDS instance.
             type: string
         auto_minor_version_upgrade:
-            description: ""
+            description: |-
+                (Optional) Indicates that minor engine upgrades
+                will be applied automatically to the DB instance during the maintenance window.
+                Defaults to true.
+            optional: true
             type: string
         availability_zone:
             description: The availability zone of the instance.
@@ -144,7 +147,10 @@ spec:
             optional: true
             type: string
         kms_key_id:
-            description: ""
+            description: |-
+                (Optional) The ARN for the KMS encryption key. If creating an
+                encrypted replica, set this to the destination KMS ARN.
+            optional: true
             type: string
         latest_restorable_time:
             description: The latest time, in UTC RFC3339 format, to which a database can be restored with point-in-time restore.
@@ -225,7 +231,8 @@ spec:
             optional: true
             type: string
         replicate_source_db:
-            description: 'identifierkms_key_id. See DB Instance Replication and '
+            description: "(Optional) Specifies that this resource is a Replicate\ndatabase, and to use this value as the source database. This correlates to the\nidentifierkms_key_id. See DB Instance Replication and "
+            optional: true
             type: string
         resource_id:
             description: The RDS Resource ID of this instance.
@@ -247,10 +254,19 @@ spec:
                 associate. Only used for DB Instances on the emEC2-Classic.
             type: string
         skip_final_snapshot:
-            description: final_snapshot_identifierfalse.
+            description: |-
+                (Optional) Determines whether a final DB snapshot is
+                created before the DB instance is deleted. If true is specified, no DBSnapshot
+                is created. If false is specified, a DB snapshot is created before the DB
+                instance is deleted, using the value from final_snapshot_identifierfalse.
+            optional: true
             type: string
         snapshot_identifier:
-            description: ""
+            description: |-
+                (Optional) Specifies whether or not to create this
+                database from a snapshot. This correlates to the snapshot ID you'd find in the
+                RDS console, e.g: rds:production-2015-06-26-06-05.
+            optional: true
             type: string
         source_db_instance_automated_backups_arn:
             description: (Optional) The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.
@@ -404,7 +420,9 @@ spec:
                 storage_type of "io1".
             type: string
         kms_key_id:
-            description: ""
+            description: |-
+                (Optional) The ARN for the KMS encryption key. If creating an
+                encrypted replica, set this to the destination KMS ARN.
             type: string
         latest_restorable_time:
             description: The latest time, in UTC RFC3339 format, to which a database can be restored with point-in-time restore.
@@ -474,7 +492,7 @@ spec:
             description: (Optional) Specifies whether the replica is in either mounted or open-read-onlyopen-read-only mode unless otherwise specified. See Working with Oracle Read Replicas for more information.
             type: string
         replicate_source_db:
-            description: 'identifierkms_key_id. See DB Instance Replication and '
+            description: "(Optional) Specifies that this resource is a Replicate\ndatabase, and to use this value as the source database. This correlates to the\nidentifierkms_key_id. See DB Instance Replication and "
             type: string
         resource_id:
             description: The RDS Resource ID of this instance.
@@ -494,10 +512,17 @@ spec:
                 associate. Only used for DB Instances on the emEC2-Classic.
             type: string
         skip_final_snapshot:
-            description: final_snapshot_identifierfalse.
+            description: |-
+                (Optional) Determines whether a final DB snapshot is
+                created before the DB instance is deleted. If true is specified, no DBSnapshot
+                is created. If false is specified, a DB snapshot is created before the DB
+                instance is deleted, using the value from final_snapshot_identifierfalse.
             type: string
         snapshot_identifier:
-            description: ""
+            description: |-
+                (Optional) Specifies whether or not to create this
+                database from a snapshot. This correlates to the snapshot ID you'd find in the
+                RDS console, e.g: rds:production-2015-06-26-06-05.
             type: string
         source_db_instance_automated_backups_arn:
             description: (Optional) The ARN of the automated backup from which to restore. Required if source_db_instance_identifier or source_dbi_resource_id is not specified.

@@ -1,7 +1,7 @@
 resource "aws_efs_backup_policy" "aws_efs_backup_policy" {
+  backup_policy  = var.backup_policy
   file_system_id = var.file_system_id
   status         = var.status
-  backup_policy  = var.backup_policy
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "status" {
+  description = "(Required) A status of the backup policy. Valid values: ENABLED, DISABLED.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_efs_backup_policy.aws_efs_backup_policy.status
+}
 output "backup_policy" {
   description = "(Required) A backup_policy object (documented below).Backup Policy ArgumentsFor strongbackup_policy the following attributes are supported:"
   value       = aws_efs_backup_policy.aws_efs_backup_policy.backup_policy
@@ -146,10 +150,6 @@ output "backup_policy" {
 output "file_system_id" {
   description = "(Required) The ID of the EFS file system."
   value       = aws_efs_backup_policy.aws_efs_backup_policy.file_system_id
-}
-output "status" {
-  description = "(Required) A status of the backup policy. Valid values: ENABLED, DISABLED.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_efs_backup_policy.aws_efs_backup_policy.status
 }
 output "id" {
   description = "The ID that identifies the file system (e.g., fs-ccfc0d65)."

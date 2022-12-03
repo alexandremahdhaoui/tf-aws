@@ -12,10 +12,7 @@ spec:
             description: The Spot Instance Request ID.
             type: string
         private_dns:
-            description: |-
-                The private DNS name assigned to the instance. Can only be
-                used inside the Amazon EC2, and only available if you've enabled DNS hostnames
-                for your VPC
+            description: ""
             type: string
         private_ip:
             description: The private IP address assigned to the instance
@@ -32,9 +29,7 @@ spec:
             description: 'The current '
             type: string
         spot_instance_id:
-            description: |-
-                The Instance ID (if any) that is currently fulfilling
-                the Spot Instance request.
+            description: ""
             type: string
         spot_request_state:
             description: ' The current '

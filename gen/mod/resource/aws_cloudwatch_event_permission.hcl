@@ -1,23 +1,15 @@
 resource "aws_cloudwatch_event_permission" "aws_cloudwatch_event_permission" {
+  condition      = var.condition
+  event_bus_name = var.event_bus_name
+  key            = var.key
   principal      = var.principal
   statement_id   = var.statement_id
   type           = var.type
   value          = var.value
   action         = var.action
-  condition      = var.condition
-  event_bus_name = var.event_bus_name
-  key            = var.key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "key" {
-  description = "(Required) Key for the condition. Valid values: aws:PrincipalOrgID."
-  type        = string
-}
-variable "principal" {
-  description = "(Required) The 12-digit AWS account ID that you are permitting to put events to your default event bus. Specify * to permit any account to put events to your default event bus, optionally limited by condition."
   type        = string
 }
 variable "statement_id" {
@@ -46,6 +38,14 @@ variable "event_bus_name" {
   description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.condition"
   type        = string
   default     = ""
+}
+variable "key" {
+  description = "(Required) Key for the condition. Valid values: aws:PrincipalOrgID."
+  type        = string
+}
+variable "principal" {
+  description = "(Required) The 12-digit AWS account ID that you are permitting to put events to your default event bus. Specify * to permit any account to put events to your default event bus, optionally limited by condition."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -167,18 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "event_bus_name" {
-  description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.condition"
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.event_bus_name
-}
-output "key" {
-  description = "(Required) Key for the condition. Valid values: aws:PrincipalOrgID."
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.key
-}
-output "principal" {
-  description = "(Required) The 12-digit AWS account ID that you are permitting to put events to your default event bus. Specify * to permit any account to put events to your default event bus, optionally limited by condition."
-  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.principal
-}
 output "statement_id" {
   description = "(Required) An identifier string for the external account that you are granting permissions to."
   value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.statement_id
@@ -198,6 +186,18 @@ output "action" {
 output "condition" {
   description = "(Optional) Configuration block to limit the event bus permissions you are granting to only accounts that fulfill the condition. Specified below."
   value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.condition
+}
+output "event_bus_name" {
+  description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.condition"
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.event_bus_name
+}
+output "key" {
+  description = "(Required) Key for the condition. Valid values: aws:PrincipalOrgID."
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.key
+}
+output "principal" {
+  description = "(Required) The 12-digit AWS account ID that you are permitting to put events to your default event bus. Specify * to permit any account to put events to your default event bus, optionally limited by condition."
+  value       = aws_cloudwatch_event_permission.aws_cloudwatch_event_permission.principal
 }
 output "id" {
   description = "The statement ID of the EventBridge permission."

@@ -124,6 +124,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "tags_all" {
+  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_apprunner_connection.aws_apprunner_connection.tags_all
+}
 output "arn" {
   description = "ARN of the connection."
   value       = aws_apprunner_connection.aws_apprunner_connection.arn
@@ -131,10 +135,6 @@ output "arn" {
 output "status" {
   description = "Current state of the App Runner connection. When the state is AVAILABLE, you can use the connection to create an aws_apprunner_service resource."
   value       = aws_apprunner_connection.aws_apprunner_connection.status
-}
-output "tags_all" {
-  description = "Map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_apprunner_connection.aws_apprunner_connection.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

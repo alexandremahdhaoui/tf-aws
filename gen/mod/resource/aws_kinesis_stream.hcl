@@ -1,19 +1,19 @@
 resource "aws_kinesis_stream" "aws_kinesis_stream" {
+  enforce_consumer_deletion = var.enforce_consumer_deletion
+  id                        = var.id
+  stream_mode_details       = var.stream_mode_details
   tags                      = var.tags
   arn                       = var.arn
   encryption_type           = var.encryption_type
-  stream_mode               = var.stream_mode
-  update                    = var.update
-  kms_key_id                = var.kms_key_id
-  shard_count               = var.shard_count
-  id                        = var.id
-  retention_period          = var.retention_period
   name                      = var.name
-  shard_level_metrics       = var.shard_level_metrics
-  stream_mode_details       = var.stream_mode_details
+  stream_mode               = var.stream_mode
   tags_all                  = var.tags_all
   create                    = var.create
-  enforce_consumer_deletion = var.enforce_consumer_deletion
+  update                    = var.update
+  kms_key_id                = var.kms_key_id
+  retention_period          = var.retention_period
+  shard_count               = var.shard_count
+  shard_level_metrics       = var.shard_level_metrics
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -24,6 +24,28 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "enforce_consumer_deletion" {
+  description = "(Optional) A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false."
+  type        = string
+  default     = ""
+}
+variable "id" {
+  description = "The unique Stream id"
+  type        = string
+}
+variable "stream_mode_details" {
+  description = "(Optional) Indicates the capacity mode of the data stream. Detailed below."
+  type        = string
+  default     = ""
+}
+variable "stream_mode" {
+  description = "(Required) Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  type        = string
+}
 variable "arn" {
   description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
   type        = string
@@ -33,34 +55,16 @@ variable "encryption_type" {
   type        = string
   default     = ""
 }
-variable "stream_mode" {
-  description = "(Required) Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.In addition to all arguments above, the following attributes are exported:"
+variable "name" {
+  description = "The unique Stream name"
+  type        = string
+}
+variable "create" {
+  description = "(Default 5m)"
   type        = string
 }
 variable "update" {
   description = "(Default 120m)"
-  type        = string
-}
-variable "kms_key_id" {
-  description = "(Optional) The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis."
-  type        = string
-  default     = ""
-}
-variable "shard_count" {
-  description = "The count of Shards for this Stream"
-  type        = string
-}
-variable "id" {
-  description = "The unique Stream id"
-  type        = string
-}
-variable "retention_period" {
-  description = "(Optional) Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "The unique Stream name"
   type        = string
 }
 variable "shard_level_metrics" {
@@ -68,23 +72,19 @@ variable "shard_level_metrics" {
   type        = string
   default     = ""
 }
-variable "stream_mode_details" {
-  description = "(Optional) Indicates the capacity mode of the data stream. Detailed below."
+variable "kms_key_id" {
+  description = "(Optional) The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis."
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  type        = string
-}
-variable "create" {
-  description = "(Default 5m)"
-  type        = string
-}
-variable "enforce_consumer_deletion" {
-  description = "(Optional) A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false."
+variable "retention_period" {
+  description = "(Optional) Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24."
   type        = string
   default     = ""
+}
+variable "shard_count" {
+  description = "The count of Shards for this Stream"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -206,33 +206,29 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "name" {
-  description = "The unique Stream name"
-  value       = aws_kinesis_stream.aws_kinesis_stream.name
-}
-output "shard_level_metrics" {
-  description = "(Optional) A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable."
-  value       = aws_kinesis_stream.aws_kinesis_stream.shard_level_metrics
-}
-output "stream_mode_details" {
-  description = "(Optional) Indicates the capacity mode of the data stream. Detailed below."
-  value       = aws_kinesis_stream.aws_kinesis_stream.stream_mode_details
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_kinesis_stream.aws_kinesis_stream.tags_all
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_kinesis_stream.aws_kinesis_stream.create
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.stream_mode_details Configuration Block"
+  value       = aws_kinesis_stream.aws_kinesis_stream.tags
 }
 output "enforce_consumer_deletion" {
   description = "(Optional) A boolean that indicates all registered consumers should be deregistered from the stream so that the stream can be destroyed without error. The default value is false."
   value       = aws_kinesis_stream.aws_kinesis_stream.enforce_consumer_deletion
 }
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.stream_mode_details Configuration Block"
-  value       = aws_kinesis_stream.aws_kinesis_stream.tags
+output "id" {
+  description = "The unique Stream id"
+  value       = aws_kinesis_stream.aws_kinesis_stream.id
+}
+output "stream_mode_details" {
+  description = "(Optional) Indicates the capacity mode of the data stream. Detailed below."
+  value       = aws_kinesis_stream.aws_kinesis_stream.stream_mode_details
+}
+output "stream_mode" {
+  description = "(Required) Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_kinesis_stream.aws_kinesis_stream.stream_mode
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_kinesis_stream.aws_kinesis_stream.tags_all
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
@@ -242,29 +238,49 @@ output "encryption_type" {
   description = "(Optional) The encryption type to use. The only acceptable values are NONE or KMS. The default value is NONE."
   value       = aws_kinesis_stream.aws_kinesis_stream.encryption_type
 }
-output "stream_mode" {
-  description = "(Required) Specifies the capacity mode of the stream. Must be either PROVISIONED or ON_DEMAND.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_kinesis_stream.aws_kinesis_stream.stream_mode
+output "name" {
+  description = "The unique Stream name"
+  value       = aws_kinesis_stream.aws_kinesis_stream.name
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_kinesis_stream.aws_kinesis_stream.create
 }
 output "update" {
   description = "(Default 120m)"
   value       = aws_kinesis_stream.aws_kinesis_stream.update
 }
+output "shard_level_metrics" {
+  description = "(Optional) A list of shard-level CloudWatch metrics which can be enabled for the stream. See Monitoring with CloudWatch for more. Note that the value ALL should not be used; instead you should provide an explicit list of metrics you wish to enable."
+  value       = aws_kinesis_stream.aws_kinesis_stream.shard_level_metrics
+}
 output "kms_key_id" {
   description = "(Optional) The GUID for the customer-managed KMS key to use for encryption. You can also use a Kinesis-owned master key by specifying the alias alias/aws/kinesis."
   value       = aws_kinesis_stream.aws_kinesis_stream.kms_key_id
+}
+output "retention_period" {
+  description = "(Optional) Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24."
+  value       = aws_kinesis_stream.aws_kinesis_stream.retention_period
 }
 output "shard_count" {
   description = "The count of Shards for this Stream"
   value       = aws_kinesis_stream.aws_kinesis_stream.shard_count
 }
-output "id" {
-  description = "The unique Stream id"
-  value       = aws_kinesis_stream.aws_kinesis_stream.id
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_kinesis_stream.aws_kinesis_stream.tags_all
 }
-output "retention_period" {
-  description = "(Optional) Length of time data records are accessible after they are added to the stream. The maximum value of a stream's retention period is 8760 hours. Minimum value is 24. Default is 24."
-  value       = aws_kinesis_stream.aws_kinesis_stream.retention_period
+output "update" {
+  description = "(Default 120m)"
+  value       = aws_kinesis_stream.aws_kinesis_stream.update
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
+  value       = aws_kinesis_stream.aws_kinesis_stream.arn
+}
+output "create" {
+  description = "(Default 5m)"
+  value       = aws_kinesis_stream.aws_kinesis_stream.create
 }
 output "delete" {
   description = "(Default 120m)"
@@ -281,22 +297,6 @@ output "name" {
 output "shard_count" {
   description = "The count of Shards for this Stream"
   value       = aws_kinesis_stream.aws_kinesis_stream.shard_count
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_kinesis_stream.aws_kinesis_stream.tags_all
-}
-output "update" {
-  description = "(Default 120m)"
-  value       = aws_kinesis_stream.aws_kinesis_stream.update
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) specifying the Stream (same as id)"
-  value       = aws_kinesis_stream.aws_kinesis_stream.arn
-}
-output "create" {
-  description = "(Default 5m)"
-  value       = aws_kinesis_stream.aws_kinesis_stream.create
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

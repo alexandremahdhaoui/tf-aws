@@ -1,14 +1,27 @@
 resource "aws_neptune_subnet_group" "aws_neptune_subnet_group" {
-  subnet_ids  = var.subnet_ids
   tags        = var.tags
   arn         = var.arn
   description = var.description
   id          = var.id
   name        = var.name
   name_prefix = var.name_prefix
+  subnet_ids  = var.subnet_ids
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "subnet_ids" {
+  description = "(Required) A list of VPC subnet IDs."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The ARN of the neptune subnet group."
   type        = string
 }
 variable "description" {
@@ -26,19 +39,6 @@ variable "name" {
 }
 variable "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-  type        = string
-}
-variable "subnet_ids" {
-  description = "(Required) A list of VPC subnet IDs."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The ARN of the neptune subnet group."
   type        = string
 }
 variable "tag_instance_id" {
@@ -161,6 +161,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "subnet_ids" {
+  description = "(Required) A list of VPC subnet IDs."
+  value       = aws_neptune_subnet_group.aws_neptune_subnet_group.subnet_ids
+}
 output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_neptune_subnet_group.aws_neptune_subnet_group.tags
@@ -184,10 +188,6 @@ output "name" {
 output "name_prefix" {
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
   value       = aws_neptune_subnet_group.aws_neptune_subnet_group.name_prefix
-}
-output "subnet_ids" {
-  description = "(Required) A list of VPC subnet IDs."
-  value       = aws_neptune_subnet_group.aws_neptune_subnet_group.subnet_ids
 }
 output "arn" {
   description = "The ARN of the neptune subnet group."

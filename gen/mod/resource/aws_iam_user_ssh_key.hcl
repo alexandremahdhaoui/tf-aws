@@ -1,9 +1,9 @@
 resource "aws_iam_user_ssh_key" "aws_iam_user_ssh_key" {
+  status            = var.status
   username          = var.username
   encoding          = var.encoding
   public_key        = var.public_key
   ssh_public_key_id = var.ssh_public_key_id
-  status            = var.status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,10 +150,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "encoding" {
-  description = "(Required) Specifies the public key encoding format to use in the response. To retrieve the public key in ssh-rsa format, use SSH. To retrieve the public key in PEM format, use PEM."
-  value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.encoding
-}
 output "public_key" {
   description = "(Required) The SSH public key. The public key must be encoded in ssh-rsa format or PEM format."
   value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.public_key
@@ -169,6 +165,10 @@ output "status" {
 output "username" {
   description = "(Required) The name of the IAM user to associate the SSH public key with."
   value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.username
+}
+output "encoding" {
+  description = "(Required) Specifies the public key encoding format to use in the response. To retrieve the public key in ssh-rsa format, use SSH. To retrieve the public key in PEM format, use PEM."
+  value       = aws_iam_user_ssh_key.aws_iam_user_ssh_key.encoding
 }
 output "fingerprint" {
   description = "The MD5 message digest of the SSH public key."

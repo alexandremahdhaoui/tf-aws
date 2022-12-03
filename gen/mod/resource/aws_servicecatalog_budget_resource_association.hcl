@@ -9,14 +9,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "resource_id" {
-  description = "(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "budget_name" {
-  description = "(Required) Budget name."
-  type        = string
-}
 variable "create" {
   description = "(Default 3m)"
   type        = string
@@ -27,6 +19,14 @@ variable "id" {
 }
 variable "read" {
   description = "(Default 10m)"
+  type        = string
+}
+variable "resource_id" {
+  description = "(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "budget_name" {
+  description = "(Required) Budget name."
   type        = string
 }
 variable "tag_instance_id" {
@@ -149,6 +149,18 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "create" {
+  description = "(Default 3m)"
+  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.create
+}
+output "id" {
+  description = "Identifier of the association.TimeoutsConfiguration options:"
+  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
+}
 output "resource_id" {
   description = "(Required) Resource identifier.In addition to all arguments above, the following attributes are exported:"
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.resource_id
@@ -161,22 +173,6 @@ output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.create
 }
-output "id" {
-  description = "Identifier of the association.TimeoutsConfiguration options:"
-  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.id
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
-}
-output "create" {
-  description = "(Default 3m)"
-  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.create
-}
 output "delete" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.delete
@@ -184,6 +180,10 @@ output "delete" {
 output "id" {
   description = "Identifier of the association.TimeoutsConfiguration options:"
   value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_budget_resource_association.aws_servicecatalog_budget_resource_association.read
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

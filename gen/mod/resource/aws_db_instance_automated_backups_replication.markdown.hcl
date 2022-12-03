@@ -1,13 +1,17 @@
 resource "aws_db_instance_automated_backups_replication.markdown" "aws_db_instance_automated_backups_replication.markdown" {
-  pre_signed_url         = var.pre_signed_url
-  retention_period       = var.retention_period
   source_db_instance_arn = var.source_db_instance_arn
   create                 = var.create
   id                     = var.id
   kms_key_id             = var.kms_key_id
+  pre_signed_url         = var.pre_signed_url
+  retention_period       = var.retention_period
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "retention_period" {
+  description = "(Optional, Forces new resource) The retention period for the replicated automated backups, defaults to 7."
   type        = string
 }
 variable "source_db_instance_arn" {
@@ -28,10 +32,6 @@ variable "kms_key_id" {
 }
 variable "pre_signed_url" {
   description = "(Optional, Forces new resource) A URL that contains a Signature Version 4 signed request for the StartDBInstanceAutomatedBackupsReplication action to be called in the AWS Region of the source DB instance."
-  type        = string
-}
-variable "retention_period" {
-  description = "(Optional, Forces new resource) The retention period for the replicated automated backups, defaults to 7."
   type        = string
 }
 variable "tag_instance_id" {

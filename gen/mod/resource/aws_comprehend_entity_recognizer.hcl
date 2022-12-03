@@ -1,43 +1,43 @@
 resource "aws_comprehend_entity_recognizer" "aws_comprehend_entity_recognizer" {
-  document_type           = var.document_type
-  entity_types            = var.entity_types
+  attribute_names         = var.attribute_names
+  data_format             = var.data_format
   source_documents_s3_uri = var.source_documents_s3_uri
   tags_all                = var.tags_all
-  version_name_prefix     = var.version_name_prefix
+  version_name            = var.version_name
+  vpc_config              = var.vpc_config
   annotation_data_s3_uri  = var.annotation_data_s3_uri
   data_access_role_arn    = var.data_access_role_arn
+  input_data_config       = var.input_data_config
+  language_code           = var.language_code
+  security_group_ids      = var.security_group_ids
+  augmented_manifests     = var.augmented_manifests
+  model_kms_key_id        = var.model_kms_key_id
   tags                    = var.tags
+  delete                  = var.delete
+  documents               = var.documents
+  name                    = var.name
+  volume_kms_key_id       = var.volume_kms_key_id
+  annotations             = var.annotations
+  entity_list             = var.entity_list
+  type                    = var.type
+  update                  = var.update
+  document_type           = var.document_type
+  input_format            = var.input_format
   s3_uri                  = var.s3_uri
+  split                   = var.split
+  test_s3uri              = var.test_s3uri
+  arn                     = var.arn
   subnets                 = var.subnets
   create                  = var.create
-  model_kms_key_id        = var.model_kms_key_id
-  split                   = var.split
-  update                  = var.update
-  volume_kms_key_id       = var.volume_kms_key_id
-  vpc_config              = var.vpc_config
-  attribute_names         = var.attribute_names
-  augmented_manifests     = var.augmented_manifests
-  language_code           = var.language_code
-  name                    = var.name
-  type                    = var.type
-  version_name            = var.version_name
-  entity_list             = var.entity_list
-  input_data_config       = var.input_data_config
-  documents               = var.documents
-  input_format            = var.input_format
-  delete                  = var.delete
-  annotations             = var.annotations
-  arn                     = var.arn
-  test_s3uri              = var.test_s3uri
-  data_format             = var.data_format
-  security_group_ids      = var.security_group_ids
+  entity_types            = var.entity_types
+  version_name_prefix     = var.version_name_prefix
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "split" {
-  description = "(Optional, Default: TRAINTRAIN or TEST.documents Configuration Block"
+variable "test_s3uri" {
+  description = "(Optional) Location of test documents.entity_list Configuration Block"
   type        = string
   default     = ""
 }
@@ -46,64 +46,8 @@ variable "update" {
   type        = string
   default     = ""
 }
-variable "volume_kms_key_id" {
-  description = "(Optional) ID or ARN of a KMS Key used to encrypt storage volumes during job processing."
-  type        = string
-  default     = ""
-}
-variable "vpc_config" {
-  description = "(Optional) Configuration parameters for VPC to contain Entity Recognizer resources.\nSee the vpc_config Configuration Block section below.input_data_config Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "attribute_names" {
-  description = "(Required) The JSON attribute that contains the annotations for the training documents."
-  type        = string
-}
-variable "augmented_manifests" {
-  description = "(Optional) List of training datasets produced by Amazon SageMaker Ground Truth.\nUsed if data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below."
-  type        = string
-  default     = ""
-}
-variable "create" {
-  description = "(Optional, Default: 60m)"
-  type        = string
-  default     = ""
-}
-variable "model_kms_key_id" {
-  description = "(Optional) The ID or ARN of a KMS Key used to encrypt trained Entity Recognizers."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "\\n), carriage return (\\r), or tab (\\t).vpc_config Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "version_name" {
-  description = "\"\"-version_name_prefix."
-  type        = string
-  default     = ""
-}
-variable "entity_list" {
-  description = "(Optional) Specifies location of the entity list data.\nSee the entity_list Configuration Blockentity_list or annotations is required."
-  type        = string
-  default     = ""
-}
-variable "input_data_config" {
-  description = "input_data_config Configuration Block section below."
-  type        = string
-}
-variable "language_code" {
-  description = "en, es, fr, it, de, or pt."
-  type        = string
-}
-variable "name" {
-  description = "-)."
-  type        = string
-}
-variable "documents" {
-  description = "(Optional) Specifies a collection of training documents.\nUsed if data_format is COMPREHEND_CSVdocuments Configuration Block section below."
+variable "document_type" {
+  description = "(Optional, Default: PLAIN_TEXT_DOCUMENTPLAIN_TEXT_DOCUMENT or SEMI_STRUCTURED_DOCUMENT."
   type        = string
   default     = ""
 }
@@ -112,13 +56,12 @@ variable "input_format" {
   type        = string
   default     = ""
 }
-variable "delete" {
-  description = "(Optional, Default: 30m)"
+variable "s3_uri" {
+  description = "(Required) Location of entity list.entity_types Configuration Block"
   type        = string
-  default     = ""
 }
-variable "annotations" {
-  description = "(Optional) Specifies location of the document annotation data.\nSee the annotations Configuration Blockannotations or entity_list is required."
+variable "split" {
+  description = "(Optional, Default: TRAINTRAIN or TEST.documents Configuration Block"
   type        = string
   default     = ""
 }
@@ -127,17 +70,36 @@ variable "arn" {
   type        = string
   default     = ""
 }
-variable "data_format" {
-  description = "(Optional, Default: COMPREHEND_CSVCOMPREHEND_CSV or AUGMENTED_MANIFEST."
+variable "subnets" {
+  description = "(Required) List of VPC subnets.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "create" {
+  description = "(Optional, Default: 60m)"
   type        = string
   default     = ""
 }
-variable "security_group_ids" {
-  description = "(Required) List of security group IDs."
+variable "entity_types" {
+  description = "entity_types Configuration Block section below.annotations Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "version_name_prefix" {
+  description = "(Optional) Creates a unique version name beginning with the specified prefix.\nHas a maximum length of 37 characters.\nCan contain upper- and lower-case letters, numbers, and hypen (-version_name."
+  type        = string
+  default     = ""
+}
+variable "version_name" {
+  description = "(Optional) Name for the version of the Entity Recognizer.\nEach version must have a unique name within the Entity Recognizer.\nIf omitted, Terraform will assign a random, unique version name.\nIf explicitly set to \"\"-version_name_prefix."
+  type        = string
+  default     = ""
+}
+variable "attribute_names" {
+  description = "(Required) The JSON attribute that contains the annotations for the training documents."
   type        = string
 }
-variable "test_s3uri" {
-  description = "(Optional) Location of test documents.entity_list Configuration Block"
+variable "data_format" {
+  description = "(Optional, Default: COMPREHEND_CSVCOMPREHEND_CSV or AUGMENTED_MANIFEST."
   type        = string
   default     = ""
 }
@@ -151,8 +113,12 @@ variable "tags_all" {
   type        = string
   default     = ""
 }
-variable "version_name_prefix" {
-  description = "(Optional) Creates a unique version name beginning with the specified prefix.\nHas a maximum length of 37 characters.\nCan contain upper- and lower-case letters, numbers, and hypen (-version_name."
+variable "security_group_ids" {
+  description = "(Required) List of security group IDs."
+  type        = string
+}
+variable "vpc_config" {
+  description = "(Optional) Configuration parameters for VPC to contain Entity Recognizer resources.\nSee the vpc_config Configuration Block section below.input_data_config Configuration Block"
   type        = string
   default     = ""
 }
@@ -165,28 +131,61 @@ variable "data_access_role_arn" {
   description = "(Required) The ARN for an IAM Role which allows Comprehend to read the training and testing data."
   type        = string
 }
-variable "document_type" {
-  description = "(Optional, Default: PLAIN_TEXT_DOCUMENTPLAIN_TEXT_DOCUMENT or SEMI_STRUCTURED_DOCUMENT."
+variable "input_data_config" {
+  description = "input_data_config Configuration Block section below."
+  type        = string
+}
+variable "language_code" {
+  description = "(Required) Two-letter language code for the language.\nOne of en, es, fr, it, de, or pt."
+  type        = string
+}
+variable "augmented_manifests" {
+  description = "data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below."
   type        = string
   default     = ""
 }
-variable "entity_types" {
-  description = "entity_types Configuration Block section below.annotations Configuration Block"
+variable "model_kms_key_id" {
+  description = "(Optional) The ID or ARN of a KMS Key used to encrypt trained Entity Recognizers."
   type        = string
   default     = ""
-}
-variable "s3_uri" {
-  description = "(Required) Location of entity list.entity_types Configuration Block"
-  type        = string
-}
-variable "subnets" {
-  description = "(Required) List of VPC subnets.In addition to all arguments above, the following attributes are exported:"
-  type        = string
 }
 variable "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags Configuration Block present, tags with matching keys will overwrite those defined at the provider-level."
   type        = string
   default     = ""
+}
+variable "delete" {
+  description = "(Optional, Default: 30m)"
+  type        = string
+  default     = ""
+}
+variable "documents" {
+  description = "(Optional) Specifies a collection of training documents.\nUsed if data_format is COMPREHEND_CSVdocuments Configuration Block section below."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name for the Entity Recognizer.\nHas a maximum length of 63 characters.\nCan contain upper- and lower-case letters, numbers, and hypen (-)."
+  type        = string
+}
+variable "volume_kms_key_id" {
+  description = "(Optional) ID or ARN of a KMS Key used to encrypt storage volumes during job processing."
+  type        = string
+  default     = ""
+}
+variable "annotations" {
+  description = "(Optional) Specifies location of the document annotation data.\nSee the annotations Configuration Blockannotations or entity_list is required."
+  type        = string
+  default     = ""
+}
+variable "entity_list" {
+  description = "(Optional) Specifies location of the entity list data.\nSee the entity_list Configuration Blockentity_list or annotations is required."
+  type        = string
+  default     = ""
+}
+variable "type" {
+  description = "(Required) An entity type to be matched by the Entity Recognizer.\nCannot contain a newline (\\n), carriage return (\\r), or tab (\\t).vpc_config Configuration Block"
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -308,81 +307,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "version_name" {
-  description = "\"\"-version_name_prefix."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.version_name
-}
-output "entity_list" {
-  description = "(Optional) Specifies location of the entity list data.\nSee the entity_list Configuration Blockentity_list or annotations is required."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.entity_list
-}
-output "input_data_config" {
-  description = "input_data_config Configuration Block section below."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.input_data_config
-}
-output "language_code" {
-  description = "en, es, fr, it, de, or pt."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.language_code
-}
-output "name" {
-  description = "-)."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.name
-}
-output "type" {
-  description = "\\n), carriage return (\\r), or tab (\\t).vpc_config Configuration Block"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.type
-}
-output "documents" {
-  description = "(Optional) Specifies a collection of training documents.\nUsed if data_format is COMPREHEND_CSVdocuments Configuration Block section below."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.documents
-}
-output "input_format" {
-  description = "(Optional, Default: ONE_DOC_PER_LINEONE_DOC_PER_LINE or ONE_DOC_PER_FILE."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.input_format
-}
-output "delete" {
-  description = "(Optional, Default: 30m)"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.delete
-}
-output "annotations" {
-  description = "(Optional) Specifies location of the document annotation data.\nSee the annotations Configuration Blockannotations or entity_list is required."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.annotations
-}
 output "arn" {
   description = "ARN of the Entity Recognizer version."
   value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.arn
 }
-output "data_format" {
-  description = "(Optional, Default: COMPREHEND_CSVCOMPREHEND_CSV or AUGMENTED_MANIFEST."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.data_format
-}
-output "security_group_ids" {
-  description = "(Required) List of security group IDs."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.security_group_ids
-}
-output "test_s3uri" {
-  description = "(Optional) Location of test documents.entity_list Configuration Block"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.test_s3uri
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_comprehend_entity_recognizer provides the following Timeouts configuration options:"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.tags_all
+output "subnets" {
+  description = "(Required) List of VPC subnets.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.subnets
 }
 output "version_name_prefix" {
   description = "(Optional) Creates a unique version name beginning with the specified prefix.\nHas a maximum length of 37 characters.\nCan contain upper- and lower-case letters, numbers, and hypen (-version_name."
   value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.version_name_prefix
 }
-output "annotation_data_s3_uri" {
-  description = "(Optional) Location of annotation files."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.annotation_data_s3_uri
-}
-output "data_access_role_arn" {
-  description = "(Required) The ARN for an IAM Role which allows Comprehend to read the training and testing data."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.data_access_role_arn
-}
-output "document_type" {
-  description = "(Optional, Default: PLAIN_TEXT_DOCUMENTPLAIN_TEXT_DOCUMENT or SEMI_STRUCTURED_DOCUMENT."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.document_type
+output "create" {
+  description = "(Optional, Default: 60m)"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.create
 }
 output "entity_types" {
   description = "entity_types Configuration Block section below.annotations Configuration Block"
@@ -392,49 +331,109 @@ output "source_documents_s3_uri" {
   description = "(Optional) Location of source PDF files."
   value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.source_documents_s3_uri
 }
-output "s3_uri" {
-  description = "(Required) Location of entity list.entity_types Configuration Block"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.s3_uri
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.Timeoutsaws_comprehend_entity_recognizer provides the following Timeouts configuration options:"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.tags_all
 }
-output "subnets" {
-  description = "(Required) List of VPC subnets.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.subnets
-}
-output "tags" {
-  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags Configuration Block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.tags
-}
-output "update" {
-  description = "(Optional, Default: 60m)"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.update
-}
-output "volume_kms_key_id" {
-  description = "(Optional) ID or ARN of a KMS Key used to encrypt storage volumes during job processing."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.volume_kms_key_id
-}
-output "vpc_config" {
-  description = "(Optional) Configuration parameters for VPC to contain Entity Recognizer resources.\nSee the vpc_config Configuration Block section below.input_data_config Configuration Block"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.vpc_config
+output "version_name" {
+  description = "(Optional) Name for the version of the Entity Recognizer.\nEach version must have a unique name within the Entity Recognizer.\nIf omitted, Terraform will assign a random, unique version name.\nIf explicitly set to \"\"-version_name_prefix."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.version_name
 }
 output "attribute_names" {
   description = "(Required) The JSON attribute that contains the annotations for the training documents."
   value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.attribute_names
 }
-output "augmented_manifests" {
-  description = "(Optional) List of training datasets produced by Amazon SageMaker Ground Truth.\nUsed if data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below."
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.augmented_manifests
+output "data_format" {
+  description = "(Optional, Default: COMPREHEND_CSVCOMPREHEND_CSV or AUGMENTED_MANIFEST."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.data_format
 }
-output "create" {
-  description = "(Optional, Default: 60m)"
-  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.create
+output "input_data_config" {
+  description = "input_data_config Configuration Block section below."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.input_data_config
+}
+output "language_code" {
+  description = "(Required) Two-letter language code for the language.\nOne of en, es, fr, it, de, or pt."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.language_code
+}
+output "security_group_ids" {
+  description = "(Required) List of security group IDs."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.security_group_ids
+}
+output "vpc_config" {
+  description = "(Optional) Configuration parameters for VPC to contain Entity Recognizer resources.\nSee the vpc_config Configuration Block section below.input_data_config Configuration Block"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.vpc_config
+}
+output "annotation_data_s3_uri" {
+  description = "(Optional) Location of annotation files."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.annotation_data_s3_uri
+}
+output "data_access_role_arn" {
+  description = "(Required) The ARN for an IAM Role which allows Comprehend to read the training and testing data."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.data_access_role_arn
+}
+output "tags" {
+  description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags Configuration Block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.tags
+}
+output "augmented_manifests" {
+  description = "data_format is AUGMENTED_MANIFESTaugmented_manifests Configuration Block section below."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.augmented_manifests
 }
 output "model_kms_key_id" {
   description = "(Optional) The ID or ARN of a KMS Key used to encrypt trained Entity Recognizers."
   value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.model_kms_key_id
 }
+output "name" {
+  description = "(Required) Name for the Entity Recognizer.\nHas a maximum length of 63 characters.\nCan contain upper- and lower-case letters, numbers, and hypen (-)."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.name
+}
+output "volume_kms_key_id" {
+  description = "(Optional) ID or ARN of a KMS Key used to encrypt storage volumes during job processing."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.volume_kms_key_id
+}
+output "delete" {
+  description = "(Optional, Default: 30m)"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.delete
+}
+output "documents" {
+  description = "(Optional) Specifies a collection of training documents.\nUsed if data_format is COMPREHEND_CSVdocuments Configuration Block section below."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.documents
+}
+output "type" {
+  description = "(Required) An entity type to be matched by the Entity Recognizer.\nCannot contain a newline (\\n), carriage return (\\r), or tab (\\t).vpc_config Configuration Block"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.type
+}
+output "annotations" {
+  description = "(Optional) Specifies location of the document annotation data.\nSee the annotations Configuration Blockannotations or entity_list is required."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.annotations
+}
+output "entity_list" {
+  description = "(Optional) Specifies location of the entity list data.\nSee the entity_list Configuration Blockentity_list or annotations is required."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.entity_list
+}
+output "s3_uri" {
+  description = "(Required) Location of entity list.entity_types Configuration Block"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.s3_uri
+}
 output "split" {
   description = "(Optional, Default: TRAINTRAIN or TEST.documents Configuration Block"
   value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.split
+}
+output "test_s3uri" {
+  description = "(Optional) Location of test documents.entity_list Configuration Block"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.test_s3uri
+}
+output "update" {
+  description = "(Optional, Default: 60m)"
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.update
+}
+output "document_type" {
+  description = "(Optional, Default: PLAIN_TEXT_DOCUMENTPLAIN_TEXT_DOCUMENT or SEMI_STRUCTURED_DOCUMENT."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.document_type
+}
+output "input_format" {
+  description = "(Optional, Default: ONE_DOC_PER_LINEONE_DOC_PER_LINE or ONE_DOC_PER_FILE."
+  value       = aws_comprehend_entity_recognizer.aws_comprehend_entity_recognizer.input_format
 }
 output "arn" {
   description = "ARN of the Entity Recognizer version."

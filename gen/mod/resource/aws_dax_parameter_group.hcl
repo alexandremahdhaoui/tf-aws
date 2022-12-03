@@ -1,8 +1,8 @@
 resource "aws_dax_parameter_group" "aws_dax_parameter_group" {
-  description = var.description
-  name        = var.name
   parameters  = var.parameters
   value       = var.value
+  description = var.description
+  name        = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

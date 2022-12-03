@@ -1,5 +1,4 @@
 datasource "aws_cloudfront_realtime_log_config" "aws_cloudfront_realtime_log_config" {
-  sampling_rate         = var.sampling_rate
   stream_type           = var.stream_type
   arn                   = var.arn
   endpoint              = var.endpoint
@@ -7,25 +6,10 @@ datasource "aws_cloudfront_realtime_log_config" "aws_cloudfront_realtime_log_con
   kinesis_stream_config = var.kinesis_stream_config
   name                  = var.name
   role_arn              = var.role_arn
+  sampling_rate         = var.sampling_rate
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "stream_type" {
-  description = "(Required) Type of data stream where real-time log data is sent. The only valid value is Kinesis.The kinesis_stream_config object supports the following:"
-  type        = string
-}
-variable "arn" {
-  description = "ARN (Amazon Resource Name) of the CloudFront real-time log configuration."
-  type        = string
-}
-variable "endpoint" {
-  description = "(Required) Amazon Kinesis data streams where real-time log data is sent."
-  type        = string
-}
-variable "fields" {
-  description = "(Required) Fields that are included in each real-time log record. See the AWS documentation for supported values."
   type        = string
 }
 variable "kinesis_stream_config" {
@@ -42,6 +26,22 @@ variable "role_arn" {
 }
 variable "sampling_rate" {
   description = "(Required) Sampling rate for this real-time log configuration. The sampling rate determines the percentage of viewer requests that are represented in the real-time log data. An integer between 1 and 100, inclusive.The endpoint object supports the following:"
+  type        = string
+}
+variable "stream_type" {
+  description = "(Required) Type of data stream where real-time log data is sent. The only valid value is Kinesis.The kinesis_stream_config object supports the following:"
+  type        = string
+}
+variable "arn" {
+  description = "ARN (Amazon Resource Name) of the CloudFront real-time log configuration."
+  type        = string
+}
+variable "endpoint" {
+  description = "(Required) Amazon Kinesis data streams where real-time log data is sent."
+  type        = string
+}
+variable "fields" {
+  description = "(Required) Fields that are included in each real-time log record. See the AWS documentation for supported values."
   type        = string
 }
 output "role_arn" {

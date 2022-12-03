@@ -1,50 +1,20 @@
 resource "aws_s3control_object_lambda_access_point" "aws_s3control_object_lambda_access_point" {
-  function_payload             = var.function_payload
+  function_arn                 = var.function_arn
   name                         = var.name
-  transformation_configuration = var.transformation_configuration
-  actions                      = var.actions
+  allowed_features             = var.allowed_features
   content_transformation       = var.content_transformation
   arn                          = var.arn
   aws_lambda                   = var.aws_lambda
   cloud_watch_metrics_enabled  = var.cloud_watch_metrics_enabled
   configuration                = var.configuration
-  function_arn                 = var.function_arn
+  function_payload             = var.function_payload
   supporting_access_point      = var.supporting_access_point
   account_id                   = var.account_id
-  allowed_features             = var.allowed_features
+  actions                      = var.actions
+  transformation_configuration = var.transformation_configuration
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "content_transformation" {
-  description = "(Required) The content transformation of an Object Lambda Access Point configuration. See Content Transformation below for more details.Content TransformationThe content_transformation block supports the following:"
-  type        = string
-}
-variable "function_payload" {
-  description = "(Optional) Additional JSON that provides supplemental data to the Lambda function used to transform objects.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) The name for this Object Lambda Access Point.ConfigurationThe configuration block supports the following:"
-  type        = string
-}
-variable "transformation_configuration" {
-  description = "(Required) List of transformation configurations for the Object Lambda Access Point. See Transformation Configuration below for more details.Transformation ConfigurationThe transformation_configuration block supports the following:"
-  type        = string
-}
-variable "actions" {
-  description = "(Required) The actions of an Object Lambda Access Point configuration. Valid values: GetObject."
-  type        = string
-}
-variable "allowed_features" {
-  description = "(Optional) Allowed features. Valid values: GetObject-Range, GetObject-PartNumber."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the Object Lambda Access Point."
   type        = string
 }
 variable "aws_lambda" {
@@ -60,9 +30,10 @@ variable "configuration" {
   description = "(Required) A configuration block containing details about the Object Lambda Access Point. See Configuration below for more details."
   type        = string
 }
-variable "function_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the AWS Lambda function."
+variable "function_payload" {
+  description = "(Optional) Additional JSON that provides supplemental data to the Lambda function used to transform objects.In addition to all arguments above, the following attributes are exported:"
   type        = string
+  default     = ""
 }
 variable "supporting_access_point" {
   description = "(Required) Standard access point associated with the Object Lambda Access Point."
@@ -72,6 +43,35 @@ variable "account_id" {
   description = "(Optional) The AWS account ID for the owner of the bucket for which you want to create an Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
   type        = string
   default     = ""
+}
+variable "actions" {
+  description = "(Required) The actions of an Object Lambda Access Point configuration. Valid values: GetObject."
+  type        = string
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the Object Lambda Access Point."
+  type        = string
+}
+variable "transformation_configuration" {
+  description = "(Required) List of transformation configurations for the Object Lambda Access Point. See Transformation Configuration below for more details.Transformation ConfigurationThe transformation_configuration block supports the following:"
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name for this Object Lambda Access Point.ConfigurationThe configuration block supports the following:"
+  type        = string
+}
+variable "allowed_features" {
+  description = "(Optional) Allowed features. Valid values: GetObject-Range, GetObject-PartNumber."
+  type        = string
+  default     = ""
+}
+variable "content_transformation" {
+  description = "(Required) The content transformation of an Object Lambda Access Point configuration. See Content Transformation below for more details.Content TransformationThe content_transformation block supports the following:"
+  type        = string
+}
+variable "function_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the AWS Lambda function."
+  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -193,13 +193,21 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name for this Object Lambda Access Point.ConfigurationThe configuration block supports the following:"
+  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.name
+}
 output "allowed_features" {
   description = "(Optional) Allowed features. Valid values: GetObject-Range, GetObject-PartNumber."
   value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.allowed_features
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the Object Lambda Access Point."
-  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.arn
+output "content_transformation" {
+  description = "(Required) The content transformation of an Object Lambda Access Point configuration. See Content Transformation below for more details.Content TransformationThe content_transformation block supports the following:"
+  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.content_transformation
+}
+output "function_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the AWS Lambda function."
+  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.function_arn
 }
 output "aws_lambda" {
   description = "(Required) Configuration for an AWS Lambda function. See AWS Lambda below for more details.AWS LambdaThe aws_lambda block supports the following:"
@@ -213,9 +221,9 @@ output "configuration" {
   description = "(Required) A configuration block containing details about the Object Lambda Access Point. See Configuration below for more details."
   value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.configuration
 }
-output "function_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the AWS Lambda function."
-  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.function_arn
+output "function_payload" {
+  description = "(Optional) Additional JSON that provides supplemental data to the Lambda function used to transform objects.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.function_payload
 }
 output "supporting_access_point" {
   description = "(Required) Standard access point associated with the Object Lambda Access Point."
@@ -225,25 +233,17 @@ output "account_id" {
   description = "(Optional) The AWS account ID for the owner of the bucket for which you want to create an Object Lambda Access Point. Defaults to automatically determined account ID of the Terraform AWS provider."
   value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.account_id
 }
-output "content_transformation" {
-  description = "(Required) The content transformation of an Object Lambda Access Point configuration. See Content Transformation below for more details.Content TransformationThe content_transformation block supports the following:"
-  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.content_transformation
+output "actions" {
+  description = "(Required) The actions of an Object Lambda Access Point configuration. Valid values: GetObject."
+  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.actions
 }
-output "function_payload" {
-  description = "(Optional) Additional JSON that provides supplemental data to the Lambda function used to transform objects.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.function_payload
-}
-output "name" {
-  description = "(Required) The name for this Object Lambda Access Point.ConfigurationThe configuration block supports the following:"
-  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.name
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the Object Lambda Access Point."
+  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.arn
 }
 output "transformation_configuration" {
   description = "(Required) List of transformation configurations for the Object Lambda Access Point. See Transformation Configuration below for more details.Transformation ConfigurationThe transformation_configuration block supports the following:"
   value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.transformation_configuration
-}
-output "actions" {
-  description = "(Required) The actions of an Object Lambda Access Point configuration. Valid values: GetObject."
-  value       = aws_s3control_object_lambda_access_point.aws_s3control_object_lambda_access_point.actions
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the Object Lambda Access Point."

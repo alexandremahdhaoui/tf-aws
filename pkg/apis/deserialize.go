@@ -3,6 +3,8 @@ package apis
 import (
 	"encoding/json"
 	"fmt"
+	log "github.com/sirupsen/logrus"
+	"gitlab.com/alexandre.mahdhaoui/tf-aws/pkg/logger"
 	"gopkg.in/yaml.v3"
 	"os"
 	"strings"
@@ -19,8 +21,11 @@ func FromDeserializer(b []byte, f func([]byte, interface{}) error) (*TerraformMo
 
 // FromPath only supports json & yaml yet
 func FromPath(path string) (*TerraformModuleDefinition, error) {
+	sf, ef := logger.Trace("deserialize", "TerraformModuleDefinition from path", path)
+	defer sf()
 	b, err := os.ReadFile(path)
 	if err != nil {
+		log.Errorf("failed to read file `%s`", path)
 		return nil, err
 	}
 	switch {
@@ -29,6 +34,7 @@ func FromPath(path string) (*TerraformModuleDefinition, error) {
 	case strings.HasSuffix(path, ".yaml"), strings.HasSuffix(path, ".yml"):
 		return FromDeserializer(b, yaml.Unmarshal)
 	default:
-		panic(fmt.Sprintf("could not deserialize `%s`; file extension should be equal to `.json`, `.yml` or `.yaml`", path))
+		logger.Panic(fmt.Errorf("could not deserialize `%s`; file extension should be equal to `.json`, `.yml` or `.yaml`", path), ef)
+		return nil, nil
 	}
 }

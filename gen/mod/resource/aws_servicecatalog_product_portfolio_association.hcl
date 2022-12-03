@@ -12,6 +12,16 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "read" {
+  description = "(Default 10m)"
+  type        = string
+  default     = ""
+}
+variable "source_portfolio_id" {
+  description = "(Optional) Identifier of the source portfolio.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "accept_language" {
   description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
   type        = string
@@ -39,16 +49,6 @@ variable "portfolio_id" {
 variable "product_id" {
   description = "(Required) Product identifier."
   type        = string
-}
-variable "read" {
-  description = "(Default 10m)"
-  type        = string
-  default     = ""
-}
-variable "source_portfolio_id" {
-  description = "(Optional) Identifier of the source portfolio.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -170,22 +170,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "product_id" {
-  description = "(Required) Product identifier."
-  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.product_id
-}
-output "read" {
-  description = "(Default 10m)"
-  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.read
-}
-output "source_portfolio_id" {
-  description = "(Optional) Identifier of the source portfolio.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.source_portfolio_id
-}
-output "accept_language" {
-  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
-  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.accept_language
-}
 output "create" {
   description = "(Default 3m)"
   value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.create
@@ -201,6 +185,22 @@ output "id" {
 output "portfolio_id" {
   description = "(Required) Portfolio identifier."
   value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.portfolio_id
+}
+output "product_id" {
+  description = "(Required) Product identifier."
+  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.product_id
+}
+output "read" {
+  description = "(Default 10m)"
+  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.read
+}
+output "source_portfolio_id" {
+  description = "(Optional) Identifier of the source portfolio.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.source_portfolio_id
+}
+output "accept_language" {
+  description = "(Optional) Language code. Valid values: en (English), jp (Japanese), zh (Chinese). Default value is en."
+  value       = aws_servicecatalog_product_portfolio_association.aws_servicecatalog_product_portfolio_association.accept_language
 }
 output "create" {
   description = "(Default 3m)"

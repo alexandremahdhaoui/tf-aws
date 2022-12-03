@@ -12,14 +12,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "fsx_filesystem_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) for the FSx for Lustre file system."
-  type        = string
-}
-variable "id" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  type        = string
-}
 variable "security_group_arns" {
   description = "(Optional) The Amazon Resource Names (ARNs) of the security groups that are to use to configure the FSx for Lustre file system."
   type        = string
@@ -44,6 +36,14 @@ variable "uri" {
   type        = string
 }
 variable "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  type        = string
+}
+variable "fsx_filesystem_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) for the FSx for Lustre file system."
+  type        = string
+}
+variable "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   type        = string
 }
@@ -167,14 +167,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "Amazon Resource Name (ARN) of the DataSync Location."
-  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.arn
-}
-output "fsx_filesystem_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) for the FSx for Lustre file system."
-  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.fsx_filesystem_arn
-}
 output "id" {
   description = "Amazon Resource Name (ARN) of the DataSync Location."
   value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.id
@@ -198,6 +190,14 @@ output "tags_all" {
 output "uri" {
   description = "The URL of the FSx for Lustre location that was described."
   value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.uri
+}
+output "arn" {
+  description = "Amazon Resource Name (ARN) of the DataSync Location."
+  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.arn
+}
+output "fsx_filesystem_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) for the FSx for Lustre file system."
+  value       = aws_datasync_location_fsx_lustre_file_system.aws_datasync_location_fsx_lustre_file_system.fsx_filesystem_arn
 }
 output "creation_time" {
   description = "The time that the FSx for Lustre location was created."

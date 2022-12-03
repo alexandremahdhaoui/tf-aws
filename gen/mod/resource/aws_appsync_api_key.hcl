@@ -1,8 +1,8 @@
 resource "aws_appsync_api_key" "aws_appsync_api_key" {
-  api_id      = var.api_id
-  description = var.description
   expires     = var.expires
   id          = var.id
+  api_id      = var.api_id
+  description = var.description
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -146,6 +146,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "api_id" {
+  description = "(Required) ID of the associated AppSync API"
+  value       = aws_appsync_api_key.aws_appsync_api_key.api_id
+}
 output "description" {
   description = "(Optional) API key description. Defaults to \"Managed by Terraform\"."
   value       = aws_appsync_api_key.aws_appsync_api_key.description
@@ -157,10 +161,6 @@ output "expires" {
 output "id" {
   description = "API Key ID (Formatted as ApiId:Key)"
   value       = aws_appsync_api_key.aws_appsync_api_key.id
-}
-output "api_id" {
-  description = "(Required) ID of the associated AppSync API"
-  value       = aws_appsync_api_key.aws_appsync_api_key.api_id
 }
 output "id" {
   description = "API Key ID (Formatted as ApiId:Key)"

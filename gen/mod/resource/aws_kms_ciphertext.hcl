@@ -1,7 +1,7 @@
 resource "aws_kms_ciphertext" "aws_kms_ciphertext" {
+  plaintext = var.plaintext
   context   = var.context
   key_id    = var.key_id
-  plaintext = var.plaintext
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

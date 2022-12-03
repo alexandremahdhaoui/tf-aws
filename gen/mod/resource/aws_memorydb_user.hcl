@@ -1,19 +1,33 @@
 resource "aws_memorydb_user" "aws_memorydb_user" {
-  access_string          = var.access_string
-  id                     = var.id
-  password_count         = var.password_count
-  tags                   = var.tags
   tags_all               = var.tags_all
-  user_name              = var.user_name
-  arn                    = var.arn
-  authentication_mode    = var.authentication_mode
+  id                     = var.id
   minimum_engine_version = var.minimum_engine_version
   passwords              = var.passwords
+  password_count         = var.password_count
+  tags                   = var.tags
   type                   = var.type
+  user_name              = var.user_name
+  access_string          = var.access_string
+  arn                    = var.arn
+  authentication_mode    = var.authentication_mode
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "access_string" {
+  description = "(Required) The access permissions string used for this user."
+  type        = string
+}
+variable "arn" {
+  description = "The ARN of the user."
+  type        = string
+  default     = ""
+}
+variable "authentication_mode" {
+  description = ""
+  type        = string
+  default     = ""
 }
 variable "password_count" {
   description = "The number of passwords belonging to the user."
@@ -25,17 +39,12 @@ variable "tags" {
   type        = string
   default     = ""
 }
-variable "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+variable "type" {
+  description = "(Required) Indicates whether the user requires a password to authenticate. Must be set to password.In addition to all arguments above, the following attributes are exported:"
   type        = string
-  default     = ""
 }
 variable "user_name" {
   description = "(Required, Forces new resource) Name of the MemoryDB user. Up to 40 characters."
-  type        = string
-}
-variable "access_string" {
-  description = "(Required) The access permissions string used for this user."
   type        = string
 }
 variable "id" {
@@ -52,17 +61,8 @@ variable "passwords" {
   description = "(Required) The set of passwords used for authentication. You can create up to two passwords for each user."
   type        = string
 }
-variable "type" {
-  description = "(Required) Indicates whether the user requires a password to authenticate. Must be set to password.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "arn" {
-  description = "The ARN of the user."
-  type        = string
-  default     = ""
-}
-variable "authentication_mode" {
-  description = ""
+variable "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   type        = string
   default     = ""
 }
@@ -186,14 +186,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the user."
-  value       = aws_memorydb_user.aws_memorydb_user.arn
-}
-output "authentication_mode" {
-  description = ""
-  value       = aws_memorydb_user.aws_memorydb_user.authentication_mode
-}
 output "minimum_engine_version" {
   description = "The minimum engine version supported for the user."
   value       = aws_memorydb_user.aws_memorydb_user.minimum_engine_version
@@ -202,17 +194,21 @@ output "passwords" {
   description = "(Required) The set of passwords used for authentication. You can create up to two passwords for each user."
   value       = aws_memorydb_user.aws_memorydb_user.passwords
 }
-output "type" {
-  description = "(Required) Indicates whether the user requires a password to authenticate. Must be set to password.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_memorydb_user.aws_memorydb_user.type
-}
-output "access_string" {
-  description = "(Required) The access permissions string used for this user."
-  value       = aws_memorydb_user.aws_memorydb_user.access_string
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_memorydb_user.aws_memorydb_user.tags_all
 }
 output "id" {
   description = "Same as user_name."
   value       = aws_memorydb_user.aws_memorydb_user.id
+}
+output "arn" {
+  description = "The ARN of the user."
+  value       = aws_memorydb_user.aws_memorydb_user.arn
+}
+output "authentication_mode" {
+  description = ""
+  value       = aws_memorydb_user.aws_memorydb_user.authentication_mode
 }
 output "password_count" {
   description = "The number of passwords belonging to the user."
@@ -222,13 +218,25 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.authentication_mode Configuration Block"
   value       = aws_memorydb_user.aws_memorydb_user.tags
 }
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_memorydb_user.aws_memorydb_user.tags_all
+output "type" {
+  description = "(Required) Indicates whether the user requires a password to authenticate. Must be set to password.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_memorydb_user.aws_memorydb_user.type
 }
 output "user_name" {
   description = "(Required, Forces new resource) Name of the MemoryDB user. Up to 40 characters."
   value       = aws_memorydb_user.aws_memorydb_user.user_name
+}
+output "access_string" {
+  description = "(Required) The access permissions string used for this user."
+  value       = aws_memorydb_user.aws_memorydb_user.access_string
+}
+output "password_count" {
+  description = "The number of passwords belonging to the user."
+  value       = aws_memorydb_user.aws_memorydb_user.password_count
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_memorydb_user.aws_memorydb_user.tags_all
 }
 output "arn" {
   description = "The ARN of the user."
@@ -245,14 +253,6 @@ output "id" {
 output "minimum_engine_version" {
   description = "The minimum engine version supported for the user."
   value       = aws_memorydb_user.aws_memorydb_user.minimum_engine_version
-}
-output "password_count" {
-  description = "The number of passwords belonging to the user."
-  value       = aws_memorydb_user.aws_memorydb_user.password_count
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_memorydb_user.aws_memorydb_user.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -11,8 +11,7 @@ spec:
             description: ARN of the user.
             type: string
         authentication_mode:
-            description: |
-                Denotes the user's authentication properties.
+            description: ""
             type: string
         id:
             description: Name of the user.
@@ -37,8 +36,7 @@ spec:
             description: ARN of the user.
             type: string
         authentication_mode:
-            description: |
-                Denotes the user's authentication properties.
+            description: ""
             type: string
         id:
             description: Name of the user.

@@ -1,40 +1,30 @@
 resource "aws_api_gateway_method_settings" "aws_api_gateway_method_settings" {
-  cache_data_encrypted                    = var.cache_data_encrypted
   cache_ttl_in_seconds                    = var.cache_ttl_in_seconds
-  logging_level                           = var.logging_level
-  settings                                = var.settings
-  throttling_burst_limit                  = var.throttling_burst_limit
-  caching_enabled                         = var.caching_enabled
   data_trace_enabled                      = var.data_trace_enabled
-  method_path                             = var.method_path
   metrics_enabled                         = var.metrics_enabled
+  throttling_burst_limit                  = var.throttling_burst_limit
+  throttling_rate_limit                   = var.throttling_rate_limit
+  stage_name                              = var.stage_name
+  cache_data_encrypted                    = var.cache_data_encrypted
+  caching_enabled                         = var.caching_enabled
+  logging_level                           = var.logging_level
+  method_path                             = var.method_path
   require_authorization_for_cache_control = var.require_authorization_for_cache_control
   rest_api_id                             = var.rest_api_id
-  stage_name                              = var.stage_name
-  throttling_rate_limit                   = var.throttling_rate_limit
+  settings                                = var.settings
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "caching_enabled" {
-  description = "(Optional) Whether responses should be cached and returned for requests. A cache cluster must be enabled on the stage for responses to be cached."
-  type        = string
-  default     = ""
-}
-variable "data_trace_enabled" {
-  description = "(Optional) Whether data trace logging is enabled for this method, which effects the log entries pushed to Amazon CloudWatch Logs."
+variable "logging_level" {
+  description = "(Optional) Logging level for this method, which effects the log entries pushed to Amazon CloudWatch Logs. The available levels are OFF, ERROR, and INFO."
   type        = string
   default     = ""
 }
 variable "method_path" {
   description = "(Required) Method path defined as {resource_path}/{http_method} for an individual method override, or */* for overriding all methods in the stage. Ensure to trim any leading forward slashes in the path (e.g., trimprefix(aws_api_gateway_resource.example.path, \"/\"))."
   type        = string
-}
-variable "metrics_enabled" {
-  description = "(Optional) Whether Amazon CloudWatch metrics are enabled for this method."
-  type        = string
-  default     = ""
 }
 variable "require_authorization_for_cache_control" {
   description = "(Optional) Whether authorization is required for a cache invalidation request."
@@ -45,9 +35,28 @@ variable "rest_api_id" {
   description = "(Required) ID of the REST API"
   type        = string
 }
+variable "settings" {
+  description = "(Required) Settings block, see below.settings"
+  type        = string
+}
 variable "stage_name" {
   description = "(Required) Name of the stage"
   type        = string
+}
+variable "cache_data_encrypted" {
+  description = "(Optional) Whether the cached responses are encrypted."
+  type        = string
+  default     = ""
+}
+variable "caching_enabled" {
+  description = "(Optional) Whether responses should be cached and returned for requests. A cache cluster must be enabled on the stage for responses to be cached."
+  type        = string
+  default     = ""
+}
+variable "metrics_enabled" {
+  description = "(Optional) Whether Amazon CloudWatch metrics are enabled for this method."
+  type        = string
+  default     = ""
 }
 variable "throttling_burst_limit" {
   description = "(Optional) Throttling burst limit. Default: -1 (throttling disabled)."
@@ -59,24 +68,15 @@ variable "throttling_rate_limit" {
   type        = string
   default     = ""
 }
-variable "cache_data_encrypted" {
-  description = "(Optional) Whether the cached responses are encrypted."
-  type        = string
-  default     = ""
-}
 variable "cache_ttl_in_seconds" {
   description = "(Optional) Time to live (TTL), in seconds, for cached responses. The higher the TTL, the longer the response will be cached."
   type        = string
   default     = ""
 }
-variable "logging_level" {
-  description = "(Optional) Logging level for this method, which effects the log entries pushed to Amazon CloudWatch Logs. The available levels are OFF, ERROR, and INFO."
+variable "data_trace_enabled" {
+  description = "(Optional) Whether data trace logging is enabled for this method, which effects the log entries pushed to Amazon CloudWatch Logs."
   type        = string
   default     = ""
-}
-variable "settings" {
-  description = "(Required) Settings block, see below.settings"
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -202,25 +202,21 @@ output "stage_name" {
   description = "(Required) Name of the stage"
   value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.stage_name
 }
-output "throttling_burst_limit" {
-  description = "(Optional) Throttling burst limit. Default: -1 (throttling disabled)."
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.throttling_burst_limit
+output "cache_data_encrypted" {
+  description = "(Optional) Whether the cached responses are encrypted."
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.cache_data_encrypted
 }
 output "caching_enabled" {
   description = "(Optional) Whether responses should be cached and returned for requests. A cache cluster must be enabled on the stage for responses to be cached."
   value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.caching_enabled
 }
-output "data_trace_enabled" {
-  description = "(Optional) Whether data trace logging is enabled for this method, which effects the log entries pushed to Amazon CloudWatch Logs."
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.data_trace_enabled
+output "logging_level" {
+  description = "(Optional) Logging level for this method, which effects the log entries pushed to Amazon CloudWatch Logs. The available levels are OFF, ERROR, and INFO."
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.logging_level
 }
 output "method_path" {
   description = "(Required) Method path defined as {resource_path}/{http_method} for an individual method override, or */* for overriding all methods in the stage. Ensure to trim any leading forward slashes in the path (e.g., trimprefix(aws_api_gateway_resource.example.path, \"/\"))."
   value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.method_path
-}
-output "metrics_enabled" {
-  description = "(Optional) Whether Amazon CloudWatch metrics are enabled for this method."
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.metrics_enabled
 }
 output "require_authorization_for_cache_control" {
   description = "(Optional) Whether authorization is required for a cache invalidation request."
@@ -230,25 +226,29 @@ output "rest_api_id" {
   description = "(Required) ID of the REST API"
   value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.rest_api_id
 }
-output "throttling_rate_limit" {
-  description = "(Optional) Throttling rate limit. Default: -1 (throttling disabled)."
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.throttling_rate_limit
-}
-output "cache_data_encrypted" {
-  description = "(Optional) Whether the cached responses are encrypted."
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.cache_data_encrypted
+output "settings" {
+  description = "(Required) Settings block, see below.settings"
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.settings
 }
 output "cache_ttl_in_seconds" {
   description = "(Optional) Time to live (TTL), in seconds, for cached responses. The higher the TTL, the longer the response will be cached."
   value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.cache_ttl_in_seconds
 }
-output "logging_level" {
-  description = "(Optional) Logging level for this method, which effects the log entries pushed to Amazon CloudWatch Logs. The available levels are OFF, ERROR, and INFO."
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.logging_level
+output "data_trace_enabled" {
+  description = "(Optional) Whether data trace logging is enabled for this method, which effects the log entries pushed to Amazon CloudWatch Logs."
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.data_trace_enabled
 }
-output "settings" {
-  description = "(Required) Settings block, see below.settings"
-  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.settings
+output "metrics_enabled" {
+  description = "(Optional) Whether Amazon CloudWatch metrics are enabled for this method."
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.metrics_enabled
+}
+output "throttling_burst_limit" {
+  description = "(Optional) Throttling burst limit. Default: -1 (throttling disabled)."
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.throttling_burst_limit
+}
+output "throttling_rate_limit" {
+  description = "(Optional) Throttling rate limit. Default: -1 (throttling disabled)."
+  value       = aws_api_gateway_method_settings.aws_api_gateway_method_settings.throttling_rate_limit
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

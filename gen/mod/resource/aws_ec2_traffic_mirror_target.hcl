@@ -1,15 +1,19 @@
 resource "aws_ec2_traffic_mirror_target" "aws_ec2_traffic_mirror_target" {
-  id                                = var.id
-  network_interface_id              = var.network_interface_id
   network_load_balancer_arn         = var.network_load_balancer_arn
   tags                              = var.tags
   tags_all                          = var.tags_all
   arn                               = var.arn
   description                       = var.description
   gateway_load_balancer_endpoint_id = var.gateway_load_balancer_endpoint_id
+  id                                = var.id
+  network_interface_id              = var.network_interface_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "description" {
+  description = "(Optional, Forces new) A description of the traffic mirror session."
   type        = string
 }
 variable "gateway_load_balancer_endpoint_id" {
@@ -39,10 +43,6 @@ variable "tags_all" {
 }
 variable "arn" {
   description = "The ARN of the traffic mirror target."
-  type        = string
-}
-variable "description" {
-  description = "(Optional, Forces new) A description of the traffic mirror session."
   type        = string
 }
 variable "tag_instance_id" {

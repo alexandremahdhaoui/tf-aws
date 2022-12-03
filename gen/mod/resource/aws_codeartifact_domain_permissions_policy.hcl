@@ -9,6 +9,11 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "policy_revision" {
+  description = "(Optional) The current revision of the resource policy to be set. This revision is used for optimistic locking, which prevents others from overwriting your changes to the domain's resource policy.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
 variable "domain" {
   description = "(Required) The name of the domain on which to set the resource policy."
   type        = string
@@ -25,11 +30,6 @@ variable "id" {
 variable "policy_document" {
   description = "(Required) A JSON policy string to be set as the access control resource policy on the provided domain."
   type        = string
-}
-variable "policy_revision" {
-  description = "(Optional) The current revision of the resource policy to be set. This revision is used for optimistic locking, which prevents others from overwriting your changes to the domain's resource policy.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -151,14 +151,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "domain_owner" {
-  description = "(Optional) The account number of the AWS account that owns the domain."
-  value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.domain_owner
-}
-output "id" {
-  description = "The Name of Domain."
-  value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.id
-}
 output "policy_document" {
   description = "(Required) A JSON policy string to be set as the access control resource policy on the provided domain."
   value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.policy_document
@@ -171,13 +163,21 @@ output "domain" {
   description = "(Required) The name of the domain on which to set the resource policy."
   value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.domain
 }
-output "resource_arn" {
-  description = "The ARN of the resource associated with the resource policy."
-  value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.resource_arn
+output "domain_owner" {
+  description = "(Optional) The account number of the AWS account that owns the domain."
+  value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.domain_owner
 }
 output "id" {
   description = "The Name of Domain."
   value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.id
+}
+output "id" {
+  description = "The Name of Domain."
+  value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.id
+}
+output "resource_arn" {
+  description = "The ARN of the resource associated with the resource policy."
+  value       = aws_codeartifact_domain_permissions_policy.aws_codeartifact_domain_permissions_policy.resource_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -4,10 +4,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-output "outpost_arn" {
-  description = "ARN of Outpost"
-  value       = aws_ec2_local_gateway.aws_ec2_local_gateway.outpost_arn
-}
 output "owner_id" {
   description = "AWS account identifier that owns the Local Gateway."
   value       = aws_ec2_local_gateway.aws_ec2_local_gateway.owner_id
@@ -15,6 +11,10 @@ output "owner_id" {
 output "state" {
   description = "State of the local gateway.TimeoutsConfiguration options:"
   value       = aws_ec2_local_gateway.aws_ec2_local_gateway.state
+}
+output "outpost_arn" {
+  description = "ARN of Outpost"
+  value       = aws_ec2_local_gateway.aws_ec2_local_gateway.outpost_arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

@@ -1,25 +1,49 @@
 resource "aws_opensearch_domain_saml_options" "aws_opensearch_domain_saml_options" {
-  master_backend_role     = var.master_backend_role
-  saml_options            = var.saml_options
-  subject_key             = var.subject_key
-  update                  = var.update
-  domain_name             = var.domain_name
+  delete                  = var.delete
   enabled                 = var.enabled
   id                      = var.id
-  idp                     = var.idp
+  master_user_name        = var.master_user_name
   metadata_content        = var.metadata_content
   roles_key               = var.roles_key
-  delete                  = var.delete
-  entity_id               = var.entity_id
-  master_user_name        = var.master_user_name
+  saml_options            = var.saml_options
+  domain_name             = var.domain_name
+  idp                     = var.idp
+  master_backend_role     = var.master_backend_role
+  subject_key             = var.subject_key
   session_timeout_minutes = var.session_timeout_minutes
+  update                  = var.update
+  entity_id               = var.entity_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "delete" {
-  description = "(Default 90m)"
+variable "subject_key" {
+  description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
+  type        = string
+  default     = ""
+}
+variable "domain_name" {
+  description = "(Required) Name of the domain."
+  type        = string
+}
+variable "idp" {
+  description = "(Optional) Information from your identity provider."
+  type        = string
+  default     = ""
+}
+variable "master_backend_role" {
+  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  type        = string
+  default     = ""
+}
+variable "session_timeout_minutes" {
+  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
+  type        = string
+  default     = ""
+}
+variable "update" {
+  description = "(Default 180m)"
   type        = string
   default     = ""
 }
@@ -32,13 +56,12 @@ variable "master_user_name" {
   type        = string
   default     = ""
 }
-variable "session_timeout_minutes" {
-  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
+variable "metadata_content" {
+  description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
   type        = string
-  default     = ""
 }
-variable "master_backend_role" {
-  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+variable "roles_key" {
+  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
   type        = string
   default     = ""
 }
@@ -47,19 +70,10 @@ variable "saml_options" {
   type        = string
   default     = ""
 }
-variable "subject_key" {
-  description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
+variable "delete" {
+  description = "(Default 90m)"
   type        = string
   default     = ""
-}
-variable "update" {
-  description = "(Default 180m)"
-  type        = string
-  default     = ""
-}
-variable "domain_name" {
-  description = "(Required) Name of the domain."
-  type        = string
 }
 variable "enabled" {
   description = "(Required) Whether SAML authentication is enabled."
@@ -67,20 +81,6 @@ variable "enabled" {
 }
 variable "id" {
   description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
-  type        = string
-  default     = ""
-}
-variable "idp" {
-  description = "(Optional) Information from your identity provider."
-  type        = string
-  default     = ""
-}
-variable "metadata_content" {
-  description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "roles_key" {
-  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
   type        = string
   default     = ""
 }
@@ -204,49 +204,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "delete" {
-  description = "(Default 90m)"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.delete
-}
-output "entity_id" {
-  description = "(Required) Unique Entity ID of the application in SAML Identity Provider."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.entity_id
-}
-output "master_user_name" {
-  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_user_name
-}
-output "session_timeout_minutes" {
-  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.session_timeout_minutes
+output "idp" {
+  description = "(Optional) Information from your identity provider."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.idp
 }
 output "master_backend_role" {
   description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_backend_role
 }
-output "saml_options" {
-  description = "(Optional) SAML authentication options for an AWS OpenSearch Domain.saml_options"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.saml_options
-}
 output "subject_key" {
   description = "(Optional) Element of the SAML assertion to use for username. Default is NameID.idp"
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.subject_key
+}
+output "domain_name" {
+  description = "(Required) Name of the domain."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.domain_name
 }
 output "update" {
   description = "(Default 180m)"
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.update
 }
-output "metadata_content" {
-  description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.metadata_content
+output "session_timeout_minutes" {
+  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.session_timeout_minutes
 }
-output "roles_key" {
-  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.roles_key
-}
-output "domain_name" {
-  description = "(Required) Name of the domain."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.domain_name
+output "entity_id" {
+  description = "(Required) Unique Entity ID of the application in SAML Identity Provider."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.entity_id
 }
 output "enabled" {
   description = "(Required) Whether SAML authentication is enabled."
@@ -256,9 +240,25 @@ output "id" {
   description = "Name of the domain the SAML options are associated with.TimeoutsConfiguration options:"
   value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.id
 }
-output "idp" {
-  description = "(Optional) Information from your identity provider."
-  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.idp
+output "master_user_name" {
+  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.master_user_name
+}
+output "metadata_content" {
+  description = "(Required) Metadata of the SAML application in xml format.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.metadata_content
+}
+output "roles_key" {
+  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles."
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.roles_key
+}
+output "saml_options" {
+  description = "(Optional) SAML authentication options for an AWS OpenSearch Domain.saml_options"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.saml_options
+}
+output "delete" {
+  description = "(Default 90m)"
+  value       = aws_opensearch_domain_saml_options.aws_opensearch_domain_saml_options.delete
 }
 output "delete" {
   description = "(Default 90m)"

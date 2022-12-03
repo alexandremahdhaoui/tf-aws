@@ -1,9 +1,9 @@
 datasource "aws_launch_template" "aws_launch_template" {
-  filter = var.filter
-  id     = var.id
   name   = var.name
   tags   = var.tags
   values = var.values
+  filter = var.filter
+  id     = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."

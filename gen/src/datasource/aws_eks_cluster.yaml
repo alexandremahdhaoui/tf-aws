@@ -58,7 +58,8 @@ spec:
             description: List of ARNs of the Outposts hosting the EKS cluster. Only a single ARN is supported currently.
             type: string
         outpost_config:
-            description: ""
+            description: |
+                Contains Outpost Configuration.
             type: string
         platform_version:
             description: Platform version for the cluster.

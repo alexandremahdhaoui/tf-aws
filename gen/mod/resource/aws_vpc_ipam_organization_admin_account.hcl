@@ -9,6 +9,10 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "name" {
+  description = "The Organizations name for the delegate account."
+  type        = string
+}
 variable "arn" {
   description = "The Organizations ARN for the delegate account."
   type        = string
@@ -23,10 +27,6 @@ variable "email" {
 }
 variable "id" {
   description = "The Organizations member account ID that you want to enable as the IPAM account."
-  type        = string
-}
-variable "name" {
-  description = "The Organizations name for the delegate account."
   type        = string
 }
 variable "tag_instance_id" {
@@ -169,6 +169,10 @@ output "arn" {
   description = "The Organizations ARN for the delegate account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.arn
 }
+output "name" {
+  description = "The Organizations name for the delegate account."
+  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
+}
 output "service_principal" {
   description = "The AWS service principal."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.service_principal
@@ -184,10 +188,6 @@ output "email" {
 output "id" {
   description = "The Organizations member account ID that you want to enable as the IPAM account."
   value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.id
-}
-output "name" {
-  description = "The Organizations name for the delegate account."
-  value       = aws_vpc_ipam_organization_admin_account.aws_vpc_ipam_organization_admin_account.name
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

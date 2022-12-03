@@ -1,15 +1,19 @@
 resource "aws_lightsail_certificate" "aws_lightsail_certificate" {
-  created_at                = var.created_at
-  domain_name               = var.domain_name
-  domain_validation_options = var.domain_validation_options
-  id                        = var.id
   name                      = var.name
   subject_alternative_names = var.subject_alternative_names
   tags                      = var.tags
   arn                       = var.arn
+  created_at                = var.created_at
+  domain_name               = var.domain_name
+  domain_validation_options = var.domain_validation_options
+  id                        = var.id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "created_at" {
+  description = "The timestamp when the instance was created."
   type        = string
 }
 variable "domain_name" {
@@ -40,10 +44,6 @@ variable "tags" {
 }
 variable "arn" {
   description = "The ARN of the lightsail certificate."
-  type        = string
-}
-variable "created_at" {
-  description = "The timestamp when the instance was created."
   type        = string
 }
 variable "tag_instance_id" {
@@ -166,10 +166,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "arn" {
-  description = "The ARN of the lightsail certificate."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
-}
 output "created_at" {
   description = "The timestamp when the instance was created."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
@@ -198,6 +194,14 @@ output "tags" {
   description = "(Optional) A map of tags to assign to the resource. To create a key-only tag, use an empty string as the value. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   value       = aws_lightsail_certificate.aws_lightsail_certificate.tags
 }
+output "arn" {
+  description = "The ARN of the lightsail certificate."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
+}
+output "arn" {
+  description = "The ARN of the lightsail certificate."
+  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
+}
 output "created_at" {
   description = "The timestamp when the instance was created."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.created_at
@@ -213,10 +217,6 @@ output "id" {
 output "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
   value       = aws_lightsail_certificate.aws_lightsail_certificate.tags_all
-}
-output "arn" {
-  description = "The ARN of the lightsail certificate."
-  value       = aws_lightsail_certificate.aws_lightsail_certificate.arn
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

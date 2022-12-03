@@ -17,16 +17,22 @@ spec:
                 updates to the distribution configuration.
             type: string
         domain_name:
-            description: d604721fxaaqy9.cloudfront.net.
+            description: |-
+                The domain name corresponding to the distribution. For
+                example: d604721fxaaqy9.cloudfront.net.
             type: string
         enabled:
             description: true if any of the AWS accounts listed as trusted signers have active CloudFront key pairs
             type: string
         etag:
-            description: E2QWRUHAPOMQZL.
+            description: |-
+                The current version of the distribution's information. For example:
+                E2QWRUHAPOMQZL.
             type: string
         hosted_zone_id:
-            description: Alias Resource Record SetZ2FDTNDATAQYW2.
+            description: |-
+                The CloudFront Route 53 zone ID that can be used to
+                route an Alias Resource Record SetZ2FDTNDATAQYW2.
             type: string
         id:
             description: 'The identifier for the distribution. For example: EDFDVBD632BHDS5.'

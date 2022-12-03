@@ -99,10 +99,18 @@ spec:
             optional: true
             type: string
         response_card:
-            description: 'Example: Using a Response Card.TimeoutsConfiguration options:'
+            description: |-
+                (Optional) The response card. Amazon Lex will substitute session attributes and
+                slot values into the response card. For more information, see
+                Example: Using a Response Card.TimeoutsConfiguration options:
+            optional: true
             type: string
         status:
-            description: ""
+            description: |-
+                When you send a request to create or update a bot, Amazon Lex sets the status response
+                element to BUILDING. After Amazon Lex builds the bot, it sets status to READY. If Amazon Lex can't
+                build the bot, it sets status to FAILED. Amazon Lex returns the reason for the failure in the
+                failure_reason response element.
             type: string
         update:
             description: (Default 5m)
@@ -127,7 +135,11 @@ spec:
             description: The date when the $LATEST version of this bot was updated.
             type: string
         status:
-            description: ""
+            description: |-
+                When you send a request to create or update a bot, Amazon Lex sets the status response
+                element to BUILDING. After Amazon Lex builds the bot, it sets status to READY. If Amazon Lex can't
+                build the bot, it sets status to FAILED. Amazon Lex returns the reason for the failure in the
+                failure_reason response element.
             type: string
         version:
             description: The version of the bot.

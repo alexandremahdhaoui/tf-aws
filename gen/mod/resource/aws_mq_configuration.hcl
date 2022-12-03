@@ -1,15 +1,15 @@
 resource "aws_mq_configuration" "aws_mq_configuration" {
-  engine_type             = var.engine_type
-  id                      = var.id
-  name                    = var.name
   arn                     = var.arn
-  authentication_strategy = var.authentication_strategy
   engine_version          = var.engine_version
+  id                      = var.id
   latest_revision         = var.latest_revision
-  tags                    = var.tags
-  tags_all                = var.tags_all
+  authentication_strategy = var.authentication_strategy
   data                    = var.data
   description             = var.description
+  engine_type             = var.engine_type
+  name                    = var.name
+  tags                    = var.tags
+  tags_all                = var.tags_all
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -20,13 +20,8 @@ variable "arn" {
   type        = string
   default     = ""
 }
-variable "authentication_strategy" {
-  description = "(Optional) Authentication strategy associated with the configuration. Valid values are simple and ldap. ldap is not supported for engine_type RabbitMQ."
-  type        = string
-  default     = ""
-}
-variable "engine_type" {
-  description = "(Required) Type of broker engine. Valid values are ActiveMQ and RabbitMQ."
+variable "engine_version" {
+  description = "(Required) Version of the broker engine."
   type        = string
 }
 variable "id" {
@@ -34,9 +29,15 @@ variable "id" {
   type        = string
   default     = ""
 }
-variable "name" {
-  description = "(Required) Name of the configuration."
+variable "latest_revision" {
+  description = "Latest revision of the configuration."
   type        = string
+  default     = ""
+}
+variable "authentication_strategy" {
+  description = "(Optional) Authentication strategy associated with the configuration. Valid values are simple and ldap. ldap is not supported for engine_type RabbitMQ."
+  type        = string
+  default     = ""
 }
 variable "data" {
   description = "(Required) Broker configuration in XML format. See official docs for supported parameters and format of the XML."
@@ -47,14 +48,13 @@ variable "description" {
   type        = string
   default     = ""
 }
-variable "engine_version" {
-  description = "(Required) Version of the broker engine."
+variable "engine_type" {
+  description = "(Required) Type of broker engine. Valid values are ActiveMQ and RabbitMQ."
   type        = string
 }
-variable "latest_revision" {
-  description = "Latest revision of the configuration."
+variable "name" {
+  description = "(Required) Name of the configuration."
   type        = string
-  default     = ""
 }
 variable "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -190,21 +190,25 @@ output "arn" {
   description = "ARN of the configuration."
   value       = aws_mq_configuration.aws_mq_configuration.arn
 }
-output "authentication_strategy" {
-  description = "(Optional) Authentication strategy associated with the configuration. Valid values are simple and ldap. ldap is not supported for engine_type RabbitMQ."
-  value       = aws_mq_configuration.aws_mq_configuration.authentication_strategy
-}
-output "engine_type" {
-  description = "(Required) Type of broker engine. Valid values are ActiveMQ and RabbitMQ."
-  value       = aws_mq_configuration.aws_mq_configuration.engine_type
+output "engine_version" {
+  description = "(Required) Version of the broker engine."
+  value       = aws_mq_configuration.aws_mq_configuration.engine_version
 }
 output "id" {
   description = "Unique ID that Amazon MQ generates for the configuration."
   value       = aws_mq_configuration.aws_mq_configuration.id
 }
-output "name" {
-  description = "(Required) Name of the configuration."
-  value       = aws_mq_configuration.aws_mq_configuration.name
+output "latest_revision" {
+  description = "Latest revision of the configuration."
+  value       = aws_mq_configuration.aws_mq_configuration.latest_revision
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_mq_configuration.aws_mq_configuration.tags_all
+}
+output "authentication_strategy" {
+  description = "(Optional) Authentication strategy associated with the configuration. Valid values are simple and ldap. ldap is not supported for engine_type RabbitMQ."
+  value       = aws_mq_configuration.aws_mq_configuration.authentication_strategy
 }
 output "data" {
   description = "(Required) Broker configuration in XML format. See official docs for supported parameters and format of the XML."
@@ -214,13 +218,13 @@ output "description" {
   description = "(Optional) Description of the configuration."
   value       = aws_mq_configuration.aws_mq_configuration.description
 }
-output "engine_version" {
-  description = "(Required) Version of the broker engine."
-  value       = aws_mq_configuration.aws_mq_configuration.engine_version
+output "engine_type" {
+  description = "(Required) Type of broker engine. Valid values are ActiveMQ and RabbitMQ."
+  value       = aws_mq_configuration.aws_mq_configuration.engine_type
 }
-output "latest_revision" {
-  description = "Latest revision of the configuration."
-  value       = aws_mq_configuration.aws_mq_configuration.latest_revision
+output "name" {
+  description = "(Required) Name of the configuration."
+  value       = aws_mq_configuration.aws_mq_configuration.name
 }
 output "tags" {
   description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
@@ -241,10 +245,6 @@ output "id" {
 output "latest_revision" {
   description = "Latest revision of the configuration."
   value       = aws_mq_configuration.aws_mq_configuration.latest_revision
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_mq_configuration.aws_mq_configuration.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

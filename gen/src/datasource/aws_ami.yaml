@@ -28,9 +28,7 @@ spec:
             description: Date and time when the image will be deprecated.
             type: string
         description:
-            description: |-
-                Description of the AMI that was provided during image
-                creation.
+            description: ""
             type: string
         device_name:
             description: Physical name of the device.
@@ -84,8 +82,7 @@ spec:
             description: Platform details associated with the billing code of the AMI.
             type: string
         product_codes:
-            description: |
-                Any product codes associated with the AMI.
+            description: ""
             type: string
         product_codes.#.product_code_id:
             description: The product code.
@@ -97,7 +94,9 @@ spec:
             description: true if the image has public launch permissions.
             type: string
         ramdisk_id:
-            description: ""
+            description: |-
+                RAM disk associated with the image, if any. Only applicable
+                for machine images.
             type: string
         root_device_name:
             description: Device name of the root device.

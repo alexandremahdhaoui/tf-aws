@@ -1,7 +1,7 @@
 resource "aws_lightsail_static_ip" "aws_lightsail_static_ip" {
+  name       = var.name
   arn        = var.arn
   ip_address = var.ip_address
-  name       = var.name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -139,6 +139,10 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "name" {
+  description = "(Required) The name for the allocated static IPIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_lightsail_static_ip.aws_lightsail_static_ip.name
+}
 output "arn" {
   description = "The ARN of the Lightsail static IP"
   value       = aws_lightsail_static_ip.aws_lightsail_static_ip.arn
@@ -146,10 +150,6 @@ output "arn" {
 output "ip_address" {
   description = "The allocated static IP address"
   value       = aws_lightsail_static_ip.aws_lightsail_static_ip.ip_address
-}
-output "name" {
-  description = "(Required) The name for the allocated static IPIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_lightsail_static_ip.aws_lightsail_static_ip.name
 }
 output "arn" {
   description = "The ARN of the Lightsail static IP"

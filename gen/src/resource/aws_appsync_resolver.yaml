@@ -8,7 +8,9 @@ spec:
             description: (Required) API ID for the GraphQL API.
             type: string
         caching_config:
-            description: ""
+            description: |
+                (Optional) CachingConfig.
+            optional: true
             type: string
         caching_keys:
             description: (Optional) List of caching key.
@@ -49,7 +51,9 @@ spec:
             optional: true
             type: string
         pipeline_config:
-            description: ""
+            description: |
+                (Optional) PipelineConfig.
+            optional: true
             type: string
         request_template:
             description: (Optional) Request mapping template for UNIT resolver or 'before mapping template' for PIPELINE resolver. Required for non-Lambda resolvers.

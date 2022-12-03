@@ -11,10 +11,6 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional, Forces new resource) The domain description."
-  type        = string
-}
 variable "id" {
   description = "The name of the domain."
   type        = string
@@ -38,6 +34,10 @@ variable "workflow_execution_retention_period_in_days" {
 }
 variable "arn" {
   description = "Amazon Resource Name (ARN)"
+  type        = string
+}
+variable "description" {
+  description = "(Optional, Forces new resource) The domain description."
   type        = string
 }
 variable "tag_instance_id" {

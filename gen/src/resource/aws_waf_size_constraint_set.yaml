@@ -5,9 +5,7 @@ metadata:
 spec:
     args:
         comparison_operator:
-            description: |-
-                (Required) The type of comparison you want to perform.
-                e.g., EQ, NE, LT, GTdocs for all supported values.
+            description: EQ, NE, LT, GTdocs for all supported values.
             type: string
         data:
             description: (Optional) When type is HEADER, enter the name of the header that you want to search, e.g., User-Agent or Referertype is any other value, omit this field.

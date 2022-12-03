@@ -1,9 +1,9 @@
 resource "aws_waf_ipset" "aws_waf_ipset" {
-  value              = var.value
   id                 = var.id
   ip_set_descriptors = var.ip_set_descriptors
   name               = var.name
   type               = var.type
+  value              = var.value
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -150,6 +150,14 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "id" {
+  description = "The ID of the WAF IPSet."
+  value       = aws_waf_ipset.aws_waf_ipset.id
+}
+output "ip_set_descriptors" {
+  description = "(Optional) One or more pairs specifying the IP address type (IPV4 or IPV6) and the IP address range (in CIDR format) from which web requests originate.Nested Blocksip_set_descriptorsArguments"
+  value       = aws_waf_ipset.aws_waf_ipset.ip_set_descriptors
+}
 output "name" {
   description = "(Required) The name or description of the IPSet."
   value       = aws_waf_ipset.aws_waf_ipset.name
@@ -161,14 +169,6 @@ output "type" {
 output "value" {
   description = "(Required) An IPv4 or IPv6 address specified via CIDR notationE.g., 192.0.2.44/32 or 1111:0000:0000:0000:0000:0000:0000:0000/64In addition to all arguments above, the following attributes are exported:"
   value       = aws_waf_ipset.aws_waf_ipset.value
-}
-output "id" {
-  description = "The ID of the WAF IPSet."
-  value       = aws_waf_ipset.aws_waf_ipset.id
-}
-output "ip_set_descriptors" {
-  description = "(Optional) One or more pairs specifying the IP address type (IPV4 or IPV6) and the IP address range (in CIDR format) from which web requests originate.Nested Blocksip_set_descriptorsArguments"
-  value       = aws_waf_ipset.aws_waf_ipset.ip_set_descriptors
 }
 output "arn" {
   description = "The ARN of the WAF IPSet."

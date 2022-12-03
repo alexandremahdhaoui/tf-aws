@@ -1,41 +1,41 @@
 resource "aws_s3_bucket_acl" "aws_s3_bucket_acl" {
   permission            = var.permission
-  type                  = var.type
+  uri                   = var.uri
   access_control_policy = var.access_control_policy
-  bucket                = var.bucket
+  grantee               = var.grantee
+  owner                 = var.owner
+  email_address         = var.email_address
   expected_bucket_owner = var.expected_bucket_owner
   grant                 = var.grant
   id                    = var.id
-  uri                   = var.uri
+  type                  = var.type
   acl                   = var.acl
+  bucket                = var.bucket
   display_name          = var.display_name
-  email_address         = var.email_address
-  grantee               = var.grantee
-  owner                 = var.owner
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "id" {
-  description = "(Optional) The canonical user ID of the grantee."
+variable "uri" {
+  description = "(Optional) URI of the grantee group.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "permission" {
-  description = "(Required) Logging permissions assigned to the grantee for the bucket.ownerThe owner configuration block supports the following arguments:"
-  type        = string
-}
-variable "type" {
-  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
-  type        = string
 }
 variable "access_control_policy" {
   description = "(Optional, Conflicts with acl) A configuration block that sets the ACL permissions for an object per grantee documented below."
   type        = string
 }
-variable "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
+variable "grantee" {
+  description = "(Required) Configuration block for the person being granted permissions documented below."
+  type        = string
+}
+variable "owner" {
+  description = "(Required) Configuration block of the bucket owner's display name and ID documented below.grantThe grant configuration block supports the following arguments:"
+  type        = string
+}
+variable "permission" {
+  description = "(Required) Logging permissions assigned to the grantee for the bucket.ownerThe owner configuration block supports the following arguments:"
   type        = string
 }
 variable "expected_bucket_owner" {
@@ -46,17 +46,21 @@ variable "grant" {
   description = "(Required) Set of grant configuration blocks documented below."
   type        = string
 }
-variable "owner" {
-  description = "(Required) Configuration block of the bucket owner's display name and ID documented below.grantThe grant configuration block supports the following arguments:"
-  type        = string
-}
-variable "uri" {
-  description = "(Optional) URI of the grantee group.In addition to all arguments above, the following attributes are exported:"
+variable "id" {
+  description = "(Optional) The canonical user ID of the grantee."
   type        = string
   default     = ""
 }
+variable "type" {
+  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
+  type        = string
+}
 variable "acl" {
   description = "(Optional, Conflicts with access_control_policy) The canned ACL to apply to the bucket."
+  type        = string
+}
+variable "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
   type        = string
 }
 variable "display_name" {
@@ -68,10 +72,6 @@ variable "email_address" {
   description = "(Optional) Email address of the grantee. See Regions and Endpoints for supported AWS regions where this argument can be specified."
   type        = string
   default     = ""
-}
-variable "grantee" {
-  description = "(Required) Configuration block for the person being granted permissions documented below."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -193,10 +193,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "acl" {
-  description = "(Optional, Conflicts with access_control_policy) The canned ACL to apply to the bucket."
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.acl
-}
 output "display_name" {
   description = "(Optional) The display name of the owner.granteeThe grantee configuration block supports the following arguments:"
   value       = aws_s3_bucket_acl.aws_s3_bucket_acl.display_name
@@ -204,26 +200,6 @@ output "display_name" {
 output "email_address" {
   description = "(Optional) Email address of the grantee. See Regions and Endpoints for supported AWS regions where this argument can be specified."
   value       = aws_s3_bucket_acl.aws_s3_bucket_acl.email_address
-}
-output "grantee" {
-  description = "(Required) Configuration block for the person being granted permissions documented below."
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.grantee
-}
-output "owner" {
-  description = "(Required) Configuration block of the bucket owner's display name and ID documented below.grantThe grant configuration block supports the following arguments:"
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.owner
-}
-output "uri" {
-  description = "(Optional) URI of the grantee group.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.uri
-}
-output "access_control_policy" {
-  description = "(Optional, Conflicts with acl) A configuration block that sets the ACL permissions for an object per grantee documented below."
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.access_control_policy
-}
-output "bucket" {
-  description = "(Required, Forces new resource) The name of the bucket."
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.bucket
 }
 output "expected_bucket_owner" {
   description = "(Optional, Forces new resource) The account ID of the expected bucket owner.access_control_policyThe access_control_policy configuration block supports the following arguments:"
@@ -237,13 +213,37 @@ output "id" {
   description = "(Optional) The canonical user ID of the grantee."
   value       = aws_s3_bucket_acl.aws_s3_bucket_acl.id
 }
+output "type" {
+  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.type
+}
+output "acl" {
+  description = "(Optional, Conflicts with access_control_policy) The canned ACL to apply to the bucket."
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.acl
+}
+output "bucket" {
+  description = "(Required, Forces new resource) The name of the bucket."
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.bucket
+}
+output "owner" {
+  description = "(Required) Configuration block of the bucket owner's display name and ID documented below.grantThe grant configuration block supports the following arguments:"
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.owner
+}
 output "permission" {
   description = "(Required) Logging permissions assigned to the grantee for the bucket.ownerThe owner configuration block supports the following arguments:"
   value       = aws_s3_bucket_acl.aws_s3_bucket_acl.permission
 }
-output "type" {
-  description = "(Required) Type of grantee. Valid values: CanonicalUser, AmazonCustomerByEmail, Group."
-  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.type
+output "uri" {
+  description = "(Optional) URI of the grantee group.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.uri
+}
+output "access_control_policy" {
+  description = "(Optional, Conflicts with acl) A configuration block that sets the ACL permissions for an object per grantee documented below."
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.access_control_policy
+}
+output "grantee" {
+  description = "(Required) Configuration block for the person being granted permissions documented below."
+  value       = aws_s3_bucket_acl.aws_s3_bucket_acl.grantee
 }
 output "id" {
   description = "The bucket, expected_bucket_owner (if configured), and acl (if configured) separated by commas (,)."

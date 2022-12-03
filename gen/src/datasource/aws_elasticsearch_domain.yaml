@@ -11,13 +11,15 @@ spec:
             description: Key-value string pairs to specify advanced configuration options.
             type: string
         advanced_security_options:
-            description: ""
+            description: |
+                Status of the Elasticsearch domain's advanced security options. The block consists of the following attributes:
             type: string
         arn:
             description: ' – The ARN of the domain.'
             type: string
         auto_tune_options:
-            description: ""
+            description: |
+                Configuration of the Auto-Tune options of the domain.
             type: string
         automated_snapshot_start_hour:
             description: Hour during which the service takes an automated daily snapshot of the indices in the domain.
@@ -32,14 +34,15 @@ spec:
             description: The CloudWatch Log Group where the logs are published.
             type: string
         cluster_config:
-            description: |
-                Cluster configuration of the domain.
+            description: ""
             type: string
         cognito_options:
-            description: ""
+            description: |
+                Domain Amazon Cognito Authentication options for Kibana.
             type: string
         cold_storage_options:
-            description: ""
+            description: |
+                Configuration block containing cold storage configuration.
             type: string
         created:
             description: ' – Status of the creation of the domain.'
@@ -69,14 +72,14 @@ spec:
             description: ' – (Required) Name of the domain.The following attributes are exported:'
             type: string
         duration:
-            description: ""
+            description: |
+                Configuration block for the duration of the Auto-Tune maintenance window.
             type: string
         ebs_enabled:
             description: Whether EBS volumes are attached to data nodes in the domain.
             type: string
         ebs_options:
-            description: |
-                EBS Options for the instances in the domain.
+            description: ""
             type: string
         elasticsearch_version:
             description: ' – Elasticsearch version for the domain.'
@@ -85,8 +88,7 @@ spec:
             description: Whether node to node encryption is enabled.
             type: string
         encryption_at_rest:
-            description: |
-                Domain encryption at rest related options.
+            description: ""
             type: string
         endpoint:
             description: ' – Domain-specific endpoint used to submit index, search, and data upload requests.'
@@ -113,8 +115,7 @@ spec:
             description: The KMS key id used to encrypt data at rest.
             type: string
         log_publishing_options:
-            description: |
-                Domain log publishing related options.
+            description: ""
             type: string
         log_type:
             description: The type of Elasticsearch log being published.
@@ -124,8 +125,7 @@ spec:
                 A list of the nested configurations for the Auto-Tune maintenance windows of the domain.
             type: string
         node_to_node_encryption:
-            description: |
-                Domain in transit encryption related options.
+            description: ""
             type: string
         processing:
             description: ' – Status of a configuration change in the domain.'
@@ -170,7 +170,8 @@ spec:
             description: The type of EBS volumes attached to data nodes.
             type: string
         vpc_options:
-            description: ""
+            description: |
+                VPC Options for private Elasticsearch domains.
             type: string
         warm_count:
             description: The number of warm nodes in the cluster.
@@ -182,7 +183,8 @@ spec:
             description: The instance type for the Elasticsearch cluster's warm nodes.
             type: string
         zone_awareness_config:
-            description: ""
+            description: |
+                Configuration block containing zone awareness settings.
             type: string
         zone_awareness_enabled:
             description: Indicates whether zone awareness is enabled.
@@ -195,13 +197,15 @@ spec:
             description: Key-value string pairs to specify advanced configuration options.
             type: string
         advanced_security_options:
-            description: ""
+            description: |
+                Status of the Elasticsearch domain's advanced security options. The block consists of the following attributes:
             type: string
         arn:
             description: ' – The ARN of the domain.'
             type: string
         auto_tune_options:
-            description: ""
+            description: |
+                Configuration of the Auto-Tune options of the domain.
             type: string
         automated_snapshot_start_hour:
             description: Hour during which the service takes an automated daily snapshot of the indices in the domain.
@@ -216,14 +220,15 @@ spec:
             description: The CloudWatch Log Group where the logs are published.
             type: string
         cluster_config:
-            description: |
-                Cluster configuration of the domain.
+            description: ""
             type: string
         cognito_options:
-            description: ""
+            description: |
+                Domain Amazon Cognito Authentication options for Kibana.
             type: string
         cold_storage_options:
-            description: ""
+            description: |
+                Configuration block containing cold storage configuration.
             type: string
         created:
             description: ' – Status of the creation of the domain.'
@@ -250,14 +255,14 @@ spec:
             description: ' – Unique identifier for the domain.'
             type: string
         duration:
-            description: ""
+            description: |
+                Configuration block for the duration of the Auto-Tune maintenance window.
             type: string
         ebs_enabled:
             description: Whether EBS volumes are attached to data nodes in the domain.
             type: string
         ebs_options:
-            description: |
-                EBS Options for the instances in the domain.
+            description: ""
             type: string
         elasticsearch_version:
             description: ' – Elasticsearch version for the domain.'
@@ -266,8 +271,7 @@ spec:
             description: Whether node to node encryption is enabled.
             type: string
         encryption_at_rest:
-            description: |
-                Domain encryption at rest related options.
+            description: ""
             type: string
         endpoint:
             description: ' – Domain-specific endpoint used to submit index, search, and data upload requests.'
@@ -294,8 +298,7 @@ spec:
             description: The KMS key id used to encrypt data at rest.
             type: string
         log_publishing_options:
-            description: |
-                Domain log publishing related options.
+            description: ""
             type: string
         log_type:
             description: The type of Elasticsearch log being published.
@@ -305,8 +308,7 @@ spec:
                 A list of the nested configurations for the Auto-Tune maintenance windows of the domain.
             type: string
         node_to_node_encryption:
-            description: |
-                Domain in transit encryption related options.
+            description: ""
             type: string
         processing:
             description: ' – Status of a configuration change in the domain.'
@@ -351,7 +353,8 @@ spec:
             description: The type of EBS volumes attached to data nodes.
             type: string
         vpc_options:
-            description: ""
+            description: |
+                VPC Options for private Elasticsearch domains.
             type: string
         warm_count:
             description: The number of warm nodes in the cluster.
@@ -363,7 +366,8 @@ spec:
             description: The instance type for the Elasticsearch cluster's warm nodes.
             type: string
         zone_awareness_config:
-            description: ""
+            description: |
+                Configuration block containing zone awareness settings.
             type: string
         zone_awareness_enabled:
             description: Indicates whether zone awareness is enabled.

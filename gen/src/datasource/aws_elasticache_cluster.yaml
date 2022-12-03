@@ -61,7 +61,9 @@ spec:
                 retain automatic cache cluster snapshots before deleting them.
             type: string
         snapshot_window:
-            description: ""
+            description: |-
+                Daily time range (in UTC) during which ElastiCache will
+                begin taking a daily snapshot of the cache cluster.
             type: string
         subnet_group_name:
             description: ' – Name of the subnet group associated to the cache cluster.'
@@ -121,7 +123,9 @@ spec:
                 retain automatic cache cluster snapshots before deleting them.
             type: string
         snapshot_window:
-            description: ""
+            description: |-
+                Daily time range (in UTC) during which ElastiCache will
+                begin taking a daily snapshot of the cache cluster.
             type: string
         subnet_group_name:
             description: ' – Name of the subnet group associated to the cache cluster.'

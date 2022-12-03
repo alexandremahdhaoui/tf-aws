@@ -135,13 +135,13 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "event_bus_name" {
-  description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_cloudwatch_event_bus_policy.aws_cloudwatch_event_bus_policy.event_bus_name
-}
 output "policy" {
   description = "(Required) The text of the policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide."
   value       = aws_cloudwatch_event_bus_policy.aws_cloudwatch_event_bus_policy.policy
+}
+output "event_bus_name" {
+  description = "(Optional) The event bus to set the permissions on. If you omit this, the permissions are set on the default event bus.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_cloudwatch_event_bus_policy.aws_cloudwatch_event_bus_policy.event_bus_name
 }
 output "id" {
   description = "The name of the EventBridge event bus."

@@ -1,40 +1,30 @@
 resource "aws_networkmanager_link" "aws_networkmanager_link" {
-  global_network_id = var.global_network_id
   tags              = var.tags
+  arn               = var.arn
+  bandwidth         = var.bandwidth
+  description       = var.description
+  global_network_id = var.global_network_id
+  provider_name     = var.provider_name
+  download_speed    = var.download_speed
+  site_id           = var.site_id
   type              = var.type
   upload_speed      = var.upload_speed
-  description       = var.description
-  bandwidth         = var.bandwidth
-  download_speed    = var.download_speed
-  provider_name     = var.provider_name
-  site_id           = var.site_id
-  arn               = var.arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "description" {
-  description = "(Optional) A description of the link."
-  type        = string
-  default     = ""
-}
 variable "global_network_id" {
   description = "(Required) The ID of the global network."
   type        = string
 }
+variable "provider_name" {
+  description = "(Optional) The provider of the link."
+  type        = string
+  default     = ""
+}
 variable "tags" {
   description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  type        = string
-  default     = ""
-}
-variable "type" {
-  description = "(Optional) The type of the link.The bandwidth object supports the following:"
-  type        = string
-  default     = ""
-}
-variable "upload_speed" {
-  description = "(Optional) Upload speed in Mbps.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -46,19 +36,29 @@ variable "bandwidth" {
   description = "(Required) The upload speed and download speed in Mbps. Documented below."
   type        = string
 }
-variable "download_speed" {
-  description = "(Optional) Download speed in Mbps."
+variable "description" {
+  description = "(Optional) A description of the link."
   type        = string
   default     = ""
 }
-variable "provider_name" {
-  description = "(Optional) The provider of the link."
+variable "upload_speed" {
+  description = "(Optional) Upload speed in Mbps.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+  default     = ""
+}
+variable "download_speed" {
+  description = "(Optional) Download speed in Mbps."
   type        = string
   default     = ""
 }
 variable "site_id" {
   description = "(Required) The ID of the site."
   type        = string
+}
+variable "type" {
+  description = "(Optional) The type of the link.The bandwidth object supports the following:"
+  type        = string
+  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -180,18 +180,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "description" {
-  description = "(Optional) A description of the link."
-  value       = aws_networkmanager_link.aws_networkmanager_link.description
-}
-output "global_network_id" {
-  description = "(Required) The ID of the global network."
-  value       = aws_networkmanager_link.aws_networkmanager_link.global_network_id
-}
-output "tags" {
-  description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
-  value       = aws_networkmanager_link.aws_networkmanager_link.tags
-}
 output "type" {
   description = "(Optional) The type of the link.The bandwidth object supports the following:"
   value       = aws_networkmanager_link.aws_networkmanager_link.type
@@ -200,6 +188,30 @@ output "upload_speed" {
   description = "(Optional) Upload speed in Mbps.In addition to all arguments above, the following attributes are exported:"
   value       = aws_networkmanager_link.aws_networkmanager_link.upload_speed
 }
+output "download_speed" {
+  description = "(Optional) Download speed in Mbps."
+  value       = aws_networkmanager_link.aws_networkmanager_link.download_speed
+}
+output "site_id" {
+  description = "(Required) The ID of the site."
+  value       = aws_networkmanager_link.aws_networkmanager_link.site_id
+}
+output "description" {
+  description = "(Optional) A description of the link."
+  value       = aws_networkmanager_link.aws_networkmanager_link.description
+}
+output "global_network_id" {
+  description = "(Required) The ID of the global network."
+  value       = aws_networkmanager_link.aws_networkmanager_link.global_network_id
+}
+output "provider_name" {
+  description = "(Optional) The provider of the link."
+  value       = aws_networkmanager_link.aws_networkmanager_link.provider_name
+}
+output "tags" {
+  description = "(Optional) Key-value tags for the link. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  value       = aws_networkmanager_link.aws_networkmanager_link.tags
+}
 output "arn" {
   description = "Link Amazon Resource Name (ARN)."
   value       = aws_networkmanager_link.aws_networkmanager_link.arn
@@ -207,18 +219,6 @@ output "arn" {
 output "bandwidth" {
   description = "(Required) The upload speed and download speed in Mbps. Documented below."
   value       = aws_networkmanager_link.aws_networkmanager_link.bandwidth
-}
-output "download_speed" {
-  description = "(Optional) Download speed in Mbps."
-  value       = aws_networkmanager_link.aws_networkmanager_link.download_speed
-}
-output "provider_name" {
-  description = "(Optional) The provider of the link."
-  value       = aws_networkmanager_link.aws_networkmanager_link.provider_name
-}
-output "site_id" {
-  description = "(Required) The ID of the site."
-  value       = aws_networkmanager_link.aws_networkmanager_link.site_id
 }
 output "arn" {
   description = "Link Amazon Resource Name (ARN)."

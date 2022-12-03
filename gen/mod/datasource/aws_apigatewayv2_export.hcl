@@ -1,27 +1,14 @@
 datasource "aws_apigatewayv2_export" "aws_apigatewayv2_export" {
+  stage_name         = var.stage_name
   api_id             = var.api_id
   export_version     = var.export_version
   id                 = var.id
   include_extensions = var.include_extensions
   output_type        = var.output_type
   specification      = var.specification
-  stage_name         = var.stage_name
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "id" {
-  description = "API identifier."
-  type        = string
-}
-variable "include_extensions" {
-  description = "(Optional) Whether to include API Gateway extensions in the exported API definition. API Gateway extensions are included by default."
-  type        = string
-  default     = ""
-}
-variable "output_type" {
-  description = "(Required) Output type of the exported definition file. Valid values are JSON and YAML."
   type        = string
 }
 variable "specification" {
@@ -42,6 +29,27 @@ variable "export_version" {
   type        = string
   default     = ""
 }
+variable "id" {
+  description = "API identifier."
+  type        = string
+}
+variable "include_extensions" {
+  description = "(Optional) Whether to include API Gateway extensions in the exported API definition. API Gateway extensions are included by default."
+  type        = string
+  default     = ""
+}
+variable "output_type" {
+  description = "(Required) Output type of the exported definition file. Valid values are JSON and YAML."
+  type        = string
+}
+output "api_id" {
+  description = "(Required) API identifier."
+  value       = aws_apigatewayv2_export.aws_apigatewayv2_export.api_id
+}
+output "export_version" {
+  description = "(Optional) Version of the API Gateway export algorithm. API Gateway uses the latest version by default. Currently, the only supported version is 1.0."
+  value       = aws_apigatewayv2_export.aws_apigatewayv2_export.export_version
+}
 output "id" {
   description = "API identifier."
   value       = aws_apigatewayv2_export.aws_apigatewayv2_export.id
@@ -61,14 +69,6 @@ output "specification" {
 output "stage_name" {
   description = "(Optional) Name of the API stage to export. If you don't specify this property, a representation of the latest API configuration is exported.In addition to all arguments above, the following attributes are exported:"
   value       = aws_apigatewayv2_export.aws_apigatewayv2_export.stage_name
-}
-output "api_id" {
-  description = "(Required) API identifier."
-  value       = aws_apigatewayv2_export.aws_apigatewayv2_export.api_id
-}
-output "export_version" {
-  description = "(Optional) Version of the API Gateway export algorithm. API Gateway uses the latest version by default. Currently, the only supported version is 1.0."
-  value       = aws_apigatewayv2_export.aws_apigatewayv2_export.export_version
 }
 output "id" {
   description = "API identifier."

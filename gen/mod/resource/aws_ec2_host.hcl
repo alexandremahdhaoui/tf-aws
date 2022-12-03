@@ -1,21 +1,21 @@
 resource "aws_ec2_host" "aws_ec2_host" {
-  id                = var.id
   instance_type     = var.instance_type
-  outpost_arn       = var.outpost_arn
   owner_id          = var.owner_id
   arn               = var.arn
   auto_placement    = var.auto_placement
   availability_zone = var.availability_zone
   host_recovery     = var.host_recovery
+  id                = var.id
   instance_family   = var.instance_family
+  outpost_arn       = var.outpost_arn
   tags              = var.tags
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "host_recovery" {
-  description = "(Optional) Indicates whether to enable or disable host recovery for the Dedicated Host. Valid values: on, off. Default: off."
+variable "instance_type" {
+  description = "(Optional) Specifies the instance type to be supported by the Dedicated Hosts. If you specify an instance type, the Dedicated Hosts support instances of the specified instance type only. Exactly one of instance_family or instance_type must be specified."
   type        = string
   default     = ""
 }
@@ -24,8 +24,8 @@ variable "instance_family" {
   type        = string
   default     = ""
 }
-variable "tags" {
-  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+variable "outpost_arn" {
+  description = "(Optional) The Amazon Resource Name (ARN) of the AWS Outpost on which to allocate the Dedicated Host."
   type        = string
   default     = ""
 }
@@ -46,17 +46,17 @@ variable "availability_zone" {
   description = "(Required) The Availability Zone in which to allocate the Dedicated Host."
   type        = string
 }
+variable "host_recovery" {
+  description = "(Optional) Indicates whether to enable or disable host recovery for the Dedicated Host. Valid values: on, off. Default: off."
+  type        = string
+  default     = ""
+}
 variable "id" {
   description = "The ID of the allocated Dedicated Host. This is used to launch an instance onto a specific host."
   type        = string
 }
-variable "instance_type" {
-  description = "(Optional) Specifies the instance type to be supported by the Dedicated Hosts. If you specify an instance type, the Dedicated Hosts support instances of the specified instance type only. Exactly one of instance_family or instance_type must be specified."
-  type        = string
-  default     = ""
-}
-variable "outpost_arn" {
-  description = "(Optional) The Amazon Resource Name (ARN) of the AWS Outpost on which to allocate the Dedicated Host."
+variable "tags" {
+  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
@@ -180,18 +180,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "host_recovery" {
-  description = "(Optional) Indicates whether to enable or disable host recovery for the Dedicated Host. Valid values: on, off. Default: off."
-  value       = aws_ec2_host.aws_ec2_host.host_recovery
-}
-output "instance_family" {
-  description = "(Optional) Specifies the instance family to be supported by the Dedicated Hosts. If you specify an instance family, the Dedicated Hosts support multiple instance types within that instance family. Exactly one of instance_family or instance_type must be specified."
-  value       = aws_ec2_host.aws_ec2_host.instance_family
-}
-output "tags" {
-  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_ec2_host.aws_ec2_host.tags
-}
 output "instance_type" {
   description = "(Optional) Specifies the instance type to be supported by the Dedicated Hosts. If you specify an instance type, the Dedicated Hosts support instances of the specified instance type only. Exactly one of instance_family or instance_type must be specified."
   value       = aws_ec2_host.aws_ec2_host.instance_type
@@ -216,9 +204,21 @@ output "availability_zone" {
   description = "(Required) The Availability Zone in which to allocate the Dedicated Host."
   value       = aws_ec2_host.aws_ec2_host.availability_zone
 }
+output "host_recovery" {
+  description = "(Optional) Indicates whether to enable or disable host recovery for the Dedicated Host. Valid values: on, off. Default: off."
+  value       = aws_ec2_host.aws_ec2_host.host_recovery
+}
 output "id" {
   description = "The ID of the allocated Dedicated Host. This is used to launch an instance onto a specific host."
   value       = aws_ec2_host.aws_ec2_host.id
+}
+output "instance_family" {
+  description = "(Optional) Specifies the instance family to be supported by the Dedicated Hosts. If you specify an instance family, the Dedicated Hosts support multiple instance types within that instance family. Exactly one of instance_family or instance_type must be specified."
+  value       = aws_ec2_host.aws_ec2_host.instance_family
+}
+output "tags" {
+  description = "(Optional) Map of tags to assign to this resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_ec2_host.aws_ec2_host.tags
 }
 output "arn" {
   description = "The ARN of the Dedicated Host."

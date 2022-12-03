@@ -1,35 +1,18 @@
 resource "aws_waf_rate_based_rule" "aws_waf_rate_based_rule" {
-  name        = var.name
-  predicates  = var.predicates
-  rate_key    = var.rate_key
-  type        = var.type
-  tags        = var.tags
   arn         = var.arn
   data_id     = var.data_id
   id          = var.id
   metric_name = var.metric_name
   negated     = var.negated
+  predicates  = var.predicates
   rate_limit  = var.rate_limit
+  tags        = var.tags
+  type        = var.type
+  name        = var.name
+  rate_key    = var.rate_key
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
-  type        = string
-}
-variable "negated" {
-  description = "(Required) Set this to falseByteMatchSet, IPSet, SqlInjectionMatchSet, XssMatchSet, or SizeConstraintSet192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses emexcept 192.0.2.44."
-  type        = string
-}
-variable "rate_limit" {
-  description = "(Required) The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. Minimum value is 100."
-  type        = string
-}
-variable "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicatesSee the WAF Documentation for more information.Arguments"
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "Amazon Resource Name (ARN)"
   type        = string
 }
 variable "data_id" {
@@ -44,8 +27,8 @@ variable "metric_name" {
   description = "(Required) The name or description for the Amazon CloudWatch metric of this rule."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name or description of the rule."
+variable "negated" {
+  description = "(Required) Set this to falseByteMatchSet, IPSet, SqlInjectionMatchSet, XssMatchSet, or SizeConstraintSet192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses emexcept 192.0.2.44."
   type        = string
 }
 variable "predicates" {
@@ -53,12 +36,29 @@ variable "predicates" {
   type        = string
   default     = ""
 }
-variable "rate_key" {
-  description = "(Required) Valid value is IP."
+variable "rate_limit" {
+  description = "(Required) The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. Minimum value is 100."
+  type        = string
+}
+variable "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicatesSee the WAF Documentation for more information.Arguments"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "Amazon Resource Name (ARN)"
   type        = string
 }
 variable "type" {
   description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.RemarksIn addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "rate_key" {
+  description = "(Required) Valid value is IP."
+  type        = string
+}
+variable "name" {
+  description = "(Required) The name or description of the rule."
   type        = string
 }
 variable "tag_instance_id" {
@@ -185,17 +185,25 @@ output "name" {
   description = "(Required) The name or description of the rule."
   value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.name
 }
-output "predicates" {
-  description = "(Optional) The objects to include in a rule (documented below)."
-  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.predicates
-}
 output "rate_key" {
   description = "(Required) Valid value is IP."
   value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.rate_key
 }
-output "type" {
-  description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.RemarksIn addition to all arguments above, the following attributes are exported:"
-  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.type
+output "negated" {
+  description = "(Required) Set this to falseByteMatchSet, IPSet, SqlInjectionMatchSet, XssMatchSet, or SizeConstraintSet192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses emexcept 192.0.2.44."
+  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.negated
+}
+output "predicates" {
+  description = "(Optional) The objects to include in a rule (documented below)."
+  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.predicates
+}
+output "rate_limit" {
+  description = "(Required) The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. Minimum value is 100."
+  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.rate_limit
+}
+output "tags" {
+  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicatesSee the WAF Documentation for more information.Arguments"
+  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.tags
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"
@@ -213,17 +221,13 @@ output "metric_name" {
   description = "(Required) The name or description for the Amazon CloudWatch metric of this rule."
   value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.metric_name
 }
-output "negated" {
-  description = "(Required) Set this to falseByteMatchSet, IPSet, SqlInjectionMatchSet, XssMatchSet, or SizeConstraintSet192.0.2.44true, AWS WAF will allow, block, or count requests based on all IP addresses emexcept 192.0.2.44."
-  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.negated
+output "type" {
+  description = "(Required) The type of predicate in a rule. Valid values: ByteMatch, GeoMatch, IPMatch, RegexMatch, SizeConstraint, SqlInjectionMatch, or XssMatch.RemarksIn addition to all arguments above, the following attributes are exported:"
+  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.type
 }
-output "rate_limit" {
-  description = "(Required) The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. Minimum value is 100."
-  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.rate_limit
-}
-output "tags" {
-  description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.Nested BlockspredicatesSee the WAF Documentation for more information.Arguments"
-  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.tags
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
+  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.tags_all
 }
 output "arn" {
   description = "Amazon Resource Name (ARN)"
@@ -232,10 +236,6 @@ output "arn" {
 output "id" {
   description = "The ID of the WAF rule."
   value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.id
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block."
-  value       = aws_waf_rate_based_rule.aws_waf_rate_based_rule.tags_all
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

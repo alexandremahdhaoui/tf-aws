@@ -1,21 +1,25 @@
 resource "aws_grafana_workspace_saml_configuration" "aws_grafana_workspace_saml_configuration" {
-  allowed_organizations   = var.allowed_organizations
-  email_assertion         = var.email_assertion
-  idp_metadata_url        = var.idp_metadata_url
-  org_assertion           = var.org_assertion
-  groups_assertion        = var.groups_assertion
-  name_assertion          = var.name_assertion
-  login_validity_duration = var.login_validity_duration
   role_assertion          = var.role_assertion
-  status                  = var.status
   workspace_id            = var.workspace_id
   admin_role_values       = var.admin_role_values
   editor_role_values      = var.editor_role_values
+  email_assertion         = var.email_assertion
   idp_metadata_xml        = var.idp_metadata_xml
   login_assertion         = var.login_assertion
+  org_assertion           = var.org_assertion
+  allowed_organizations   = var.allowed_organizations
+  idp_metadata_url        = var.idp_metadata_url
+  login_validity_duration = var.login_validity_duration
+  name_assertion          = var.name_assertion
+  groups_assertion        = var.groups_assertion
+  status                  = var.status
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "workspace_id" {
+  description = "(Required) The workspace id."
   type        = string
 }
 variable "role_assertion" {
@@ -23,23 +27,14 @@ variable "role_assertion" {
   type        = string
   default     = ""
 }
-variable "status" {
-  description = "The status of the SAML configuration."
-  type        = string
-  default     = ""
-}
-variable "workspace_id" {
-  description = "(Required) The workspace id."
-  type        = string
-}
-variable "admin_role_values" {
-  description = "(Optional) The admin role values."
-  type        = string
-  default     = ""
-}
 variable "editor_role_values" {
   description = "(Required) The editor role values."
   type        = string
+}
+variable "email_assertion" {
+  description = "(Optional) The email assertion."
+  type        = string
+  default     = ""
 }
 variable "idp_metadata_xml" {
   description = "(Optional) The IDP Metadata XML. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified."
@@ -51,18 +46,13 @@ variable "login_assertion" {
   type        = string
   default     = ""
 }
-variable "login_validity_duration" {
-  description = "(Optional) The login validity duration."
+variable "org_assertion" {
+  description = "(Optional) The org assertion."
   type        = string
   default     = ""
 }
-variable "allowed_organizations" {
-  description = "(Optional) The allowed organizations."
-  type        = string
-  default     = ""
-}
-variable "email_assertion" {
-  description = "(Optional) The email assertion."
+variable "admin_role_values" {
+  description = "(Optional) The admin role values."
   type        = string
   default     = ""
 }
@@ -71,18 +61,28 @@ variable "idp_metadata_url" {
   type        = string
   default     = ""
 }
-variable "org_assertion" {
-  description = "(Optional) The org assertion."
-  type        = string
-  default     = ""
-}
-variable "groups_assertion" {
-  description = "(Optional) The groups assertion."
+variable "login_validity_duration" {
+  description = "(Optional) The login validity duration."
   type        = string
   default     = ""
 }
 variable "name_assertion" {
   description = "(Optional) The name assertion."
+  type        = string
+  default     = ""
+}
+variable "allowed_organizations" {
+  description = "(Optional) The allowed organizations."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "The status of the SAML configuration."
+  type        = string
+  default     = ""
+}
+variable "groups_assertion" {
+  description = "(Optional) The groups assertion."
   type        = string
   default     = ""
 }
@@ -206,29 +206,17 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "idp_metadata_url" {
-  description = "(Optional) The IDP Metadata URL. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.idp_metadata_url
-}
-output "org_assertion" {
-  description = "(Optional) The org assertion."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.org_assertion
-}
-output "email_assertion" {
-  description = "(Optional) The email assertion."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.email_assertion
-}
-output "name_assertion" {
-  description = "(Optional) The name assertion."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.name_assertion
-}
-output "groups_assertion" {
-  description = "(Optional) The groups assertion."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.groups_assertion
+output "admin_role_values" {
+  description = "(Optional) The admin role values."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.admin_role_values
 }
 output "editor_role_values" {
   description = "(Required) The editor role values."
   value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.editor_role_values
+}
+output "email_assertion" {
+  description = "(Optional) The email assertion."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.email_assertion
 }
 output "idp_metadata_xml" {
   description = "(Optional) The IDP Metadata XML. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified."
@@ -238,29 +226,41 @@ output "login_assertion" {
   description = "(Optional) The login assertion."
   value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.login_assertion
 }
+output "org_assertion" {
+  description = "(Optional) The org assertion."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.org_assertion
+}
+output "allowed_organizations" {
+  description = "(Optional) The allowed organizations."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.allowed_organizations
+}
+output "idp_metadata_url" {
+  description = "(Optional) The IDP Metadata URL. Note that either idp_metadata_url or idp_metadata_xml (but not both) must be specified."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.idp_metadata_url
+}
 output "login_validity_duration" {
   description = "(Optional) The login validity duration."
   value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.login_validity_duration
 }
-output "role_assertion" {
-  description = "(Optional) The role assertion.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.role_assertion
+output "name_assertion" {
+  description = "(Optional) The name assertion."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.name_assertion
+}
+output "groups_assertion" {
+  description = "(Optional) The groups assertion."
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.groups_assertion
 }
 output "status" {
   description = "The status of the SAML configuration."
   value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.status
 }
+output "role_assertion" {
+  description = "(Optional) The role assertion.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.role_assertion
+}
 output "workspace_id" {
   description = "(Required) The workspace id."
   value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.workspace_id
-}
-output "admin_role_values" {
-  description = "(Optional) The admin role values."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.admin_role_values
-}
-output "allowed_organizations" {
-  description = "(Optional) The allowed organizations."
-  value       = aws_grafana_workspace_saml_configuration.aws_grafana_workspace_saml_configuration.allowed_organizations
 }
 output "status" {
   description = "The status of the SAML configuration."

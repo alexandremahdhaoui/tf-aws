@@ -8,7 +8,10 @@ spec:
             description: The ARN of the DAX cluster
             type: string
         availability_zones:
-            description: ""
+            description: |-
+                (Optional) List of Availability Zones in which the
+                nodes will be created
+            optional: true
             type: string
         cluster_address:
             description: The DNS name of the DAX cluster without the port appended
@@ -20,7 +23,9 @@ spec:
             description: ""
             type: string
         configuration_endpoint:
-            description: ""
+            description: |-
+                The configuration endpoint for this DAX cluster,
+                consisting of a DNS name and a port number
             type: string
         create:
             description: (Default 45m)
@@ -85,7 +90,9 @@ spec:
             description: The DNS name of the DAX cluster without the port appended
             type: string
         configuration_endpoint:
-            description: ""
+            description: |-
+                The configuration endpoint for this DAX cluster,
+                consisting of a DNS name and a port number
             type: string
         create:
             description: (Default 45m)

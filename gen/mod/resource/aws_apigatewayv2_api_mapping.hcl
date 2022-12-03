@@ -8,6 +8,14 @@ variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
+variable "domain_name" {
+  description = "(Required) Domain name. Use the aws_apigatewayv2_domain_name resource to configure a domain name."
+  type        = string
+}
+variable "stage" {
+  description = "(Required) API stage. Use the aws_apigatewayv2_stage resource to configure an API stage."
+  type        = string
+}
 variable "api_id" {
   description = "(Required) API identifier."
   type        = string
@@ -16,14 +24,6 @@ variable "api_mapping_key" {
   description = "(Optional) The API mapping key.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
-}
-variable "domain_name" {
-  description = "(Required) Domain name. Use the aws_apigatewayv2_domain_name resource to configure a domain name."
-  type        = string
-}
-variable "stage" {
-  description = "(Required) API stage. Use the aws_apigatewayv2_stage resource to configure an API stage."
-  type        = string
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"

@@ -1,20 +1,20 @@
 resource "aws_eks_identity_provider_config" "aws_eks_identity_provider_config" {
-  create                        = var.create
-  groups_prefix                 = var.groups_prefix
-  required_claims               = var.required_claims
-  tags_all                      = var.tags_all
   arn                           = var.arn
   cluster_name                  = var.cluster_name
   groups_claim                  = var.groups_claim
-  issuer_url                    = var.issuer_url
   username_prefix               = var.username_prefix
-  id                            = var.id
+  groups_prefix                 = var.groups_prefix
   oidc                          = var.oidc
   tags                          = var.tags
-  username_claim                = var.username_claim
-  client_id                     = var.client_id
-  identity_provider_config_name = var.identity_provider_config_name
+  id                            = var.id
   status                        = var.status
+  username_claim                = var.username_claim
+  tags_all                      = var.tags_all
+  client_id                     = var.client_id
+  create                        = var.create
+  identity_provider_config_name = var.identity_provider_config_name
+  issuer_url                    = var.issuer_url
+  required_claims               = var.required_claims
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
@@ -24,10 +24,13 @@ variable "create" {
   description = "(Default 40m)"
   type        = string
 }
-variable "groups_prefix" {
-  description = "(Optional) A prefix that is prepended to group claims e.g., oidc:."
+variable "identity_provider_config_name" {
+  description = " – (Required) The name of the identity provider config."
   type        = string
-  default     = ""
+}
+variable "issuer_url" {
+  description = "(Required) Issuer URL for the OpenID Connect identity provider."
+  type        = string
 }
 variable "required_claims" {
   description = "(Optional) The key value pairs that describe required claims in the identity token."
@@ -38,8 +41,8 @@ variable "tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
   type        = string
 }
-variable "arn" {
-  description = "Amazon Resource Name (ARN) of the EKS Identity Provider Configuration."
+variable "client_id" {
+  description = " – (Required) Client ID for the OpenID Connect identity provider."
   type        = string
 }
 variable "cluster_name" {
@@ -51,17 +54,13 @@ variable "groups_claim" {
   type        = string
   default     = ""
 }
-variable "issuer_url" {
-  description = "(Required) Issuer URL for the OpenID Connect identity provider."
-  type        = string
-}
 variable "username_prefix" {
   description = "(Optional) A prefix that is prepended to username claims.In addition to all arguments above, the following attributes are exported:"
   type        = string
   default     = ""
 }
-variable "id" {
-  description = "EKS Cluster name and EKS Identity Provider Configuration name separated by a colon (:)."
+variable "arn" {
+  description = "Amazon Resource Name (ARN) of the EKS Identity Provider Configuration."
   type        = string
 }
 variable "oidc" {
@@ -73,21 +72,22 @@ variable "tags" {
   type        = string
   default     = ""
 }
+variable "groups_prefix" {
+  description = "(Optional) A prefix that is prepended to group claims e.g., oidc:."
+  type        = string
+  default     = ""
+}
+variable "status" {
+  description = "Status of the EKS Identity Provider Configuration."
+  type        = string
+}
 variable "username_claim" {
   description = "(Optional) The JWT claim that the provider will use as the username."
   type        = string
   default     = ""
 }
-variable "client_id" {
-  description = " – (Required) Client ID for the OpenID Connect identity provider."
-  type        = string
-}
-variable "identity_provider_config_name" {
-  description = " – (Required) The name of the identity provider config."
-  type        = string
-}
-variable "status" {
-  description = "Status of the EKS Identity Provider Configuration."
+variable "id" {
+  description = "EKS Cluster name and EKS Identity Provider Configuration name separated by a colon (:)."
   type        = string
 }
 variable "tag_instance_id" {
@@ -210,6 +210,34 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
+output "issuer_url" {
+  description = "(Required) Issuer URL for the OpenID Connect identity provider."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.issuer_url
+}
+output "required_claims" {
+  description = "(Optional) The key value pairs that describe required claims in the identity token."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.required_claims
+}
+output "tags_all" {
+  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.tags_all
+}
+output "client_id" {
+  description = " – (Required) Client ID for the OpenID Connect identity provider."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.client_id
+}
+output "create" {
+  description = "(Default 40m)"
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.create
+}
+output "identity_provider_config_name" {
+  description = " – (Required) The name of the identity provider config."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.identity_provider_config_name
+}
+output "username_prefix" {
+  description = "(Optional) A prefix that is prepended to username claims.In addition to all arguments above, the following attributes are exported:"
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.username_prefix
+}
 output "arn" {
   description = "Amazon Resource Name (ARN) of the EKS Identity Provider Configuration."
   value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.arn
@@ -222,17 +250,9 @@ output "groups_claim" {
   description = "(Optional) The JWT claim that the provider will use to return groups."
   value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.groups_claim
 }
-output "issuer_url" {
-  description = "(Required) Issuer URL for the OpenID Connect identity provider."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.issuer_url
-}
-output "username_prefix" {
-  description = "(Optional) A prefix that is prepended to username claims.In addition to all arguments above, the following attributes are exported:"
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.username_prefix
-}
-output "id" {
-  description = "EKS Cluster name and EKS Identity Provider Configuration name separated by a colon (:)."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.id
+output "groups_prefix" {
+  description = "(Optional) A prefix that is prepended to group claims e.g., oidc:."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.groups_prefix
 }
 output "oidc" {
   description = "(Required) Nested attribute containing OpenID Connect identity provider information for the cluster. Detailed below."
@@ -242,37 +262,17 @@ output "tags" {
   description = "(Optional) Key-value map of resource tags. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level.oidc Configuration Block"
   value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.tags
 }
-output "username_claim" {
-  description = "(Optional) The JWT claim that the provider will use as the username."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.username_claim
-}
-output "client_id" {
-  description = " – (Required) Client ID for the OpenID Connect identity provider."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.client_id
-}
-output "identity_provider_config_name" {
-  description = " – (Required) The name of the identity provider config."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.identity_provider_config_name
+output "id" {
+  description = "EKS Cluster name and EKS Identity Provider Configuration name separated by a colon (:)."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.id
 }
 output "status" {
   description = "Status of the EKS Identity Provider Configuration."
   value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.status
 }
-output "create" {
-  description = "(Default 40m)"
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.create
-}
-output "groups_prefix" {
-  description = "(Optional) A prefix that is prepended to group claims e.g., oidc:."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.groups_prefix
-}
-output "required_claims" {
-  description = "(Optional) The key value pairs that describe required claims in the identity token."
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.required_claims
-}
-output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider default_tags configuration block.TimeoutsConfiguration options:"
-  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.tags_all
+output "username_claim" {
+  description = "(Optional) The JWT claim that the provider will use as the username."
+  value       = aws_eks_identity_provider_config.aws_eks_identity_provider_config.username_claim
 }
 output "arn" {
   description = "Amazon Resource Name (ARN) of the EKS Identity Provider Configuration."

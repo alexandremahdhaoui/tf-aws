@@ -1,97 +1,103 @@
 resource "aws_mskconnect_connector" "aws_mskconnect_connector" {
-  kafka_cluster                       = var.kafka_cluster
-  plugin                              = var.plugin
-  revision                            = var.revision
-  service_execution_role_arn          = var.service_execution_role_arn
-  apache_kafka_cluster                = var.apache_kafka_cluster
-  autoscaling                         = var.autoscaling
-  delivery_stream                     = var.delivery_stream
-  firehose                            = var.firehose
-  worker_configuration                = var.worker_configuration
-  subnets                             = var.subnets
-  vpc                                 = var.vpc
-  kafka_cluster_client_authentication = var.kafka_cluster_client_authentication
-  max_worker_count                    = var.max_worker_count
-  name                                = var.name
-  security_groups                     = var.security_groups
-  capacity                            = var.capacity
+  authentication_type                 = var.authentication_type
   description                         = var.description
-  provisioned_capacity                = var.provisioned_capacity
+  kafka_cluster                       = var.kafka_cluster
+  name                                = var.name
+  worker_configuration                = var.worker_configuration
+  worker_log_delivery                 = var.worker_log_delivery
+  version                             = var.version
+  vpc                                 = var.vpc
+  apache_kafka_cluster                = var.apache_kafka_cluster
+  bootstrap_servers                   = var.bootstrap_servers
+  max_worker_count                    = var.max_worker_count
+  prefix                              = var.prefix
+  scale_in_policy                     = var.scale_in_policy
+  subnets                             = var.subnets
+  worker_count                        = var.worker_count
+  delivery_stream                     = var.delivery_stream
   enabled                             = var.enabled
   encryption_type                     = var.encryption_type
-  kafka_cluster_encryption_in_transit = var.kafka_cluster_encryption_in_transit
-  kafkaconnect_version                = var.kafkaconnect_version
+  min_worker_count                    = var.min_worker_count
+  scale_out_policy                    = var.scale_out_policy
+  update                              = var.update
+  arn                                 = var.arn
+  create                              = var.create
+  custom_plugin                       = var.custom_plugin
+  kafka_cluster_client_authentication = var.kafka_cluster_client_authentication
+  provisioned_capacity                = var.provisioned_capacity
+  autoscaling                         = var.autoscaling
+  capacity                            = var.capacity
+  log_group                           = var.log_group
+  plugin                              = var.plugin
   bucket                              = var.bucket
+  connector_configuration             = var.connector_configuration
+  kafka_cluster_encryption_in_transit = var.kafka_cluster_encryption_in_transit
+  security_groups                     = var.security_groups
   cloudwatch_logs                     = var.cloudwatch_logs
   cpu_utilization_percentage          = var.cpu_utilization_percentage
-  custom_plugin                       = var.custom_plugin
-  scale_out_policy                    = var.scale_out_policy
+  firehose                            = var.firehose
   mcu_count                           = var.mcu_count
-  scale_in_policy                     = var.scale_in_policy
-  arn                                 = var.arn
-  bootstrap_servers                   = var.bootstrap_servers
-  create                              = var.create
-  log_group                           = var.log_group
-  prefix                              = var.prefix
-  update                              = var.update
-  connector_configuration             = var.connector_configuration
-  log_delivery                        = var.log_delivery
+  revision                            = var.revision
   s3                                  = var.s3
-  worker_log_delivery                 = var.worker_log_delivery
-  authentication_type                 = var.authentication_type
-  min_worker_count                    = var.min_worker_count
-  version                             = var.version
-  worker_count                        = var.worker_count
+  kafkaconnect_version                = var.kafkaconnect_version
+  log_delivery                        = var.log_delivery
+  service_execution_role_arn          = var.service_execution_role_arn
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
 }
-variable "name" {
-  description = "(Required) The name of the connector."
+variable "scale_in_policy" {
+  description = "(Optional) The scale-in policy for the connector. See below."
   type        = string
-}
-variable "security_groups" {
-  description = "(Required) The security groups for the connector."
-  type        = string
+  default     = ""
 }
 variable "subnets" {
   description = "(Required) The subnets for the connector.kafka_cluster_client_authentication Configuration Block"
+  type        = string
+}
+variable "version" {
+  description = "The current version of the connector.TimeoutsConfiguration options:"
   type        = string
 }
 variable "vpc" {
   description = "(Required) Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster.vpc Configuration Block"
   type        = string
 }
-variable "kafka_cluster_client_authentication" {
-  description = "(Required) Details of the client authentication used by the Apache Kafka cluster. See below."
+variable "apache_kafka_cluster" {
+  description = "(Required) The Apache Kafka cluster to which the connector is connected.apache_kafka_cluster Configuration Block"
+  type        = string
+}
+variable "bootstrap_servers" {
+  description = "(Required) The bootstrap servers of the cluster."
   type        = string
 }
 variable "max_worker_count" {
   description = "(Required) The maximum number of workers allocated to the connector."
   type        = string
 }
-variable "provisioned_capacity" {
-  description = "(Optional) Details about a fixed capacity allocated to a connector. See below.autoscaling Configuration Block"
+variable "prefix" {
+  description = "(Optional) The S3 prefix that is the destination for log delivery.plugin Configuration Block"
   type        = string
   default     = ""
 }
-variable "capacity" {
-  description = "(Required) Information about the capacity allocated to the connector. See below."
+variable "worker_count" {
+  description = "(Required) The number of workers that are allocated to the connector.kafka_cluster Configuration Block"
   type        = string
 }
-variable "description" {
-  description = "(Optional) A summary description of the connector."
+variable "scale_out_policy" {
+  description = "(Optional) The scale-out policy for the connector. See below.scale_in_policy Configuration Block"
   type        = string
   default     = ""
 }
-variable "cpu_utilization_percentage" {
-  description = "(Required) The CPU utilization percentage threshold at which you want connector scale out to be triggered.provisioned_capacity Configuration Block"
+variable "update" {
+  description = "(Default 20m)"
   type        = string
 }
-variable "custom_plugin" {
-  description = "(Required) Details about a custom plugin. See below.custom_plugin Configuration Block"
+variable "delivery_stream" {
+  description = "(Optional) The name of the Kinesis Data Firehose delivery stream that is the destination for log delivery."
   type        = string
+  default     = ""
 }
 variable "enabled" {
   description = "(Required) Specifies whether connector logs get sent to the specified Amazon S3 destination."
@@ -102,16 +108,71 @@ variable "encryption_type" {
   type        = string
   default     = ""
 }
-variable "kafka_cluster_encryption_in_transit" {
-  description = "(Required) Details of encryption in transit to the Apache Kafka cluster. See below."
+variable "min_worker_count" {
+  description = "(Required) The minimum number of workers allocated to the connector."
   type        = string
 }
-variable "kafkaconnect_version" {
-  description = "(Required) The version of Kafka Connect. It has to be compatible with both the Apache Kafka cluster's version and the plugins."
+variable "provisioned_capacity" {
+  description = "(Optional) Details about a fixed capacity allocated to a connector. See below.autoscaling Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "arn" {
+  description = "The Amazon Resource Name (ARN) of the connector."
+  type        = string
+}
+variable "create" {
+  description = "(Default 20m)"
+  type        = string
+}
+variable "custom_plugin" {
+  description = "(Required) Details about a custom plugin. See below.custom_plugin Configuration Block"
+  type        = string
+}
+variable "kafka_cluster_client_authentication" {
+  description = "(Required) Details of the client authentication used by the Apache Kafka cluster. See below."
+  type        = string
+}
+variable "autoscaling" {
+  description = "(Optional) Information about the auto scaling parameters for the connector. See below."
+  type        = string
+  default     = ""
+}
+variable "capacity" {
+  description = "(Required) Information about the capacity allocated to the connector. See below."
+  type        = string
+}
+variable "log_group" {
+  description = "(Required) The name of the CloudWatch log group that is the destination for log delivery.firehose Configuration Block"
+  type        = string
+}
+variable "plugin" {
+  description = "(Required) Specifies which plugins to use for the connector. See below."
   type        = string
 }
 variable "bucket" {
   description = "(Optional) The name of the S3 bucket that is the destination for log delivery."
+  type        = string
+  default     = ""
+}
+variable "connector_configuration" {
+  description = "(Required) A map of keys to values that represent the configuration for the connector."
+  type        = string
+}
+variable "kafka_cluster_encryption_in_transit" {
+  description = "(Required) Details of encryption in transit to the Apache Kafka cluster. See below."
+  type        = string
+}
+variable "security_groups" {
+  description = "(Required) The security groups for the connector."
+  type        = string
+}
+variable "revision" {
+  description = "(Required) The revision of the worker configuration.In addition to all arguments above, the following attributes are exported:"
+  type        = string
+}
+variable "s3" {
+  description = "(Optional) Details about delivering logs to Amazon S3. See below.cloudwatch_logs Configuration Block"
   type        = string
   default     = ""
 }
@@ -120,57 +181,22 @@ variable "cloudwatch_logs" {
   type        = string
   default     = ""
 }
-variable "scale_out_policy" {
-  description = "(Optional) The scale-out policy for the connector. See below.scale_in_policy Configuration Block"
+variable "cpu_utilization_percentage" {
+  description = "(Required) The CPU utilization percentage threshold at which you want connector scale out to be triggered.provisioned_capacity Configuration Block"
+  type        = string
+}
+variable "firehose" {
+  description = "(Optional) Details about delivering logs to Amazon Kinesis Data Firehose. See below."
   type        = string
   default     = ""
-}
-variable "create" {
-  description = "(Default 20m)"
-  type        = string
-}
-variable "log_group" {
-  description = "(Required) The name of the CloudWatch log group that is the destination for log delivery.firehose Configuration Block"
-  type        = string
 }
 variable "mcu_count" {
   description = "(Optional) The number of microcontroller units (MCUs) allocated to each connector worker. Valid values: 1, 2, 4, 8. The default value is 1."
   type        = string
   default     = ""
 }
-variable "scale_in_policy" {
-  description = "(Optional) The scale-in policy for the connector. See below."
-  type        = string
-  default     = ""
-}
-variable "arn" {
-  description = "The Amazon Resource Name (ARN) of the connector."
-  type        = string
-}
-variable "bootstrap_servers" {
-  description = "(Required) The bootstrap servers of the cluster."
-  type        = string
-}
-variable "prefix" {
-  description = "(Optional) The S3 prefix that is the destination for log delivery.plugin Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "update" {
-  description = "(Default 20m)"
-  type        = string
-}
-variable "s3" {
-  description = "(Optional) Details about delivering logs to Amazon S3. See below.cloudwatch_logs Configuration Block"
-  type        = string
-  default     = ""
-}
-variable "worker_log_delivery" {
-  description = "(Required) The workers can send worker logs to different destination types. This configuration specifies the details of these destinations. See below.worker_log_delivery Configuration Block"
-  type        = string
-}
-variable "connector_configuration" {
-  description = "(Required) A map of keys to values that represent the configuration for the connector."
+variable "kafkaconnect_version" {
+  description = "(Required) The version of Kafka Connect. It has to be compatible with both the Apache Kafka cluster's version and the plugins."
   type        = string
 }
 variable "log_delivery" {
@@ -178,12 +204,17 @@ variable "log_delivery" {
   type        = string
   default     = ""
 }
-variable "version" {
-  description = "The current version of the connector.TimeoutsConfiguration options:"
+variable "service_execution_role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the IAM role used by the connector to access the Amazon Web Services resources that it needs. The types of resources depends on the logic of the connector. For example, a connector that has Amazon S3 as a destination must have permissions that allow it to write to the S3 destination bucket."
   type        = string
 }
-variable "worker_count" {
-  description = "(Required) The number of workers that are allocated to the connector.kafka_cluster Configuration Block"
+variable "worker_configuration" {
+  description = "(Optional) Specifies which worker configuration to use with the connector. See below.capacity Configuration Block"
+  type        = string
+  default     = ""
+}
+variable "worker_log_delivery" {
+  description = "(Required) The workers can send worker logs to different destination types. This configuration specifies the details of these destinations. See below.worker_log_delivery Configuration Block"
   type        = string
 }
 variable "authentication_type" {
@@ -191,17 +222,8 @@ variable "authentication_type" {
   type        = string
   default     = ""
 }
-variable "min_worker_count" {
-  description = "(Required) The minimum number of workers allocated to the connector."
-  type        = string
-}
-variable "delivery_stream" {
-  description = "(Optional) The name of the Kinesis Data Firehose delivery stream that is the destination for log delivery."
-  type        = string
-  default     = ""
-}
-variable "firehose" {
-  description = "(Optional) Details about delivering logs to Amazon Kinesis Data Firehose. See below."
+variable "description" {
+  description = "(Optional) A summary description of the connector."
   type        = string
   default     = ""
 }
@@ -209,31 +231,9 @@ variable "kafka_cluster" {
   description = "(Required) Specifies which Apache Kafka cluster to connect to. See below."
   type        = string
 }
-variable "plugin" {
-  description = "(Required) Specifies which plugins to use for the connector. See below."
+variable "name" {
+  description = "(Required) The name of the connector."
   type        = string
-}
-variable "revision" {
-  description = "(Required) The revision of the worker configuration.In addition to all arguments above, the following attributes are exported:"
-  type        = string
-}
-variable "service_execution_role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the IAM role used by the connector to access the Amazon Web Services resources that it needs. The types of resources depends on the logic of the connector. For example, a connector that has Amazon S3 as a destination must have permissions that allow it to write to the S3 destination bucket."
-  type        = string
-}
-variable "apache_kafka_cluster" {
-  description = "(Required) The Apache Kafka cluster to which the connector is connected.apache_kafka_cluster Configuration Block"
-  type        = string
-}
-variable "autoscaling" {
-  description = "(Optional) Information about the auto scaling parameters for the connector. See below."
-  type        = string
-  default     = ""
-}
-variable "worker_configuration" {
-  description = "(Optional) Specifies which worker configuration to use with the connector. See below.capacity Configuration Block"
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -355,85 +355,33 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "service_execution_role_arn" {
-  description = "(Required) The Amazon Resource Name (ARN) of the IAM role used by the connector to access the Amazon Web Services resources that it needs. The types of resources depends on the logic of the connector. For example, a connector that has Amazon S3 as a destination must have permissions that allow it to write to the S3 destination bucket."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.service_execution_role_arn
+output "security_groups" {
+  description = "(Required) The security groups for the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.security_groups
 }
-output "apache_kafka_cluster" {
-  description = "(Required) The Apache Kafka cluster to which the connector is connected.apache_kafka_cluster Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.apache_kafka_cluster
+output "bucket" {
+  description = "(Optional) The name of the S3 bucket that is the destination for log delivery."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.bucket
 }
-output "autoscaling" {
-  description = "(Optional) Information about the auto scaling parameters for the connector. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.autoscaling
+output "connector_configuration" {
+  description = "(Required) A map of keys to values that represent the configuration for the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.connector_configuration
 }
-output "delivery_stream" {
-  description = "(Optional) The name of the Kinesis Data Firehose delivery stream that is the destination for log delivery."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.delivery_stream
+output "kafka_cluster_encryption_in_transit" {
+  description = "(Required) Details of encryption in transit to the Apache Kafka cluster. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafka_cluster_encryption_in_transit
 }
-output "firehose" {
-  description = "(Optional) Details about delivering logs to Amazon Kinesis Data Firehose. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.firehose
-}
-output "kafka_cluster" {
-  description = "(Required) Specifies which Apache Kafka cluster to connect to. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafka_cluster
-}
-output "plugin" {
-  description = "(Required) Specifies which plugins to use for the connector. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.plugin
+output "mcu_count" {
+  description = "(Optional) The number of microcontroller units (MCUs) allocated to each connector worker. Valid values: 1, 2, 4, 8. The default value is 1."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.mcu_count
 }
 output "revision" {
   description = "(Required) The revision of the worker configuration.In addition to all arguments above, the following attributes are exported:"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.revision
 }
-output "worker_configuration" {
-  description = "(Optional) Specifies which worker configuration to use with the connector. See below.capacity Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.worker_configuration
-}
-output "kafka_cluster_client_authentication" {
-  description = "(Required) Details of the client authentication used by the Apache Kafka cluster. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafka_cluster_client_authentication
-}
-output "max_worker_count" {
-  description = "(Required) The maximum number of workers allocated to the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.max_worker_count
-}
-output "name" {
-  description = "(Required) The name of the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.name
-}
-output "security_groups" {
-  description = "(Required) The security groups for the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.security_groups
-}
-output "subnets" {
-  description = "(Required) The subnets for the connector.kafka_cluster_client_authentication Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.subnets
-}
-output "vpc" {
-  description = "(Required) Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster.vpc Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.vpc
-}
-output "capacity" {
-  description = "(Required) Information about the capacity allocated to the connector. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.capacity
-}
-output "description" {
-  description = "(Optional) A summary description of the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.description
-}
-output "provisioned_capacity" {
-  description = "(Optional) Details about a fixed capacity allocated to a connector. See below.autoscaling Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.provisioned_capacity
-}
-output "kafkaconnect_version" {
-  description = "(Required) The version of Kafka Connect. It has to be compatible with both the Apache Kafka cluster's version and the plugins."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafkaconnect_version
-}
-output "bucket" {
-  description = "(Optional) The name of the S3 bucket that is the destination for log delivery."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.bucket
+output "s3" {
+  description = "(Optional) Details about delivering logs to Amazon S3. See below.cloudwatch_logs Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.s3
 }
 output "cloudwatch_logs" {
   description = "(Optional) Details about delivering logs to Amazon CloudWatch Logs. See below."
@@ -443,69 +391,29 @@ output "cpu_utilization_percentage" {
   description = "(Required) The CPU utilization percentage threshold at which you want connector scale out to be triggered.provisioned_capacity Configuration Block"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.cpu_utilization_percentage
 }
-output "custom_plugin" {
-  description = "(Required) Details about a custom plugin. See below.custom_plugin Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.custom_plugin
+output "firehose" {
+  description = "(Optional) Details about delivering logs to Amazon Kinesis Data Firehose. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.firehose
 }
-output "enabled" {
-  description = "(Required) Specifies whether connector logs get sent to the specified Amazon S3 destination."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.enabled
-}
-output "encryption_type" {
-  description = "(Optional) The type of encryption in transit to the Apache Kafka cluster. Valid values: PLAINTEXT, TLS. The default values is PLAINTEXT.log_delivery Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.encryption_type
-}
-output "kafka_cluster_encryption_in_transit" {
-  description = "(Required) Details of encryption in transit to the Apache Kafka cluster. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafka_cluster_encryption_in_transit
-}
-output "scale_out_policy" {
-  description = "(Optional) The scale-out policy for the connector. See below.scale_in_policy Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.scale_out_policy
-}
-output "arn" {
-  description = "The Amazon Resource Name (ARN) of the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.arn
-}
-output "bootstrap_servers" {
-  description = "(Required) The bootstrap servers of the cluster."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.bootstrap_servers
-}
-output "create" {
-  description = "(Default 20m)"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.create
-}
-output "log_group" {
-  description = "(Required) The name of the CloudWatch log group that is the destination for log delivery.firehose Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.log_group
-}
-output "mcu_count" {
-  description = "(Optional) The number of microcontroller units (MCUs) allocated to each connector worker. Valid values: 1, 2, 4, 8. The default value is 1."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.mcu_count
-}
-output "scale_in_policy" {
-  description = "(Optional) The scale-in policy for the connector. See below."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.scale_in_policy
-}
-output "prefix" {
-  description = "(Optional) The S3 prefix that is the destination for log delivery.plugin Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.prefix
-}
-output "update" {
-  description = "(Default 20m)"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.update
-}
-output "connector_configuration" {
-  description = "(Required) A map of keys to values that represent the configuration for the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.connector_configuration
+output "kafkaconnect_version" {
+  description = "(Required) The version of Kafka Connect. It has to be compatible with both the Apache Kafka cluster's version and the plugins."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafkaconnect_version
 }
 output "log_delivery" {
   description = "(Optional) Details about log delivery. See below."
   value       = aws_mskconnect_connector.aws_mskconnect_connector.log_delivery
 }
-output "s3" {
-  description = "(Optional) Details about delivering logs to Amazon S3. See below.cloudwatch_logs Configuration Block"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.s3
+output "service_execution_role_arn" {
+  description = "(Required) The Amazon Resource Name (ARN) of the IAM role used by the connector to access the Amazon Web Services resources that it needs. The types of resources depends on the logic of the connector. For example, a connector that has Amazon S3 as a destination must have permissions that allow it to write to the S3 destination bucket."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.service_execution_role_arn
+}
+output "name" {
+  description = "(Required) The name of the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.name
+}
+output "worker_configuration" {
+  description = "(Optional) Specifies which worker configuration to use with the connector. See below.capacity Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.worker_configuration
 }
 output "worker_log_delivery" {
   description = "(Required) The workers can send worker logs to different destination types. This configuration specifies the details of these destinations. See below.worker_log_delivery Configuration Block"
@@ -515,25 +423,109 @@ output "authentication_type" {
   description = "(Optional) The type of client authentication used to connect to the Apache Kafka cluster. Valid values: IAM, NONE. A value of NONE means that no client authentication is used. The default value is NONE.kafka_cluster_encryption_in_transit Configuration Block"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.authentication_type
 }
-output "min_worker_count" {
-  description = "(Required) The minimum number of workers allocated to the connector."
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.min_worker_count
+output "description" {
+  description = "(Optional) A summary description of the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.description
+}
+output "kafka_cluster" {
+  description = "(Required) Specifies which Apache Kafka cluster to connect to. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafka_cluster
+}
+output "prefix" {
+  description = "(Optional) The S3 prefix that is the destination for log delivery.plugin Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.prefix
+}
+output "scale_in_policy" {
+  description = "(Optional) The scale-in policy for the connector. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.scale_in_policy
+}
+output "subnets" {
+  description = "(Required) The subnets for the connector.kafka_cluster_client_authentication Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.subnets
 }
 output "version" {
   description = "The current version of the connector.TimeoutsConfiguration options:"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.version
+}
+output "vpc" {
+  description = "(Required) Details of an Amazon VPC which has network connectivity to the Apache Kafka cluster.vpc Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.vpc
+}
+output "apache_kafka_cluster" {
+  description = "(Required) The Apache Kafka cluster to which the connector is connected.apache_kafka_cluster Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.apache_kafka_cluster
+}
+output "bootstrap_servers" {
+  description = "(Required) The bootstrap servers of the cluster."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.bootstrap_servers
+}
+output "max_worker_count" {
+  description = "(Required) The maximum number of workers allocated to the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.max_worker_count
 }
 output "worker_count" {
   description = "(Required) The number of workers that are allocated to the connector.kafka_cluster Configuration Block"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.worker_count
 }
+output "min_worker_count" {
+  description = "(Required) The minimum number of workers allocated to the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.min_worker_count
+}
+output "scale_out_policy" {
+  description = "(Optional) The scale-out policy for the connector. See below.scale_in_policy Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.scale_out_policy
+}
 output "update" {
   description = "(Default 20m)"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.update
 }
-output "version" {
-  description = "The current version of the connector.TimeoutsConfiguration options:"
-  value       = aws_mskconnect_connector.aws_mskconnect_connector.version
+output "delivery_stream" {
+  description = "(Optional) The name of the Kinesis Data Firehose delivery stream that is the destination for log delivery."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.delivery_stream
+}
+output "enabled" {
+  description = "(Required) Specifies whether connector logs get sent to the specified Amazon S3 destination."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.enabled
+}
+output "encryption_type" {
+  description = "(Optional) The type of encryption in transit to the Apache Kafka cluster. Valid values: PLAINTEXT, TLS. The default values is PLAINTEXT.log_delivery Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.encryption_type
+}
+output "kafka_cluster_client_authentication" {
+  description = "(Required) Details of the client authentication used by the Apache Kafka cluster. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.kafka_cluster_client_authentication
+}
+output "provisioned_capacity" {
+  description = "(Optional) Details about a fixed capacity allocated to a connector. See below.autoscaling Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.provisioned_capacity
+}
+output "arn" {
+  description = "The Amazon Resource Name (ARN) of the connector."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.arn
+}
+output "create" {
+  description = "(Default 20m)"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.create
+}
+output "custom_plugin" {
+  description = "(Required) Details about a custom plugin. See below.custom_plugin Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.custom_plugin
+}
+output "plugin" {
+  description = "(Required) Specifies which plugins to use for the connector. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.plugin
+}
+output "autoscaling" {
+  description = "(Optional) Information about the auto scaling parameters for the connector. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.autoscaling
+}
+output "capacity" {
+  description = "(Required) Information about the capacity allocated to the connector. See below."
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.capacity
+}
+output "log_group" {
+  description = "(Required) The name of the CloudWatch log group that is the destination for log delivery.firehose Configuration Block"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.log_group
 }
 output "arn" {
   description = "The Amazon Resource Name (ARN) of the connector."
@@ -546,6 +538,14 @@ output "create" {
 output "delete" {
   description = "(Default 10m)"
   value       = aws_mskconnect_connector.aws_mskconnect_connector.delete
+}
+output "update" {
+  description = "(Default 20m)"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.update
+}
+output "version" {
+  description = "The current version of the connector.TimeoutsConfiguration options:"
+  value       = aws_mskconnect_connector.aws_mskconnect_connector.version
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

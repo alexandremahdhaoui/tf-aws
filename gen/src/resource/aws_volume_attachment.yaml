@@ -14,12 +14,15 @@ spec:
             description: ID of the Instance
             type: string
         skip_destroy:
-            description: ""
+            description: |-
+                (Optional, Boolean) Set this to true if you do not wish
+                to detach the volume from the instance to which it is attached at destroy
+                time, and instead just remove the attachment from Terraform state. This is
+                useful when destroying an instance which has volumes created by some other
+                means attached.
             type: string
         stop_instance_before_detaching:
-            description: |-
-                (Optional, Boolean) Set this to true to ensure that the target instance is stopped
-                before trying to detach the volume. Stops the instance, if it is not already stopped.In addition to all arguments above, the following attributes are exported:
+            description: 'In addition to all arguments above, the following attributes are exported:'
             type: string
         volume_id:
             description: (Required) ID of the Volume to be attached

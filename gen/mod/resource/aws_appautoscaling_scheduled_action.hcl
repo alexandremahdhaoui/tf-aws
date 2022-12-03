@@ -1,19 +1,42 @@
 resource "aws_appautoscaling_scheduled_action" "aws_appautoscaling_scheduled_action" {
-  timezone               = var.timezone
-  end_time               = var.end_time
-  min_capacity           = var.min_capacity
-  scalable_dimension     = var.scalable_dimension
-  service_namespace      = var.service_namespace
-  schedule               = var.schedule
   start_time             = var.start_time
+  timezone               = var.timezone
   max_capacity           = var.max_capacity
   name                   = var.name
-  resource_id            = var.resource_id
+  service_namespace      = var.service_namespace
+  scalable_dimension     = var.scalable_dimension
   scalable_target_action = var.scalable_target_action
+  schedule               = var.schedule
+  end_time               = var.end_time
+  min_capacity           = var.min_capacity
+  resource_id            = var.resource_id
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
   type        = string
+}
+variable "max_capacity" {
+  description = "(Optional) Maximum capacity. At least one of max_capacity or min_capacity must be set."
+  type        = string
+  default     = ""
+}
+variable "name" {
+  description = "(Required) Name of the scheduled action."
+  type        = string
+}
+variable "service_namespace" {
+  description = "(Required) Namespace of the AWS service. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference Example: ecs"
+  type        = string
+}
+variable "start_time" {
+  description = "(Optional) Date and time for the scheduled action to start in RFC 3339 format. The timezone is not affected by the setting of timezone."
+  type        = string
+  default     = ""
+}
+variable "timezone" {
+  description = "(Optional) Time zone used when setting a scheduled action by using an at or cron expression. Does not affect timezone for start_time and end_time. Valid values are the canonical names of the IANA time zones supported by Joda-Time, such as Etc/GMT+9 or Pacific/Tahiti. Default is UTC.Scalable Target Action Arguments"
+  type        = string
+  default     = ""
 }
 variable "end_time" {
   description = "(Optional) Date and time for the scheduled action to end in RFC 3339 format. The timezone is not affected by the setting of timezone."
@@ -25,30 +48,12 @@ variable "min_capacity" {
   type        = string
   default     = ""
 }
-variable "scalable_dimension" {
-  description = "(Required) Scalable dimension. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference Example: ecs:service:DesiredCount"
-  type        = string
-}
-variable "service_namespace" {
-  description = "(Required) Namespace of the AWS service. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference Example: ecs"
-  type        = string
-}
-variable "timezone" {
-  description = "(Optional) Time zone used when setting a scheduled action by using an at or cron expression. Does not affect timezone for start_time and end_time. Valid values are the canonical names of the IANA time zones supported by Joda-Time, such as Etc/GMT+9 or Pacific/Tahiti. Default is UTC.Scalable Target Action Arguments"
-  type        = string
-  default     = ""
-}
-variable "max_capacity" {
-  description = "(Optional) Maximum capacity. At least one of max_capacity or min_capacity must be set."
-  type        = string
-  default     = ""
-}
-variable "name" {
-  description = "(Required) Name of the scheduled action."
-  type        = string
-}
 variable "resource_id" {
   description = "(Required) Identifier of the resource associated with the scheduled action. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference"
+  type        = string
+}
+variable "scalable_dimension" {
+  description = "(Required) Scalable dimension. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference Example: ecs:service:DesiredCount"
   type        = string
 }
 variable "scalable_target_action" {
@@ -58,11 +63,6 @@ variable "scalable_target_action" {
 variable "schedule" {
   description = "(Required) Schedule for this action. The following formats are supported: At expressions - at(yyyy-mm-ddThh:mm:ss), Rate expressions - rate(valueunit), Cron expressions - cron(fields). Times for at expressions and cron expressions are evaluated using the time zone configured in timezone. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference"
   type        = string
-}
-variable "start_time" {
-  description = "(Optional) Date and time for the scheduled action to start in RFC 3339 format. The timezone is not affected by the setting of timezone."
-  type        = string
-  default     = ""
 }
 variable "tag_instance_id" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
@@ -184,18 +184,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "scalable_target_action" {
-  description = "(Required) New minimum and maximum capacity. You can set both values or just one. See below"
-  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.scalable_target_action
-}
-output "schedule" {
-  description = "(Required) Schedule for this action. The following formats are supported: At expressions - at(yyyy-mm-ddThh:mm:ss), Rate expressions - rate(valueunit), Cron expressions - cron(fields). Times for at expressions and cron expressions are evaluated using the time zone configured in timezone. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference"
-  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.schedule
-}
-output "start_time" {
-  description = "(Optional) Date and time for the scheduled action to start in RFC 3339 format. The timezone is not affected by the setting of timezone."
-  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.start_time
-}
 output "max_capacity" {
   description = "(Optional) Maximum capacity. At least one of max_capacity or min_capacity must be set."
   value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.max_capacity
@@ -204,13 +192,13 @@ output "name" {
   description = "(Required) Name of the scheduled action."
   value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.name
 }
-output "resource_id" {
-  description = "(Required) Identifier of the resource associated with the scheduled action. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference"
-  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.resource_id
-}
 output "service_namespace" {
   description = "(Required) Namespace of the AWS service. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference Example: ecs"
   value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.service_namespace
+}
+output "start_time" {
+  description = "(Optional) Date and time for the scheduled action to start in RFC 3339 format. The timezone is not affected by the setting of timezone."
+  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.start_time
 }
 output "timezone" {
   description = "(Optional) Time zone used when setting a scheduled action by using an at or cron expression. Does not affect timezone for start_time and end_time. Valid values are the canonical names of the IANA time zones supported by Joda-Time, such as Etc/GMT+9 or Pacific/Tahiti. Default is UTC.Scalable Target Action Arguments"
@@ -224,9 +212,21 @@ output "min_capacity" {
   description = "(Optional) Minimum capacity. At least one of min_capacity or max_capacity must be set.In addition to all arguments above, the following attributes are exported:"
   value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.min_capacity
 }
+output "resource_id" {
+  description = "(Required) Identifier of the resource associated with the scheduled action. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference"
+  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.resource_id
+}
 output "scalable_dimension" {
   description = "(Required) Scalable dimension. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference Example: ecs:service:DesiredCount"
   value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.scalable_dimension
+}
+output "scalable_target_action" {
+  description = "(Required) New minimum and maximum capacity. You can set both values or just one. See below"
+  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.scalable_target_action
+}
+output "schedule" {
+  description = "(Required) Schedule for this action. The following formats are supported: At expressions - at(yyyy-mm-ddThh:mm:ss), Rate expressions - rate(valueunit), Cron expressions - cron(fields). Times for at expressions and cron expressions are evaluated using the time zone configured in timezone. Documentation can be found in the parameter at: AWS Application Auto Scaling API Reference"
+  value       = aws_appautoscaling_scheduled_action.aws_appautoscaling_scheduled_action.schedule
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

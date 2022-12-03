@@ -1,15 +1,23 @@
 resource "aws_account_alternate_contact" "aws_account_alternate_contact" {
-  alternate_contact_type = var.alternate_contact_type
-  create                 = var.create
-  email_address          = var.email_address
   name                   = var.name
   phone_number           = var.phone_number
   title                  = var.title
   update                 = var.update
   account_id             = var.account_id
+  alternate_contact_type = var.alternate_contact_type
+  create                 = var.create
+  email_address          = var.email_address
 }
 variable "provider_region" {
   description = "Region where the provider should be executed."
+  type        = string
+}
+variable "email_address" {
+  description = "(Required) An email address for the alternate contact."
+  type        = string
+}
+variable "name" {
+  description = "(Required) Name of the alternate contact."
   type        = string
 }
 variable "phone_number" {
@@ -35,14 +43,6 @@ variable "alternate_contact_type" {
 }
 variable "create" {
   description = "(Default 5m)"
-  type        = string
-}
-variable "email_address" {
-  description = "(Required) An email address for the alternate contact."
-  type        = string
-}
-variable "name" {
-  description = "(Required) Name of the alternate contact."
   type        = string
 }
 variable "tag_instance_id" {
@@ -197,10 +197,6 @@ output "name" {
   description = "(Required) Name of the alternate contact."
   value       = aws_account_alternate_contact.aws_account_alternate_contact.name
 }
-output "update" {
-  description = "(Default 5m)"
-  value       = aws_account_alternate_contact.aws_account_alternate_contact.update
-}
 output "create" {
   description = "(Default 5m)"
   value       = aws_account_alternate_contact.aws_account_alternate_contact.create
@@ -208,6 +204,10 @@ output "create" {
 output "delete" {
   description = "(Default 5m)"
   value       = aws_account_alternate_contact.aws_account_alternate_contact.delete
+}
+output "update" {
+  description = "(Default 5m)"
+  value       = aws_account_alternate_contact.aws_account_alternate_contact.update
 }
 output "provider_region" {
   description = "Region where the provider should be executed."

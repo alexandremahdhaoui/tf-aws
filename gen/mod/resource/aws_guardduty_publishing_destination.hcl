@@ -145,10 +145,6 @@ variable "tag_security_confidentiality" {
   description = "Tag should comply to https://gitlab.com/alexandre.mahdhaoui/spec-tag"
   type        = string
 }
-output "kms_key_arn" {
-  description = "(Required) The ARN of the KMS key used to encrypt GuardDuty findings. GuardDuty enforces this to be encrypted."
-  value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.kms_key_arn
-}
 output "destination_arn" {
   description = "(Required) The bucket arn and prefix under which the findings get exported. Bucket-ARN is required, the prefix is optional and will be AWSLogs/[Account-ID]/GuardDuty/[Region]/ if not provided"
   value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.destination_arn
@@ -160,6 +156,10 @@ output "destination_type" {
 output "detector_id" {
   description = "(Required) The detector ID of the GuardDuty."
   value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.detector_id
+}
+output "kms_key_arn" {
+  description = "(Required) The ARN of the KMS key used to encrypt GuardDuty findings. GuardDuty enforces this to be encrypted."
+  value       = aws_guardduty_publishing_destination.aws_guardduty_publishing_destination.kms_key_arn
 }
 output "id" {
   description = "The ID of the GuardDuty PublishingDestination and the detector ID. Format: <DetectorID>:<PublishingDestinationID>"
